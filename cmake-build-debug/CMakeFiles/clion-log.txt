@@ -1,0 +1,15 @@
+/home/xdbeef/clion-2017.3.3/bin/cmake/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/xdbeef/NetBeansProjects/spelunkyds
+-- Configuring done
+CMake Error at CMakeLists.txt:16 (add_executable):
+  Cannot find source file:
+
+    source/map.h
+
+  Tried extensions .c .C .c++ .cc .cpp .cxx .m .M .mm .h .hh .h++ .hm .hpp
+  .hxx .in .txx
+
+
+CMake Error: CMake can not determine linker language for target: spelunkyds
+CMake Error: Cannot determine link language for target "spelunkyds".
+-- Generating done
+-- Build files have been written to: /home/xdbeef/NetBeansProjects/spelunkyds/cmake-build-debug

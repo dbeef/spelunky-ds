@@ -1,0 +1,12 @@
+//
+// Created by xdbeef on 24.02.18.
+//
+
+#ifndef SPELUNKYDS_CONSTS_H
+#define SPELUNKYDS_CONSTS_H
+
+#define FRAMES_PER_ANIMATION 6
+#define TICKS_PER_SECOND 30.5554503
+#define DMA_CHANNEL 3
+
+#endif //SPELUNKYDS_CONSTS_H

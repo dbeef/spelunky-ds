@@ -1,0 +1,3 @@
+/home/xdbeef/NetBeansProjects/spelunkyds/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/xdbeef/NetBeansProjects/spelunkyds/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/xdbeef/NetBeansProjects/spelunkyds/cmake-build-debug/CMakeFiles/spelunkyds.dir
