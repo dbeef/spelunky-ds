@@ -1,5 +1,7 @@
 Spelunky remake for the NintendoDS.
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/XnIEWVBfIAs" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
 <here I should post a gif of spelunky on a real nds>
 
 <h3> State of progress </h3>

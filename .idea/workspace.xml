@@ -12,21 +12,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4167ccef-cad0-4b13-8f61-b9437b132076" name="Default" comment="Merge branch 'master' of https://github.com/dbeef/spelunky-ds&#10;&#10;# Conflicts:&#10;#&#9;README.md">
-      <change beforePath="" afterPath="$PROJECT_DIR$/README_BACKUP_18615.md" />
       <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/README_BASE_18615.md" afterPath="$PROJECT_DIR$/README_BASE_18615.md" />
-      <change beforePath="$PROJECT_DIR$/README_BASE_18697.md" afterPath="$PROJECT_DIR$/README_BASE_18697.md" />
-      <change beforePath="$PROJECT_DIR$/README_BASE_18811.md" afterPath="$PROJECT_DIR$/README_BASE_18811.md" />
-      <change beforePath="$PROJECT_DIR$/README_BASE_19335.md" afterPath="$PROJECT_DIR$/README_BASE_19335.md" />
-      <change beforePath="$PROJECT_DIR$/README_LOCAL_18615.md" afterPath="$PROJECT_DIR$/README_LOCAL_18615.md" />
-      <change beforePath="$PROJECT_DIR$/README_LOCAL_18697.md" afterPath="$PROJECT_DIR$/README_LOCAL_18697.md" />
-      <change beforePath="$PROJECT_DIR$/README_LOCAL_18811.md" afterPath="$PROJECT_DIR$/README_LOCAL_18811.md" />
-      <change beforePath="$PROJECT_DIR$/README_LOCAL_19335.md" afterPath="$PROJECT_DIR$/README_LOCAL_19335.md" />
-      <change beforePath="$PROJECT_DIR$/README_REMOTE_18615.md" afterPath="$PROJECT_DIR$/README_REMOTE_18615.md" />
-      <change beforePath="$PROJECT_DIR$/README_REMOTE_18697.md" afterPath="$PROJECT_DIR$/README_REMOTE_18697.md" />
-      <change beforePath="$PROJECT_DIR$/README_REMOTE_18811.md" afterPath="$PROJECT_DIR$/README_REMOTE_18811.md" />
-      <change beforePath="$PROJECT_DIR$/README_REMOTE_19335.md" afterPath="$PROJECT_DIR$/README_REMOTE_19335.md" />
+      <change beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
+      <change beforePath="$PROJECT_DIR$/README_BACKUP_18615.md" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/README_BACKUP_18697.md" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/README_BACKUP_18811.md" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/README_BACKUP_19335.md" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/README_BASE_18615.md" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/README_BASE_18697.md" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/README_BASE_18811.md" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/README_BASE_19335.md" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/README_LOCAL_18615.md" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/README_LOCAL_18697.md" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/README_LOCAL_18811.md" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/README_LOCAL_19335.md" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/README_REMOTE_18615.md" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/README_REMOTE_18697.md" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/README_REMOTE_18811.md" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/README_REMOTE_19335.md" afterPath="" />
       <change beforePath="$PROJECT_DIR$/build/LevelGenerator.d" afterPath="$PROJECT_DIR$/build/LevelGenerator.d" />
       <change beforePath="$PROJECT_DIR$/build/LevelGenerator.o" afterPath="$PROJECT_DIR$/build/LevelGenerator.o" />
       <change beforePath="$PROJECT_DIR$/build/MainDude.d" afterPath="$PROJECT_DIR$/build/MainDude.d" />
@@ -188,8 +192,8 @@
       <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="319">
-              <caret line="51" column="0" lean-forward="false" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
+            <state relative-caret-position="54">
+              <caret line="3" column="0" lean-forward="true" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -464,15 +468,16 @@
       <workItem from="1520176121993" duration="270000" />
       <workItem from="1520176441317" duration="7331000" />
       <workItem from="1520234536726" duration="278000" />
-      <workItem from="1520664843985" duration="39487000" />
+      <workItem from="1520664843985" duration="39744000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="170446000" />
+    <option name="totallyTimeSpent" value="170703000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="61" y="-4" width="1539" height="904" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2014295" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -483,7 +488,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32957393" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.9799499" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.9799499" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -875,8 +880,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="319">
-          <caret line="51" column="0" lean-forward="false" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
+        <state relative-caret-position="54">
+          <caret line="3" column="0" lean-forward="true" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
           <folding />
         </state>
       </provider>
