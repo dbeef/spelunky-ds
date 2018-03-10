@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 Spelunky remake for the NintendoDS.
 
 <here I should post a gif of spelunky on a real nds>
@@ -45,7 +44,3 @@ I found following materials very helpful:
 
 <p>
 Thanks to every person who contributed to NDS homebrew!
-=======
-# spelunky-ds
-Spelunky for the NintendoDS
->>>>>>> 00cce082ca0e88667dc5fa75c2efe4a6013dcdca
