@@ -60,10 +60,7 @@ main.o: /home/xdbeef/NetBeansProjects/spelunkyds/source/main.cpp \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/videoGL.h \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/nand.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/../build/font.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/MainDude.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/SpriteState.h \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/console.h \
- /home/xdbeef/devkitPro/libnds/include/nds/arm9/input.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/Scrolling.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/LevelGenerator.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/MapTile.h \
@@ -195,13 +192,7 @@ main.o: /home/xdbeef/NetBeansProjects/spelunkyds/source/main.cpp \
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/../build/font.h:
 
-/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/MainDude.h:
-
-/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/SpriteState.h:
-
 /home/xdbeef/devkitPro/libnds/include/nds/arm9/console.h:
-
-/home/xdbeef/devkitPro/libnds/include/nds/arm9/input.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/Scrolling.h:
 

@@ -17,10 +17,11 @@
 
 class LevelGenerator {
 
+public:
+
     MapTile *mapTiles[32][32];
     int layout[ROOMS_X][ROOMS_Y];
 
-public:
     void newLayout(int seed);
 
     void tilesToMap();

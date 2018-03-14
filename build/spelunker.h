@@ -3,13 +3,13 @@
 
 //======================================================================
 //
-//	spelunker, 192x64@8, 
+//	spelunker, 96x48@8, 
 //	Transparent color : 20,9C,00
 //	+ palette 256 entries, not compressed
-//	+ 192 tiles Metatiled by 4x4 not compressed
-//	Total size: 512 + 12288 = 12800
+//	+ 72 tiles Metatiled by 2x2 not compressed
+//	Total size: 512 + 4608 = 5120
 //
-//	Time-stamp: 2018-03-10, 18:04:32
+//	Time-stamp: 2018-03-14, 20:13:01
 //	Exported by Cearn's GBA Image Transmogrifier, v0.8.14
 //	( http://www.coranac.com/projects/#grit )
 //
@@ -18,8 +18,8 @@
 #ifndef GRIT_SPELUNKER_H
 #define GRIT_SPELUNKER_H
 
-#define spelunkerTilesLen 12288
-extern const unsigned int spelunkerTiles[3072];
+#define spelunkerTilesLen 4608
+extern const unsigned int spelunkerTiles[1152];
 
 #define spelunkerPalLen 512
 extern const unsigned short spelunkerPal[256];

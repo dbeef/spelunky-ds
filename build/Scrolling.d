@@ -65,6 +65,9 @@ Scrolling.o: \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/MapTile.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/MapUtils.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../Consts.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/MainDude.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/SpriteState.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/../level_layout/MapTile.h \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/input.h
 
 /home/xdbeef/devkitPro/libnds/include/nds.h:
@@ -196,5 +199,11 @@ Scrolling.o: \
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/MapUtils.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../Consts.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/MainDude.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/SpriteState.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/../level_layout/MapTile.h:
 
 /home/xdbeef/devkitPro/libnds/include/nds/arm9/input.h:

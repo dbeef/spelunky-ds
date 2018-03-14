@@ -94,6 +94,87 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/Makefile">
+			<Option target="spelunkyds"/>
+		</Unit>
+		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/README.md">
+			<Option target="spelunkyds"/>
+		</Unit>
+		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/gfx/fonts/font.bmp">
+			<Option target="spelunkyds"/>
+		</Unit>
+		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/gfx/fonts/font.grit">
+			<Option target="spelunkyds"/>
+		</Unit>
+		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/gfx/sprites/man.png">
+			<Option target="spelunkyds"/>
+		</Unit>
+		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/gfx/sprites/sprite.grit">
+			<Option target="spelunkyds"/>
+		</Unit>
+		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/gfx/sprites/woman.png">
+			<Option target="spelunkyds"/>
+		</Unit>
+		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/includes/TextBackgrounds.h">
+			<Option target="spelunkyds"/>
+		</Unit>
+		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/scratches/font.png">
+			<Option target="spelunkyds"/>
+		</Unit>
+		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/Consts.h">
+			<Option target="spelunkyds"/>
+		</Unit>
+		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/MainDude.cpp">
+			<Option target="spelunkyds"/>
+		</Unit>
+		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/MainDude.h">
+			<Option target="spelunkyds"/>
+		</Unit>
+		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/SpriteState.h">
+			<Option target="spelunkyds"/>
+		</Unit>
+		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/console/TextManager.cpp">
+			<Option target="spelunkyds"/>
+		</Unit>
+		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/console/TextManager.h">
+			<Option target="spelunkyds"/>
+		</Unit>
+		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/LevelGenerator.cpp">
+			<Option target="spelunkyds"/>
+		</Unit>
+		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/LevelGenerator.h">
+			<Option target="spelunkyds"/>
+		</Unit>
+		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/MapTile.cpp">
+			<Option target="spelunkyds"/>
+		</Unit>
+		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/MapTile.h">
+			<Option target="spelunkyds"/>
+		</Unit>
+		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/MapUtils.cpp">
+			<Option target="spelunkyds"/>
+		</Unit>
+		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/MapUtils.h">
+			<Option target="spelunkyds"/>
+		</Unit>
+		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/ScreenPositions.h">
+			<Option target="spelunkyds"/>
+		</Unit>
+		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/Scrolling.cpp">
+			<Option target="spelunkyds"/>
+		</Unit>
+		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/Scrolling.h">
+			<Option target="spelunkyds"/>
+		</Unit>
+		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/main.cpp">
+			<Option target="spelunkyds"/>
+		</Unit>
+		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/time/Timer.cpp">
+			<Option target="spelunkyds"/>
+		</Unit>
+		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/time/Timer.h">
+			<Option target="spelunkyds"/>
+		</Unit>
 		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>

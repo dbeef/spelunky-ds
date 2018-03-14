@@ -123,6 +123,222 @@ spelunkyds/fast:
 	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/build
 .PHONY : spelunkyds/fast
 
+source/animations/MainDude.o: source/animations/MainDude.cpp.o
+
+.PHONY : source/animations/MainDude.o
+
+# target to build an object file
+source/animations/MainDude.cpp.o:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/animations/MainDude.cpp.o
+.PHONY : source/animations/MainDude.cpp.o
+
+source/animations/MainDude.i: source/animations/MainDude.cpp.i
+
+.PHONY : source/animations/MainDude.i
+
+# target to preprocess a source file
+source/animations/MainDude.cpp.i:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/animations/MainDude.cpp.i
+.PHONY : source/animations/MainDude.cpp.i
+
+source/animations/MainDude.s: source/animations/MainDude.cpp.s
+
+.PHONY : source/animations/MainDude.s
+
+# target to generate assembly for a file
+source/animations/MainDude.cpp.s:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/animations/MainDude.cpp.s
+.PHONY : source/animations/MainDude.cpp.s
+
+source/console/TextManager.o: source/console/TextManager.cpp.o
+
+.PHONY : source/console/TextManager.o
+
+# target to build an object file
+source/console/TextManager.cpp.o:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/console/TextManager.cpp.o
+.PHONY : source/console/TextManager.cpp.o
+
+source/console/TextManager.i: source/console/TextManager.cpp.i
+
+.PHONY : source/console/TextManager.i
+
+# target to preprocess a source file
+source/console/TextManager.cpp.i:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/console/TextManager.cpp.i
+.PHONY : source/console/TextManager.cpp.i
+
+source/console/TextManager.s: source/console/TextManager.cpp.s
+
+.PHONY : source/console/TextManager.s
+
+# target to generate assembly for a file
+source/console/TextManager.cpp.s:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/console/TextManager.cpp.s
+.PHONY : source/console/TextManager.cpp.s
+
+source/level_layout/LevelGenerator.o: source/level_layout/LevelGenerator.cpp.o
+
+.PHONY : source/level_layout/LevelGenerator.o
+
+# target to build an object file
+source/level_layout/LevelGenerator.cpp.o:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/level_layout/LevelGenerator.cpp.o
+.PHONY : source/level_layout/LevelGenerator.cpp.o
+
+source/level_layout/LevelGenerator.i: source/level_layout/LevelGenerator.cpp.i
+
+.PHONY : source/level_layout/LevelGenerator.i
+
+# target to preprocess a source file
+source/level_layout/LevelGenerator.cpp.i:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/level_layout/LevelGenerator.cpp.i
+.PHONY : source/level_layout/LevelGenerator.cpp.i
+
+source/level_layout/LevelGenerator.s: source/level_layout/LevelGenerator.cpp.s
+
+.PHONY : source/level_layout/LevelGenerator.s
+
+# target to generate assembly for a file
+source/level_layout/LevelGenerator.cpp.s:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/level_layout/LevelGenerator.cpp.s
+.PHONY : source/level_layout/LevelGenerator.cpp.s
+
+source/level_layout/MapTile.o: source/level_layout/MapTile.cpp.o
+
+.PHONY : source/level_layout/MapTile.o
+
+# target to build an object file
+source/level_layout/MapTile.cpp.o:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/level_layout/MapTile.cpp.o
+.PHONY : source/level_layout/MapTile.cpp.o
+
+source/level_layout/MapTile.i: source/level_layout/MapTile.cpp.i
+
+.PHONY : source/level_layout/MapTile.i
+
+# target to preprocess a source file
+source/level_layout/MapTile.cpp.i:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/level_layout/MapTile.cpp.i
+.PHONY : source/level_layout/MapTile.cpp.i
+
+source/level_layout/MapTile.s: source/level_layout/MapTile.cpp.s
+
+.PHONY : source/level_layout/MapTile.s
+
+# target to generate assembly for a file
+source/level_layout/MapTile.cpp.s:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/level_layout/MapTile.cpp.s
+.PHONY : source/level_layout/MapTile.cpp.s
+
+source/level_layout/MapUtils.o: source/level_layout/MapUtils.cpp.o
+
+.PHONY : source/level_layout/MapUtils.o
+
+# target to build an object file
+source/level_layout/MapUtils.cpp.o:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/level_layout/MapUtils.cpp.o
+.PHONY : source/level_layout/MapUtils.cpp.o
+
+source/level_layout/MapUtils.i: source/level_layout/MapUtils.cpp.i
+
+.PHONY : source/level_layout/MapUtils.i
+
+# target to preprocess a source file
+source/level_layout/MapUtils.cpp.i:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/level_layout/MapUtils.cpp.i
+.PHONY : source/level_layout/MapUtils.cpp.i
+
+source/level_layout/MapUtils.s: source/level_layout/MapUtils.cpp.s
+
+.PHONY : source/level_layout/MapUtils.s
+
+# target to generate assembly for a file
+source/level_layout/MapUtils.cpp.s:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/level_layout/MapUtils.cpp.s
+.PHONY : source/level_layout/MapUtils.cpp.s
+
+source/level_layout/Scrolling.o: source/level_layout/Scrolling.cpp.o
+
+.PHONY : source/level_layout/Scrolling.o
+
+# target to build an object file
+source/level_layout/Scrolling.cpp.o:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/level_layout/Scrolling.cpp.o
+.PHONY : source/level_layout/Scrolling.cpp.o
+
+source/level_layout/Scrolling.i: source/level_layout/Scrolling.cpp.i
+
+.PHONY : source/level_layout/Scrolling.i
+
+# target to preprocess a source file
+source/level_layout/Scrolling.cpp.i:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/level_layout/Scrolling.cpp.i
+.PHONY : source/level_layout/Scrolling.cpp.i
+
+source/level_layout/Scrolling.s: source/level_layout/Scrolling.cpp.s
+
+.PHONY : source/level_layout/Scrolling.s
+
+# target to generate assembly for a file
+source/level_layout/Scrolling.cpp.s:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/level_layout/Scrolling.cpp.s
+.PHONY : source/level_layout/Scrolling.cpp.s
+
+source/main.o: source/main.cpp.o
+
+.PHONY : source/main.o
+
+# target to build an object file
+source/main.cpp.o:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/main.cpp.o
+.PHONY : source/main.cpp.o
+
+source/main.i: source/main.cpp.i
+
+.PHONY : source/main.i
+
+# target to preprocess a source file
+source/main.cpp.i:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/main.cpp.i
+.PHONY : source/main.cpp.i
+
+source/main.s: source/main.cpp.s
+
+.PHONY : source/main.s
+
+# target to generate assembly for a file
+source/main.cpp.s:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/main.cpp.s
+.PHONY : source/main.cpp.s
+
+source/time/Timer.o: source/time/Timer.cpp.o
+
+.PHONY : source/time/Timer.o
+
+# target to build an object file
+source/time/Timer.cpp.o:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/time/Timer.cpp.o
+.PHONY : source/time/Timer.cpp.o
+
+source/time/Timer.i: source/time/Timer.cpp.i
+
+.PHONY : source/time/Timer.i
+
+# target to preprocess a source file
+source/time/Timer.cpp.i:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/time/Timer.cpp.i
+.PHONY : source/time/Timer.cpp.i
+
+source/time/Timer.s: source/time/Timer.cpp.s
+
+.PHONY : source/time/Timer.s
+
+# target to generate assembly for a file
+source/time/Timer.cpp.s:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/time/Timer.cpp.s
+.PHONY : source/time/Timer.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -132,6 +348,30 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... spelunkyds"
+	@echo "... source/animations/MainDude.o"
+	@echo "... source/animations/MainDude.i"
+	@echo "... source/animations/MainDude.s"
+	@echo "... source/console/TextManager.o"
+	@echo "... source/console/TextManager.i"
+	@echo "... source/console/TextManager.s"
+	@echo "... source/level_layout/LevelGenerator.o"
+	@echo "... source/level_layout/LevelGenerator.i"
+	@echo "... source/level_layout/LevelGenerator.s"
+	@echo "... source/level_layout/MapTile.o"
+	@echo "... source/level_layout/MapTile.i"
+	@echo "... source/level_layout/MapTile.s"
+	@echo "... source/level_layout/MapUtils.o"
+	@echo "... source/level_layout/MapUtils.i"
+	@echo "... source/level_layout/MapUtils.s"
+	@echo "... source/level_layout/Scrolling.o"
+	@echo "... source/level_layout/Scrolling.i"
+	@echo "... source/level_layout/Scrolling.s"
+	@echo "... source/main.o"
+	@echo "... source/main.i"
+	@echo "... source/main.s"
+	@echo "... source/time/Timer.o"
+	@echo "... source/time/Timer.i"
+	@echo "... source/time/Timer.s"
 .PHONY : help
 
 

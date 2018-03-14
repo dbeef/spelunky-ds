@@ -2,25 +2,36 @@
 #include "Scrolling.h"
 #include "MapUtils.h"
 #include "../Consts.h"
+#include "../animations/MainDude.h"
 #include <nds/arm9/input.h>
+#include <nds/arm9/sprite.h>
 
 extern u16 map[4096];
 
 void spelunker::scroll(int id, int width, int height, LevelGenerator *l, int bg, u16 *fresh_map) {
-    int keys = 0;
+    int keys_held = 0;
+    int keys_up = 0;
     int sx = 0;
     int sy = 0;
 
     int timer = 0;
+
+    MainDude *mainDude = new MainDude();
+    mainDude->x = 100;
+    mainDude->y = 100;
+
+    mainDude->initMan();
+
 
     touchPosition touch;
     while (true) {
         scanKeys();
 
         timer += timerElapsed(0) / TICKS_PER_SECOND;
-        keys = keysHeld();
+        keys_held = keysHeld();
+        keys_up = keysUp();
 
-        if ((keys & KEY_B) && timer > 1000) {
+        if ((keys_held & KEY_B) && timer > 1000) {
 
             timer = 0;
             dmaCopyHalfWords(DMA_CHANNEL, fresh_map, map, sizeof(map));
@@ -32,10 +43,10 @@ void spelunker::scroll(int id, int width, int height, LevelGenerator *l, int bg,
             dmaCopyHalfWords(DMA_CHANNEL, map, bgGetMapPtr(bg), sizeof(map));
         }
 
-        if (keys & KEY_UP) sy -= 3;
-        if (keys & KEY_DOWN) sy += 3;
-        if (keys & KEY_LEFT) sx -= 3;
-        if (keys & KEY_RIGHT) sx += 3;
+        if (keys_held & KEY_X) sy -= 3;
+        if (keys_held & KEY_B) sy += 3;
+        if (keys_held & KEY_Y) sx -= 3;
+        if (keys_held & KEY_A) sx += 3;
 
         if (sx < 0) sx = 0;
         if (sx >= width - 256) sx = width - 1 - 256;
@@ -43,6 +54,13 @@ void spelunker::scroll(int id, int width, int height, LevelGenerator *l, int bg,
         if (sy >= height - 192) sy = height - 1 - 192;
 
         swiWaitForVBlank();
+
+        mainDude->updateTimers( timerElapsed(0) / TICKS_PER_SECOND);
+        mainDude->animateMan(sx, sy);
+        mainDude->checkCollisionWitMapTiles(l->mapTiles);
+        mainDude->changePos(keys_held, keys_up);
+        oamUpdate(&oamSub);
+        oamUpdate(&oamMain);
 
         bgSetScroll(id, sx, sy);
 

@@ -1,11 +1,9 @@
 #include <nds.h>
 #include <cstdio>
 #include "../build/font.h"
-#include "animations/MainDude.h"
 #include <nds/arm9/video.h>
 #include <nds/arm9/sprite.h>
 #include <nds/arm9/console.h>
-#include <nds/arm9/input.h>
 #include <array>
 #include <iostream>
 #include <cstring>
@@ -26,18 +24,15 @@ int main(void) {
 
     videoSetMode(MODE_0_2D);
     videoSetModeSub(MODE_0_2D);
+
+    vramSetBankA(VRAM_A_MAIN_BG);
+    vramSetBankF(VRAM_F_MAIN_SPRITE_0x06400000);
+    vramSetBankD(VRAM_D_SUB_SPRITE);
+
     oamInit(&oamMain, SpriteMapping_1D_128, false);
+    oamInit(&oamSub, SpriteMapping_1D_128, false);
 
     prepareConsole();
-
-    MainDude *mainDude = new MainDude();
-    mainDude->x = 0;
-    mainDude->y = 0;
-
-    mainDude->initMan();
-
-    videoSetMode(MODE_0_2D);
-    vramSetBankA(VRAM_A_MAIN_BG);
 
     int bg = bgInit(0, BgType_Text8bpp, BgSize_B8_512x512, 1, 1);
 
@@ -59,19 +54,6 @@ int main(void) {
 
     spelunker::scroll(bg, 512, 512, l, bg, fresh_map);
 
-    while (1) {
-
-        swiWaitForVBlank();
-        scanKeys();
-
-        int keys = keysHeld();
-
-//        mainDude->changePos(keys, timeElapsed);
-//        mainDude->animateMan();
-
-        oamUpdate(&oamSub);
-        oamUpdate(&oamMain);
-    }
     timer->stop();
 
     return 0;

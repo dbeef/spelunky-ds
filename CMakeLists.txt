@@ -22,7 +22,11 @@ add_executable(spelunkyds
         gfx/sprites/sprite.grit
         source/animations/MainDude.cpp
         source/animations/MainDude.h
+        source/console/TextManager.cpp
+        source/console/TextManager.h
         source/main.cpp
+        source/level_layout/Scrolling.cpp
+        source/level_layout/Scrolling.h
         includes/TextBackgrounds.h
         Makefile
-        README.md source/animations/MainDude.cpp source/animations/MainDude.h source/animations/SpriteState.h source/level_layout/ScreenPositions.h source/Consts.h source/level_layout/Scrolling.h source/map.h source/level_layout/LevelGenerator.cpp source/level_layout/LevelGenerator.h source/time/Timer.cpp source/time/Timer.h source/console/TextManager.cpp source/console/TextManager.h source/level_layout/MapUtils.cpp source/level_layout/MapUtils.h source/level_layout/MapTile.cpp source/level_layout/MapTile.h)
+        README.md source/animations/MainDude.cpp source/animations/MainDude.h source/animations/SpriteState.h source/level_layout/ScreenPositions.h source/Consts.h source/level_layout/Scrolling.h source/level_layout/LevelGenerator.cpp source/level_layout/LevelGenerator.h source/time/Timer.cpp source/time/Timer.h source/console/TextManager.cpp source/console/TextManager.h source/level_layout/MapUtils.cpp source/level_layout/MapUtils.h source/level_layout/MapTile.cpp source/level_layout/MapTile.h)
