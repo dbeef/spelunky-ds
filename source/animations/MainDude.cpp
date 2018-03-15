@@ -163,9 +163,11 @@ void MainDude::checkCollisionWitMapTiles(MapTile *mapTiles[32][32]) {
 }
 
 void MainDude::initMan() {
-    sprite_gfx_mem = oamAllocateGfx(&oamMain, SpriteSize_16x16, SpriteColorFormat_256Color);
+    sprite_gfx_mem_main = oamAllocateGfx(&oamMain, SpriteSize_16x16, SpriteColorFormat_256Color);
+    sprite_gfx_mem_sub = oamAllocateGfx(&oamSub, SpriteSize_16x16, SpriteColorFormat_256Color);
     frame_gfx = (u8 *) spelunkerTiles;
     dmaCopy(spelunkerPal, SPRITE_PALETTE, 512);
+    dmaCopy(spelunkerPal, SPRITE_PALETTE_SUB, 512);
 }
 
 
@@ -174,25 +176,73 @@ void MainDude::animateMan(int camera_x, int camera_y) {
     if (can_hang_on_tile_right) {
         int frame = (2 * 6) + 1;
         u8 *offset = frame_gfx + frame * 16 * 16;
-        dmaCopy(offset, sprite_gfx_mem, 16 * 16);
-        oamSet(&oamMain, 0, x - camera_x, y - camera_y, 0, 0, SpriteSize_16x16, SpriteColorFormat_256Color,
-               sprite_gfx_mem, -1, false, false, false, false, false);
+        dmaCopy(offset, sprite_gfx_mem_main, 16 * 16);
+        dmaCopy(offset, sprite_gfx_mem_sub, 16 * 16);
+
+
+        if (this->y <= 320 + 16) {
+            oamSet(&oamMain, 0, x - camera_x, y - camera_y, 0, 0, SpriteSize_16x16, SpriteColorFormat_256Color,
+                   sprite_gfx_mem_main, -1, false, false, false, false, false);
+        }
+        else
+            oamSet(&oamMain, 0, -16, -16, 0, 0, SpriteSize_16x16, SpriteColorFormat_256Color,
+                   0, -1, false, false, false, false, false);
+
+        if(this->y >= 320) {
+            oamSet(&oamSub, 0, x - camera_x, y - camera_y - 192, 0, 0, SpriteSize_16x16, SpriteColorFormat_256Color,
+                   sprite_gfx_mem_sub, -1, false, false, false, false, false);
+        }
+        else
+            oamSet(&oamSub, 0, -16, -16, 0, 0, SpriteSize_16x16, SpriteColorFormat_256Color,
+                   0, -1, false, false, false, false, false);
+
         return;
     }
     if (can_hang_on_tile_left) {
         int frame = (2 * 6);
         u8 *offset = frame_gfx + frame * 16 * 16;
-        dmaCopy(offset, sprite_gfx_mem, 16 * 16);
-        oamSet(&oamMain, 0, x - camera_x, y - camera_y, 0, 0, SpriteSize_16x16, SpriteColorFormat_256Color,
-               sprite_gfx_mem, -1, false, false, false, false, false);
+        dmaCopy(offset, sprite_gfx_mem_main, 16 * 16);
+        dmaCopy(offset, sprite_gfx_mem_sub, 16 * 16);
+        if (this->y <= 320) {
+            oamSet(&oamMain, 0, x - camera_x, y - camera_y, 0, 0, SpriteSize_16x16, SpriteColorFormat_256Color,
+                   sprite_gfx_mem_main, -1, false, false, false, false, false);
+        }
+        else
+            oamSet(&oamMain, 0,-16, -16, 0, 0, SpriteSize_16x16, SpriteColorFormat_256Color,
+                   0, -1, false, false, false, false, false);
+
+
+        if(this->y >= 320) {
+            oamSet(&oamSub, 0, x - camera_x, y - camera_y - 192, 0, 0, SpriteSize_16x16, SpriteColorFormat_256Color,
+                   sprite_gfx_mem_sub, -1, false, false, false, false, false);
+        }
+        else
+            oamSet(&oamSub, 0,-16, -16, 0, 0, SpriteSize_16x16, SpriteColorFormat_256Color,
+                   0, -1, false, false, false, false, false);
+
         return;
     }
 
     int frame = anim_frame + state * FRAMES_PER_ANIMATION;
     u8 *offset = frame_gfx + frame * 16 * 16;
-    dmaCopy(offset, sprite_gfx_mem, 16 * 16);
-    oamSet(&oamMain, 0, x - camera_x, y - camera_y, 0, 0, SpriteSize_16x16, SpriteColorFormat_256Color,
-           sprite_gfx_mem, -1, false, false, false, false, false);
+    dmaCopy(offset, sprite_gfx_mem_main, 16 * 16);
+    dmaCopy(offset, sprite_gfx_mem_sub, 16 * 16);
+    if (this->y <= 320) {
+        oamSet(&oamMain, 0, x - camera_x, y - camera_y, 0, 0, SpriteSize_16x16, SpriteColorFormat_256Color,
+               sprite_gfx_mem_main, -1, false, false, false, false, false);
+    }
+    else
+        oamSet(&oamMain, 0, -16, -16,  0, 0, SpriteSize_16x16, SpriteColorFormat_256Color,
+               0, -1, false, false, false, false, false);
+
+    if(this->y >= 320) {
+        oamSet(&oamSub, 0, x - camera_x, y - camera_y - 192, 0, 0, SpriteSize_16x16, SpriteColorFormat_256Color,
+               sprite_gfx_mem_sub, -1, false, false, false, false, false);
+    }
+    else
+        oamSet(&oamSub, 0, -16, -16, 0, 0, SpriteSize_16x16, SpriteColorFormat_256Color,
+               0, -1, false, false, false, false, false);
+
 }
 
 void MainDude::checkUpperCollision(MapTile *mapTiles[32][32]) {

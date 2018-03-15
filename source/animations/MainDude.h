@@ -47,7 +47,8 @@ public:
     int x;
     int y;
     int anim_frame;
-    u16 *sprite_gfx_mem;
+    u16 *sprite_gfx_mem_main;
+    u16 *sprite_gfx_mem_sub;
     u8 *frame_gfx;
 
     void checkCollisionWitMapTiles(MapTile *mapTiles[32][32]);

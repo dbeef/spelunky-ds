@@ -8,7 +8,7 @@
 
 namespace spelunker {
 
-    void scroll(int id, int width, int height, LevelGenerator* l, int bg, u16* fresh_map);
+    void scroll(int bg_main, int bg_sub, int width, int height, LevelGenerator* l, u16* fresh_map);
 
 }
 
