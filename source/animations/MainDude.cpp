@@ -213,8 +213,7 @@ void MainDude::checkUpperCollision(MapTile *mapTiles[32][32]) {
                     y_speed = 0;
                     this->y = (y * 16) + 16;
                 }
-            }
-            else
+            } else
                 return;
         }
     }
@@ -249,8 +248,7 @@ void MainDude::checkBottomCollision(MapTile *mapTiles[32][32]) {
                         speed_inc_y_timer = 0;
                     }
                 }
-            }
-            else
+            } else
                 continue;
         }
     }
@@ -298,8 +296,7 @@ void MainDude::checkRightCollision(MapTile *mapTiles[32][32]) {
                     x_speed = 0;
                     this->x = (x * 16) + 16;
                 }
-            }
-            else
+            } else
                 continue;
         }
     }
@@ -328,14 +325,14 @@ void MainDude::checkCanHangOnTile(MapTile *mapTiles[32][32]) {
 
                     bool y_bound = (this->y > (y * 16) - 2) && (this->y < (y * 16) + 8);
                     bool x_bound = false;
-                    if (right_collision) {
+                    if (right_collision && state == W_LEFT) {
 
                         bool upper_right_tile_exists = mapTiles[x + 1][y - 1] != 0;
                         if (upper_right_tile_exists)
                             continue;
 
                         x_bound = (this->x <= (x * 16) + 16 && (this->x >= (x * 16) + 12));
-                    } else if (left_collision) {
+                    } else if (left_collision && state == W_RIGHT) {
                         bool upper_left_tile_exists = mapTiles[x - 1][y - 1] != 0;
                         if (upper_left_tile_exists)
                             continue;

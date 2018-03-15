@@ -43,10 +43,36 @@ void spelunker::scroll(int id, int width, int height, LevelGenerator *l, int bg,
             dmaCopyHalfWords(DMA_CHANNEL, map, bgGetMapPtr(bg), sizeof(map));
         }
 
-        if (keys_held & KEY_X) sy -= 3;
-        if (keys_held & KEY_B) sy += 3;
-        if (keys_held & KEY_Y) sx -= 3;
-        if (keys_held & KEY_A) sx += 3;
+//        if (keys_held & KEY_X) sy -= 3;
+//        if (keys_held & KEY_B) sy += 3;
+//        if (keys_held & KEY_Y) sx -= 3;
+//        if (keys_held & KEY_A) sx += 3;
+
+//        sx = mainDude->x - 128;
+//        sy = mainDude->y - 96;
+
+        static int BOUNDARY_X = 32;
+        static int BOUNDARY_Y = 16;
+
+        int center_x = mainDude->x - 128;
+        int center_y = mainDude->y - 96;
+
+
+        //todo Bound sx/sy delta to mainDude.x_speed/mainDude.y_speed, or to value of (center-x/y - sx/y)
+        if (abs(center_x - sx) > BOUNDARY_X) {
+            if (center_x > sx)
+                sx += 2;
+            else
+                sx -= 2;
+        }
+
+        if (abs(center_y - sy) > BOUNDARY_Y) {
+            if (center_y > sy)
+                sy += 2;
+            else
+                sy -= 2;
+        }
+
 
         if (sx < 0) sx = 0;
         if (sx >= width - 256) sx = width - 1 - 256;
@@ -55,7 +81,7 @@ void spelunker::scroll(int id, int width, int height, LevelGenerator *l, int bg,
 
         swiWaitForVBlank();
 
-        mainDude->updateTimers( timerElapsed(0) / TICKS_PER_SECOND);
+        mainDude->updateTimers(timerElapsed(0) / TICKS_PER_SECOND);
         mainDude->animateMan(sx, sy);
         mainDude->checkCollisionWitMapTiles(l->mapTiles);
         mainDude->changePos(keys_held, keys_up);
