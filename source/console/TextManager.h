@@ -10,7 +10,7 @@
 
 class TextManager {
 
-    Timer timer;
+    Timer t;
     int intro_timers[3] = {1000, 3500, 6000};
     bool printed_lines[3] = {0, 0, 0};
     bool console_cleared = 0;

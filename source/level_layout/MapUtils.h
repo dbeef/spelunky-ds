@@ -5,6 +5,6 @@
 #ifndef SPELUNKYDS_MAPUTILS_H
 #define SPELUNKYDS_MAPUTILS_H
 
-void sectorizeMap();
+void sectorize_map();
 
 #endif //SPELUNKYDS_MAPUTILS_H

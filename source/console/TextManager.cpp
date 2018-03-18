@@ -34,7 +34,7 @@ void TextManager::initConsole() {
 
 void TextManager::printIntro() {
 
-//    updateTimer(intro_timers, timer.getTimeElapsedMs());
+//    updateTimer(intro_timers, Timer.getTimeElapsedMs());
 
     for (int a = 0; a < 3; a++) {
         if (intro_timers[a] <= 0 && printed_lines[a] == 0) {

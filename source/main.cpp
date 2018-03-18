@@ -20,7 +20,7 @@ void prepareConsole();
 
 int main(void) {
 
-    Timer *timer = new Timer();
+    Timer *t = new Timer();
 
     videoSetMode(MODE_0_2D);
     videoSetModeSub(MODE_0_2D);
@@ -50,7 +50,7 @@ int main(void) {
     l->generateRooms();
     l->tilesToMap();
 
-    sectorizeMap();
+    sectorize_map();
 
     dmaCopyHalfWords(DMA_CHANNEL, map, bgGetMapPtr(bg_main), sizeof(map));
     dmaCopyHalfWords(DMA_CHANNEL, map, bgGetMapPtr(bg_sub), sizeof(map));
@@ -59,7 +59,7 @@ int main(void) {
 
     spelunker::scroll(bg_main, bg_sub, 512, 512, l, fresh_map);
 
-    timer->stop();
+    t->stop();
 
     return 0;
 }

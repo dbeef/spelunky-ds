@@ -11,7 +11,7 @@
  */
 extern u16 map[4096];
 
-void sectorizeMap() {
+void sectorize_map() {
 
     //malloc always needed on map declaration! Otherwise won't work
     u16 *map_temp = (u16 *) std::malloc(sizeof(u16[4096]));

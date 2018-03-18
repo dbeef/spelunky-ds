@@ -7,57 +7,58 @@
 #define MAX_X_SPEED 1.5
 #define MAX_Y_SPEED 2.3
 #define MIN_HANGING_TIME 100
+#define FRICTION_DELTA_TIME_MS 30
+#define FRICTION_DELTA_SPEED 0.25
+#define Y_SPEED_DELTA_TIME_MS 5
+#define GRAVITY_DELTA_SPEED 0.2
+#define X_SPEED_DELTA_TIME_MS 50
+#define X_SPEED_DELTA 1
 
 #include <nds.h>
 #include "SpriteState.h"
 #include "../level_layout/MapTile.h"
+#include "../level_layout/LevelGenerator.h"
 
 struct MainDude {
 
 public:
 
-    int col1_timer;
+    int animationFrameTimer;
 
+    int speedIncTimerX;
+    int speedIncTimerY;
+    int posIncTimer;
 
+    int frictionTimer = 0;
 
-    int key_pressed_time;
+    //How much time was spent on hanging, since last flag hangingOnTileLeft/right occured.
+    int hangingTimer;
 
-    int gravity_timer;
-    int speed_inc_y_timer;
-    int speed_inc_x_timer;
-
-    int pos_x_inc_timer;
-    int pos_y_inc_timer;
-
-    int hanging_timer;
-
-    int friction_timer = 0;
-
-    bool can_hang_on_tile_left = false;
-    bool can_hang_on_tile_right = false;
-    bool apply_friction = false;
-    bool bottom_collision = false;
-    bool upper_collision = false;
-    bool left_collision = false;
-    bool right_collision = false;
+    bool hangingOnTileLeft;
+    bool hangingOnTileRight;
+    bool bottomCollision;
+    bool upperCollision;
+    bool leftCollision;
+    bool rightCollision;
 
     SpriteState state;
-    double x_speed;
-    double y_speed;
+
+    double xSpeed;
+    double ySpeed;
     int x;
     int y;
-    int anim_frame;
-    u16 *sprite_gfx_mem_main;
-    u16 *sprite_gfx_mem_sub;
-    u8 *frame_gfx;
+    int animFrame;
+    u16 *spriteGfxMemMain;
+    u16 *spriteGfxMemSub;
+    u8 *frameGfx;
 
-    void checkCollisionWitMapTiles(MapTile *mapTiles[32][32]);
+    void checkCollisionWithMap(MapTile *mapTiles[32][32]);
 
-    void animateMan(int camera_x, int camera_y);
+    void animate(int camera_x, int camera_y);
 
-    void changePos(int keys_held, int keys_up);
+    void handleKeyInput(int keys_held, int keys_up);
 
-    void initMan();
+    void init();
 
     void updateTimers(int timeElapsed);
 
@@ -69,7 +70,11 @@ public:
 
     void checkRightCollision(MapTile *mapTiles[32][32]);
 
-    void checkCanHangOnTile(MapTile *mapTiles[32][32]);
+    void canHangOnTile(MapTile *mapTiles[32][32]);
+
+    void applyFriction();
+
+    void update(int camera_x, int camera_y, int keys_held, int keys_up, LevelGenerator *l);
 };
 
 

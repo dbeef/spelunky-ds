@@ -20,7 +20,7 @@ void spelunker::scroll(int bg_main, int bg_sub, int width, int height, LevelGene
     mainDude->x = 100;
     mainDude->y = 100;
 
-    mainDude->initMan();
+    mainDude->init();
 
 
     touchPosition touch;
@@ -39,7 +39,7 @@ void spelunker::scroll(int bg_main, int bg_sub, int width, int height, LevelGene
             l->mapFrame();
             l->generateRooms();
             l->tilesToMap();
-            sectorizeMap();
+            sectorize_map();
             dmaCopyHalfWords(DMA_CHANNEL, map, bgGetMapPtr(bg_main), sizeof(map));
             dmaCopyHalfWords(DMA_CHANNEL, map, bgGetMapPtr(bg_sub), sizeof(map));
         }
@@ -59,7 +59,7 @@ void spelunker::scroll(int bg_main, int bg_sub, int width, int height, LevelGene
         int center_y = mainDude->y - 96;
 
 
-        //todo Bound sx/sy delta to mainDude.x_speed/mainDude.y_speed, or to value of (center-x/y - sx/y)
+        //todo Bound sx/sy delta to mainDude.xSpeed/mainDude.ySpeed, or to value of (center-x/y - sx/y)
         if (abs(center_x - sx) > BOUNDARY_X) {
             if (center_x > sx)
                 sx += 2;
@@ -89,10 +89,8 @@ void spelunker::scroll(int bg_main, int bg_sub, int width, int height, LevelGene
 
         swiWaitForVBlank();
 
-        mainDude->updateTimers(timerElapsed(0) / TICKS_PER_SECOND);
-        mainDude->animateMan(sx, sy);
-        mainDude->checkCollisionWitMapTiles(l->mapTiles);
-        mainDude->changePos(keys_held, keys_up);
+        mainDude->update(sx, sy, keys_held, keys_up, l);
+
         oamUpdate(&oamSub);
         oamUpdate(&oamMain);
 
@@ -103,14 +101,14 @@ void spelunker::scroll(int bg_main, int bg_sub, int width, int height, LevelGene
 
 /*
         touchRead(&touch);
-        if (timer > 500) {
+        if (Timer > 500) {
             if (touch.px != 0 && touch.py != 0) {
                 dmaCopyHalfWords(DMA_CHANNEL, fresh_map, map, sizeof(map));
                 l->clearCollidedTile(touch.px, touch.py, sx, sy, bg_main);
-                sectorizeMap();
+                sectorize_map();
                 dmaCopyHalfWords(DMA_CHANNEL, map, bgGetMapPtr(bg_main), sizeof(map));
             }
-            timer = 0;
+            Timer = 0;
         }*/
     }
 }

@@ -1,6 +1,5 @@
-LevelGenerator.o: \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/LevelGenerator.cpp \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/LevelGenerator.h \
+map_utils.o: \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/map_utils.cpp \
  /home/xdbeef/devkitPro/libnds/include/nds.h \
  /home/xdbeef/devkitPro/libnds/include/nds/libversion.h \
  /home/xdbeef/devkitPro/libnds/include/nds/ndstypes.h \
@@ -60,10 +59,7 @@ LevelGenerator.o: \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/trig_lut.h \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/video.h \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/videoGL.h \
- /home/xdbeef/devkitPro/libnds/include/nds/arm9/nand.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/MapTile.h
-
-/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/LevelGenerator.h:
+ /home/xdbeef/devkitPro/libnds/include/nds/arm9/nand.h
 
 /home/xdbeef/devkitPro/libnds/include/nds.h:
 
@@ -184,5 +180,3 @@ LevelGenerator.o: \
 /home/xdbeef/devkitPro/libnds/include/nds/arm9/videoGL.h:
 
 /home/xdbeef/devkitPro/libnds/include/nds/arm9/nand.h:
-
-/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/MapTile.h:

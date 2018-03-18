@@ -1,6 +1,5 @@
-LevelGenerator.o: \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/LevelGenerator.cpp \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/LevelGenerator.h \
+scrolling.o: \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/scrolling.cpp \
  /home/xdbeef/devkitPro/libnds/include/nds.h \
  /home/xdbeef/devkitPro/libnds/include/nds/libversion.h \
  /home/xdbeef/devkitPro/libnds/include/nds/ndstypes.h \
@@ -61,9 +60,16 @@ LevelGenerator.o: \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/video.h \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/videoGL.h \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/nand.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/MapTile.h
-
-/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/LevelGenerator.h:
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/scrolling.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/LevelGenerator.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/MapTile.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/map_utils.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../consts.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/MainDude.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/SpriteState.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/../level_layout/MapTile.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/../level_layout/LevelGenerator.h \
+ /home/xdbeef/devkitPro/libnds/include/nds/arm9/input.h
 
 /home/xdbeef/devkitPro/libnds/include/nds.h:
 
@@ -185,4 +191,22 @@ LevelGenerator.o: \
 
 /home/xdbeef/devkitPro/libnds/include/nds/arm9/nand.h:
 
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/scrolling.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/LevelGenerator.h:
+
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/MapTile.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/map_utils.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../consts.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/MainDude.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/SpriteState.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/../level_layout/MapTile.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/../level_layout/LevelGenerator.h:
+
+/home/xdbeef/devkitPro/libnds/include/nds/arm9/input.h:
