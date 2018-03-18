@@ -1,0 +1,1 @@
+snake.o: snake.s

@@ -62,14 +62,6 @@ public:
 
     void updateTimers(int timeElapsed);
 
-    void checkUpperCollision(MapTile *mapTiles[32][32]);
-
-    void checkBottomCollision(MapTile *mapTiles[32][32]);
-
-    void checkLeftCollision(MapTile *mapTiles[32][32]);
-
-    void checkRightCollision(MapTile *mapTiles[32][32]);
-
     void canHangOnTile(MapTile *mapTiles[32][32]);
 
     void applyFriction();

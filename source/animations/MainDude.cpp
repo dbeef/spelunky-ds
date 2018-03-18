@@ -8,7 +8,7 @@
 #include "MainDude.h"
 #include "../Consts.h"
 #include "../../build/spelunker.h"
-#include "../level_layout/LevelGenerator.h"
+#include "Collisions.h"
 
 void MainDude::handleKeyInput(int keys_held, int keys_up) {
 
@@ -86,21 +86,25 @@ void MainDude::checkCollisionWithMap(MapTile *mapTiles[32][32]) {
         posIncTimer = 0;
     }
 
-    leftCollision = false;
-    rightCollision = false;
-    bottomCollision = false;
-    upperCollision = false;
+    bottomCollision = Collisions::checkBottomCollision(mapTiles, &this->x, &this->y, &ySpeed, 16, 16);
+    leftCollision = Collisions::checkLeftCollision(mapTiles, &this->x, &this->y, &xSpeed, 16, 16);
+    rightCollision = Collisions::checkRightCollision(mapTiles, &this->x, &this->y, &xSpeed, 16, 16);
+    upperCollision = Collisions::checkUpperCollision(mapTiles, &this->x, &this->y, &ySpeed, 16);
 
-    checkBottomCollision(mapTiles);
-    checkLeftCollision(mapTiles);
-    checkRightCollision(mapTiles);
-    checkUpperCollision(mapTiles);
+    if (!bottomCollision) {
+        if (speedIncTimerY > Y_SPEED_DELTA_TIME_MS && !(hangingOnTileLeft || hangingOnTileRight)) {
+            ySpeed += GRAVITY_DELTA_SPEED;
+            speedIncTimerY = 0;
+        }
+    }
+
     canHangOnTile(mapTiles);
 
     if (upperCollision || bottomCollision) {
         hangingOnTileLeft = false;
         hangingOnTileRight = false;
     }
+
 }
 
 void MainDude::init() {
@@ -188,112 +192,6 @@ void MainDude::animate(int camera_x, int camera_y) {
 
 }
 
-void MainDude::checkUpperCollision(MapTile *mapTiles[32][32]) {
-
-    for (int x = 0; x < 32; x++) {
-        for (int y = 0; y < 32; y++) {
-
-            if (mapTiles[x][y] == 0)
-                continue;
-
-            if (!upperCollision) {
-                bool w1 = (this->y < (y * 16) + 16 && (this->y > (y * 16)));
-                bool w2 = (this->x > (x * 16) - 16 && (this->x < (x * 16) + 16));
-                upperCollision = w1 && w2;
-
-                if (upperCollision) {
-                    std::cout << "333" << " " << x << " " << y << " " << this->x << " " << this->y << '\n';
-                    ySpeed = 0;
-                    this->y = (y * 16) + 16;
-                }
-            } else
-                return;
-        }
-    }
-}
-
-void MainDude::checkBottomCollision(MapTile *mapTiles[32][32]) {
-
-    for (int x = 0; x < 32; x++) {
-        for (int y = 0; y < 32; y++) {
-
-            if (mapTiles[x][y] == 0)
-                continue;
-
-            if (!bottomCollision) {
-                //punkt (x*16)(y*16) to lewy górny róg tile-a
-                //oś y rośnie do dołu
-                //oś x rośnie w prawo
-                //punkt 0,0 to lewy górny punkt mapy
-                bool w1 = (this->x > (x * 16) - 16 * 0.75 && this->x < (x * 16) + 16 * 0.75);
-                bool w2 = (this->y + 16 <= (y * 16) + 16) && (this->y + 16 >= (y * 16));
-
-                bottomCollision = w1 && w2;
-
-                if (bottomCollision) {
-                    //x i y sprajta to lewy górny róg
-                    ySpeed = 0;
-                    this->y = y * 16 - 16;
-                } else {
-                    if (speedIncTimerY > Y_SPEED_DELTA_TIME_MS && !(hangingOnTileLeft || hangingOnTileRight)) {
-                        ySpeed += GRAVITY_DELTA_SPEED;
-                        speedIncTimerY = 0;
-                    }
-                }
-            } else
-                continue;
-        }
-    }
-}
-
-void MainDude::checkLeftCollision(MapTile *mapTiles[32][32]) {
-
-    for (int x = 0; x < 32; x++) {
-        for (int y = 0; y < 32; y++) {
-
-            if (mapTiles[x][y] == 0)
-                continue;
-
-            if (!leftCollision) {
-                bool w1 = (this->y > (y * 16) - 16 && (this->y < (y * 16) + 16));
-                bool w2 = (this->x < (x * 16) - 12 && (this->x > (x * 16) - 16));
-                leftCollision = w1 && w2;
-
-                if (leftCollision) {
-                    std::cout << "222" << " " << x << " " << y << " " << this->x << " " << this->y << '\n';
-                    xSpeed = 0;
-                    this->x = (x * 16) - 16;
-                }
-            } else continue;
-        }
-    }
-}
-
-void MainDude::checkRightCollision(MapTile *mapTiles[32][32]) {
-
-    for (int x = 0; x < 32; x++) {
-        for (int y = 0; y < 32; y++) {
-
-            if (mapTiles[x][y] == 0)
-                continue;
-
-
-            if (!rightCollision) {
-                bool w1 = (this->y > (y * 16) - 16 && (this->y < (y * 16) + 16));
-                bool w2 = (this->x < (x * 16) + 16 && (this->x > (x * 16) + 12));
-                rightCollision = w1 && w2;
-
-                if (rightCollision) {
-                    std::cout << "111" << " " << x << " " << y << " " << this->x << " " << this->y << '\n';
-                    xSpeed = 0;
-                    this->x = (x * 16) + 16;
-                }
-            } else
-                continue;
-        }
-    }
-}
-
 void MainDude::canHangOnTile(MapTile *mapTiles[32][32]) {
 
     for (int x = 0; x < 32; x++) {
@@ -337,7 +235,7 @@ void MainDude::canHangOnTile(MapTile *mapTiles[32][32]) {
                         this->y = (y * 16);
                         ySpeed = 0;
 
-                        std::cout << " 99 99 0" << '\n';
+                        std::cout << "HANGING" << '\n';
 
                         if (rightCollision)
                             hangingOnTileRight = true;

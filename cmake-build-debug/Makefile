@@ -123,6 +123,33 @@ spelunkyds/fast:
 	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/build
 .PHONY : spelunkyds/fast
 
+source/animations/Collisions.o: source/animations/Collisions.cpp.o
+
+.PHONY : source/animations/Collisions.o
+
+# target to build an object file
+source/animations/Collisions.cpp.o:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/animations/Collisions.cpp.o
+.PHONY : source/animations/Collisions.cpp.o
+
+source/animations/Collisions.i: source/animations/Collisions.cpp.i
+
+.PHONY : source/animations/Collisions.i
+
+# target to preprocess a source file
+source/animations/Collisions.cpp.i:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/animations/Collisions.cpp.i
+.PHONY : source/animations/Collisions.cpp.i
+
+source/animations/Collisions.s: source/animations/Collisions.cpp.s
+
+.PHONY : source/animations/Collisions.s
+
+# target to generate assembly for a file
+source/animations/Collisions.cpp.s:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/animations/Collisions.cpp.s
+.PHONY : source/animations/Collisions.cpp.s
+
 source/animations/MainDude.o: source/animations/MainDude.cpp.o
 
 .PHONY : source/animations/MainDude.o
@@ -348,6 +375,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... spelunkyds"
+	@echo "... source/animations/Collisions.o"
+	@echo "... source/animations/Collisions.i"
+	@echo "... source/animations/Collisions.s"
 	@echo "... source/animations/MainDude.o"
 	@echo "... source/animations/MainDude.i"
 	@echo "... source/animations/MainDude.s"

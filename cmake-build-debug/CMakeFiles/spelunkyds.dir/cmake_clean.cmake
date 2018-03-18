@@ -7,6 +7,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/spelunkyds.dir/source/time/Timer.cpp.o"
   "CMakeFiles/spelunkyds.dir/source/level_layout/MapUtils.cpp.o"
   "CMakeFiles/spelunkyds.dir/source/level_layout/MapTile.cpp.o"
+  "CMakeFiles/spelunkyds.dir/source/animations/Collisions.cpp.o"
   "spelunkyds.pdb"
   "spelunkyds"
 )

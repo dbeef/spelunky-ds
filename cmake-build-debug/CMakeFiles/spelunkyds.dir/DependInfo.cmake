@@ -4,6 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
+  "/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Collisions.cpp" "/home/xdbeef/NetBeansProjects/spelunkyds/cmake-build-debug/CMakeFiles/spelunkyds.dir/source/animations/Collisions.cpp.o"
   "/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/MainDude.cpp" "/home/xdbeef/NetBeansProjects/spelunkyds/cmake-build-debug/CMakeFiles/spelunkyds.dir/source/animations/MainDude.cpp.o"
   "/home/xdbeef/NetBeansProjects/spelunkyds/source/console/TextManager.cpp" "/home/xdbeef/NetBeansProjects/spelunkyds/cmake-build-debug/CMakeFiles/spelunkyds.dir/source/console/TextManager.cpp.o"
   "/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/LevelGenerator.cpp" "/home/xdbeef/NetBeansProjects/spelunkyds/cmake-build-debug/CMakeFiles/spelunkyds.dir/source/level_layout/LevelGenerator.cpp.o"
