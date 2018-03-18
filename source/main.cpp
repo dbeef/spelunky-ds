@@ -34,7 +34,7 @@ int main(void) {
     oamInit(&oamSub, SpriteMapping_1D_128, false);
 
     int bg_main = bgInit(2, BgType_Text8bpp, BgSize_B8_512x512, 22,4);
-    int bg_sub = bgInitSub(3, BgType_Text8bpp, BgSize_B8_512x512, 18,4);
+    int bg_sub = bgInitSub(3, BgType_Text4bpp, BgSize_B8_512x512, 18,4);
 
     dmaCopy(cavebgTiles, bgGetGfxPtr(bg_main), sizeof(cavebgTiles));
     dmaCopy(cavebgTiles, bgGetGfxPtr(bg_sub), sizeof(cavebgTiles));
@@ -77,7 +77,7 @@ void prepareConsole() {
     font.pal = (u16 *) fontPal;
     font.numChars = 59;
     font.numColors = fontPalLen / 2;
-    font.bpp = 8;
+    font.bpp = 4;
     font.asciiOffset = 32;
     font.convertSingleColor = false;
 
