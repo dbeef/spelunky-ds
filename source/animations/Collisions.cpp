@@ -1,7 +1,7 @@
 //
 // Created by xdbeef on 18.03.18.
 //
-
+// TODO Add b64 encoded illustration for the following collisions.
 #include <iostream>
 #include "Collisions.h"
 #include "MainDude.h"
@@ -132,4 +132,50 @@ bool Collisions::checkRightCollision(MapTile *mapTiles[32][32], int *xPos, int *
         }
     }
     return rightCollision;
+}
+
+bool Collisions::isStandingOnEdge(MapTile *mapTiles[32][32], int *xPos, int *yPos, double *xSpeed, int width,
+                                  int height) {
+
+    bool standingOnEdge = false;
+
+    for (int x = 0; x < 32; x++) {
+        for (int y = 0; y < 32; y++) {
+
+            if (mapTiles[x][y] == 0)
+                continue;
+
+
+            if (!standingOnEdge) {
+
+                if (x < 32) {
+
+                    bool w0 = mapTiles[x + 1][y] == 0;
+                    bool w1 = (*yPos <= y * TILE_H) && *yPos + height >= (y * TILE_H);
+                    bool w2 = (*xPos >= (x * TILE_W)) && (*xPos < (x * TILE_W) + TILE_W);
+                    standingOnEdge = w0 && w1 && w2;
+
+                    if (standingOnEdge) {
+//                        std::cout << "STANDING ON EDGE - RIGHT" << '\n';
+                    }
+                }
+
+                if (x > 0) {
+
+                    bool w0 = mapTiles[x - 1][y] == 0;
+                    bool w1 = (*yPos <= y * TILE_H) && *yPos + height >= (y * TILE_H);
+                    bool w2 = (*xPos <= (x * TILE_W)) && (*xPos > (x * TILE_W) - width);
+                    standingOnEdge = w0 && w1 && w2;
+                    if (standingOnEdge) {
+//                        std::cout << "STANDING ON EDGE - LEFT" << '\n';
+                    }
+
+                }
+
+
+            } else
+                return true;
+        }
+    }
+    return standingOnEdge;
 }

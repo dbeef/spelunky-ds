@@ -177,6 +177,33 @@ source/animations/MainDude.cpp.s:
 	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/animations/MainDude.cpp.s
 .PHONY : source/animations/MainDude.cpp.s
 
+source/animations/Snake.o: source/animations/Snake.cpp.o
+
+.PHONY : source/animations/Snake.o
+
+# target to build an object file
+source/animations/Snake.cpp.o:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/animations/Snake.cpp.o
+.PHONY : source/animations/Snake.cpp.o
+
+source/animations/Snake.i: source/animations/Snake.cpp.i
+
+.PHONY : source/animations/Snake.i
+
+# target to preprocess a source file
+source/animations/Snake.cpp.i:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/animations/Snake.cpp.i
+.PHONY : source/animations/Snake.cpp.i
+
+source/animations/Snake.s: source/animations/Snake.cpp.s
+
+.PHONY : source/animations/Snake.s
+
+# target to generate assembly for a file
+source/animations/Snake.cpp.s:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/animations/Snake.cpp.s
+.PHONY : source/animations/Snake.cpp.s
+
 source/console/TextManager.o: source/console/TextManager.cpp.o
 
 .PHONY : source/console/TextManager.o
@@ -381,6 +408,9 @@ help:
 	@echo "... source/animations/MainDude.o"
 	@echo "... source/animations/MainDude.i"
 	@echo "... source/animations/MainDude.s"
+	@echo "... source/animations/Snake.o"
+	@echo "... source/animations/Snake.i"
+	@echo "... source/animations/Snake.s"
 	@echo "... source/console/TextManager.o"
 	@echo "... source/console/TextManager.i"
 	@echo "... source/console/TextManager.s"

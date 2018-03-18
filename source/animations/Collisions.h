@@ -19,6 +19,8 @@ public:
 
     static bool checkRightCollision(MapTile *mapTiles[32][32], int *xPos, int *yPos, double *xSpeed, int width, int height);
 
+    static bool isStandingOnEdge(MapTile *mapTiles[32][32], int *xPos, int *yPos, double *xSpeed, int width, int height);
+
 
 };
 

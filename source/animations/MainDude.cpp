@@ -90,6 +90,8 @@ void MainDude::checkCollisionWithMap(MapTile *mapTiles[32][32]) {
     leftCollision = Collisions::checkLeftCollision(mapTiles, &this->x, &this->y, &xSpeed, 16, 16);
     rightCollision = Collisions::checkRightCollision(mapTiles, &this->x, &this->y, &xSpeed, 16, 16);
     upperCollision = Collisions::checkUpperCollision(mapTiles, &this->x, &this->y, &ySpeed, 16);
+    Collisions::isStandingOnEdge(mapTiles, &this->x, &this->y, &ySpeed, 16, 16);
+
 
     if (!bottomCollision) {
         if (speedIncTimerY > Y_SPEED_DELTA_TIME_MS && !(hangingOnTileLeft || hangingOnTileRight)) {
