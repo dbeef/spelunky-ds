@@ -9,7 +9,6 @@
 #include "../../build/font.h"
 
 void TextManager::initConsole() {
-/*
     const int tile_base = 0;
     const int map_base = 8;
 
@@ -26,7 +25,6 @@ void TextManager::initConsole() {
     font.convertSingleColor = false;
 
     consoleSetFont(console, &font);
-*/
 
 }
 

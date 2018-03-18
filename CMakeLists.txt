@@ -14,11 +14,8 @@ link_directories(~/devkitPro/libnds/include/nds)
 link_directories(~/devkitPro/libnds/include/nds/arm9)
 
 add_executable(spelunkyds
-        gfx/fonts/font.bmp
         gfx/fonts/font.grit
         scratches/font.png
-        gfx/sprites/man.png
-        gfx/sprites/woman.png
         gfx/sprites/sprite.grit
         source/animations/MainDude.cpp
         source/animations/MainDude.h

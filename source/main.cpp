@@ -25,18 +25,16 @@ int main(void) {
     videoSetMode(MODE_0_2D);
     videoSetModeSub(MODE_0_2D);
 
-    vramSetBankA(VRAM_A_MAIN_BG);
-    vramSetBankC(VRAM_C_SUB_BG);
+    vramSetBankA(VRAM_A_MAIN_BG_0x06000000);
+    vramSetBankC(VRAM_C_SUB_BG_0x06200000);
     vramSetBankF(VRAM_F_MAIN_SPRITE_0x06400000);
     vramSetBankD(VRAM_D_SUB_SPRITE);
 
     oamInit(&oamMain, SpriteMapping_1D_128, false);
     oamInit(&oamSub, SpriteMapping_1D_128, false);
 
-    prepareConsole();
-
-    int bg_main = bgInit(0, BgType_Text8bpp, BgSize_B8_512x512, 1, 1);
-    int bg_sub = bgInitSub(0, BgType_Text8bpp, BgSize_B8_512x512, 1, 1);
+    int bg_main = bgInit(2, BgType_Text8bpp, BgSize_B8_512x512, 22,4);
+    int bg_sub = bgInitSub(3, BgType_Text8bpp, BgSize_B8_512x512, 18,4);
 
     dmaCopy(cavebgTiles, bgGetGfxPtr(bg_main), sizeof(cavebgTiles));
     dmaCopy(cavebgTiles, bgGetGfxPtr(bg_sub), sizeof(cavebgTiles));
@@ -56,6 +54,7 @@ int main(void) {
     dmaCopyHalfWords(DMA_CHANNEL, map, bgGetMapPtr(bg_sub), sizeof(map));
     dmaCopy(cavebgPal, BG_PALETTE, cavebgPalLen);
     dmaCopy(cavebgPal, BG_PALETTE_SUB, cavebgPalLen);
+    prepareConsole();
 
     spelunker::scroll(bg_main, bg_sub, 512, 512, l, fresh_map);
 
@@ -66,22 +65,22 @@ int main(void) {
 
 
 void prepareConsole() {
-/*
-    const int tile_base = 0;
+    const int tile_base = 2;
     const int map_base = 8;
 
-    PrintConsole *console = consoleInit(0, 0, BgType_Text8bpp, BgSize_B8_512x512, map_base, tile_base, false, false);
+    PrintConsole *bottomConsole;
+    consoleInit(bottomConsole, 0, BgType_Text4bpp, BgSize_T_256x256, map_base, tile_base, false, true);
 
     ConsoleFont font;
 
     font.gfx = (u16 *) fontTiles;
     font.pal = (u16 *) fontPal;
-    font.numChars = 59;//95
+    font.numChars = 59;
     font.numColors = fontPalLen / 2;
     font.bpp = 8;
     font.asciiOffset = 32;
     font.convertSingleColor = false;
 
-    consoleSetFont(console, &font);*/
+    consoleSetFont(bottomConsole, &font);
 }
 

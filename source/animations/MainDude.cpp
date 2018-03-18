@@ -68,7 +68,6 @@ void MainDude::updateTimers(int timeElapsed) {
 
 void MainDude::checkCollisionWithMap(MapTile *mapTiles[32][32]) {
 
-    applyFriction();
 
     if (xSpeed > MAX_X_SPEED)
         xSpeed = MAX_X_SPEED;
@@ -372,6 +371,7 @@ void MainDude::applyFriction() {
 }
 
 void MainDude::update(int camera_x, int camera_y, int keys_held, int keys_up, LevelGenerator *l) {
+    this->applyFriction();
     this->updateTimers(timerElapsed(0) / TICKS_PER_SECOND);
     this->animate(camera_x, camera_y);
     this->checkCollisionWithMap(l->mapTiles);

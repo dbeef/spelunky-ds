@@ -1,1 +1,0 @@
-man.o: man.s
