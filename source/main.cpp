@@ -26,6 +26,7 @@ int main(void) {
     videoSetModeSub(MODE_0_2D);
 
     vramSetBankA(VRAM_A_MAIN_BG_0x06000000);
+    //vram c is used by the console
     vramSetBankC(VRAM_C_SUB_BG_0x06200000);
     vramSetBankF(VRAM_F_MAIN_SPRITE_0x06400000);
     vramSetBankD(VRAM_D_SUB_SPRITE);
@@ -69,7 +70,7 @@ void prepareConsole() {
     const int map_base = 8;
 
     PrintConsole *bottomConsole;
-    consoleInit(bottomConsole, 0, BgType_Text4bpp, BgSize_T_256x256, map_base, tile_base, false, true);
+    consoleInit(bottomConsole, 0, BgType_Text4bpp, BgSize_T_256x256, map_base, tile_base, false, false);
 
     ConsoleFont font;
 

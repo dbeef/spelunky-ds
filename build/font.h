@@ -3,13 +3,12 @@
 
 //======================================================================
 //
-//	font, 16x480@8, 
-//	Transparent color : 20,9C,00
+//	font, 8x472@4, 
 //	+ palette 2 entries, not compressed
-//	+ 120 tiles Metatiled by 2x2 not compressed
-//	Total size: 4 + 7680 = 7684
+//	+ 59 tiles not compressed
+//	Total size: 4 + 1888 = 1892
 //
-//	Time-stamp: 2018-03-18, 20:47:49
+//	Time-stamp: 2018-03-20, 20:45:10
 //	Exported by Cearn's GBA Image Transmogrifier, v0.8.14
 //	( http://www.coranac.com/projects/#grit )
 //
@@ -18,8 +17,8 @@
 #ifndef GRIT_FONT_H
 #define GRIT_FONT_H
 
-#define fontTilesLen 7680
-extern const unsigned int fontTiles[1920];
+#define fontTilesLen 1888
+extern const unsigned int fontTiles[472];
 
 #define fontPalLen 4
 extern const unsigned short fontPal[2];

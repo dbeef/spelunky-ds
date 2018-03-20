@@ -31,7 +31,7 @@ bool Collisions::checkUpperCollision(MapTile *mapTiles[32][32], int *xPos, int *
                 upperCollision = w1 && w2;
 
                 if (upperCollision) {
-                    std::cout << "UPPER-SIDE TILE COLLISION" << '\n';
+                    fprintf(stdout, "UPPER-SIDE TILE COLLISION \n");
                     *ySpeed = 0;
                     *yPos = (y * TILE_H) + TILE_H;
                 }
@@ -91,7 +91,7 @@ Collisions::checkLeftCollision(MapTile *mapTiles[32][32], int *xPos, int *yPos, 
                 leftCollision = w1 && w2;
 
                 if (leftCollision) {
-                    std::cout << "LEFT-SIDE TILE COLLISION" << '\n';
+                    fprintf(stdout, "LEFT-SIDE TILE COLLISION \n");
                     *xSpeed = 0;
                     *xPos = (x * TILE_W) - TILE_W;
                 }
@@ -122,7 +122,7 @@ bool Collisions::checkRightCollision(MapTile *mapTiles[32][32], int *xPos, int *
                 rightCollision = w1 && w2;
 
                 if (rightCollision) {
-                    std::cout << "RIGHT-SIDE TILE COLLISION" << '\n';
+                    fprintf(stdout, "RIGHT-SIDE TILE COLLISION \n");
                     *xSpeed = 0;
                     *xPos = (x * TILE_W) + TILE_W;
                 }

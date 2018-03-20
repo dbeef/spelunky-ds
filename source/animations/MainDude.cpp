@@ -237,7 +237,7 @@ void MainDude::canHangOnTile(MapTile *mapTiles[32][32]) {
                         this->y = (y * 16);
                         ySpeed = 0;
 
-                        std::cout << "HANGING" << '\n';
+                        fprintf(stdout, "HANGING" + '\n');
 
                         if (rightCollision)
                             hangingOnTileRight = true;
