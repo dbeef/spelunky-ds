@@ -11,6 +11,9 @@
  */
 extern u16 map[4096];
 
+//fixme black-ish background is composed of 16 tiles (4 normal sized tiles),
+// that's why it appears to be corrupted after sectorizing
+//make it 4 different tiles
 void sectorize_map() {
 
     //malloc always needed on map declaration! Otherwise won't work
