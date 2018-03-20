@@ -41,6 +41,9 @@ I found following materials very helpful:
   <li> libnds documentation https://libnds.devkitpro.org </li>
   <li> devkitPro forum https://devkitpro.org </li>
   <li> this blog, that post in particular: https://www.coranac.com/tonc/text/regbg.htm </li>
+  <li> memory access calculator: https://mtheall.com/vram.html </li>
+  <li> this post: https://gamedev.stackexchange.com/questions/61065/using-ndslib-how-to-configure-video-modes-to-both-print-text-and-draw-bitmaps-o </li>
+  <li> </li>
 </ul>
 
 
