@@ -45,7 +45,6 @@ void LevelGenerator::newLayout(int seed) {
 
     std::cout << " " << seed << '\n';
 
-
     for (int a = 0; a < ROOMS_X; a++) {
         for (int b = 0; b < ROOMS_Y; b++) {
             layout[a][b] = 0;
@@ -136,9 +135,75 @@ void LevelGenerator::newLayout(int seed) {
 
 }
 
+void LevelGenerator::mapBackground() {
+/*
+    for (int a = 0; a < 32; a += 2)
+        for (int b = 0; b < 32; b += 2) {
+            delete (mapTiles[b][a]);
+            MapTile *t = new MapTile();
+            t->values[0] = 0;
+            t->values[1] = 1;
+            t->values[2] = 2;
+            t->values[3] = 3;
+            t->map_index[0] = (b * 2) + 0 + (a * LINE_WIDTH);
+            t->map_index[1] = (b * 2) + 1 + (a * LINE_WIDTH);
+            t->map_index[2] = (b * 2) + 0 + (a * LINE_WIDTH) + LINE_WIDTH;
+            t->map_index[3] = (b * 2) + 1 + (a * LINE_WIDTH) + LINE_WIDTH;
+            t->collidable = false;
+            this->mapTiles[b][a] = t;
+        }
+
+    for (int a = 0; a < 32; a += 2)
+        for (int b = 1; b < 32; b += 2) {
+            delete (mapTiles[b][a]);
+            MapTile *t = new MapTile();
+            t->values[0] = 4;
+            t->values[1] = 5;
+            t->values[2] = 6;
+            t->values[3] = 7;
+            t->map_index[0] = (b * 2) + 0 + (a * LINE_WIDTH);
+            t->map_index[1] = (b * 2) + 1 + (a * LINE_WIDTH);
+            t->map_index[2] = (b * 2) + 0 + (a * LINE_WIDTH) + LINE_WIDTH;
+            t->map_index[3] = (b * 2) + 1 + (a * LINE_WIDTH) + LINE_WIDTH;
+            t->collidable = false;
+            this->mapTiles[b][a] = t;
+        }
+
+    for (int a = 1; a < 32; a += 2)
+        for (int b = 0; b < 32; b += 2) {
+            delete (mapTiles[b][a]);
+            MapTile *t = new MapTile();
+            t->values[0] = 8;
+            t->values[1] = 9;
+            t->values[2] = 10;
+            t->values[3] = 11;
+            t->map_index[0] = (b * 2) + 0 + (a * LINE_WIDTH);
+            t->map_index[1] = (b * 2) + 1 + (a * LINE_WIDTH);
+            t->map_index[2] = (b * 2) + 0 + (a * LINE_WIDTH) + LINE_WIDTH;
+            t->map_index[3] = (b * 2) + 1 + (a * LINE_WIDTH) + LINE_WIDTH;
+            t->collidable = false;
+            this->mapTiles[b][a] = t;
+        }
+
+    for (int a = 1; a < 32; a += 2)
+        for (int b = 1; b < 32; b += 2) {
+            delete (mapTiles[b][a]);
+            MapTile *t = new MapTile();
+            t->values[0] = 12;
+            t->values[1] = 13;
+            t->values[2] = 14;
+            t->values[3] = 15;
+            t->map_index[0] = (b * 2) + 0 + (a * LINE_WIDTH);
+            t->map_index[1] = (b * 2) + 1 + (a * LINE_WIDTH);
+            t->map_index[2] = (b * 2) + 0 + (a * LINE_WIDTH) + LINE_WIDTH;
+            t->map_index[3] = (b * 2) + 1 + (a * LINE_WIDTH) + LINE_WIDTH;
+            t->collidable = false;
+            this->mapTiles[b][a] = t;
+        }*/
+}
+
 void LevelGenerator::mapFrame() {
 
-    int frame_index = 0;
     for (int a = 0; a < 32; a++) {
         delete (mapTiles[a][0]);
         MapTile *t = new MapTile();
@@ -146,15 +211,14 @@ void LevelGenerator::mapFrame() {
         t->values[1] = 21;
         t->values[2] = 22;
         t->values[3] = 23;
-        t->map_index[0] = frame_index;
-        t->map_index[1] = frame_index + 1;
-        t->map_index[2] = LINE_WIDTH + frame_index;
-        t->map_index[3] = LINE_WIDTH + frame_index + 1;
+        t->map_index[0] = a * 2;
+        t->map_index[1] = a * 2 + 1;
+        t->map_index[2] = LINE_WIDTH + a * 2;
+        t->map_index[3] = LINE_WIDTH + a * 2 + 1;
+        t->collidable = true;
         this->mapTiles[a][0] = t;
-        frame_index += 2;
     }
 
-    frame_index = 0;
     for (int a = 0; a < 32; a++) {
         delete (mapTiles[a][31]);
         MapTile *t = new MapTile();
@@ -162,15 +226,14 @@ void LevelGenerator::mapFrame() {
         t->values[1] = 21;
         t->values[2] = 22;
         t->values[3] = 23;
-        t->map_index[0] = 62 * LINE_WIDTH + frame_index;
-        t->map_index[1] = 62 * LINE_WIDTH + frame_index + 1;
-        t->map_index[2] = 63 * LINE_WIDTH + frame_index;
-        t->map_index[3] = 63 * LINE_WIDTH + frame_index + 1;
+        t->map_index[0] = 62 * LINE_WIDTH + a * 2;
+        t->map_index[1] = 62 * LINE_WIDTH + a * 2 + 1;
+        t->map_index[2] = 63 * LINE_WIDTH + a * 2;
+        t->map_index[3] = 63 * LINE_WIDTH + a * 2 + 1;
+        t->collidable = true;
         this->mapTiles[a][31] = t;
-        frame_index += 2;
     }
 
-    frame_index = 0;
     for (int a = 0; a < 32; a++) {
         delete (mapTiles[0][a]);
         MapTile *t = new MapTile();
@@ -178,15 +241,14 @@ void LevelGenerator::mapFrame() {
         t->values[1] = 21;
         t->values[2] = 22;
         t->values[3] = 23;
-        t->map_index[0] = frame_index * LINE_WIDTH + 0;
-        t->map_index[1] = frame_index * LINE_WIDTH + 1;
-        t->map_index[2] = frame_index * LINE_WIDTH + LINE_WIDTH;
-        t->map_index[3] = frame_index * LINE_WIDTH + LINE_WIDTH + 1;
+        t->map_index[0] = a * 2 * LINE_WIDTH + 0;
+        t->map_index[1] = a * 2 * LINE_WIDTH + 1;
+        t->map_index[2] = a * 2 * LINE_WIDTH + LINE_WIDTH;
+        t->map_index[3] = a * 2 * LINE_WIDTH + LINE_WIDTH + 1;
+        t->collidable = true;
         this->mapTiles[0][a] = t;
-        frame_index += 2;
     }
 
-    frame_index = 0;
     for (int a = 0; a < 32; a++) {
         delete (mapTiles[31][a]);
         MapTile *t = new MapTile();
@@ -194,12 +256,12 @@ void LevelGenerator::mapFrame() {
         t->values[1] = 21;
         t->values[2] = 22;
         t->values[3] = 23;
-        t->map_index[0] = frame_index * LINE_WIDTH - 2;
-        t->map_index[1] = frame_index * LINE_WIDTH - 1;
-        t->map_index[2] = frame_index * LINE_WIDTH + LINE_WIDTH - 2;
-        t->map_index[3] = frame_index * LINE_WIDTH + LINE_WIDTH - 1;
+        t->map_index[0] = a * 2 * LINE_WIDTH - 2;
+        t->map_index[1] = a * 2 * LINE_WIDTH - 1;
+        t->map_index[2] = a * 2 * LINE_WIDTH + LINE_WIDTH - 2;
+        t->map_index[3] = a * 2 * LINE_WIDTH + LINE_WIDTH - 1;
+        t->collidable = true;
         this->mapTiles[31][a] = t;
-        frame_index += 2;
     }
 }
 
@@ -239,7 +301,7 @@ void LevelGenerator::clearCollidedTile(int px, int py, int camera_x, int camera_
 
 void LevelGenerator::generateRooms() {
 
-    bool tab[10][10];
+    int tab[10][10];
 
     for (int b = ROOMS_Y - 1; b >= 0; b--) {
         for (int a = 0; a < ROOMS_X; a++) {
@@ -257,7 +319,7 @@ void LevelGenerator::generateRooms() {
 
             for (int tab_y = 0; tab_y < 10; tab_y++) {
                 for (int tab_x = 0; tab_x < 10; tab_x++) {
-                    if (tab[tab_y][tab_x] == 1) {
+                    if (tab[tab_y][tab_x] != 0) {
 
                         u16 room_offset =
                                 OFFSET_X + OFFSET_Y + 2 * ROOM_WIDTH * a +
@@ -268,14 +330,54 @@ void LevelGenerator::generateRooms() {
                         std::cout << pos_x << " " << pos_y << '\n';
                         delete (mapTiles[pos_x][pos_y]);
                         MapTile *t = new MapTile();
-                        t->values[0] = 20;
-                        t->values[1] = 21;
-                        t->values[2] = 22;
-                        t->values[3] = 23;
+
+                        if (tab[tab_y][tab_x] == 1) {
+                            t->values[0] = 20;
+                            t->values[1] = 21;
+                            t->values[2] = 22;
+                            t->values[3] = 23;
+                        } else if (tab[tab_y][tab_x] == 2) {
+                            t->values[0] = 40;
+                            t->values[1] = 41;
+                            t->values[2] = 42;
+                            t->values[3] = 43;
+                        } else if (tab[tab_y][tab_x] == 5) {
+                            t->values[0] = 24;
+                            t->values[1] = 25;
+                            t->values[2] = 26;
+                            t->values[3] = 27;
+                        } else if (tab[tab_y][tab_x] == 6) {
+                            t->values[0] = 32;
+                            t->values[1] = 33;
+                            t->values[2] = 34;
+                            t->values[3] = 35;
+                        } else if (tab[tab_y][tab_x] == 7) {
+                            t->values[0] = 36;
+                            t->values[1] = 37;
+                            t->values[2] = 38;
+                            t->values[3] = 39;
+                        } else if (tab[tab_y][tab_x] == 8) {
+                            t->values[0] = 16;
+                            t->values[1] = 17;
+                            t->values[2] = 18;
+                            t->values[3] = 19;
+                        } else if (tab[tab_y][tab_x] == 3) {
+                            t->values[0] = 28;
+                            t->values[1] = 29;
+                            t->values[2] = 30;
+                            t->values[3] = 31;
+                        } else if (tab[tab_y][tab_x] == 4) {
+                            t->values[0] = 44;
+                            t->values[1] = 45;
+                            t->values[2] = 46;
+                            t->values[3] = 47;
+                        }
+
                         t->map_index[0] = room_offset + (tab_x * 2) + (tab_y * LINE_WIDTH * 2);
                         t->map_index[1] = room_offset + (tab_x * 2) + (tab_y * LINE_WIDTH * 2) + 1;
                         t->map_index[2] = room_offset + (tab_x * 2) + (LINE_WIDTH + (tab_y * LINE_WIDTH * 2));
                         t->map_index[3] = room_offset + (tab_x * 2) + (LINE_WIDTH + (tab_y * LINE_WIDTH * 2)) + 1;
+                        t->collidable = true;
                         this->mapTiles[pos_x][pos_y] = t;
                     }
                 }

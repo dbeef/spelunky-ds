@@ -9,6 +9,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/spelunkyds.dir/source/level_layout/MapTile.cpp.o"
   "CMakeFiles/spelunkyds.dir/source/animations/Collisions.cpp.o"
   "CMakeFiles/spelunkyds.dir/source/animations/Snake.cpp.o"
+  "CMakeFiles/spelunkyds.dir/source/hud/Hud.cpp.o"
   "spelunkyds.pdb"
   "spelunkyds"
 )

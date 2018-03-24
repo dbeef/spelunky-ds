@@ -8,6 +8,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/MainDude.cpp" "/home/xdbeef/NetBeansProjects/spelunkyds/cmake-build-debug/CMakeFiles/spelunkyds.dir/source/animations/MainDude.cpp.o"
   "/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Snake.cpp" "/home/xdbeef/NetBeansProjects/spelunkyds/cmake-build-debug/CMakeFiles/spelunkyds.dir/source/animations/Snake.cpp.o"
   "/home/xdbeef/NetBeansProjects/spelunkyds/source/console/TextManager.cpp" "/home/xdbeef/NetBeansProjects/spelunkyds/cmake-build-debug/CMakeFiles/spelunkyds.dir/source/console/TextManager.cpp.o"
+  "/home/xdbeef/NetBeansProjects/spelunkyds/source/hud/Hud.cpp" "/home/xdbeef/NetBeansProjects/spelunkyds/cmake-build-debug/CMakeFiles/spelunkyds.dir/source/hud/Hud.cpp.o"
   "/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/LevelGenerator.cpp" "/home/xdbeef/NetBeansProjects/spelunkyds/cmake-build-debug/CMakeFiles/spelunkyds.dir/source/level_layout/LevelGenerator.cpp.o"
   "/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/MapTile.cpp" "/home/xdbeef/NetBeansProjects/spelunkyds/cmake-build-debug/CMakeFiles/spelunkyds.dir/source/level_layout/MapTile.cpp.o"
   "/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/MapUtils.cpp" "/home/xdbeef/NetBeansProjects/spelunkyds/cmake-build-debug/CMakeFiles/spelunkyds.dir/source/level_layout/MapUtils.cpp.o"

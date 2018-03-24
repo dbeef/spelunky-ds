@@ -3,6 +3,7 @@
 #include "MapUtils.h"
 #include "../Consts.h"
 #include "../animations/MainDude.h"
+#include "../hud/Hud.h"
 #include <nds/arm9/input.h>
 #include <nds/arm9/sprite.h>
 
@@ -22,6 +23,8 @@ void spelunker::scroll(int bg_main, int bg_sub, int width, int height, LevelGene
 
     mainDude->init();
 
+    Hud *hud = new Hud();
+    hud->initHud();
 
     touchPosition touch;
     while (true) {
@@ -36,6 +39,7 @@ void spelunker::scroll(int bg_main, int bg_sub, int width, int height, LevelGene
             timer = 0;
             dmaCopyHalfWords(DMA_CHANNEL, fresh_map, map, sizeof(map));
             l->newLayout(timerElapsed(0));
+            l->mapBackground();
             l->mapFrame();
             l->generateRooms();
             l->tilesToMap();
@@ -51,6 +55,8 @@ void spelunker::scroll(int bg_main, int bg_sub, int width, int height, LevelGene
 
 //        sx = mainDude->x - 128;
 //        sy = mainDude->y - 96;
+
+//        hud->drawHud();
 
         static int BOUNDARY_X = 32;
         static int BOUNDARY_Y = 16;

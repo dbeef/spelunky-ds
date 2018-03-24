@@ -16,10 +16,10 @@ void MainDude::handleKeyInput(int keys_held, int keys_up) {
 
         if (keys_held & KEY_UP) {
             if (bottomCollision) {
-                ySpeed = -MAX_Y_SPEED;
+                ySpeed = -JUMP_SPEED;
             }
             if ((hangingOnTileLeft || hangingOnTileRight) && hangingTimer > MIN_HANGING_TIME) {
-                ySpeed = -MAX_Y_SPEED;
+                ySpeed = -JUMP_SPEED;
                 hangingOnTileLeft = false;
                 hangingOnTileRight = false;
             }
@@ -120,6 +120,8 @@ void MainDude::init() {
 
 void MainDude::animate(int camera_x, int camera_y) {
 
+    dmaCopy(spelunkerPal, SPRITE_PALETTE, 512);
+    dmaCopy(spelunkerPal, SPRITE_PALETTE_SUB, 512);
 
     if (animationFrameTimer > 70) {
         animationFrameTimer = 0;

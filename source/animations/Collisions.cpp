@@ -22,7 +22,7 @@ bool Collisions::checkUpperCollision(MapTile *mapTiles[32][32], int *xPos, int *
     for (int x = 0; x < 32; x++) {
         for (int y = 0; y < 32; y++) {
 
-            if (mapTiles[x][y] == 0)
+            if (mapTiles[x][y] == 0 /*|| !mapTiles[x][y]->collidable*/)
                 continue;
 
             if (!upperCollision) {
@@ -52,7 +52,7 @@ bool Collisions::checkBottomCollision(MapTile *mapTiles[32][32], int *xPos, int 
     for (int x = 0; x < 32; x++) {
         for (int y = 0; y < 32; y++) {
 
-            if (mapTiles[x][y] == 0)
+            if (mapTiles[x][y] == 0 /*|| !mapTiles[x][y]->collidable*/)
                 continue;
 
             if (!bottomCollision) {
@@ -82,7 +82,7 @@ Collisions::checkLeftCollision(MapTile *mapTiles[32][32], int *xPos, int *yPos, 
     for (int x = 0; x < 32; x++) {
         for (int y = 0; y < 32; y++) {
 
-            if (mapTiles[x][y] == 0)
+            if (mapTiles[x][y] == 0 /*|| !mapTiles[x][y]->collidable*/)
                 continue;
 
             if (!leftCollision) {
@@ -112,7 +112,7 @@ bool Collisions::checkRightCollision(MapTile *mapTiles[32][32], int *xPos, int *
     for (int x = 0; x < 32; x++) {
         for (int y = 0; y < 32; y++) {
 
-            if (mapTiles[x][y] == 0)
+            if (mapTiles[x][y] == 0 /*|| !mapTiles[x][y]->collidable*/)
                 continue;
 
 
@@ -142,7 +142,7 @@ bool Collisions::isStandingOnEdge(MapTile *mapTiles[32][32], int *xPos, int *yPo
     for (int x = 0; x < 32; x++) {
         for (int y = 0; y < 32; y++) {
 
-            if (mapTiles[x][y] == 0)
+            if (mapTiles[x][y] == 0 /*|| !mapTiles[x][y]->collidable*/)
                 continue;
 
 

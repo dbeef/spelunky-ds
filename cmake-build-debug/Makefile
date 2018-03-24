@@ -39,10 +39,10 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /home/xdbeef/clion-2017.3.3/bin/cmake/bin/cmake
+CMAKE_COMMAND = /home/xdbeef/clion/clion-2017.3.3/bin/cmake/bin/cmake
 
 # The command to remove a file.
-RM = /home/xdbeef/clion-2017.3.3/bin/cmake/bin/cmake -E remove -f
+RM = /home/xdbeef/clion/clion-2017.3.3/bin/cmake/bin/cmake -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
@@ -59,7 +59,7 @@ CMAKE_BINARY_DIR = /home/xdbeef/NetBeansProjects/spelunkyds/cmake-build-debug
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	/home/xdbeef/clion-2017.3.3/bin/cmake/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+	/home/xdbeef/clion/clion-2017.3.3/bin/cmake/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -70,7 +70,7 @@ edit_cache/fast: edit_cache
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	/home/xdbeef/clion-2017.3.3/bin/cmake/bin/cmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	/home/xdbeef/clion/clion-2017.3.3/bin/cmake/bin/cmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : rebuild_cache
 
 # Special rule for the target rebuild_cache
@@ -230,6 +230,33 @@ source/console/TextManager.s: source/console/TextManager.cpp.s
 source/console/TextManager.cpp.s:
 	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/console/TextManager.cpp.s
 .PHONY : source/console/TextManager.cpp.s
+
+source/hud/Hud.o: source/hud/Hud.cpp.o
+
+.PHONY : source/hud/Hud.o
+
+# target to build an object file
+source/hud/Hud.cpp.o:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/hud/Hud.cpp.o
+.PHONY : source/hud/Hud.cpp.o
+
+source/hud/Hud.i: source/hud/Hud.cpp.i
+
+.PHONY : source/hud/Hud.i
+
+# target to preprocess a source file
+source/hud/Hud.cpp.i:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/hud/Hud.cpp.i
+.PHONY : source/hud/Hud.cpp.i
+
+source/hud/Hud.s: source/hud/Hud.cpp.s
+
+.PHONY : source/hud/Hud.s
+
+# target to generate assembly for a file
+source/hud/Hud.cpp.s:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/hud/Hud.cpp.s
+.PHONY : source/hud/Hud.cpp.s
 
 source/level_layout/LevelGenerator.o: source/level_layout/LevelGenerator.cpp.o
 
@@ -414,6 +441,9 @@ help:
 	@echo "... source/console/TextManager.o"
 	@echo "... source/console/TextManager.i"
 	@echo "... source/console/TextManager.s"
+	@echo "... source/hud/Hud.o"
+	@echo "... source/hud/Hud.i"
+	@echo "... source/hud/Hud.s"
 	@echo "... source/level_layout/LevelGenerator.o"
 	@echo "... source/level_layout/LevelGenerator.i"
 	@echo "... source/level_layout/LevelGenerator.s"

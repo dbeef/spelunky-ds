@@ -1,4 +1,4 @@
-/home/xdbeef/clion-2017.3.3/bin/cmake/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/xdbeef/NetBeansProjects/spelunkyds
+/home/xdbeef/clion/clion-2017.3.3/bin/cmake/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/xdbeef/NetBeansProjects/spelunkyds
 -- Configuring done
 -- Generating done
 -- Build files have been written to: /home/xdbeef/NetBeansProjects/spelunkyds/cmake-build-debug

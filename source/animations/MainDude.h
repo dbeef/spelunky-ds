@@ -5,14 +5,15 @@
 #ifndef SPELUNKYDS_MAINDUDE_H
 #define SPELUNKYDS_MAINDUDE_H
 #define MAX_X_SPEED 1.5
-#define MAX_Y_SPEED 2.3
+#define MAX_Y_SPEED 2.7
 #define MIN_HANGING_TIME 100
 #define FRICTION_DELTA_TIME_MS 30
 #define FRICTION_DELTA_SPEED 0.25
-#define Y_SPEED_DELTA_TIME_MS 5
+#define Y_SPEED_DELTA_TIME_MS 2
 #define GRAVITY_DELTA_SPEED 0.2
-#define X_SPEED_DELTA_TIME_MS 50
+#define X_SPEED_DELTA_TIME_MS 2
 #define X_SPEED_DELTA 1
+#define JUMP_SPEED MAX_Y_SPEED*0.75
 
 #include <nds.h>
 #include "SpriteState.h"
