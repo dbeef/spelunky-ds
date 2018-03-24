@@ -28,10 +28,7 @@ void Hud::initHud() {
 }
 
 void Hud::drawHud() {
-    u8 *frameGfx = (u8 *) heartTiles;
-    dmaCopy(frameGfx, heartGfxMemMain, 16 * 16);
     dmaCopy(heartTiles, heartGfxMemMain, 16 * 16);
-    dmaCopy(heartPal, SPRITE_PALETTE, 512);
     oamSet(&oamMain, 0, HEART_POSITION_X, HEART_POSITION_Y, 0, 0, SpriteSize_16x16, SpriteColorFormat_256Color,
            heartGfxMemMain, -1, false, false, false, false, false);
 }

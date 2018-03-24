@@ -1,1 +1,2 @@
 Ladders are not destructable.
+todo use OAM  (initSprites method from https://patater.com/files/projects/manual/manual.html#id2615382)

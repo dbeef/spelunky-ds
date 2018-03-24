@@ -120,8 +120,6 @@ void MainDude::init() {
 
 void MainDude::animate(int camera_x, int camera_y) {
 
-    dmaCopy(spelunkerPal, SPRITE_PALETTE, 512);
-    dmaCopy(spelunkerPal, SPRITE_PALETTE_SUB, 512);
 
     if (animationFrameTimer > 70) {
         animationFrameTimer = 0;

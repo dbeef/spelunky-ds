@@ -24,7 +24,7 @@ void spelunker::scroll(int bg_main, int bg_sub, int width, int height, LevelGene
     mainDude->init();
 
     Hud *hud = new Hud();
-    hud->initHud();
+//    hud->initHud();
 
     touchPosition touch;
     while (true) {
@@ -56,7 +56,6 @@ void spelunker::scroll(int bg_main, int bg_sub, int width, int height, LevelGene
 //        sx = mainDude->x - 128;
 //        sy = mainDude->y - 96;
 
-//        hud->drawHud();
 
         static int BOUNDARY_X = 32;
         static int BOUNDARY_Y = 16;
