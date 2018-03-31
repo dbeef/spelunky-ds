@@ -13,6 +13,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/MapTile.cpp" "/home/xdbeef/NetBeansProjects/spelunkyds/cmake-build-debug/CMakeFiles/spelunkyds.dir/source/level_layout/MapTile.cpp.o"
   "/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/MapUtils.cpp" "/home/xdbeef/NetBeansProjects/spelunkyds/cmake-build-debug/CMakeFiles/spelunkyds.dir/source/level_layout/MapUtils.cpp.o"
   "/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/Scrolling.cpp" "/home/xdbeef/NetBeansProjects/spelunkyds/cmake-build-debug/CMakeFiles/spelunkyds.dir/source/level_layout/Scrolling.cpp.o"
+  "/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/SpriteInfo.cpp" "/home/xdbeef/NetBeansProjects/spelunkyds/cmake-build-debug/CMakeFiles/spelunkyds.dir/source/level_layout/SpriteInfo.cpp.o"
   "/home/xdbeef/NetBeansProjects/spelunkyds/source/main.cpp" "/home/xdbeef/NetBeansProjects/spelunkyds/cmake-build-debug/CMakeFiles/spelunkyds.dir/source/main.cpp.o"
   "/home/xdbeef/NetBeansProjects/spelunkyds/source/time/Timer.cpp" "/home/xdbeef/NetBeansProjects/spelunkyds/cmake-build-debug/CMakeFiles/spelunkyds.dir/source/time/Timer.cpp.o"
   )

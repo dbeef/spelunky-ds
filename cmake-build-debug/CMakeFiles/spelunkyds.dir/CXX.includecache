@@ -10,9 +10,25 @@
 
 /home/xdbeef/NetBeansProjects/spelunkyds/build/font.h
 
+/home/xdbeef/NetBeansProjects/spelunkyds/build/heart.h
+
+/home/xdbeef/NetBeansProjects/spelunkyds/build/snake.h
+
 /home/xdbeef/NetBeansProjects/spelunkyds/build/spelunker.h
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/Consts.h
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Collisions.cpp
+iostream
+-
+Collisions.h
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Collisions.h
+MainDude.h
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/MainDude.h
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Collisions.h
+../level_layout/MapTile.h
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/MapTile.h
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/MainDude.cpp
 nds.h
@@ -27,8 +43,8 @@ MainDude.h
 /home/xdbeef/NetBeansProjects/spelunkyds/source/Consts.h
 ../../build/spelunker.h
 /home/xdbeef/NetBeansProjects/spelunkyds/build/spelunker.h
-../level_layout/LevelGenerator.h
-/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/LevelGenerator.h
+Collisions.h
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Collisions.h
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/MainDude.h
 nds.h
@@ -37,6 +53,26 @@ SpriteState.h
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/SpriteState.h
 ../level_layout/MapTile.h
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/MapTile.h
+../level_layout/LevelGenerator.h
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/LevelGenerator.h
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Snake.cpp
+nds/arm9/sprite.h
+-
+Snake.h
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Snake.h
+../../build/snake.h
+/home/xdbeef/NetBeansProjects/spelunkyds/build/snake.h
+Collisions.h
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Collisions.h
+../Consts.h
+/home/xdbeef/NetBeansProjects/spelunkyds/source/Consts.h
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Snake.h
+nds.h
+-
+SpriteState.h
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/SpriteState.h
 ../level_layout/LevelGenerator.h
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/LevelGenerator.h
 
@@ -57,6 +93,20 @@ TextManager.h
 /home/xdbeef/NetBeansProjects/spelunkyds/source/console/TextManager.h
 ../time/Timer.h
 /home/xdbeef/NetBeansProjects/spelunkyds/source/time/Timer.h
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/hud/Hud.cpp
+nds/arm9/sprite.h
+-
+nds.h
+-
+Hud.h
+/home/xdbeef/NetBeansProjects/spelunkyds/source/hud/Hud.h
+../../build/heart.h
+/home/xdbeef/NetBeansProjects/spelunkyds/build/heart.h
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/hud/Hud.h
+nds/jtypes.h
+-
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/BaseCaveMap.h
 nds.h
@@ -109,14 +159,36 @@ MapUtils.h
 /home/xdbeef/NetBeansProjects/spelunkyds/source/Consts.h
 ../animations/MainDude.h
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/MainDude.h
+../hud/Hud.h
+/home/xdbeef/NetBeansProjects/spelunkyds/source/hud/Hud.h
+SpriteInfo.h
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/SpriteInfo.h
+../../build/heart.h
+/home/xdbeef/NetBeansProjects/spelunkyds/build/heart.h
 nds/arm9/input.h
 -
 nds/arm9/sprite.h
 -
+nds/arm9/cache.h
+-
+assert.h
+-
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/Scrolling.h
+nds/arm9/sprite.h
+-
 LevelGenerator.h
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/LevelGenerator.h
+SpriteInfo.h
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/SpriteInfo.h
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/SpriteInfo.cpp
+SpriteInfo.h
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/SpriteInfo.h
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/SpriteInfo.h
+nds/arm9/sprite.h
+-
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/main.cpp
 nds.h
@@ -477,6 +549,10 @@ nds/ndstypes.h
 -
 
 /home/xdbeef/devkitPro/libnds/include/nds/ipc.h
+ndstypes.h
+/home/xdbeef/devkitPro/libnds/include/nds/ndstypes.h
+
+/home/xdbeef/devkitPro/libnds/include/nds/jtypes.h
 ndstypes.h
 /home/xdbeef/devkitPro/libnds/include/nds/ndstypes.h
 

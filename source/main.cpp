@@ -31,6 +31,7 @@ int main(void) {
     vramSetBankF(VRAM_F_MAIN_SPRITE_0x06400000);
     vramSetBankD(VRAM_D_SUB_SPRITE);
 
+
     oamInit(&oamMain, SpriteMapping_1D_128, false);
     oamInit(&oamSub, SpriteMapping_1D_128, false);
 
@@ -56,7 +57,7 @@ int main(void) {
     dmaCopyHalfWords(DMA_CHANNEL, map, bgGetMapPtr(bg_sub), sizeof(map));
     dmaCopy(cavebgPal, BG_PALETTE, cavebgPalLen);
     dmaCopy(cavebgPal, BG_PALETTE_SUB, cavebgPalLen);
-//    prepareConsole();
+    prepareConsole();
 
     spelunker::scroll(bg_main, bg_sub, 512, 512, l, fresh_map);
 

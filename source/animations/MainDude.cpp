@@ -9,6 +9,53 @@
 #include "../Consts.h"
 #include "../../build/spelunker.h"
 #include "Collisions.h"
+#include "../level_layout/MapUtils.h"
+
+void MainDude::clearTilesOnRight(MapTile *mapTiles[32][32]) {
+
+    int xx = floor_div(this->x, 16);
+    int yy = floor_div(this->y, 16);
+
+    MapTile *left_middle = mapTiles[xx - 1][yy];
+    MapTile *right_middle = mapTiles[xx + 1][yy];
+    MapTile *up_middle = mapTiles[xx][yy - 1];
+    MapTile *down_middle = mapTiles[xx][yy + 1];
+    MapTile *center = mapTiles[xx][yy];
+    MapTile *left_up = mapTiles[xx - 1][yy - 1];
+    MapTile *right_up = mapTiles[xx + 1][yy - 1];
+    MapTile *left_down = mapTiles[xx - 1][yy + 1];
+    MapTile *right_down = mapTiles[xx + 1][yy + 1];
+
+    left_middle->values[0] = 16;
+    left_middle->values[1] = 16;
+    left_middle->values[2] = 16;
+    left_middle->values[3] = 16;
+
+    left_down->values[0] = 0;
+    left_down->values[1] = 0;
+    left_down->values[2] = 0;
+    left_down->values[3] = 0;
+
+    left_up->values[0] = 0;
+    left_up->values[1] = 0;
+    left_up->values[2] = 0;
+    left_up->values[3] = 0;
+    right_middle->values[0] = 16;
+    right_middle->values[1] = 16;
+    right_middle->values[2] = 16;
+    right_middle->values[3] = 16;
+
+    right_down->values[0] = 0;
+    right_down->values[1] = 0;
+    right_down->values[2] = 0;
+    right_down->values[3] = 0;
+
+    right_up->values[0] = 0;
+    right_up->values[1] = 0;
+    right_up->values[2] = 0;
+    right_up->values[3] = 0;
+
+}
 
 void MainDude::handleKeyInput(int keys_held, int keys_up) {
 
@@ -26,13 +73,13 @@ void MainDude::handleKeyInput(int keys_held, int keys_up) {
         }
 
         if (keys_held & KEY_LEFT) {
+            state = W_LEFT;
             hangingOnTileLeft = false;
             if (xSpeed > -MAX_X_SPEED && !(hangingOnTileRight || hangingOnTileLeft))
                 if (speedIncTimerX > X_SPEED_DELTA_TIME_MS) {
                     xSpeed -= X_SPEED_DELTA;
                     speedIncTimerX = 0;
                 }
-            state = W_LEFT;
         }
 
         if (keys_held & KEY_RIGHT) {
@@ -58,8 +105,11 @@ void MainDude::updateTimers(int timeElapsed) {
     speedIncTimerX += timeElapsed;
     speedIncTimerY += timeElapsed;
     posIncTimer += timeElapsed;
+    posIncTimerX += timeElapsed;
+    posIncTimerY += timeElapsed;
     frictionTimer += timeElapsed;
     hangingTimer += timeElapsed;
+
 
     if (xSpeed != 0)
         animationFrameTimer += timeElapsed;
@@ -79,18 +129,69 @@ void MainDude::checkCollisionWithMap(MapTile *mapTiles[32][32]) {
     if (ySpeed < -MAX_Y_SPEED)
         ySpeed = -MAX_Y_SPEED;
 
+    bool pixelPerfectCollision = xSpeed < 10 || ySpeed < 10;
 
-    if (posIncTimer > 10) {
-        x += xSpeed;
-        y += ySpeed;
-        posIncTimer = 0;
+    if (pixelPerfectCollision) {
+        if (posIncTimerX > 20 / xSpeed * 3) {
+            if (xSpeed > 0) {
+                if (pixelPerfectCollision)
+                    x += 1;
+                else
+                    x += 2;
+            } else if (xSpeed < 0)
+                if (pixelPerfectCollision)
+                    x -= 1;
+                else
+                    x -= 2;
+            posIncTimerX = 0;
+//        x += xSpeed;
+        }
+
+        if (posIncTimerY > 20 / ySpeed * 3) {
+            if (ySpeed > 0)
+                if (pixelPerfectCollision)
+                    y += 1;
+                else
+                    y += 2;
+            else if (ySpeed < 0)
+                if (pixelPerfectCollision)
+                    y -= 1;
+                else
+                    y -= 2;
+//        y += ySpeed;
+            posIncTimerY = 0;
+        }
     }
 
-    bottomCollision = Collisions::checkBottomCollision(mapTiles, &this->x, &this->y, &ySpeed, 16, 16);
-    leftCollision = Collisions::checkLeftCollision(mapTiles, &this->x, &this->y, &xSpeed, 16, 16);
-    rightCollision = Collisions::checkRightCollision(mapTiles, &this->x, &this->y, &xSpeed, 16, 16);
-    upperCollision = Collisions::checkUpperCollision(mapTiles, &this->x, &this->y, &ySpeed, 16);
-    Collisions::isStandingOnEdge(mapTiles, &this->x, &this->y, &ySpeed, 16, 16);
+    int xx = floor_div(this->x + 0.5 * MAIN_DUDE_WIDTH, 16);
+    int yy = floor_div(this->y + 0.5 * MAIN_DUDE_HEIGHT, 16);
+
+    MapTile *left_middle = mapTiles[xx - 1][yy];
+    MapTile *right_middle = mapTiles[xx + 1][yy];
+    MapTile *up_middle = mapTiles[xx][yy - 1];
+    MapTile *down_middle = mapTiles[xx][yy + 1];
+    MapTile *center = mapTiles[xx][yy];
+    MapTile *left_up = mapTiles[xx - 1][yy - 1];
+    MapTile *right_up = mapTiles[xx + 1][yy - 1];
+    MapTile *left_down = mapTiles[xx - 1][yy + 1];
+    MapTile *right_down = mapTiles[xx + 1][yy + 1];
+    MapTile *tiles[9] = {
+            left_middle, //0
+            right_middle, //1
+            up_middle, //2
+            down_middle, //3
+            center, //4
+            left_up, //5
+            right_up, //6
+            left_down, //7
+            right_down //8
+    };
+
+    bottomCollision = Collisions::checkBottomCollision(tiles, &this->x, &this->y, &ySpeed, 16, 16);
+    leftCollision = Collisions::checkLeftCollision(tiles, &this->x, &this->y, &xSpeed, 16, 16, !bottomCollision);
+    rightCollision = Collisions::checkRightCollision(tiles, &this->x, &this->y, &xSpeed, 16, 16, !bottomCollision);
+    upperCollision = Collisions::checkUpperCollision(tiles, &this->x, &this->y, &ySpeed, 16);
+    Collisions::isStandingOnEdge(tiles, &this->x, &this->y, &ySpeed, 16, 16);
 
 
     if (!bottomCollision) {
@@ -106,6 +207,18 @@ void MainDude::checkCollisionWithMap(MapTile *mapTiles[32][32]) {
         hangingOnTileLeft = false;
         hangingOnTileRight = false;
     }
+
+    if (!bottomCollision) {
+        if (/*up_middle == 0 && down_middle == 0 && */(right_middle == 0 && (right_up != 0 && right_down != 0))) {
+            if (xSpeed > 0)
+                x += 1;
+        }
+        if (/*up_middle == 0 && down_middle == 0 && */(left_middle == 0 && (left_up != 0 && left_down != 0))) {
+            if (xSpeed < 0)
+                x -= 1;
+        }
+    }
+
 
 }
 
@@ -277,6 +390,4 @@ void MainDude::update(int camera_x, int camera_y, int keys_held, int keys_up, Le
     this->checkCollisionWithMap(l->mapTiles);
     this->handleKeyInput(keys_held, keys_up);
 }
-
-
 

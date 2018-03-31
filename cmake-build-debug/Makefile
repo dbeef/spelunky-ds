@@ -366,6 +366,33 @@ source/level_layout/Scrolling.cpp.s:
 	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/level_layout/Scrolling.cpp.s
 .PHONY : source/level_layout/Scrolling.cpp.s
 
+source/level_layout/SpriteInfo.o: source/level_layout/SpriteInfo.cpp.o
+
+.PHONY : source/level_layout/SpriteInfo.o
+
+# target to build an object file
+source/level_layout/SpriteInfo.cpp.o:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/level_layout/SpriteInfo.cpp.o
+.PHONY : source/level_layout/SpriteInfo.cpp.o
+
+source/level_layout/SpriteInfo.i: source/level_layout/SpriteInfo.cpp.i
+
+.PHONY : source/level_layout/SpriteInfo.i
+
+# target to preprocess a source file
+source/level_layout/SpriteInfo.cpp.i:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/level_layout/SpriteInfo.cpp.i
+.PHONY : source/level_layout/SpriteInfo.cpp.i
+
+source/level_layout/SpriteInfo.s: source/level_layout/SpriteInfo.cpp.s
+
+.PHONY : source/level_layout/SpriteInfo.s
+
+# target to generate assembly for a file
+source/level_layout/SpriteInfo.cpp.s:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/level_layout/SpriteInfo.cpp.s
+.PHONY : source/level_layout/SpriteInfo.cpp.s
+
 source/main.o: source/main.cpp.o
 
 .PHONY : source/main.o
@@ -456,6 +483,9 @@ help:
 	@echo "... source/level_layout/Scrolling.o"
 	@echo "... source/level_layout/Scrolling.i"
 	@echo "... source/level_layout/Scrolling.s"
+	@echo "... source/level_layout/SpriteInfo.o"
+	@echo "... source/level_layout/SpriteInfo.i"
+	@echo "... source/level_layout/SpriteInfo.s"
 	@echo "... source/main.o"
 	@echo "... source/main.i"
 	@echo "... source/main.s"

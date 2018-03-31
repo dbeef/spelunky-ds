@@ -11,6 +11,14 @@
  */
 extern u16 map[4096];
 
+int floor_div(int a, int b)
+{
+    div_t r = div(a, b);
+    if (r.rem != 0 && ((a < 0) ^ (b < 0)))
+        r.quot--;
+    return r.quot;
+}
+
 //fixme black-ish background is composed of 16 tiles (4 normal sized tiles),
 // that's why it appears to be corrupted after sectorizing
 //make it 4 different tiles

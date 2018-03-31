@@ -175,6 +175,12 @@
 		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/Scrolling.h">
 			<Option target="spelunkyds"/>
 		</Unit>
+		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/SpriteInfo.cpp">
+			<Option target="spelunkyds"/>
+		</Unit>
+		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/SpriteInfo.h">
+			<Option target="spelunkyds"/>
+		</Unit>
 		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/main.cpp">
 			<Option target="spelunkyds"/>
 		</Unit>

@@ -5,6 +5,7 @@
 #include <iostream>
 #include "Collisions.h"
 #include "MainDude.h"
+#include "../level_layout/MapUtils.h"
 
 #define TILE_H 16
 #define TILE_W 16
@@ -15,59 +16,65 @@
 //the map.
 
 //Collision from upper side of the tile, with rectangle given by x,y, and width.
-bool Collisions::checkUpperCollision(MapTile *mapTiles[32][32], int *xPos, int *yPos, double *ySpeed, int width) {
+bool Collisions::checkUpperCollision(MapTile *neighboringTiles[9], int *xPos, int *yPos, double *ySpeed, int width) {
+
+    int dude_tile_x = floor_div(*xPos, 16);
+    int dude_tile_y = floor_div(*yPos, 16);
 
     bool upperCollision = false;
+    bool w1 = false;
+    bool w2 = false;
 
-    for (int x = 0; x < 32; x++) {
-        for (int y = 0; y < 32; y++) {
+    for (int a = 0; a < 9; a++) {
 
-            if (mapTiles[x][y] == 0 /*|| !mapTiles[x][y]->collidable*/)
-                continue;
+        if (&neighboringTiles[a] == 0 /*|| !neighboringTiles[x][y]->collidable*/)
+            continue;
 
-            if (!upperCollision) {
-                bool w1 = (*yPos < (y * TILE_H) + TILE_H && (*yPos > (y * TILE_H)));
-                bool w2 = (*xPos > (x * TILE_W) - width && (*xPos < (x * TILE_W) + TILE_W));
-                upperCollision = w1 && w2;
+        if (!upperCollision) {
+            w1 = (*yPos < (neighboringTiles[a]->y * TILE_H) + TILE_H && (*yPos > (neighboringTiles[a]->y * TILE_H)));
+            w2 = (*xPos > (neighboringTiles[a]->x * TILE_W) - width &&
+                  (*xPos < (neighboringTiles[a]->x * TILE_W) + TILE_W));
+            upperCollision = w1 && w2;
 
-                if (upperCollision) {
-                    fprintf(stdout, "UPPER-SIDE TILE COLLISION \n");
-                    *ySpeed = 0;
-                    *yPos = (y * TILE_H) + TILE_H;
-                }
+            if (upperCollision) {
+                //fprintf(stdout, "UPPER-SIDE TILE COLLISION \n");
+                *ySpeed = 0;
+                *yPos = (neighboringTiles[a]->y * TILE_H) + TILE_H;
+            }
 
-            } else
-                return true;
+        } else {
+            return true;
         }
     }
+
     return upperCollision;
 }
 
 //Collision from bottom side of the tile, with rectangle given by x,y, width and height.
-bool Collisions::checkBottomCollision(MapTile *mapTiles[32][32], int *xPos, int *yPos, double *ySpeed, int width,
+bool Collisions::checkBottomCollision(MapTile *neighboringTiles[9], int *xPos, int *yPos, double *ySpeed, int width,
                                       int height) {
 
     bool bottomCollision = false;
+    bool w1 = false;
+    bool w2 = false;
 
-    for (int x = 0; x < 32; x++) {
-        for (int y = 0; y < 32; y++) {
+    for (int a = 0; a < 9; a++) {
+//        if (neighboringTiles[a] == 0 /*|| !mapTiles[x][y]->collidable*/)
+//            continue;
 
-            if (mapTiles[x][y] == 0 /*|| !mapTiles[x][y]->collidable*/)
-                continue;
+        if (!bottomCollision) {
+            w1 = (*xPos > (neighboringTiles[a]->x * TILE_W) - width * 0.75 &&
+                  *xPos < (neighboringTiles[a]->x * TILE_W) + width * 0.75);
+            w2 = (*yPos <= neighboringTiles[a]->y * TILE_H) && *yPos + height >= (neighboringTiles[a]->y * TILE_H);
 
-            if (!bottomCollision) {
-                bool w1 = (*xPos > (x * TILE_W) - width * 0.75 && *xPos < (x * TILE_W) + width * 0.75);
-                bool w2 = (*yPos <= y * TILE_H) && *yPos + height >= (y * TILE_H);
+            bottomCollision = w1 && w2;
 
-                bottomCollision = w1 && w2;
-
-                if (bottomCollision) {
-                    *ySpeed = 0;
-                    *yPos = (y * TILE_H) - TILE_H;
-                }
-            } else
-                return true;
-        }
+            if (bottomCollision) {
+                *ySpeed = 0;
+                *yPos = (neighboringTiles[a]->y * TILE_H) - TILE_H;
+            }
+        } else
+            return true;
     }
 
     return bottomCollision;
@@ -75,107 +82,189 @@ bool Collisions::checkBottomCollision(MapTile *mapTiles[32][32], int *xPos, int 
 
 //Collision from left side of the tile, with rectangle given by x,y, width and height.
 bool
-Collisions::checkLeftCollision(MapTile *mapTiles[32][32], int *xPos, int *yPos, double *xSpeed, int width, int height) {
+Collisions::checkLeftCollision(MapTile *neighboringTiles[9], int *xPos, int *yPos, double *xSpeed, int width,
+                               int height,
+                               bool jumping) {
+
 
     bool leftCollision = false;
+    bool gap = false;
+    bool w1 = false;
+    bool w2 = false;
 
-    for (int x = 0; x < 32; x++) {
-        for (int y = 0; y < 32; y++) {
-
-            if (mapTiles[x][y] == 0 /*|| !mapTiles[x][y]->collidable*/)
-                continue;
-
-            if (!leftCollision) {
-                bool w1 = (*yPos > (y * TILE_H) - height && (*yPos < (y * TILE_H) + TILE_H));
-                bool w2 = (*xPos < (x * TILE_W) - 0.75 * width && (*xPos > (x * TILE_W) - width));
-                leftCollision = w1 && w2;
-
-                if (leftCollision) {
-                    fprintf(stdout, "LEFT-SIDE TILE COLLISION \n");
-                    *xSpeed = 0;
-                    *xPos = (x * TILE_W) - TILE_W;
-                }
-
-            } else return true;
+    if (jumping) {
+        if (neighboringTiles[1] == 0 && neighboringTiles[6] != 0 && neighboringTiles[8] != 0) {
+//            gap = true;
+//
+            //            *xPos = (neighboringTiles[6]->x * TILE_W) - TILE_W + 1;
+//            if (*yPos < (neighboringTiles[8]->y * TILE_H) - (TILE_H * 0.025) &&
+//                *yPos > (neighboringTiles[6]->y * TILE_H) + (TILE_H * 0.975)){
+//                fprintf(stdout, "GAP LEFT \n");
+//                return false;
+//            }
         }
     }
+
+    for (int a = 0; a < 9; a++) {
+
+
+//        if (neighboringTiles[a] == 0 /*|| !mapTiles[x][y]->collidable*/)
+//            continue;
+
+        if (!leftCollision) {
+
+
+            //+1 is for enabling player to cross gaps between 2 tiles (upper tile, gap, lower tile)
+//            if (gap && (a == 1 || a == 8 || a == 6)) {
+//                w2 = (*xPos < (neighboringTiles[a]->x * TILE_W) - 0.75 * width &&
+//                      (*xPos > (neighboringTiles[a]->x * TILE_W) - width + 0));
+//                w1 = (*yPos > (neighboringTiles[a]->y * TILE_H) - height &&
+//                      (*yPos < (neighboringTiles[a]->y * TILE_H) + TILE_H));
+//
+//            }
+//            else {
+            w2 = (*xPos < (neighboringTiles[a]->x * TILE_W) - 0.75 * width &&
+                  (*xPos > (neighboringTiles[a]->x * TILE_W) - width));
+            w1 = (*yPos > (neighboringTiles[a]->y * TILE_H) - height &&
+                  (*yPos < (neighboringTiles[a]->y * TILE_H) + TILE_H));
+
+//            }
+            leftCollision = w1 && w2;
+
+            if (leftCollision) {
+                //fprintf(stdout, "LEFT-SIDE TILE COLLISION \n");
+                *xSpeed = 0;
+//                if (gap /*&& (a == 1 || a == 8 || a == 6 || a == 4)*/)
+//                    *xPos = (neighboringTiles[a]->x * TILE_W) - TILE_W + 1;
+//                else
+                *xPos = (neighboringTiles[a]->x * TILE_W) - TILE_W;
+            }
+
+        } else {
+            fprintf(stdout, "ASDASD \n");
+            return true;
+        };
+    }
+
+    if (!leftCollision)
+        fprintf(stdout, "\n");
+    else
+        fprintf(stdout, "ASDASD \n");
 
     return leftCollision;
 }
 
 //Collision from right side of the tile, with rectangle given by x,y, width and height.
-bool Collisions::checkRightCollision(MapTile *mapTiles[32][32], int *xPos, int *yPos, double *xSpeed, int width,
-                                     int height) {
+bool Collisions::checkRightCollision(MapTile *neighboringTiles[9], int *xPos, int *yPos, double *xSpeed, int width,
+                                     int height, bool jumping) {
 
     bool rightCollision = false;
+    bool gap = false;
+    bool w1 = false;
+    bool w2 = false;
+    if (jumping) {
+//        if (neighboringTiles[0] == 0 && neighboringTiles[7] != 0 && neighboringTiles[5] != 0) {
+//            gap = true;
+//            *xPos = (neighboringTiles[0]->x * TILE_W) + TILE_W;
+//
+//            if (*yPos < (neighboringTiles[7]->y * TILE_H) - (TILE_H * 0.025) &&
+//                *yPos > (neighboringTiles[5]->y * TILE_H) + (TILE_H * 0.975)){
+//                fprintf(stdout, "   GAP RIGHT  \n");
+//                return false;
+//            }
+//        }
+    }
 
-    for (int x = 0; x < 32; x++) {
-        for (int y = 0; y < 32; y++) {
+    for (int a = 0; a < 32; a++) {
 
-            if (mapTiles[x][y] == 0 /*|| !mapTiles[x][y]->collidable*/)
-                continue;
+//        if (neighboringTiles[a] == 0 /*|| !mapTiles[x][y]->collidable*/)
+//            continue;
+
+        if (!rightCollision) {
 
 
-            if (!rightCollision) {
-                bool w1 = (*yPos > (y * TILE_H) - height && (*yPos < (y * TILE_H) + TILE_H));
-                bool w2 = (*xPos < (x * TILE_W) + width && (*xPos > (x * TILE_W) + 0.75 * width));
-                rightCollision = w1 && w2;
+//            if (gap && a == 0) {
+//                w2 = (*xPos + 0 < (neighboringTiles[a]->x * TILE_W) + width &&
+//                      (*xPos > (neighboringTiles[a]->x * TILE_W) + 0.75 * width));
+//
+//                w1 = (*yPos > (neighboringTiles[a]->y * TILE_H) - height &&
+//                      (*yPos < (neighboringTiles[a]->y * TILE_H) + TILE_H));
+//            } else {
+            w2 = (*xPos < (neighboringTiles[a]->x * TILE_W) + width &&
+                  (*xPos > (neighboringTiles[a]->x * TILE_W) + 0.75 * width));
 
-                if (rightCollision) {
-                    fprintf(stdout, "RIGHT-SIDE TILE COLLISION \n");
-                    *xSpeed = 0;
-                    *xPos = (x * TILE_W) + TILE_W;
-                }
+            w1 = (*yPos > (neighboringTiles[a]->y * TILE_H) - height &&
+                  (*yPos < (neighboringTiles[a]->y * TILE_H) + TILE_H));
+//            }
 
-            } else
-                return true;
+            rightCollision = w1 && w2;
+
+            if (rightCollision) {
+//                    //fprintf(stdout, "RIGHT-SIDE TILE COLLISION \n");
+                *xSpeed = 0;
+                *xPos = (neighboringTiles[a]->x * TILE_W) + TILE_W;
+            }
+
+        } else {
+            fprintf(stdout, "RIGHT COLLISION \n");
+            return true;
         }
     }
+
+
+    if(rightCollision)
+        fprintf(stdout, "RIGHT COLLISION \n");
+    else
+        fprintf(stdout, "\n");
+
+
     return rightCollision;
 }
 
-bool Collisions::isStandingOnEdge(MapTile *mapTiles[32][32], int *xPos, int *yPos, double *xSpeed, int width,
+bool Collisions::isStandingOnEdge(MapTile *neighboringTiles[9], int *xPos, int *yPos, double *xSpeed, int width,
                                   int height) {
 
     bool standingOnEdge = false;
+    bool w0 = false;
+    bool w1 = false;
+    bool w2 = false;
 
-    for (int x = 0; x < 32; x++) {
-        for (int y = 0; y < 32; y++) {
+    for (int a = 0; a < 32; a++) {
 
-            if (mapTiles[x][y] == 0 /*|| !mapTiles[x][y]->collidable*/)
-                continue;
+        if (neighboringTiles[a] == 0 /*|| !mapTiles[x][y]->collidable*/)
+            continue;
 
 
-            if (!standingOnEdge) {
-
+        if (!standingOnEdge) {
+            return false;
+/*
                 if (x < 32) {
 
-                    bool w0 = mapTiles[x + 1][y] == 0;
-                    bool w1 = (*yPos <= y * TILE_H) && *yPos + height >= (y * TILE_H);
-                    bool w2 = (*xPos >= (x * TILE_W)) && (*xPos < (x * TILE_W) + TILE_W);
+                    w0 = mapTiles[x + 1][y] == 0;
+                    w1 = (*yPos <= y * TILE_H) && *yPos + height >= (y * TILE_H);
+                    w2 = (*xPos >= (x * TILE_W)) && (*xPos < (x * TILE_W) + TILE_W);
                     standingOnEdge = w0 && w1 && w2;
 
                     if (standingOnEdge) {
-//                        std::cout << "STANDING ON EDGE - RIGHT" << '\n';
+                        std::cout << "STANDING ON EDGE - RIGHT" << '\n';
                     }
                 }
 
                 if (x > 0) {
 
-                    bool w0 = mapTiles[x - 1][y] == 0;
-                    bool w1 = (*yPos <= y * TILE_H) && *yPos + height >= (y * TILE_H);
-                    bool w2 = (*xPos <= (x * TILE_W)) && (*xPos > (x * TILE_W) - width);
+                    w0 = mapTiles[x - 1][y] == 0;
+                    w1 = (*yPos <= y * TILE_H) && *yPos + height >= (y * TILE_H);
+                    w2 = (*xPos <= (x * TILE_W)) && (*xPos > (x * TILE_W) - width);
                     standingOnEdge = w0 && w1 && w2;
                     if (standingOnEdge) {
-//                        std::cout << "STANDING ON EDGE - LEFT" << '\n';
+                        std::cout << "STANDING ON EDGE - LEFT" << '\n';
                     }
 
-                }
+                }*/
 
 
-            } else
-                return true;
-        }
+        } else
+            return true;
     }
     return standingOnEdge;
 }

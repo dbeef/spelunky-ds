@@ -6,5 +6,6 @@
 #define SPELUNKYDS_MAPUTILS_H
 
 void sectorize_map();
+int floor_div(int a, int b);
 
 #endif //SPELUNKYDS_MAPUTILS_H

@@ -67,7 +67,8 @@ MainDude.o: \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/MapTile.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../Consts.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../../build/spelunker.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Collisions.h
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Collisions.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/MapUtils.h
 
 /home/xdbeef/devkitPro/libnds/include/nds.h:
 
@@ -204,3 +205,5 @@ MainDude.o: \
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../../build/spelunker.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Collisions.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/MapUtils.h:

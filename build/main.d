@@ -64,6 +64,7 @@ main.o: /home/xdbeef/NetBeansProjects/spelunkyds/source/main.cpp \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/Scrolling.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/LevelGenerator.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/MapTile.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/SpriteInfo.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/../build/cavebg.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/BaseCaveMap.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/time/Timer.h \
@@ -199,6 +200,8 @@ main.o: /home/xdbeef/NetBeansProjects/spelunkyds/source/main.cpp \
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/LevelGenerator.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/MapTile.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/SpriteInfo.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/../build/cavebg.h:
 

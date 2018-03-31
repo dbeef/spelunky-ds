@@ -216,6 +216,8 @@ void LevelGenerator::mapFrame() {
         t->map_index[2] = LINE_WIDTH + a * 2;
         t->map_index[3] = LINE_WIDTH + a * 2 + 1;
         t->collidable = true;
+        t->x = a;
+        t->y = 0;
         this->mapTiles[a][0] = t;
     }
 
@@ -231,6 +233,8 @@ void LevelGenerator::mapFrame() {
         t->map_index[2] = 63 * LINE_WIDTH + a * 2;
         t->map_index[3] = 63 * LINE_WIDTH + a * 2 + 1;
         t->collidable = true;
+        t->x = a;
+        t->y = 31;
         this->mapTiles[a][31] = t;
     }
 
@@ -246,6 +250,8 @@ void LevelGenerator::mapFrame() {
         t->map_index[2] = a * 2 * LINE_WIDTH + LINE_WIDTH;
         t->map_index[3] = a * 2 * LINE_WIDTH + LINE_WIDTH + 1;
         t->collidable = true;
+        t->x = 0;
+        t->y = a;
         this->mapTiles[0][a] = t;
     }
 
@@ -256,11 +262,13 @@ void LevelGenerator::mapFrame() {
         t->values[1] = 21;
         t->values[2] = 22;
         t->values[3] = 23;
-        t->map_index[0] = a * 2 * LINE_WIDTH - 2;
-        t->map_index[1] = a * 2 * LINE_WIDTH - 1;
-        t->map_index[2] = a * 2 * LINE_WIDTH + LINE_WIDTH - 2;
-        t->map_index[3] = a * 2 * LINE_WIDTH + LINE_WIDTH - 1;
+        t->map_index[0] = a * 2 * LINE_WIDTH - 2 + LINE_WIDTH;
+        t->map_index[1] = a * 2 * LINE_WIDTH - 1 + LINE_WIDTH;
+        t->map_index[2] = a * 2 * LINE_WIDTH + LINE_WIDTH - 2 + LINE_WIDTH;
+        t->map_index[3] = a * 2 * LINE_WIDTH + LINE_WIDTH - 1 + LINE_WIDTH;
         t->collidable = true;
+        t->x = 31;
+        t->y = a;
         this->mapTiles[31][a] = t;
     }
 }
@@ -302,21 +310,51 @@ void LevelGenerator::clearCollidedTile(int px, int py, int camera_x, int camera_
 void LevelGenerator::generateRooms() {
 
     int tab[10][10];
+    int r;
 
     for (int b = ROOMS_Y - 1; b >= 0; b--) {
         for (int a = 0; a < ROOMS_X; a++) {
 
             int room_type = layout[a][b];
 
-            if (room_type == 0)
-                memcpy(tab, tab_0, sizeof(tab_0));
-            if (room_type == 1)
-                memcpy(tab, tab_1, sizeof(tab_1));
-            if (room_type == 2)
-                memcpy(tab, tab_2, sizeof(tab_2));
-            if (room_type == 3)
-                memcpy(tab, tab_3, sizeof(tab_3));
+            if (room_type == 0) {
+                r = (rand() % 3) + 1;
+                if (r == 1)
+                    memcpy(tab, tab_0_1, sizeof(tab_0_1));
+                else if (r == 2)
+                    memcpy(tab, tab_0_2, sizeof(tab_0_2));
+                else if (r == 3)
+                    memcpy(tab, tab_0_3, sizeof(tab_0_3));
+            }
+            if (room_type == 1) {
+                r = (rand() % 3) + 1;
+                if (r == 1)
+                    memcpy(tab, tab_1_1, sizeof(tab_1_1));
+                else if (r == 2)
+                    memcpy(tab, tab_1_2, sizeof(tab_1_2));
+                else if (r == 3)
+                    memcpy(tab, tab_1_3, sizeof(tab_1_3));
 
+            }
+            if (room_type == 2) {
+                r = (rand() % 3) + 1;
+                if (r == 1)
+                    memcpy(tab, tab_2_1, sizeof(tab_2_1));
+                else if (r == 2)
+                    memcpy(tab, tab_2_2, sizeof(tab_2_2));
+                else if (r == 3)
+                    memcpy(tab, tab_2_3, sizeof(tab_2_3));
+            }
+            if (room_type == 3) {
+                r = (rand() % 3) + 1;
+                if (r == 1)
+                    memcpy(tab, tab_3_1, sizeof(tab_3_1));
+                else if (r == 2)
+                    memcpy(tab, tab_3_2, sizeof(tab_3_2));
+                else if (r == 3)
+                    memcpy(tab, tab_3_3, sizeof(tab_3_3));
+
+            }
             for (int tab_y = 0; tab_y < 10; tab_y++) {
                 for (int tab_x = 0; tab_x < 10; tab_x++) {
                     if (tab[tab_y][tab_x] != 0) {
@@ -378,6 +416,8 @@ void LevelGenerator::generateRooms() {
                         t->map_index[2] = room_offset + (tab_x * 2) + (LINE_WIDTH + (tab_y * LINE_WIDTH * 2));
                         t->map_index[3] = room_offset + (tab_x * 2) + (LINE_WIDTH + (tab_y * LINE_WIDTH * 2)) + 1;
                         t->collidable = true;
+                        t->x = pos_x;
+                        t->y = pos_y;
                         this->mapTiles[pos_x][pos_y] = t;
                     }
                 }

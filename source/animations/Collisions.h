@@ -11,15 +11,15 @@
 class Collisions {
 
 public:
-    static bool checkUpperCollision(MapTile *mapTiles[32][32], int *xPos, int *yPos, double *ySpeed, int width);
+    static bool checkUpperCollision(MapTile *neighboringTiles[9], int *xPos, int *yPos, double *ySpeed, int width);
 
-    static bool checkBottomCollision(MapTile *mapTiles[32][32], int *xPos, int *yPos, double *ySpeed, int width, int height);
+    static bool checkBottomCollision(MapTile *neighboringTiles[9], int *xPos, int *yPos, double *ySpeed, int width, int height);
 
-    static bool checkLeftCollision(MapTile *mapTiles[32][32], int *xPos, int *yPos, double *xSpeed, int width, int height);
+    static bool checkLeftCollision(MapTile *neighboringTiles[9], int *xPos, int *yPos, double *xSpeed, int width, int height, bool jumping);
 
-    static bool checkRightCollision(MapTile *mapTiles[32][32], int *xPos, int *yPos, double *xSpeed, int width, int height);
+    static bool checkRightCollision(MapTile *neighboringTiles[9], int *xPos, int *yPos, double *xSpeed, int width, int height, bool jumping);
 
-    static bool isStandingOnEdge(MapTile *mapTiles[32][32], int *xPos, int *yPos, double *xSpeed, int width, int height);
+    static bool isStandingOnEdge(MapTile *neighboringTiles[9], int *xPos, int *yPos, double *xSpeed, int width, int height);
 
 
 };

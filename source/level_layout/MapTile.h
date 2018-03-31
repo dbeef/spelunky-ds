@@ -13,6 +13,8 @@ public:
     //(practical reasons, compromise between having as much tiles as possible on screen and readability)
     int values[4];
     int map_index[4];
+    int x; //32
+    int y; //32
     bool collidable;
     MapTile();
 };
