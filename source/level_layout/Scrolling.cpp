@@ -20,6 +20,7 @@ static const int BOUNDARY_VALUE = 32; /* This is the default boundary value
 static const int OFFSET_MULTIPLIER = BOUNDARY_VALUE /
                                      sizeof(SPRITE_GFX[0]);
 
+
 void spelunker::scroll(int bg_main, int bg_sub, int width, int height, LevelGenerator *l, u16 *fresh_map) {
     int keys_held = 0;
     int keys_up = 0;
@@ -27,6 +28,7 @@ void spelunker::scroll(int bg_main, int bg_sub, int width, int height, LevelGene
     int sy = 0;
 
     int timer = 0;
+    int camera_timer = 0;
 
 
 //    SpriteInfo *heartInfo = new SpriteInfo();
@@ -48,6 +50,8 @@ void spelunker::scroll(int bg_main, int bg_sub, int width, int height, LevelGene
         scanKeys();
 
         timer += timerElapsed(0) / TICKS_PER_SECOND;
+        camera_timer += timerElapsed(0) / TICKS_PER_SECOND;
+
         keys_held = keysHeld();
         keys_up = keysUp();
 
@@ -85,20 +89,26 @@ void spelunker::scroll(int bg_main, int bg_sub, int width, int height, LevelGene
 
 
         //todo Bound sx/sy delta to mainDude.xSpeed/mainDude.ySpeed, or to value of (center-x/y - sx/y)
-        if (abs(center_x - sx) > BOUNDARY_X) {
-            if (center_x > sx)
-                sx += 2;
-            else
-                sx -= 2;
-        }
 
-        if (abs(center_y - sy) > BOUNDARY_Y) {
-            if (center_y > sy)
-                sy += 2;
-            else
-                sy -= 2;
-        }
+        //todo timer
+//        if(camera_timer > 10) {
 
+            if (abs(center_x - sx) > BOUNDARY_X) {
+                if (center_x > sx)
+                    sx += 1;
+                else
+                    sx -= 1;
+            }
+
+            if (abs(center_y - sy) > BOUNDARY_Y) {
+                if (center_y > sy)
+                    sy += 1;
+                else
+                    sy -= 1;
+            }
+
+//            camera_timer = 0;
+//        }
 
         if (sx < 0) sx = 0;
         if (sx >= width - 256) sx = width - 1 - 256;

@@ -57,7 +57,7 @@ int main(void) {
     dmaCopyHalfWords(DMA_CHANNEL, map, bgGetMapPtr(bg_sub), sizeof(map));
     dmaCopy(cavebgPal, BG_PALETTE, cavebgPalLen);
     dmaCopy(cavebgPal, BG_PALETTE_SUB, cavebgPalLen);
-    prepareConsole();
+//    prepareConsole();
 
     spelunker::scroll(bg_main, bg_sub, 512, 512, l, fresh_map);
 

@@ -4,17 +4,17 @@
 
 #ifndef SPELUNKYDS_MAINDUDE_H
 #define SPELUNKYDS_MAINDUDE_H
-#define MAX_X_SPEED 15
+#define MAX_X_SPEED 2
 
-#define MAX_Y_SPEED 25
+#define MAX_Y_SPEED 4.0
 #define MIN_HANGING_TIME 100
 #define FRICTION_DELTA_TIME_MS 30
-#define FRICTION_DELTA_SPEED 3.5
+#define FRICTION_DELTA_SPEED 1
 #define Y_SPEED_DELTA_TIME_MS 2
-#define GRAVITY_DELTA_SPEED 0.2
+#define GRAVITY_DELTA_SPEED 0.20
 #define X_SPEED_DELTA_TIME_MS 2
 #define X_SPEED_DELTA 2
-#define JUMP_SPEED MAX_Y_SPEED*0.125
+#define JUMP_SPEED 2.1
 #define MAIN_DUDE_HEIGHT 16
 #define MAIN_DUDE_WIDTH 16
 
@@ -33,12 +33,8 @@ public:
 
     int animationFrameTimer;
 
-    int speedIncTimerX;
-    int speedIncTimerY;
+    int speedIncTimer;
     int posIncTimer;
-    int posIncTimerX;
-    int posIncTimerY;
-
 
     int frictionTimer = 0;
 
@@ -63,7 +59,9 @@ public:
     u16 *spriteGfxMemSub;
     u8 *frameGfx;
 
-    void checkCollisionWithMap(MapTile *mapTiles[32][32]);
+    void checkCollisionWithMap(MapTile *mapTiles[32][32], int xx, int yy);
+
+    void updateSpeed(MapTile *mapTiles[32][32]);
 
     void animate(int camera_x, int camera_y);
 

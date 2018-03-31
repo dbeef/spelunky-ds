@@ -76,9 +76,9 @@ void MainDude::handleKeyInput(int keys_held, int keys_up) {
             state = W_LEFT;
             hangingOnTileLeft = false;
             if (xSpeed > -MAX_X_SPEED && !(hangingOnTileRight || hangingOnTileLeft))
-                if (speedIncTimerX > X_SPEED_DELTA_TIME_MS) {
+                if (speedIncTimer > X_SPEED_DELTA_TIME_MS) {
                     xSpeed -= X_SPEED_DELTA;
-                    speedIncTimerX = 0;
+                    speedIncTimer = 0;
                 }
         }
 
@@ -86,9 +86,9 @@ void MainDude::handleKeyInput(int keys_held, int keys_up) {
             state = W_RIGHT;
             hangingOnTileRight = false;
             if (xSpeed < MAX_X_SPEED && !(hangingOnTileRight || hangingOnTileLeft)) {
-                if (speedIncTimerX > X_SPEED_DELTA_TIME_MS) {
+                if (speedIncTimer > X_SPEED_DELTA_TIME_MS) {
                     xSpeed += X_SPEED_DELTA;
-                    speedIncTimerX = 0;
+                    speedIncTimer = 0;
                 }
             }
         }
@@ -102,22 +102,17 @@ void MainDude::handleKeyInput(int keys_held, int keys_up) {
 
 
 void MainDude::updateTimers(int timeElapsed) {
-    speedIncTimerX += timeElapsed;
-    speedIncTimerY += timeElapsed;
     posIncTimer += timeElapsed;
-    posIncTimerX += timeElapsed;
-    posIncTimerY += timeElapsed;
     frictionTimer += timeElapsed;
+    speedIncTimer += timeElapsed;
     hangingTimer += timeElapsed;
-
 
     if (xSpeed != 0)
         animationFrameTimer += timeElapsed;
 }
 
 
-void MainDude::checkCollisionWithMap(MapTile *mapTiles[32][32]) {
-
+void MainDude::updateSpeed(MapTile *mapTiles[32][32]) {
 
     if (xSpeed > MAX_X_SPEED)
         xSpeed = MAX_X_SPEED;
@@ -129,42 +124,68 @@ void MainDude::checkCollisionWithMap(MapTile *mapTiles[32][32]) {
     if (ySpeed < -MAX_Y_SPEED)
         ySpeed = -MAX_Y_SPEED;
 
-    bool pixelPerfectCollision = xSpeed < 10 || ySpeed < 10;
 
-    if (pixelPerfectCollision) {
-        if (posIncTimerX > 20 / xSpeed * 3) {
-            if (xSpeed > 0) {
-                if (pixelPerfectCollision)
+    if (posIncTimer > 10) {
+
+        std::cout<< xSpeed << '\n';
+
+        double tempXspeed = abs(xSpeed);
+        double tempYspeed = abs(ySpeed);
+
+        int old_xx = -1;
+        int old_yy = -1;
+        int xx;
+        int yy;
+
+        while (tempXspeed > 0 || tempYspeed > 0) {
+            if (tempXspeed > 0) {
+                if (xSpeed > 0) {
                     x += 1;
-                else
-                    x += 2;
-            } else if (xSpeed < 0)
-                if (pixelPerfectCollision)
+                } else if (xSpeed < 0) {
                     x -= 1;
-                else
-                    x -= 2;
-            posIncTimerX = 0;
-//        x += xSpeed;
-        }
-
-        if (posIncTimerY > 20 / ySpeed * 3) {
-            if (ySpeed > 0)
-                if (pixelPerfectCollision)
+                }
+            }
+            if (tempYspeed > 0) {
+                if (ySpeed > 0)
                     y += 1;
-                else
-                    y += 2;
-            else if (ySpeed < 0)
-                if (pixelPerfectCollision)
+                else if (ySpeed < 0)
                     y -= 1;
-                else
-                    y -= 2;
-//        y += ySpeed;
-            posIncTimerY = 0;
-        }
-    }
+            }
 
-    int xx = floor_div(this->x + 0.5 * MAIN_DUDE_WIDTH, 16);
-    int yy = floor_div(this->y + 0.5 * MAIN_DUDE_HEIGHT, 16);
+            xx = floor_div(this->x + 0.5 * MAIN_DUDE_WIDTH, 16);
+            yy = floor_div(this->y + 0.5 * MAIN_DUDE_HEIGHT, 16);
+//
+            if (old_xx != xx || old_yy != yy) {
+                checkCollisionWithMap(mapTiles, xx, yy);
+            }
+//
+            old_xx = xx;
+            old_yy = yy;
+
+            tempXspeed--;
+            tempYspeed--;
+        }
+
+
+        if (!bottomCollision && !(hangingOnTileLeft || hangingOnTileRight))
+            ySpeed += GRAVITY_DELTA_SPEED;
+
+        posIncTimer = 0;
+
+    }
+}
+
+void MainDude::checkCollisionWithMap(MapTile *mapTiles[32][32], int xx, int yy) {
+
+
+    //w przypadku cohdzenia, jeśli prędkość mniejsza lub równa 1, to pixel perfec collision,
+    //dodać ograniczenie - prędkość się nie inkrementuje powyżej pewnej wartości, jeśli
+    //wciskany jest przycisk ruchu bez przycisku boostu
+    //w przypadku spadania, jeśli prędkość mniejsza lub równa 1, to pixel perfect collision,
+
+    //prędkość inkrementowana jest co stały czas - jeden licznik
+    //pozycja inkrementowana jest co stały czas - jeden licznik
+
 
     MapTile *left_middle = mapTiles[xx - 1][yy];
     MapTile *right_middle = mapTiles[xx + 1][yy];
@@ -191,15 +212,9 @@ void MainDude::checkCollisionWithMap(MapTile *mapTiles[32][32]) {
     leftCollision = Collisions::checkLeftCollision(tiles, &this->x, &this->y, &xSpeed, 16, 16, !bottomCollision);
     rightCollision = Collisions::checkRightCollision(tiles, &this->x, &this->y, &xSpeed, 16, 16, !bottomCollision);
     upperCollision = Collisions::checkUpperCollision(tiles, &this->x, &this->y, &ySpeed, 16);
-    Collisions::isStandingOnEdge(tiles, &this->x, &this->y, &ySpeed, 16, 16);
+    Collisions::isStandingOnEdge(tiles, &
+            this->x, &this->y, &ySpeed, 16, 16);
 
-
-    if (!bottomCollision) {
-        if (speedIncTimerY > Y_SPEED_DELTA_TIME_MS && !(hangingOnTileLeft || hangingOnTileRight)) {
-            ySpeed += GRAVITY_DELTA_SPEED;
-            speedIncTimerY = 0;
-        }
-    }
 
     canHangOnTile(mapTiles);
 
@@ -208,6 +223,8 @@ void MainDude::checkCollisionWithMap(MapTile *mapTiles[32][32]) {
         hangingOnTileRight = false;
     }
 
+
+    //todo timer
     if (!bottomCollision) {
         if (/*up_middle == 0 && down_middle == 0 && */(right_middle == 0 && (right_up != 0 && right_down != 0))) {
             if (xSpeed > 0)
@@ -218,6 +235,7 @@ void MainDude::checkCollisionWithMap(MapTile *mapTiles[32][32]) {
                 x -= 1;
         }
     }
+    //
 
 
 }
@@ -309,6 +327,9 @@ void MainDude::animate(int camera_x, int camera_y) {
 
 void MainDude::canHangOnTile(MapTile *mapTiles[32][32]) {
 
+    if(bottomCollision)
+        return;
+
     for (int x = 0; x < 32; x++) {
         for (int y = 0; y < 32; y++) {
 
@@ -387,7 +408,8 @@ void MainDude::update(int camera_x, int camera_y, int keys_held, int keys_up, Le
     this->applyFriction();
     this->updateTimers(timerElapsed(0) / TICKS_PER_SECOND);
     this->animate(camera_x, camera_y);
-    this->checkCollisionWithMap(l->mapTiles);
+    this->updateSpeed(l->mapTiles);
+//    this->checkCollisionWithMap(l->mapTiles);
     this->handleKeyInput(keys_held, keys_up);
 }
 

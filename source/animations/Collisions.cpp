@@ -134,6 +134,7 @@ Collisions::checkLeftCollision(MapTile *neighboringTiles[9], int *xPos, int *yPo
             if (leftCollision) {
                 //fprintf(stdout, "LEFT-SIDE TILE COLLISION \n");
                 *xSpeed = 0;
+                fprintf(stdout, "X SPEED 0 \n");
 //                if (gap /*&& (a == 1 || a == 8 || a == 6 || a == 4)*/)
 //                    *xPos = (neighboringTiles[a]->x * TILE_W) - TILE_W + 1;
 //                else
@@ -202,6 +203,8 @@ bool Collisions::checkRightCollision(MapTile *neighboringTiles[9], int *xPos, in
             if (rightCollision) {
 //                    //fprintf(stdout, "RIGHT-SIDE TILE COLLISION \n");
                 *xSpeed = 0;
+                fprintf(stdout, "X SPEED 0 \n");
+
                 *xPos = (neighboringTiles[a]->x * TILE_W) + TILE_W;
             }
 
