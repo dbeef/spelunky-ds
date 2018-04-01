@@ -61,6 +61,7 @@ Hud.o: /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/Hud.cpp \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/nand.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/Hud.h \
  /home/xdbeef/devkitPro/libnds/include/nds/jtypes.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../level_layout/SpriteInfo.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../../build/heart.h
 
 /home/xdbeef/devkitPro/libnds/include/nds/arm9/sprite.h:
@@ -186,5 +187,7 @@ Hud.o: /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/Hud.cpp \
 /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/Hud.h:
 
 /home/xdbeef/devkitPro/libnds/include/nds/jtypes.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../level_layout/SpriteInfo.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../../build/heart.h:

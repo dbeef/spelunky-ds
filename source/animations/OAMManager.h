@@ -18,6 +18,10 @@ public:
     u16 *oam_address;
 
     int current_oam_id = 0;
+
+    /* Keep track of the available tiles */
+    int nextAvailableTileIdx = 0;
+
     OAMTable *oam;
 
     void initOAMTable(u16* spriteAddress, u16* paletteAddress,  u16* oam_address, int offset_multiplier);

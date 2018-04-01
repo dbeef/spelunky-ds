@@ -3,16 +3,11 @@
 #include "MapUtils.h"
 #include "../Consts.h"
 #include "../animations/MainDude.h"
-#include "../hud/Hud.h"
-#include "SpriteInfo.h"
-#include "../../build/heart.h"
-#include "../animations/Camera.h"
 #include "../animations/OAMManager.h"
 #include "../../build/spelunker.h"
+#include "../hud/Hud.h"
+#include "../../build/heart.h"
 #include <nds/arm9/input.h>
-#include <nds/arm9/sprite.h>
-#include <nds/arm9/cache.h>
-#include <assert.h>
 
 extern u16 map[4096];
 
@@ -35,16 +30,16 @@ void spelunker::scroll(int bg_main, int bg_sub, LevelGenerator *l, u16 *fresh_ma
     OAMManager *subOamManager = new OAMManager();
     subOamManager->initOAMTable(SPRITE_GFX_SUB, SPRITE_PALETTE_SUB, OAM_SUB, OFFSET_MULTIPLIER_SUB);
 
+    Hud *hud = new Hud();
+    hud->initHud(heartTiles);
+    hud->heartSpriteInfo = mainOamManager->initSprite(heartPal, heartPalLen, heartTiles, heartTilesLen);
+
     MainDude *mainDude = new MainDude();
     mainDude->x = 100;
     mainDude->y = 100;
     mainDude->main_spriteInfo = mainOamManager->initSprite(spelunkerPal, spelunkerPalLen, spelunkerTiles, spelunkerTilesLen);
     mainDude->sub_spriteInfo = subOamManager->initSprite(spelunkerPal, spelunkerPalLen, spelunkerTiles, spelunkerTilesLen);
     mainDude->init();
-
-//    Hud *hud = new Hud();
-//    hud->initHud();
-
 
     while (true) {
         scanKeys();
@@ -74,7 +69,9 @@ void spelunker::scroll(int bg_main, int bg_sub, LevelGenerator *l, u16 *fresh_ma
 
 
         swiWaitForVBlank();
+
         mainDude->update(camera, keys_held, keys_down, l);
+        hud->drawHud();
 
         camera->updatePosition(mainDude->x, mainDude->y);
         camera->setScroll(bg_main, bg_sub);

@@ -13,19 +13,35 @@
   <component name="ChangeListManager">
     <list default="true" id="4167ccef-cad0-4b13-8f61-b9437b132076" name="Default" comment="Merge branch 'master' of https://github.com/dbeef/spelunky-ds&#10;&#10;# Conflicts:&#10;#&#9;README.md">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/build/Hud.d" afterPath="$PROJECT_DIR$/build/Hud.d" />
+      <change beforePath="$PROJECT_DIR$/build/Hud.o" afterPath="$PROJECT_DIR$/build/Hud.o" />
       <change beforePath="$PROJECT_DIR$/build/MainDude.o" afterPath="$PROJECT_DIR$/build/MainDude.o" />
       <change beforePath="$PROJECT_DIR$/build/OAMManager.o" afterPath="$PROJECT_DIR$/build/OAMManager.o" />
+      <change beforePath="$PROJECT_DIR$/build/Scrolling.d" afterPath="$PROJECT_DIR$/build/Scrolling.d" />
       <change beforePath="$PROJECT_DIR$/build/Scrolling.o" afterPath="$PROJECT_DIR$/build/Scrolling.o" />
-      <change beforePath="$PROJECT_DIR$/build/SpriteInfo.d" afterPath="$PROJECT_DIR$/build/SpriteInfo.d" />
-      <change beforePath="$PROJECT_DIR$/build/SpriteInfo.o" afterPath="$PROJECT_DIR$/build/SpriteInfo.o" />
+      <change beforePath="$PROJECT_DIR$/build/cavebg.h" afterPath="$PROJECT_DIR$/build/cavebg.h" />
+      <change beforePath="$PROJECT_DIR$/build/cavebg.s" afterPath="$PROJECT_DIR$/build/cavebg.s" />
+      <change beforePath="$PROJECT_DIR$/build/font.h" afterPath="$PROJECT_DIR$/build/font.h" />
+      <change beforePath="$PROJECT_DIR$/build/font.s" afterPath="$PROJECT_DIR$/build/font.s" />
+      <change beforePath="$PROJECT_DIR$/build/heart.h" afterPath="$PROJECT_DIR$/build/heart.h" />
+      <change beforePath="$PROJECT_DIR$/build/heart.o" afterPath="$PROJECT_DIR$/build/heart.o" />
+      <change beforePath="$PROJECT_DIR$/build/heart.s" afterPath="$PROJECT_DIR$/build/heart.s" />
+      <change beforePath="$PROJECT_DIR$/build/main.o" afterPath="$PROJECT_DIR$/build/main.o" />
+      <change beforePath="$PROJECT_DIR$/build/snake.h" afterPath="$PROJECT_DIR$/build/snake.h" />
+      <change beforePath="$PROJECT_DIR$/build/snake.s" afterPath="$PROJECT_DIR$/build/snake.s" />
+      <change beforePath="$PROJECT_DIR$/build/spelunker.h" afterPath="$PROJECT_DIR$/build/spelunker.h" />
+      <change beforePath="$PROJECT_DIR$/build/spelunker.s" afterPath="$PROJECT_DIR$/build/spelunker.s" />
       <change beforePath="$PROJECT_DIR$/build/spelunkyds.map" afterPath="$PROJECT_DIR$/build/spelunkyds.map" />
-      <change beforePath="$PROJECT_DIR$/source/animations/MainDude.cpp" afterPath="$PROJECT_DIR$/source/animations/MainDude.cpp" />
+      <change beforePath="$PROJECT_DIR$/build/tiles.h" afterPath="$PROJECT_DIR$/build/tiles.h" />
+      <change beforePath="$PROJECT_DIR$/build/tiles.s" afterPath="$PROJECT_DIR$/build/tiles.s" />
+      <change beforePath="$PROJECT_DIR$/gfx/sprites/heart.png" afterPath="$PROJECT_DIR$/gfx/sprites/heart.png" />
       <change beforePath="$PROJECT_DIR$/source/animations/MainDude.h" afterPath="$PROJECT_DIR$/source/animations/MainDude.h" />
       <change beforePath="$PROJECT_DIR$/source/animations/OAMManager.cpp" afterPath="$PROJECT_DIR$/source/animations/OAMManager.cpp" />
       <change beforePath="$PROJECT_DIR$/source/animations/OAMManager.h" afterPath="$PROJECT_DIR$/source/animations/OAMManager.h" />
+      <change beforePath="$PROJECT_DIR$/source/hud/Hud.cpp" afterPath="$PROJECT_DIR$/source/hud/Hud.cpp" />
+      <change beforePath="$PROJECT_DIR$/source/hud/Hud.h" afterPath="$PROJECT_DIR$/source/hud/Hud.h" />
       <change beforePath="$PROJECT_DIR$/source/level_layout/Scrolling.cpp" afterPath="$PROJECT_DIR$/source/level_layout/Scrolling.cpp" />
-      <change beforePath="$PROJECT_DIR$/source/level_layout/SpriteInfo.cpp" afterPath="$PROJECT_DIR$/source/level_layout/SpriteInfo.cpp" />
-      <change beforePath="$PROJECT_DIR$/source/level_layout/SpriteInfo.h" afterPath="$PROJECT_DIR$/source/level_layout/SpriteInfo.h" />
+      <change beforePath="$PROJECT_DIR$/source/main.cpp" afterPath="$PROJECT_DIR$/source/main.cpp" />
       <change beforePath="$PROJECT_DIR$/spelunkyds.elf" afterPath="$PROJECT_DIR$/spelunkyds.elf" />
       <change beforePath="$PROJECT_DIR$/spelunkyds.nds" afterPath="$PROJECT_DIR$/spelunkyds.nds" />
     </list>
@@ -40,77 +56,11 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="main.cpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/source/main.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="32" column="0" lean-forward="false" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MainDude.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/source/animations/MainDude.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="342">
-              <caret line="87" column="25" lean-forward="false" selection-start-line="87" selection-start-column="25" selection-end-line="87" selection-end-column="25" />
-              <folding>
-                <element signature="e#442#458#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SpriteInfo.cpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/source/level_layout/SpriteInfo.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="144">
-              <caret line="8" column="25" lean-forward="false" selection-start-line="8" selection-start-column="25" selection-end-line="8" selection-end-column="25" />
-              <folding>
-                <element signature="e#41#57#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MainDude.cpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/source/animations/MainDude.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="234">
-              <caret line="264" column="41" lean-forward="false" selection-start-line="264" selection-start-column="41" selection-end-line="264" selection-end-column="41" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="sprite.h" pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/devkitPro/libnds/include/nds/arm9/sprite.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="18">
-              <caret line="70" column="19" lean-forward="false" selection-start-line="70" selection-start-column="19" selection-end-line="70" selection-end-column="19" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Collisions.cpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/source/animations/Collisions.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="2" lean-forward="false" selection-start-line="0" selection-start-column="2" selection-end-line="0" selection-end-column="2" />
-              <folding>
-                <element signature="e#40#59#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Scrolling.cpp" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Scrolling.cpp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/source/level_layout/Scrolling.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="234">
-              <caret line="40" column="56" lean-forward="false" selection-start-line="40" selection-start-column="56" selection-end-line="40" selection-end-column="56" />
+            <state relative-caret-position="306">
+              <caret line="41" column="21" lean-forward="false" selection-start-line="41" selection-start-column="21" selection-end-line="41" selection-end-column="21" />
               <folding>
                 <element signature="e#0#16#0" expanded="true" />
               </folding>
@@ -118,11 +68,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="OAMManager.h" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Hud.cpp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/source/hud/Hud.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="479">
+              <caret line="38" column="41" lean-forward="false" selection-start-line="38" selection-start-column="41" selection-end-line="38" selection-end-column="41" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="OAMManager.h" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/source/animations/OAMManager.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="171">
-              <caret line="21" column="0" lean-forward="false" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+            <state relative-caret-position="266">
+              <caret line="19" column="9" lean-forward="false" selection-start-line="19" selection-start-column="9" selection-end-line="19" selection-end-column="9" />
               <folding />
             </state>
           </provider>
@@ -131,8 +91,8 @@
       <file leaf-file-name="OAMManager.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/source/animations/OAMManager.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="261">
-              <caret line="123" column="0" lean-forward="false" selection-start-line="123" selection-start-column="0" selection-end-line="123" selection-end-column="0" />
+            <state relative-caret-position="216">
+              <caret line="111" column="23" lean-forward="false" selection-start-line="111" selection-start-column="23" selection-end-line="111" selection-end-column="23" />
               <folding>
                 <element signature="e#41#57#0" expanded="true" />
               </folding>
@@ -140,13 +100,34 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SpriteInfo.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/source/level_layout/SpriteInfo.h">
+      <file leaf-file-name="spelunker.png" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/gfx/sprites/spelunker.png">
+          <provider selected="true" editor-type-id="images">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="sprite.grit" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/gfx/sprites/sprite.grit">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="342">
-              <caret line="19" column="13" lean-forward="false" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
+            <state relative-caret-position="36">
+              <caret line="2" column="4" lean-forward="false" selection-start-line="2" selection-start-column="4" selection-end-line="2" selection-end-column="4" />
               <folding />
             </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="snake.png" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/gfx/sprites/snake.png">
+          <provider selected="true" editor-type-id="images">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="heart.png" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/gfx/sprites/heart.png">
+          <provider selected="true" editor-type-id="images">
+            <state />
           </provider>
         </entry>
       </file>
@@ -154,16 +135,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>neighborin</find>
-      <find>tiles[9</find>
-      <find>ca</find>
-      <find>keys</find>
-      <find>left_down</find>
-      <find>left</find>
-      <find>BOUNDARY_X</find>
-      <find>ABS</find>
-      <find>abs</find>
-      <find>sx</find>
       <find>sy</find>
       <find>width</find>
       <find>camera</find>
@@ -178,12 +149,22 @@
       <find>init</find>
       <find>animate</find>
       <find>oamI</find>
-      <find>current_oam_id</find>
-      <find>frameGfx</find>
       <find>fra</find>
-      <find>gfx</find>
-      <find>frameGfx =</find>
       <find>frm</find>
+      <find>gfx</find>
+      <find>frameGfx</find>
+      <find>frameGfx =</find>
+      <find>KEYS</find>
+      <find>next</find>
+      <find>available</find>
+      <find>current</find>
+      <find>gfxInde</find>
+      <find>nextAvailableTileIdx</find>
+      <find>current_oam_id</find>
+      <find>spriteInfo-&gt;oamId</find>
+      <find>oamId</find>
+      <find>asser</find>
+      <find>spriteInfo</find>
     </findStrings>
     <replaceStrings>
       <replace>Collisions</replace>
@@ -230,7 +211,6 @@
         <option value="$PROJECT_DIR$/source/time/Timer.cpp" />
         <option value="$PROJECT_DIR$/source/level_layout/MapTile.cpp" />
         <option value="$PROJECT_DIR$/README.md" />
-        <option value="$PROJECT_DIR$/gfx/sprites/sprite.grit" />
         <option value="$APPLICATION_CONFIG_DIR$/scratches/scratch.cpp" />
         <option value="$PROJECT_DIR$/source/console/text_manager.cpp" />
         <option value="$PROJECT_DIR$/source/level_layout/level_generator.cpp" />
@@ -249,9 +229,7 @@
         <option value="$PROJECT_DIR$/source/animations/Snake.h" />
         <option value="$PROJECT_DIR$/gfx/fonts/font.grit" />
         <option value="$PROJECT_DIR$/source/level_layout/BaseCaveMap.h" />
-        <option value="$PROJECT_DIR$/source/hud/Hud.h" />
         <option value="$PROJECT_DIR$/Makefile" />
-        <option value="$PROJECT_DIR$/source/hud/Hud.cpp" />
         <option value="$PROJECT_DIR$/notes/notes.txt" />
         <option value="$PROJECT_DIR$/source/level_layout/MapUtils.cpp" />
         <option value="$PROJECT_DIR$/source/level_layout/MapUtils.h" />
@@ -260,7 +238,6 @@
         <option value="$PROJECT_DIR$/source/level_layout/LevelGenerator.cpp" />
         <option value="$PROJECT_DIR$/source/animations/Snake.cpp" />
         <option value="$PROJECT_DIR$/source/level_layout/Scrolling.h" />
-        <option value="$PROJECT_DIR$/source/main.cpp" />
         <option value="$PROJECT_DIR$/source/animations/Camera.cpp" />
         <option value="$PROJECT_DIR$/source/animations/Camera.h" />
         <option value="$PROJECT_DIR$/source/touch/touchUtils.h" />
@@ -268,13 +245,17 @@
         <option value="$PROJECT_DIR$/source/animations/OamManager.h" />
         <option value="$PROJECT_DIR$/source/animations/Collisions.cpp" />
         <option value="$PROJECT_DIR$/source/animations/Collisions.h" />
-        <option value="$PROJECT_DIR$/source/animations/MainDude.h" />
         <option value="$PROJECT_DIR$/source/level_layout/SpriteInfo.h" />
-        <option value="$PROJECT_DIR$/source/level_layout/Scrolling.cpp" />
-        <option value="$PROJECT_DIR$/source/animations/MainDude.cpp" />
         <option value="$PROJECT_DIR$/source/level_layout/SpriteInfo.cpp" />
-        <option value="$PROJECT_DIR$/source/animations/OAMManager.cpp" />
+        <option value="$PROJECT_DIR$/source/animations/MainDude.h" />
+        <option value="$PROJECT_DIR$/source/hud/Hud.h" />
+        <option value="$PROJECT_DIR$/source/animations/MainDude.cpp" />
+        <option value="$PROJECT_DIR$/source/main.cpp" />
+        <option value="$PROJECT_DIR$/gfx/sprites/sprite.grit" />
         <option value="$PROJECT_DIR$/source/animations/OAMManager.h" />
+        <option value="$PROJECT_DIR$/source/animations/OAMManager.cpp" />
+        <option value="$PROJECT_DIR$/source/hud/Hud.cpp" />
+        <option value="$PROJECT_DIR$/source/level_layout/Scrolling.cpp" />
       </list>
     </option>
   </component>
@@ -353,6 +334,17 @@
               <item name="spelunkyds" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
               <item name="spelunkyds" type="462c0819:PsiDirectoryNode" />
               <item name="gfx" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="spelunkyds" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
+              <item name="spelunkyds" type="462c0819:PsiDirectoryNode" />
+              <item name="gfx" type="462c0819:PsiDirectoryNode" />
+              <item name="sprites" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="spelunkyds" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
+              <item name="spelunkyds" type="462c0819:PsiDirectoryNode" />
+              <item name="scratches" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="spelunkyds" type="dad4c3:CidrFilesViewHelper$MyProjectTreeStructure$1" />
@@ -470,12 +462,12 @@
       <workItem from="1522266330772" duration="1746000" />
       <workItem from="1522501079478" duration="10138000" />
       <workItem from="1522568613741" duration="4234000" />
-      <workItem from="1522586783644" duration="10860000" />
+      <workItem from="1522586783644" duration="15820000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="340598000" />
+    <option name="totallyTimeSpent" value="345558000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -496,7 +488,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32957393" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24951267" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.39097744" sideWeight="0.4899285" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20802005" sideWeight="0.4899285" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -559,32 +551,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/build/font.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///usr/include/stdio.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="355" column="11" lean-forward="false" selection-start-line="355" selection-start-column="11" selection-end-line="355" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/devkitPro/libnds/include/nds/arm9/console.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3960">
-          <caret line="220" column="0" lean-forward="false" selection-start-line="220" selection-start-column="0" selection-end-line="220" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gfx/fonts/font.bmp">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/gfx/fonts/font.grit">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="432">
@@ -646,23 +612,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/gfx/sprites/sprite.grit">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="6" column="6" lean-forward="false" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gfx/sprites/spelunker.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gfx/sprites/snake.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Makefile">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="252">
@@ -681,18 +630,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="368">
           <caret line="21" column="26" lean-forward="false" selection-start-line="21" selection-start-column="26" selection-end-line="21" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gfx/sprites/heart.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/source/hud/Hud.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="12" column="19" lean-forward="false" selection-start-line="12" selection-start-column="19" selection-end-line="12" selection-end-column="19" />
         </state>
       </provider>
     </entry>
@@ -745,13 +682,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
           <caret line="103" column="3" lean-forward="false" selection-start-line="103" selection-start-column="3" selection-end-line="103" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/source/hud/Hud.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="24" column="21" lean-forward="false" selection-start-line="24" selection-start-column="21" selection-end-line="24" selection-end-column="21" />
         </state>
       </provider>
     </entry>
@@ -845,39 +775,39 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/level_layout/Scrolling.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="234">
-          <caret line="40" column="56" lean-forward="false" selection-start-line="40" selection-start-column="56" selection-end-line="40" selection-end-column="56" />
-          <folding>
-            <element signature="e#0#16#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/source/animations/Collisions.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="2" lean-forward="false" selection-start-line="0" selection-start-column="2" selection-end-line="0" selection-end-column="2" />
           <folding>
-            <element signature="e#40#59#0" expanded="true" />
+            <element signature="e#40#59#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/main.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="31" column="36" lean-forward="false" selection-start-line="31" selection-start-column="36" selection-end-line="31" selection-end-column="36" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$USER_HOME$/devkitPro/libnds/include/nds/arm9/sprite.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18">
-          <caret line="70" column="19" lean-forward="false" selection-start-line="70" selection-start-column="19" selection-end-line="70" selection-end-column="19" />
+        <state relative-caret-position="220">
+          <caret line="219" column="16" lean-forward="false" selection-start-line="219" selection-start-column="16" selection-end-line="219" selection-end-column="16" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/animations/MainDude.cpp">
+    <entry file="file://$PROJECT_DIR$/source/animations/MainDude.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="234">
-          <caret line="264" column="41" lean-forward="false" selection-start-line="264" selection-start-column="41" selection-end-line="264" selection-end-column="41" />
-          <folding />
+        <state relative-caret-position="360">
+          <caret line="67" column="14" lean-forward="false" selection-start-line="67" selection-start-column="14" selection-end-line="67" selection-end-column="14" />
+          <folding>
+            <element signature="e#442#458#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -886,41 +816,84 @@
         <state relative-caret-position="144">
           <caret line="8" column="25" lean-forward="false" selection-start-line="8" selection-start-column="25" selection-end-line="8" selection-end-column="25" />
           <folding>
-            <element signature="e#41#57#0" expanded="true" />
+            <element signature="e#41#57#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/animations/MainDude.h">
+    <entry file="file://$PROJECT_DIR$/source/hud/Hud.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="87" column="25" lean-forward="false" selection-start-line="87" selection-start-column="25" selection-end-line="87" selection-end-column="25" />
+        <state relative-caret-position="252">
+          <caret line="14" column="12" lean-forward="false" selection-start-line="14" selection-start-column="12" selection-end-line="14" selection-end-column="12" />
           <folding>
-            <element signature="e#442#458#0" expanded="true" />
+            <element signature="e#92#115#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/main.cpp">
+    <entry file="file://$PROJECT_DIR$/source/animations/MainDude.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="32" column="0" lean-forward="false" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
+        <state relative-caret-position="234">
+          <caret line="68" column="15" lean-forward="false" selection-start-line="68" selection-start-column="15" selection-end-line="68" selection-end-column="15" />
           <folding />
         </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gfx/sprites/spelunker (copy).png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gfx/sprites/heart (copy).png">
+      <provider selected="true" editor-type-id="images">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/source/level_layout/SpriteInfo.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="19" column="13" lean-forward="false" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
+        <state relative-caret-position="270">
+          <caret line="15" column="8" lean-forward="false" selection-start-line="15" selection-start-column="8" selection-end-line="15" selection-end-column="8" />
           <folding />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/gfx/sprites/asdas.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gfx/sprites/spelunker2.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gfx/sprites/heart.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gfx/sprites/snake.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gfx/sprites/sprite.grit">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="36">
+          <caret line="2" column="4" lean-forward="false" selection-start-line="2" selection-start-column="4" selection-end-line="2" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gfx/sprites/spelunker.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/source/animations/OAMManager.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="261">
-          <caret line="123" column="0" lean-forward="false" selection-start-line="123" selection-start-column="0" selection-end-line="123" selection-end-column="0" />
+        <state relative-caret-position="216">
+          <caret line="111" column="23" lean-forward="false" selection-start-line="111" selection-start-column="23" selection-end-line="111" selection-end-column="23" />
           <folding>
             <element signature="e#41#57#0" expanded="true" />
           </folding>
@@ -929,9 +902,27 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/source/animations/OAMManager.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="21" column="0" lean-forward="false" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+        <state relative-caret-position="266">
+          <caret line="19" column="9" lean-forward="false" selection-start-line="19" selection-start-column="9" selection-end-line="19" selection-end-column="9" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/hud/Hud.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="479">
+          <caret line="38" column="41" lean-forward="false" selection-start-line="38" selection-start-column="41" selection-end-line="38" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/level_layout/Scrolling.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="41" column="21" lean-forward="false" selection-start-line="41" selection-start-column="21" selection-end-line="41" selection-end-column="21" />
+          <folding>
+            <element signature="e#0#16#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

@@ -59,8 +59,6 @@ public:
     int x;
     int y;
     int animFrame;
-    u16 *spriteGfxMemMain;
-    u16 *spriteGfxMemSub;
     u8 *frameGfx;
 
     void checkCollisionWithMap(MapTile *mapTiles[32][32], int xx, int yy);

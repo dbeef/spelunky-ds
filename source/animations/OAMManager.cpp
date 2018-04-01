@@ -59,7 +59,6 @@ OAMManager::initSprite(const unsigned short pallette[], int palLen, const unsign
     SpriteInfo *spriteInfo = new SpriteInfo();/*&spriteInfo[current_oam_id];*/
     SpriteEntry *spriteEntry = &oam->oamBuffer[current_oam_id];
 
-
     /* Initialize spriteInfo */
     spriteInfo->offset_multiplier = this->offset_multiplier;
     spriteInfo->sprite_address = this->sprite_address;
@@ -105,8 +104,8 @@ OAMManager::initSprite(const unsigned short pallette[], int palLen, const unsign
      *  be placed onto, which palette the sprite should use, and whether or not
      *  to show the sprite.
      */
-    spriteEntry->gfxIndex = current_oam_id;
-    current_oam_id += tilesLen / BYTES_PER_16_COLOR_TILE;
+    spriteEntry->gfxIndex = nextAvailableTileIdx;
+    nextAvailableTileIdx += tilesLen / BYTES_PER_16_COLOR_TILE;
     spriteEntry->priority = OBJPRIORITY_0;
     spriteEntry->palette = spriteInfo->oamId;
 

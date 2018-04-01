@@ -22,13 +22,19 @@
 #define HOLDING_OBJ_FRAME_POSITION_X 10
 #define HOLDING_OBJ_FRAME_POSITION_Y 50
 
-void Hud::initHud() {
-    heartGfxMemMain = oamAllocateGfx(&oamMain, SpriteSize_16x16, SpriteColorFormat_256Color);
-    dmaCopy(heartPal, SPRITE_PALETTE, 512);
+void Hud::initHud(const unsigned int tiles[]) {
+    frameGfx = (u8*) tiles;
 }
 
 void Hud::drawHud() {
-    dmaCopy(heartTiles, heartGfxMemMain, 16 * 16);
-    oamSet(&oamMain, 0, HEART_POSITION_X, HEART_POSITION_Y, 0, 0, SpriteSize_16x16, SpriteColorFormat_256Color,
-           heartGfxMemMain, -1, false, false, false, false, false);
+
+    int frame;
+    u8* offset;
+
+    frame = 1;
+    offset = frameGfx + frame * 64*64;
+
+    heartSpriteInfo->entry->x = HEART_POSITION_X;
+    heartSpriteInfo->entry->y = HEART_POSITION_Y;
+    heartSpriteInfo->updateFrame(frameGfx);
 }
