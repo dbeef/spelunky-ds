@@ -135,9 +135,12 @@ DEPENDS	:=	$(OFILES:.o=.d)
 $(OUTPUT).nds	: 	$(OUTPUT).elf
 $(OUTPUT).elf	:	$(OFILES)
 
-%.s %.h : %.png
+%.s %.h : ../gfx/sprites/%.png
 		grit $< -ff../gfx/sprites/sprite.grit -o$*
-#		grit $< -ff../gfx/tilemaps/tilemap.grit -o$*
+%.s %.h : ../gfx/tilemaps/%.png
+		grit $< -ff../gfx/tilemaps/tilemap.grit -o$*
+#grit $< -ff../gfx/tilemaps/tilemap.grit -o$*
+#grit $< -ff../gfx/sprites/sprite.grit -o$*
 
 #---------------------------------------------------------------------------------
 # The bin2o rule should be copied and modified

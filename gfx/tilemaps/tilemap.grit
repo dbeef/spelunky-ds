@@ -1,8 +1,7 @@
--p!
--gt
+-W3
+-m!
 -gB8
--mRtpf
--mLs
--mu32
--Mw16
--Mh16
+#metatile
+-Mh2
+-Mw2
+-gT 209c00
