@@ -11,10 +11,13 @@
 class Hud {
 
 public:
-    u8 *frameGfx;
     void drawHud();
-    void initHud(const unsigned int tiles[]);
+    void initHud();
     SpriteInfo* heartSpriteInfo;
+    SpriteInfo* bombSpriteInfo;
+    SpriteInfo* dollarSpriteInfo;
+    SpriteInfo* ropeSpriteInfo;
+    SpriteInfo* holdingItemSpriteInfo;
 //    u16 *heartGfxMemMain;
 //    u16 *bombGfxMemMain;
 //    u16 *ropeGfxMemMain;

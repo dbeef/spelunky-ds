@@ -8,6 +8,10 @@
 #include "../hud/Hud.h"
 #include "../../build/heart.h"
 #include <nds/arm9/input.h>
+#include "../../build/dollar.h"
+#include "../../build/bomb.h"
+#include "../../build/rope.h"
+#include "../../build/holding_item.h"
 
 extern u16 map[4096];
 
@@ -34,12 +38,19 @@ void spelunker::scroll(int bg_main, int bg_sub, LevelGenerator *l, u16 *fresh_ma
     MainDude *mainDude = new MainDude();
     mainDude->x = 100;
     mainDude->y = 100;
-    mainDude->main_spriteInfo = mainOamManager->initSprite(spelunkerPal, spelunkerPalLen, spelunkerTiles, spelunkerTilesLen);
-    mainDude->sub_spriteInfo = subOamManager->initSprite(spelunkerPal, spelunkerPalLen, spelunkerTiles, spelunkerTilesLen);
+    mainDude->main_spriteInfo = mainOamManager->initSprite(spelunkerPal, spelunkerPalLen, spelunkerTiles,
+                                                           spelunkerTilesLen);
+    mainDude->sub_spriteInfo = subOamManager->initSprite(spelunkerPal, spelunkerPalLen, spelunkerTiles,
+                                                         spelunkerTilesLen);
     mainDude->init();
     Hud *hud = new Hud();
-    hud->initHud(heartTiles);
     hud->heartSpriteInfo = mainOamManager->initSprite(heartPal, heartPalLen, heartTiles, heartTilesLen);
+    hud->dollarSpriteInfo = mainOamManager->initSprite(dollarPal, dollarPalLen, dollarTiles, dollarTilesLen);
+    hud->bombSpriteInfo = mainOamManager->initSprite(bombPal, bombPalLen, bombTiles, bombTilesLen);
+    hud->ropeSpriteInfo = mainOamManager->initSprite(ropePal, ropePalLen, ropeTiles, ropeTilesLen);
+    hud->holdingItemSpriteInfo = mainOamManager->
+            initSprite(holding_itemPal, holding_itemPalLen, holding_itemTiles, holding_itemTilesLen);
+    hud->initHud();
 
     while (true) {
         scanKeys();

@@ -1,0 +1,1 @@
+bomb.o: bomb.s

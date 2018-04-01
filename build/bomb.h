@@ -1,9 +1,9 @@
 
-//{{BLOCK(heart)
+//{{BLOCK(bomb)
 
 //======================================================================
 //
-//	heart, 16x16@4, 
+//	bomb, 16x16@4, 
 //	Transparent color : 20,9C,00
 //	+ palette 16 entries, not compressed
 //	+ 4 tiles Metatiled by 2x2 not compressed
@@ -15,15 +15,15 @@
 //
 //======================================================================
 
-#ifndef GRIT_HEART_H
-#define GRIT_HEART_H
+#ifndef GRIT_BOMB_H
+#define GRIT_BOMB_H
 
-#define heartTilesLen 128
-extern const unsigned int heartTiles[32];
+#define bombTilesLen 128
+extern const unsigned int bombTiles[32];
 
-#define heartPalLen 32
-extern const unsigned short heartPal[16];
+#define bombPalLen 32
+extern const unsigned short bombPal[16];
 
-#endif // GRIT_HEART_H
+#endif // GRIT_BOMB_H
 
-//}}BLOCK(heart)
+//}}BLOCK(bomb)

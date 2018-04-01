@@ -1,0 +1,1 @@
+dollar.o: dollar.s

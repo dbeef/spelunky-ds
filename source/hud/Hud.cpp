@@ -16,25 +16,29 @@
 #define ROPE_POSITION_X 90
 #define ROPE_POSITION_Y 10
 
-#define GOLD_POSITION_X 130
-#define GOLD_POSITION_Y 10
+#define DOLLAR_POSITION_X 130
+#define DOLLAR_POSITION_Y 10
 
-#define HOLDING_OBJ_FRAME_POSITION_X 10
-#define HOLDING_OBJ_FRAME_POSITION_Y 50
+#define HOLDING_ITEM_FRAME_POSITION_X 10
+#define HOLDING_ITEM_FRAME_POSITION_Y 25
 
-void Hud::initHud(const unsigned int tiles[]) {
-    frameGfx = (u8*) tiles;
+void Hud::initHud() {
+    heartSpriteInfo->entry->x = HEART_POSITION_X;
+    heartSpriteInfo->entry->y = HEART_POSITION_Y;
+
+    bombSpriteInfo->entry->x = BOMB_POSITION_X;
+    bombSpriteInfo->entry->y = BOMB_POSITION_Y;
+
+    dollarSpriteInfo->entry->x = DOLLAR_POSITION_X;
+    dollarSpriteInfo->entry->y = DOLLAR_POSITION_Y;
+
+    ropeSpriteInfo->entry->x = ROPE_POSITION_X;
+    ropeSpriteInfo->entry->y = ROPE_POSITION_Y;
+
+    holdingItemSpriteInfo->entry->x = HOLDING_ITEM_FRAME_POSITION_X;
+    holdingItemSpriteInfo->entry->y = HOLDING_ITEM_FRAME_POSITION_Y;
 }
 
 void Hud::drawHud() {
-
-    int frame;
-    u8* offset;
-
-    frame = 1;
-    offset = frameGfx + frame * 64*64;
-
-    heartSpriteInfo->entry->x = HEART_POSITION_X;
-    heartSpriteInfo->entry->y = HEART_POSITION_Y;
-    heartSpriteInfo->updateFrame(frameGfx);
+    //nothing
 }

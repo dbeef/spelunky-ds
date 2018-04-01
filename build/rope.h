@@ -1,9 +1,9 @@
 
-//{{BLOCK(heart)
+//{{BLOCK(rope)
 
 //======================================================================
 //
-//	heart, 16x16@4, 
+//	rope, 16x16@4, 
 //	Transparent color : 20,9C,00
 //	+ palette 16 entries, not compressed
 //	+ 4 tiles Metatiled by 2x2 not compressed
@@ -15,15 +15,15 @@
 //
 //======================================================================
 
-#ifndef GRIT_HEART_H
-#define GRIT_HEART_H
+#ifndef GRIT_ROPE_H
+#define GRIT_ROPE_H
 
-#define heartTilesLen 128
-extern const unsigned int heartTiles[32];
+#define ropeTilesLen 128
+extern const unsigned int ropeTiles[32];
 
-#define heartPalLen 32
-extern const unsigned short heartPal[16];
+#define ropePalLen 32
+extern const unsigned short ropePal[16];
 
-#endif // GRIT_HEART_H
+#endif // GRIT_ROPE_H
 
-//}}BLOCK(heart)
+//}}BLOCK(rope)

@@ -1,13 +1,13 @@
 
-//{{BLOCK(spelunker)
+//{{BLOCK(dollar)
 
 //======================================================================
 //
-//	spelunker, 96x48@4, 
+//	dollar, 16x16@4, 
 //	Transparent color : 20,9C,00
 //	+ palette 16 entries, not compressed
-//	+ 72 tiles Metatiled by 2x2 not compressed
-//	Total size: 32 + 2304 = 2336
+//	+ 4 tiles Metatiled by 2x2 not compressed
+//	Total size: 32 + 128 = 160
 //
 //	Time-stamp: 2018-04-01, 22:18:30
 //	Exported by Cearn's GBA Image Transmogrifier, v0.8.14
@@ -15,15 +15,15 @@
 //
 //======================================================================
 
-#ifndef GRIT_SPELUNKER_H
-#define GRIT_SPELUNKER_H
+#ifndef GRIT_DOLLAR_H
+#define GRIT_DOLLAR_H
 
-#define spelunkerTilesLen 2304
-extern const unsigned int spelunkerTiles[576];
+#define dollarTilesLen 128
+extern const unsigned int dollarTiles[32];
 
-#define spelunkerPalLen 32
-extern const unsigned short spelunkerPal[16];
+#define dollarPalLen 32
+extern const unsigned short dollarPal[16];
 
-#endif // GRIT_SPELUNKER_H
+#endif // GRIT_DOLLAR_H
 
-//}}BLOCK(spelunker)
+//}}BLOCK(dollar)

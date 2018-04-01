@@ -78,7 +78,11 @@ Scrolling.o: \
  /home/xdbeef/devkitPro/libnds/include/nds/jtypes.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../hud/../level_layout/SpriteInfo.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../../build/heart.h \
- /home/xdbeef/devkitPro/libnds/include/nds/arm9/input.h
+ /home/xdbeef/devkitPro/libnds/include/nds/arm9/input.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../../build/dollar.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../../build/bomb.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../../build/rope.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../../build/holding_item.h
 
 /home/xdbeef/devkitPro/libnds/include/nds.h:
 
@@ -237,3 +241,11 @@ Scrolling.o: \
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../../build/heart.h:
 
 /home/xdbeef/devkitPro/libnds/include/nds/arm9/input.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../../build/dollar.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../../build/bomb.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../../build/rope.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../../build/holding_item.h:
