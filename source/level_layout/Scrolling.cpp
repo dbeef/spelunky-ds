@@ -23,7 +23,7 @@ static const int OFFSET_MULTIPLIER = BOUNDARY_VALUE /
 
 void spelunker::scroll(int bg_main, int bg_sub, int width, int height, LevelGenerator *l, u16 *fresh_map) {
     int keys_held = 0;
-    int keys_up = 0;
+    int keys_down = 0;
     int sx = 0;
     int sy = 0;
 
@@ -53,7 +53,7 @@ void spelunker::scroll(int bg_main, int bg_sub, int width, int height, LevelGene
         camera_timer += timerElapsed(0) / TICKS_PER_SECOND;
 
         keys_held = keysHeld();
-        keys_up = keysUp();
+        keys_down = keysDown();
 
         if ((keys_held & KEY_B) ) {
 
@@ -126,7 +126,7 @@ void spelunker::scroll(int bg_main, int bg_sub, int width, int height, LevelGene
         //
         //updateOAM(oam);
         //
-        mainDude->update(sx, sy, keys_held, keys_up, l);
+        mainDude->update(sx, sy, keys_held, keys_down, l);
 
         oamUpdate(&oamSub);
         oamUpdate(&oamMain);

@@ -26,42 +26,23 @@ void MainDude::clearTilesOnRight(MapTile *mapTiles[32][32]) {
     MapTile *left_down = mapTiles[xx - 1][yy + 1];
     MapTile *right_down = mapTiles[xx + 1][yy + 1];
 
-    left_middle->values[0] = 16;
-    left_middle->values[1] = 16;
-    left_middle->values[2] = 16;
-    left_middle->values[3] = 16;
+    up_middle->values[0] = 16;
+    up_middle->values[1] = 16;
+    up_middle->values[2] = 16;
+    up_middle->values[3] = 16;
 
-    left_down->values[0] = 0;
-    left_down->values[1] = 0;
-    left_down->values[2] = 0;
-    left_down->values[3] = 0;
-
-    left_up->values[0] = 0;
-    left_up->values[1] = 0;
-    left_up->values[2] = 0;
-    left_up->values[3] = 0;
-    right_middle->values[0] = 16;
-    right_middle->values[1] = 16;
-    right_middle->values[2] = 16;
-    right_middle->values[3] = 16;
-
-    right_down->values[0] = 0;
-    right_down->values[1] = 0;
-    right_down->values[2] = 0;
-    right_down->values[3] = 0;
-
-    right_up->values[0] = 0;
-    right_up->values[1] = 0;
-    right_up->values[2] = 0;
-    right_up->values[3] = 0;
+    down_middle->values[0] = 0;
+    down_middle->values[1] = 0;
+    down_middle->values[2] = 0;
+    down_middle->values[3] = 0;
 
 }
 
-void MainDude::handleKeyInput(int keys_held, int keys_up) {
+void MainDude::handleKeyInput(int keys_held, int keys_down) {
 
-    if (keys_held) {
 
-        if (keys_held & KEY_UP) {
+    if (keys_down) {
+        if (keys_down & KEY_R) {
             if (bottomCollision) {
                 ySpeed = -JUMP_SPEED;
             }
@@ -69,8 +50,12 @@ void MainDude::handleKeyInput(int keys_held, int keys_up) {
                 ySpeed = -JUMP_SPEED;
                 hangingOnTileLeft = false;
                 hangingOnTileRight = false;
+                hangingTimer = 0;
             }
         }
+    }
+    if (keys_held) {
+
 
         if (keys_held & KEY_LEFT) {
             state = W_LEFT;
@@ -127,7 +112,7 @@ void MainDude::updateSpeed(MapTile *mapTiles[32][32]) {
 
     if (posIncTimer > 10) {
 
-        std::cout<< xSpeed << '\n';
+        std::cout << xSpeed << '\n';
 
         double tempXspeed = abs(xSpeed);
         double tempYspeed = abs(ySpeed);
@@ -216,7 +201,7 @@ void MainDude::checkCollisionWithMap(MapTile *mapTiles[32][32], int xx, int yy) 
             this->x, &this->y, &ySpeed, 16, 16);
 
 
-    canHangOnTile(mapTiles);
+    canHangOnTile(tiles);
 
     if (upperCollision || bottomCollision) {
         hangingOnTileLeft = false;
@@ -228,11 +213,11 @@ void MainDude::checkCollisionWithMap(MapTile *mapTiles[32][32], int xx, int yy) 
     if (!bottomCollision) {
         if (/*up_middle == 0 && down_middle == 0 && */(right_middle == 0 && (right_up != 0 && right_down != 0))) {
             if (xSpeed > 0)
-                x += 1;
+                x += 2;
         }
         if (/*up_middle == 0 && down_middle == 0 && */(left_middle == 0 && (left_up != 0 && left_down != 0))) {
             if (xSpeed < 0)
-                x -= 1;
+                x -= 2;
         }
     }
     //
@@ -325,91 +310,120 @@ void MainDude::animate(int camera_x, int camera_y) {
 
 }
 
-void MainDude::canHangOnTile(MapTile *mapTiles[32][32]) {
 
-    if(bottomCollision)
+//w spelunkach przycisk skoku jest blokowany po pierwszym wciśnięciu aż do odciśnięcia
+/**
+ * MapTile *tiles[9] = {
+            left_middle, //0
+            right_middle, //1
+            up_middle, //2
+            down_middle, //3
+            center, //4
+            left_up, //5
+            right_up, //6
+            left_down, //7
+            right_down //8
+    };
+ * @param neighboringTiles
+ */
+void MainDude::canHangOnTile(MapTile *neighboringTiles[9]) {
+
+
+    if (bottomCollision || (!leftCollision && !rightCollision))
         return;
 
-    for (int x = 0; x < 32; x++) {
-        for (int y = 0; y < 32; y++) {
+    if (/*(neighboringTiles[3] != 0 && neighboringTiles[2] != 0) || */neighboringTiles[2] != 0 || neighboringTiles[3] != 0)
+        return;
 
-            if (mapTiles[x][y] == 0)
-                continue;
+    bool y_bound = false;
+    bool x_bound = false;
 
-            if (!hangingOnTileLeft && !hangingOnTileRight) {
+    if (rightCollision && state == W_LEFT) {
 
-                if (x == 0 || y == 0 || x == 31 || y == 31)
-                    continue;
+        if (neighboringTiles[5] != 0)
+            return;
 
-                if (leftCollision || rightCollision) {
+        x_bound = (this->x <= (neighboringTiles[0]->x * 16) + 16 && (this->x >= (neighboringTiles[0]->x * 16) + 12));
+        y_bound = (this->y > (neighboringTiles[0]->y * 16) - 2) && (this->y < (neighboringTiles[0]->y * 16) + 8);
+    } else if (leftCollision && state == W_RIGHT) {
 
-                    bool upper_tile_exists = mapTiles[x][y - 1] != 0;
-                    bool lower_tile_exists = mapTiles[x][y + 1] != 0;
+        if (neighboringTiles[6] != 0)
+            return;
 
-                    if ((upper_tile_exists && lower_tile_exists) || (upper_tile_exists))
-                        continue;
+        y_bound = (this->y > (neighboringTiles[1]->y * 16) - 2) && (this->y < (neighboringTiles[1]->y * 16) + 8);
+        x_bound = (this->x <= (neighboringTiles[1]->x * 16) - 12 && (this->x >= (neighboringTiles[1]->x * 16) - 16));
+    }
 
-                    bool y_bound = (this->y > (y * 16) - 2) && (this->y < (y * 16) + 8);
-                    bool x_bound = false;
-                    if (rightCollision && state == W_LEFT) {
+    if ((y_bound && x_bound) && hangingTimer > MIN_HANGING_TIME) {
+        hangingTimer = 0;
+        ySpeed = 0;
 
-                        bool upper_right_tile_exists = mapTiles[x + 1][y - 1] != 0;
-                        if (upper_right_tile_exists)
-                            continue;
+        fprintf(stdout, "HANGING" + '\n');
 
-                        x_bound = (this->x <= (x * 16) + 16 && (this->x >= (x * 16) + 12));
-                    } else if (leftCollision && state == W_RIGHT) {
-                        bool upper_left_tile_exists = mapTiles[x - 1][y - 1] != 0;
-                        if (upper_left_tile_exists)
-                            continue;
-
-                        x_bound = (this->x <= (x * 16) - 12 && (this->x >= (x * 16) - 16));
-                    }
-
-                    if (y_bound && x_bound) {
-                        hangingTimer = 0;
-                        this->y = (y * 16);
-                        ySpeed = 0;
-
-                        fprintf(stdout, "HANGING" + '\n');
-
-                        if (rightCollision)
-                            hangingOnTileRight = true;
-                        if (leftCollision)
-                            hangingOnTileLeft = true;
-                    }
-                }
-            }
+        if (rightCollision) {
+            this->y = (neighboringTiles[0]->y * 16);
+            hangingOnTileRight = true;
+        }
+        if (leftCollision) {
+            hangingOnTileLeft = true;
+            this->y = (neighboringTiles[1]->y * 16);
         }
     }
+
+    //jeśli tile pod graczem istnieje, lub tile nad graczem istineje, nie można się zawiesic
+    //obliczenie x,y bounds
+    //jeśli jest zwrócony w lewo i jest kolizja z tilem z lewej, to sprawdź czy upper-right istnieje, jeśli tak, to wyjdź
+    //jeśli jest zwrócony w prawo i jest kolizja z tilem z prawej, to sprawdź czy upper-left istnieje, jeśli tak, to wyjdź
+
+/*
+    if (y_bound && x_bound) {
+        hangingTimer = 0;
+        this->y = (y * 16);
+        ySpeed = 0;
+
+        fprintf(stdout, "HANGING" + '\n');
+
+        if (rightCollision)
+            hangingOnTileRight = true;
+        if (leftCollision)
+            hangingOnTileLeft = true;
+
+                        bool y_bound = (this->y > (y * 16) - 2) && (this->y < (y * 16) + 8);
+                        x_bound = (this->x <= (x * 16) - 12 && (this->x >= (x * 16) - 16));
+
+    }*/
+
+
+
 }
 
+//W spelunkach zwalnianie jes ttakże w powietrzu!
 void MainDude::applyFriction() {
 
-    if (bottomCollision) {
-        if (frictionTimer > FRICTION_DELTA_TIME_MS) {
-            frictionTimer = 0;
-            if (xSpeed > 0) {
-                xSpeed -= FRICTION_DELTA_SPEED;
-                if (xSpeed < 0)
-                    xSpeed = 0;
-            }
-            if (xSpeed < 0) {
-                xSpeed += FRICTION_DELTA_SPEED;
-                if (xSpeed > 0)
-                    xSpeed = 0;
-            }
+//    if (bottomCollision) {
+    if (frictionTimer > FRICTION_DELTA_TIME_MS) {
+        frictionTimer = 0;
+        if (xSpeed > 0) {
+            xSpeed -= FRICTION_DELTA_SPEED;
+            if (xSpeed < 0)
+                xSpeed = 0;
+        }
+        if (xSpeed < 0) {
+            xSpeed += FRICTION_DELTA_SPEED;
+            if (xSpeed > 0)
+                xSpeed = 0;
         }
     }
+//    }
 
 }
 
-void MainDude::update(int camera_x, int camera_y, int keys_held, int keys_up, LevelGenerator *l) {
+void MainDude::update(int camera_x, int camera_y, int keys_held, int keys_down, LevelGenerator *l) {
     this->applyFriction();
     this->updateTimers(timerElapsed(0) / TICKS_PER_SECOND);
     this->animate(camera_x, camera_y);
     this->updateSpeed(l->mapTiles);
 //    this->checkCollisionWithMap(l->mapTiles);
-    this->handleKeyInput(keys_held, keys_up);
+    this->handleKeyInput(keys_held, keys_down);
 }
 

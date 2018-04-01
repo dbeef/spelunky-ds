@@ -11,10 +11,10 @@
 #define FRICTION_DELTA_TIME_MS 30
 #define FRICTION_DELTA_SPEED 1
 #define Y_SPEED_DELTA_TIME_MS 2
-#define GRAVITY_DELTA_SPEED 0.20
+#define GRAVITY_DELTA_SPEED 0.19
 #define X_SPEED_DELTA_TIME_MS 2
 #define X_SPEED_DELTA 2
-#define JUMP_SPEED 2.1
+#define JUMP_SPEED 2.3
 #define MAIN_DUDE_HEIGHT 16
 #define MAIN_DUDE_WIDTH 16
 
@@ -71,7 +71,7 @@ public:
 
     void updateTimers(int timeElapsed);
 
-    void canHangOnTile(MapTile *mapTiles[32][32]);
+    void canHangOnTile(MapTile *neighboringTiles[9]);
 
     void applyFriction();
 
