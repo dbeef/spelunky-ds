@@ -9,13 +9,18 @@
 
 #include "../level_layout/SpriteInfo.h"
 
+
 class OAMManager {
 public:
+    int offset_multiplier;
+    u16 *sprite_address;
+    u16 *palette_address;
+    u16 *oam_address;
+
     int current_oam_id = 0;
     OAMTable *oam;
-    SpriteInfo *sprites[MAX_SPRITE_NUMBER];
 
-    void initOAMTable();
+    void initOAMTable(u16* spriteAddress, u16* paletteAddress,  u16* oam_address, int offset_multiplier);
 
     void updateOAM();
 

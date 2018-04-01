@@ -16,6 +16,10 @@
 
 extern u16 map[4096];
 
+static const int BOUNDARY_VALUE = 32; /* This is the default boundary value (can be set in REG_DISPCNT) */
+static const int OFFSET_MULTIPLIER_MAIN = BOUNDARY_VALUE / sizeof(SPRITE_GFX[0]);
+static const int OFFSET_MULTIPLIER_SUB = BOUNDARY_VALUE / sizeof(SPRITE_GFX_SUB[0]);
+
 void spelunker::scroll(int bg_main, int bg_sub, LevelGenerator *l, u16 *fresh_map) {
     int keys_held = 0;
     int keys_down = 0;
@@ -24,13 +28,18 @@ void spelunker::scroll(int bg_main, int bg_sub, LevelGenerator *l, u16 *fresh_ma
     int camera_timer = 0;
 
     Camera *camera = new Camera();
-    OAMManager *oamManager = new OAMManager();
-    oamManager->initOAMTable();
+
+    OAMManager *mainOamManager = new OAMManager();
+    mainOamManager->initOAMTable(SPRITE_GFX, SPRITE_PALETTE, OAM, OFFSET_MULTIPLIER_MAIN);
+
+    OAMManager *subOamManager = new OAMManager();
+    subOamManager->initOAMTable(SPRITE_GFX_SUB, SPRITE_PALETTE_SUB, OAM_SUB, OFFSET_MULTIPLIER_SUB);
 
     MainDude *mainDude = new MainDude();
     mainDude->x = 100;
     mainDude->y = 100;
-    mainDude->spriteInfo = oamManager->initSprite(spelunkerPal, spelunkerPalLen, spelunkerTiles, spelunkerTilesLen);
+    mainDude->main_spriteInfo = mainOamManager->initSprite(spelunkerPal, spelunkerPalLen, spelunkerTiles, spelunkerTilesLen);
+    mainDude->sub_spriteInfo = subOamManager->initSprite(spelunkerPal, spelunkerPalLen, spelunkerTiles, spelunkerTilesLen);
     mainDude->init();
 
 //    Hud *hud = new Hud();
@@ -65,16 +74,13 @@ void spelunker::scroll(int bg_main, int bg_sub, LevelGenerator *l, u16 *fresh_ma
 
 
         swiWaitForVBlank();
-        //
-        //updateOAM(oam);
-        //
         mainDude->update(camera, keys_held, keys_down, l);
+
         camera->updatePosition(mainDude->x, mainDude->y);
         camera->setScroll(bg_main, bg_sub);
 
-
-        oamUpdate(&oamSub);
-        oamUpdate(&oamMain);
+        mainOamManager->updateOAM();
+        subOamManager->updateOAM();
 
     }
 }

@@ -10,11 +10,16 @@
 
 class SpriteInfo {
 public:
+    u16* sprite_address;
+    int offset_multiplier;
+
     int oamId;
     int width;
     int height;
     int angle;
     SpriteEntry *entry;
+
+    void updateFrame(u8 *tile);
 };
 
 

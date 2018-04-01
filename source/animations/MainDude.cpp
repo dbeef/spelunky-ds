@@ -12,7 +12,6 @@
 #include "../level_layout/MapUtils.h"
 
 #define SPRITESHEET_ROW_WIDTH 6
-
 /**
  * For debugging purposes
  * @param mapTiles
@@ -219,11 +218,11 @@ void MainDude::checkCollisionWithMap(MapTile *mapTiles[32][32], int xx, int yy) 
 }
 
 void MainDude::init() {
-    spriteGfxMemMain = oamAllocateGfx(&oamMain, SpriteSize_16x16, SpriteColorFormat_256Color);
-    spriteGfxMemSub = oamAllocateGfx(&oamSub, SpriteSize_16x16, SpriteColorFormat_256Color);
+//    spriteGfxMemMain = oamAllocateGfx(&oamMain, SpriteSize_16x16, SpriteColorFormat_256Color);
+//    spriteGfxMemSub = oamAllocateGfx(&oamSub, SpriteSize_16x16, SpriteColorFormat_256Color);
     frameGfx = (u8 *) spelunkerTiles;
-    dmaCopy(spelunkerPal, SPRITE_PALETTE, 512);
-    dmaCopy(spelunkerPal, SPRITE_PALETTE_SUB, 512);
+//    dmaCopy(spelunkerPal, SPRITE_PALETTE, 512);
+//    dmaCopy(spelunkerPal, SPRITE_PALETTE_SUB, 512);
 }
 
 
@@ -233,7 +232,6 @@ void MainDude::animate(Camera *camera) {
         animationFrameTimer = 0;
         animFrame++;
     }
-
     if (animFrame >= FRAMES_PER_ANIMATION) animFrame = 0;
 
     int main_x = x - camera->x;
@@ -251,30 +249,45 @@ void MainDude::animate(Camera *camera) {
         sub_y = -16;
     }
 
+    main_spriteInfo->entry->x = main_x;
+    main_spriteInfo->entry->y = main_y;
+
+    sub_spriteInfo->entry->x = sub_x;
+    sub_spriteInfo->entry->y = sub_y;
+
     int frame;
     u8 *offset;
 
     if (hangingOnTileRight) {
         frame = (2 * SPRITESHEET_ROW_WIDTH) + 1;
         offset = frameGfx + frame * MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT;
-        dmaCopy(offset, spriteGfxMemMain, MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT);
-        dmaCopy(offset, spriteGfxMemSub, MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT);
+//        dmaCopy(offset, spriteGfxMemMain, MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT);
+//        dmaCopy(offset, spriteGfxMemSub, MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT);
+        main_spriteInfo->updateFrame(offset);
+        sub_spriteInfo->updateFrame(offset);
+
     } else if (hangingOnTileLeft) {
         frame = (2 * SPRITESHEET_ROW_WIDTH);
         offset = frameGfx + frame * MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT;
-        dmaCopy(offset, spriteGfxMemMain, MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT);
-        dmaCopy(offset, spriteGfxMemSub, MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT);
+//        dmaCopy(offset, spriteGfxMemMain, MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT);
+//        dmaCopy(offset, spriteGfxMemSub, MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT);
+        main_spriteInfo->updateFrame(offset);
+        sub_spriteInfo->updateFrame(offset);
     } else {
         frame = animFrame + state * FRAMES_PER_ANIMATION;
         offset = frameGfx + frame * MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT;
-        dmaCopy(offset, spriteGfxMemMain, MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT);
-        dmaCopy(offset, spriteGfxMemSub, MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT);
+//        dmaCopy(offset, spriteGfxMemMain, MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT);
+//        dmaCopy(offset, spriteGfxMemSub, MAIN_/DUDE_WIDTH * MAIN_DUDE_HEIGHT);
+        main_spriteInfo->updateFrame(offset);
+        sub_spriteInfo->updateFrame(offset);
     }
 
-    oamSet(&oamMain, 0, main_x, main_y, 0, 0, SpriteSize_16x16, SpriteColorFormat_256Color,
-           spriteGfxMemMain, -1, false, false, false, false, false);
-    oamSet(&oamSub, 0, sub_x, sub_y, 0, 0, SpriteSize_16x16, SpriteColorFormat_256Color,
-           spriteGfxMemSub, -1, false, false, false, false, false);
+
+
+//    oamSet(&oamMain, 0, main_x, main_y, 0, 0, SpriteSize_16x16, SpriteColorFormat_256Color,
+//           spriteGfxMemMain, -1, false, false, false, false, false);
+//    oamSet(&oamSub, 0, sub_x, sub_y, 0, 0, SpriteSize_16x16, SpriteColorFormat_256Color,
+//           spriteGfxMemSub, -1, false, false, false, false, false);
 
 }
 

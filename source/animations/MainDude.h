@@ -32,7 +32,9 @@ struct MainDude {
 
 public:
 
-    SpriteInfo *spriteInfo;
+    SpriteInfo *main_spriteInfo;
+    SpriteInfo *sub_spriteInfo;
+
     int animationFrameTimer;
 
     int speedIncTimer;

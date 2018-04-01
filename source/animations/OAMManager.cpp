@@ -9,11 +9,16 @@
 
 static const int BYTES_PER_16_COLOR_TILE = 32;
 static const int COLORS_PER_PALETTE = 16;
-static const int BOUNDARY_VALUE = 32; /* This is the default boundary value (can be set in REG_DISPCNT) */
-static const int OFFSET_MULTIPLIER = BOUNDARY_VALUE / sizeof(SPRITE_GFX[0]);
 
-void OAMManager::initOAMTable() {
+void OAMManager::initOAMTable(u16 *sprite_address, u16 *paletteAddress, u16 *oam_address, int offset_multiplier) {
     oam = new OAMTable();
+
+    this->sprite_address = sprite_address;
+    this->palette_address = paletteAddress;
+    this->oam_address = oam_address;
+    this->oam = oam;
+    this->offset_multiplier = offset_multiplier;
+
     /*
      * For all 128 sprites on the DS, disable and clear any attributes they
      * might have. This prevents any garbage from being displayed and gives
@@ -41,21 +46,23 @@ void OAMManager::updateOAM() {
     DC_FlushAll();
     dmaCopyHalfWords(3,
                      oam->oamBuffer,
-                     OAM,
+                     oam_address,
                      SPRITE_COUNT * sizeof(SpriteEntry));
 }
 
-SpriteInfo *OAMManager::initSprite(const unsigned short pallette[], int palLen, const unsigned int tiles[], int tilesLen) {
+SpriteInfo *
+OAMManager::initSprite(const unsigned short pallette[], int palLen, const unsigned int tiles[], int tilesLen) {
 
     /* Keep track of the available tiles */
 
-    /* Create the ship sprite. */
-    
     assert(current_oam_id < SPRITE_COUNT);
     SpriteInfo *spriteInfo = new SpriteInfo();/*&spriteInfo[current_oam_id];*/
     SpriteEntry *spriteEntry = &oam->oamBuffer[current_oam_id];
 
+
     /* Initialize spriteInfo */
+    spriteInfo->offset_multiplier = this->offset_multiplier;
+    spriteInfo->sprite_address = this->sprite_address;
     spriteInfo->oamId = current_oam_id;
     spriteInfo->width = 16;
     spriteInfo->height = 16;
@@ -103,17 +110,19 @@ SpriteInfo *OAMManager::initSprite(const unsigned short pallette[], int palLen, 
     spriteEntry->priority = OBJPRIORITY_0;
     spriteEntry->palette = spriteInfo->oamId;
 
-    //In case of animations, copy only the current frame
     dmaCopyHalfWords(3,
                      pallette,
-                     &SPRITE_PALETTE[spriteInfo->oamId *
-                                     COLORS_PER_PALETTE],
+                     &palette_address[spriteInfo->oamId *
+                                      COLORS_PER_PALETTE],
                      palLen);
+
     dmaCopyHalfWords(3,
                      tiles,
-                     &SPRITE_GFX[spriteEntry->gfxIndex * OFFSET_MULTIPLIER],
+                     &sprite_address[spriteEntry->gfxIndex * this->offset_multiplier],
                      tilesLen);
 
-    sprites[current_oam_id] = spriteInfo;
+
+    current_oam_id++;
+
     return spriteInfo;
 }
