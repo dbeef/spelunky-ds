@@ -11,7 +11,7 @@
 
 namespace spelunker {
 
-    void scroll(int bg_main, int bg_sub, int width, int height, LevelGenerator* l, u16* fresh_map);
+    void scroll(int bg_main, int bg_sub, LevelGenerator* l, u16* fresh_map);
     void initOAMTable(OAMTable * oam);
 
     void updateOAM(OAMTable *oam);

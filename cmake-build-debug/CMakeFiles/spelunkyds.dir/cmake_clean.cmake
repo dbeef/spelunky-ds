@@ -11,6 +11,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/spelunkyds.dir/source/animations/Snake.cpp.o"
   "CMakeFiles/spelunkyds.dir/source/hud/Hud.cpp.o"
   "CMakeFiles/spelunkyds.dir/source/level_layout/SpriteInfo.cpp.o"
+  "CMakeFiles/spelunkyds.dir/source/animations/Camera.cpp.o"
   "spelunkyds.pdb"
   "spelunkyds"
 )

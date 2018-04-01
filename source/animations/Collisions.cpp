@@ -1,7 +1,6 @@
 //
 // Created by xdbeef on 18.03.18.
 //
-// TODO Add b64 encoded illustration for the following collisions.
 #include <iostream>
 #include "Collisions.h"
 #include "MainDude.h"
@@ -18,16 +17,13 @@
 //Collision from upper side of the tile, with rectangle given by x,y, and width.
 bool Collisions::checkUpperCollision(MapTile *neighboringTiles[9], int *xPos, int *yPos, double *ySpeed, int width) {
 
-    int dude_tile_x = floor_div(*xPos, 16);
-    int dude_tile_y = floor_div(*yPos, 16);
-
     bool upperCollision = false;
-    bool w1 = false;
-    bool w2 = false;
+    bool w1;
+    bool w2;
 
     for (int a = 0; a < 9; a++) {
 
-        if (&neighboringTiles[a] == 0)
+        if (neighboringTiles[a] == 0)
             continue;
 
         if (!upperCollision) {
@@ -54,10 +50,13 @@ bool Collisions::checkBottomCollision(MapTile *neighboringTiles[9], int *xPos, i
                                       int height) {
 
     bool bottomCollision = false;
-    bool w1 = false;
-    bool w2 = false;
+    bool w1;
+    bool w2;
 
     for (int a = 0; a < 9; a++) {
+
+        if(neighboringTiles[a] == 0)
+            continue;
 
         if (!bottomCollision) {
             w1 = (*xPos > (neighboringTiles[a]->x * TILE_W) - width * 0.75 &&
@@ -78,17 +77,17 @@ bool Collisions::checkBottomCollision(MapTile *neighboringTiles[9], int *xPos, i
 }
 
 //Collision from left side of the tile, with rectangle given by x,y, width and height.
-bool
-Collisions::checkLeftCollision(MapTile *neighboringTiles[9], int *xPos, int *yPos, double *xSpeed, int width,
-                               int height,
-                               bool jumping) {
-
+bool Collisions::checkLeftCollision(MapTile *neighboringTiles[9], int *xPos, int *yPos, double *xSpeed, int width,
+                               int height) {
 
     bool leftCollision = false;
     bool w1;
     bool w2;
 
     for (int a = 0; a < 9; a++) {
+
+        if(neighboringTiles[a] == 0)
+            continue;
 
         if (!leftCollision) {
 
@@ -114,11 +113,14 @@ Collisions::checkLeftCollision(MapTile *neighboringTiles[9], int *xPos, int *yPo
 
 //Collision from right side of the tile, with rectangle given by x,y, width and height.
 bool Collisions::checkRightCollision(MapTile *neighboringTiles[9], int *xPos, int *yPos, double *xSpeed, int width,
-                                     int height, bool jumping) {
+                                     int height) {
     bool rightCollision = false;
     bool w1;
     bool w2;
-    for (int a = 0; a < 32; a++) {
+    for (int a = 0; a < 9; a++) {
+
+        if(neighboringTiles[a] == 0)
+            continue;
 
         if (!rightCollision) {
 

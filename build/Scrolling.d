@@ -70,9 +70,11 @@ Scrolling.o: \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/SpriteState.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/../level_layout/MapTile.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/../level_layout/LevelGenerator.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/Camera.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../hud/Hud.h \
  /home/xdbeef/devkitPro/libnds/include/nds/jtypes.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../../build/heart.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/Camera.h \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/input.h
 
 /home/xdbeef/devkitPro/libnds/include/nds.h:
@@ -215,10 +217,14 @@ Scrolling.o: \
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/../level_layout/LevelGenerator.h:
 
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/Camera.h:
+
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../hud/Hud.h:
 
 /home/xdbeef/devkitPro/libnds/include/nds/jtypes.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../../build/heart.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/Camera.h:
 
 /home/xdbeef/devkitPro/libnds/include/nds/arm9/input.h:

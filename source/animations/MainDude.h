@@ -23,6 +23,7 @@
 #include "SpriteState.h"
 #include "../level_layout/MapTile.h"
 #include "../level_layout/LevelGenerator.h"
+#include "Camera.h"
 
 struct MainDude {
 
@@ -63,7 +64,7 @@ public:
 
     void updateSpeed(MapTile *mapTiles[32][32]);
 
-    void animate(int camera_x, int camera_y);
+    void animate(Camera * camera);
 
     void handleKeyInput(int keys_held, int keys_up);
 
@@ -75,7 +76,7 @@ public:
 
     void applyFriction();
 
-    void update(int camera_x, int camera_y, int keys_held, int keys_up, LevelGenerator *l);
+    void update(Camera *camera, int keys_held, int keys_up, LevelGenerator *l);
 
     void clearTilesOnRight(MapTile *mapTile[32][32]);
 };

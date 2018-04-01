@@ -4,6 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
+  "/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Camera.cpp" "/home/xdbeef/NetBeansProjects/spelunkyds/cmake-build-debug/CMakeFiles/spelunkyds.dir/source/animations/Camera.cpp.o"
   "/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Collisions.cpp" "/home/xdbeef/NetBeansProjects/spelunkyds/cmake-build-debug/CMakeFiles/spelunkyds.dir/source/animations/Collisions.cpp.o"
   "/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/MainDude.cpp" "/home/xdbeef/NetBeansProjects/spelunkyds/cmake-build-debug/CMakeFiles/spelunkyds.dir/source/animations/MainDude.cpp.o"
   "/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Snake.cpp" "/home/xdbeef/NetBeansProjects/spelunkyds/cmake-build-debug/CMakeFiles/spelunkyds.dir/source/animations/Snake.cpp.o"

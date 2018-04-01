@@ -65,6 +65,7 @@ MainDude.o: \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/MapTile.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/LevelGenerator.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/MapTile.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Camera.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../Consts.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../../build/spelunker.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Collisions.h \
@@ -199,6 +200,8 @@ MainDude.o: \
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/LevelGenerator.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/MapTile.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Camera.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../Consts.h:
 

@@ -59,7 +59,7 @@ int main(void) {
     dmaCopy(cavebgPal, BG_PALETTE_SUB, cavebgPalLen);
 //    prepareConsole();
 
-    spelunker::scroll(bg_main, bg_sub, 512, 512, l, fresh_map);
+    spelunker::scroll(bg_main, bg_sub, l, fresh_map);
 
     t->stop();
 

@@ -188,8 +188,8 @@ void MainDude::checkCollisionWithMap(MapTile *mapTiles[32][32], int xx, int yy) 
     };
 
     bottomCollision = Collisions::checkBottomCollision(tiles, &this->x, &this->y, &ySpeed, 16, 16);
-    leftCollision = Collisions::checkLeftCollision(tiles, &this->x, &this->y, &xSpeed, 16, 16, !bottomCollision);
-    rightCollision = Collisions::checkRightCollision(tiles, &this->x, &this->y, &xSpeed, 16, 16, !bottomCollision);
+    leftCollision = Collisions::checkLeftCollision(tiles, &this->x, &this->y, &xSpeed, 16, 16);
+    rightCollision = Collisions::checkRightCollision(tiles, &this->x, &this->y, &xSpeed, 16, 16);
     upperCollision = Collisions::checkUpperCollision(tiles, &this->x, &this->y, &ySpeed, 16);
     Collisions::isStandingOnEdge(tiles, &
             this->x, &this->y, &ySpeed, 16, 16);
@@ -225,7 +225,7 @@ void MainDude::init() {
 }
 
 
-void MainDude::animate(int camera_x, int camera_y) {
+void MainDude::animate(Camera *camera) {
 
 
     if (animationFrameTimer > 70) {
@@ -243,14 +243,14 @@ void MainDude::animate(int camera_x, int camera_y) {
 
 
         if (this->y <= 320 + 16) {
-            oamSet(&oamMain, 0, x - camera_x, y - camera_y, 0, 0, SpriteSize_16x16, SpriteColorFormat_256Color,
+            oamSet(&oamMain, 0, x - camera->x, y - camera->y, 0, 0, SpriteSize_16x16, SpriteColorFormat_256Color,
                    spriteGfxMemMain, -1, false, false, false, false, false);
         } else
             oamSet(&oamMain, 0, -16, -16, 0, 0, SpriteSize_16x16, SpriteColorFormat_256Color,
                    0, -1, false, false, false, false, false);
 
         if (this->y >= 320) {
-            oamSet(&oamSub, 0, x - camera_x, y - camera_y - 192, 0, 0, SpriteSize_16x16, SpriteColorFormat_256Color,
+            oamSet(&oamSub, 0, x - camera->x, y - camera->y - 192, 0, 0, SpriteSize_16x16, SpriteColorFormat_256Color,
                    spriteGfxMemSub, -1, false, false, false, false, false);
         } else
             oamSet(&oamSub, 0, -16, -16, 0, 0, SpriteSize_16x16, SpriteColorFormat_256Color,
@@ -264,7 +264,7 @@ void MainDude::animate(int camera_x, int camera_y) {
         dmaCopy(offset, spriteGfxMemMain, 16 * 16);
         dmaCopy(offset, spriteGfxMemSub, 16 * 16);
         if (this->y <= 320) {
-            oamSet(&oamMain, 0, x - camera_x, y - camera_y, 0, 0, SpriteSize_16x16, SpriteColorFormat_256Color,
+            oamSet(&oamMain, 0, x - camera->x, y - camera->y, 0, 0, SpriteSize_16x16, SpriteColorFormat_256Color,
                    spriteGfxMemMain, -1, false, false, false, false, false);
         } else
             oamSet(&oamMain, 0, -16, -16, 0, 0, SpriteSize_16x16, SpriteColorFormat_256Color,
@@ -272,7 +272,7 @@ void MainDude::animate(int camera_x, int camera_y) {
 
 
         if (this->y >= 320) {
-            oamSet(&oamSub, 0, x - camera_x, y - camera_y - 192, 0, 0, SpriteSize_16x16, SpriteColorFormat_256Color,
+            oamSet(&oamSub, 0, x - camera->x, y - camera->y - 192, 0, 0, SpriteSize_16x16, SpriteColorFormat_256Color,
                    spriteGfxMemSub, -1, false, false, false, false, false);
         } else
             oamSet(&oamSub, 0, -16, -16, 0, 0, SpriteSize_16x16, SpriteColorFormat_256Color,
@@ -286,14 +286,14 @@ void MainDude::animate(int camera_x, int camera_y) {
     dmaCopy(offset, spriteGfxMemMain, 16 * 16);
     dmaCopy(offset, spriteGfxMemSub, 16 * 16);
     if (this->y <= 320) {
-        oamSet(&oamMain, 0, x - camera_x, y - camera_y, 0, 0, SpriteSize_16x16, SpriteColorFormat_256Color,
+        oamSet(&oamMain, 0, x - camera->x, y - camera->y, 0, 0, SpriteSize_16x16, SpriteColorFormat_256Color,
                spriteGfxMemMain, -1, false, false, false, false, false);
     } else
         oamSet(&oamMain, 0, -16, -16, 0, 0, SpriteSize_16x16, SpriteColorFormat_256Color,
                0, -1, false, false, false, false, false);
 
     if (this->y >= 320) {
-        oamSet(&oamSub, 0, x - camera_x, y - camera_y - 192, 0, 0, SpriteSize_16x16, SpriteColorFormat_256Color,
+        oamSet(&oamSub, 0, x - camera->x, y - camera->y - 192, 0, 0, SpriteSize_16x16, SpriteColorFormat_256Color,
                spriteGfxMemSub, -1, false, false, false, false, false);
     } else
         oamSet(&oamSub, 0, -16, -16, 0, 0, SpriteSize_16x16, SpriteColorFormat_256Color,
@@ -346,10 +346,8 @@ void MainDude::canHangOnTile(MapTile *neighboringTiles[9]) {
 
 }
 
-//W spelunkach zwalnianie jes ttakże w powietrzu!
 void MainDude::applyFriction() {
 
-//    if (bottomCollision) {
     if (frictionTimer > FRICTION_DELTA_TIME_MS) {
         frictionTimer = 0;
         if (xSpeed > 0) {
@@ -363,16 +361,14 @@ void MainDude::applyFriction() {
                 xSpeed = 0;
         }
     }
-//    }
 
 }
 
-void MainDude::update(int camera_x, int camera_y, int keys_held, int keys_down, LevelGenerator *l) {
+void MainDude::update(Camera *camera, int keys_held, int keys_down, LevelGenerator *l) {
     this->applyFriction();
     this->updateTimers(timerElapsed(0) / TICKS_PER_SECOND);
-    this->animate(camera_x, camera_y);
+    this->animate(camera);
     this->updateSpeed(l->mapTiles);
-//    this->checkCollisionWithMap(l->mapTiles);
     this->handleKeyInput(keys_held, keys_down);
 }
 

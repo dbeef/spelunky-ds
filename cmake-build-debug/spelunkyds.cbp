@@ -115,6 +115,12 @@
 		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/Consts.h">
 			<Option target="spelunkyds"/>
 		</Unit>
+		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Camera.cpp">
+			<Option target="spelunkyds"/>
+		</Unit>
+		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Camera.h">
+			<Option target="spelunkyds"/>
+		</Unit>
 		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Collisions.cpp">
 			<Option target="spelunkyds"/>
 		</Unit>

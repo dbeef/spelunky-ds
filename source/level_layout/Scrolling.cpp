@@ -6,6 +6,7 @@
 #include "../hud/Hud.h"
 #include "SpriteInfo.h"
 #include "../../build/heart.h"
+#include "../animations/Camera.h"
 #include <nds/arm9/input.h>
 #include <nds/arm9/sprite.h>
 #include <nds/arm9/cache.h>
@@ -21,15 +22,14 @@ static const int OFFSET_MULTIPLIER = BOUNDARY_VALUE /
                                      sizeof(SPRITE_GFX[0]);
 
 
-void spelunker::scroll(int bg_main, int bg_sub, int width, int height, LevelGenerator *l, u16 *fresh_map) {
+void spelunker::scroll(int bg_main, int bg_sub, LevelGenerator *l, u16 *fresh_map) {
     int keys_held = 0;
     int keys_down = 0;
-    int sx = 0;
-    int sy = 0;
 
     int timer = 0;
     int camera_timer = 0;
 
+    Camera *camera = new Camera();
 
 //    SpriteInfo *heartInfo = new SpriteInfo();
 //    OAMTable *oam = new OAMTable();
@@ -59,12 +59,12 @@ void spelunker::scroll(int bg_main, int bg_sub, int width, int height, LevelGene
 
             timer = 0;
             dmaCopyHalfWords(DMA_CHANNEL, fresh_map, map, sizeof(map));
-//            l->newLayout(timerElapsed(0));
-//            l->mapBackground();
-//            l->mapFrame();
-//            l->generateRooms();
-            mainDude->clearTilesOnRight(l->mapTiles);
-            fprintf(stdout, "GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG \n");
+            l->newLayout(timerElapsed(0));
+            l->mapBackground();
+            l->mapFrame();
+
+            l->generateRooms();
+//            mainDude->clearTilesOnRight(l->mapTiles);
 
             l->tilesToMap();
             sectorize_map();
@@ -72,69 +72,18 @@ void spelunker::scroll(int bg_main, int bg_sub, int width, int height, LevelGene
             dmaCopyHalfWords(DMA_CHANNEL, map, bgGetMapPtr(bg_sub), sizeof(map));
         }
 
-//        if (keys_held & KEY_X) sy -= 3;
-//        if (keys_held & KEY_B) sy += 3;
-//        if (keys_held & KEY_Y) sx -= 3;
-//        if (keys_held & KEY_A) sx += 3;
-
-//        sx = mainDude->x - 128;
-//        sy = mainDude->y - 96;
-
-
-        static int BOUNDARY_X = 32;
-        static int BOUNDARY_Y = 16;
-
-        int center_x = mainDude->x - 128;
-        int center_y = mainDude->y - 96;
-
-
-        //todo Bound sx/sy delta to mainDude.xSpeed/mainDude.ySpeed, or to value of (center-x/y - sx/y)
-
-        //todo timer
-//        if(camera_timer > 10) {
-
-            if (abs(center_x - sx) > BOUNDARY_X) {
-                if (center_x > sx)
-                    sx += 1;
-                else
-                    sx -= 1;
-            }
-
-            if (abs(center_y - sy) > BOUNDARY_Y) {
-                if (center_y > sy)
-                    sy += 1;
-                else
-                    sy -= 1;
-            }
-
-//            camera_timer = 0;
-//        }
-
-        if (sx < 0) sx = 0;
-        if (sx >= width - 256) sx = width - 1 - 256;
-        if (sy < 0) sy = 0;
-        if (sy >= height - 192 - 192) sy = height - 1 - 192 - 192;
-/*
-
-        if (sx < 0) sx = 0;
-        if (sx >= width - 256) sx = width - 1 - 256;
-        if (sy < 0) sy = 0;
-        if (sy >= height - 192) sy = height - 1 - 192;
-*/
 
         swiWaitForVBlank();
         //
         //updateOAM(oam);
         //
-        mainDude->update(sx, sy, keys_held, keys_down, l);
+        mainDude->update(camera, keys_held, keys_down, l);
+        camera->updatePosition(mainDude->x, mainDude->y);
+        camera->setScroll( bg_main, bg_sub);
+
 
         oamUpdate(&oamSub);
         oamUpdate(&oamMain);
-
-        bgSetScroll(bg_main, sx, sy);
-        bgSetScroll(bg_sub, sx, sy + 192);
-
-        bgUpdate();
 
 /*
         touchRead(&touch);
