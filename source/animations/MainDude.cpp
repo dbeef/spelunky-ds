@@ -11,6 +11,10 @@
 #include "Collisions.h"
 #include "../level_layout/MapUtils.h"
 
+/**
+ * For debugging purposes
+ * @param mapTiles
+ */
 void MainDude::clearTilesOnRight(MapTile *mapTiles[32][32]) {
 
     int xx = floor_div(this->x, 16);
@@ -139,11 +143,11 @@ void MainDude::updateSpeed(MapTile *mapTiles[32][32]) {
 
             xx = floor_div(this->x + 0.5 * MAIN_DUDE_WIDTH, 16);
             yy = floor_div(this->y + 0.5 * MAIN_DUDE_HEIGHT, 16);
-//
+
             if (old_xx != xx || old_yy != yy) {
                 checkCollisionWithMap(mapTiles, xx, yy);
             }
-//
+
             old_xx = xx;
             old_yy = yy;
 
@@ -161,16 +165,6 @@ void MainDude::updateSpeed(MapTile *mapTiles[32][32]) {
 }
 
 void MainDude::checkCollisionWithMap(MapTile *mapTiles[32][32], int xx, int yy) {
-
-
-    //w przypadku cohdzenia, jeśli prędkość mniejsza lub równa 1, to pixel perfec collision,
-    //dodać ograniczenie - prędkość się nie inkrementuje powyżej pewnej wartości, jeśli
-    //wciskany jest przycisk ruchu bez przycisku boostu
-    //w przypadku spadania, jeśli prędkość mniejsza lub równa 1, to pixel perfect collision,
-
-    //prędkość inkrementowana jest co stały czas - jeden licznik
-    //pozycja inkrementowana jest co stały czas - jeden licznik
-
 
     MapTile *left_middle = mapTiles[xx - 1][yy];
     MapTile *right_middle = mapTiles[xx + 1][yy];
@@ -209,19 +203,16 @@ void MainDude::checkCollisionWithMap(MapTile *mapTiles[32][32], int xx, int yy) 
     }
 
 
-    //todo timer
     if (!bottomCollision) {
-        if (/*up_middle == 0 && down_middle == 0 && */(right_middle == 0 && (right_up != 0 && right_down != 0))) {
+        if ((right_middle == 0 && (right_up != 0 && right_down != 0))) {
             if (xSpeed > 0)
                 x += 2;
         }
-        if (/*up_middle == 0 && down_middle == 0 && */(left_middle == 0 && (left_up != 0 && left_down != 0))) {
+        if ((left_middle == 0 && (left_up != 0 && left_down != 0))) {
             if (xSpeed < 0)
                 x -= 2;
         }
     }
-    //
-
 
 }
 
@@ -310,29 +301,12 @@ void MainDude::animate(int camera_x, int camera_y) {
 
 }
 
-
-//w spelunkach przycisk skoku jest blokowany po pierwszym wciśnięciu aż do odciśnięcia
-/**
- * MapTile *tiles[9] = {
-            left_middle, //0
-            right_middle, //1
-            up_middle, //2
-            down_middle, //3
-            center, //4
-            left_up, //5
-            right_up, //6
-            left_down, //7
-            right_down //8
-    };
- * @param neighboringTiles
- */
 void MainDude::canHangOnTile(MapTile *neighboringTiles[9]) {
-
 
     if (bottomCollision || (!leftCollision && !rightCollision))
         return;
 
-    if (/*(neighboringTiles[3] != 0 && neighboringTiles[2] != 0) || */neighboringTiles[2] != 0 || neighboringTiles[3] != 0)
+    if (neighboringTiles[2] != 0 || neighboringTiles[3] != 0)
         return;
 
     bool y_bound = false;
@@ -369,31 +343,6 @@ void MainDude::canHangOnTile(MapTile *neighboringTiles[9]) {
             this->y = (neighboringTiles[1]->y * 16);
         }
     }
-
-    //jeśli tile pod graczem istnieje, lub tile nad graczem istineje, nie można się zawiesic
-    //obliczenie x,y bounds
-    //jeśli jest zwrócony w lewo i jest kolizja z tilem z lewej, to sprawdź czy upper-right istnieje, jeśli tak, to wyjdź
-    //jeśli jest zwrócony w prawo i jest kolizja z tilem z prawej, to sprawdź czy upper-left istnieje, jeśli tak, to wyjdź
-
-/*
-    if (y_bound && x_bound) {
-        hangingTimer = 0;
-        this->y = (y * 16);
-        ySpeed = 0;
-
-        fprintf(stdout, "HANGING" + '\n');
-
-        if (rightCollision)
-            hangingOnTileRight = true;
-        if (leftCollision)
-            hangingOnTileLeft = true;
-
-                        bool y_bound = (this->y > (y * 16) - 2) && (this->y < (y * 16) + 8);
-                        x_bound = (this->x <= (x * 16) - 12 && (this->x >= (x * 16) - 16));
-
-    }*/
-
-
 
 }
 
