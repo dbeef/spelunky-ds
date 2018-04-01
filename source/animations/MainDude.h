@@ -18,12 +18,12 @@
 #define MAIN_DUDE_HEIGHT 16
 #define MAIN_DUDE_WIDTH 16
 
-
 #include <nds.h>
 #include "SpriteState.h"
 #include "../level_layout/MapTile.h"
 #include "../level_layout/LevelGenerator.h"
 #include "Camera.h"
+#include "../level_layout/SpriteInfo.h"
 
 struct MainDude {
 
@@ -32,6 +32,7 @@ struct MainDude {
 
 public:
 
+    SpriteInfo *spriteInfo;
     int animationFrameTimer;
 
     int speedIncTimer;

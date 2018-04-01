@@ -6,8 +6,6 @@
 #include "MainDude.h"
 #include "../level_layout/MapUtils.h"
 
-#define TILE_H 16
-#define TILE_W 16
 
 //(TILE_W * a), (TILE_H * b) makes x,y point placed in the left-upper corner of the tile from passed *mapTiles[a][b].
 //Sprite's x,y positions that are given to the following functions are expected to be upper-left corner.

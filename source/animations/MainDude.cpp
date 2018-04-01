@@ -11,14 +11,16 @@
 #include "Collisions.h"
 #include "../level_layout/MapUtils.h"
 
+#define SPRITESHEET_ROW_WIDTH 6
+
 /**
  * For debugging purposes
  * @param mapTiles
  */
 void MainDude::clearTilesOnRight(MapTile *mapTiles[32][32]) {
 
-    int xx = floor_div(this->x, 16);
-    int yy = floor_div(this->y, 16);
+    int xx = floor_div(this->x, TILE_W);
+    int yy = floor_div(this->y, TILE_H);
 
     MapTile *left_middle = mapTiles[xx - 1][yy];
     MapTile *right_middle = mapTiles[xx + 1][yy];
@@ -227,7 +229,6 @@ void MainDude::init() {
 
 void MainDude::animate(Camera *camera) {
 
-
     if (animationFrameTimer > 70) {
         animationFrameTimer = 0;
         animFrame++;
@@ -235,69 +236,45 @@ void MainDude::animate(Camera *camera) {
 
     if (animFrame >= FRAMES_PER_ANIMATION) animFrame = 0;
 
+    int main_x = x - camera->x;
+    int main_y = y - camera->y;
+    int sub_x = x - camera->x;
+    int sub_y = y - camera->y - 192;
+
+    if (this->y > 320) {
+        main_x = -16;
+        main_y = -16;
+    }
+
+    if (this->y < 320) {
+        sub_x = -16;
+        sub_y = -16;
+    }
+
+    int frame;
+    u8 *offset;
+
     if (hangingOnTileRight) {
-        int frame = (2 * 6) + 1;
-        u8 *offset = frameGfx + frame * 16 * 16;
-        dmaCopy(offset, spriteGfxMemMain, 16 * 16);
-        dmaCopy(offset, spriteGfxMemSub, 16 * 16);
-
-
-        if (this->y <= 320 + 16) {
-            oamSet(&oamMain, 0, x - camera->x, y - camera->y, 0, 0, SpriteSize_16x16, SpriteColorFormat_256Color,
-                   spriteGfxMemMain, -1, false, false, false, false, false);
-        } else
-            oamSet(&oamMain, 0, -16, -16, 0, 0, SpriteSize_16x16, SpriteColorFormat_256Color,
-                   0, -1, false, false, false, false, false);
-
-        if (this->y >= 320) {
-            oamSet(&oamSub, 0, x - camera->x, y - camera->y - 192, 0, 0, SpriteSize_16x16, SpriteColorFormat_256Color,
-                   spriteGfxMemSub, -1, false, false, false, false, false);
-        } else
-            oamSet(&oamSub, 0, -16, -16, 0, 0, SpriteSize_16x16, SpriteColorFormat_256Color,
-                   0, -1, false, false, false, false, false);
-
-        return;
-    }
-    if (hangingOnTileLeft) {
-        int frame = (2 * 6);
-        u8 *offset = frameGfx + frame * 16 * 16;
-        dmaCopy(offset, spriteGfxMemMain, 16 * 16);
-        dmaCopy(offset, spriteGfxMemSub, 16 * 16);
-        if (this->y <= 320) {
-            oamSet(&oamMain, 0, x - camera->x, y - camera->y, 0, 0, SpriteSize_16x16, SpriteColorFormat_256Color,
-                   spriteGfxMemMain, -1, false, false, false, false, false);
-        } else
-            oamSet(&oamMain, 0, -16, -16, 0, 0, SpriteSize_16x16, SpriteColorFormat_256Color,
-                   0, -1, false, false, false, false, false);
-
-
-        if (this->y >= 320) {
-            oamSet(&oamSub, 0, x - camera->x, y - camera->y - 192, 0, 0, SpriteSize_16x16, SpriteColorFormat_256Color,
-                   spriteGfxMemSub, -1, false, false, false, false, false);
-        } else
-            oamSet(&oamSub, 0, -16, -16, 0, 0, SpriteSize_16x16, SpriteColorFormat_256Color,
-                   0, -1, false, false, false, false, false);
-
-        return;
+        frame = (2 * SPRITESHEET_ROW_WIDTH) + 1;
+        offset = frameGfx + frame * MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT;
+        dmaCopy(offset, spriteGfxMemMain, MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT);
+        dmaCopy(offset, spriteGfxMemSub, MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT);
+    } else if (hangingOnTileLeft) {
+        frame = (2 * SPRITESHEET_ROW_WIDTH);
+        offset = frameGfx + frame * MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT;
+        dmaCopy(offset, spriteGfxMemMain, MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT);
+        dmaCopy(offset, spriteGfxMemSub, MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT);
+    } else {
+        frame = animFrame + state * FRAMES_PER_ANIMATION;
+        offset = frameGfx + frame * MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT;
+        dmaCopy(offset, spriteGfxMemMain, MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT);
+        dmaCopy(offset, spriteGfxMemSub, MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT);
     }
 
-    int frame = animFrame + state * FRAMES_PER_ANIMATION;
-    u8 *offset = frameGfx + frame * 16 * 16;
-    dmaCopy(offset, spriteGfxMemMain, 16 * 16);
-    dmaCopy(offset, spriteGfxMemSub, 16 * 16);
-    if (this->y <= 320) {
-        oamSet(&oamMain, 0, x - camera->x, y - camera->y, 0, 0, SpriteSize_16x16, SpriteColorFormat_256Color,
-               spriteGfxMemMain, -1, false, false, false, false, false);
-    } else
-        oamSet(&oamMain, 0, -16, -16, 0, 0, SpriteSize_16x16, SpriteColorFormat_256Color,
-               0, -1, false, false, false, false, false);
-
-    if (this->y >= 320) {
-        oamSet(&oamSub, 0, x - camera->x, y - camera->y - 192, 0, 0, SpriteSize_16x16, SpriteColorFormat_256Color,
-               spriteGfxMemSub, -1, false, false, false, false, false);
-    } else
-        oamSet(&oamSub, 0, -16, -16, 0, 0, SpriteSize_16x16, SpriteColorFormat_256Color,
-               0, -1, false, false, false, false, false);
+    oamSet(&oamMain, 0, main_x, main_y, 0, 0, SpriteSize_16x16, SpriteColorFormat_256Color,
+           spriteGfxMemMain, -1, false, false, false, false, false);
+    oamSet(&oamSub, 0, sub_x, sub_y, 0, 0, SpriteSize_16x16, SpriteColorFormat_256Color,
+           spriteGfxMemSub, -1, false, false, false, false, false);
 
 }
 

@@ -6,6 +6,9 @@
 #define SPELUNKYDS_COLLISIONS_H
 
 
+#define TILE_H 16
+#define TILE_W 16
+
 #include "../level_layout/MapTile.h"
 
 class Collisions {

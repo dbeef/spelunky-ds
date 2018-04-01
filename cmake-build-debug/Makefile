@@ -204,6 +204,33 @@ source/animations/MainDude.cpp.s:
 	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/animations/MainDude.cpp.s
 .PHONY : source/animations/MainDude.cpp.s
 
+source/animations/OAMManager.o: source/animations/OAMManager.cpp.o
+
+.PHONY : source/animations/OAMManager.o
+
+# target to build an object file
+source/animations/OAMManager.cpp.o:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/animations/OAMManager.cpp.o
+.PHONY : source/animations/OAMManager.cpp.o
+
+source/animations/OAMManager.i: source/animations/OAMManager.cpp.i
+
+.PHONY : source/animations/OAMManager.i
+
+# target to preprocess a source file
+source/animations/OAMManager.cpp.i:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/animations/OAMManager.cpp.i
+.PHONY : source/animations/OAMManager.cpp.i
+
+source/animations/OAMManager.s: source/animations/OAMManager.cpp.s
+
+.PHONY : source/animations/OAMManager.s
+
+# target to generate assembly for a file
+source/animations/OAMManager.cpp.s:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/animations/OAMManager.cpp.s
+.PHONY : source/animations/OAMManager.cpp.s
+
 source/animations/Snake.o: source/animations/Snake.cpp.o
 
 .PHONY : source/animations/Snake.o
@@ -492,6 +519,9 @@ help:
 	@echo "... source/animations/MainDude.o"
 	@echo "... source/animations/MainDude.i"
 	@echo "... source/animations/MainDude.s"
+	@echo "... source/animations/OAMManager.o"
+	@echo "... source/animations/OAMManager.i"
+	@echo "... source/animations/OAMManager.s"
 	@echo "... source/animations/Snake.o"
 	@echo "... source/animations/Snake.i"
 	@echo "... source/animations/Snake.s"

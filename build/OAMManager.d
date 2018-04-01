@@ -1,5 +1,5 @@
-MainDude.o: \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/MainDude.cpp \
+OAMManager.o: \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/OAMManager.cpp \
  /home/xdbeef/devkitPro/libnds/include/nds.h \
  /home/xdbeef/devkitPro/libnds/include/nds/libversion.h \
  /home/xdbeef/devkitPro/libnds/include/nds/ndstypes.h \
@@ -60,17 +60,8 @@ MainDude.o: \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/video.h \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/videoGL.h \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/nand.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/MainDude.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/SpriteState.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/MapTile.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/LevelGenerator.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/MapTile.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Camera.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/SpriteInfo.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../Consts.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../../build/spelunker.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Collisions.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/MapUtils.h
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/OAMManager.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/SpriteInfo.h
 
 /home/xdbeef/devkitPro/libnds/include/nds.h:
 
@@ -192,24 +183,6 @@ MainDude.o: \
 
 /home/xdbeef/devkitPro/libnds/include/nds/arm9/nand.h:
 
-/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/MainDude.h:
-
-/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/SpriteState.h:
-
-/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/MapTile.h:
-
-/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/LevelGenerator.h:
-
-/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/MapTile.h:
-
-/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Camera.h:
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/OAMManager.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/SpriteInfo.h:
-
-/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../Consts.h:
-
-/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../../build/spelunker.h:
-
-/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Collisions.h:
-
-/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/MapUtils.h:
