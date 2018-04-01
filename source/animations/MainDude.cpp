@@ -222,7 +222,7 @@ void MainDude::init() {
 //    spriteGfxMemSub = oamAllocateGfx(&oamSub, SpriteSize_16x16, SpriteColorFormat_256Color);
     frameGfx = (u8 *) spelunkerTiles;
 //    dmaCopy(spelunkerPal, SPRITE_PALETTE, 512);
-//    dmaCopy(spelunkerPal, SPRITE_PALETTE_SUB, 512);
+    dmaCopy(spelunkerPal, SPRITE_PALETTE_SUB, 512);
 }
 
 
@@ -260,7 +260,7 @@ void MainDude::animate(Camera *camera) {
 
     if (hangingOnTileRight) {
         frame = (2 * SPRITESHEET_ROW_WIDTH) + 1;
-        offset = frameGfx + frame * MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT;
+        offset = frameGfx + frame * MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT / 2;
 //        dmaCopy(offset, spriteGfxMemMain, MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT);
 //        dmaCopy(offset, spriteGfxMemSub, MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT);
         main_spriteInfo->updateFrame(offset);
@@ -268,21 +268,19 @@ void MainDude::animate(Camera *camera) {
 
     } else if (hangingOnTileLeft) {
         frame = (2 * SPRITESHEET_ROW_WIDTH);
-        offset = frameGfx + frame * MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT;
+        offset = frameGfx + frame * MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT / 2;
 //        dmaCopy(offset, spriteGfxMemMain, MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT);
 //        dmaCopy(offset, spriteGfxMemSub, MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT);
         main_spriteInfo->updateFrame(offset);
         sub_spriteInfo->updateFrame(offset);
     } else {
         frame = animFrame + state * FRAMES_PER_ANIMATION;
-        offset = frameGfx + frame * MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT;
+        offset = frameGfx + frame * MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT /2;
 //        dmaCopy(offset, spriteGfxMemMain, MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT);
 //        dmaCopy(offset, spriteGfxMemSub, MAIN_/DUDE_WIDTH * MAIN_DUDE_HEIGHT);
         main_spriteInfo->updateFrame(offset);
         sub_spriteInfo->updateFrame(offset);
     }
-
-
 
 //    oamSet(&oamMain, 0, main_x, main_y, 0, 0, SpriteSize_16x16, SpriteColorFormat_256Color,
 //           spriteGfxMemMain, -1, false, false, false, false, false);

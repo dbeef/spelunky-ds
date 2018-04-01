@@ -12,4 +12,6 @@ void SpriteInfo::updateFrame(u8 *tile ) {
                      tile,
                      &sprite_address[entry->gfxIndex * this->offset_multiplier],
                      16*16);
+
+
 }

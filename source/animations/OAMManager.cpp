@@ -75,7 +75,7 @@ OAMManager::initSprite(const unsigned short pallette[], int palLen, const unsign
      *  the ship.
      */
     spriteEntry->y = 60;
-    spriteEntry->isRotateScale = true;
+    spriteEntry->isRotateScale = false;
     /* This assert is a check to see a matrix is available to store the affine
      * transformation matrix for this sprite. Of course, you don't have to have
      * the matrix id match the affine id, but if you do make them match, this
@@ -84,7 +84,7 @@ OAMManager::initSprite(const unsigned short pallette[], int palLen, const unsign
     spriteEntry->isSizeDouble = false;
 //    spriteEntry->objMode = OBJMODE_NORMAL;
     spriteEntry->isMosaic = false;
-    spriteEntry->colorMode = OBJCOLOR_256;
+    spriteEntry->colorMode = OBJCOLOR_16;
     spriteEntry->shape = OBJSHAPE_SQUARE;
 
     /*
