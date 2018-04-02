@@ -80,8 +80,8 @@ CFILES		:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.c)))
 CPPFILES	:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.cpp)))
 SFILES		:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.s)))
 BINFILES	:=	$(foreach dir,$(DATA),$(notdir $(wildcard $(dir)/*.*)))
-BMPFILES	:=	$(foreach dir,$(FONTS),$(notdir $(wildcard $(dir)/*.bmp)))
-SPRITE_FILES	:=	$(foreach dir,$(SPRITES),$(notdir $(wildcard $(dir)/*.png)))
+SPRITE_FILES	:=	$(foreach dir,$(FONTS),$(notdir $(wildcard $(dir)/*.png))) \
+					$(foreach dir,$(SPRITES),$(notdir $(wildcard $(dir)/*.png)))
 TILEMAP_FILES	:=	$(foreach dir,$(TILEMAPS),$(notdir $(wildcard $(dir)/*.png)))
 
 #---------------------------------------------------------------------------------
@@ -134,11 +134,13 @@ DEPENDS	:=	$(OFILES:.o=.d)
 #---------------------------------------------------------------------------------
 $(OUTPUT).nds	: 	$(OUTPUT).elf
 $(OUTPUT).elf	:	$(OFILES)
-
+%.s %.h : ../gfx/fonts/%.png
+		grit $< -ff../gfx/fonts/font.grit -o$*
 %.s %.h : ../gfx/sprites/%.png
 		grit $< -ff../gfx/sprites/sprite.grit -o$*
 %.s %.h : ../gfx/tilemaps/%.png
 		grit $< -ff../gfx/tilemaps/tilemap.grit -o$*
+
 #grit $< -ff../gfx/tilemaps/tilemap.grit -o$*
 #grit $< -ff../gfx/sprites/sprite.grit -o$*
 
