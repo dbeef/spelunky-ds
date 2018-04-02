@@ -64,6 +64,7 @@ void MainDude::handleKeyInput(int keys_held, int keys_down) {
 
 
         if (keys_held & KEY_LEFT) {
+            key_left = true;
             state = W_LEFT;
             hangingOnTileLeft = false;
             if (xSpeed > -MAX_X_SPEED && !(hangingOnTileRight || hangingOnTileLeft))
@@ -72,8 +73,11 @@ void MainDude::handleKeyInput(int keys_held, int keys_down) {
                     speedIncTimer = 0;
                 }
         }
+        else
+            key_left = false;
 
         if (keys_held & KEY_RIGHT) {
+            key_right = true;
             state = W_RIGHT;
             hangingOnTileRight = false;
             if (xSpeed < MAX_X_SPEED && !(hangingOnTileRight || hangingOnTileLeft)) {
@@ -82,7 +86,8 @@ void MainDude::handleKeyInput(int keys_held, int keys_down) {
                     speedIncTimer = 0;
                 }
             }
-        }
+        } else
+            key_right = false;
 
         if (keys_held & KEY_DOWN) {
             hangingOnTileLeft = false;
@@ -93,6 +98,12 @@ void MainDude::handleKeyInput(int keys_held, int keys_down) {
             crawling = false;
     } else
         crawling = false;
+
+    if(!keys_held)
+    {
+        key_left = false;
+        key_right = false;
+    }
 }
 
 
@@ -108,13 +119,43 @@ void MainDude::updateTimers(int timeElapsed) {
         animFrame++;
     }
 
-    if (animFrame >= FRAMES_PER_ANIMATION && !crawling) {
-        animFrame = 0;
+    if(!key_left && pushing_left) {
+        pushing_left = false;
+        pushingTimer = 0;
     }
+    if(!key_right && pushing_right) {
+        pushing_right = false;
+        pushingTimer = 0;
+    }
+
+    if ((leftCollision || rightCollision) && !crawling && !hangingOnTileLeft && !hangingOnTileRight && (key_left || key_right)) {
+        pushingTimer += timeElapsed;
+        if (pushingTimer > PUSHING_TIME)
+            if (leftCollision) {
+                pushing_right = true;
+                pushingTimer = 0;
+            }
+            else {
+                pushing_left = true;
+                pushingTimer = 0;
+            }
+    } else {
+        pushingTimer = 0;
+        pushing_left = false;
+        pushing_right = false;
+    }
+
+    if (animFrame >= FRAMES_PER_ANIMATION && !crawling && !pushing_left && !pushing_right)
+        animFrame = 0;
+
     if (animFrame >= 9 && crawling)
         animFrame = 0;
 
-    if (!bottomCollision)
+    if ((pushing_left || pushing_right) && animFrame >= 7)
+        animFrame = 0;
+
+
+    if (!bottomCollision && !hangingOnTileLeft && !hangingOnTileRight)
         jumpingTimer += timeElapsed;
 
     if (bottomCollision && jumpingTimer > STUN_JUMPING_TIME) {
@@ -306,6 +347,18 @@ void MainDude::animate(Camera *camera) {
         offset = frameGfx + frame * MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT / 2;
         main_spriteInfo->updateFrame(offset);
         sub_spriteInfo->updateFrame(offset);
+    } else if (pushing_left || pushing_right) {
+
+        if (pushing_left)
+            frame = animFrame + (7) * SPRITESHEET_ROW_WIDTH;
+        else
+            frame = animFrame + (8) * SPRITESHEET_ROW_WIDTH + 1;
+
+
+        offset = frameGfx + frame * MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT / 2;
+        main_spriteInfo->updateFrame(offset);
+        sub_spriteInfo->updateFrame(offset);
+
     } else if (hangingOnTileRight) {
         frame = (2 * SPRITESHEET_ROW_WIDTH) + 1;
         offset = frameGfx + frame * MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT / 2;
@@ -328,8 +381,22 @@ void MainDude::animate(Camera *camera) {
         main_spriteInfo->updateFrame(offset);
         sub_spriteInfo->updateFrame(offset);
     } else {
-        frame = animFrame + state * FRAMES_PER_ANIMATION;
-        offset = frameGfx + frame * MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT / 2;
+        if(abs(xSpeed) != 0) {
+            frame = animFrame + state * FRAMES_PER_ANIMATION;
+            offset = frameGfx + frame * MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT / 2;
+        }
+        else
+        {
+            if(state == 1) {
+                frame = (2 * SPRITESHEET_ROW_WIDTH) + 2;
+                offset = frameGfx + frame * MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT / 2;
+            }
+            else if(state == 0){
+                frame = (2 * SPRITESHEET_ROW_WIDTH) + 3;
+                offset = frameGfx + frame * MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT / 2;
+            }
+
+        }
         main_spriteInfo->updateFrame(offset);
         sub_spriteInfo->updateFrame(offset);
     }
@@ -408,5 +475,6 @@ void MainDude::update(Camera *camera, int keys_held, int keys_down, LevelGenerat
 
     if (!bottomCollision)
         crawling = false;
+
 }
 

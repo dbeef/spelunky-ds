@@ -20,6 +20,7 @@
 #define MAIN_DUDE_WIDTH 16
 #define STUN_TIME 2000
 #define STUN_JUMPING_TIME 1500
+#define PUSHING_TIME 500
 
 #include <nds.h>
 #include "SpriteState.h"
@@ -38,6 +39,9 @@ public:
     SpriteInfo *main_spriteInfo;
     SpriteInfo *sub_spriteInfo;
 
+    bool key_left;
+    bool key_right;
+
     int animationFrameTimer;
 
     int speedIncTimer;
@@ -51,6 +55,7 @@ public:
     bool stunned;
     int stunnedTimer;
     int jumpingTimer;
+    int pushingTimer;
 
     bool hangingOnTileLeft;
     bool hangingOnTileRight;
@@ -59,6 +64,8 @@ public:
     bool leftCollision;
     bool rightCollision;
     bool crawling;
+    bool pushing_left;
+    bool pushing_right;
 
     SpriteState state;
 
