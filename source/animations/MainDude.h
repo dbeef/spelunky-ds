@@ -5,6 +5,7 @@
 #ifndef SPELUNKYDS_MAINDUDE_H
 #define SPELUNKYDS_MAINDUDE_H
 #define MAX_X_SPEED 1.5
+#define MAX_X_SPEED_CRAWLING 0.25
 
 #define MAX_Y_SPEED 2
 #define MIN_HANGING_TIME 100
@@ -57,6 +58,7 @@ public:
     bool upperCollision;
     bool leftCollision;
     bool rightCollision;
+    bool crawling;
 
     SpriteState state;
 
