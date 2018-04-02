@@ -17,6 +17,8 @@
 #define JUMP_SPEED 2.3
 #define MAIN_DUDE_HEIGHT 16
 #define MAIN_DUDE_WIDTH 16
+#define STUN_TIME 2000
+#define STUN_JUMPING_TIME 1500
 
 #include <nds.h>
 #include "SpriteState.h"
@@ -44,6 +46,10 @@ public:
 
     //How much time was spent on hanging, since last flag hangingOnTileLeft/right occured.
     int hangingTimer;
+
+    bool stunned;
+    int stunnedTimer;
+    int jumpingTimer;
 
     bool hangingOnTileLeft;
     bool hangingOnTileRight;

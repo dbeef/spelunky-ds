@@ -12,6 +12,7 @@
 #include "../level_layout/MapUtils.h"
 
 #define SPRITESHEET_ROW_WIDTH 6
+
 /**
  * For debugging purposes
  * @param mapTiles
@@ -46,7 +47,7 @@ void MainDude::clearTilesOnRight(MapTile *mapTiles[32][32]) {
 void MainDude::handleKeyInput(int keys_held, int keys_down) {
 
 
-    if (keys_down) {
+    if (keys_down && !stunned) {
         if (keys_down & KEY_R) {
             if (bottomCollision) {
                 ySpeed = -JUMP_SPEED;
@@ -59,7 +60,7 @@ void MainDude::handleKeyInput(int keys_held, int keys_down) {
             }
         }
     }
-    if (keys_held) {
+    if (keys_held && !stunned) {
 
 
         if (keys_held & KEY_LEFT) {
@@ -97,7 +98,31 @@ void MainDude::updateTimers(int timeElapsed) {
     speedIncTimer += timeElapsed;
     hangingTimer += timeElapsed;
 
-    if (xSpeed != 0)
+    if (animationFrameTimer > 70) {
+        animationFrameTimer = 0;
+        animFrame++;
+    }
+    if (animFrame >= FRAMES_PER_ANIMATION) animFrame = 0;
+
+    if (!bottomCollision)
+        jumpingTimer += timeElapsed;
+
+    if (bottomCollision && jumpingTimer > STUN_JUMPING_TIME) {
+        stunned = true;
+        jumpingTimer = 0;
+    } else if (bottomCollision && jumpingTimer < STUN_JUMPING_TIME) {
+        jumpingTimer = 0;
+    }
+
+    if (stunned)
+        stunnedTimer += timeElapsed;
+    if (stunnedTimer > STUN_TIME) {
+        stunned = false;
+        stunnedTimer = 0;
+    }
+
+
+    if (xSpeed != 0 || stunned)
         animationFrameTimer += timeElapsed;
 }
 
@@ -117,7 +142,7 @@ void MainDude::updateSpeed(MapTile *mapTiles[32][32]) {
 
     if (posIncTimer > 10) {
 
-        std::cout << xSpeed << '\n';
+//        std::cout << xSpeed << '\n';
 
         double tempXspeed = abs(xSpeed);
         double tempYspeed = abs(ySpeed);
@@ -228,12 +253,6 @@ void MainDude::init() {
 
 void MainDude::animate(Camera *camera) {
 
-    if (animationFrameTimer > 70) {
-        animationFrameTimer = 0;
-        animFrame++;
-    }
-    if (animFrame >= FRAMES_PER_ANIMATION) animFrame = 0;
-
     int main_x = x - camera->x;
     int main_y = y - camera->y;
     int sub_x = x - camera->x;
@@ -258,34 +277,30 @@ void MainDude::animate(Camera *camera) {
     int frame;
     u8 *offset;
 
-    if (hangingOnTileRight) {
-        frame = (2 * SPRITESHEET_ROW_WIDTH) + 1;
+    if (stunned) {
+        if (animFrame > 4)
+            animFrame = 0;
+
+        frame = (3 * SPRITESHEET_ROW_WIDTH) + animFrame;
         offset = frameGfx + frame * MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT / 2;
-//        dmaCopy(offset, spriteGfxMemMain, MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT);
-//        dmaCopy(offset, spriteGfxMemSub, MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT);
         main_spriteInfo->updateFrame(offset);
         sub_spriteInfo->updateFrame(offset);
-
+    } else if (hangingOnTileRight) {
+        frame = (2 * SPRITESHEET_ROW_WIDTH) + 1;
+        offset = frameGfx + frame * MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT / 2;
+        main_spriteInfo->updateFrame(offset);
+        sub_spriteInfo->updateFrame(offset);
     } else if (hangingOnTileLeft) {
         frame = (2 * SPRITESHEET_ROW_WIDTH);
         offset = frameGfx + frame * MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT / 2;
-//        dmaCopy(offset, spriteGfxMemMain, MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT);
-//        dmaCopy(offset, spriteGfxMemSub, MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT);
         main_spriteInfo->updateFrame(offset);
         sub_spriteInfo->updateFrame(offset);
     } else {
         frame = animFrame + state * FRAMES_PER_ANIMATION;
-        offset = frameGfx + frame * MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT /2;
-//        dmaCopy(offset, spriteGfxMemMain, MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT);
-//        dmaCopy(offset, spriteGfxMemSub, MAIN_/DUDE_WIDTH * MAIN_DUDE_HEIGHT);
+        offset = frameGfx + frame * MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT / 2;
         main_spriteInfo->updateFrame(offset);
         sub_spriteInfo->updateFrame(offset);
     }
-
-//    oamSet(&oamMain, 0, main_x, main_y, 0, 0, SpriteSize_16x16, SpriteColorFormat_256Color,
-//           spriteGfxMemMain, -1, false, false, false, false, false);
-//    oamSet(&oamSub, 0, sub_x, sub_y, 0, 0, SpriteSize_16x16, SpriteColorFormat_256Color,
-//           spriteGfxMemSub, -1, false, false, false, false, false);
 
 }
 
@@ -320,7 +335,7 @@ void MainDude::canHangOnTile(MapTile *neighboringTiles[9]) {
         hangingTimer = 0;
         ySpeed = 0;
 
-        fprintf(stdout, "HANGING" + '\n');
+//        fprintf(stdout, "HANGING" + '\n');
 
         if (rightCollision) {
             this->y = (neighboringTiles[0]->y * 16);

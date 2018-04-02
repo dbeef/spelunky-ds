@@ -56,7 +56,7 @@ int main(void) {
     dmaCopyHalfWords(DMA_CHANNEL, map, bgGetMapPtr(bg_sub), sizeof(map));
     dmaCopy(cavebgPal, BG_PALETTE, cavebgPalLen);
     dmaCopy(cavebgPal, BG_PALETTE_SUB, cavebgPalLen);
-//    prepareConsole();
+    prepareConsole();
 
     spelunker::scroll(bg_main, bg_sub, l, fresh_map);
 
@@ -71,7 +71,7 @@ void prepareConsole() {
     const int map_base = 8;
 
     PrintConsole *bottomConsole;
-    consoleInit(bottomConsole, 0, BgType_Text4bpp, BgSize_T_256x256, map_base, tile_base, false, false);
+    consoleInit(bottomConsole, 0, BgType_Text4bpp, BgSize_T_256x256, map_base, tile_base, true, false);
 
     ConsoleFont font;
 

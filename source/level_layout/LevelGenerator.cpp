@@ -43,7 +43,7 @@ void LevelGenerator::newLayout(int seed) {
 
     srand(timerElapsed(1));
 
-    std::cout << " " << seed << '\n';
+//    std::cout << " " << seed << '\n';
 
     for (int a = 0; a < ROOMS_X; a++) {
         for (int b = 0; b < ROOMS_Y; b++) {
@@ -53,7 +53,7 @@ void LevelGenerator::newLayout(int seed) {
 
     //value of '3' crashes program
     int curr_x = rand() % 3;
-    std::cout << " " << curr_x << '\n';
+//    std::cout << " " << curr_x << '\n';
 
     int curr_y = ROOMS_Y - 1;
     int direction = 0;
@@ -128,9 +128,9 @@ void LevelGenerator::newLayout(int seed) {
 
     for (int b = ROOMS_Y - 1; b >= 0; b--) {
         for (int a = 0; a < ROOMS_X; a++) {
-            std::cout << " " << layout[a][b];
+//            std::cout << " " << layout[a][b];
         }
-        std::cout << ('\n');
+//        std::cout << ('\n');
     }
 
 }
@@ -300,7 +300,7 @@ void LevelGenerator::clearCollidedTile(int px, int py, int camera_x, int camera_
                 t->values[1] = 0;
                 t->values[2] = 0;
                 t->values[3] = 0;
-                std::cout << " " << px << " " << py << " " << camera_x << " " << camera_y << '\n';
+//                std::cout << " " << px << " " << py << " " << camera_x << " " << camera_y << '\n';
             }
         }
     }
@@ -365,7 +365,7 @@ void LevelGenerator::generateRooms() {
                         u16 pos_x = (OFFSET_X + tab_x * 2 + 2 * ROOM_WIDTH * a) / 2;
                         u16 pos_y = (OFFSET_X + tab_y * 2 + 2 * ROOM_HEIGHT * ((ROOMS_Y - b) - 1)) / 2;
 
-                        std::cout << pos_x << " " << pos_y << '\n';
+//                        std::cout << pos_x << " " << pos_y << '\n';
                         delete (mapTiles[pos_x][pos_y]);
                         MapTile *t = new MapTile();
 
