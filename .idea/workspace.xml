@@ -14,36 +14,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4167ccef-cad0-4b13-8f61-b9437b132076" name="Default" comment="Merge branch 'master' of https://github.com/dbeef/spelunky-ds&#10;&#10;# Conflicts:&#10;#&#9;README.md">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/build/MainDude.o" afterPath="$PROJECT_DIR$/build/MainDude.o" />
-      <change beforePath="$PROJECT_DIR$/build/Scrolling.o" afterPath="$PROJECT_DIR$/build/Scrolling.o" />
-      <change beforePath="$PROJECT_DIR$/build/bomb.h" afterPath="$PROJECT_DIR$/build/bomb.h" />
-      <change beforePath="$PROJECT_DIR$/build/bomb.s" afterPath="$PROJECT_DIR$/build/bomb.s" />
-      <change beforePath="$PROJECT_DIR$/build/cavebg.h" afterPath="$PROJECT_DIR$/build/cavebg.h" />
-      <change beforePath="$PROJECT_DIR$/build/cavebg.s" afterPath="$PROJECT_DIR$/build/cavebg.s" />
-      <change beforePath="$PROJECT_DIR$/build/dollar.h" afterPath="$PROJECT_DIR$/build/dollar.h" />
-      <change beforePath="$PROJECT_DIR$/build/dollar.s" afterPath="$PROJECT_DIR$/build/dollar.s" />
-      <change beforePath="$PROJECT_DIR$/build/font.h" afterPath="$PROJECT_DIR$/build/font.h" />
-      <change beforePath="$PROJECT_DIR$/build/font.s" afterPath="$PROJECT_DIR$/build/font.s" />
-      <change beforePath="$PROJECT_DIR$/build/heart.h" afterPath="$PROJECT_DIR$/build/heart.h" />
-      <change beforePath="$PROJECT_DIR$/build/heart.s" afterPath="$PROJECT_DIR$/build/heart.s" />
-      <change beforePath="$PROJECT_DIR$/build/holding_item.h" afterPath="$PROJECT_DIR$/build/holding_item.h" />
-      <change beforePath="$PROJECT_DIR$/build/holding_item.s" afterPath="$PROJECT_DIR$/build/holding_item.s" />
-      <change beforePath="$PROJECT_DIR$/build/rope.h" afterPath="$PROJECT_DIR$/build/rope.h" />
-      <change beforePath="$PROJECT_DIR$/build/rope.s" afterPath="$PROJECT_DIR$/build/rope.s" />
-      <change beforePath="$PROJECT_DIR$/build/snake.h" afterPath="$PROJECT_DIR$/build/snake.h" />
-      <change beforePath="$PROJECT_DIR$/build/snake.s" afterPath="$PROJECT_DIR$/build/snake.s" />
-      <change beforePath="$PROJECT_DIR$/build/spelunker.h" afterPath="$PROJECT_DIR$/build/spelunker.h" />
-      <change beforePath="$PROJECT_DIR$/build/spelunker.o" afterPath="$PROJECT_DIR$/build/spelunker.o" />
-      <change beforePath="$PROJECT_DIR$/build/spelunker.s" afterPath="$PROJECT_DIR$/build/spelunker.s" />
-      <change beforePath="$PROJECT_DIR$/build/spelunkyds.map" afterPath="$PROJECT_DIR$/build/spelunkyds.map" />
-      <change beforePath="$PROJECT_DIR$/gfx/sprites/spelunker.png" afterPath="$PROJECT_DIR$/gfx/sprites/spelunker.png" />
-      <change beforePath="$PROJECT_DIR$/source/animations/MainDude.cpp" afterPath="$PROJECT_DIR$/source/animations/MainDude.cpp" />
-      <change beforePath="$PROJECT_DIR$/source/animations/MainDude.h" afterPath="$PROJECT_DIR$/source/animations/MainDude.h" />
-      <change beforePath="$PROJECT_DIR$/spelunkyds.elf" afterPath="$PROJECT_DIR$/spelunkyds.elf" />
-      <change beforePath="$PROJECT_DIR$/spelunkyds.nds" afterPath="$PROJECT_DIR$/spelunkyds.nds" />
-    </list>
+    <list default="true" id="4167ccef-cad0-4b13-8f61-b9437b132076" name="Default" comment="Merge branch 'master' of https://github.com/dbeef/spelunky-ds&#10;&#10;# Conflicts:&#10;#&#9;README.md" />
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -72,13 +43,20 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MainDude.cpp" pinned="false" current-in-tab="true">
+      <file leaf-file-name="MainDude.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/source/animations/MainDude.cpp">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="477">
               <caret line="395" column="83" lean-forward="false" selection-start-line="395" selection-start-column="83" selection-end-line="395" selection-end-column="83" />
               <folding />
             </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="spelunker.png" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/gfx/sprites/spelunker.png">
+          <provider selected="true" editor-type-id="images">
+            <state />
           </provider>
         </entry>
       </file>
@@ -468,12 +446,12 @@
       <workItem from="1522501079478" duration="10138000" />
       <workItem from="1522568613741" duration="4234000" />
       <workItem from="1522586783644" duration="26999000" />
-      <workItem from="1522657096263" duration="13069000" />
+      <workItem from="1522657096263" duration="13143000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="369806000" />
+    <option name="totallyTimeSpent" value="369880000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -487,14 +465,14 @@
   <component name="ToolWindowManager">
     <frame x="61" y="-4" width="1539" height="904" extended-state="6" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2014295" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2014295" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32957393" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="CMake" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32957393" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3659148" sideWeight="0.51007146" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32957393" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24951267" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14285715" sideWeight="0.4899285" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14285715" sideWeight="0.4899285" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -863,17 +841,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/gfx/sprites/spelunker.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/source/animations/MainDude.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="477">
           <caret line="395" column="83" lean-forward="false" selection-start-line="395" selection-start-column="83" selection-end-line="395" selection-end-column="83" />
           <folding />
         </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gfx/sprites/spelunker.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
       </provider>
     </entry>
   </component>

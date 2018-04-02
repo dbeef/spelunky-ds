@@ -72,8 +72,7 @@ void MainDude::handleKeyInput(int keys_held, int keys_down) {
                     xSpeed -= X_SPEED_DELTA;
                     speedIncTimer = 0;
                 }
-        }
-        else
+        } else
             key_left = false;
 
         if (keys_held & KEY_RIGHT) {
@@ -99,8 +98,7 @@ void MainDude::handleKeyInput(int keys_held, int keys_down) {
     } else
         crawling = false;
 
-    if(!keys_held)
-    {
+    if (!keys_held) {
         key_left = false;
         key_right = false;
     }
@@ -119,23 +117,23 @@ void MainDude::updateTimers(int timeElapsed) {
         animFrame++;
     }
 
-    if(!key_left && pushing_left) {
+    if (!key_left && pushing_left) {
         pushing_left = false;
         pushingTimer = 0;
     }
-    if(!key_right && pushing_right) {
+    if (!key_right && pushing_right) {
         pushing_right = false;
         pushingTimer = 0;
     }
 
-    if ((leftCollision || rightCollision) && !crawling && !hangingOnTileLeft && !hangingOnTileRight && (key_left || key_right)) {
+    if ((leftCollision || rightCollision) && !crawling && !hangingOnTileLeft && !hangingOnTileRight &&
+        (key_left || key_right)) {
         pushingTimer += timeElapsed;
         if (pushingTimer > PUSHING_TIME)
             if (leftCollision) {
                 pushing_right = true;
                 pushingTimer = 0;
-            }
-            else {
+            } else {
                 pushing_left = true;
                 pushingTimer = 0;
             }
@@ -380,18 +378,27 @@ void MainDude::animate(Camera *camera) {
         offset = frameGfx + frame * MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT / 2;
         main_spriteInfo->updateFrame(offset);
         sub_spriteInfo->updateFrame(offset);
-    } else {
-        if(abs(xSpeed) != 0) {
-            frame = animFrame + state * FRAMES_PER_ANIMATION;
+    } else if (!bottomCollision) {
+
+        if (state == 1) {
+            frame = state * FRAMES_PER_ANIMATION;
+            offset = frameGfx + frame * MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT / 2;
+        } else if (state == 0) {
+            frame = state * FRAMES_PER_ANIMATION;
             offset = frameGfx + frame * MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT / 2;
         }
-        else
-        {
-            if(state == 1) {
+        main_spriteInfo->updateFrame(offset);
+        sub_spriteInfo->updateFrame(offset);
+
+    } else {
+        if (abs(xSpeed) != 0) {
+            frame = animFrame + state * FRAMES_PER_ANIMATION;
+            offset = frameGfx + frame * MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT / 2;
+        } else {
+            if (state == 1) {
                 frame = (2 * SPRITESHEET_ROW_WIDTH) + 2;
                 offset = frameGfx + frame * MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT / 2;
-            }
-            else if(state == 0){
+            } else if (state == 0) {
                 frame = (2 * SPRITESHEET_ROW_WIDTH) + 3;
                 offset = frameGfx + frame * MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT / 2;
             }
