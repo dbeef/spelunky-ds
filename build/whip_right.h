@@ -1,9 +1,9 @@
 
-//{{BLOCK(dollar)
+//{{BLOCK(whip_right)
 
 //======================================================================
 //
-//	dollar, 16x16@4, 
+//	whip_right, 16x16@4, 
 //	Transparent color : 20,9C,00
 //	+ palette 16 entries, not compressed
 //	+ 4 tiles Metatiled by 2x2 not compressed
@@ -15,15 +15,15 @@
 //
 //======================================================================
 
-#ifndef GRIT_DOLLAR_H
-#define GRIT_DOLLAR_H
+#ifndef GRIT_WHIP_RIGHT_H
+#define GRIT_WHIP_RIGHT_H
 
-#define dollarTilesLen 128
-extern const unsigned int dollarTiles[32];
+#define whip_rightTilesLen 128
+extern const unsigned int whip_rightTiles[32];
 
-#define dollarPalLen 32
-extern const unsigned short dollarPal[16];
+#define whip_rightPalLen 32
+extern const unsigned short whip_rightPal[16];
 
-#endif // GRIT_DOLLAR_H
+#endif // GRIT_WHIP_RIGHT_H
 
-//}}BLOCK(dollar)
+//}}BLOCK(whip_right)

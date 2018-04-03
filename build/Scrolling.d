@@ -82,7 +82,11 @@ Scrolling.o: \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../../build/dollar.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../../build/bomb.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../../build/rope.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../../build/holding_item.h
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../../build/holding_item.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../../build/pre_whip_left.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../../build/pre_whip_right.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../../build/whip_left.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../../build/whip_right.h
 
 /home/xdbeef/devkitPro/libnds/include/nds.h:
 
@@ -249,3 +253,11 @@ Scrolling.o: \
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../../build/rope.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../../build/holding_item.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../../build/pre_whip_left.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../../build/pre_whip_right.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../../build/whip_left.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../../build/whip_right.h:

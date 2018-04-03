@@ -36,6 +36,16 @@ struct MainDude {
 
 public:
 
+    SpriteInfo *main_whip_left_spriteInfo;
+    SpriteInfo *main_whip_right_spriteInfo;
+    SpriteInfo *main_pre_whip_left_spriteInfo;
+    SpriteInfo *main_pre_whip_right_spriteInfo;
+
+    SpriteInfo *sub_whip_left_spriteInfo;
+    SpriteInfo *sub_whip_right_spriteInfo;
+    SpriteInfo *sub_pre_whip_left_spriteInfo;
+    SpriteInfo *sub_pre_whip_right_spriteInfo;
+
     SpriteInfo *main_spriteInfo;
     SpriteInfo *sub_spriteInfo;
 
@@ -56,6 +66,7 @@ public:
     int stunnedTimer;
     int jumpingTimer;
     int pushingTimer;
+    int whip_timer;
 
     bool hangingOnTileLeft;
     bool hangingOnTileRight;
@@ -66,6 +77,7 @@ public:
     bool crawling;
     bool pushing_left;
     bool pushing_right;
+    bool whip;
 
     SpriteState state;
 
@@ -95,6 +107,26 @@ public:
     void update(Camera *camera, int keys_held, int keys_up, LevelGenerator *l);
 
     void clearTilesOnRight(MapTile *mapTile[32][32]);
+
+    void hideWhipLeftMain();
+    void hideWhipLeftSub();
+    void hideWhipRightMain();
+    void hideWhipRightSub();
+    
+    void hidePreWhipLeftMain();
+    void hidePreWhipLeftSub();
+    void hidePreWhipRightMain();
+    void hidePreWhipRightSub();
+    
+    void showWhipLeftMain();
+    void showWhipLeftSub();
+    void showWhipRightMain();
+    void showWhipRightSub();
+
+    void showPreWhipLeftMain();
+    void showPreWhipLeftSub();
+    void showPreWhipRightMain();
+    void showPreWhipRightSub();
 };
 
 

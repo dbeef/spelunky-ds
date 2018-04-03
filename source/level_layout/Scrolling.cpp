@@ -12,6 +12,10 @@
 #include "../../build/bomb.h"
 #include "../../build/rope.h"
 #include "../../build/holding_item.h"
+#include "../../build/pre_whip_left.h"
+#include "../../build/pre_whip_right.h"
+#include "../../build/whip_left.h"
+#include "../../build/whip_right.h"
 
 extern u16 map[4096];
 
@@ -39,9 +43,35 @@ void spelunker::scroll(int bg_main, int bg_sub, LevelGenerator *l, u16 *fresh_ma
     mainDude->x = 100;
     mainDude->y = 100;
     mainDude->main_spriteInfo = mainOamManager->initSprite(spelunkerPal, spelunkerPalLen, spelunkerTiles,
+
                                                            spelunkerTilesLen);
+
+    mainDude->main_pre_whip_left_spriteInfo = mainOamManager->initSprite(pre_whip_leftPal, pre_whip_leftPalLen,
+                                                                         pre_whip_leftTiles, pre_whip_leftTilesLen);
+
+    mainDude->main_pre_whip_right_spriteInfo = mainOamManager->initSprite(pre_whip_rightPal, pre_whip_rightPalLen,
+                                                                          pre_whip_rightTiles, pre_whip_rightTilesLen);
+
+    mainDude->main_whip_left_spriteInfo = mainOamManager->initSprite(whip_leftPal, whip_leftPalLen,
+                                                                     whip_leftTiles, whip_leftTilesLen);
+
+    mainDude->main_whip_right_spriteInfo = mainOamManager->initSprite(whip_rightPal, whip_rightPalLen,
+                                                                      whip_rightTiles, whip_rightTilesLen);
+
     mainDude->sub_spriteInfo = subOamManager->initSprite(spelunkerPal, spelunkerPalLen, spelunkerTiles,
                                                          spelunkerTilesLen);
+
+    mainDude->sub_pre_whip_left_spriteInfo = subOamManager->initSprite(pre_whip_leftPal, pre_whip_leftPalLen,
+                                                                       pre_whip_leftTiles, pre_whip_leftTilesLen);
+    mainDude->sub_pre_whip_right_spriteInfo = subOamManager->initSprite(pre_whip_rightPal, pre_whip_rightPalLen,
+                                                                        pre_whip_rightTiles, pre_whip_rightTilesLen);
+    mainDude->sub_whip_left_spriteInfo = subOamManager->initSprite(whip_leftPal, whip_leftPalLen,
+                                                                   whip_leftTiles, whip_leftTilesLen);
+    mainDude->sub_whip_right_spriteInfo = subOamManager->initSprite(whip_rightPal, whip_rightPalLen,
+                                                                    whip_rightTiles, whip_rightTilesLen);
+
+
+
     mainDude->init();
     Hud *hud = new Hud();
     hud->heartSpriteInfo = mainOamManager->initSprite(heartPal, heartPalLen, heartTiles, heartTilesLen);

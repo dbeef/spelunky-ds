@@ -59,6 +59,12 @@ void MainDude::handleKeyInput(int keys_held, int keys_down) {
                 hangingTimer = 0;
             }
         }
+        if (keys_down & KEY_L) {
+            if (!stunned && !whip) {
+                whip = true;
+                animFrame = 0;
+            }
+        }
     }
     if (keys_held && !stunned) {
 
@@ -112,9 +118,29 @@ void MainDude::updateTimers(int timeElapsed) {
     speedIncTimer += timeElapsed;
     hangingTimer += timeElapsed;
 
-    if (animationFrameTimer > 70) {
+    if (whip) {
+        whip_timer += timeElapsed;
+        //4 frames idle
+        if (whip_timer > 420 + 0 * 70) {
+            whip_timer = 0;
+            whip = false;
+            hideWhipLeftSub();
+            hideWhipLeftMain();
+            hideWhipRightSub();
+            hideWhipRightMain();
+            hidePreWhipLeftSub();
+            hidePreWhipLeftMain();
+            hidePreWhipRightSub();
+            hidePreWhipRightMain();
+        }
+    }
+
+    if (animationFrameTimer > 65) {
         animationFrameTimer = 0;
-        animFrame++;
+
+        if (!whip || (whip && animFrame < 5))
+            animFrame++;
+
     }
 
     if (!key_left && pushing_left) {
@@ -171,7 +197,7 @@ void MainDude::updateTimers(int timeElapsed) {
     }
 
 
-    if (xSpeed != 0 || stunned)
+    if (xSpeed != 0 || stunned || whip)
         animationFrameTimer += timeElapsed;
 }
 
@@ -303,11 +329,16 @@ void MainDude::checkCollisionWithMap(MapTile *mapTiles[32][32], int xx, int yy) 
 }
 
 void MainDude::init() {
-//    spriteGfxMemMain = oamAllocateGfx(&oamMain, SpriteSize_16x16, SpriteColorFormat_256Color);
-//    spriteGfxMemSub = oamAllocateGfx(&oamSub, SpriteSize_16x16, SpriteColorFormat_256Color);
     frameGfx = (u8 *) spelunkerTiles;
-//    dmaCopy(spelunkerPal, SPRITE_PALETTE, 512);
-    dmaCopy(spelunkerPal, SPRITE_PALETTE_SUB, 512);
+
+    hideWhipLeftSub();
+    hideWhipLeftMain();
+    hideWhipRightSub();
+    hideWhipRightMain();
+    hidePreWhipLeftSub();
+    hidePreWhipLeftMain();
+    hidePreWhipRightSub();
+    hidePreWhipRightMain();
 }
 
 
@@ -337,6 +368,65 @@ void MainDude::animate(Camera *camera) {
     int frame;
     u8 *offset;
 
+    if (whip) {
+
+        if (state == 1) {
+
+            hideWhipRightMain();
+            hideWhipRightSub();
+            hidePreWhipRightMain();
+            hidePreWhipRightSub();
+
+            if (whip_timer > 100 && whip_timer < 170) {
+                showPreWhipLeftMain();
+                showPreWhipLeftSub();
+            } else if (whip_timer >= 200) {
+                hidePreWhipLeftMain();
+                hidePreWhipLeftSub();
+                showWhipLeftMain();
+                showWhipLeftSub();
+            }
+
+            sub_pre_whip_left_spriteInfo->entry->x = sub_x + 16;
+            sub_pre_whip_left_spriteInfo->entry->y = sub_y;
+            main_pre_whip_left_spriteInfo->entry->x = main_x + 16;
+            main_pre_whip_left_spriteInfo->entry->y = main_y;
+
+            sub_whip_left_spriteInfo->entry->x = sub_x - 16;
+            sub_whip_left_spriteInfo->entry->y = sub_y;
+            main_whip_left_spriteInfo->entry->x = main_x - 16;
+            main_whip_left_spriteInfo->entry->y = main_y;
+
+        } else {
+
+            hideWhipLeftMain();
+            hideWhipLeftSub();
+            hidePreWhipLeftMain();
+            hidePreWhipLeftSub();
+
+
+            if (whip_timer > 100 && whip_timer < 170) {
+                showPreWhipRightMain();
+                showPreWhipRightSub();
+
+            } else if (whip_timer >= 200) {
+                hidePreWhipRightMain();
+                hidePreWhipRightSub();
+                showWhipRightMain();
+                showWhipRightSub();
+            }
+
+            sub_pre_whip_right_spriteInfo->entry->x = sub_x - 16;
+            sub_pre_whip_right_spriteInfo->entry->y = sub_y;
+            main_pre_whip_right_spriteInfo->entry->x = main_x - 16;
+            main_pre_whip_right_spriteInfo->entry->y = main_y;
+            sub_whip_right_spriteInfo->entry->x = sub_x + 16;
+            sub_whip_right_spriteInfo->entry->y = sub_y;
+            main_whip_right_spriteInfo->entry->x = main_x + 16;
+            main_whip_right_spriteInfo->entry->y = main_y;
+        }
+
+    }
     if (stunned) {
         if (animFrame > 4)
             animFrame = 0;
@@ -357,6 +447,18 @@ void MainDude::animate(Camera *camera) {
         main_spriteInfo->updateFrame(offset);
         sub_spriteInfo->updateFrame(offset);
 
+    } else if (whip) {
+
+        if (state == 1) {
+            frame = (9 * SPRITESHEET_ROW_WIDTH) + 2 + animFrame;
+            offset = frameGfx + frame * MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT / 2;
+        } else if (state == 0) {
+            frame = (10 * SPRITESHEET_ROW_WIDTH) + 2 + animFrame;
+            offset = frameGfx + frame * MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT / 2;
+        }
+
+        main_spriteInfo->updateFrame(offset);
+        sub_spriteInfo->updateFrame(offset);
     } else if (hangingOnTileRight) {
         frame = (2 * SPRITESHEET_ROW_WIDTH) + 1;
         offset = frameGfx + frame * MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT / 2;
@@ -482,6 +584,72 @@ void MainDude::update(Camera *camera, int keys_held, int keys_down, LevelGenerat
 
     if (!bottomCollision)
         crawling = false;
+
+}
+
+void MainDude::hideWhipRightMain() {
+    main_whip_right_spriteInfo->entry->isHidden = true;
+}
+
+void MainDude::hidePreWhipRightMain() {
+    main_pre_whip_right_spriteInfo->entry->isHidden = true;
+}
+
+void MainDude::hideWhipRightSub() {
+    sub_whip_right_spriteInfo->entry->isHidden = true;
+}
+
+void MainDude::hidePreWhipRightSub() {
+    sub_pre_whip_right_spriteInfo->entry->isHidden = true;
+}
+
+void MainDude::hideWhipLeftMain() {
+    main_whip_left_spriteInfo->entry->isHidden = true;
+}
+
+void MainDude::hidePreWhipLeftMain() {
+    main_pre_whip_left_spriteInfo->entry->isHidden = true;
+}
+
+void MainDude::hideWhipLeftSub() {
+    sub_whip_left_spriteInfo->entry->isHidden = true;
+}
+
+void MainDude::hidePreWhipLeftSub() {
+    sub_pre_whip_left_spriteInfo->entry->isHidden = true;
+}
+
+void MainDude::showWhipRightMain() {
+    main_whip_right_spriteInfo->entry->isHidden = false;
+}
+
+void MainDude::showPreWhipRightMain() {
+    main_pre_whip_right_spriteInfo->entry->isHidden = false;
+}
+
+void MainDude::showWhipRightSub() {
+    sub_whip_right_spriteInfo->entry->isHidden = false;
+}
+
+void MainDude::showPreWhipRightSub() {
+    sub_pre_whip_right_spriteInfo->entry->isHidden = false;
+}
+
+void MainDude::showWhipLeftMain() {
+    main_whip_left_spriteInfo->entry->isHidden = false;
+}
+
+void MainDude::showPreWhipLeftMain() {
+    main_pre_whip_left_spriteInfo->entry->isHidden = false;
+}
+
+void MainDude::showWhipLeftSub() {
+    sub_whip_left_spriteInfo->entry->isHidden = false;
+}
+
+void MainDude::showPreWhipLeftSub() {
+    sub_pre_whip_left_spriteInfo->entry->isHidden = false;
+
 
 }
 
