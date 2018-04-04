@@ -51,7 +51,8 @@ void OAMManager::updateOAM() {
 }
 
 SpriteInfo *
-OAMManager::initSprite(const unsigned short pallette[], int palLen, const unsigned int tiles[], int tilesLen) {
+OAMManager::initSprite(const unsigned short pallette[], int palLen, const unsigned int tiles[], int tilesLen,
+                       int size) {
 
     /* Keep track of the available tiles */
 
@@ -63,8 +64,8 @@ OAMManager::initSprite(const unsigned short pallette[], int palLen, const unsign
     spriteInfo->offset_multiplier = this->offset_multiplier;
     spriteInfo->sprite_address = this->sprite_address;
     spriteInfo->oamId = current_oam_id;
-    spriteInfo->width = 16;
-    spriteInfo->height = 16;
+    spriteInfo->width = size;
+    spriteInfo->height = size;
     spriteInfo->angle = 462;
     spriteInfo->entry = spriteEntry;
     /*
@@ -96,7 +97,11 @@ OAMManager::initSprite(const unsigned short pallette[], int palLen, const unsign
      */
     spriteEntry->x = 50;
     spriteEntry->rotationIndex = spriteInfo->oamId;
-    spriteEntry->size = OBJSIZE_16;
+    if (size == 8)
+        spriteEntry->size = OBJSIZE_8;
+    else
+        spriteEntry->size = OBJSIZE_16;
+
     /*
      *  Configure attribute 2.
      *

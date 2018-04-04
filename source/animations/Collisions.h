@@ -24,7 +24,9 @@ public:
 
     static bool isStandingOnEdge(MapTile *neighboringTiles[9], int *xPos, int *yPos, double *xSpeed, int width, int height);
 
+    static void getNeighboringTiles(MapTile *mapTiles[32][32], int xx, int yy, MapTile *neighboringTiles[9]);
 
+    static void getCenterTile(int x_position, int y_position, int height, int width, int *x_tile, int *y_tile);
 };
 
 

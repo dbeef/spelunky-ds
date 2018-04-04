@@ -68,6 +68,7 @@ Collisions.o: \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/MapTile.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Camera.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/SpriteInfo.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Bomb.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/MapUtils.h
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Collisions.h:
@@ -205,5 +206,7 @@ Collisions.o: \
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Camera.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/SpriteInfo.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Bomb.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/MapUtils.h:

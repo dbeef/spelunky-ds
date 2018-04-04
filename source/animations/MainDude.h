@@ -28,6 +28,7 @@
 #include "../level_layout/LevelGenerator.h"
 #include "Camera.h"
 #include "../level_layout/SpriteInfo.h"
+#include "Bomb.h"
 
 struct MainDude {
 
@@ -49,6 +50,7 @@ public:
     SpriteInfo *main_spriteInfo;
     SpriteInfo *sub_spriteInfo;
 
+    Bomb *bomb;
     bool key_left;
     bool key_right;
 
@@ -88,6 +90,8 @@ public:
     int animFrame;
     u8 *frameGfx;
 
+    double *timer;
+
     void checkCollisionWithMap(MapTile *mapTiles[32][32], int xx, int yy);
 
     void updateSpeed(MapTile *mapTiles[32][32]);
@@ -96,7 +100,7 @@ public:
 
     void handleKeyInput(int keys_held, int keys_up);
 
-    void init();
+    void init(double *timer, Bomb *bomb);
 
     void updateTimers(int timeElapsed);
 

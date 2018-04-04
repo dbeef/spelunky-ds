@@ -28,7 +28,7 @@ public:
 
     void updateOAM();
 
-    SpriteInfo *initSprite(const unsigned short pallette[], int palLen, const unsigned int tiles[], int tilesLen);
+    SpriteInfo *initSprite(const unsigned short pallette[], int palLen, const unsigned int tiles[], int tilesLen, int size);
 };
 
 

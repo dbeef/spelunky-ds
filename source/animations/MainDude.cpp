@@ -61,8 +61,20 @@ void MainDude::handleKeyInput(int keys_held, int keys_down) {
         }
         if (keys_down & KEY_L) {
             if (!stunned && !whip) {
-                whip = true;
-                animFrame = 0;
+                if(bomb->carried == true){
+
+                    bomb->carried = false;
+                    if(state == 1)
+                        bomb->x_speed = -1;
+                    else
+                        bomb->x_speed = 1;
+
+                    bomb->y_speed = -1;
+                }
+                else {
+                    whip = true;
+                    animFrame = 0;
+                }
             }
         }
     }
@@ -253,6 +265,11 @@ void MainDude::updateSpeed(MapTile *mapTiles[32][32]) {
                     y -= 1;
             }
 
+
+
+//            Collisions::getCenterTile(this->x, this->y, MAIN_DUDE_HEIGHT, MAIN_DUDE_WIDTH, xx, yy);
+//fixme
+
             xx = floor_div(this->x + 0.5 * MAIN_DUDE_WIDTH, 16);
             yy = floor_div(this->y + 0.5 * MAIN_DUDE_HEIGHT, 16);
 
@@ -276,28 +293,11 @@ void MainDude::updateSpeed(MapTile *mapTiles[32][32]) {
     }
 }
 
+
 void MainDude::checkCollisionWithMap(MapTile *mapTiles[32][32], int xx, int yy) {
 
-    MapTile *left_middle = mapTiles[xx - 1][yy];
-    MapTile *right_middle = mapTiles[xx + 1][yy];
-    MapTile *up_middle = mapTiles[xx][yy - 1];
-    MapTile *down_middle = mapTiles[xx][yy + 1];
-    MapTile *center = mapTiles[xx][yy];
-    MapTile *left_up = mapTiles[xx - 1][yy - 1];
-    MapTile *right_up = mapTiles[xx + 1][yy - 1];
-    MapTile *left_down = mapTiles[xx - 1][yy + 1];
-    MapTile *right_down = mapTiles[xx + 1][yy + 1];
-    MapTile *tiles[9] = {
-            left_middle, //0
-            right_middle, //1
-            up_middle, //2
-            down_middle, //3
-            center, //4
-            left_up, //5
-            right_up, //6
-            left_down, //7
-            right_down //8
-    };
+    MapTile *tiles[9];
+    Collisions::getNeighboringTiles(mapTiles, xx, yy, tiles);
 
     bottomCollision = Collisions::checkBottomCollision(tiles, &this->x, &this->y, &ySpeed, 16, 16);
     leftCollision = Collisions::checkLeftCollision(tiles, &this->x, &this->y, &xSpeed, 16, 16);
@@ -316,11 +316,11 @@ void MainDude::checkCollisionWithMap(MapTile *mapTiles[32][32], int xx, int yy) 
 
 
     if (!bottomCollision) {
-        if ((right_middle == 0 && (right_up != 0 && right_down != 0))) {
+        if ((tiles[1] == 0 && (tiles[6] != 0 && tiles[8] != 0))) {
             if (xSpeed > 0)
                 x += 2;
         }
-        if ((left_middle == 0 && (left_up != 0 && left_down != 0))) {
+        if ((tiles[0] == 0 && (tiles[5] != 0 && tiles[7] != 0))) {
             if (xSpeed < 0)
                 x -= 2;
         }
@@ -328,8 +328,10 @@ void MainDude::checkCollisionWithMap(MapTile *mapTiles[32][32], int xx, int yy) 
 
 }
 
-void MainDude::init() {
+void MainDude::init(double *timer, Bomb *bomb) {
+    this->timer = timer;
     frameGfx = (u8 *) spelunkerTiles;
+    this-> bomb = bomb;
 
     hideWhipLeftSub();
     hideWhipLeftMain();
@@ -364,6 +366,18 @@ void MainDude::animate(Camera *camera) {
 
     sub_spriteInfo->entry->x = sub_x;
     sub_spriteInfo->entry->y = sub_y;
+
+    if(bomb->carried == true) {
+        bomb->y = this->y + 6;
+
+        if(state == 1) {
+            bomb->x = this->x - 2;
+        }
+        else
+            bomb->x = this->x + 10;
+
+
+    }
 
     int frame;
     u8 *offset;
@@ -577,7 +591,7 @@ void MainDude::applyFriction() {
 
 void MainDude::update(Camera *camera, int keys_held, int keys_down, LevelGenerator *l) {
     this->applyFriction();
-    this->updateTimers(timerElapsed(0) / TICKS_PER_SECOND);
+    this->updateTimers(*timer);
     this->animate(camera);
     this->updateSpeed(l->mapTiles);
     this->handleKeyInput(keys_held, keys_down);

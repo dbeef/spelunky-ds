@@ -72,6 +72,7 @@ Scrolling.o: \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/../level_layout/LevelGenerator.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/Camera.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/../level_layout/SpriteInfo.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/Bomb.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/OAMManager.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../../build/spelunker.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../hud/Hud.h \
@@ -81,12 +82,14 @@ Scrolling.o: \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/input.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../../build/dollar.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../../build/bomb.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../../build/bomb_unarmed.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../../build/rope.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../../build/holding_item.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../../build/pre_whip_left.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../../build/pre_whip_right.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../../build/whip_left.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../../build/whip_right.h
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../../build/whip_right.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/Bomb.h
 
 /home/xdbeef/devkitPro/libnds/include/nds.h:
 
@@ -232,6 +235,8 @@ Scrolling.o: \
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/../level_layout/SpriteInfo.h:
 
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/Bomb.h:
+
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/OAMManager.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../../build/spelunker.h:
@@ -250,6 +255,8 @@ Scrolling.o: \
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../../build/bomb.h:
 
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../../build/bomb_unarmed.h:
+
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../../build/rope.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../../build/holding_item.h:
@@ -261,3 +268,5 @@ Scrolling.o: \
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../../build/whip_left.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../../build/whip_right.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/Bomb.h:
