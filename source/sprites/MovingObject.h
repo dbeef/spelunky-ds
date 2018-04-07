@@ -6,6 +6,7 @@
 #define SPELUNKYDS_MOVINGOBJECT_H
 
 #include "../level_layout/LevelGenerator.h"
+#include "../animations/OAMManager.h"
 
 /**
  *  https://en.wikibooks.org/wiki/C%2B%2B_Programming/Classes/Abstract_Classes
@@ -22,7 +23,7 @@ public:
 
     virtual void draw() = 0;
 
-    virtual void init() = 0;
+    virtual void init(OAMManager *mainOam, OAMManager *subOam) = 0;
 
     virtual void updateTimers() = 0;
 
@@ -38,6 +39,7 @@ public:
 
     virtual void onCollisionWithMainCharacter() = 0;
 
+    //TODO Make x,y as float, cast (floor) to int when drawn.
     int x;
     int y;
 

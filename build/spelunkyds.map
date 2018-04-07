@@ -698,16 +698,6 @@ Discarded input sections
  .bss           0x0000000000000000        0x0 cavebg.o
  .data          0x0000000000000000        0x0 MapUtils.o
  .bss           0x0000000000000000        0x0 MapUtils.o
- .group         0x0000000000000000        0x8 Scrolling.o
- .group         0x0000000000000000        0x8 Scrolling.o
- .group         0x0000000000000000        0x8 Scrolling.o
- .group         0x0000000000000000        0x8 Scrolling.o
- .group         0x0000000000000000        0x8 Scrolling.o
- .group         0x0000000000000000        0x8 Scrolling.o
- .group         0x0000000000000000        0x8 Scrolling.o
- .group         0x0000000000000000        0x8 Scrolling.o
- .group         0x0000000000000000        0x8 Scrolling.o
- .group         0x0000000000000000        0x8 Scrolling.o
  .data          0x0000000000000000        0x0 Scrolling.o
  .data          0x0000000000000000        0x0 SpriteInfo.o
  .bss           0x0000000000000000        0x0 SpriteInfo.o
@@ -724,6 +714,14 @@ Discarded input sections
  .text          0x0000000000000000      0x400 Snake.o
  .data          0x0000000000000000        0x0 Snake.o
  .data          0x0000000000000000        0x0 Collisions.o
+ .group         0x0000000000000000        0x8 Bomb.o
+ .group         0x0000000000000000        0x8 Bomb.o
+ .group         0x0000000000000000        0x8 Bomb.o
+ .group         0x0000000000000000        0x8 Bomb.o
+ .group         0x0000000000000000        0x8 Bomb.o
+ .group         0x0000000000000000        0x8 Bomb.o
+ .group         0x0000000000000000        0x8 Bomb.o
+ .group         0x0000000000000000        0x8 Bomb.o
  .data          0x0000000000000000        0x0 Bomb.o
  .data          0x0000000000000000        0x0 Camera.o
  .bss           0x0000000000000000        0x0 Camera.o
@@ -18619,221 +18617,219 @@ Linker script and memory map
                 0x0000000002000bf0                floor_div(int, int)
                 0x0000000002000c1c                floor_div(int, int, int*)
                 0x0000000002000c28                sectorize_map()
- .text          0x0000000002000d1c      0x3fc Scrolling.o
+ .text          0x0000000002000d1c      0x2b0 Scrolling.o
                 0x0000000002000d1c                spelunker::scroll(int, int, LevelGenerator*, unsigned short*)
- .text          0x0000000002001118       0x38 SpriteInfo.o
-                0x0000000002001118                SpriteInfo::updateFrame(unsigned char*)
- .text          0x0000000002001150        0x4 MapTile.o
-                0x0000000002001150                MapTile::MapTile()
-                0x0000000002001150                MapTile::MapTile()
- .text          0x0000000002001154      0x6e4 LevelGenerator.o
-                0x0000000002001154                LevelGenerator::newLayout(int)
-                0x00000000020012ec                LevelGenerator::mapBackground()
-                0x00000000020012f0                LevelGenerator::mapFrame()
-                0x0000000002001490                LevelGenerator::tilesToMap()
-                0x00000000020014c8                LevelGenerator::clearCollidedTile(int, int, int, int, int)
-                0x0000000002001550                LevelGenerator::generateRooms()
- .text          0x0000000002001838       0x5c InputHandler.o
-                0x0000000002001838                InputHandler::updateInput()
- .text          0x0000000002001894      0xde8 MainDude.o
-                0x0000000002001894                MainDude::updateTimers()
-                0x0000000002001b8c                MainDude::updateSpeed()
-                0x0000000002001d34                MainDude::init()
-                0x0000000002001d68                MainDude::updateOther()
-                0x0000000002001d84                MainDude::draw()
-                0x0000000002002114                MainDude::updatePosition()
-                0x00000000020023c0                MainDude::updateCollisionsMap(int, int)
-                0x00000000020024f0                MainDude::handleKeyInput()
-                0x000000000200266c                MainDude::canHangOnTile(MapTile**)
- .text          0x000000000200267c      0x5cc Collisions.o
-                0x000000000200267c                Collisions::checkUpperCollision(MapTile**, int*, int*, double*, int)
-                0x0000000002002734                Collisions::checkBottomCollision(MapTile**, int*, int*, double*, int, int)
-                0x00000000020028b0                Collisions::checkLeftCollision(MapTile**, int*, int*, double*, int, int)
-                0x0000000002002a0c                Collisions::checkRightCollision(MapTile**, int*, int*, double*, int, int)
-                0x0000000002002b64                Collisions::isStandingOnEdge(MapTile**, int*, int*, double*, int, int)
-                0x0000000002002b68                Collisions::getNeighboringTiles(MapTile* (*) [32], int, int, MapTile**)
-                0x0000000002002bd0                Collisions::getCenterTile(int, int, int, int, int*, int*)
- .text          0x0000000002002c48      0x44c Bomb.o
-                0x0000000002002c48                Bomb::init(int, int, bool, LevelGenerator*, double*)
-                0x0000000002002c5c                Bomb::checkCollisionWithMap(MapTile* (*) [32], int, int)
-                0x0000000002002ce0                Bomb::updateCollisions()
-                0x0000000002003020                Bomb::update(Camera*)
- .text          0x0000000002003094       0xa8 Camera.o
-                0x0000000002003094                Camera::updatePosition(int, int)
-                0x00000000020030fc                Camera::setScroll(int, int)
- .text          0x000000000200313c      0x214 OAMManager.o
-                0x000000000200313c                OAMManager::initOAMTable(unsigned short*, unsigned short*, unsigned short*, int)
-                0x00000000020031d8                OAMManager::updateOAM()
-                0x000000000200320c                OAMManager::initSprite(unsigned short const*, int, unsigned int const*, int, int)
- .text          0x0000000002003350       0x58 Timer.o
-                0x0000000002003350                Timer::getMillisecondsElapsed()
-                0x0000000002003378                Timer::stop()
-                0x0000000002003384                Timer::Timer()
-                0x0000000002003384                Timer::Timer()
- .text          0x00000000020033a8       0x88 Hud.o
-                0x00000000020033a8                Hud::initHud()
-                0x000000000200342c                Hud::drawHud()
- .text          0x0000000002003430      0x11c /home/xdbeef/devkitPro/devkitARM/bin/../lib/gcc/arm-none-eabi/7.1.0/thumb/libgcc.a(_udivsi3.o)
-                0x0000000002003430                __udivsi3
-                0x0000000002003430                __aeabi_uidiv
-                0x000000000200352c                __aeabi_uidivmod
- .text          0x000000000200354c      0x150 /home/xdbeef/devkitPro/devkitARM/bin/../lib/gcc/arm-none-eabi/7.1.0/thumb/libgcc.a(_divsi3.o)
-                0x000000000200354c                __divsi3
-                0x000000000200354c                __aeabi_idiv
-                0x000000000200367c                __aeabi_idivmod
- .text          0x000000000200369c        0x4 /home/xdbeef/devkitPro/devkitARM/bin/../lib/gcc/arm-none-eabi/7.1.0/thumb/libgcc.a(_dvmd_tls.o)
-                0x000000000200369c                __aeabi_ldiv0
-                0x000000000200369c                __aeabi_idiv0
- .text          0x00000000020036a0      0x424 /home/xdbeef/devkitPro/devkitARM/bin/../lib/gcc/arm-none-eabi/7.1.0/thumb/libgcc.a(_arm_addsubdf3.o)
-                0x00000000020036a0                __aeabi_drsub
-                0x00000000020036a8                __aeabi_dsub
-                0x00000000020036a8                __subdf3
-                0x00000000020036ac                __adddf3
-                0x00000000020036ac                __aeabi_dadd
-                0x00000000020039bc                __aeabi_ui2d
-                0x00000000020039bc                __floatunsidf
-                0x00000000020039e0                __aeabi_i2d
-                0x00000000020039e0                __floatsidf
-                0x0000000002003a08                __extendsfdf2
-                0x0000000002003a08                __aeabi_f2d
-                0x0000000002003a50                __aeabi_ul2d
-                0x0000000002003a50                __floatundidf
-                0x0000000002003a64                __floatdidf
-                0x0000000002003a64                __aeabi_l2d
- .text          0x0000000002003ac4      0x49c /home/xdbeef/devkitPro/devkitARM/bin/../lib/gcc/arm-none-eabi/7.1.0/thumb/libgcc.a(_arm_muldivdf3.o)
-                0x0000000002003ac4                __aeabi_dmul
-                0x0000000002003ac4                __muldf3
-                0x0000000002003d54                __aeabi_ddiv
-                0x0000000002003d54                __divdf3
- .text          0x0000000002003f60      0x144 /home/xdbeef/devkitPro/devkitARM/bin/../lib/gcc/arm-none-eabi/7.1.0/thumb/libgcc.a(_arm_cmpdf2.o)
-                0x0000000002003f60                __gtdf2
-                0x0000000002003f60                __gedf2
-                0x0000000002003f68                __ltdf2
-                0x0000000002003f68                __ledf2
-                0x0000000002003f70                __cmpdf2
-                0x0000000002003f70                __nedf2
-                0x0000000002003f70                __eqdf2
-                0x0000000002003ff8                __aeabi_cdrcmple
-                0x0000000002004014                __aeabi_cdcmple
-                0x0000000002004014                __aeabi_cdcmpeq
-                0x000000000200402c                __aeabi_dcmpeq
-                0x0000000002004044                __aeabi_dcmplt
-                0x000000000200405c                __aeabi_dcmple
-                0x0000000002004074                __aeabi_dcmpge
-                0x000000000200408c                __aeabi_dcmpgt
- .text          0x00000000020040a4       0x5c /home/xdbeef/devkitPro/devkitARM/bin/../lib/gcc/arm-none-eabi/7.1.0/thumb/libgcc.a(_arm_fixdfsi.o)
-                0x00000000020040a4                __aeabi_d2iz
-                0x00000000020040a4                __fixdfsi
- .text          0x0000000002004100       0x54 /home/xdbeef/devkitPro/devkitARM/bin/../lib/gcc/arm-none-eabi/7.1.0/thumb/libgcc.a(_arm_fixunsdfsi.o)
-                0x0000000002004100                __aeabi_d2uiz
-                0x0000000002004100                __fixunsdfsi
- .text          0x0000000002004154      0x114 /home/xdbeef/devkitPro/devkitARM/bin/../lib/gcc/arm-none-eabi/7.1.0/thumb/libgcc.a(_arm_cmpsf2.o)
-                0x0000000002004154                __gtsf2
-                0x0000000002004154                __gesf2
-                0x000000000200415c                __ltsf2
-                0x000000000200415c                __lesf2
-                0x0000000002004164                __eqsf2
-                0x0000000002004164                __nesf2
-                0x0000000002004164                __cmpsf2
-                0x00000000020041c8                __aeabi_cfrcmple
-                0x00000000020041d8                __aeabi_cfcmple
-                0x00000000020041d8                __aeabi_cfcmpeq
-                0x00000000020041f0                __aeabi_fcmpeq
-                0x0000000002004208                __aeabi_fcmplt
-                0x0000000002004220                __aeabi_fcmple
-                0x0000000002004238                __aeabi_fcmpge
-                0x0000000002004250                __aeabi_fcmpgt
- .text          0x0000000002004268       0x3c /home/xdbeef/devkitPro/devkitARM/bin/../lib/gcc/arm-none-eabi/7.1.0/thumb/libgcc.a(_aeabi_uldivmod.o)
-                0x0000000002004268                __aeabi_uldivmod
- .text          0x00000000020042a4      0x1d8 /home/xdbeef/devkitPro/devkitARM/bin/../lib/gcc/arm-none-eabi/7.1.0/thumb/libgcc.a(libunwind.o)
-                0x00000000020042a4                restore_core_regs
-                0x00000000020042a4                __restore_core_regs
-                0x00000000020042c0                __gnu_Unwind_Restore_VFP
-                0x00000000020042c8                __gnu_Unwind_Save_VFP
-                0x00000000020042d0                __gnu_Unwind_Restore_VFP_D
-                0x00000000020042d8                __gnu_Unwind_Save_VFP_D
-                0x00000000020042e0                __gnu_Unwind_Restore_VFP_D_16_to_31
-                0x00000000020042e8                __gnu_Unwind_Save_VFP_D_16_to_31
-                0x00000000020042f0                __gnu_Unwind_Restore_WMMXD
-                0x0000000002004334                __gnu_Unwind_Save_WMMXD
-                0x0000000002004378                __gnu_Unwind_Restore_WMMXC
-                0x000000000200438c                __gnu_Unwind_Save_WMMXC
-                0x00000000020043a0                _Unwind_RaiseException
-                0x00000000020043a0                ___Unwind_RaiseException
-                0x00000000020043cc                ___Unwind_Resume
-                0x00000000020043cc                _Unwind_Resume
-                0x00000000020043f8                ___Unwind_Resume_or_Rethrow
-                0x00000000020043f8                _Unwind_Resume_or_Rethrow
-                0x0000000002004424                _Unwind_ForcedUnwind
-                0x0000000002004424                ___Unwind_ForcedUnwind
-                0x0000000002004450                ___Unwind_Backtrace
-                0x0000000002004450                _Unwind_Backtrace
- .text          0x000000000200447c       0x28 /home/xdbeef/devkitPro/devkitARM/bin/../lib/gcc/arm-none-eabi/7.1.0/thumb/libgcc.a(_clzdi2.o)
-                0x000000000200447c                __clzdi2
- .text          0x00000000020044a4       0x48 /home/xdbeef/devkitPro/devkitARM/bin/../lib/gcc/arm-none-eabi/7.1.0/thumb/libgcc.a(_clzsi2.o)
-                0x00000000020044a4                __clzsi2
- .text          0x00000000020044ec      0x224 /home/xdbeef/devkitPro/devkitARM/bin/../lib/gcc/arm-none-eabi/7.1.0/../../../../arm-none-eabi/lib/thumb/libg.a(lib_a-strcmp.o)
-                0x00000000020044ec                strcmp
- .text          0x0000000002004710       0x38 /home/xdbeef/devkitPro/devkitARM/bin/../lib/gcc/arm-none-eabi/7.1.0/thumb/libgcc.a(_arm_unorddf2.o)
-                0x0000000002004710                __aeabi_dcmpun
-                0x0000000002004710                __unorddf2
- .text          0x0000000002004748       0xa0 /home/xdbeef/devkitPro/devkitARM/bin/../lib/gcc/arm-none-eabi/7.1.0/thumb/libgcc.a(_arm_truncdfsf2.o)
-                0x0000000002004748                __aeabi_d2f
-                0x0000000002004748                __truncdfsf2
- .text          0x00000000020047e8       0x38 /home/xdbeef/devkitPro/devkitARM/bin/../lib/gcc/arm-none-eabi/7.1.0/thumb/libgcc.a(_arm_unordsf2.o)
-                0x00000000020047e8                __aeabi_fcmpun
-                0x00000000020047e8                __unordsf2
+ .text          0x0000000002000fcc       0x38 SpriteInfo.o
+                0x0000000002000fcc                SpriteInfo::updateFrame(unsigned char*)
+ .text          0x0000000002001004        0x4 MapTile.o
+                0x0000000002001004                MapTile::MapTile()
+                0x0000000002001004                MapTile::MapTile()
+ .text          0x0000000002001008      0x6e4 LevelGenerator.o
+                0x0000000002001008                LevelGenerator::newLayout(int)
+                0x00000000020011a0                LevelGenerator::mapBackground()
+                0x00000000020011a4                LevelGenerator::mapFrame()
+                0x0000000002001344                LevelGenerator::tilesToMap()
+                0x000000000200137c                LevelGenerator::clearCollidedTile(int, int, int, int, int)
+                0x0000000002001404                LevelGenerator::generateRooms()
+ .text          0x00000000020016ec       0x5c InputHandler.o
+                0x00000000020016ec                InputHandler::updateInput()
+ .text          0x0000000002001748      0xe60 MainDude.o
+                0x0000000002001748                MainDude::updateTimers()
+                0x0000000002001a40                MainDude::updateSpeed()
+                0x0000000002001bc0                MainDude::updateOther()
+                0x0000000002001bc4                MainDude::init(OAMManager*, OAMManager*)
+                0x0000000002001cb0                MainDude::draw()
+                0x0000000002002040                MainDude::updatePosition()
+                0x00000000020022ec                MainDude::updateCollisionsMap(int, int)
+                0x000000000200241c                MainDude::handleKeyInput()
+                0x0000000002002598                MainDude::canHangOnTile(MapTile**)
+ .text          0x00000000020025a8      0x5cc Collisions.o
+                0x00000000020025a8                Collisions::checkUpperCollision(MapTile**, int*, int*, double*, int)
+                0x0000000002002660                Collisions::checkBottomCollision(MapTile**, int*, int*, double*, int, int)
+                0x00000000020027dc                Collisions::checkLeftCollision(MapTile**, int*, int*, double*, int, int)
+                0x0000000002002938                Collisions::checkRightCollision(MapTile**, int*, int*, double*, int, int)
+                0x0000000002002a90                Collisions::isStandingOnEdge(MapTile**, int*, int*, double*, int, int)
+                0x0000000002002a94                Collisions::getNeighboringTiles(MapTile* (*) [32], int, int, MapTile**)
+                0x0000000002002afc                Collisions::getCenterTile(int, int, int, int, int*, int*)
+ .text          0x0000000002002b74      0x49c Bomb.o
+                0x0000000002002b74                Bomb::init(OAMManager*, OAMManager*)
+                0x0000000002002bc4                Bomb::init(int, int, bool, LevelGenerator*, double*)
+                0x0000000002002bd8                Bomb::checkCollisionWithMap(MapTile* (*) [32], int, int)
+                0x0000000002002c5c                Bomb::updateCollisions()
+                0x0000000002002f9c                Bomb::update(Camera*)
+ .text          0x0000000002003010       0xa8 Camera.o
+                0x0000000002003010                Camera::updatePosition(int, int)
+                0x0000000002003078                Camera::setScroll(int, int)
+ .text          0x00000000020030b8      0x214 OAMManager.o
+                0x00000000020030b8                OAMManager::initOAMTable(unsigned short*, unsigned short*, unsigned short*, int)
+                0x0000000002003154                OAMManager::updateOAM()
+                0x0000000002003188                OAMManager::initSprite(unsigned short const*, int, unsigned int const*, int, int)
+ .text          0x00000000020032cc       0x58 Timer.o
+                0x00000000020032cc                Timer::getMillisecondsElapsed()
+                0x00000000020032f4                Timer::stop()
+                0x0000000002003300                Timer::Timer()
+                0x0000000002003300                Timer::Timer()
+ .text          0x0000000002003324      0x110 Hud.o
+                0x0000000002003324                Hud::init(OAMManager*)
+                0x0000000002003430                Hud::draw()
+ .text          0x0000000002003434      0x11c /home/xdbeef/devkitPro/devkitARM/bin/../lib/gcc/arm-none-eabi/7.1.0/thumb/libgcc.a(_udivsi3.o)
+                0x0000000002003434                __udivsi3
+                0x0000000002003434                __aeabi_uidiv
+                0x0000000002003530                __aeabi_uidivmod
+ .text          0x0000000002003550      0x150 /home/xdbeef/devkitPro/devkitARM/bin/../lib/gcc/arm-none-eabi/7.1.0/thumb/libgcc.a(_divsi3.o)
+                0x0000000002003550                __divsi3
+                0x0000000002003550                __aeabi_idiv
+                0x0000000002003680                __aeabi_idivmod
+ .text          0x00000000020036a0        0x4 /home/xdbeef/devkitPro/devkitARM/bin/../lib/gcc/arm-none-eabi/7.1.0/thumb/libgcc.a(_dvmd_tls.o)
+                0x00000000020036a0                __aeabi_ldiv0
+                0x00000000020036a0                __aeabi_idiv0
+ .text          0x00000000020036a4      0x424 /home/xdbeef/devkitPro/devkitARM/bin/../lib/gcc/arm-none-eabi/7.1.0/thumb/libgcc.a(_arm_addsubdf3.o)
+                0x00000000020036a4                __aeabi_drsub
+                0x00000000020036ac                __aeabi_dsub
+                0x00000000020036ac                __subdf3
+                0x00000000020036b0                __adddf3
+                0x00000000020036b0                __aeabi_dadd
+                0x00000000020039c0                __aeabi_ui2d
+                0x00000000020039c0                __floatunsidf
+                0x00000000020039e4                __aeabi_i2d
+                0x00000000020039e4                __floatsidf
+                0x0000000002003a0c                __extendsfdf2
+                0x0000000002003a0c                __aeabi_f2d
+                0x0000000002003a54                __aeabi_ul2d
+                0x0000000002003a54                __floatundidf
+                0x0000000002003a68                __floatdidf
+                0x0000000002003a68                __aeabi_l2d
+ .text          0x0000000002003ac8      0x49c /home/xdbeef/devkitPro/devkitARM/bin/../lib/gcc/arm-none-eabi/7.1.0/thumb/libgcc.a(_arm_muldivdf3.o)
+                0x0000000002003ac8                __aeabi_dmul
+                0x0000000002003ac8                __muldf3
+                0x0000000002003d58                __aeabi_ddiv
+                0x0000000002003d58                __divdf3
+ .text          0x0000000002003f64      0x144 /home/xdbeef/devkitPro/devkitARM/bin/../lib/gcc/arm-none-eabi/7.1.0/thumb/libgcc.a(_arm_cmpdf2.o)
+                0x0000000002003f64                __gtdf2
+                0x0000000002003f64                __gedf2
+                0x0000000002003f6c                __ltdf2
+                0x0000000002003f6c                __ledf2
+                0x0000000002003f74                __cmpdf2
+                0x0000000002003f74                __nedf2
+                0x0000000002003f74                __eqdf2
+                0x0000000002003ffc                __aeabi_cdrcmple
+                0x0000000002004018                __aeabi_cdcmple
+                0x0000000002004018                __aeabi_cdcmpeq
+                0x0000000002004030                __aeabi_dcmpeq
+                0x0000000002004048                __aeabi_dcmplt
+                0x0000000002004060                __aeabi_dcmple
+                0x0000000002004078                __aeabi_dcmpge
+                0x0000000002004090                __aeabi_dcmpgt
+ .text          0x00000000020040a8       0x5c /home/xdbeef/devkitPro/devkitARM/bin/../lib/gcc/arm-none-eabi/7.1.0/thumb/libgcc.a(_arm_fixdfsi.o)
+                0x00000000020040a8                __aeabi_d2iz
+                0x00000000020040a8                __fixdfsi
+ .text          0x0000000002004104       0x54 /home/xdbeef/devkitPro/devkitARM/bin/../lib/gcc/arm-none-eabi/7.1.0/thumb/libgcc.a(_arm_fixunsdfsi.o)
+                0x0000000002004104                __aeabi_d2uiz
+                0x0000000002004104                __fixunsdfsi
+ .text          0x0000000002004158      0x114 /home/xdbeef/devkitPro/devkitARM/bin/../lib/gcc/arm-none-eabi/7.1.0/thumb/libgcc.a(_arm_cmpsf2.o)
+                0x0000000002004158                __gtsf2
+                0x0000000002004158                __gesf2
+                0x0000000002004160                __ltsf2
+                0x0000000002004160                __lesf2
+                0x0000000002004168                __eqsf2
+                0x0000000002004168                __nesf2
+                0x0000000002004168                __cmpsf2
+                0x00000000020041cc                __aeabi_cfrcmple
+                0x00000000020041dc                __aeabi_cfcmple
+                0x00000000020041dc                __aeabi_cfcmpeq
+                0x00000000020041f4                __aeabi_fcmpeq
+                0x000000000200420c                __aeabi_fcmplt
+                0x0000000002004224                __aeabi_fcmple
+                0x000000000200423c                __aeabi_fcmpge
+                0x0000000002004254                __aeabi_fcmpgt
+ .text          0x000000000200426c       0x3c /home/xdbeef/devkitPro/devkitARM/bin/../lib/gcc/arm-none-eabi/7.1.0/thumb/libgcc.a(_aeabi_uldivmod.o)
+                0x000000000200426c                __aeabi_uldivmod
+ .text          0x00000000020042a8      0x1d8 /home/xdbeef/devkitPro/devkitARM/bin/../lib/gcc/arm-none-eabi/7.1.0/thumb/libgcc.a(libunwind.o)
+                0x00000000020042a8                restore_core_regs
+                0x00000000020042a8                __restore_core_regs
+                0x00000000020042c4                __gnu_Unwind_Restore_VFP
+                0x00000000020042cc                __gnu_Unwind_Save_VFP
+                0x00000000020042d4                __gnu_Unwind_Restore_VFP_D
+                0x00000000020042dc                __gnu_Unwind_Save_VFP_D
+                0x00000000020042e4                __gnu_Unwind_Restore_VFP_D_16_to_31
+                0x00000000020042ec                __gnu_Unwind_Save_VFP_D_16_to_31
+                0x00000000020042f4                __gnu_Unwind_Restore_WMMXD
+                0x0000000002004338                __gnu_Unwind_Save_WMMXD
+                0x000000000200437c                __gnu_Unwind_Restore_WMMXC
+                0x0000000002004390                __gnu_Unwind_Save_WMMXC
+                0x00000000020043a4                _Unwind_RaiseException
+                0x00000000020043a4                ___Unwind_RaiseException
+                0x00000000020043d0                ___Unwind_Resume
+                0x00000000020043d0                _Unwind_Resume
+                0x00000000020043fc                ___Unwind_Resume_or_Rethrow
+                0x00000000020043fc                _Unwind_Resume_or_Rethrow
+                0x0000000002004428                _Unwind_ForcedUnwind
+                0x0000000002004428                ___Unwind_ForcedUnwind
+                0x0000000002004454                ___Unwind_Backtrace
+                0x0000000002004454                _Unwind_Backtrace
+ .text          0x0000000002004480       0x28 /home/xdbeef/devkitPro/devkitARM/bin/../lib/gcc/arm-none-eabi/7.1.0/thumb/libgcc.a(_clzdi2.o)
+                0x0000000002004480                __clzdi2
+ .text          0x00000000020044a8       0x48 /home/xdbeef/devkitPro/devkitARM/bin/../lib/gcc/arm-none-eabi/7.1.0/thumb/libgcc.a(_clzsi2.o)
+                0x00000000020044a8                __clzsi2
+ .text          0x00000000020044f0      0x224 /home/xdbeef/devkitPro/devkitARM/bin/../lib/gcc/arm-none-eabi/7.1.0/../../../../arm-none-eabi/lib/thumb/libg.a(lib_a-strcmp.o)
+                0x00000000020044f0                strcmp
+ .text          0x0000000002004714       0x38 /home/xdbeef/devkitPro/devkitARM/bin/../lib/gcc/arm-none-eabi/7.1.0/thumb/libgcc.a(_arm_unorddf2.o)
+                0x0000000002004714                __aeabi_dcmpun
+                0x0000000002004714                __unorddf2
+ .text          0x000000000200474c       0xa0 /home/xdbeef/devkitPro/devkitARM/bin/../lib/gcc/arm-none-eabi/7.1.0/thumb/libgcc.a(_arm_truncdfsf2.o)
+                0x000000000200474c                __aeabi_d2f
+                0x000000000200474c                __truncdfsf2
+ .text          0x00000000020047ec       0x38 /home/xdbeef/devkitPro/devkitARM/bin/../lib/gcc/arm-none-eabi/7.1.0/thumb/libgcc.a(_arm_unordsf2.o)
+                0x00000000020047ec                __aeabi_fcmpun
+                0x00000000020047ec                __unordsf2
  *(EXCLUDE_FILE(*.twl* *.vectors* *.itcm*) .stub)
  *(EXCLUDE_FILE(*.twl* *.vectors* *.itcm*) .text.*)
  .text.deregister_tm_clones
-                0x0000000002004820       0x2c /home/xdbeef/devkitPro/devkitARM/bin/../lib/gcc/arm-none-eabi/7.1.0/thumb/crtbegin.o
+                0x0000000002004824       0x2c /home/xdbeef/devkitPro/devkitARM/bin/../lib/gcc/arm-none-eabi/7.1.0/thumb/crtbegin.o
  .text.register_tm_clones
-                0x000000000200484c       0x34 /home/xdbeef/devkitPro/devkitARM/bin/../lib/gcc/arm-none-eabi/7.1.0/thumb/crtbegin.o
+                0x0000000002004850       0x34 /home/xdbeef/devkitPro/devkitARM/bin/../lib/gcc/arm-none-eabi/7.1.0/thumb/crtbegin.o
  .text.__do_global_dtors_aux
-                0x0000000002004880       0x30 /home/xdbeef/devkitPro/devkitARM/bin/../lib/gcc/arm-none-eabi/7.1.0/thumb/crtbegin.o
+                0x0000000002004884       0x30 /home/xdbeef/devkitPro/devkitARM/bin/../lib/gcc/arm-none-eabi/7.1.0/thumb/crtbegin.o
  .text.frame_dummy
-                0x00000000020048b0       0x28 /home/xdbeef/devkitPro/devkitARM/bin/../lib/gcc/arm-none-eabi/7.1.0/thumb/crtbegin.o
- .text.startup  0x00000000020048d8      0x210 main.o
-                0x00000000020048d8                main
- .text._ZN4Bomb11updateOtherEv
-                0x0000000002004ae8        0x4 Scrolling.o
-                0x0000000002004ae8                Bomb::updateOther()
- .text._ZN4Bomb4initEv
-                0x0000000002004aec        0x4 Scrolling.o
-                0x0000000002004aec                Bomb::init()
- .text._ZN4Bomb4drawEv
-                0x0000000002004af0        0x4 Scrolling.o
-                0x0000000002004af0                Bomb::draw()
- .text._ZN4Bomb12updateTimersEv
-                0x0000000002004af4        0x4 Scrolling.o
-                0x0000000002004af4                Bomb::updateTimers()
- .text._ZN4Bomb14updatePositionEv
-                0x0000000002004af8        0x4 Scrolling.o
-                0x0000000002004af8                Bomb::updatePosition()
- .text._ZN4Bomb11updateSpeedEv
-                0x0000000002004afc        0x4 Scrolling.o
-                0x0000000002004afc                Bomb::updateSpeed()
- .text._ZN4Bomb19updateCollisionsMapEii
-                0x0000000002004b00        0x4 Scrolling.o
-                0x0000000002004b00                Bomb::updateCollisionsMap(int, int)
- .text._ZN4Bomb27updateCollisionsOtherMovingEv
-                0x0000000002004b04        0x4 Scrolling.o
-                0x0000000002004b04                Bomb::updateCollisionsOtherMoving()
- .text._ZN4Bomb28onCollisionWithMainCharacterEv
-                0x0000000002004b08        0x4 Scrolling.o
-                0x0000000002004b08                Bomb::onCollisionWithMainCharacter()
- .text.startup  0x0000000002004b0c       0x24 Scrolling.o
- .text.startup  0x0000000002004b30       0x24 LevelGenerator.o
- .text.startup  0x0000000002004b54       0x24 TextManager.o
+                0x00000000020048b4       0x28 /home/xdbeef/devkitPro/devkitARM/bin/../lib/gcc/arm-none-eabi/7.1.0/thumb/crtbegin.o
+ .text.startup  0x00000000020048dc      0x210 main.o
+                0x00000000020048dc                main
+ .text.startup  0x0000000002004aec       0x24 Scrolling.o
+ .text.startup  0x0000000002004b10       0x24 LevelGenerator.o
+ .text.startup  0x0000000002004b34       0x24 TextManager.o
  .text._ZN8MainDude27updateCollisionsOtherMovingEv
-                0x0000000002004b78        0x4 MainDude.o
-                0x0000000002004b78                MainDude::updateCollisionsOtherMoving()
+                0x0000000002004b58        0x4 MainDude.o
+                0x0000000002004b58                MainDude::updateCollisionsOtherMoving()
  .text._ZN8MainDude28onCollisionWithMainCharacterEv
-                0x0000000002004b7c        0x4 MainDude.o
-                0x0000000002004b7c                MainDude::onCollisionWithMainCharacter()
- .text.startup  0x0000000002004b80       0x24 MainDude.o
- .text.startup  0x0000000002004ba4       0x24 Snake.o
- .text.startup  0x0000000002004bc8       0x24 Collisions.o
+                0x0000000002004b5c        0x4 MainDude.o
+                0x0000000002004b5c                MainDude::onCollisionWithMainCharacter()
+ .text.startup  0x0000000002004b60       0x24 MainDude.o
+ .text.startup  0x0000000002004b84       0x24 Snake.o
+ .text.startup  0x0000000002004ba8       0x24 Collisions.o
+ .text._ZN4Bomb11updateOtherEv
+                0x0000000002004bcc        0x4 Bomb.o
+                0x0000000002004bcc                Bomb::updateOther()
+ .text._ZN4Bomb4drawEv
+                0x0000000002004bd0        0x4 Bomb.o
+                0x0000000002004bd0                Bomb::draw()
+ .text._ZN4Bomb12updateTimersEv
+                0x0000000002004bd4        0x4 Bomb.o
+                0x0000000002004bd4                Bomb::updateTimers()
+ .text._ZN4Bomb14updatePositionEv
+                0x0000000002004bd8        0x4 Bomb.o
+                0x0000000002004bd8                Bomb::updatePosition()
+ .text._ZN4Bomb11updateSpeedEv
+                0x0000000002004bdc        0x4 Bomb.o
+                0x0000000002004bdc                Bomb::updateSpeed()
+ .text._ZN4Bomb19updateCollisionsMapEii
+                0x0000000002004be0        0x4 Bomb.o
+                0x0000000002004be0                Bomb::updateCollisionsMap(int, int)
+ .text._ZN4Bomb27updateCollisionsOtherMovingEv
+                0x0000000002004be4        0x4 Bomb.o
+                0x0000000002004be4                Bomb::updateCollisionsOtherMoving()
+ .text._ZN4Bomb28onCollisionWithMainCharacterEv
+                0x0000000002004be8        0x4 Bomb.o
+                0x0000000002004be8                Bomb::onCollisionWithMainCharacter()
  .text.startup  0x0000000002004bec       0x24 Bomb.o
  .text.startup  0x0000000002004c10       0x24 MovingObject.o
  .text.startup  0x0000000002004c34       0x24 Hud.o
@@ -22806,16 +22802,15 @@ Linker script and memory map
  .rodata        0x0000000002054600     0x1130 LevelGenerator.o
  .rodata        0x0000000002055730       0x2c MainDude.o
                 0x0000000002055730                vtable for MainDude
- .rodata        0x000000000205575c     0x2004 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(default_font.bin.o)
-                0x000000000205575c                default_font_bin
-                0x000000000205775c                default_font_bin_end
-                0x000000000205775c                default_font_bin_size
+ .rodata        0x000000000205575c       0x2c Bomb.o
+                0x000000000205575c                vtable for Bomb
+ .rodata        0x0000000002055788     0x2004 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(default_font.bin.o)
+                0x0000000002055788                default_font_bin
+                0x0000000002057788                default_font_bin_end
+                0x0000000002057788                default_font_bin_size
  *all.rodata*(*)
  *(EXCLUDE_FILE(*.twl*) .roda)
  *(EXCLUDE_FILE(*.twl*) .rodata.*)
- .rodata._ZTV4Bomb
-                0x0000000002057760       0x2c Scrolling.o
-                0x0000000002057760                vtable for Bomb
  .rodata.str1.4
                 0x000000000205778c       0x14 Hud.o
  .rodata.SIN_LUT
@@ -30414,362 +30409,362 @@ ARM.exidx       0x0000000002070edc     0x11e0
 .debug_sfnames
  *(.debug_sfnames)
 
-.debug_aranges  0x0000000000000000      0x938
+.debug_aranges  0x0000000000000000      0x930
  *(.debug_aranges)
  .debug_aranges
                 0x0000000000000000       0x30 main.o
  .debug_aranges
                 0x0000000000000030       0x20 MapUtils.o
  .debug_aranges
-                0x0000000000000050       0x70 Scrolling.o
+                0x0000000000000050       0x28 Scrolling.o
  .debug_aranges
-                0x00000000000000c0       0x20 SpriteInfo.o
+                0x0000000000000078       0x20 SpriteInfo.o
  .debug_aranges
-                0x00000000000000e0       0x20 MapTile.o
+                0x0000000000000098       0x20 MapTile.o
  .debug_aranges
-                0x0000000000000100       0x28 LevelGenerator.o
+                0x00000000000000b8       0x28 LevelGenerator.o
  .debug_aranges
-                0x0000000000000128       0x28 TextManager.o
+                0x00000000000000e0       0x28 TextManager.o
  .debug_aranges
-                0x0000000000000150       0x20 InputHandler.o
+                0x0000000000000108       0x20 InputHandler.o
  .debug_aranges
-                0x0000000000000170       0x38 MainDude.o
+                0x0000000000000128       0x38 MainDude.o
  .debug_aranges
-                0x00000000000001a8       0x28 Snake.o
+                0x0000000000000160       0x28 Snake.o
  .debug_aranges
-                0x00000000000001d0       0x28 Collisions.o
+                0x0000000000000188       0x28 Collisions.o
  .debug_aranges
-                0x00000000000001f8       0x28 Bomb.o
+                0x00000000000001b0       0x68 Bomb.o
  .debug_aranges
-                0x0000000000000220       0x20 Camera.o
+                0x0000000000000218       0x20 Camera.o
  .debug_aranges
-                0x0000000000000240       0x20 OAMManager.o
+                0x0000000000000238       0x20 OAMManager.o
  .debug_aranges
-                0x0000000000000260       0x20 MovingObject.o
+                0x0000000000000258       0x20 MovingObject.o
  .debug_aranges
-                0x0000000000000280       0x20 Timer.o
+                0x0000000000000278       0x20 Timer.o
  .debug_aranges
-                0x00000000000002a0       0x28 Hud.o
+                0x0000000000000298       0x28 Hud.o
  .debug_aranges
-                0x00000000000002c8       0x50 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(keys.o)
+                0x00000000000002c0       0x50 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(keys.o)
  .debug_aranges
-                0x0000000000000318       0x60 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(sprite.o)
+                0x0000000000000310       0x60 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(sprite.o)
  .debug_aranges
-                0x0000000000000378       0x60 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(trig.o)
+                0x0000000000000370       0x60 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(trig.o)
  .debug_aranges
-                0x00000000000003d8       0x88 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(console.o)
+                0x00000000000003d0       0x88 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(console.o)
  .debug_aranges
-                0x0000000000000460       0x40 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(sprite_alloc.o)
+                0x0000000000000458       0x40 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(sprite_alloc.o)
  .debug_aranges
-                0x00000000000004a0       0x48 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(background.o)
+                0x0000000000000498       0x48 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(background.o)
  .debug_aranges
-                0x00000000000004e8       0x18 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(securearea.o)
+                0x00000000000004e0       0x18 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(securearea.o)
  .debug_aranges
-                0x0000000000000500       0x20 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(initSystem.o)
+                0x00000000000004f8       0x20 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(initSystem.o)
  .debug_aranges
-                0x0000000000000520       0xc8 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(fifosystem.o)
+                0x0000000000000518       0xc8 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(fifosystem.o)
  .debug_aranges
-                0x00000000000005e8       0x28 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(libnds_exit.arm.o)
+                0x00000000000005e0       0x28 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(libnds_exit.arm.o)
  .debug_aranges
-                0x0000000000000610       0x50 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(interrupts.o)
+                0x0000000000000608       0x50 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(interrupts.o)
  .debug_aranges
-                0x0000000000000660       0x50 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(timers.o)
+                0x0000000000000658       0x50 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(timers.o)
  .debug_aranges
-                0x00000000000006b0       0x38 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(dcache.o)
+                0x00000000000006a8       0x38 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(dcache.o)
  .debug_aranges
-                0x00000000000006e8       0x20 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(cpu_clock.o)
+                0x00000000000006e0       0x20 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(cpu_clock.o)
  .debug_aranges
-                0x0000000000000708       0x28 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(IntrWait.o)
+                0x0000000000000700       0x28 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(IntrWait.o)
  .debug_aranges
-                0x0000000000000730       0x30 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(mpu_setup.o)
+                0x0000000000000728       0x30 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(mpu_setup.o)
  .debug_aranges
-                0x0000000000000760       0x20 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(swiSoftReset.o)
+                0x0000000000000758       0x20 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(swiSoftReset.o)
  .debug_aranges
-                0x0000000000000780       0x20 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(interruptDispatcher.o)
+                0x0000000000000778       0x20 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(interruptDispatcher.o)
  .debug_aranges
-                0x00000000000007a0       0x68 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(system.o)
+                0x0000000000000798       0x68 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(system.o)
  .debug_aranges
-                0x0000000000000808       0x48 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(video.o)
+                0x0000000000000800       0x48 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(video.o)
  .debug_aranges
-                0x0000000000000850       0x20 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(timeSupport.o)
+                0x0000000000000848       0x20 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(timeSupport.o)
  .debug_aranges
-                0x0000000000000870       0xc8 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(biosCalls.o)
+                0x0000000000000868       0xc8 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(biosCalls.o)
 
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x0000000000000000    0x4ad4b
+.debug_info     0x0000000000000000    0x4afad
  *(.debug_info)
  .debug_info    0x0000000000000000     0x5c95 main.o
  .debug_info    0x0000000000005c95     0x1c39 MapUtils.o
- .debug_info    0x00000000000078ce     0x628b Scrolling.o
- .debug_info    0x000000000000db59     0x1ae7 SpriteInfo.o
- .debug_info    0x000000000000f640       0xf7 MapTile.o
- .debug_info    0x000000000000f737     0x4323 LevelGenerator.o
- .debug_info    0x0000000000013a5a     0x33b4 TextManager.o
- .debug_info    0x0000000000016e0e     0x1b1e InputHandler.o
- .debug_info    0x000000000001892c     0x5b5b MainDude.o
- .debug_info    0x000000000001e487     0x569d Snake.o
- .debug_info    0x0000000000023b24     0x51cf Collisions.o
- .debug_info    0x0000000000028cf3     0x5338 Bomb.o
- .debug_info    0x000000000002e02b     0x126b Camera.o
- .debug_info    0x000000000002f296     0x1eb8 OAMManager.o
- .debug_info    0x000000000003114e     0x4b0c MovingObject.o
- .debug_info    0x0000000000035c5a     0x1b39 Timer.o
- .debug_info    0x0000000000037793     0x3b70 Hud.o
- .debug_info    0x000000000003b303      0xd35 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(keys.o)
- .debug_info    0x000000000003c038     0x1573 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(sprite.o)
- .debug_info    0x000000000003d5ab      0xdeb /home/xdbeef/devkitPro/libnds/lib/libnds9.a(trig.o)
- .debug_info    0x000000000003e396     0x253a /home/xdbeef/devkitPro/libnds/lib/libnds9.a(console.o)
- .debug_info    0x00000000000408d0     0x19eb /home/xdbeef/devkitPro/libnds/lib/libnds9.a(sprite_alloc.o)
- .debug_info    0x00000000000422bb     0x1269 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(background.o)
- .debug_info    0x0000000000043524       0x58 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(securearea.o)
- .debug_info    0x000000000004357c     0x1c23 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(initSystem.o)
- .debug_info    0x000000000004519f     0x1f7b /home/xdbeef/devkitPro/libnds/lib/libnds9.a(fifosystem.o)
- .debug_info    0x000000000004711a      0xc50 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(libnds_exit.arm.o)
- .debug_info    0x0000000000047d6a      0x66d /home/xdbeef/devkitPro/libnds/lib/libnds9.a(interrupts.o)
- .debug_info    0x00000000000483d7      0x425 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(timers.o)
- .debug_info    0x00000000000487fc       0x22 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(dcache.o)
- .debug_info    0x000000000004881e       0x26 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(cpu_clock.o)
- .debug_info    0x0000000000048844       0x22 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(IntrWait.o)
- .debug_info    0x0000000000048866       0x22 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(mpu_setup.o)
- .debug_info    0x0000000000048888       0x26 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(swiSoftReset.o)
- .debug_info    0x00000000000488ae       0x26 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(interruptDispatcher.o)
- .debug_info    0x00000000000488d4     0x1326 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(system.o)
- .debug_info    0x0000000000049bfa      0x724 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(video.o)
- .debug_info    0x000000000004a31e      0xa0b /home/xdbeef/devkitPro/libnds/lib/libnds9.a(timeSupport.o)
- .debug_info    0x000000000004ad29       0x22 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(biosCalls.o)
+ .debug_info    0x00000000000078ce     0x5db0 Scrolling.o
+ .debug_info    0x000000000000d67e     0x1ae7 SpriteInfo.o
+ .debug_info    0x000000000000f165       0xf7 MapTile.o
+ .debug_info    0x000000000000f25c     0x4323 LevelGenerator.o
+ .debug_info    0x000000000001357f     0x33b4 TextManager.o
+ .debug_info    0x0000000000016933     0x1b1e InputHandler.o
+ .debug_info    0x0000000000018451     0x5e02 MainDude.o
+ .debug_info    0x000000000001e253     0x569d Snake.o
+ .debug_info    0x00000000000238f0     0x51cf Collisions.o
+ .debug_info    0x0000000000028abf     0x5b42 Bomb.o
+ .debug_info    0x000000000002e601     0x126b Camera.o
+ .debug_info    0x000000000002f86c     0x1eb8 OAMManager.o
+ .debug_info    0x0000000000031724     0x4b0c MovingObject.o
+ .debug_info    0x0000000000036230     0x1b39 Timer.o
+ .debug_info    0x0000000000037d69     0x37fc Hud.o
+ .debug_info    0x000000000003b565      0xd35 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(keys.o)
+ .debug_info    0x000000000003c29a     0x1573 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(sprite.o)
+ .debug_info    0x000000000003d80d      0xdeb /home/xdbeef/devkitPro/libnds/lib/libnds9.a(trig.o)
+ .debug_info    0x000000000003e5f8     0x253a /home/xdbeef/devkitPro/libnds/lib/libnds9.a(console.o)
+ .debug_info    0x0000000000040b32     0x19eb /home/xdbeef/devkitPro/libnds/lib/libnds9.a(sprite_alloc.o)
+ .debug_info    0x000000000004251d     0x1269 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(background.o)
+ .debug_info    0x0000000000043786       0x58 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(securearea.o)
+ .debug_info    0x00000000000437de     0x1c23 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(initSystem.o)
+ .debug_info    0x0000000000045401     0x1f7b /home/xdbeef/devkitPro/libnds/lib/libnds9.a(fifosystem.o)
+ .debug_info    0x000000000004737c      0xc50 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(libnds_exit.arm.o)
+ .debug_info    0x0000000000047fcc      0x66d /home/xdbeef/devkitPro/libnds/lib/libnds9.a(interrupts.o)
+ .debug_info    0x0000000000048639      0x425 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(timers.o)
+ .debug_info    0x0000000000048a5e       0x22 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(dcache.o)
+ .debug_info    0x0000000000048a80       0x26 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(cpu_clock.o)
+ .debug_info    0x0000000000048aa6       0x22 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(IntrWait.o)
+ .debug_info    0x0000000000048ac8       0x22 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(mpu_setup.o)
+ .debug_info    0x0000000000048aea       0x26 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(swiSoftReset.o)
+ .debug_info    0x0000000000048b10       0x26 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(interruptDispatcher.o)
+ .debug_info    0x0000000000048b36     0x1326 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(system.o)
+ .debug_info    0x0000000000049e5c      0x724 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(video.o)
+ .debug_info    0x000000000004a580      0xa0b /home/xdbeef/devkitPro/libnds/lib/libnds9.a(timeSupport.o)
+ .debug_info    0x000000000004af8b       0x22 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(biosCalls.o)
 
-.debug_abbrev   0x0000000000000000     0x9ad0
+.debug_abbrev   0x0000000000000000     0x9b5f
  *(.debug_abbrev)
  .debug_abbrev  0x0000000000000000      0x8f1 main.o
  .debug_abbrev  0x00000000000008f1      0x433 MapUtils.o
- .debug_abbrev  0x0000000000000d24      0x9bc Scrolling.o
- .debug_abbrev  0x00000000000016e0      0x3ce SpriteInfo.o
- .debug_abbrev  0x0000000000001aae       0xd8 MapTile.o
- .debug_abbrev  0x0000000000001b86      0x965 LevelGenerator.o
- .debug_abbrev  0x00000000000024eb      0x6fb TextManager.o
- .debug_abbrev  0x0000000000002be6      0x39d InputHandler.o
- .debug_abbrev  0x0000000000002f83      0x974 MainDude.o
- .debug_abbrev  0x00000000000038f7      0x8a0 Snake.o
- .debug_abbrev  0x0000000000004197      0x7e0 Collisions.o
- .debug_abbrev  0x0000000000004977      0x89a Bomb.o
- .debug_abbrev  0x0000000000005211      0x388 Camera.o
- .debug_abbrev  0x0000000000005599      0x527 OAMManager.o
- .debug_abbrev  0x0000000000005ac0      0x694 MovingObject.o
- .debug_abbrev  0x0000000000006154      0x3f9 Timer.o
- .debug_abbrev  0x000000000000654d      0x7b9 Hud.o
- .debug_abbrev  0x0000000000006d06      0x286 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(keys.o)
- .debug_abbrev  0x0000000000006f8c      0x3d7 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(sprite.o)
- .debug_abbrev  0x0000000000007363      0x323 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(trig.o)
- .debug_abbrev  0x0000000000007686      0x525 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(console.o)
- .debug_abbrev  0x0000000000007bab      0x3aa /home/xdbeef/devkitPro/libnds/lib/libnds9.a(sprite_alloc.o)
- .debug_abbrev  0x0000000000007f55      0x3ad /home/xdbeef/devkitPro/libnds/lib/libnds9.a(background.o)
- .debug_abbrev  0x0000000000008302       0x45 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(securearea.o)
- .debug_abbrev  0x0000000000008347      0x35a /home/xdbeef/devkitPro/libnds/lib/libnds9.a(initSystem.o)
- .debug_abbrev  0x00000000000086a1      0x542 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(fifosystem.o)
- .debug_abbrev  0x0000000000008be3      0x289 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(libnds_exit.arm.o)
- .debug_abbrev  0x0000000000008e6c      0x28e /home/xdbeef/devkitPro/libnds/lib/libnds9.a(interrupts.o)
- .debug_abbrev  0x00000000000090fa      0x1ef /home/xdbeef/devkitPro/libnds/lib/libnds9.a(timers.o)
- .debug_abbrev  0x00000000000092e9       0x12 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(dcache.o)
- .debug_abbrev  0x00000000000092fb       0x14 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(cpu_clock.o)
- .debug_abbrev  0x000000000000930f       0x12 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(IntrWait.o)
- .debug_abbrev  0x0000000000009321       0x12 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(mpu_setup.o)
- .debug_abbrev  0x0000000000009333       0x14 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(swiSoftReset.o)
- .debug_abbrev  0x0000000000009347       0x14 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(interruptDispatcher.o)
- .debug_abbrev  0x000000000000935b      0x373 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(system.o)
- .debug_abbrev  0x00000000000096ce      0x216 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(video.o)
- .debug_abbrev  0x00000000000098e4      0x1da /home/xdbeef/devkitPro/libnds/lib/libnds9.a(timeSupport.o)
- .debug_abbrev  0x0000000000009abe       0x12 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(biosCalls.o)
+ .debug_abbrev  0x0000000000000d24      0x97b Scrolling.o
+ .debug_abbrev  0x000000000000169f      0x3ce SpriteInfo.o
+ .debug_abbrev  0x0000000000001a6d       0xd8 MapTile.o
+ .debug_abbrev  0x0000000000001b45      0x965 LevelGenerator.o
+ .debug_abbrev  0x00000000000024aa      0x6fb TextManager.o
+ .debug_abbrev  0x0000000000002ba5      0x39d InputHandler.o
+ .debug_abbrev  0x0000000000002f42      0x994 MainDude.o
+ .debug_abbrev  0x00000000000038d6      0x8a0 Snake.o
+ .debug_abbrev  0x0000000000004176      0x7e0 Collisions.o
+ .debug_abbrev  0x0000000000004956      0x91e Bomb.o
+ .debug_abbrev  0x0000000000005274      0x388 Camera.o
+ .debug_abbrev  0x00000000000055fc      0x527 OAMManager.o
+ .debug_abbrev  0x0000000000005b23      0x694 MovingObject.o
+ .debug_abbrev  0x00000000000061b7      0x3f9 Timer.o
+ .debug_abbrev  0x00000000000065b0      0x7e5 Hud.o
+ .debug_abbrev  0x0000000000006d95      0x286 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(keys.o)
+ .debug_abbrev  0x000000000000701b      0x3d7 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(sprite.o)
+ .debug_abbrev  0x00000000000073f2      0x323 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(trig.o)
+ .debug_abbrev  0x0000000000007715      0x525 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(console.o)
+ .debug_abbrev  0x0000000000007c3a      0x3aa /home/xdbeef/devkitPro/libnds/lib/libnds9.a(sprite_alloc.o)
+ .debug_abbrev  0x0000000000007fe4      0x3ad /home/xdbeef/devkitPro/libnds/lib/libnds9.a(background.o)
+ .debug_abbrev  0x0000000000008391       0x45 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(securearea.o)
+ .debug_abbrev  0x00000000000083d6      0x35a /home/xdbeef/devkitPro/libnds/lib/libnds9.a(initSystem.o)
+ .debug_abbrev  0x0000000000008730      0x542 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(fifosystem.o)
+ .debug_abbrev  0x0000000000008c72      0x289 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(libnds_exit.arm.o)
+ .debug_abbrev  0x0000000000008efb      0x28e /home/xdbeef/devkitPro/libnds/lib/libnds9.a(interrupts.o)
+ .debug_abbrev  0x0000000000009189      0x1ef /home/xdbeef/devkitPro/libnds/lib/libnds9.a(timers.o)
+ .debug_abbrev  0x0000000000009378       0x12 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(dcache.o)
+ .debug_abbrev  0x000000000000938a       0x14 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(cpu_clock.o)
+ .debug_abbrev  0x000000000000939e       0x12 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(IntrWait.o)
+ .debug_abbrev  0x00000000000093b0       0x12 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(mpu_setup.o)
+ .debug_abbrev  0x00000000000093c2       0x14 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(swiSoftReset.o)
+ .debug_abbrev  0x00000000000093d6       0x14 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(interruptDispatcher.o)
+ .debug_abbrev  0x00000000000093ea      0x373 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(system.o)
+ .debug_abbrev  0x000000000000975d      0x216 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(video.o)
+ .debug_abbrev  0x0000000000009973      0x1da /home/xdbeef/devkitPro/libnds/lib/libnds9.a(timeSupport.o)
+ .debug_abbrev  0x0000000000009b4d       0x12 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(biosCalls.o)
 
-.debug_line     0x0000000000000000     0xa8d3
+.debug_line     0x0000000000000000     0xaa2b
  *(.debug_line)
  .debug_line    0x0000000000000000      0x862 main.o
  .debug_line    0x0000000000000862      0x43e MapUtils.o
- .debug_line    0x0000000000000ca0      0xa67 Scrolling.o
- .debug_line    0x0000000000001707      0x3b2 SpriteInfo.o
- .debug_line    0x0000000000001ab9       0x84 MapTile.o
- .debug_line    0x0000000000001b3d      0x972 LevelGenerator.o
- .debug_line    0x00000000000024af      0x680 TextManager.o
- .debug_line    0x0000000000002b2f      0x3ce InputHandler.o
- .debug_line    0x0000000000002efd      0xb74 MainDude.o
- .debug_line    0x0000000000003a71      0x7d1 Snake.o
- .debug_line    0x0000000000004242      0x85e Collisions.o
- .debug_line    0x0000000000004aa0      0x769 Bomb.o
- .debug_line    0x0000000000005209      0x393 Camera.o
- .debug_line    0x000000000000559c      0x52e OAMManager.o
- .debug_line    0x0000000000005aca      0x660 MovingObject.o
- .debug_line    0x000000000000612a      0x39f Timer.o
- .debug_line    0x00000000000064c9      0x6fb Hud.o
- .debug_line    0x0000000000006bc4      0x328 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(keys.o)
- .debug_line    0x0000000000006eec      0x413 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(sprite.o)
- .debug_line    0x00000000000072ff      0x3a3 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(trig.o)
- .debug_line    0x00000000000076a2      0x74b /home/xdbeef/devkitPro/libnds/lib/libnds9.a(console.o)
- .debug_line    0x0000000000007ded      0x3b1 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(sprite_alloc.o)
- .debug_line    0x000000000000819e      0x3d9 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(background.o)
- .debug_line    0x0000000000008577       0x7f /home/xdbeef/devkitPro/libnds/lib/libnds9.a(securearea.o)
- .debug_line    0x00000000000085f6      0x3a1 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(initSystem.o)
- .debug_line    0x0000000000008997      0x8a0 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(fifosystem.o)
- .debug_line    0x0000000000009237      0x2a6 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(libnds_exit.arm.o)
- .debug_line    0x00000000000094dd      0x2e6 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(interrupts.o)
- .debug_line    0x00000000000097c3      0x246 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(timers.o)
- .debug_line    0x0000000000009a09       0xd0 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(dcache.o)
- .debug_line    0x0000000000009ad9       0xa0 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(cpu_clock.o)
- .debug_line    0x0000000000009b79       0xb4 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(IntrWait.o)
- .debug_line    0x0000000000009c2d      0x12c /home/xdbeef/devkitPro/libnds/lib/libnds9.a(mpu_setup.o)
- .debug_line    0x0000000000009d59       0x99 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(swiSoftReset.o)
- .debug_line    0x0000000000009df2       0xc9 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(interruptDispatcher.o)
- .debug_line    0x0000000000009ebb      0x3c6 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(system.o)
- .debug_line    0x000000000000a281      0x285 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(video.o)
- .debug_line    0x000000000000a506      0x1de /home/xdbeef/devkitPro/libnds/lib/libnds9.a(timeSupport.o)
- .debug_line    0x000000000000a6e4      0x1ef /home/xdbeef/devkitPro/libnds/lib/libnds9.a(biosCalls.o)
+ .debug_line    0x0000000000000ca0      0x932 Scrolling.o
+ .debug_line    0x00000000000015d2      0x3b2 SpriteInfo.o
+ .debug_line    0x0000000000001984       0x84 MapTile.o
+ .debug_line    0x0000000000001a08      0x972 LevelGenerator.o
+ .debug_line    0x000000000000237a      0x680 TextManager.o
+ .debug_line    0x00000000000029fa      0x3ce InputHandler.o
+ .debug_line    0x0000000000002dc8      0xc00 MainDude.o
+ .debug_line    0x00000000000039c8      0x7d1 Snake.o
+ .debug_line    0x0000000000004199      0x85e Collisions.o
+ .debug_line    0x00000000000049f7      0x93f Bomb.o
+ .debug_line    0x0000000000005336      0x393 Camera.o
+ .debug_line    0x00000000000056c9      0x52e OAMManager.o
+ .debug_line    0x0000000000005bf7      0x660 MovingObject.o
+ .debug_line    0x0000000000006257      0x39f Timer.o
+ .debug_line    0x00000000000065f6      0x726 Hud.o
+ .debug_line    0x0000000000006d1c      0x328 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(keys.o)
+ .debug_line    0x0000000000007044      0x413 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(sprite.o)
+ .debug_line    0x0000000000007457      0x3a3 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(trig.o)
+ .debug_line    0x00000000000077fa      0x74b /home/xdbeef/devkitPro/libnds/lib/libnds9.a(console.o)
+ .debug_line    0x0000000000007f45      0x3b1 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(sprite_alloc.o)
+ .debug_line    0x00000000000082f6      0x3d9 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(background.o)
+ .debug_line    0x00000000000086cf       0x7f /home/xdbeef/devkitPro/libnds/lib/libnds9.a(securearea.o)
+ .debug_line    0x000000000000874e      0x3a1 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(initSystem.o)
+ .debug_line    0x0000000000008aef      0x8a0 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(fifosystem.o)
+ .debug_line    0x000000000000938f      0x2a6 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(libnds_exit.arm.o)
+ .debug_line    0x0000000000009635      0x2e6 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(interrupts.o)
+ .debug_line    0x000000000000991b      0x246 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(timers.o)
+ .debug_line    0x0000000000009b61       0xd0 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(dcache.o)
+ .debug_line    0x0000000000009c31       0xa0 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(cpu_clock.o)
+ .debug_line    0x0000000000009cd1       0xb4 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(IntrWait.o)
+ .debug_line    0x0000000000009d85      0x12c /home/xdbeef/devkitPro/libnds/lib/libnds9.a(mpu_setup.o)
+ .debug_line    0x0000000000009eb1       0x99 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(swiSoftReset.o)
+ .debug_line    0x0000000000009f4a       0xc9 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(interruptDispatcher.o)
+ .debug_line    0x000000000000a013      0x3c6 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(system.o)
+ .debug_line    0x000000000000a3d9      0x285 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(video.o)
+ .debug_line    0x000000000000a65e      0x1de /home/xdbeef/devkitPro/libnds/lib/libnds9.a(timeSupport.o)
+ .debug_line    0x000000000000a83c      0x1ef /home/xdbeef/devkitPro/libnds/lib/libnds9.a(biosCalls.o)
 
-.debug_frame    0x0000000000000000     0x1564
+.debug_frame    0x0000000000000000     0x1594
  *(.debug_frame)
  .debug_frame   0x0000000000000000       0x90 main.o
  .debug_frame   0x0000000000000090       0x64 MapUtils.o
- .debug_frame   0x00000000000000f4       0xe4 Scrolling.o
- .debug_frame   0x00000000000001d8       0x20 SpriteInfo.o
- .debug_frame   0x00000000000001f8       0x20 MapTile.o
- .debug_frame   0x0000000000000218      0x100 LevelGenerator.o
- .debug_frame   0x0000000000000318       0x80 TextManager.o
- .debug_frame   0x0000000000000398       0x28 InputHandler.o
- .debug_frame   0x00000000000003c0      0x1a4 MainDude.o
- .debug_frame   0x0000000000000564       0xcc Snake.o
- .debug_frame   0x0000000000000630      0x12c Collisions.o
- .debug_frame   0x000000000000075c       0xb0 Bomb.o
- .debug_frame   0x000000000000080c       0x48 Camera.o
- .debug_frame   0x0000000000000854       0x78 OAMManager.o
- .debug_frame   0x00000000000008cc       0x28 MovingObject.o
- .debug_frame   0x00000000000008f4       0x58 Timer.o
- .debug_frame   0x000000000000094c       0x54 Hud.o
- .debug_frame   0x00000000000009a0       0x8c /home/xdbeef/devkitPro/libnds/lib/libnds9.a(keys.o)
- .debug_frame   0x0000000000000a2c       0xf4 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(sprite.o)
- .debug_frame   0x0000000000000b20       0xd0 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(trig.o)
- .debug_frame   0x0000000000000bf0      0x1a4 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(console.o)
- .debug_frame   0x0000000000000d94       0xb4 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(sprite_alloc.o)
- .debug_frame   0x0000000000000e48       0xc0 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(background.o)
- .debug_frame   0x0000000000000f08       0x28 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(initSystem.o)
- .debug_frame   0x0000000000000f30      0x2c0 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(fifosystem.o)
- .debug_frame   0x00000000000011f0       0x3c /home/xdbeef/devkitPro/libnds/lib/libnds9.a(libnds_exit.arm.o)
- .debug_frame   0x000000000000122c       0xa4 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(interrupts.o)
- .debug_frame   0x00000000000012d0       0xc4 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(timers.o)
- .debug_frame   0x0000000000001394       0xf8 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(system.o)
- .debug_frame   0x000000000000148c       0xb8 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(video.o)
- .debug_frame   0x0000000000001544       0x20 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(timeSupport.o)
+ .debug_frame   0x00000000000000f4       0x54 Scrolling.o
+ .debug_frame   0x0000000000000148       0x20 SpriteInfo.o
+ .debug_frame   0x0000000000000168       0x20 MapTile.o
+ .debug_frame   0x0000000000000188      0x100 LevelGenerator.o
+ .debug_frame   0x0000000000000288       0x80 TextManager.o
+ .debug_frame   0x0000000000000308       0x28 InputHandler.o
+ .debug_frame   0x0000000000000330      0x1b8 MainDude.o
+ .debug_frame   0x00000000000004e8       0xcc Snake.o
+ .debug_frame   0x00000000000005b4      0x12c Collisions.o
+ .debug_frame   0x00000000000006e0      0x158 Bomb.o
+ .debug_frame   0x0000000000000838       0x48 Camera.o
+ .debug_frame   0x0000000000000880       0x78 OAMManager.o
+ .debug_frame   0x00000000000008f8       0x28 MovingObject.o
+ .debug_frame   0x0000000000000920       0x58 Timer.o
+ .debug_frame   0x0000000000000978       0x58 Hud.o
+ .debug_frame   0x00000000000009d0       0x8c /home/xdbeef/devkitPro/libnds/lib/libnds9.a(keys.o)
+ .debug_frame   0x0000000000000a5c       0xf4 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(sprite.o)
+ .debug_frame   0x0000000000000b50       0xd0 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(trig.o)
+ .debug_frame   0x0000000000000c20      0x1a4 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(console.o)
+ .debug_frame   0x0000000000000dc4       0xb4 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(sprite_alloc.o)
+ .debug_frame   0x0000000000000e78       0xc0 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(background.o)
+ .debug_frame   0x0000000000000f38       0x28 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(initSystem.o)
+ .debug_frame   0x0000000000000f60      0x2c0 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(fifosystem.o)
+ .debug_frame   0x0000000000001220       0x3c /home/xdbeef/devkitPro/libnds/lib/libnds9.a(libnds_exit.arm.o)
+ .debug_frame   0x000000000000125c       0xa4 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(interrupts.o)
+ .debug_frame   0x0000000000001300       0xc4 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(timers.o)
+ .debug_frame   0x00000000000013c4       0xf8 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(system.o)
+ .debug_frame   0x00000000000014bc       0xb8 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(video.o)
+ .debug_frame   0x0000000000001574       0x20 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(timeSupport.o)
 
-.debug_str      0x0000000000000000     0x727a
+.debug_str      0x0000000000000000     0x72a0
  *(.debug_str)
  .debug_str     0x0000000000000000     0x2eed main.o
                                        0x33c4 (size before relaxing)
  .debug_str     0x0000000000002eed       0x8a MapUtils.o
                                         0xf8a (size before relaxing)
- .debug_str     0x0000000000002f77      0xa87 Scrolling.o
-                                       0x32f8 (size before relaxing)
- .debug_str     0x00000000000039fe       0x4c SpriteInfo.o
+ .debug_str     0x0000000000002f77      0x8d8 Scrolling.o
+                                       0x3141 (size before relaxing)
+ .debug_str     0x000000000000384f       0x4c SpriteInfo.o
                                         0xf7f (size before relaxing)
- .debug_str     0x0000000000003a4a       0x59 MapTile.o
+ .debug_str     0x000000000000389b       0x59 MapTile.o
                                         0x16a (size before relaxing)
- .debug_str     0x0000000000003aa3      0x195 LevelGenerator.o
+ .debug_str     0x00000000000038f4      0x195 LevelGenerator.o
                                        0x28b9 (size before relaxing)
- .debug_str     0x0000000000003c38      0x159 TextManager.o
+ .debug_str     0x0000000000003a89      0x159 TextManager.o
                                        0x23b4 (size before relaxing)
- .debug_str     0x0000000000003d91       0xdc InputHandler.o
+ .debug_str     0x0000000000003be2       0xdc InputHandler.o
                                        0x101b (size before relaxing)
- .debug_str     0x0000000000003e6d      0x4fa MainDude.o
-                                       0x3117 (size before relaxing)
- .debug_str     0x0000000000004367      0x2d6 Snake.o
+ .debug_str     0x0000000000003cbe      0x535 MainDude.o
+                                       0x327b (size before relaxing)
+ .debug_str     0x00000000000041f3      0x2fa Snake.o
                                        0x2d40 (size before relaxing)
- .debug_str     0x000000000000463d      0x12a Collisions.o
+ .debug_str     0x00000000000044ed      0x12a Collisions.o
                                        0x2970 (size before relaxing)
- .debug_str     0x0000000000004767       0x6c Bomb.o
-                                       0x2b0d (size before relaxing)
- .debug_str     0x00000000000047d3       0xc3 Camera.o
+ .debug_str     0x0000000000004617      0x169 Bomb.o
+                                       0x30b3 (size before relaxing)
+ .debug_str     0x0000000000004780       0xc3 Camera.o
                                         0x8e7 (size before relaxing)
- .debug_str     0x0000000000004896       0xc0 OAMManager.o
+ .debug_str     0x0000000000004843       0xc0 OAMManager.o
                                        0x1116 (size before relaxing)
- .debug_str     0x0000000000004956       0x69 MovingObject.o
+ .debug_str     0x0000000000004903       0x69 MovingObject.o
                                        0x25e5 (size before relaxing)
- .debug_str     0x00000000000049bf       0x62 Timer.o
+ .debug_str     0x000000000000496c       0x62 Timer.o
                                         0xf73 (size before relaxing)
- .debug_str     0x0000000000004a21      0x2b3 Hud.o
-                                       0x28cf (size before relaxing)
- .debug_str     0x0000000000004cd4      0x24b /home/xdbeef/devkitPro/libnds/lib/libnds9.a(keys.o)
+ .debug_str     0x00000000000049ce      0x32c Hud.o
+                                       0x26f3 (size before relaxing)
+ .debug_str     0x0000000000004cfa      0x24b /home/xdbeef/devkitPro/libnds/lib/libnds9.a(keys.o)
                                         0x894 (size before relaxing)
- .debug_str     0x0000000000004f1f      0x183 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(sprite.o)
+ .debug_str     0x0000000000004f45      0x183 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(sprite.o)
                                         0xd1a (size before relaxing)
- .debug_str     0x00000000000050a2       0xea /home/xdbeef/devkitPro/libnds/lib/libnds9.a(trig.o)
+ .debug_str     0x00000000000050c8       0xea /home/xdbeef/devkitPro/libnds/lib/libnds9.a(trig.o)
                                         0x701 (size before relaxing)
- .debug_str     0x000000000000518c      0x5db /home/xdbeef/devkitPro/libnds/lib/libnds9.a(console.o)
+ .debug_str     0x00000000000051b2      0x5db /home/xdbeef/devkitPro/libnds/lib/libnds9.a(console.o)
                                        0x13e6 (size before relaxing)
- .debug_str     0x0000000000005767      0x109 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(sprite_alloc.o)
+ .debug_str     0x000000000000578d      0x109 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(sprite_alloc.o)
                                         0xd11 (size before relaxing)
- .debug_str     0x0000000000005870      0x2a8 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(background.o)
+ .debug_str     0x0000000000005896      0x2a8 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(background.o)
                                         0xbb4 (size before relaxing)
- .debug_str     0x0000000000005b18       0x6f /home/xdbeef/devkitPro/libnds/lib/libnds9.a(securearea.o)
+ .debug_str     0x0000000000005b3e       0x6f /home/xdbeef/devkitPro/libnds/lib/libnds9.a(securearea.o)
                                         0x14d (size before relaxing)
- .debug_str     0x0000000000005b87      0x2f2 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(initSystem.o)
+ .debug_str     0x0000000000005bad      0x2f2 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(initSystem.o)
                                        0x1222 (size before relaxing)
- .debug_str     0x0000000000005e79      0x595 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(fifosystem.o)
+ .debug_str     0x0000000000005e9f      0x595 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(fifosystem.o)
                                         0xdad (size before relaxing)
- .debug_str     0x000000000000640e      0x1d2 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(libnds_exit.arm.o)
+ .debug_str     0x0000000000006434      0x1d2 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(libnds_exit.arm.o)
                                         0x865 (size before relaxing)
- .debug_str     0x00000000000065e0       0xa3 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(interrupts.o)
+ .debug_str     0x0000000000006606       0xa3 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(interrupts.o)
                                         0x4d7 (size before relaxing)
- .debug_str     0x0000000000006683       0xfa /home/xdbeef/devkitPro/libnds/lib/libnds9.a(timers.o)
+ .debug_str     0x00000000000066a9       0xfa /home/xdbeef/devkitPro/libnds/lib/libnds9.a(timers.o)
                                         0x320 (size before relaxing)
- .debug_str     0x000000000000677d       0x60 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(dcache.o)
+ .debug_str     0x00000000000067a3       0x60 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(dcache.o)
                                          0xa4 (size before relaxing)
- .debug_str     0x00000000000067dd       0x5e /home/xdbeef/devkitPro/libnds/lib/libnds9.a(cpu_clock.o)
+ .debug_str     0x0000000000006803       0x5e /home/xdbeef/devkitPro/libnds/lib/libnds9.a(cpu_clock.o)
                                          0xae (size before relaxing)
- .debug_str     0x000000000000683b       0x5d /home/xdbeef/devkitPro/libnds/lib/libnds9.a(IntrWait.o)
+ .debug_str     0x0000000000006861       0x5d /home/xdbeef/devkitPro/libnds/lib/libnds9.a(IntrWait.o)
                                          0xad (size before relaxing)
- .debug_str     0x0000000000006898       0x5e /home/xdbeef/devkitPro/libnds/lib/libnds9.a(mpu_setup.o)
+ .debug_str     0x00000000000068be       0x5e /home/xdbeef/devkitPro/libnds/lib/libnds9.a(mpu_setup.o)
                                          0xae (size before relaxing)
- .debug_str     0x00000000000068f6       0x5c /home/xdbeef/devkitPro/libnds/lib/libnds9.a(swiSoftReset.o)
+ .debug_str     0x000000000000691c       0x5c /home/xdbeef/devkitPro/libnds/lib/libnds9.a(swiSoftReset.o)
                                          0xac (size before relaxing)
- .debug_str     0x0000000000006952       0x63 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(interruptDispatcher.o)
+ .debug_str     0x0000000000006978       0x63 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(interruptDispatcher.o)
                                          0xb3 (size before relaxing)
- .debug_str     0x00000000000069b5      0x373 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(system.o)
+ .debug_str     0x00000000000069db      0x373 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(system.o)
                                         0xc2b (size before relaxing)
- .debug_str     0x0000000000006d28      0x48b /home/xdbeef/devkitPro/libnds/lib/libnds9.a(video.o)
+ .debug_str     0x0000000000006d4e      0x48b /home/xdbeef/devkitPro/libnds/lib/libnds9.a(video.o)
                                         0xc4f (size before relaxing)
- .debug_str     0x00000000000071b3       0x6e /home/xdbeef/devkitPro/libnds/lib/libnds9.a(timeSupport.o)
+ .debug_str     0x00000000000071d9       0x6e /home/xdbeef/devkitPro/libnds/lib/libnds9.a(timeSupport.o)
                                         0x693 (size before relaxing)
- .debug_str     0x0000000000007221       0x59 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(biosCalls.o)
+ .debug_str     0x0000000000007247       0x59 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(biosCalls.o)
                                          0xa9 (size before relaxing)
 
-.debug_loc      0x0000000000000000     0x7a93
+.debug_loc      0x0000000000000000     0x7bb9
  *(.debug_loc)
  .debug_loc     0x0000000000000000      0x42f main.o
  .debug_loc     0x000000000000042f      0x1bf MapUtils.o
- .debug_loc     0x00000000000005ee      0x29b Scrolling.o
- .debug_loc     0x0000000000000889       0x46 SpriteInfo.o
- .debug_loc     0x00000000000008cf      0x73c LevelGenerator.o
- .debug_loc     0x000000000000100b      0x161 TextManager.o
- .debug_loc     0x000000000000116c       0x37 InputHandler.o
- .debug_loc     0x00000000000011a3      0x91d MainDude.o
- .debug_loc     0x0000000000001ac0      0x3fa Snake.o
- .debug_loc     0x0000000000001eba      0x906 Collisions.o
- .debug_loc     0x00000000000027c0      0x698 Bomb.o
- .debug_loc     0x0000000000002e58      0x1fb Camera.o
- .debug_loc     0x0000000000003053      0x358 OAMManager.o
- .debug_loc     0x00000000000033ab       0x2a MovingObject.o
- .debug_loc     0x00000000000033d5       0x6b Timer.o
- .debug_loc     0x0000000000003440       0x8a Hud.o
- .debug_loc     0x00000000000034ca      0x7be /home/xdbeef/devkitPro/libnds/lib/libnds9.a(sprite.o)
- .debug_loc     0x0000000000003c88      0x7fc /home/xdbeef/devkitPro/libnds/lib/libnds9.a(trig.o)
- .debug_loc     0x0000000000004484      0xfbe /home/xdbeef/devkitPro/libnds/lib/libnds9.a(console.o)
- .debug_loc     0x0000000000005442      0x676 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(sprite_alloc.o)
- .debug_loc     0x0000000000005ab8      0x396 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(background.o)
- .debug_loc     0x0000000000005e4e       0xd8 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(initSystem.o)
- .debug_loc     0x0000000000005f26     0x1279 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(fifosystem.o)
- .debug_loc     0x000000000000719f       0x58 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(libnds_exit.arm.o)
- .debug_loc     0x00000000000071f7      0x179 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(interrupts.o)
- .debug_loc     0x0000000000007370      0x283 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(timers.o)
- .debug_loc     0x00000000000075f3      0x1f9 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(system.o)
- .debug_loc     0x00000000000077ec      0x286 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(video.o)
- .debug_loc     0x0000000000007a72       0x21 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(timeSupport.o)
+ .debug_loc     0x00000000000005ee      0x2c4 Scrolling.o
+ .debug_loc     0x00000000000008b2       0x46 SpriteInfo.o
+ .debug_loc     0x00000000000008f8      0x73c LevelGenerator.o
+ .debug_loc     0x0000000000001034      0x161 TextManager.o
+ .debug_loc     0x0000000000001195       0x37 InputHandler.o
+ .debug_loc     0x00000000000011cc      0x95f MainDude.o
+ .debug_loc     0x0000000000001b2b      0x3fa Snake.o
+ .debug_loc     0x0000000000001f25      0x906 Collisions.o
+ .debug_loc     0x000000000000282b      0x71c Bomb.o
+ .debug_loc     0x0000000000002f47      0x1fb Camera.o
+ .debug_loc     0x0000000000003142      0x358 OAMManager.o
+ .debug_loc     0x000000000000349a       0x2a MovingObject.o
+ .debug_loc     0x00000000000034c4       0x6b Timer.o
+ .debug_loc     0x000000000000352f       0xc1 Hud.o
+ .debug_loc     0x00000000000035f0      0x7be /home/xdbeef/devkitPro/libnds/lib/libnds9.a(sprite.o)
+ .debug_loc     0x0000000000003dae      0x7fc /home/xdbeef/devkitPro/libnds/lib/libnds9.a(trig.o)
+ .debug_loc     0x00000000000045aa      0xfbe /home/xdbeef/devkitPro/libnds/lib/libnds9.a(console.o)
+ .debug_loc     0x0000000000005568      0x676 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(sprite_alloc.o)
+ .debug_loc     0x0000000000005bde      0x396 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(background.o)
+ .debug_loc     0x0000000000005f74       0xd8 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(initSystem.o)
+ .debug_loc     0x000000000000604c     0x1279 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(fifosystem.o)
+ .debug_loc     0x00000000000072c5       0x58 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(libnds_exit.arm.o)
+ .debug_loc     0x000000000000731d      0x179 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(interrupts.o)
+ .debug_loc     0x0000000000007496      0x283 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(timers.o)
+ .debug_loc     0x0000000000007719      0x1f9 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(system.o)
+ .debug_loc     0x0000000000007912      0x286 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(video.o)
+ .debug_loc     0x0000000000007b98       0x21 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(timeSupport.o)
 
 .debug_macinfo
  *(.debug_macinfo)
@@ -30835,35 +30830,35 @@ LOAD /home/xdbeef/devkitPro/devkitARM/bin/../lib/gcc/arm-none-eabi/7.1.0/thumb/c
 LOAD /home/xdbeef/devkitPro/devkitARM/bin/../lib/gcc/arm-none-eabi/7.1.0/thumb/crtn.o
 OUTPUT(/home/xdbeef/NetBeansProjects/spelunkyds/spelunkyds.elf elf32-littlearm)
 
-.debug_ranges   0x0000000000000000     0x1780
+.debug_ranges   0x0000000000000000     0x1770
  .debug_ranges  0x0000000000000000      0x148 main.o
  .debug_ranges  0x0000000000000148       0x18 MapUtils.o
- .debug_ranges  0x0000000000000160      0x140 Scrolling.o
- .debug_ranges  0x00000000000002a0      0x2b0 LevelGenerator.o
- .debug_ranges  0x0000000000000550       0x58 TextManager.o
- .debug_ranges  0x00000000000005a8       0xa0 MainDude.o
- .debug_ranges  0x0000000000000648       0x98 Snake.o
- .debug_ranges  0x00000000000006e0       0xd8 Collisions.o
- .debug_ranges  0x00000000000007b8       0x80 Bomb.o
- .debug_ranges  0x0000000000000838       0xd8 Camera.o
- .debug_ranges  0x0000000000000910       0xa0 OAMManager.o
- .debug_ranges  0x00000000000009b0       0x28 MovingObject.o
- .debug_ranges  0x00000000000009d8       0x48 Hud.o
- .debug_ranges  0x0000000000000a20       0x58 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(keys.o)
- .debug_ranges  0x0000000000000a78       0xb0 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(sprite.o)
- .debug_ranges  0x0000000000000b28       0xc8 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(trig.o)
- .debug_ranges  0x0000000000000bf0      0x238 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(console.o)
- .debug_ranges  0x0000000000000e28       0x80 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(sprite_alloc.o)
- .debug_ranges  0x0000000000000ea8       0xf8 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(background.o)
- .debug_ranges  0x0000000000000fa0       0x10 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(initSystem.o)
- .debug_ranges  0x0000000000000fb0      0x488 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(fifosystem.o)
- .debug_ranges  0x0000000000001438       0x18 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(libnds_exit.arm.o)
- .debug_ranges  0x0000000000001450       0xe8 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(interrupts.o)
- .debug_ranges  0x0000000000001538       0x58 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(timers.o)
- .debug_ranges  0x0000000000001590       0x30 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(dcache.o)
- .debug_ranges  0x00000000000015c0       0x20 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(IntrWait.o)
- .debug_ranges  0x00000000000015e0       0x28 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(mpu_setup.o)
- .debug_ranges  0x0000000000001608       0x58 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(system.o)
- .debug_ranges  0x0000000000001660       0x50 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(video.o)
- .debug_ranges  0x00000000000016b0       0x10 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(timeSupport.o)
- .debug_ranges  0x00000000000016c0       0xc0 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(biosCalls.o)
+ .debug_ranges  0x0000000000000160       0xf0 Scrolling.o
+ .debug_ranges  0x0000000000000250      0x2b0 LevelGenerator.o
+ .debug_ranges  0x0000000000000500       0x58 TextManager.o
+ .debug_ranges  0x0000000000000558       0xa0 MainDude.o
+ .debug_ranges  0x00000000000005f8       0x98 Snake.o
+ .debug_ranges  0x0000000000000690       0xd8 Collisions.o
+ .debug_ranges  0x0000000000000768       0xc0 Bomb.o
+ .debug_ranges  0x0000000000000828       0xd8 Camera.o
+ .debug_ranges  0x0000000000000900       0xa0 OAMManager.o
+ .debug_ranges  0x00000000000009a0       0x28 MovingObject.o
+ .debug_ranges  0x00000000000009c8       0x48 Hud.o
+ .debug_ranges  0x0000000000000a10       0x58 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(keys.o)
+ .debug_ranges  0x0000000000000a68       0xb0 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(sprite.o)
+ .debug_ranges  0x0000000000000b18       0xc8 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(trig.o)
+ .debug_ranges  0x0000000000000be0      0x238 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(console.o)
+ .debug_ranges  0x0000000000000e18       0x80 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(sprite_alloc.o)
+ .debug_ranges  0x0000000000000e98       0xf8 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(background.o)
+ .debug_ranges  0x0000000000000f90       0x10 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(initSystem.o)
+ .debug_ranges  0x0000000000000fa0      0x488 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(fifosystem.o)
+ .debug_ranges  0x0000000000001428       0x18 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(libnds_exit.arm.o)
+ .debug_ranges  0x0000000000001440       0xe8 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(interrupts.o)
+ .debug_ranges  0x0000000000001528       0x58 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(timers.o)
+ .debug_ranges  0x0000000000001580       0x30 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(dcache.o)
+ .debug_ranges  0x00000000000015b0       0x20 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(IntrWait.o)
+ .debug_ranges  0x00000000000015d0       0x28 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(mpu_setup.o)
+ .debug_ranges  0x00000000000015f8       0x58 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(system.o)
+ .debug_ranges  0x0000000000001650       0x50 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(video.o)
+ .debug_ranges  0x00000000000016a0       0x10 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(timeSupport.o)
+ .debug_ranges  0x00000000000016b0       0xc0 /home/xdbeef/devkitPro/libnds/lib/libnds9.a(biosCalls.o)

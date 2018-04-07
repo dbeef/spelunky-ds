@@ -1,5 +1,6 @@
 //
 // Created by xdbeef on 04.03.18.
+// CURRENTLY NOT USED
 //
 
 #include <nds/arm9/console.h>

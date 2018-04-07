@@ -3,11 +3,14 @@
 //
 
 #include <nds/arm9/sprite.h>
-#include <nds.h>
 #include <cstdio>
 #include <iostream>
 #include "Hud.h"
 #include "../../build/heart.h"
+#include "../../build/dollar.h"
+#include "../../build/bomb.h"
+#include "../../build/rope.h"
+#include "../../build/holding_item.h"
 
 #define HEART_POSITION_X 5
 #define HEART_POSITION_Y 5
@@ -24,7 +27,15 @@
 #define HOLDING_ITEM_FRAME_POSITION_X 5
 #define HOLDING_ITEM_FRAME_POSITION_Y 20
 
-void Hud::initHud() {
+void Hud::init(OAMManager *mainOam) {
+
+    heartSpriteInfo = mainOam->initSprite(heartPal, heartPalLen, heartTiles, heartTilesLen, 16);
+    dollarSpriteInfo = mainOam->initSprite(dollarPal, dollarPalLen, dollarTiles, dollarTilesLen, 16);
+    bombSpriteInfo = mainOam->initSprite(bombPal, bombPalLen, bombTiles, bombTilesLen, 16);
+    ropeSpriteInfo = mainOam->initSprite(ropePal, ropePalLen, ropeTiles, ropeTilesLen, 16);
+    holdingItemSpriteInfo = mainOam->
+            initSprite(holding_itemPal, holding_itemPalLen, holding_itemTiles, holding_itemTilesLen, 16);
+
     heartSpriteInfo->entry->x = HEART_POSITION_X;
     heartSpriteInfo->entry->y = HEART_POSITION_Y;
 
@@ -44,6 +55,6 @@ void Hud::initHud() {
 
 }
 
-void Hud::drawHud() {
+void Hud::draw() {
     //nothing
 }

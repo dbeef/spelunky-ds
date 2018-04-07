@@ -7,12 +7,13 @@
 
 #include <nds/jtypes.h>
 #include "../level_layout/SpriteInfo.h"
+#include "../animations/OAMManager.h"
 
 class Hud {
 
 public:
-    void drawHud();
-    void initHud();
+    void draw();
+    void init(OAMManager *mainOam);
     SpriteInfo* heartSpriteInfo;
     SpriteInfo* bombSpriteInfo;
     SpriteInfo* dollarSpriteInfo;

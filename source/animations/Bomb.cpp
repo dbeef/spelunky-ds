@@ -7,6 +7,8 @@
 #include "../level_layout/MapUtils.h"
 #include "Collisions.h"
 #include "MainDude.h"
+#include "../../build/bomb_armed.h"
+#include "../../build/bomb_unarmed.h"
 
 void Bomb::update(Camera *camera) {
 
@@ -37,12 +39,19 @@ void Bomb::update(Camera *camera) {
     updateCollisions();
 }
 
-void Bomb::init(int x, int y, bool armed,LevelGenerator *l, double *timer) {
+void Bomb::init(int x, int y, bool armed, LevelGenerator *l, double *timer) {
     this->levelGenerator = l;
     this->x = x;
     this->y = y;
     this->armed = armed;
-    this-> timer = timer;
+    this->timer = timer;
+}
+
+void Bomb::init(OAMManager *mainOam, OAMManager *subOam) {
+    subSpriteInfo = subOam->initSprite(bomb_unarmedPal, bomb_unarmedPalLen,
+                                       bomb_unarmedTiles, bomb_unarmedTilesLen, 8);
+    mainSpriteInfo = mainOam->initSprite(bomb_unarmedPal, bomb_unarmedPalLen,
+                                         bomb_unarmedTiles, bomb_unarmedTilesLen, 8);
 }
 
 void Bomb::updateCollisions() {
@@ -123,19 +132,20 @@ void Bomb::updateCollisions() {
     }
 
 }
-    void Bomb::checkCollisionWithMap(MapTile *mapTiles[32][32], int xx, int yy) {
 
-        MapTile *tiles[9];
-        Collisions::getNeighboringTiles(mapTiles, xx, yy, tiles);
+void Bomb::checkCollisionWithMap(MapTile *mapTiles[32][32], int xx, int yy) {
 
-        bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, 8,8);
-        leftCollision = Collisions::checkLeftCollision(tiles, &x, &y,& xSpeed, 8,8);
-        rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, 8,8);
-        upperCollision = Collisions::checkUpperCollision(tiles, &x, &y,& ySpeed, 8);
+    MapTile *tiles[9];
+    Collisions::getNeighboringTiles(mapTiles, xx, yy, tiles);
+
+    bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, 8, 8);
+    leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, 8, 8);
+    rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, 8, 8);
+    upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, 8);
 
 //        std::cout << bottomCollision << leftCollision << rightCollision << upperCollision <<'\n';
 
-    }
+}
 
 
 

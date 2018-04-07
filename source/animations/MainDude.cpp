@@ -7,10 +7,11 @@
 #include <iostream>
 #include "MainDude.h"
 #include "../Consts.h"
-#include "../../build/spelunker.h"
 #include "Collisions.h"
 #include "../level_layout/MapUtils.h"
-
+#include "../../build/spelunker.h"
+#include "../../build/whip_left.h"
+#include "../../build/pre_whip_left.h"
 
 void MainDude::handleKeyInput() {
 
@@ -88,7 +89,6 @@ void MainDude::updateTimers() {
 
     if (whip) {
         whip_timer += *timer;
-        //4 frames idle
         if (whip_timer > 420 + 0 * 70) {
             whip_timer = 0;
             whip = false;
@@ -96,11 +96,6 @@ void MainDude::updateTimers() {
             main_whip->entry->isHidden = true;
             sub_pre_whip->entry->isHidden = true;
             main_pre_whip->entry->isHidden = true;
-//            sub_pre_whip_right_spriteInfo->entry->isHidden = true;
-//            sub_whip_right_spriteInfo->entry->isHidden = true;
-//            main_whip_right_spriteInfo->entry->isHidden = true;
-//            main_whip_right_spriteInfo->entry->isHidden = true;
-//            sub_whip_right_spriteInfo->entry->isHidden = true;
         }
     }
 
@@ -260,21 +255,33 @@ void MainDude::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos
     }
 
 }
+void MainDude::init(OAMManager *mainOam, OAMManager *subOam) {
 
-void MainDude::init() {
+    main_spelunker = mainOam->initSprite(spelunkerPal, spelunkerPalLen, spelunkerTiles,
+                                                          spelunkerTilesLen, 16);
+
+    main_pre_whip = mainOam->initSprite(pre_whip_leftPal, pre_whip_leftPalLen,
+                                                         pre_whip_leftTiles, pre_whip_leftTilesLen, 16);
+
+    main_whip = mainOam->initSprite(whip_leftPal, whip_leftPalLen,
+                                                     whip_leftTiles, whip_leftTilesLen, 16);
+
+    sub_spelunker = subOam->initSprite(spelunkerPal, spelunkerPalLen, spelunkerTiles,
+                                                        spelunkerTilesLen, 16);
+    sub_pre_whip = subOam->initSprite(pre_whip_leftPal, pre_whip_leftPalLen,
+                                                       pre_whip_leftTiles, pre_whip_leftTilesLen, 16);
+    sub_whip = subOam->initSprite(whip_leftPal, whip_leftPalLen,
+                                                   whip_leftTiles, whip_leftTilesLen, 16);
+
+
     frameGfx = (u8 *) spelunkerTiles;
     sub_whip->entry->isHidden = true;
     main_whip->entry->isHidden = true;
     sub_pre_whip->entry->isHidden = true;
     main_pre_whip->entry->isHidden = true;
-//    sub_pre_whip_right_spriteInfo->entry->isHidden = true;
-//    main_pre_whip_right_spriteInfo->entry->isHidden = true;
-//    sub_whip_right_spriteInfo->entry->isHidden = true;
-//    main_whip_right_spriteInfo->entry->isHidden = true;
-
 }
 
-
+//todo split
 void MainDude::draw() {
 
     int main_x = x - camera->x;
@@ -486,9 +493,6 @@ void MainDude::canHangOnTile(MapTile *neighboringTiles[9]) {
 }
 
 void MainDude::updateOther() {
-    this->updateSpeed();
-    this->updateTimers();
-    this->draw();
 }
 
 void MainDude::updatePosition() {

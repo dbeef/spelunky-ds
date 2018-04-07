@@ -26,7 +26,7 @@ public:
 
     void updateOther() override {};
 
-    void init(){};
+    void init(OAMManager *mainOam, OAMManager *subOam);
 
     void draw() {};
 

@@ -1,5 +1,6 @@
 //
 // Created by xdbeef on 04.03.18.
+// CURRENTLY NOT USED
 //
 
 #ifndef SPELUNKYDS_TEXTMANAGER_H
@@ -17,8 +18,8 @@ class TextManager {
 
 
     char *intro_lines[3] = {"\n\n\n\n\n\n\n\n  MY LIPS CRACKED AND COVERED\n            IN SAND, \n",
-                           " I SPOTTED THE CAVE'S ENTRANCE,",
-                           "     AND FELT THE GODS SMILING \n            UPON ME."};
+                            " I SPOTTED THE CAVE'S ENTRANCE,",
+                            "     AND FELT THE GODS SMILING \n            UPON ME."};
 
     int console_clear = 1000000;
 
@@ -28,6 +29,7 @@ class TextManager {
 
 public:
     void initConsole();
+
     void printIntro();
 };
 

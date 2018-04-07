@@ -62,7 +62,9 @@ MovingObject.o: \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/video.h \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/videoGL.h \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/nand.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/sprites/../level_layout/MapTile.h
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/sprites/../level_layout/MapTile.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/sprites/../animations/OAMManager.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/sprites/../animations/../level_layout/SpriteInfo.h
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/sprites/MovingObject.h:
 
@@ -189,3 +191,7 @@ MovingObject.o: \
 /home/xdbeef/devkitPro/libnds/include/nds/arm9/nand.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/sprites/../level_layout/MapTile.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/sprites/../animations/OAMManager.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/sprites/../animations/../level_layout/SpriteInfo.h:

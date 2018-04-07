@@ -6,7 +6,7 @@
 #define SPELUNKYDS_MAINDUDE_H
 
 #define MAIN_DUDE_MAX_X_SPEED 1.5
-#define MAIN_DUDE_MAX_X_SPEED_CRAWLING 0.25
+#define MAIN_DUDE_MAX_X_SPEED_CRAWLING 1.5
 #define MAIN_DUDE_MAX_Y_SPEED 2
 #define MAIN_DUDE_JUMP_SPEED 2.3
 #define MAIN_DUDE_HEIGHT 16
@@ -47,7 +47,7 @@ public:
 
     void onCollisionWithMainCharacter() override {};
 
-    void init() override;
+    void init(OAMManager *mainOam, OAMManager *subOam) override;
 
     SpriteInfo *main_whip;
     SpriteInfo *main_pre_whip;
