@@ -59,7 +59,6 @@ main.o: /home/xdbeef/NetBeansProjects/spelunkyds/source/main.cpp \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/video.h \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/videoGL.h \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/nand.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/../build/font.h \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/console.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/Scrolling.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/LevelGenerator.h \
@@ -69,7 +68,9 @@ main.o: /home/xdbeef/NetBeansProjects/spelunkyds/source/main.cpp \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/BaseCaveMap.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/time/Timer.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/Consts.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/MapUtils.h
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/MapUtils.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/console/TextManager.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/console/../time/Timer.h
 
 /home/xdbeef/devkitPro/libnds/include/nds.h:
 
@@ -191,8 +192,6 @@ main.o: /home/xdbeef/NetBeansProjects/spelunkyds/source/main.cpp \
 
 /home/xdbeef/devkitPro/libnds/include/nds/arm9/nand.h:
 
-/home/xdbeef/NetBeansProjects/spelunkyds/source/../build/font.h:
-
 /home/xdbeef/devkitPro/libnds/include/nds/arm9/console.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/Scrolling.h:
@@ -212,3 +211,7 @@ main.o: /home/xdbeef/NetBeansProjects/spelunkyds/source/main.cpp \
 /home/xdbeef/NetBeansProjects/spelunkyds/source/Consts.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/MapUtils.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/console/TextManager.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/console/../time/Timer.h:

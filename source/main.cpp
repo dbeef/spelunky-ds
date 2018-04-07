@@ -1,6 +1,5 @@
 #include <nds.h>
 #include <cstdio>
-#include "../build/font.h"
 #include <nds/arm9/video.h>
 #include <nds/arm9/sprite.h>
 #include <nds/arm9/console.h>
@@ -13,14 +12,16 @@
 #include "time/Timer.h"
 #include "Consts.h"
 #include "level_layout/MapUtils.h"
+#include "console/TextManager.h"
 
 static u16 *fresh_map;
 
-void prepareConsole();
 
 int main(void) {
 
     Timer *t = new Timer();
+    TextManager *textManager = new TextManager();
+
 
     videoSetMode(MODE_0_2D);
     videoSetModeSub(MODE_0_2D);
@@ -56,33 +57,12 @@ int main(void) {
     dmaCopyHalfWords(DMA_CHANNEL, map, bgGetMapPtr(bg_sub), sizeof(map));
     dmaCopy(cavebgPal, BG_PALETTE, cavebgPalLen);
     dmaCopy(cavebgPal, BG_PALETTE_SUB, cavebgPalLen);
-    prepareConsole();
+    textManager->initConsole();
 
     spelunker::scroll(bg_main, bg_sub, l, fresh_map);
 
     t->stop();
 
     return 0;
-}
-
-
-void prepareConsole() {
-    const int tile_base = 2;
-    const int map_base = 8;
-
-    PrintConsole *bottomConsole;
-    consoleInit(bottomConsole, 0, BgType_Text4bpp, BgSize_T_256x256, map_base, tile_base, true, false);
-
-    ConsoleFont font;
-
-    font.gfx = (u16 *) fontTiles;
-    font.pal = (u16 *) fontPal;
-    font.numChars = 59;
-    font.numColors = fontPalLen / 2;
-    font.bpp = 4;
-    font.asciiOffset = 32;
-    font.convertSingleColor = true;
-
-    consoleSetFont(bottomConsole, &font);
 }
 

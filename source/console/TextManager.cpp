@@ -10,10 +10,11 @@
 #include "../../build/font.h"
 
 void TextManager::initConsole() {
-    const int tile_base = 0;
+    const int tile_base = 2;
     const int map_base = 8;
 
-    PrintConsole *console = consoleInit(0, 0, BgType_Text8bpp, BgSize_T_256x256, map_base, tile_base, false, false);
+    PrintConsole *bottomConsole;
+    consoleInit(bottomConsole, 0, BgType_Text4bpp, BgSize_T_256x256, map_base, tile_base, true, false);
 
     ConsoleFont font;
 
@@ -21,11 +22,12 @@ void TextManager::initConsole() {
     font.pal = (u16 *) fontPal;
     font.numChars = 59;
     font.numColors = fontPalLen / 2;
-    font.bpp = 8;
+    font.bpp = 4;
     font.asciiOffset = 32;
-    font.convertSingleColor = false;
+    font.convertSingleColor = true;
 
-    consoleSetFont(console, &font);
+    consoleSetFont(bottomConsole, &font);
+
 
 }
 
