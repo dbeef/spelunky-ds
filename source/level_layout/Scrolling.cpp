@@ -7,16 +7,13 @@
 #include "../../build/spelunker.h"
 #include "../hud/Hud.h"
 #include "../../build/heart.h"
-#include <nds/arm9/input.h>
 #include "../../build/dollar.h"
 #include "../../build/bomb.h"
 #include "../../build/bomb_unarmed.h"
 #include "../../build/rope.h"
 #include "../../build/holding_item.h"
 #include "../../build/pre_whip_left.h"
-#include "../../build/pre_whip_right.h"
 #include "../../build/whip_left.h"
-#include "../../build/whip_right.h"
 
 extern u16 map[4096];
 
@@ -25,11 +22,10 @@ static const int OFFSET_MULTIPLIER_MAIN = BOUNDARY_VALUE / sizeof(SPRITE_GFX[0])
 static const int OFFSET_MULTIPLIER_SUB = BOUNDARY_VALUE / sizeof(SPRITE_GFX_SUB[0]);
 
 void spelunker::scroll(int bg_main, int bg_sub, LevelGenerator *l, u16 *fresh_map) {
-    int keys_held = 0;
-    int keys_down = 0;
 
     double timer = 0;
 
+    InputHandler *inputHandler = new InputHandler();
     Camera *camera = new Camera();
 
     OAMManager *mainOamManager = new OAMManager();
@@ -45,22 +41,23 @@ void spelunker::scroll(int bg_main, int bg_sub, LevelGenerator *l, u16 *fresh_ma
     mainDude->y = 100;
     mainDude->levelGenerator = l;
     mainDude->camera = camera;
+    mainDude->inputHandler = inputHandler;
 
-    mainDude->main_spriteInfo = mainOamManager->initSprite(spelunkerPal, spelunkerPalLen, spelunkerTiles,
-                                                           spelunkerTilesLen, 16);
+    mainDude->main_spelunker = mainOamManager->initSprite(spelunkerPal, spelunkerPalLen, spelunkerTiles,
+                                                          spelunkerTilesLen, 16);
 
-    mainDude->main_pre_whip_left_spriteInfo = mainOamManager->initSprite(pre_whip_leftPal, pre_whip_leftPalLen,
-                                                                         pre_whip_leftTiles, pre_whip_leftTilesLen, 16);
+    mainDude->main_pre_whip = mainOamManager->initSprite(pre_whip_leftPal, pre_whip_leftPalLen,
+                                                         pre_whip_leftTiles, pre_whip_leftTilesLen, 16);
 
-    mainDude->main_whip_left_spriteInfo = mainOamManager->initSprite(whip_leftPal, whip_leftPalLen,
-                                                                     whip_leftTiles, whip_leftTilesLen, 16);
+    mainDude->main_whip = mainOamManager->initSprite(whip_leftPal, whip_leftPalLen,
+                                                     whip_leftTiles, whip_leftTilesLen, 16);
 
-    mainDude->sub_spriteInfo = subOamManager->initSprite(spelunkerPal, spelunkerPalLen, spelunkerTiles,
-                                                         spelunkerTilesLen, 16);
-    mainDude->sub_pre_whip_left_spriteInfo = subOamManager->initSprite(pre_whip_leftPal, pre_whip_leftPalLen,
-                                                                       pre_whip_leftTiles, pre_whip_leftTilesLen, 16);
-    mainDude->sub_whip_left_spriteInfo = subOamManager->initSprite(whip_leftPal, whip_leftPalLen,
-                                                                   whip_leftTiles, whip_leftTilesLen, 16);
+    mainDude->sub_spelunker = subOamManager->initSprite(spelunkerPal, spelunkerPalLen, spelunkerTiles,
+                                                        spelunkerTilesLen, 16);
+    mainDude->sub_pre_whip = subOamManager->initSprite(pre_whip_leftPal, pre_whip_leftPalLen,
+                                                       pre_whip_leftTiles, pre_whip_leftTilesLen, 16);
+    mainDude->sub_whip = subOamManager->initSprite(whip_leftPal, whip_leftPalLen,
+                                                   whip_leftTiles, whip_leftTilesLen, 16);
 
     Bomb *bomb = new Bomb();
     bomb->init(70, 100, true, l, &timer);
@@ -83,36 +80,28 @@ void spelunker::scroll(int bg_main, int bg_sub, LevelGenerator *l, u16 *fresh_ma
     hud->initHud();
 
     while (true) {
-        scanKeys();
 
         timer = timerElapsed(0) / TICKS_PER_SECOND;
 
-        keys_held = keysHeld();
-        keys_down = keysDown();
+        inputHandler->updateInput();
 
-        if ((keys_held & KEY_B)) {
-
+        if ((inputHandler->b_key_held)) {
             dmaCopyHalfWords(DMA_CHANNEL, fresh_map, map, sizeof(map));
             l->newLayout(timer);
             l->mapBackground();
             l->mapFrame();
-
             l->generateRooms();
-//            mainDude->clearTilesOnRight(levelGenerator->mapTiles);
-
             l->tilesToMap();
             sectorize_map();
             dmaCopyHalfWords(DMA_CHANNEL, map, bgGetMapPtr(bg_main), sizeof(map));
             dmaCopyHalfWords(DMA_CHANNEL, map, bgGetMapPtr(bg_sub), sizeof(map));
-
             mainDude->bottomCollision = false;
             bomb->bottomCollision = false;
         }
 
-
         swiWaitForVBlank();
         mainDude->updateOther();
-        mainDude->handleKeyInput(keys_held, keys_down);
+        mainDude->handleKeyInput();
         bomb->update(camera);
         hud->drawHud();
 

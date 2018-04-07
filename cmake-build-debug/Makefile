@@ -339,6 +339,33 @@ source/hud/Hud.cpp.s:
 	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/hud/Hud.cpp.s
 .PHONY : source/hud/Hud.cpp.s
 
+source/input/InputHandler.o: source/input/InputHandler.cpp.o
+
+.PHONY : source/input/InputHandler.o
+
+# target to build an object file
+source/input/InputHandler.cpp.o:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/input/InputHandler.cpp.o
+.PHONY : source/input/InputHandler.cpp.o
+
+source/input/InputHandler.i: source/input/InputHandler.cpp.i
+
+.PHONY : source/input/InputHandler.i
+
+# target to preprocess a source file
+source/input/InputHandler.cpp.i:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/input/InputHandler.cpp.i
+.PHONY : source/input/InputHandler.cpp.i
+
+source/input/InputHandler.s: source/input/InputHandler.cpp.s
+
+.PHONY : source/input/InputHandler.s
+
+# target to generate assembly for a file
+source/input/InputHandler.cpp.s:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/input/InputHandler.cpp.s
+.PHONY : source/input/InputHandler.cpp.s
+
 source/level_layout/LevelGenerator.o: source/level_layout/LevelGenerator.cpp.o
 
 .PHONY : source/level_layout/LevelGenerator.o
@@ -588,6 +615,9 @@ help:
 	@echo "... source/hud/Hud.o"
 	@echo "... source/hud/Hud.i"
 	@echo "... source/hud/Hud.s"
+	@echo "... source/input/InputHandler.o"
+	@echo "... source/input/InputHandler.i"
+	@echo "... source/input/InputHandler.s"
 	@echo "... source/level_layout/LevelGenerator.o"
 	@echo "... source/level_layout/LevelGenerator.i"
 	@echo "... source/level_layout/LevelGenerator.s"

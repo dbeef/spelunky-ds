@@ -12,10 +12,10 @@
 #include "../level_layout/MapUtils.h"
 
 
-void MainDude::handleKeyInput(int keys_held, int keys_down) {
+void MainDude::handleKeyInput() {
 
-    if (keys_down && !stunned) {
-        if (keys_down & KEY_R) {
+    if (!stunned) {
+        if (inputHandler->r_bumper_down) {
             if (bottomCollision) {
                 ySpeed = -MAIN_DUDE_JUMP_SPEED;
             }
@@ -26,7 +26,7 @@ void MainDude::handleKeyInput(int keys_held, int keys_down) {
                 hangingTimer = 0;
             }
         }
-        if (keys_down & KEY_L) {
+        if (inputHandler->l_bumper_down) {
             if (!stunned && !whip) {
                 if (bomb->carried == true) {
 
@@ -44,11 +44,9 @@ void MainDude::handleKeyInput(int keys_held, int keys_down) {
             }
         }
     }
-    if (keys_held && !stunned) {
+    if (!stunned) {
 
-
-        if (keys_held & KEY_LEFT) {
-            left_key_held = true;
+        if (inputHandler->left_key_held) {
             state = W_LEFT;
             hangingOnTileLeft = false;
             if (xSpeed > -MAIN_DUDE_MAX_X_SPEED && !(hangingOnTileRight || hangingOnTileLeft))
@@ -56,11 +54,8 @@ void MainDude::handleKeyInput(int keys_held, int keys_down) {
                     xSpeed -= X_SPEED_DELTA_VALUE;
                     speedIncTimer = 0;
                 }
-        } else
-            left_key_held = false;
-
-        if (keys_held & KEY_RIGHT) {
-            right_key_held = true;
+        }
+        if (inputHandler->right_key_held) {
             state = W_RIGHT;
             hangingOnTileRight = false;
             if (xSpeed < MAIN_DUDE_MAX_X_SPEED && !(hangingOnTileRight || hangingOnTileLeft)) {
@@ -69,10 +64,9 @@ void MainDude::handleKeyInput(int keys_held, int keys_down) {
                     speedIncTimer = 0;
                 }
             }
-        } else
-            right_key_held = false;
+        }
 
-        if (keys_held & KEY_DOWN) {
+        if (inputHandler->down_key_held) {
             hangingOnTileLeft = false;
             hangingOnTileRight = false;
             if (bottomCollision)
@@ -82,10 +76,6 @@ void MainDude::handleKeyInput(int keys_held, int keys_down) {
     } else
         crawling = false;
 
-    if (!keys_held) {
-        left_key_held = false;
-        right_key_held = false;
-    }
 }
 
 
@@ -102,10 +92,10 @@ void MainDude::updateTimers() {
         if (whip_timer > 420 + 0 * 70) {
             whip_timer = 0;
             whip = false;
-            sub_whip_left_spriteInfo->entry->isHidden = true;
-            main_whip_left_spriteInfo->entry->isHidden = true;
-            sub_pre_whip_left_spriteInfo->entry->isHidden = true;
-            main_pre_whip_left_spriteInfo->entry->isHidden = true;
+            sub_whip->entry->isHidden = true;
+            main_whip->entry->isHidden = true;
+            sub_pre_whip->entry->isHidden = true;
+            main_pre_whip->entry->isHidden = true;
 //            sub_pre_whip_right_spriteInfo->entry->isHidden = true;
 //            sub_whip_right_spriteInfo->entry->isHidden = true;
 //            main_whip_right_spriteInfo->entry->isHidden = true;
@@ -122,17 +112,17 @@ void MainDude::updateTimers() {
 
     }
 
-    if (!left_key_held && pushing_left) {
+    if (!inputHandler->left_key_held && pushing_left) {
         pushing_left = false;
         pushingTimer = 0;
     }
-    if (!right_key_held && pushing_right) {
+    if (!inputHandler->right_key_held && pushing_right) {
         pushing_right = false;
         pushingTimer = 0;
     }
 
     if ((leftCollision || rightCollision) && !crawling && !hangingOnTileLeft && !hangingOnTileRight &&
-        (left_key_held || right_key_held)) {
+        (inputHandler->left_key_held || inputHandler->right_key_held)) {
         pushingTimer += *timer;
         if (pushingTimer > PUSHING_TIME)
             if (leftCollision) {
@@ -273,10 +263,10 @@ void MainDude::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos
 
 void MainDude::init() {
     frameGfx = (u8 *) spelunkerTiles;
-    sub_whip_left_spriteInfo->entry->isHidden = true;
-    main_whip_left_spriteInfo->entry->isHidden = true;
-    sub_pre_whip_left_spriteInfo->entry->isHidden = true;
-    main_pre_whip_left_spriteInfo->entry->isHidden = true;
+    sub_whip->entry->isHidden = true;
+    main_whip->entry->isHidden = true;
+    sub_pre_whip->entry->isHidden = true;
+    main_pre_whip->entry->isHidden = true;
 //    sub_pre_whip_right_spriteInfo->entry->isHidden = true;
 //    main_pre_whip_right_spriteInfo->entry->isHidden = true;
 //    sub_whip_right_spriteInfo->entry->isHidden = true;
@@ -302,11 +292,11 @@ void MainDude::draw() {
         sub_y = -16;
     }
 
-    main_spriteInfo->entry->x = main_x;
-    main_spriteInfo->entry->y = main_y;
+    main_spelunker->entry->x = main_x;
+    main_spelunker->entry->y = main_y;
 
-    sub_spriteInfo->entry->x = sub_x;
-    sub_spriteInfo->entry->y = sub_y;
+    sub_spelunker->entry->x = sub_x;
+    sub_spelunker->entry->y = sub_y;
 
     if (bomb->carried == true) {
         bomb->y = this->y + 6;
@@ -324,44 +314,44 @@ void MainDude::draw() {
 
     if (whip) {
 
-        sub_pre_whip_left_spriteInfo->entry->y = sub_y - 2;
-        main_pre_whip_left_spriteInfo->entry->y = main_y - 2;
-        sub_whip_left_spriteInfo->entry->y = sub_y;
-        main_whip_left_spriteInfo->entry->y = main_y;
+        sub_pre_whip->entry->y = sub_y - 2;
+        main_pre_whip->entry->y = main_y - 2;
+        sub_whip->entry->y = sub_y;
+        main_whip->entry->y = main_y;
 
         if (whip_timer > 100 && whip_timer < 180) {
-            main_pre_whip_left_spriteInfo->entry->isHidden = false;
-            sub_pre_whip_left_spriteInfo->entry->isHidden = false;
+            main_pre_whip->entry->isHidden = false;
+            sub_pre_whip->entry->isHidden = false;
         } else if (whip_timer >= 220) {
-            main_pre_whip_left_spriteInfo->entry->isHidden = true;
-            sub_pre_whip_left_spriteInfo->entry->isHidden = true;
-            main_whip_left_spriteInfo->entry->isHidden = false;
-            sub_whip_left_spriteInfo->entry->isHidden = false;
+            main_pre_whip->entry->isHidden = true;
+            sub_pre_whip->entry->isHidden = true;
+            main_whip->entry->isHidden = false;
+            sub_whip->entry->isHidden = false;
         }
 
         if (state == 1) {
 
-            main_whip_left_spriteInfo->entry->hFlip = true;
-            sub_whip_left_spriteInfo->entry->hFlip = true;
-            main_pre_whip_left_spriteInfo->entry->hFlip = true;
-            sub_pre_whip_left_spriteInfo->entry->hFlip = true;
+            main_whip->entry->hFlip = true;
+            sub_whip->entry->hFlip = true;
+            main_pre_whip->entry->hFlip = true;
+            sub_pre_whip->entry->hFlip = true;
 
-            sub_pre_whip_left_spriteInfo->entry->x = sub_x + 8;
-            main_pre_whip_left_spriteInfo->entry->x = main_x + 8;
-            sub_whip_left_spriteInfo->entry->x = sub_x - 12;
-            main_whip_left_spriteInfo->entry->x = main_x - 12;
+            sub_pre_whip->entry->x = sub_x + 8;
+            main_pre_whip->entry->x = main_x + 8;
+            sub_whip->entry->x = sub_x - 12;
+            main_whip->entry->x = main_x - 12;
 
         } else {
 
-            main_whip_left_spriteInfo->entry->hFlip = false;
-            sub_whip_left_spriteInfo->entry->hFlip = false;
-            main_pre_whip_left_spriteInfo->entry->hFlip = false;
-            sub_pre_whip_left_spriteInfo->entry->hFlip = false;
+            main_whip->entry->hFlip = false;
+            sub_whip->entry->hFlip = false;
+            main_pre_whip->entry->hFlip = false;
+            sub_pre_whip->entry->hFlip = false;
 
-            sub_pre_whip_left_spriteInfo->entry->x = sub_x - 8;
-            main_pre_whip_left_spriteInfo->entry->x = main_x - 8;
-            main_whip_left_spriteInfo->entry->x = main_x + 8;
-            sub_whip_left_spriteInfo->entry->x = sub_x + 8;
+            sub_pre_whip->entry->x = sub_x - 8;
+            main_pre_whip->entry->x = main_x - 8;
+            main_whip->entry->x = main_x + 8;
+            sub_whip->entry->x = sub_x + 8;
         }
 
     }
@@ -371,8 +361,8 @@ void MainDude::draw() {
 
         frame = (3 * SPRITESHEET_ROW_WIDTH) + animFrame;
         offset = frameGfx + frame * MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT / 2;
-        main_spriteInfo->updateFrame(offset);
-        sub_spriteInfo->updateFrame(offset);
+        main_spelunker->updateFrame(offset);
+        sub_spelunker->updateFrame(offset);
     } else if (pushing_left || pushing_right) {
 
         if (pushing_left)
@@ -382,8 +372,8 @@ void MainDude::draw() {
 
 
         offset = frameGfx + frame * MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT / 2;
-        main_spriteInfo->updateFrame(offset);
-        sub_spriteInfo->updateFrame(offset);
+        main_spelunker->updateFrame(offset);
+        sub_spelunker->updateFrame(offset);
 
     } else if (whip) {
 
@@ -395,18 +385,18 @@ void MainDude::draw() {
             offset = frameGfx + frame * MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT / 2;
         }
 
-        main_spriteInfo->updateFrame(offset);
-        sub_spriteInfo->updateFrame(offset);
+        main_spelunker->updateFrame(offset);
+        sub_spelunker->updateFrame(offset);
     } else if (hangingOnTileRight) {
         frame = (2 * SPRITESHEET_ROW_WIDTH) + 1;
         offset = frameGfx + frame * MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT / 2;
-        main_spriteInfo->updateFrame(offset);
-        sub_spriteInfo->updateFrame(offset);
+        main_spelunker->updateFrame(offset);
+        sub_spelunker->updateFrame(offset);
     } else if (hangingOnTileLeft) {
         frame = (2 * SPRITESHEET_ROW_WIDTH);
         offset = frameGfx + frame * MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT / 2;
-        main_spriteInfo->updateFrame(offset);
-        sub_spriteInfo->updateFrame(offset);
+        main_spelunker->updateFrame(offset);
+        sub_spelunker->updateFrame(offset);
     } else if (crawling) {
         //left
         if (state == 1)
@@ -416,8 +406,8 @@ void MainDude::draw() {
 
 
         offset = frameGfx + frame * MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT / 2;
-        main_spriteInfo->updateFrame(offset);
-        sub_spriteInfo->updateFrame(offset);
+        main_spelunker->updateFrame(offset);
+        sub_spelunker->updateFrame(offset);
     } else if (!bottomCollision) {
 
         if (state == 1) {
@@ -427,8 +417,8 @@ void MainDude::draw() {
             frame = state * FRAMES_PER_ANIMATION;
             offset = frameGfx + frame * MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT / 2;
         }
-        main_spriteInfo->updateFrame(offset);
-        sub_spriteInfo->updateFrame(offset);
+        main_spelunker->updateFrame(offset);
+        sub_spelunker->updateFrame(offset);
 
     } else {
         if (abs(xSpeed) != 0) {
@@ -444,8 +434,8 @@ void MainDude::draw() {
             }
 
         }
-        main_spriteInfo->updateFrame(offset);
-        sub_spriteInfo->updateFrame(offset);
+        main_spelunker->updateFrame(offset);
+        sub_spelunker->updateFrame(offset);
     }
 
 }

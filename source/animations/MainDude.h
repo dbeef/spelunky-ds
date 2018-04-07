@@ -25,6 +25,7 @@
 #include "../level_layout/SpriteInfo.h"
 #include "Bomb.h"
 #include "../sprites/MovingObject.h"
+#include "../input/InputHandler.h"
 
 class MainDude : public MovingObject {
 
@@ -48,18 +49,12 @@ public:
 
     void init() override;
 
-    SpriteInfo *main_whip_left_spriteInfo;
-//    SpriteInfo *main_whip_right_spriteInfo;
-    SpriteInfo *main_pre_whip_left_spriteInfo;
-//    SpriteInfo *main_pre_whip_right_spriteInfo;
-
-    SpriteInfo *sub_whip_left_spriteInfo;
-//    SpriteInfo *sub_whip_right_spriteInfo;
-    SpriteInfo *sub_pre_whip_left_spriteInfo;
-//    SpriteInfo *sub_pre_whip_right_spriteInfo;
-
-    SpriteInfo *main_spriteInfo;
-    SpriteInfo *sub_spriteInfo;
+    SpriteInfo *main_whip;
+    SpriteInfo *main_pre_whip;
+    SpriteInfo *sub_whip;
+    SpriteInfo *sub_pre_whip;
+    SpriteInfo *main_spelunker;
+    SpriteInfo *sub_spelunker;
 
     Bomb *bomb;
 
@@ -76,10 +71,6 @@ public:
     int pushingTimer;
     int whip_timer;
 
-    //todo przenieść do osobnej klasy od inputu
-    bool left_key_held;
-    bool right_key_held;
-
     bool hangingOnTileLeft;
     bool hangingOnTileRight;
     bool stunned;
@@ -89,6 +80,7 @@ public:
     bool whip;
 
     SpriteState state;
+    InputHandler *inputHandler;
 
     int animFrame;
     u8 *frameGfx;
@@ -97,7 +89,7 @@ public:
 
     Camera *camera;
 
-    void handleKeyInput(int keys_held, int keys_up);
+    void handleKeyInput();
 
     void canHangOnTile(MapTile *neighboringTiles[9]);
 

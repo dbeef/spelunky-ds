@@ -70,6 +70,7 @@ MainDude.o: \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Bomb.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/MovingObject.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/../level_layout/LevelGenerator.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../input/InputHandler.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../Consts.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../../build/spelunker.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Collisions.h \
@@ -214,6 +215,8 @@ MainDude.o: \
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/MovingObject.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/../level_layout/LevelGenerator.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../input/InputHandler.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../Consts.h:
 
