@@ -39,13 +39,6 @@ void Bomb::update(Camera *camera) {
     updateCollisions();
 }
 
-void Bomb::init(int x, int y, bool armed, LevelGenerator *l, double *timer) {
-    this->levelGenerator = l;
-    this->x = x;
-    this->y = y;
-    this->armed = armed;
-    this->timer = timer;
-}
 
 void Bomb::init(OAMManager *mainOam, OAMManager *subOam) {
     subSpriteInfo = subOam->initSprite(bomb_unarmedPal, bomb_unarmedPalLen,

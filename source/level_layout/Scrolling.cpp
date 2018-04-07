@@ -26,8 +26,9 @@ void spelunker::scroll(int bg_main, int bg_sub, LevelGenerator *l, u16 *fresh_ma
 
     Bomb *bomb = new Bomb();
     bomb->init(mainOamManager, subOamManager);
-    bomb->init(70, 100, true, l, &timer);
     bomb->xSpeed = 3;
+    bomb->timer = &timer;
+    bomb->levelGenerator = l;
     bomb->carried = true;
 
     MainDude *mainDude = new MainDude();

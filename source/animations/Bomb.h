@@ -56,8 +56,6 @@ public:
 
     LevelGenerator *levelGenerator;
 
-    void init(int x, int y, bool armed, LevelGenerator *l, double *timer);
-
     void update(Camera *camera);
 
     void updateCollisions();
