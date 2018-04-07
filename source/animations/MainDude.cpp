@@ -100,6 +100,7 @@ void MainDude::updateTimers() {
     }
 
     if (animationFrameTimer > 65) {
+
         animationFrameTimer = 0;
 
         if (!whip || (whip && animFrame < 5))
@@ -119,7 +120,7 @@ void MainDude::updateTimers() {
     if ((leftCollision || rightCollision) && !crawling && !hangingOnTileLeft && !hangingOnTileRight &&
         (inputHandler->left_key_held || inputHandler->right_key_held)) {
         pushingTimer += *timer;
-        if (pushingTimer > PUSHING_TIME)
+        if (pushingTimer > PUSHING_TIME) {
             if (leftCollision) {
                 pushing_right = true;
                 pushingTimer = 0;
@@ -127,6 +128,8 @@ void MainDude::updateTimers() {
                 pushing_left = true;
                 pushingTimer = 0;
             }
+        }
+
     } else {
         pushingTimer = 0;
         pushing_left = false;
@@ -161,7 +164,7 @@ void MainDude::updateTimers() {
     }
 
 
-    if (xSpeed != 0 || stunned || whip)
+    if (xSpeed != 0 || stunned || whip || (pushing_left || pushing_right))
         animationFrameTimer += *timer;
 
 
