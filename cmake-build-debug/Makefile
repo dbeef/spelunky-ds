@@ -123,6 +123,33 @@ spelunkyds/fast:
 	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/build
 .PHONY : spelunkyds/fast
 
+source/animations/Bomb.o: source/animations/Bomb.cpp.o
+
+.PHONY : source/animations/Bomb.o
+
+# target to build an object file
+source/animations/Bomb.cpp.o:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/animations/Bomb.cpp.o
+.PHONY : source/animations/Bomb.cpp.o
+
+source/animations/Bomb.i: source/animations/Bomb.cpp.i
+
+.PHONY : source/animations/Bomb.i
+
+# target to preprocess a source file
+source/animations/Bomb.cpp.i:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/animations/Bomb.cpp.i
+.PHONY : source/animations/Bomb.cpp.i
+
+source/animations/Bomb.s: source/animations/Bomb.cpp.s
+
+.PHONY : source/animations/Bomb.s
+
+# target to generate assembly for a file
+source/animations/Bomb.cpp.s:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/animations/Bomb.cpp.s
+.PHONY : source/animations/Bomb.cpp.s
+
 source/animations/Camera.o: source/animations/Camera.cpp.o
 
 .PHONY : source/animations/Camera.o
@@ -474,6 +501,33 @@ source/main.cpp.s:
 	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/main.cpp.s
 .PHONY : source/main.cpp.s
 
+source/sprites/MovingObject.o: source/sprites/MovingObject.cpp.o
+
+.PHONY : source/sprites/MovingObject.o
+
+# target to build an object file
+source/sprites/MovingObject.cpp.o:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/sprites/MovingObject.cpp.o
+.PHONY : source/sprites/MovingObject.cpp.o
+
+source/sprites/MovingObject.i: source/sprites/MovingObject.cpp.i
+
+.PHONY : source/sprites/MovingObject.i
+
+# target to preprocess a source file
+source/sprites/MovingObject.cpp.i:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/sprites/MovingObject.cpp.i
+.PHONY : source/sprites/MovingObject.cpp.i
+
+source/sprites/MovingObject.s: source/sprites/MovingObject.cpp.s
+
+.PHONY : source/sprites/MovingObject.s
+
+# target to generate assembly for a file
+source/sprites/MovingObject.cpp.s:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/sprites/MovingObject.cpp.s
+.PHONY : source/sprites/MovingObject.cpp.s
+
 source/time/Timer.o: source/time/Timer.cpp.o
 
 .PHONY : source/time/Timer.o
@@ -510,6 +564,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... spelunkyds"
+	@echo "... source/animations/Bomb.o"
+	@echo "... source/animations/Bomb.i"
+	@echo "... source/animations/Bomb.s"
 	@echo "... source/animations/Camera.o"
 	@echo "... source/animations/Camera.i"
 	@echo "... source/animations/Camera.s"
@@ -549,6 +606,9 @@ help:
 	@echo "... source/main.o"
 	@echo "... source/main.i"
 	@echo "... source/main.s"
+	@echo "... source/sprites/MovingObject.o"
+	@echo "... source/sprites/MovingObject.i"
+	@echo "... source/sprites/MovingObject.s"
 	@echo "... source/time/Timer.o"
 	@echo "... source/time/Timer.i"
 	@echo "... source/time/Timer.s"

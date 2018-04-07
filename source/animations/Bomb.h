@@ -18,25 +18,33 @@
 #include "../level_layout/MapTile.h"
 #include "Camera.h"
 #include "../level_layout/LevelGenerator.h"
+#include "../sprites/MovingObject.h"
 
-class Bomb {
+class Bomb : public MovingObject {
 
 public:
 
+    void updateOther() override {};
+
+    void init(){};
+
+    void draw() {};
+
+    void updateTimers() {};
+
+    void updatePosition() {};
+
+    void updateSpeed() {};
+
+    void updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {};
+
+    void updateCollisionsOtherMoving() {};
+
+    void onCollisionWithMainCharacter() {};
+
+
     double *timer;
-
-    bool bottomCollision;
-    bool upperCollision;
-    bool leftCollision;
-    bool rightCollision;
-
-    double x_speed;
-    double y_speed;
-
     double pos_inc_timer;
-
-    int x;
-    int y;
 
     SpriteInfo *mainSpriteInfo;
     SpriteInfo *subSpriteInfo;
@@ -48,11 +56,12 @@ public:
 
     LevelGenerator *levelGenerator;
 
-    void init(int x, int y,  bool armed, LevelGenerator *l, double *timer);
+    void init(int x, int y, bool armed, LevelGenerator *l, double *timer);
 
     void update(Camera *camera);
 
     void updateCollisions();
+
     void checkCollisionWithMap(MapTile *mapTiles[32][32], int xx, int yy);
 
     void applyFriction();

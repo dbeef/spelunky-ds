@@ -11,49 +11,16 @@
 #include "Collisions.h"
 #include "../level_layout/MapUtils.h"
 
-#define SPRITESHEET_ROW_WIDTH 6
-
-/**
- * For debugging purposes
- * @param mapTiles
- */
-void MainDude::clearTilesOnRight(MapTile *mapTiles[32][32]) {
-
-    int xx = floor_div(this->x, TILE_W);
-    int yy = floor_div(this->y, TILE_H);
-
-    MapTile *left_middle = mapTiles[xx - 1][yy];
-    MapTile *right_middle = mapTiles[xx + 1][yy];
-    MapTile *up_middle = mapTiles[xx][yy - 1];
-    MapTile *down_middle = mapTiles[xx][yy + 1];
-    MapTile *center = mapTiles[xx][yy];
-    MapTile *left_up = mapTiles[xx - 1][yy - 1];
-    MapTile *right_up = mapTiles[xx + 1][yy - 1];
-    MapTile *left_down = mapTiles[xx - 1][yy + 1];
-    MapTile *right_down = mapTiles[xx + 1][yy + 1];
-
-    up_middle->values[0] = 16;
-    up_middle->values[1] = 16;
-    up_middle->values[2] = 16;
-    up_middle->values[3] = 16;
-
-    down_middle->values[0] = 0;
-    down_middle->values[1] = 0;
-    down_middle->values[2] = 0;
-    down_middle->values[3] = 0;
-
-}
 
 void MainDude::handleKeyInput(int keys_held, int keys_down) {
-
 
     if (keys_down && !stunned) {
         if (keys_down & KEY_R) {
             if (bottomCollision) {
-                ySpeed = -JUMP_SPEED;
+                ySpeed = -MAIN_DUDE_JUMP_SPEED;
             }
             if ((hangingOnTileLeft || hangingOnTileRight) && hangingTimer > MIN_HANGING_TIME) {
-                ySpeed = -JUMP_SPEED;
+                ySpeed = -MAIN_DUDE_JUMP_SPEED;
                 hangingOnTileLeft = false;
                 hangingOnTileRight = false;
                 hangingTimer = 0;
@@ -61,17 +28,16 @@ void MainDude::handleKeyInput(int keys_held, int keys_down) {
         }
         if (keys_down & KEY_L) {
             if (!stunned && !whip) {
-                if(bomb->carried == true){
+                if (bomb->carried == true) {
 
                     bomb->carried = false;
-                    if(state == 1)
-                        bomb->x_speed = -1;
+                    if (state == 1)
+                        bomb->xSpeed = -1;
                     else
-                        bomb->x_speed = 1;
+                        bomb->xSpeed = 1;
 
-                    bomb->y_speed = -1;
-                }
-                else {
+                    bomb->ySpeed = -1;
+                } else {
                     whip = true;
                     animFrame = 0;
                 }
@@ -82,29 +48,29 @@ void MainDude::handleKeyInput(int keys_held, int keys_down) {
 
 
         if (keys_held & KEY_LEFT) {
-            key_left = true;
+            left_key_held = true;
             state = W_LEFT;
             hangingOnTileLeft = false;
-            if (xSpeed > -MAX_X_SPEED && !(hangingOnTileRight || hangingOnTileLeft))
+            if (xSpeed > -MAIN_DUDE_MAX_X_SPEED && !(hangingOnTileRight || hangingOnTileLeft))
                 if (speedIncTimer > X_SPEED_DELTA_TIME_MS) {
-                    xSpeed -= X_SPEED_DELTA;
+                    xSpeed -= X_SPEED_DELTA_VALUE;
                     speedIncTimer = 0;
                 }
         } else
-            key_left = false;
+            left_key_held = false;
 
         if (keys_held & KEY_RIGHT) {
-            key_right = true;
+            right_key_held = true;
             state = W_RIGHT;
             hangingOnTileRight = false;
-            if (xSpeed < MAX_X_SPEED && !(hangingOnTileRight || hangingOnTileLeft)) {
+            if (xSpeed < MAIN_DUDE_MAX_X_SPEED && !(hangingOnTileRight || hangingOnTileLeft)) {
                 if (speedIncTimer > X_SPEED_DELTA_TIME_MS) {
-                    xSpeed += X_SPEED_DELTA;
+                    xSpeed += X_SPEED_DELTA_VALUE;
                     speedIncTimer = 0;
                 }
             }
         } else
-            key_right = false;
+            right_key_held = false;
 
         if (keys_held & KEY_DOWN) {
             hangingOnTileLeft = false;
@@ -117,33 +83,39 @@ void MainDude::handleKeyInput(int keys_held, int keys_down) {
         crawling = false;
 
     if (!keys_held) {
-        key_left = false;
-        key_right = false;
+        left_key_held = false;
+        right_key_held = false;
     }
 }
 
 
-void MainDude::updateTimers(int timeElapsed) {
+void MainDude::updateTimers() {
 
-    posIncTimer += timeElapsed;
-    frictionTimer += timeElapsed;
-    speedIncTimer += timeElapsed;
-    hangingTimer += timeElapsed;
+    posIncTimer += *timer;
+    frictionTimer += *timer;
+    speedIncTimer += *timer;
+    hangingTimer += *timer;
 
     if (whip) {
-        whip_timer += timeElapsed;
+        whip_timer += *timer;
         //4 frames idle
         if (whip_timer > 420 + 0 * 70) {
             whip_timer = 0;
             whip = false;
-            hideWhipLeftSub();
-            hideWhipLeftMain();
-            hideWhipRightSub();
-            hideWhipRightMain();
-            hidePreWhipLeftSub();
-            hidePreWhipLeftMain();
-            hidePreWhipRightSub();
-            hidePreWhipRightMain();
+            sub_whip_left_spriteInfo->entry->isHidden = true;
+            main_whip_left_spriteInfo->entry->isHidden = true;
+
+            main_whip_right_spriteInfo->entry->isHidden = true;
+
+            sub_whip_right_spriteInfo->entry->isHidden = true;
+            sub_pre_whip_left_spriteInfo->entry->isHidden = true;
+            main_pre_whip_left_spriteInfo->entry->isHidden = true;
+
+            sub_pre_whip_right_spriteInfo->entry->isHidden = true;
+
+            sub_whip_right_spriteInfo->entry->isHidden = true;
+            main_whip_right_spriteInfo->entry->isHidden = true;
+
         }
     }
 
@@ -155,18 +127,18 @@ void MainDude::updateTimers(int timeElapsed) {
 
     }
 
-    if (!key_left && pushing_left) {
+    if (!left_key_held && pushing_left) {
         pushing_left = false;
         pushingTimer = 0;
     }
-    if (!key_right && pushing_right) {
+    if (!right_key_held && pushing_right) {
         pushing_right = false;
         pushingTimer = 0;
     }
 
     if ((leftCollision || rightCollision) && !crawling && !hangingOnTileLeft && !hangingOnTileRight &&
-        (key_left || key_right)) {
-        pushingTimer += timeElapsed;
+        (left_key_held || right_key_held)) {
+        pushingTimer += *timer;
         if (pushingTimer > PUSHING_TIME)
             if (leftCollision) {
                 pushing_right = true;
@@ -192,17 +164,17 @@ void MainDude::updateTimers(int timeElapsed) {
 
 
     if (!bottomCollision && !hangingOnTileLeft && !hangingOnTileRight)
-        jumpingTimer += timeElapsed;
+        jumpingTimer += *timer;
 
-    if (bottomCollision && jumpingTimer > STUN_JUMPING_TIME) {
+    if (bottomCollision && jumpingTimer > STUN_FALLING_TIME) {
         stunned = true;
         jumpingTimer = 0;
-    } else if (bottomCollision && jumpingTimer < STUN_JUMPING_TIME) {
+    } else if (bottomCollision && jumpingTimer < STUN_FALLING_TIME) {
         jumpingTimer = 0;
     }
 
     if (stunned)
-        stunnedTimer += timeElapsed;
+        stunnedTimer += *timer;
     if (stunnedTimer > STUN_TIME) {
         stunned = false;
         stunnedTimer = 0;
@@ -210,94 +182,70 @@ void MainDude::updateTimers(int timeElapsed) {
 
 
     if (xSpeed != 0 || stunned || whip)
-        animationFrameTimer += timeElapsed;
+        animationFrameTimer += *timer;
+
+
+    if (!bottomCollision)
+        crawling = false;
+
 }
 
 
-void MainDude::updateSpeed(MapTile *mapTiles[32][32]) {
+void MainDude::updateSpeed() {
 
     if (crawling) {
 
-        if (xSpeed > MAX_X_SPEED_CRAWLING)
-            xSpeed = MAX_X_SPEED_CRAWLING;
-        if (xSpeed < -MAX_X_SPEED_CRAWLING)
-            xSpeed = -MAX_X_SPEED_CRAWLING;
+        if (xSpeed > MAIN_DUDE_MAX_X_SPEED_CRAWLING)
+            xSpeed = MAIN_DUDE_MAX_X_SPEED_CRAWLING;
+        if (xSpeed < -MAIN_DUDE_MAX_X_SPEED_CRAWLING)
+            xSpeed = -MAIN_DUDE_MAX_X_SPEED_CRAWLING;
 
     } else {
-        if (xSpeed > MAX_X_SPEED)
-            xSpeed = MAX_X_SPEED;
-        if (xSpeed < -MAX_X_SPEED)
-            xSpeed = -MAX_X_SPEED;
+        if (xSpeed > MAIN_DUDE_MAX_X_SPEED)
+            xSpeed = MAIN_DUDE_MAX_X_SPEED;
+        if (xSpeed < -MAIN_DUDE_MAX_X_SPEED)
+            xSpeed = -MAIN_DUDE_MAX_X_SPEED;
     }
 
-    if (ySpeed > MAX_Y_SPEED)
-        ySpeed = MAX_Y_SPEED;
-    if (ySpeed < -MAX_Y_SPEED)
-        ySpeed = -MAX_Y_SPEED;
+    if (ySpeed > MAIN_DUDE_MAX_Y_SPEED)
+        ySpeed = MAIN_DUDE_MAX_Y_SPEED;
+    if (ySpeed < -MAIN_DUDE_MAX_Y_SPEED)
+        ySpeed = -MAIN_DUDE_MAX_Y_SPEED;
+
+    if (frictionTimer > FRICTION_DELTA_TIME_MS) {
+        frictionTimer = 0;
+        if (xSpeed > 0) {
+            xSpeed -= FRICTION_DELTA_SPEED;
+            if (xSpeed < 0)
+                xSpeed = 0;
+        }
+        if (xSpeed < 0) {
+            xSpeed += FRICTION_DELTA_SPEED;
+            if (xSpeed > 0)
+                xSpeed = 0;
+        }
+    }
 
 
     bool change_pos = (crawling && posIncTimer > 20) || (!crawling && posIncTimer > 10);
 
+
     if (change_pos) {
-
-//        std::cout << xSpeed << '\n';
-
-        double tempXspeed = abs(xSpeed);
-        double tempYspeed = abs(ySpeed);
-
-        int old_xx = -1;
-        int old_yy = -1;
-        int xx;
-        int yy;
-
-        while (tempXspeed > 0 || tempYspeed > 0) {
-            if (tempXspeed > 0) {
-                if (xSpeed > 0) {
-                    x += 1;
-                } else if (xSpeed < 0) {
-                    x -= 1;
-                }
-            }
-            if (tempYspeed > 0) {
-                if (ySpeed > 0)
-                    y += 1;
-                else if (ySpeed < 0)
-                    y -= 1;
-            }
-
-
-
-//            Collisions::getCenterTile(this->x, this->y, MAIN_DUDE_HEIGHT, MAIN_DUDE_WIDTH, xx, yy);
-//fixme
-
-            xx = floor_div(this->x + 0.5 * MAIN_DUDE_WIDTH, 16);
-            yy = floor_div(this->y + 0.5 * MAIN_DUDE_HEIGHT, 16);
-
-            if (old_xx != xx || old_yy != yy) {
-                checkCollisionWithMap(mapTiles, xx, yy);
-            }
-
-            old_xx = xx;
-            old_yy = yy;
-
-            tempXspeed--;
-            tempYspeed--;
-        }
-
+        updatePosition();
+        posIncTimer = 0;
 
         if (!bottomCollision && !(hangingOnTileLeft || hangingOnTileRight))
             ySpeed += GRAVITY_DELTA_SPEED;
-
-        posIncTimer = 0;
-
     }
+
+
 }
 
 
-void MainDude::checkCollisionWithMap(MapTile *mapTiles[32][32], int xx, int yy) {
+void MainDude::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
 
     MapTile *tiles[9];
-    Collisions::getNeighboringTiles(mapTiles, xx, yy, tiles);
+    Collisions::getNeighboringTiles(levelGenerator->mapTiles, x_current_pos_in_tiles, y_current_pos_in_tiles, tiles);
 
     bottomCollision = Collisions::checkBottomCollision(tiles, &this->x, &this->y, &ySpeed, 16, 16);
     leftCollision = Collisions::checkLeftCollision(tiles, &this->x, &this->y, &xSpeed, 16, 16);
@@ -328,23 +276,22 @@ void MainDude::checkCollisionWithMap(MapTile *mapTiles[32][32], int xx, int yy) 
 
 }
 
-void MainDude::init(double *timer, Bomb *bomb) {
-    this->timer = timer;
+void MainDude::init() {
     frameGfx = (u8 *) spelunkerTiles;
-    this-> bomb = bomb;
+    sub_whip_left_spriteInfo->entry->isHidden = true;
+    main_whip_left_spriteInfo->entry->isHidden = true;
 
-    hideWhipLeftSub();
-    hideWhipLeftMain();
-    hideWhipRightSub();
-    hideWhipRightMain();
-    hidePreWhipLeftSub();
-    hidePreWhipLeftMain();
-    hidePreWhipRightSub();
-    hidePreWhipRightMain();
+    sub_whip_right_spriteInfo->entry->isHidden = true;
+    main_whip_right_spriteInfo->entry->isHidden = true;
+    sub_pre_whip_left_spriteInfo->entry->isHidden = true;
+    main_pre_whip_left_spriteInfo->entry->isHidden = true;
+    sub_pre_whip_right_spriteInfo->entry->isHidden = true;
+    main_pre_whip_right_spriteInfo->entry->isHidden = true;
+
 }
 
 
-void MainDude::animate(Camera *camera) {
+void MainDude::draw() {
 
     int main_x = x - camera->x;
     int main_y = y - camera->y;
@@ -367,13 +314,12 @@ void MainDude::animate(Camera *camera) {
     sub_spriteInfo->entry->x = sub_x;
     sub_spriteInfo->entry->y = sub_y;
 
-    if(bomb->carried == true) {
+    if (bomb->carried == true) {
         bomb->y = this->y + 6;
 
-        if(state == 1) {
+        if (state == 1) {
             bomb->x = this->x - 2;
-        }
-        else
+        } else
             bomb->x = this->x + 10;
 
 
@@ -386,19 +332,22 @@ void MainDude::animate(Camera *camera) {
 
         if (state == 1) {
 
-            hideWhipRightMain();
-            hideWhipRightSub();
-            hidePreWhipRightMain();
-            hidePreWhipRightSub();
+            main_whip_right_spriteInfo->entry->isHidden = true;
+            sub_whip_right_spriteInfo->entry->isHidden = true;
+            main_pre_whip_right_spriteInfo->entry->isHidden = true;
+            sub_pre_whip_right_spriteInfo->entry->isHidden = true;
+
 
             if (whip_timer > 100 && whip_timer < 170) {
-                showPreWhipLeftMain();
-                showPreWhipLeftSub();
+                main_pre_whip_left_spriteInfo->entry->isHidden = false;
+
+                sub_pre_whip_left_spriteInfo->entry->isHidden = false;
+
             } else if (whip_timer >= 200) {
-                hidePreWhipLeftMain();
-                hidePreWhipLeftSub();
-                showWhipLeftMain();
-                showWhipLeftSub();
+                main_pre_whip_left_spriteInfo->entry->isHidden = true;
+                sub_pre_whip_left_spriteInfo->entry->isHidden = true;
+                main_whip_left_spriteInfo->entry->isHidden = false;
+                sub_whip_left_spriteInfo->entry->isHidden = false;
             }
 
             sub_pre_whip_left_spriteInfo->entry->x = sub_x + 16;
@@ -413,21 +362,22 @@ void MainDude::animate(Camera *camera) {
 
         } else {
 
-            hideWhipLeftMain();
-            hideWhipLeftSub();
-            hidePreWhipLeftMain();
-            hidePreWhipLeftSub();
+            main_whip_left_spriteInfo->entry->isHidden = true;
+
+            sub_whip_left_spriteInfo->entry->isHidden = true;
+            main_pre_whip_left_spriteInfo->entry->isHidden = true;
+            sub_pre_whip_left_spriteInfo->entry->isHidden = true;
 
 
             if (whip_timer > 100 && whip_timer < 170) {
-                showPreWhipRightMain();
-                showPreWhipRightSub();
+                main_pre_whip_right_spriteInfo->entry->isHidden = false;
+                sub_pre_whip_right_spriteInfo->entry->isHidden = false;
 
             } else if (whip_timer >= 200) {
-                hidePreWhipRightMain();
-                hidePreWhipRightSub();
-                showWhipRightMain();
-                showWhipRightSub();
+                main_pre_whip_right_spriteInfo->entry->isHidden = true;
+                sub_pre_whip_right_spriteInfo->entry->isHidden = true;
+                main_whip_right_spriteInfo->entry->isHidden = false;
+                sub_whip_right_spriteInfo->entry->isHidden = false;
             }
 
             sub_pre_whip_right_spriteInfo->entry->x = sub_x - 16;
@@ -571,99 +521,55 @@ void MainDude::canHangOnTile(MapTile *neighboringTiles[9]) {
 
 }
 
-void MainDude::applyFriction() {
+void MainDude::updateOther() {
+    this->updateSpeed();
+    this->updateTimers();
+    this->draw();
+}
 
-    if (frictionTimer > FRICTION_DELTA_TIME_MS) {
-        frictionTimer = 0;
-        if (xSpeed > 0) {
-            xSpeed -= FRICTION_DELTA_SPEED;
-            if (xSpeed < 0)
-                xSpeed = 0;
+void MainDude::updatePosition() {
+
+    double tempXspeed = abs(xSpeed);
+    double tempYspeed = abs(ySpeed);
+
+    int old_xx = -1;
+    int old_yy = -1;
+    int xx;
+    int yy;
+
+    while (tempXspeed > 0 || tempYspeed > 0) {
+        if (tempXspeed > 0) {
+            if (xSpeed > 0) {
+                x += 1;
+            } else if (xSpeed < 0) {
+                x -= 1;
+            }
         }
-        if (xSpeed < 0) {
-            xSpeed += FRICTION_DELTA_SPEED;
-            if (xSpeed > 0)
-                xSpeed = 0;
+        if (tempYspeed > 0) {
+            if (ySpeed > 0)
+                y += 1;
+            else if (ySpeed < 0)
+                y -= 1;
         }
+
+
+
+//            Collisions::getCenterTile(this->x, this->y, MAIN_DUDE_HEIGHT, MAIN_DUDE_WIDTH, xx, yy);
+//fixme
+
+        xx = floor_div(this->x + 0.5 * MAIN_DUDE_WIDTH, 16);
+        yy = floor_div(this->y + 0.5 * MAIN_DUDE_HEIGHT, 16);
+
+        if (old_xx != xx || old_yy != yy) {
+            updateCollisionsMap(xx, yy);
+        }
+
+        old_xx = xx;
+        old_yy = yy;
+
+        tempXspeed--;
+        tempYspeed--;
+
     }
-
-}
-
-void MainDude::update(Camera *camera, int keys_held, int keys_down, LevelGenerator *l) {
-    this->applyFriction();
-    this->updateTimers(*timer);
-    this->animate(camera);
-    this->updateSpeed(l->mapTiles);
-    this->handleKeyInput(keys_held, keys_down);
-
-    if (!bottomCollision)
-        crawling = false;
-
-}
-
-void MainDude::hideWhipRightMain() {
-    main_whip_right_spriteInfo->entry->isHidden = true;
-}
-
-void MainDude::hidePreWhipRightMain() {
-    main_pre_whip_right_spriteInfo->entry->isHidden = true;
-}
-
-void MainDude::hideWhipRightSub() {
-    sub_whip_right_spriteInfo->entry->isHidden = true;
-}
-
-void MainDude::hidePreWhipRightSub() {
-    sub_pre_whip_right_spriteInfo->entry->isHidden = true;
-}
-
-void MainDude::hideWhipLeftMain() {
-    main_whip_left_spriteInfo->entry->isHidden = true;
-}
-
-void MainDude::hidePreWhipLeftMain() {
-    main_pre_whip_left_spriteInfo->entry->isHidden = true;
-}
-
-void MainDude::hideWhipLeftSub() {
-    sub_whip_left_spriteInfo->entry->isHidden = true;
-}
-
-void MainDude::hidePreWhipLeftSub() {
-    sub_pre_whip_left_spriteInfo->entry->isHidden = true;
-}
-
-void MainDude::showWhipRightMain() {
-    main_whip_right_spriteInfo->entry->isHidden = false;
-}
-
-void MainDude::showPreWhipRightMain() {
-    main_pre_whip_right_spriteInfo->entry->isHidden = false;
-}
-
-void MainDude::showWhipRightSub() {
-    sub_whip_right_spriteInfo->entry->isHidden = false;
-}
-
-void MainDude::showPreWhipRightSub() {
-    sub_pre_whip_right_spriteInfo->entry->isHidden = false;
-}
-
-void MainDude::showWhipLeftMain() {
-    main_whip_left_spriteInfo->entry->isHidden = false;
-}
-
-void MainDude::showPreWhipLeftMain() {
-    main_pre_whip_left_spriteInfo->entry->isHidden = false;
-}
-
-void MainDude::showWhipLeftSub() {
-    sub_whip_left_spriteInfo->entry->isHidden = false;
-}
-
-void MainDude::showPreWhipLeftSub() {
-    sub_pre_whip_left_spriteInfo->entry->isHidden = false;
-
-
 }
 

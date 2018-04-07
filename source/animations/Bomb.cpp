@@ -47,15 +47,15 @@ void Bomb::init(int x, int y, bool armed,LevelGenerator *l, double *timer) {
 
 void Bomb::updateCollisions() {
 
-    if (x_speed > MAX_X_SPEED_BOMB)
-        x_speed = MAX_X_SPEED_BOMB;
-    if (x_speed < -MAX_X_SPEED_BOMB)
-        x_speed = -MAX_X_SPEED_BOMB;
+    if (xSpeed > MAX_X_SPEED_BOMB)
+        xSpeed = MAX_X_SPEED_BOMB;
+    if (xSpeed < -MAX_X_SPEED_BOMB)
+        xSpeed = -MAX_X_SPEED_BOMB;
 
-    if (y_speed > MAX_Y_SPEED_BOMB)
-        y_speed = MAX_Y_SPEED_BOMB;
-    if (y_speed < -MAX_Y_SPEED_BOMB)
-        y_speed = -MAX_Y_SPEED_BOMB;
+    if (ySpeed > MAX_Y_SPEED_BOMB)
+        ySpeed = MAX_Y_SPEED_BOMB;
+    if (ySpeed < -MAX_Y_SPEED_BOMB)
+        ySpeed = -MAX_Y_SPEED_BOMB;
 
     pos_inc_timer += *timer;
 
@@ -63,19 +63,19 @@ void Bomb::updateCollisions() {
 
     if (change_pos) {
 
-        if (x_speed > 0) {
-            x_speed -= 0.005;
-            if (x_speed < 0)
-                x_speed = 0;
+        if (xSpeed > 0) {
+            xSpeed -= 0.005;
+            if (xSpeed < 0)
+                xSpeed = 0;
         }
-        if (x_speed < 0) {
-            x_speed += 0.005;
-            if (x_speed > 0)
-                x_speed = 0;
+        if (xSpeed < 0) {
+            xSpeed += 0.005;
+            if (xSpeed > 0)
+                xSpeed = 0;
         }
 
-        double tempXspeed = abs(x_speed);
-        double tempYspeed = abs(y_speed);
+        double tempXspeed = abs(xSpeed);
+        double tempYspeed = abs(ySpeed);
 
         int old_xx = -1;
         int old_yy = -1;
@@ -84,16 +84,16 @@ void Bomb::updateCollisions() {
 
         while (tempXspeed > 0 || tempYspeed > 0) {
             if (tempXspeed > 0) {
-                if (x_speed > 0) {
+                if (xSpeed > 0) {
                     x += 1;
-                } else if (x_speed < 0) {
+                } else if (xSpeed < 0) {
                     x -= 1;
                 }
             }
             if (tempYspeed > 0) {
-                if (y_speed > 0)
+                if (ySpeed > 0)
                     y += 1;
-                else if (y_speed < 0)
+                else if (ySpeed < 0)
                     y -= 1;
             }
 
@@ -116,7 +116,7 @@ void Bomb::updateCollisions() {
 
 
         if (!bottomCollision)
-            y_speed += GRAVITY_DELTA_SPEED;
+            ySpeed += GRAVITY_DELTA_SPEED;
 
         pos_inc_timer = 0;
 
@@ -128,10 +128,10 @@ void Bomb::updateCollisions() {
         MapTile *tiles[9];
         Collisions::getNeighboringTiles(mapTiles, xx, yy, tiles);
 
-        bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &y_speed, 8,8);
-        leftCollision = Collisions::checkLeftCollision(tiles, &x, &y,& x_speed, 8,8);
-        rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &x_speed, 8,8);
-        upperCollision = Collisions::checkUpperCollision(tiles, &x, &y,& y_speed, 8);
+        bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, 8,8);
+        leftCollision = Collisions::checkLeftCollision(tiles, &x, &y,& xSpeed, 8,8);
+        rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, 8,8);
+        upperCollision = Collisions::checkUpperCollision(tiles, &x, &y,& ySpeed, 8);
 
 //        std::cout << bottomCollision << leftCollision << rightCollision << upperCollision <<'\n';
 

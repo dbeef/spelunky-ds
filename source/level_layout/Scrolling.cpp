@@ -17,7 +17,6 @@
 #include "../../build/pre_whip_right.h"
 #include "../../build/whip_left.h"
 #include "../../build/whip_right.h"
-#include "../animations/Bomb.h"
 
 extern u16 map[4096];
 
@@ -42,7 +41,10 @@ void spelunker::scroll(int bg_main, int bg_sub, LevelGenerator *l, u16 *fresh_ma
 
     MainDude *mainDude = new MainDude();
     mainDude->x = 100;
+    mainDude->timer = &timer;
     mainDude->y = 100;
+    mainDude->levelGenerator = l;
+    mainDude->camera = camera;
 
     mainDude->main_spriteInfo = mainOamManager->initSprite(spelunkerPal, spelunkerPalLen, spelunkerTiles,
                                                            spelunkerTilesLen, 16);
@@ -78,14 +80,15 @@ void spelunker::scroll(int bg_main, int bg_sub, LevelGenerator *l, u16 *fresh_ma
 
     Bomb *bomb = new Bomb();
     bomb->init(70, 100, true, l, &timer);
-    bomb->x_speed = 3;
+    bomb->xSpeed = 3;
     bomb->subSpriteInfo = subOamManager->initSprite(bomb_unarmedPal, bomb_unarmedPalLen,
                                                     bomb_unarmedTiles, bomb_unarmedTilesLen, 8);
     bomb->mainSpriteInfo = mainOamManager->initSprite(bomb_unarmedPal, bomb_unarmedPalLen,
                                                       bomb_unarmedTiles, bomb_unarmedTilesLen, 8);
     bomb->carried = true;
 
-    mainDude->init(&timer, bomb);
+    mainDude->init();
+    mainDude->bomb = bomb;
     Hud *hud = new Hud();
     hud->heartSpriteInfo = mainOamManager->initSprite(heartPal, heartPalLen, heartTiles, heartTilesLen, 16);
     hud->dollarSpriteInfo = mainOamManager->initSprite(dollarPal, dollarPalLen, dollarTiles, dollarTilesLen, 16);
@@ -111,7 +114,7 @@ void spelunker::scroll(int bg_main, int bg_sub, LevelGenerator *l, u16 *fresh_ma
             l->mapFrame();
 
             l->generateRooms();
-//            mainDude->clearTilesOnRight(l->mapTiles);
+//            mainDude->clearTilesOnRight(levelGenerator->mapTiles);
 
             l->tilesToMap();
             sectorize_map();
@@ -124,8 +127,8 @@ void spelunker::scroll(int bg_main, int bg_sub, LevelGenerator *l, u16 *fresh_ma
 
 
         swiWaitForVBlank();
-
-        mainDude->update(camera, keys_held, keys_down, l);
+        mainDude->updateOther();
+        mainDude->handleKeyInput(keys_held, keys_down);
         bomb->update(camera);
         hud->drawHud();
 

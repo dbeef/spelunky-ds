@@ -1,9 +1,9 @@
 
-//{{BLOCK(whip_left)
+//{{BLOCK(bomb_unarmed)
 
 //======================================================================
 //
-//	whip_left, 16x16@4, 
+//	bomb_unarmed, 16x16@4, 
 //	Transparent color : 20,9C,00
 //	+ palette 16 entries, not compressed
 //	+ 4 tiles Metatiled by 2x2 not compressed
@@ -15,15 +15,15 @@
 //
 //======================================================================
 
-#ifndef GRIT_WHIP_LEFT_H
-#define GRIT_WHIP_LEFT_H
+#ifndef GRIT_BOMB_UNARMED_H
+#define GRIT_BOMB_UNARMED_H
 
-#define whip_leftTilesLen 128
-extern const unsigned int whip_leftTiles[32];
+#define bomb_unarmedTilesLen 128
+extern const unsigned int bomb_unarmedTiles[32];
 
-#define whip_leftPalLen 32
-extern const unsigned short whip_leftPal[16];
+#define bomb_unarmedPalLen 32
+extern const unsigned short bomb_unarmedPal[16];
 
-#endif // GRIT_WHIP_LEFT_H
+#endif // GRIT_BOMB_UNARMED_H
 
-//}}BLOCK(whip_left)
+//}}BLOCK(bomb_unarmed)

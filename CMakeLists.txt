@@ -19,8 +19,12 @@ add_executable(spelunkyds
         gfx/sprites/sprite.grit
         source/animations/MainDude.cpp
         source/animations/MainDude.h
+        source/animations/Bomb.cpp
+        source/animations/Bomb.h
         source/console/TextManager.cpp
         source/console/TextManager.h
+        source/sprites/MovingObject.h
+        source/sprites/MovingObject.cpp
         source/main.cpp
         source/level_layout/Scrolling.cpp
         source/level_layout/Scrolling.h

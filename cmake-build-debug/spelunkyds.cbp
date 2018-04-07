@@ -115,6 +115,12 @@
 		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/Consts.h">
 			<Option target="spelunkyds"/>
 		</Unit>
+		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Bomb.cpp">
+			<Option target="spelunkyds"/>
+		</Unit>
+		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Bomb.h">
+			<Option target="spelunkyds"/>
+		</Unit>
 		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Camera.cpp">
 			<Option target="spelunkyds"/>
 		</Unit>
@@ -194,6 +200,12 @@
 			<Option target="spelunkyds"/>
 		</Unit>
 		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/main.cpp">
+			<Option target="spelunkyds"/>
+		</Unit>
+		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/sprites/MovingObject.cpp">
+			<Option target="spelunkyds"/>
+		</Unit>
+		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/sprites/MovingObject.h">
 			<Option target="spelunkyds"/>
 		</Unit>
 		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/time/Timer.cpp">

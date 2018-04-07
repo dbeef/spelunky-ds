@@ -9,8 +9,8 @@
 #include "../Consts.h"
 
 #define SNAKE_FRAMES_PER_ANIMATION 4
-#define MAX_X_SPEED 1.5
-#define MAX_Y_SPEED 2.3
+#define MAIN_DUDE_MAX_X_SPEED 1.5
+#define MAIN_DUDE_MAX_Y_SPEED 2.3
 #define MIN_HANGING_TIME 100
 #define FRICTION_DELTA_TIME_MS 30
 #define FRICTION_DELTA_SPEED 0.25
@@ -50,15 +50,15 @@ void Snake::updateTimers(int timeElapsed) {
 void Snake::checkCollisionWithMap(MapTile *mapTiles[32][32]) {
 
 
-    if (xSpeed > MAX_X_SPEED)
-        xSpeed = MAX_X_SPEED;
-    if (xSpeed < -MAX_X_SPEED)
-        xSpeed = -MAX_X_SPEED;
+    if (xSpeed > MAIN_DUDE_MAX_X_SPEED)
+        xSpeed = MAIN_DUDE_MAX_X_SPEED;
+    if (xSpeed < -MAIN_DUDE_MAX_X_SPEED)
+        xSpeed = -MAIN_DUDE_MAX_X_SPEED;
 
-    if (ySpeed > MAX_Y_SPEED)
-        ySpeed = MAX_Y_SPEED;
-    if (ySpeed < -MAX_Y_SPEED)
-        ySpeed = -MAX_Y_SPEED;
+    if (ySpeed > MAIN_DUDE_MAX_Y_SPEED)
+        ySpeed = MAIN_DUDE_MAX_Y_SPEED;
+    if (ySpeed < -MAIN_DUDE_MAX_Y_SPEED)
+        ySpeed = -MAIN_DUDE_MAX_Y_SPEED;
 
 
     if (posIncTimer > 10) {

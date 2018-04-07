@@ -1,6 +1,8 @@
 file(REMOVE_RECURSE
   "CMakeFiles/spelunkyds.dir/source/animations/MainDude.cpp.o"
+  "CMakeFiles/spelunkyds.dir/source/animations/Bomb.cpp.o"
   "CMakeFiles/spelunkyds.dir/source/console/TextManager.cpp.o"
+  "CMakeFiles/spelunkyds.dir/source/sprites/MovingObject.cpp.o"
   "CMakeFiles/spelunkyds.dir/source/main.cpp.o"
   "CMakeFiles/spelunkyds.dir/source/level_layout/Scrolling.cpp.o"
   "CMakeFiles/spelunkyds.dir/source/level_layout/LevelGenerator.cpp.o"
