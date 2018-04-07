@@ -104,18 +104,13 @@ void MainDude::updateTimers() {
             whip = false;
             sub_whip_left_spriteInfo->entry->isHidden = true;
             main_whip_left_spriteInfo->entry->isHidden = true;
-
-            main_whip_right_spriteInfo->entry->isHidden = true;
-
-            sub_whip_right_spriteInfo->entry->isHidden = true;
             sub_pre_whip_left_spriteInfo->entry->isHidden = true;
             main_pre_whip_left_spriteInfo->entry->isHidden = true;
-
-            sub_pre_whip_right_spriteInfo->entry->isHidden = true;
-
-            sub_whip_right_spriteInfo->entry->isHidden = true;
-            main_whip_right_spriteInfo->entry->isHidden = true;
-
+//            sub_pre_whip_right_spriteInfo->entry->isHidden = true;
+//            sub_whip_right_spriteInfo->entry->isHidden = true;
+//            main_whip_right_spriteInfo->entry->isHidden = true;
+//            main_whip_right_spriteInfo->entry->isHidden = true;
+//            sub_whip_right_spriteInfo->entry->isHidden = true;
         }
     }
 
@@ -280,13 +275,12 @@ void MainDude::init() {
     frameGfx = (u8 *) spelunkerTiles;
     sub_whip_left_spriteInfo->entry->isHidden = true;
     main_whip_left_spriteInfo->entry->isHidden = true;
-
-    sub_whip_right_spriteInfo->entry->isHidden = true;
-    main_whip_right_spriteInfo->entry->isHidden = true;
     sub_pre_whip_left_spriteInfo->entry->isHidden = true;
     main_pre_whip_left_spriteInfo->entry->isHidden = true;
-    sub_pre_whip_right_spriteInfo->entry->isHidden = true;
-    main_pre_whip_right_spriteInfo->entry->isHidden = true;
+//    sub_pre_whip_right_spriteInfo->entry->isHidden = true;
+//    main_pre_whip_right_spriteInfo->entry->isHidden = true;
+//    sub_whip_right_spriteInfo->entry->isHidden = true;
+//    main_whip_right_spriteInfo->entry->isHidden = true;
 
 }
 
@@ -330,64 +324,44 @@ void MainDude::draw() {
 
     if (whip) {
 
+        sub_pre_whip_left_spriteInfo->entry->y = sub_y - 2;
+        main_pre_whip_left_spriteInfo->entry->y = main_y - 2;
+        sub_whip_left_spriteInfo->entry->y = sub_y;
+        main_whip_left_spriteInfo->entry->y = main_y;
+
+        if (whip_timer > 100 && whip_timer < 180) {
+            main_pre_whip_left_spriteInfo->entry->isHidden = false;
+            sub_pre_whip_left_spriteInfo->entry->isHidden = false;
+        } else if (whip_timer >= 220) {
+            main_pre_whip_left_spriteInfo->entry->isHidden = true;
+            sub_pre_whip_left_spriteInfo->entry->isHidden = true;
+            main_whip_left_spriteInfo->entry->isHidden = false;
+            sub_whip_left_spriteInfo->entry->isHidden = false;
+        }
+
         if (state == 1) {
 
-            main_whip_right_spriteInfo->entry->isHidden = true;
-            sub_whip_right_spriteInfo->entry->isHidden = true;
-            main_pre_whip_right_spriteInfo->entry->isHidden = true;
-            sub_pre_whip_right_spriteInfo->entry->isHidden = true;
+            main_whip_left_spriteInfo->entry->hFlip = true;
+            sub_whip_left_spriteInfo->entry->hFlip = true;
+            main_pre_whip_left_spriteInfo->entry->hFlip = true;
+            sub_pre_whip_left_spriteInfo->entry->hFlip = true;
 
-
-            if (whip_timer > 100 && whip_timer < 170) {
-                main_pre_whip_left_spriteInfo->entry->isHidden = false;
-
-                sub_pre_whip_left_spriteInfo->entry->isHidden = false;
-
-            } else if (whip_timer >= 200) {
-                main_pre_whip_left_spriteInfo->entry->isHidden = true;
-                sub_pre_whip_left_spriteInfo->entry->isHidden = true;
-                main_whip_left_spriteInfo->entry->isHidden = false;
-                sub_whip_left_spriteInfo->entry->isHidden = false;
-            }
-
-            sub_pre_whip_left_spriteInfo->entry->x = sub_x + 16;
-            sub_pre_whip_left_spriteInfo->entry->y = sub_y;
-            main_pre_whip_left_spriteInfo->entry->x = main_x + 16;
-            main_pre_whip_left_spriteInfo->entry->y = main_y;
-
-            sub_whip_left_spriteInfo->entry->x = sub_x - 16;
-            sub_whip_left_spriteInfo->entry->y = sub_y;
-            main_whip_left_spriteInfo->entry->x = main_x - 16;
-            main_whip_left_spriteInfo->entry->y = main_y;
+            sub_pre_whip_left_spriteInfo->entry->x = sub_x + 8;
+            main_pre_whip_left_spriteInfo->entry->x = main_x + 8;
+            sub_whip_left_spriteInfo->entry->x = sub_x - 12;
+            main_whip_left_spriteInfo->entry->x = main_x - 12;
 
         } else {
 
-            main_whip_left_spriteInfo->entry->isHidden = true;
+            main_whip_left_spriteInfo->entry->hFlip = false;
+            sub_whip_left_spriteInfo->entry->hFlip = false;
+            main_pre_whip_left_spriteInfo->entry->hFlip = false;
+            sub_pre_whip_left_spriteInfo->entry->hFlip = false;
 
-            sub_whip_left_spriteInfo->entry->isHidden = true;
-            main_pre_whip_left_spriteInfo->entry->isHidden = true;
-            sub_pre_whip_left_spriteInfo->entry->isHidden = true;
-
-
-            if (whip_timer > 100 && whip_timer < 170) {
-                main_pre_whip_right_spriteInfo->entry->isHidden = false;
-                sub_pre_whip_right_spriteInfo->entry->isHidden = false;
-
-            } else if (whip_timer >= 200) {
-                main_pre_whip_right_spriteInfo->entry->isHidden = true;
-                sub_pre_whip_right_spriteInfo->entry->isHidden = true;
-                main_whip_right_spriteInfo->entry->isHidden = false;
-                sub_whip_right_spriteInfo->entry->isHidden = false;
-            }
-
-            sub_pre_whip_right_spriteInfo->entry->x = sub_x - 16;
-            sub_pre_whip_right_spriteInfo->entry->y = sub_y;
-            main_pre_whip_right_spriteInfo->entry->x = main_x - 16;
-            main_pre_whip_right_spriteInfo->entry->y = main_y;
-            sub_whip_right_spriteInfo->entry->x = sub_x + 16;
-            sub_whip_right_spriteInfo->entry->y = sub_y;
-            main_whip_right_spriteInfo->entry->x = main_x + 16;
-            main_whip_right_spriteInfo->entry->y = main_y;
+            sub_pre_whip_left_spriteInfo->entry->x = sub_x - 8;
+            main_pre_whip_left_spriteInfo->entry->x = main_x - 8;
+            main_whip_left_spriteInfo->entry->x = main_x + 8;
+            sub_whip_left_spriteInfo->entry->x = sub_x + 8;
         }
 
     }

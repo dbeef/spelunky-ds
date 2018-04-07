@@ -18,6 +18,8 @@
 class MovingObject {
 public:
 
+    //todo virtual void for Oam init
+
     virtual void draw() = 0;
 
     virtual void init() = 0;

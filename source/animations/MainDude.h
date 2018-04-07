@@ -49,14 +49,14 @@ public:
     void init() override;
 
     SpriteInfo *main_whip_left_spriteInfo;
-    SpriteInfo *main_whip_right_spriteInfo;
+//    SpriteInfo *main_whip_right_spriteInfo;
     SpriteInfo *main_pre_whip_left_spriteInfo;
-    SpriteInfo *main_pre_whip_right_spriteInfo;
+//    SpriteInfo *main_pre_whip_right_spriteInfo;
 
     SpriteInfo *sub_whip_left_spriteInfo;
-    SpriteInfo *sub_whip_right_spriteInfo;
+//    SpriteInfo *sub_whip_right_spriteInfo;
     SpriteInfo *sub_pre_whip_left_spriteInfo;
-    SpriteInfo *sub_pre_whip_right_spriteInfo;
+//    SpriteInfo *sub_pre_whip_right_spriteInfo;
 
     SpriteInfo *main_spriteInfo;
     SpriteInfo *sub_spriteInfo;
