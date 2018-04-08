@@ -21,11 +21,13 @@
 #define Y_SPEED_DELTA_TIME_MS 2
 #define GRAVITY_DELTA_SPEED 0.19
 
-extern InputHandler *global_input_handler;
-extern Camera *global_camera;
-extern LevelGenerator *global_level_generator;
-extern OAMManager *global_main_oam_manager;
-extern OAMManager *global_sub_oam_manager;
-extern Hud *global_hud;
+namespace global {
+    extern InputHandler *input_handler;
+    extern Camera *camera;
+    extern LevelGenerator *level_generator;
+    extern OAMManager *main_oam_manager;
+    extern OAMManager *sub_oam_manager;
+    extern Hud *hud;
+}
 
 #endif //SPELUNKYDS_CONSTS_H

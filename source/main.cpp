@@ -16,6 +16,14 @@
 
 static u16 *fresh_map;
 
+namespace global {
+    InputHandler *input_handler;
+    Camera *camera;
+    LevelGenerator *level_generator;
+    OAMManager *main_oam_manager;
+    OAMManager *sub_oam_manager;
+    Hud *hud;
+}
 
 int main(void) {
 
@@ -35,8 +43,8 @@ int main(void) {
     oamInit(&oamMain, SpriteMapping_1D_128, false);
     oamInit(&oamSub, SpriteMapping_1D_128, false);
 
-    int bg_main = bgInit(2, BgType_Text4bpp, BgSize_B8_512x512, 22,4);
-    int bg_sub = bgInitSub(3, BgType_Text4bpp, BgSize_B8_512x512, 18,4);
+    int bg_main = bgInit(2, BgType_Text4bpp, BgSize_B8_512x512, 22, 4);
+    int bg_sub = bgInitSub(3, BgType_Text4bpp, BgSize_B8_512x512, 18, 4);
 
     dmaCopy(cavebgTiles, bgGetGfxPtr(bg_main), sizeof(cavebgTiles));
     dmaCopy(cavebgTiles, bgGetGfxPtr(bg_sub), sizeof(cavebgTiles));
@@ -44,12 +52,12 @@ int main(void) {
     fresh_map = (u16 *) std::malloc(sizeof(u16[4096]));
     dmaCopyHalfWords(3, map, fresh_map, sizeof(map));
 
-    LevelGenerator *l = new LevelGenerator();
-    l->newLayout(timerElapsed(0));
-    l->mapBackground();
-    l->mapFrame();
-    l->generateRooms();
-    l->tilesToMap();
+    global::level_generator = new LevelGenerator();
+    global::level_generator->newLayout(timerElapsed(0));
+    global::level_generator->mapBackground();
+    global::level_generator->mapFrame();
+    global::level_generator->generateRooms();
+    global::level_generator->tilesToMap();
 
     sectorize_map();
 
@@ -59,7 +67,7 @@ int main(void) {
     dmaCopy(cavebgPal, BG_PALETTE_SUB, cavebgPalLen);
     textManager->initConsole();
 
-    spelunker::scroll(bg_main, bg_sub, l, fresh_map);
+    spelunker::scroll(bg_main, bg_sub, fresh_map);
 
     t->stop();
 
