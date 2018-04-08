@@ -12,10 +12,10 @@
 
 void Bomb::draw() {
 
-    int main_x = x - camera->x;
-    int main_y = y - camera->y;
-    int sub_x = x - camera->x;
-    int sub_y = y - camera->y - 192;
+    int main_x = x - global::camera->x;
+    int main_y = y - global::camera->y;
+    int sub_x = x - global::camera->x;
+    int sub_y = y - global::camera->y - 192;
 
     if (this->y > 320) {
         main_x = -16;
@@ -128,7 +128,7 @@ void Bomb::updatePosition() {
 void Bomb::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
 
     MapTile *tiles[9];
-    Collisions::getNeighboringTiles(levelGenerator->mapTiles, x_current_pos_in_tiles, y_current_pos_in_tiles,
+    Collisions::getNeighboringTiles(global::level_generator->mapTiles, x_current_pos_in_tiles, y_current_pos_in_tiles,
                                     tiles);
 
     bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, 8, 8);

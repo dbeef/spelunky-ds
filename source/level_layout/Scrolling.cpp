@@ -13,35 +13,25 @@ static const int BOUNDARY_VALUE = 128; /* This is the default boundary value (ca
 static const int OFFSET_MULTIPLIER_MAIN = BOUNDARY_VALUE / sizeof(SPRITE_GFX[0]);
 static const int OFFSET_MULTIPLIER_SUB = BOUNDARY_VALUE / sizeof(SPRITE_GFX_SUB[0]);
 
-void spelunker::scroll(int bg_main, int bg_sub, u16 *fresh_map) {
+void spelunker::scroll(u16 *fresh_map) {
 
     double timer = 0;
     std::vector<MovingObject *> sprites(SPRITE_COUNT * 2, nullptr);
 
-    global::input_handler = new InputHandler();
-    global::camera = new Camera();
-    global::main_oam_manager = new OAMManager();
     global::main_oam_manager->initOAMTable(SPRITE_GFX, SPRITE_PALETTE, OAM, OFFSET_MULTIPLIER_MAIN);
-    global::sub_oam_manager = new OAMManager();
     global::sub_oam_manager->initOAMTable(SPRITE_GFX_SUB, SPRITE_PALETTE_SUB, OAM_SUB, OFFSET_MULTIPLIER_SUB);
-    global::level_generator;
 
     Bomb *bomb = new Bomb();
     bomb->init(global::main_oam_manager, global::sub_oam_manager);
     bomb->xSpeed = 3;
     bomb->timer = &timer;
-    bomb->levelGenerator = global::level_generator;
     bomb->carried = true;
-    bomb->camera = global::camera;
 
     MainDude *mainDude = new MainDude();
     mainDude->x = 100;
     mainDude->timer = &timer;
     mainDude->y = 100;
-    mainDude->levelGenerator = global::level_generator;
-    mainDude->camera = global::camera;
-    mainDude->inputHandler = global::input_handler;
-   
+
     mainDude->init(global::main_oam_manager, global::sub_oam_manager);
     mainDude->bomb = bomb;
     mainDude->sprites = sprites;
@@ -49,7 +39,6 @@ void spelunker::scroll(int bg_main, int bg_sub, u16 *fresh_map) {
     sprites.push_back(bomb);
     sprites.push_back(mainDude);
 
-    global::hud = new Hud();
     global::hud->init(global::main_oam_manager);
 
     while (true) {
@@ -66,8 +55,8 @@ void spelunker::scroll(int bg_main, int bg_sub, u16 *fresh_map) {
             global::level_generator->generateRooms();
             global::level_generator->tilesToMap();
             sectorize_map();
-            dmaCopyHalfWords(DMA_CHANNEL, map, bgGetMapPtr(bg_main), sizeof(map));
-            dmaCopyHalfWords(DMA_CHANNEL, map, bgGetMapPtr(bg_sub), sizeof(map));
+            dmaCopyHalfWords(DMA_CHANNEL, map, bgGetMapPtr(global::bg_main_address), sizeof(map));
+            dmaCopyHalfWords(DMA_CHANNEL, map, bgGetMapPtr(global::bg_sub_address), sizeof(map));
             mainDude->bottomCollision = false;
             bomb->bottomCollision = false;
         }
@@ -84,7 +73,7 @@ void spelunker::scroll(int bg_main, int bg_sub, u16 *fresh_map) {
         }
 
         global::camera->updatePosition(mainDude->x, mainDude->y);
-        global::camera->setScroll(bg_main, bg_sub);
+        global::camera->setScroll();
 
         global::main_oam_manager->updateOAM();
         global::sub_oam_manager->updateOAM();

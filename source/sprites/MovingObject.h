@@ -58,9 +58,6 @@ public:
     bool leftCollision;
     bool rightCollision;
 
-    LevelGenerator *levelGenerator = nullptr;
-    Camera *camera = nullptr;
-
 };
 
 

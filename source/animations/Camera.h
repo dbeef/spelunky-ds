@@ -11,7 +11,7 @@ public:
     int x;
     int y;
     void updatePosition(int main_dude_x, int main_dude_y);
-    void setScroll(int bg_main_index, int bg_sub_index);
+    void setScroll();
 };
 
 

@@ -28,6 +28,8 @@ namespace global {
     extern OAMManager *main_oam_manager;
     extern OAMManager *sub_oam_manager;
     extern Hud *hud;
+    extern int bg_main_address;
+    extern int bg_sub_address;
 }
 
 #endif //SPELUNKYDS_CONSTS_H

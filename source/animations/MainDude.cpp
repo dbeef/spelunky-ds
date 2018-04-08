@@ -16,7 +16,7 @@
 void MainDude::handleKeyInput() {
 
     if (!stunned) {
-        if (inputHandler->r_bumper_down) {
+        if (global::input_handler->r_bumper_down) {
             if (bottomCollision) {
                 ySpeed = -MAIN_DUDE_JUMP_SPEED;
             }
@@ -27,7 +27,7 @@ void MainDude::handleKeyInput() {
                 hangingTimer = 0;
             }
         }
-        if (inputHandler->l_bumper_down) {
+        if (global::input_handler->l_bumper_down) {
             if (!stunned && !whip) {
                 if (bomb->carried) {
 
@@ -44,7 +44,7 @@ void MainDude::handleKeyInput() {
                 }
             }
         }
-        if (inputHandler->x_key_down && !holding_item) {
+        if (global::input_handler->x_key_down && !holding_item) {
             //take new bomb
 
 //            Bomb *bomb = new Bomb();
@@ -58,7 +58,7 @@ void MainDude::handleKeyInput() {
 //            holding_item = bomb;
 //            sprites.push_back(holding_item);
         }
-        if (inputHandler->y_key_down && holding_item) {
+        if (global::input_handler->y_key_down && holding_item) {
             //throw holding item
             holding_item = nullptr;
         }
@@ -66,7 +66,7 @@ void MainDude::handleKeyInput() {
     }
     if (!stunned) {
 
-        if (inputHandler->left_key_held) {
+        if (global::input_handler->left_key_held) {
             state = W_LEFT;
             hangingOnTileLeft = false;
             if (xSpeed > -MAIN_DUDE_MAX_X_SPEED && !(hangingOnTileRight || hangingOnTileLeft))
@@ -75,7 +75,7 @@ void MainDude::handleKeyInput() {
                     speedIncTimer = 0;
                 }
         }
-        if (inputHandler->right_key_held) {
+        if (global::input_handler->right_key_held) {
             state = W_RIGHT;
             hangingOnTileRight = false;
             if (xSpeed < MAIN_DUDE_MAX_X_SPEED && !(hangingOnTileRight || hangingOnTileLeft)) {
@@ -86,7 +86,7 @@ void MainDude::handleKeyInput() {
             }
         }
 
-        if (inputHandler->down_key_held) {
+        if (global::input_handler->down_key_held) {
             hangingOnTileLeft = false;
             hangingOnTileRight = false;
             if (bottomCollision)
@@ -127,17 +127,17 @@ void MainDude::updateTimers() {
 
     }
 
-    if (!inputHandler->left_key_held && pushing_left) {
+    if (!global::input_handler->left_key_held && pushing_left) {
         pushing_left = false;
         pushingTimer = 0;
     }
-    if (!inputHandler->right_key_held && pushing_right) {
+    if (!global::input_handler->right_key_held && pushing_right) {
         pushing_right = false;
         pushingTimer = 0;
     }
 
     if ((leftCollision || rightCollision) && !crawling && !hangingOnTileLeft && !hangingOnTileRight &&
-        (inputHandler->left_key_held || inputHandler->right_key_held)) {
+        (global::input_handler->left_key_held || global::input_handler->right_key_held)) {
         pushingTimer += *timer;
         if (pushingTimer > PUSHING_TIME) {
             if (leftCollision) {
@@ -247,7 +247,7 @@ void MainDude::updateSpeed() {
 void MainDude::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
 
     MapTile *tiles[9];
-    Collisions::getNeighboringTiles(levelGenerator->mapTiles, x_current_pos_in_tiles, y_current_pos_in_tiles, tiles);
+    Collisions::getNeighboringTiles(global::level_generator->mapTiles, x_current_pos_in_tiles, y_current_pos_in_tiles, tiles);
 
     bottomCollision = Collisions::checkBottomCollision(tiles, &this->x, &this->y, &ySpeed, 16, 16);
     leftCollision = Collisions::checkLeftCollision(tiles, &this->x, &this->y, &xSpeed, 16, 16);
@@ -307,10 +307,10 @@ void MainDude::init(OAMManager *mainOam, OAMManager *subOam) {
 //todo split
 void MainDude::draw() {
 
-    int main_x = x - camera->x;
-    int main_y = y - camera->y;
-    int sub_x = x - camera->x;
-    int sub_y = y - camera->y - 192;
+    int main_x = x - global::camera->x;
+    int main_y = y - global::camera->y;
+    int sub_x = x - global::camera->x;
+    int sub_y = y - global::camera->y - 192;
 
     if (this->y > 320) {
         main_x = -16;

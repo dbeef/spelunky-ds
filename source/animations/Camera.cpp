@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include <nds/arm9/background.h>
 #include "Camera.h"
+#include "../Globals.h"
 
 #define  MAP_WIDTH 512
 #define  MAP_HEIGHT 512
@@ -51,8 +52,8 @@ void Camera::updatePosition(int main_dude_x, int main_dude_y) {
 
 }
 
-void Camera::setScroll(int bg_main_index, int bg_sub_index) {
-    bgSetScroll(bg_main_index, this->x, this->y);
-    bgSetScroll(bg_sub_index, this->x, this->y + 192);
+void Camera::setScroll() {
+    bgSetScroll(global::bg_main_address, this->x, this->y);
+    bgSetScroll(global::bg_sub_address, this->x, this->y + 192);
     bgUpdate();
 }

@@ -81,7 +81,6 @@ public:
     bool whip;
 
     SpriteState state;
-    InputHandler *inputHandler = nullptr;
     std::vector<MovingObject *> sprites;
     MovingObject *holding_item = nullptr;
     int animFrame;

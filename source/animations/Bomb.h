@@ -54,11 +54,6 @@ public:
 
     int armedTimer;
 
-    LevelGenerator *levelGenerator = nullptr;
-
-//    void updateCollisions();
-//    void checkCollisionWithMap(MapTile *mapTiles[32][32], int xx, int yy);
-//    void applyFriction();
 };
 
 
