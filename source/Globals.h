@@ -9,6 +9,7 @@
 #include "hud/Hud.h"
 #include "animations/Camera.h"
 #include "level_layout/LevelGenerator.h"
+#include "animations/MainDude.h"
 
 #define FRAMES_PER_ANIMATION 6
 #define TICKS_PER_SECOND 30.5554503
@@ -22,6 +23,7 @@
 #define GRAVITY_DELTA_SPEED 0.19
 
 namespace global {
+    extern MainDude *main_dude;
     extern InputHandler *input_handler;
     extern Camera *camera;
     extern LevelGenerator *level_generator;
@@ -30,6 +32,7 @@ namespace global {
     extern Hud *hud;
     extern int bg_main_address;
     extern int bg_sub_address;
+    extern std::vector<MovingObject *> sprites;
 }
 
 #endif //SPELUNKYDS_CONSTS_H

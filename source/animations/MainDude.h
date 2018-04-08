@@ -48,7 +48,7 @@ public:
 
     void onCollisionWithMainCharacter() override {};
 
-    void init(OAMManager *mainOam, OAMManager *subOam) override;
+    void init() override;
 
     SpriteInfo *main_whip = nullptr;
     SpriteInfo *main_pre_whip = nullptr;

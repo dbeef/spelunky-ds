@@ -14,7 +14,7 @@ class Hud {
 public:
     void draw();
 
-    void init(OAMManager *mainOam);
+    void init();
 
     SpriteInfo *heartSpriteInfo = nullptr;
     SpriteInfo *bombSpriteInfo = nullptr;

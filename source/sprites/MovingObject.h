@@ -30,7 +30,7 @@ public:
 
     virtual void draw() = 0;
 
-    virtual void init(OAMManager *mainOam, OAMManager *subOam) = 0;
+    virtual void init() = 0;
 
     virtual void updateTimers() = 0;
 

@@ -36,10 +36,10 @@ void Bomb::draw() {
 }
 
 
-void Bomb::init(OAMManager *mainOam, OAMManager *subOam) {
-    subSpriteInfo = subOam->initSprite(bomb_unarmedPal, bomb_unarmedPalLen,
+void Bomb::init() {
+    subSpriteInfo = global::sub_oam_manager->initSprite(bomb_unarmedPal, bomb_unarmedPalLen,
                                        bomb_unarmedTiles, bomb_unarmedTilesLen, 8);
-    mainSpriteInfo = mainOam->initSprite(bomb_unarmedPal, bomb_unarmedPalLen,
+    mainSpriteInfo = global::main_oam_manager->initSprite(bomb_unarmedPal, bomb_unarmedPalLen,
                                          bomb_unarmedTiles, bomb_unarmedTilesLen, 8);
 }
 

@@ -11,6 +11,7 @@
 #include "../../build/bomb.h"
 #include "../../build/rope.h"
 #include "../../build/holding_item.h"
+#include "../Globals.h"
 
 #define HEART_POSITION_X 5
 #define HEART_POSITION_Y 5
@@ -27,13 +28,13 @@
 #define HOLDING_ITEM_FRAME_POSITION_X 5
 #define HOLDING_ITEM_FRAME_POSITION_Y 20
 
-void Hud::init(OAMManager *mainOam) {
+void Hud::init() {
 
-    heartSpriteInfo = mainOam->initSprite(heartPal, heartPalLen, heartTiles, heartTilesLen, 16);
-    dollarSpriteInfo = mainOam->initSprite(dollarPal, dollarPalLen, dollarTiles, dollarTilesLen, 16);
-    bombSpriteInfo = mainOam->initSprite(bombPal, bombPalLen, bombTiles, bombTilesLen, 16);
-    ropeSpriteInfo = mainOam->initSprite(ropePal, ropePalLen, ropeTiles, ropeTilesLen, 16);
-    holdingItemSpriteInfo = mainOam->
+    heartSpriteInfo = global::main_oam_manager->initSprite(heartPal, heartPalLen, heartTiles, heartTilesLen, 16);
+    dollarSpriteInfo = global::main_oam_manager->initSprite(dollarPal, dollarPalLen, dollarTiles, dollarTilesLen, 16);
+    bombSpriteInfo = global::main_oam_manager->initSprite(bombPal, bombPalLen, bombTiles, bombTilesLen, 16);
+    ropeSpriteInfo = global::main_oam_manager->initSprite(ropePal, ropePalLen, ropeTiles, ropeTilesLen, 16);
+    holdingItemSpriteInfo = global::main_oam_manager->
             initSprite(holding_itemPal, holding_itemPalLen, holding_itemTiles, holding_itemTilesLen, 16);
 
     heartSpriteInfo->entry->x = HEART_POSITION_X;

@@ -79,11 +79,18 @@ Bomb.o: \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../hud/../animations/OAMManager.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../animations/Camera.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/LevelGenerator.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../animations/MainDude.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../animations/SpriteState.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../animations/../level_layout/MapTile.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../animations/../level_layout/LevelGenerator.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../animations/Camera.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../animations/../level_layout/SpriteInfo.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../animations/Bomb.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../animations/../sprites/MovingObject.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../animations/../input/InputHandler.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/MapUtils.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Collisions.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/MainDude.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/SpriteState.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../input/InputHandler.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../../build/bomb_armed.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../../build/bomb_unarmed.h
 
@@ -245,15 +252,29 @@ Bomb.o: \
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/LevelGenerator.h:
 
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../animations/MainDude.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../animations/SpriteState.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../animations/../level_layout/MapTile.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../animations/../level_layout/LevelGenerator.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../animations/Camera.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../animations/../level_layout/SpriteInfo.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../animations/Bomb.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../animations/../sprites/MovingObject.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../animations/../input/InputHandler.h:
+
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/MapUtils.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Collisions.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/MainDude.h:
-
-/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/SpriteState.h:
-
-/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../input/InputHandler.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../../build/bomb_armed.h:
 

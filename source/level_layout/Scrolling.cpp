@@ -16,31 +16,29 @@ static const int OFFSET_MULTIPLIER_SUB = BOUNDARY_VALUE / sizeof(SPRITE_GFX_SUB[
 void spelunker::scroll(u16 *fresh_map) {
 
     double timer = 0;
-    std::vector<MovingObject *> sprites(SPRITE_COUNT * 2, nullptr);
 
     global::main_oam_manager->initOAMTable(SPRITE_GFX, SPRITE_PALETTE, OAM, OFFSET_MULTIPLIER_MAIN);
     global::sub_oam_manager->initOAMTable(SPRITE_GFX_SUB, SPRITE_PALETTE_SUB, OAM_SUB, OFFSET_MULTIPLIER_SUB);
 
     Bomb *bomb = new Bomb();
-    bomb->init(global::main_oam_manager, global::sub_oam_manager);
+    bomb->init();
     bomb->xSpeed = 3;
     bomb->timer = &timer;
     bomb->carried = true;
 
-    MainDude *mainDude = new MainDude();
-    mainDude->x = 100;
-    mainDude->timer = &timer;
-    mainDude->y = 100;
+    global::main_dude->x = 100;
+    global::main_dude->timer = &timer;
+    global::main_dude->y = 100;
 
-    mainDude->init(global::main_oam_manager, global::sub_oam_manager);
-    mainDude->bomb = bomb;
-    mainDude->sprites = sprites;
+    global::main_dude->init();
+    global::main_dude->bomb = bomb;
+    global::main_dude->sprites = global::sprites;
 
-    sprites.push_back(bomb);
-    sprites.push_back(mainDude);
+    global::sprites.push_back(bomb);
+    global::sprites.push_back(global::main_dude);
 
-    global::hud->init(global::main_oam_manager);
-
+    global::hud->init();
+    
     while (true) {
 
         timer = timerElapsed(0) / TICKS_PER_SECOND;
@@ -57,22 +55,22 @@ void spelunker::scroll(u16 *fresh_map) {
             sectorize_map();
             dmaCopyHalfWords(DMA_CHANNEL, map, bgGetMapPtr(global::bg_main_address), sizeof(map));
             dmaCopyHalfWords(DMA_CHANNEL, map, bgGetMapPtr(global::bg_sub_address), sizeof(map));
-            mainDude->bottomCollision = false;
+            global::main_dude->bottomCollision = false;
             bomb->bottomCollision = false;
         }
 
         swiWaitForVBlank();
-        mainDude->handleKeyInput();
+        global::main_dude->handleKeyInput();
         global::hud->draw();
 
-        for (int a = 0; a < sprites.size(); a++) {
-            if (sprites.at(a)) {
-                (*sprites.at(a)).update();
-                (*sprites.at(a)).draw();
+        for (int a = 0; a < global::sprites.size(); a++) {
+            if (global::sprites.at(a)) {
+                (*global::sprites.at(a)).update();
+                (*global::sprites.at(a)).draw();
             }
         }
 
-        global::camera->updatePosition(mainDude->x, mainDude->y);
+        global::camera->updatePosition(global::main_dude->x, global::main_dude->y);
         global::camera->setScroll();
 
         global::main_oam_manager->updateOAM();

@@ -19,10 +19,12 @@ static u16 *fresh_map;
 namespace global {
     InputHandler *input_handler = new InputHandler();
     Camera *camera = new Camera();
+    MainDude *main_dude = new MainDude();
     LevelGenerator *level_generator = new LevelGenerator();
     OAMManager *main_oam_manager = new OAMManager();
     OAMManager *sub_oam_manager = new OAMManager();
     Hud *hud = new Hud();
+    std::vector<MovingObject *> sprites(SPRITE_COUNT * 2, nullptr);
     int bg_main_address = 0;
     int bg_sub_address = 0;
 }
