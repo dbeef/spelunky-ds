@@ -1,6 +1,6 @@
 Spelunky remake for the NintendoDS.
 
-https://www.youtube.com/watch?v=XnIEWVBfIAs
+https://www.youtube.com/watch?v=NiRGaGSLpsI
 
 <here I should post a gif of spelunky on a real nds>
 
