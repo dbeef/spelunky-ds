@@ -97,6 +97,7 @@ OAMManager::initSprite(const unsigned short pallette[], int palLen, const unsign
      */
     spriteEntry->x = 50;
     spriteEntry->rotationIndex = spriteInfo->oamId;
+
     if (size == 8)
         spriteEntry->size = OBJSIZE_8;
     else

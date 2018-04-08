@@ -12,6 +12,17 @@
 
 void Bomb::draw() {
 
+
+    if (hold_by_main_dude == true) {
+        y = global::main_dude->y + 6;
+
+        if (global::main_dude->state == 1) {
+            x = global::main_dude->x - 2;
+        } else
+            x = global::main_dude->x + 10;
+    }
+
+
     int main_x = x - global::camera->x;
     int main_y = y - global::camera->y;
     int sub_x = x - global::camera->x;
@@ -38,9 +49,9 @@ void Bomb::draw() {
 
 void Bomb::init() {
     subSpriteInfo = global::sub_oam_manager->initSprite(bomb_unarmedPal, bomb_unarmedPalLen,
-                                       bomb_unarmedTiles, bomb_unarmedTilesLen, 8);
+                                                        bomb_unarmedTiles, bomb_unarmedTilesLen, 8);
     mainSpriteInfo = global::main_oam_manager->initSprite(bomb_unarmedPal, bomb_unarmedPalLen,
-                                         bomb_unarmedTiles, bomb_unarmedTilesLen, 8);
+                                                          bomb_unarmedTiles, bomb_unarmedTilesLen, 8);
 }
 
 void Bomb::updateSpeed() {
@@ -57,7 +68,7 @@ void Bomb::updateSpeed() {
 
     pos_inc_timer += *timer;
 
-    bool change_pos = (pos_inc_timer > 25) && !carried;
+    bool change_pos = (pos_inc_timer > 25) && !hold_by_main_dude;
 
     if (change_pos) {
         updatePosition();

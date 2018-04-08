@@ -4,7 +4,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/spelunkyds.dir/source/console/TextManager.cpp.o"
   "CMakeFiles/spelunkyds.dir/source/sprites/MovingObject.cpp.o"
   "CMakeFiles/spelunkyds.dir/source/main.cpp.o"
-  "CMakeFiles/spelunkyds.dir/source/level_layout/Scrolling.cpp.o"
+  "CMakeFiles/spelunkyds.dir/source/level_layout/GameLoop.cpp.o"
   "CMakeFiles/spelunkyds.dir/source/level_layout/LevelGenerator.cpp.o"
   "CMakeFiles/spelunkyds.dir/source/time/Timer.cpp.o"
   "CMakeFiles/spelunkyds.dir/source/level_layout/MapUtils.cpp.o"

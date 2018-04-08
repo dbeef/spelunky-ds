@@ -57,8 +57,6 @@ public:
     SpriteInfo *main_spelunker = nullptr;
     SpriteInfo *sub_spelunker = nullptr;
 
-    Bomb *bomb = nullptr;
-
     int animationFrameTimer;
     int speedIncTimer;
     int posIncTimer;
@@ -80,9 +78,9 @@ public:
     bool pushing_right;
     bool whip;
 
+    bool holding_item;
+
     SpriteState state;
-    std::vector<MovingObject *> sprites;
-    MovingObject *holding_item = nullptr;
     int animFrame;
     u8 *frameGfx = nullptr;
 

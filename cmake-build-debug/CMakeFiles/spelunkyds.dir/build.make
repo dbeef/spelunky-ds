@@ -177,28 +177,28 @@ CMakeFiles/spelunkyds.dir/source/main.cpp.o.provides: CMakeFiles/spelunkyds.dir/
 CMakeFiles/spelunkyds.dir/source/main.cpp.o.provides.build: CMakeFiles/spelunkyds.dir/source/main.cpp.o
 
 
-CMakeFiles/spelunkyds.dir/source/level_layout/Scrolling.cpp.o: CMakeFiles/spelunkyds.dir/flags.make
-CMakeFiles/spelunkyds.dir/source/level_layout/Scrolling.cpp.o: ../source/level_layout/Scrolling.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/xdbeef/NetBeansProjects/spelunkyds/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/spelunkyds.dir/source/level_layout/Scrolling.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/spelunkyds.dir/source/level_layout/Scrolling.cpp.o -c /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/Scrolling.cpp
+CMakeFiles/spelunkyds.dir/source/level_layout/GameLoop.cpp.o: CMakeFiles/spelunkyds.dir/flags.make
+CMakeFiles/spelunkyds.dir/source/level_layout/GameLoop.cpp.o: ../source/level_layout/GameLoop.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/xdbeef/NetBeansProjects/spelunkyds/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/spelunkyds.dir/source/level_layout/GameLoop.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/spelunkyds.dir/source/level_layout/GameLoop.cpp.o -c /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/GameLoop.cpp
 
-CMakeFiles/spelunkyds.dir/source/level_layout/Scrolling.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/spelunkyds.dir/source/level_layout/Scrolling.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/Scrolling.cpp > CMakeFiles/spelunkyds.dir/source/level_layout/Scrolling.cpp.i
+CMakeFiles/spelunkyds.dir/source/level_layout/GameLoop.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/spelunkyds.dir/source/level_layout/GameLoop.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/GameLoop.cpp > CMakeFiles/spelunkyds.dir/source/level_layout/GameLoop.cpp.i
 
-CMakeFiles/spelunkyds.dir/source/level_layout/Scrolling.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/spelunkyds.dir/source/level_layout/Scrolling.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/Scrolling.cpp -o CMakeFiles/spelunkyds.dir/source/level_layout/Scrolling.cpp.s
+CMakeFiles/spelunkyds.dir/source/level_layout/GameLoop.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/spelunkyds.dir/source/level_layout/GameLoop.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/GameLoop.cpp -o CMakeFiles/spelunkyds.dir/source/level_layout/GameLoop.cpp.s
 
-CMakeFiles/spelunkyds.dir/source/level_layout/Scrolling.cpp.o.requires:
+CMakeFiles/spelunkyds.dir/source/level_layout/GameLoop.cpp.o.requires:
 
-.PHONY : CMakeFiles/spelunkyds.dir/source/level_layout/Scrolling.cpp.o.requires
+.PHONY : CMakeFiles/spelunkyds.dir/source/level_layout/GameLoop.cpp.o.requires
 
-CMakeFiles/spelunkyds.dir/source/level_layout/Scrolling.cpp.o.provides: CMakeFiles/spelunkyds.dir/source/level_layout/Scrolling.cpp.o.requires
-	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/level_layout/Scrolling.cpp.o.provides.build
-.PHONY : CMakeFiles/spelunkyds.dir/source/level_layout/Scrolling.cpp.o.provides
+CMakeFiles/spelunkyds.dir/source/level_layout/GameLoop.cpp.o.provides: CMakeFiles/spelunkyds.dir/source/level_layout/GameLoop.cpp.o.requires
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/level_layout/GameLoop.cpp.o.provides.build
+.PHONY : CMakeFiles/spelunkyds.dir/source/level_layout/GameLoop.cpp.o.provides
 
-CMakeFiles/spelunkyds.dir/source/level_layout/Scrolling.cpp.o.provides.build: CMakeFiles/spelunkyds.dir/source/level_layout/Scrolling.cpp.o
+CMakeFiles/spelunkyds.dir/source/level_layout/GameLoop.cpp.o.provides.build: CMakeFiles/spelunkyds.dir/source/level_layout/GameLoop.cpp.o
 
 
 CMakeFiles/spelunkyds.dir/source/level_layout/LevelGenerator.cpp.o: CMakeFiles/spelunkyds.dir/flags.make
@@ -472,7 +472,7 @@ spelunkyds_OBJECTS = \
 "CMakeFiles/spelunkyds.dir/source/console/TextManager.cpp.o" \
 "CMakeFiles/spelunkyds.dir/source/sprites/MovingObject.cpp.o" \
 "CMakeFiles/spelunkyds.dir/source/main.cpp.o" \
-"CMakeFiles/spelunkyds.dir/source/level_layout/Scrolling.cpp.o" \
+"CMakeFiles/spelunkyds.dir/source/level_layout/GameLoop.cpp.o" \
 "CMakeFiles/spelunkyds.dir/source/level_layout/LevelGenerator.cpp.o" \
 "CMakeFiles/spelunkyds.dir/source/time/Timer.cpp.o" \
 "CMakeFiles/spelunkyds.dir/source/level_layout/MapUtils.cpp.o" \
@@ -493,7 +493,7 @@ spelunkyds: CMakeFiles/spelunkyds.dir/source/animations/Bomb.cpp.o
 spelunkyds: CMakeFiles/spelunkyds.dir/source/console/TextManager.cpp.o
 spelunkyds: CMakeFiles/spelunkyds.dir/source/sprites/MovingObject.cpp.o
 spelunkyds: CMakeFiles/spelunkyds.dir/source/main.cpp.o
-spelunkyds: CMakeFiles/spelunkyds.dir/source/level_layout/Scrolling.cpp.o
+spelunkyds: CMakeFiles/spelunkyds.dir/source/level_layout/GameLoop.cpp.o
 spelunkyds: CMakeFiles/spelunkyds.dir/source/level_layout/LevelGenerator.cpp.o
 spelunkyds: CMakeFiles/spelunkyds.dir/source/time/Timer.cpp.o
 spelunkyds: CMakeFiles/spelunkyds.dir/source/level_layout/MapUtils.cpp.o
@@ -520,7 +520,7 @@ CMakeFiles/spelunkyds.dir/requires: CMakeFiles/spelunkyds.dir/source/animations/
 CMakeFiles/spelunkyds.dir/requires: CMakeFiles/spelunkyds.dir/source/console/TextManager.cpp.o.requires
 CMakeFiles/spelunkyds.dir/requires: CMakeFiles/spelunkyds.dir/source/sprites/MovingObject.cpp.o.requires
 CMakeFiles/spelunkyds.dir/requires: CMakeFiles/spelunkyds.dir/source/main.cpp.o.requires
-CMakeFiles/spelunkyds.dir/requires: CMakeFiles/spelunkyds.dir/source/level_layout/Scrolling.cpp.o.requires
+CMakeFiles/spelunkyds.dir/requires: CMakeFiles/spelunkyds.dir/source/level_layout/GameLoop.cpp.o.requires
 CMakeFiles/spelunkyds.dir/requires: CMakeFiles/spelunkyds.dir/source/level_layout/LevelGenerator.cpp.o.requires
 CMakeFiles/spelunkyds.dir/requires: CMakeFiles/spelunkyds.dir/source/time/Timer.cpp.o.requires
 CMakeFiles/spelunkyds.dir/requires: CMakeFiles/spelunkyds.dir/source/level_layout/MapUtils.cpp.o.requires

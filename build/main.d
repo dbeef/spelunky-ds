@@ -60,7 +60,7 @@ main.o: /home/xdbeef/NetBeansProjects/spelunkyds/source/main.cpp \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/videoGL.h \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/nand.h \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/console.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/Scrolling.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/GameLoop.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/LevelGenerator.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/MapTile.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/SpriteInfo.h \
@@ -214,7 +214,7 @@ main.o: /home/xdbeef/NetBeansProjects/spelunkyds/source/main.cpp \
 
 /home/xdbeef/devkitPro/libnds/include/nds/arm9/console.h:
 
-/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/Scrolling.h:
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/GameLoop.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/LevelGenerator.h:
 

@@ -49,7 +49,8 @@ public:
     SpriteInfo *mainSpriteInfo = nullptr;
     SpriteInfo *subSpriteInfo = nullptr;
 
-    bool carried;
+    //fixme cloning carried_by_main_dude
+//    bool carried;
     bool armed;
 
     int armedTimer;

@@ -17,10 +17,10 @@ public:
     u16 *palette_address;
     u16 *oam_address;
 
-    int current_oam_id = 0;
+    u32 current_oam_id = 0;
 
     /* Keep track of the available tiles */
-    int nextAvailableTileIdx = 0;
+    u16 nextAvailableTileIdx = 0;
 
     OAMTable *oam;
 

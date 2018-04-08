@@ -175,6 +175,12 @@
 		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/input/touchUtils.h">
 			<Option target="spelunkyds"/>
 		</Unit>
+		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/GameLoop.cpp">
+			<Option target="spelunkyds"/>
+		</Unit>
+		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/GameLoop.h">
+			<Option target="spelunkyds"/>
+		</Unit>
 		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/LevelGenerator.cpp">
 			<Option target="spelunkyds"/>
 		</Unit>
@@ -194,12 +200,6 @@
 			<Option target="spelunkyds"/>
 		</Unit>
 		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/ScreenPositions.h">
-			<Option target="spelunkyds"/>
-		</Unit>
-		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/Scrolling.cpp">
-			<Option target="spelunkyds"/>
-		</Unit>
-		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/Scrolling.h">
 			<Option target="spelunkyds"/>
 		</Unit>
 		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/SpriteInfo.cpp">

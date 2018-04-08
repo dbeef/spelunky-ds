@@ -29,15 +29,28 @@ void MainDude::handleKeyInput() {
         }
         if (global::input_handler->l_bumper_down) {
             if (!stunned && !whip) {
-                if (bomb->carried) {
+                if (holding_item) {
 
-                    bomb->carried = false;
-                    if (state == 1)
-                        bomb->xSpeed = -1;
-                    else
-                        bomb->xSpeed = 1;
+                    //throw holding item
 
-                    bomb->ySpeed = -1;
+                    for (int a = 0; a < global::sprites.size(); a++) {
+                        if (global::sprites.at(a)) {
+                            if ((*global::sprites.at(a)).hold_by_main_dude) {
+
+                                if (state == 1)
+                                    (*global::sprites.at(a)).xSpeed = -1;
+                                else
+                                    (*global::sprites.at(a)).xSpeed = 1;
+
+                                (*global::sprites.at(a)).ySpeed = -1;
+
+                                (*global::sprites.at(a)).hold_by_main_dude = false;
+                            }
+                        }
+                    }
+
+
+                    holding_item = false;
                 } else {
                     whip = true;
                     animFrame = 0;
@@ -45,23 +58,23 @@ void MainDude::handleKeyInput() {
             }
         }
         if (global::input_handler->x_key_down && !holding_item) {
-            //take new bomb
+            //make new bomb object
 
-//            Bomb *bomb = new Bomb();
-//            bomb->init(global_main_oam_manager, global_sub_oam_manager);
-//            bomb->xSpeed = 3;
-//            bomb->timer = timer;
-//            bomb->global_level_generator = l;
-//            bomb->carried = true;
-//            bomb->global_camera = global_camera;
-//
-//            holding_item = bomb;
-//            sprites.push_back(holding_item);
+            Bomb *bomb = new Bomb();
+            bomb->init();
+            bomb->xSpeed = 3;
+            bomb->timer = timer;
+            bomb->hold_by_main_dude = true;
+
+            global::sprites.push_back(bomb);
+            holding_item = true;
         }
-        if (global::input_handler->y_key_down && holding_item) {
-            //throw holding item
-            holding_item = nullptr;
+
+        if (global::input_handler->y_key_down && !holding_item && global::input_handler->down_key_held) {
+            //take item from the ground
+            holding_item = true;
         }
+
 
     }
     if (!stunned) {
@@ -247,7 +260,8 @@ void MainDude::updateSpeed() {
 void MainDude::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
 
     MapTile *tiles[9];
-    Collisions::getNeighboringTiles(global::level_generator->mapTiles, x_current_pos_in_tiles, y_current_pos_in_tiles, tiles);
+    Collisions::getNeighboringTiles(global::level_generator->mapTiles, x_current_pos_in_tiles, y_current_pos_in_tiles,
+                                    tiles);
 
     bottomCollision = Collisions::checkBottomCollision(tiles, &this->x, &this->y, &ySpeed, 16, 16);
     leftCollision = Collisions::checkLeftCollision(tiles, &this->x, &this->y, &xSpeed, 16, 16);
@@ -281,20 +295,20 @@ void MainDude::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos
 void MainDude::init() {
 
     main_spelunker = global::main_oam_manager->initSprite(spelunkerPal, spelunkerPalLen, spelunkerTiles,
-                                         spelunkerTilesLen, 16);
+                                                          spelunkerTilesLen, 16);
 
     main_pre_whip = global::main_oam_manager->initSprite(pre_whip_leftPal, pre_whip_leftPalLen,
-                                        pre_whip_leftTiles, pre_whip_leftTilesLen, 16);
+                                                         pre_whip_leftTiles, pre_whip_leftTilesLen, 16);
 
     main_whip = global::main_oam_manager->initSprite(whip_leftPal, whip_leftPalLen,
-                                    whip_leftTiles, whip_leftTilesLen, 16);
+                                                     whip_leftTiles, whip_leftTilesLen, 16);
 
     sub_spelunker = global::sub_oam_manager->initSprite(spelunkerPal, spelunkerPalLen, spelunkerTiles,
-                                       spelunkerTilesLen, 16);
+                                                        spelunkerTilesLen, 16);
     sub_pre_whip = global::sub_oam_manager->initSprite(pre_whip_leftPal, pre_whip_leftPalLen,
-                                      pre_whip_leftTiles, pre_whip_leftTilesLen, 16);
+                                                       pre_whip_leftTiles, pre_whip_leftTilesLen, 16);
     sub_whip = global::sub_oam_manager->initSprite(whip_leftPal, whip_leftPalLen,
-                                  whip_leftTiles, whip_leftTilesLen, 16);
+                                                   whip_leftTiles, whip_leftTilesLen, 16);
 
 
     frameGfx = (u8 *) spelunkerTiles;
@@ -327,17 +341,6 @@ void MainDude::draw() {
 
     sub_spelunker->entry->x = sub_x;
     sub_spelunker->entry->y = sub_y;
-
-    if (bomb->carried == true) {
-        bomb->y = this->y + 6;
-
-        if (state == 1) {
-            bomb->x = this->x - 2;
-        } else
-            bomb->x = this->x + 10;
-
-
-    }
 
     int frame;
     u8 *offset;

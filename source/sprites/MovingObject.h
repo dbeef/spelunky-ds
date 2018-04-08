@@ -58,6 +58,8 @@ public:
     bool leftCollision;
     bool rightCollision;
 
+    bool hold_by_main_dude;
+
 };
 
 

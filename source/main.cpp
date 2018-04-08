@@ -6,7 +6,7 @@
 #include <array>
 #include <iostream>
 #include <cstring>
-#include "level_layout/Scrolling.h"
+#include "level_layout/GameLoop.h"
 #include "../build/cavebg.h"
 #include "level_layout/BaseCaveMap.h"
 #include "time/Timer.h"
@@ -34,18 +34,22 @@ int main(void) {
     Timer *t = new Timer();
     TextManager *textManager = new TextManager();
 
-
     videoSetMode(MODE_0_2D);
     videoSetModeSub(MODE_0_2D);
 
     vramSetBankA(VRAM_A_MAIN_BG_0x06000000);
     //vram c is used by the console
     vramSetBankC(VRAM_C_SUB_BG_0x06200000);
-    vramSetBankF(VRAM_F_MAIN_SPRITE_0x06400000);
+
+
+    vramSetBankE(VRAM_E_MAIN_SPRITE);
     vramSetBankD(VRAM_D_SUB_SPRITE);
 
-    oamInit(&oamMain, SpriteMapping_1D_128, false);
-    oamInit(&oamSub, SpriteMapping_1D_128, false);
+//    vramSetBankF(VRAM_F_SPRITE_EXT_PALETTE);
+//    vramSetBankI(VRAM_I_SUB_SPRITE_EXT_PALETTE);
+
+    oamInit(&oamMain, SpriteMapping_1D_32, false);
+    oamInit(&oamSub, SpriteMapping_1D_32, false);
 
     global::bg_main_address = bgInit(2, BgType_Text4bpp, BgSize_B8_512x512, 22, 4);
     global::bg_sub_address = bgInitSub(3, BgType_Text4bpp, BgSize_B8_512x512, 18, 4);

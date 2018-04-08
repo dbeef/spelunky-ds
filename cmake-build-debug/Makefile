@@ -366,6 +366,33 @@ source/input/InputHandler.cpp.s:
 	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/input/InputHandler.cpp.s
 .PHONY : source/input/InputHandler.cpp.s
 
+source/level_layout/GameLoop.o: source/level_layout/GameLoop.cpp.o
+
+.PHONY : source/level_layout/GameLoop.o
+
+# target to build an object file
+source/level_layout/GameLoop.cpp.o:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/level_layout/GameLoop.cpp.o
+.PHONY : source/level_layout/GameLoop.cpp.o
+
+source/level_layout/GameLoop.i: source/level_layout/GameLoop.cpp.i
+
+.PHONY : source/level_layout/GameLoop.i
+
+# target to preprocess a source file
+source/level_layout/GameLoop.cpp.i:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/level_layout/GameLoop.cpp.i
+.PHONY : source/level_layout/GameLoop.cpp.i
+
+source/level_layout/GameLoop.s: source/level_layout/GameLoop.cpp.s
+
+.PHONY : source/level_layout/GameLoop.s
+
+# target to generate assembly for a file
+source/level_layout/GameLoop.cpp.s:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/level_layout/GameLoop.cpp.s
+.PHONY : source/level_layout/GameLoop.cpp.s
+
 source/level_layout/LevelGenerator.o: source/level_layout/LevelGenerator.cpp.o
 
 .PHONY : source/level_layout/LevelGenerator.o
@@ -446,33 +473,6 @@ source/level_layout/MapUtils.s: source/level_layout/MapUtils.cpp.s
 source/level_layout/MapUtils.cpp.s:
 	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/level_layout/MapUtils.cpp.s
 .PHONY : source/level_layout/MapUtils.cpp.s
-
-source/level_layout/Scrolling.o: source/level_layout/Scrolling.cpp.o
-
-.PHONY : source/level_layout/Scrolling.o
-
-# target to build an object file
-source/level_layout/Scrolling.cpp.o:
-	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/level_layout/Scrolling.cpp.o
-.PHONY : source/level_layout/Scrolling.cpp.o
-
-source/level_layout/Scrolling.i: source/level_layout/Scrolling.cpp.i
-
-.PHONY : source/level_layout/Scrolling.i
-
-# target to preprocess a source file
-source/level_layout/Scrolling.cpp.i:
-	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/level_layout/Scrolling.cpp.i
-.PHONY : source/level_layout/Scrolling.cpp.i
-
-source/level_layout/Scrolling.s: source/level_layout/Scrolling.cpp.s
-
-.PHONY : source/level_layout/Scrolling.s
-
-# target to generate assembly for a file
-source/level_layout/Scrolling.cpp.s:
-	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/level_layout/Scrolling.cpp.s
-.PHONY : source/level_layout/Scrolling.cpp.s
 
 source/level_layout/SpriteInfo.o: source/level_layout/SpriteInfo.cpp.o
 
@@ -618,6 +618,9 @@ help:
 	@echo "... source/input/InputHandler.o"
 	@echo "... source/input/InputHandler.i"
 	@echo "... source/input/InputHandler.s"
+	@echo "... source/level_layout/GameLoop.o"
+	@echo "... source/level_layout/GameLoop.i"
+	@echo "... source/level_layout/GameLoop.s"
 	@echo "... source/level_layout/LevelGenerator.o"
 	@echo "... source/level_layout/LevelGenerator.i"
 	@echo "... source/level_layout/LevelGenerator.s"
@@ -627,9 +630,6 @@ help:
 	@echo "... source/level_layout/MapUtils.o"
 	@echo "... source/level_layout/MapUtils.i"
 	@echo "... source/level_layout/MapUtils.s"
-	@echo "... source/level_layout/Scrolling.o"
-	@echo "... source/level_layout/Scrolling.i"
-	@echo "... source/level_layout/Scrolling.s"
 	@echo "... source/level_layout/SpriteInfo.o"
 	@echo "... source/level_layout/SpriteInfo.i"
 	@echo "... source/level_layout/SpriteInfo.s"
