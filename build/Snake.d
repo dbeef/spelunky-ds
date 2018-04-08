@@ -67,7 +67,15 @@ Snake.o: \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../../build/snake.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Collisions.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/MapTile.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../Consts.h
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../Globals.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../input/InputHandler.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../hud/Hud.h \
+ /home/xdbeef/devkitPro/libnds/include/nds/jtypes.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../hud/../level_layout/SpriteInfo.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../hud/../animations/OAMManager.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../hud/../animations/../level_layout/SpriteInfo.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../animations/Camera.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/LevelGenerator.h
 
 /home/xdbeef/devkitPro/libnds/include/nds/arm9/sprite.h:
 
@@ -203,4 +211,20 @@ Snake.o: \
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/MapTile.h:
 
-/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../Consts.h:
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../Globals.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../input/InputHandler.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../hud/Hud.h:
+
+/home/xdbeef/devkitPro/libnds/include/nds/jtypes.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../hud/../level_layout/SpriteInfo.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../hud/../animations/OAMManager.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../hud/../animations/../level_layout/SpriteInfo.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../animations/Camera.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/LevelGenerator.h:

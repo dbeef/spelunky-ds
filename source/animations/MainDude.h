@@ -18,6 +18,7 @@
 #define PUSHING_TIME 500
 
 #include <nds.h>
+#include <vector>
 #include "SpriteState.h"
 #include "../level_layout/MapTile.h"
 #include "../level_layout/LevelGenerator.h"
@@ -49,14 +50,14 @@ public:
 
     void init(OAMManager *mainOam, OAMManager *subOam) override;
 
-    SpriteInfo *main_whip;
-    SpriteInfo *main_pre_whip;
-    SpriteInfo *sub_whip;
-    SpriteInfo *sub_pre_whip;
-    SpriteInfo *main_spelunker;
-    SpriteInfo *sub_spelunker;
+    SpriteInfo *main_whip = nullptr;
+    SpriteInfo *main_pre_whip = nullptr;
+    SpriteInfo *sub_whip = nullptr;
+    SpriteInfo *sub_pre_whip = nullptr;
+    SpriteInfo *main_spelunker = nullptr;
+    SpriteInfo *sub_spelunker = nullptr;
 
-    Bomb *bomb;
+    Bomb *bomb = nullptr;
 
     int animationFrameTimer;
     int speedIncTimer;
@@ -80,14 +81,13 @@ public:
     bool whip;
 
     SpriteState state;
-    InputHandler *inputHandler;
-
+    InputHandler *inputHandler = nullptr;
+    std::vector<MovingObject *> sprites;
+    MovingObject *holding_item = nullptr;
     int animFrame;
-    u8 *frameGfx;
+    u8 *frameGfx = nullptr;
 
-    double *timer;
-
-    Camera *camera;
+    double *timer = nullptr;
 
     void handleKeyInput();
 

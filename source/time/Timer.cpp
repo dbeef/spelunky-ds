@@ -4,7 +4,7 @@
 
 #include <nds.h>
 #include "Timer.h"
-#include "../Consts.h"
+#include "../Globals.h"
 
 u16 Timer::getMillisecondsElapsed() {
     return timerElapsed(0) / TICKS_PER_SECOND;

@@ -6,7 +6,7 @@
 #include <nds/arm9/sprite.h>
 #include <iostream>
 #include "MainDude.h"
-#include "../Consts.h"
+#include "../Globals.h"
 #include "Collisions.h"
 #include "../level_layout/MapUtils.h"
 #include "../../build/spelunker.h"
@@ -29,7 +29,7 @@ void MainDude::handleKeyInput() {
         }
         if (inputHandler->l_bumper_down) {
             if (!stunned && !whip) {
-                if (bomb->carried == true) {
+                if (bomb->carried) {
 
                     bomb->carried = false;
                     if (state == 1)
@@ -44,6 +44,25 @@ void MainDude::handleKeyInput() {
                 }
             }
         }
+        if (inputHandler->x_key_down && !holding_item) {
+            //take new bomb
+
+//            Bomb *bomb = new Bomb();
+//            bomb->init(global_main_oam_manager, global_sub_oam_manager);
+//            bomb->xSpeed = 3;
+//            bomb->timer = timer;
+//            bomb->global_level_generator = l;
+//            bomb->carried = true;
+//            bomb->global_camera = global_camera;
+//
+//            holding_item = bomb;
+//            sprites.push_back(holding_item);
+        }
+        if (inputHandler->y_key_down && holding_item) {
+            //throw holding item
+            holding_item = nullptr;
+        }
+
     }
     if (!stunned) {
 
@@ -258,23 +277,24 @@ void MainDude::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos
     }
 
 }
+
 void MainDude::init(OAMManager *mainOam, OAMManager *subOam) {
 
     main_spelunker = mainOam->initSprite(spelunkerPal, spelunkerPalLen, spelunkerTiles,
-                                                          spelunkerTilesLen, 16);
+                                         spelunkerTilesLen, 16);
 
     main_pre_whip = mainOam->initSprite(pre_whip_leftPal, pre_whip_leftPalLen,
-                                                         pre_whip_leftTiles, pre_whip_leftTilesLen, 16);
+                                        pre_whip_leftTiles, pre_whip_leftTilesLen, 16);
 
     main_whip = mainOam->initSprite(whip_leftPal, whip_leftPalLen,
-                                                     whip_leftTiles, whip_leftTilesLen, 16);
+                                    whip_leftTiles, whip_leftTilesLen, 16);
 
     sub_spelunker = subOam->initSprite(spelunkerPal, spelunkerPalLen, spelunkerTiles,
-                                                        spelunkerTilesLen, 16);
+                                       spelunkerTilesLen, 16);
     sub_pre_whip = subOam->initSprite(pre_whip_leftPal, pre_whip_leftPalLen,
-                                                       pre_whip_leftTiles, pre_whip_leftTilesLen, 16);
+                                      pre_whip_leftTiles, pre_whip_leftTilesLen, 16);
     sub_whip = subOam->initSprite(whip_leftPal, whip_leftPalLen,
-                                                   whip_leftTiles, whip_leftTilesLen, 16);
+                                  whip_leftTiles, whip_leftTilesLen, 16);
 
 
     frameGfx = (u8 *) spelunkerTiles;

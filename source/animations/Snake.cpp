@@ -6,7 +6,7 @@
 #include "Snake.h"
 #include "../../build/snake.h"
 #include "Collisions.h"
-#include "../Consts.h"
+#include "../Globals.h"
 
 #define SNAKE_FRAMES_PER_ANIMATION 4
 #define MAIN_DUDE_MAX_X_SPEED 1.5

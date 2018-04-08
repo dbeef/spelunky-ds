@@ -3,17 +3,14 @@
 //
 
 #include "Bomb.h"
-#include "../Consts.h"
+#include "../Globals.h"
 #include "../level_layout/MapUtils.h"
 #include "Collisions.h"
 #include "MainDude.h"
 #include "../../build/bomb_armed.h"
 #include "../../build/bomb_unarmed.h"
 
-void Bomb::update(Camera *camera) {
-
-
-    updateCollisions();
+void Bomb::draw() {
 
     int main_x = x - camera->x;
     int main_y = y - camera->y;
@@ -36,7 +33,6 @@ void Bomb::update(Camera *camera) {
     subSpriteInfo->entry->x = sub_x;
     subSpriteInfo->entry->y = sub_y;
 
-    updateCollisions();
 }
 
 
@@ -47,7 +43,7 @@ void Bomb::init(OAMManager *mainOam, OAMManager *subOam) {
                                          bomb_unarmedTiles, bomb_unarmedTilesLen, 8);
 }
 
-void Bomb::updateCollisions() {
+void Bomb::updateSpeed() {
 
     if (xSpeed > MAX_X_SPEED_BOMB)
         xSpeed = MAX_X_SPEED_BOMB;
@@ -64,79 +60,81 @@ void Bomb::updateCollisions() {
     bool change_pos = (pos_inc_timer > 25) && !carried;
 
     if (change_pos) {
-
-        if (xSpeed > 0) {
-            xSpeed -= 0.005;
-            if (xSpeed < 0)
-                xSpeed = 0;
-        }
-        if (xSpeed < 0) {
-            xSpeed += 0.005;
-            if (xSpeed > 0)
-                xSpeed = 0;
-        }
-
-        double tempXspeed = abs(xSpeed);
-        double tempYspeed = abs(ySpeed);
-
-        int old_xx = -1;
-        int old_yy = -1;
-        int xx;
-        int yy;
-
-        while (tempXspeed > 0 || tempYspeed > 0) {
-            if (tempXspeed > 0) {
-                if (xSpeed > 0) {
-                    x += 1;
-                } else if (xSpeed < 0) {
-                    x -= 1;
-                }
-            }
-            if (tempYspeed > 0) {
-                if (ySpeed > 0)
-                    y += 1;
-                else if (ySpeed < 0)
-                    y -= 1;
-            }
-
-//            Collisions::getCenterTile(this->x, this->y, MAIN_DUDE_HEIGHT, MAIN_DUDE_WIDTH, xx, yy);
-//fixme
-
-            xx = floor_div(this->x + 0.5 * BOMB_SIZE, 16);
-            yy = floor_div(this->y + 0.5 * BOMB_SIZE, 16);
-
-            if (old_xx != xx || old_yy != yy) {
-                checkCollisionWithMap(levelGenerator->mapTiles, xx, yy);
-            }
-
-            old_xx = xx;
-            old_yy = yy;
-
-            tempXspeed--;
-            tempYspeed--;
-        }
-
-
-        if (!bottomCollision)
-            ySpeed += GRAVITY_DELTA_SPEED;
-
-        pos_inc_timer = 0;
-
+        updatePosition();
     }
 
 }
 
-void Bomb::checkCollisionWithMap(MapTile *mapTiles[32][32], int xx, int yy) {
+void Bomb::updatePosition() {
+
+    if (xSpeed > 0) {
+        xSpeed -= 0.005;
+        if (xSpeed < 0)
+            xSpeed = 0;
+    }
+    if (xSpeed < 0) {
+        xSpeed += 0.005;
+        if (xSpeed > 0)
+            xSpeed = 0;
+    }
+
+    double tempXspeed = abs(xSpeed);
+    double tempYspeed = abs(ySpeed);
+
+    int old_xx = -1;
+    int old_yy = -1;
+    int xx;
+    int yy;
+
+    while (tempXspeed > 0 || tempYspeed > 0) {
+        if (tempXspeed > 0) {
+            if (xSpeed > 0) {
+                x += 1;
+            } else if (xSpeed < 0) {
+                x -= 1;
+            }
+        }
+        if (tempYspeed > 0) {
+            if (ySpeed > 0)
+                y += 1;
+            else if (ySpeed < 0)
+                y -= 1;
+        }
+
+//            Collisions::getCenterTile(this->x, this->y, MAIN_DUDE_HEIGHT, MAIN_DUDE_WIDTH, xx, yy);
+//fixme
+
+        xx = floor_div(this->x + 0.5 * BOMB_SIZE, 16);
+        yy = floor_div(this->y + 0.5 * BOMB_SIZE, 16);
+
+        if (old_xx != xx || old_yy != yy) {
+            updateCollisionsMap(xx, yy);
+        }
+
+        old_xx = xx;
+        old_yy = yy;
+
+        tempXspeed--;
+        tempYspeed--;
+    }
+
+
+    if (!bottomCollision)
+        ySpeed += GRAVITY_DELTA_SPEED;
+
+    pos_inc_timer = 0;
+}
+
+void Bomb::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
 
     MapTile *tiles[9];
-    Collisions::getNeighboringTiles(mapTiles, xx, yy, tiles);
+    Collisions::getNeighboringTiles(levelGenerator->mapTiles, x_current_pos_in_tiles, y_current_pos_in_tiles,
+                                    tiles);
 
     bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, 8, 8);
     leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, 8, 8);
     rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, 8, 8);
     upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, 8);
-
-//        std::cout << bottomCollision << leftCollision << rightCollision << upperCollision <<'\n';
 
 }
 

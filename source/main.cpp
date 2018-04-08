@@ -10,7 +10,7 @@
 #include "../build/cavebg.h"
 #include "level_layout/BaseCaveMap.h"
 #include "time/Timer.h"
-#include "Consts.h"
+#include "Globals.h"
 #include "level_layout/MapUtils.h"
 #include "console/TextManager.h"
 

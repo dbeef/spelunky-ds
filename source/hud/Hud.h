@@ -13,17 +13,14 @@ class Hud {
 
 public:
     void draw();
+
     void init(OAMManager *mainOam);
-    SpriteInfo* heartSpriteInfo;
-    SpriteInfo* bombSpriteInfo;
-    SpriteInfo* dollarSpriteInfo;
-    SpriteInfo* ropeSpriteInfo;
-    SpriteInfo* holdingItemSpriteInfo;
-//    u16 *heartGfxMemMain;
-//    u16 *bombGfxMemMain;
-//    u16 *ropeGfxMemMain;
-//    u16 *goldGfxMemMain;
-//    u16 *holdingObjFrameGfxMemMain;
+
+    SpriteInfo *heartSpriteInfo = nullptr;
+    SpriteInfo *bombSpriteInfo = nullptr;
+    SpriteInfo *dollarSpriteInfo = nullptr;
+    SpriteInfo *ropeSpriteInfo = nullptr;
+    SpriteInfo *holdingItemSpriteInfo = nullptr;
 };
 
 

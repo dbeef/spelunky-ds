@@ -73,6 +73,7 @@ Collisions.o: \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/../level_layout/LevelGenerator.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/../animations/OAMManager.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/../animations/../level_layout/SpriteInfo.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/../animations/Camera.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../input/InputHandler.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/MapUtils.h
 
@@ -221,6 +222,8 @@ Collisions.o: \
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/../animations/OAMManager.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/../animations/../level_layout/SpriteInfo.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/../animations/Camera.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../input/InputHandler.h:
 

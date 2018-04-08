@@ -112,7 +112,7 @@
 		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/scratches/font.png">
 			<Option target="spelunkyds"/>
 		</Unit>
-		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/Consts.h">
+		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/Globals.h">
 			<Option target="spelunkyds"/>
 		</Unit>
 		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Bomb.cpp">

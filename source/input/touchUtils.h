@@ -13,7 +13,7 @@
         if (Timer > 500) {
             if (input.px != 0 && input.py != 0) {
                 dmaCopyHalfWords(DMA_CHANNEL, fresh_map, map, sizeof(map));
-                levelGenerator->clearCollidedTile(input.px, input.py, sx, sy, bg_main);
+                global_level_generator->clearCollidedTile(input.px, input.py, sx, sy, bg_main);
                 sectorize_map();
                 dmaCopyHalfWords(DMA_CHANNEL, map, bgGetMapPtr(bg_main), sizeof(map));
             }

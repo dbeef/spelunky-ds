@@ -60,7 +60,16 @@ Timer.o: /home/xdbeef/NetBeansProjects/spelunkyds/source/time/Timer.cpp \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/videoGL.h \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/nand.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/time/Timer.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/time/../Consts.h
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/time/../Globals.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/time/../input/InputHandler.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/time/../hud/Hud.h \
+ /home/xdbeef/devkitPro/libnds/include/nds/jtypes.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/time/../hud/../level_layout/SpriteInfo.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/time/../hud/../animations/OAMManager.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/time/../hud/../animations/../level_layout/SpriteInfo.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/time/../animations/Camera.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/time/../level_layout/LevelGenerator.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/time/../level_layout/MapTile.h
 
 /home/xdbeef/devkitPro/libnds/include/nds.h:
 
@@ -184,4 +193,22 @@ Timer.o: /home/xdbeef/NetBeansProjects/spelunkyds/source/time/Timer.cpp \
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/time/Timer.h:
 
-/home/xdbeef/NetBeansProjects/spelunkyds/source/time/../Consts.h:
+/home/xdbeef/NetBeansProjects/spelunkyds/source/time/../Globals.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/time/../input/InputHandler.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/time/../hud/Hud.h:
+
+/home/xdbeef/devkitPro/libnds/include/nds/jtypes.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/time/../hud/../level_layout/SpriteInfo.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/time/../hud/../animations/OAMManager.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/time/../hud/../animations/../level_layout/SpriteInfo.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/time/../animations/Camera.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/time/../level_layout/LevelGenerator.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/time/../level_layout/MapTile.h:

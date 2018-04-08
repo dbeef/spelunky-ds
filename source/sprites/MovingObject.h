@@ -7,6 +7,7 @@
 
 #include "../level_layout/LevelGenerator.h"
 #include "../animations/OAMManager.h"
+#include "../animations/Camera.h"
 
 /**
  *  https://en.wikibooks.org/wiki/C%2B%2B_Programming/Classes/Abstract_Classes
@@ -20,6 +21,12 @@ class MovingObject {
 public:
 
     //todo virtual void for Oam init
+
+    void update() {
+        updateOther();
+        updateSpeed();
+        updateTimers();
+    };
 
     virtual void draw() = 0;
 
@@ -51,7 +58,8 @@ public:
     bool leftCollision;
     bool rightCollision;
 
-    LevelGenerator *levelGenerator;
+    LevelGenerator *levelGenerator = nullptr;
+    Camera *camera = nullptr;
 
 };
 

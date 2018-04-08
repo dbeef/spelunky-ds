@@ -26,43 +26,39 @@ public:
 
     void updateOther() override {};
 
-    void init(OAMManager *mainOam, OAMManager *subOam);
+    void init(OAMManager *mainOam, OAMManager *subOam) override;
 
-    void draw() {};
+    void draw() override;
 
-    void updateTimers() {};
+    void updateTimers() override {};
 
-    void updatePosition() {};
+    void updatePosition() override ;
 
-    void updateSpeed() {};
+    void updateSpeed() override;
 
-    void updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {};
+    void updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) override;
 
-    void updateCollisionsOtherMoving() {};
+    void updateCollisionsOtherMoving() override {};
 
-    void onCollisionWithMainCharacter() {};
+    void onCollisionWithMainCharacter() override {};
 
 
-    double *timer;
+    double *timer = nullptr;
     double pos_inc_timer;
 
-    SpriteInfo *mainSpriteInfo;
-    SpriteInfo *subSpriteInfo;
+    SpriteInfo *mainSpriteInfo = nullptr;
+    SpriteInfo *subSpriteInfo = nullptr;
 
     bool carried;
     bool armed;
 
     int armedTimer;
 
-    LevelGenerator *levelGenerator;
+    LevelGenerator *levelGenerator = nullptr;
 
-    void update(Camera *camera);
-
-    void updateCollisions();
-
-    void checkCollisionWithMap(MapTile *mapTiles[32][32], int xx, int yy);
-
-    void applyFriction();
+//    void updateCollisions();
+//    void checkCollisionWithMap(MapTile *mapTiles[32][32], int xx, int yy);
+//    void applyFriction();
 };
 
 
