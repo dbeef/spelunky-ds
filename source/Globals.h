@@ -33,6 +33,7 @@ namespace global {
     extern int bg_main_address;
     extern int bg_sub_address;
     extern std::vector<MovingObject *> sprites;
+    extern std::vector<SpriteInfo *> spriteInfos;
 }
 
 #endif //SPELUNKYDS_CONSTS_H

@@ -295,20 +295,20 @@ void MainDude::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos
 void MainDude::init() {
 
     main_spelunker = global::main_oam_manager->initSprite(spelunkerPal, spelunkerPalLen, spelunkerTiles,
-                                                          spelunkerTilesLen, 16);
+                                                          spelunkerTilesLen, 16, MAIN_DUDE);
 
     main_pre_whip = global::main_oam_manager->initSprite(pre_whip_leftPal, pre_whip_leftPalLen,
-                                                         pre_whip_leftTiles, pre_whip_leftTilesLen, 16);
+                                                         pre_whip_leftTiles, pre_whip_leftTilesLen, 16, PRE_WHIP);
 
     main_whip = global::main_oam_manager->initSprite(whip_leftPal, whip_leftPalLen,
-                                                     whip_leftTiles, whip_leftTilesLen, 16);
+                                                     whip_leftTiles, whip_leftTilesLen, 16, WHIP);
 
     sub_spelunker = global::sub_oam_manager->initSprite(spelunkerPal, spelunkerPalLen, spelunkerTiles,
-                                                        spelunkerTilesLen, 16);
+                                                        spelunkerTilesLen, 16, MAIN_DUDE);
     sub_pre_whip = global::sub_oam_manager->initSprite(pre_whip_leftPal, pre_whip_leftPalLen,
-                                                       pre_whip_leftTiles, pre_whip_leftTilesLen, 16);
+                                                       pre_whip_leftTiles, pre_whip_leftTilesLen, 16, PRE_WHIP);
     sub_whip = global::sub_oam_manager->initSprite(whip_leftPal, whip_leftPalLen,
-                                                   whip_leftTiles, whip_leftTilesLen, 16);
+                                                   whip_leftTiles, whip_leftTilesLen, 16, WHIP);
 
 
     frameGfx = (u8 *) spelunkerTiles;

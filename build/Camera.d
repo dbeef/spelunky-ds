@@ -15,8 +15,10 @@ Camera.o: \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../hud/../level_layout/SpriteInfo.h \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/sprite.h \
  /home/xdbeef/devkitPro/libnds/include/nds/system.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../hud/../level_layout/../sprites/SpriteTypes.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../hud/../animations/OAMManager.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../hud/../animations/../level_layout/SpriteInfo.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../hud/../animations/../sprites/SpriteTypes.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../animations/Camera.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/LevelGenerator.h \
  /home/xdbeef/devkitPro/libnds/include/nds.h \
@@ -82,6 +84,7 @@ Camera.o: \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../animations/../sprites/../level_layout/LevelGenerator.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../animations/../sprites/../animations/OAMManager.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../animations/../sprites/../animations/Camera.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../animations/../sprites/SpriteTypes.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../animations/../input/InputHandler.h
 
 /home/xdbeef/devkitPro/libnds/include/nds/arm9/background.h:
@@ -114,9 +117,13 @@ Camera.o: \
 
 /home/xdbeef/devkitPro/libnds/include/nds/system.h:
 
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../hud/../level_layout/../sprites/SpriteTypes.h:
+
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../hud/../animations/OAMManager.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../hud/../animations/../level_layout/SpriteInfo.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../hud/../animations/../sprites/SpriteTypes.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../animations/Camera.h:
 
@@ -247,5 +254,7 @@ Camera.o: \
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../animations/../sprites/../animations/OAMManager.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../animations/../sprites/../animations/Camera.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../animations/../sprites/SpriteTypes.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../animations/../input/InputHandler.h:

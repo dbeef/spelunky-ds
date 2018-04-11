@@ -60,7 +60,8 @@ SpriteInfo.o: \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/video.h \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/videoGL.h \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/nand.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/SpriteInfo.h
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/SpriteInfo.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../sprites/SpriteTypes.h
 
 /home/xdbeef/devkitPro/libnds/include/nds.h:
 
@@ -183,3 +184,5 @@ SpriteInfo.o: \
 /home/xdbeef/devkitPro/libnds/include/nds/arm9/nand.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/SpriteInfo.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../sprites/SpriteTypes.h:

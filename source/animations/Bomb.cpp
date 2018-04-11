@@ -49,9 +49,9 @@ void Bomb::draw() {
 
 void Bomb::init() {
     subSpriteInfo = global::sub_oam_manager->initSprite(bomb_unarmedPal, bomb_unarmedPalLen,
-                                                        bomb_unarmedTiles, bomb_unarmedTilesLen, 8);
+                                                        bomb_unarmedTiles, bomb_unarmedTilesLen, 8, BOMB);
     mainSpriteInfo = global::main_oam_manager->initSprite(bomb_unarmedPal, bomb_unarmedPalLen,
-                                                          bomb_unarmedTiles, bomb_unarmedTilesLen, 8);
+                                                          bomb_unarmedTiles, bomb_unarmedTilesLen, 8,BOMB);
 }
 
 void Bomb::updateSpeed() {

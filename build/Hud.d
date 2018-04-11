@@ -9,8 +9,10 @@ Hud.o: /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/Hud.cpp \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/Hud.h \
  /home/xdbeef/devkitPro/libnds/include/nds/jtypes.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../level_layout/SpriteInfo.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../level_layout/../sprites/SpriteTypes.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../animations/OAMManager.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../animations/../level_layout/SpriteInfo.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../animations/../sprites/SpriteTypes.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../../build/heart.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../../build/dollar.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../../build/bomb.h \
@@ -85,6 +87,7 @@ Hud.o: /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/Hud.cpp \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../animations/../sprites/../level_layout/LevelGenerator.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../animations/../sprites/../animations/OAMManager.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../animations/../sprites/../animations/Camera.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../animations/../sprites/SpriteTypes.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../animations/../input/InputHandler.h
 
 /home/xdbeef/devkitPro/libnds/include/nds/arm9/sprite.h:
@@ -107,9 +110,13 @@ Hud.o: /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/Hud.cpp \
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../level_layout/SpriteInfo.h:
 
+/home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../level_layout/../sprites/SpriteTypes.h:
+
 /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../animations/OAMManager.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../animations/../level_layout/SpriteInfo.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../animations/../sprites/SpriteTypes.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../../build/heart.h:
 
@@ -258,5 +265,7 @@ Hud.o: /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/Hud.cpp \
 /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../animations/../sprites/../animations/OAMManager.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../animations/../sprites/../animations/Camera.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../animations/../sprites/SpriteTypes.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../animations/../input/InputHandler.h:

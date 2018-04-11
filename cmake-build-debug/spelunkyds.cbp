@@ -217,6 +217,9 @@
 		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/sprites/MovingObject.h">
 			<Option target="spelunkyds"/>
 		</Unit>
+		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/sprites/SpriteTypes.h">
+			<Option target="spelunkyds"/>
+		</Unit>
 		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/time/Timer.cpp">
 			<Option target="spelunkyds"/>
 		</Unit>

@@ -7,6 +7,7 @@
 
 
 #include <nds/arm9/sprite.h>
+#include "../sprites/SpriteTypes.h"
 
 class SpriteInfo {
 public:
@@ -18,6 +19,9 @@ public:
     int height;
     int angle;
     SpriteEntry *entry;
+    SpriteType spriteType;
+
+    u16 oam_address;
 
     void updateFrame(u8 *tile);
 };

@@ -8,6 +8,7 @@
 #define MAX_SPRITE_NUMBER 128
 
 #include "../level_layout/SpriteInfo.h"
+#include "../sprites/SpriteTypes.h"
 
 
 class OAMManager {
@@ -28,7 +29,8 @@ public:
 
     void updateOAM();
 
-    SpriteInfo *initSprite(const unsigned short pallette[], int palLen, const unsigned int tiles[], int tilesLen, int size);
+    SpriteInfo *initSprite(const unsigned short pallette[], int palLen, const unsigned int tiles[], int tilesLen,
+                           int size, SpriteType spriteType);
 };
 
 

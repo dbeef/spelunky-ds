@@ -24,7 +24,8 @@ namespace global {
     OAMManager *main_oam_manager = new OAMManager();
     OAMManager *sub_oam_manager = new OAMManager();
     Hud *hud = new Hud();
-    std::vector<MovingObject *> sprites(SPRITE_COUNT * 2, nullptr);
+    std::vector<MovingObject *> sprites(0, nullptr);
+    std::vector<SpriteInfo *> spriteInfos(0, nullptr);
     int bg_main_address = 0;
     int bg_sub_address = 0;
 }

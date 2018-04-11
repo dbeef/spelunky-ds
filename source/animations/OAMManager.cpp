@@ -6,6 +6,13 @@
 #include <nds/arm9/cache.h>
 #include <assert.h>
 #include "OAMManager.h"
+#include "../Globals.h"
+
+/**
+ * "Another advantage of using 16-color sprites is the ability to use 16 different palettes."
+ * https://patater.com/files/projects/manual/manual.html
+ * There's a maximum of 4 bit palettes and it is 16!
+ */
 
 static const int BYTES_PER_16_COLOR_TILE = 32;
 static const int COLORS_PER_PALETTE = 16;
@@ -52,15 +59,18 @@ void OAMManager::updateOAM() {
 
 SpriteInfo *
 OAMManager::initSprite(const unsigned short pallette[], int palLen, const unsigned int tiles[], int tilesLen,
-                       int size) {
+                       int size, SpriteType type) {
 
     /* Keep track of the available tiles */
+
+//    std::cout << " MAKING " << current_oam_id << " " << type << '\n' ;
 
     assert(current_oam_id < SPRITE_COUNT);
     SpriteInfo *spriteInfo = new SpriteInfo();/*&spriteInfo[current_oam_id];*/
     SpriteEntry *spriteEntry = &oam->oamBuffer[current_oam_id];
 
     /* Initialize spriteInfo */
+    spriteInfo->spriteType = type;
     spriteInfo->offset_multiplier = this->offset_multiplier;
     spriteInfo->sprite_address = this->sprite_address;
     spriteInfo->oamId = current_oam_id;
@@ -113,13 +123,35 @@ OAMManager::initSprite(const unsigned short pallette[], int palLen, const unsign
     spriteEntry->gfxIndex = nextAvailableTileIdx;
     nextAvailableTileIdx += tilesLen / BYTES_PER_16_COLOR_TILE;
     spriteEntry->priority = OBJPRIORITY_0;
-    spriteEntry->palette = spriteInfo->oamId;
 
-    dmaCopyHalfWords(3,
-                     pallette,
-                     &palette_address[spriteInfo->oamId *
-                                      COLORS_PER_PALETTE],
-                     palLen);
+    //Re-using already loaded palletes.
+    for (int a = 0; a < global::spriteInfos.size(); a++) {
+        if (global::spriteInfos.at(a)) {
+            if ((*global::spriteInfos.at(a)).spriteType == type && (*global::spriteInfos.at(a)).oam_address == *oam_address) {
+
+//                std::cout << '\n';
+//                std::cout << "FOUND PROPER PALETTE" << (*global::spriteInfos.at(a)).spriteType << " " << type  <<  " "
+//                          << (*global::spriteInfos.at(a)).oamId << '\n';
+
+                spriteEntry->palette = (*global::spriteInfos.at(a)).oamId;
+                break;
+            }
+        }
+    }
+
+    if(!spriteEntry->palette) {
+
+//        std::cout << "!PROPER PALETTE" << '\n';
+
+        spriteEntry->palette = spriteInfo->oamId;
+        dmaCopyHalfWords(3,
+                         pallette,
+                         &palette_address[spriteInfo->oamId *
+                                          COLORS_PER_PALETTE],
+                         palLen);
+
+    }
+
 
     dmaCopyHalfWords(3,
                      tiles,
@@ -128,6 +160,10 @@ OAMManager::initSprite(const unsigned short pallette[], int palLen, const unsign
 
 
     current_oam_id++;
+
+    global::spriteInfos.push_back(spriteInfo);
+
+    spriteInfo->oam_address = *oam_address;
 
     return spriteInfo;
 }

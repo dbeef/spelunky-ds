@@ -8,6 +8,7 @@
 #include "../level_layout/LevelGenerator.h"
 #include "../animations/OAMManager.h"
 #include "../animations/Camera.h"
+#include "SpriteTypes.h"
 
 /**
  *  https://en.wikibooks.org/wiki/C%2B%2B_Programming/Classes/Abstract_Classes
@@ -60,6 +61,7 @@ public:
 
     bool hold_by_main_dude;
 
+    SpriteType spriteType;
 };
 
 
