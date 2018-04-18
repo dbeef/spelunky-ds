@@ -67,10 +67,10 @@ void Snake::checkCollisionWithMap(MapTile *mapTiles[32][32]) {
         posIncTimer = 0;
     }
 
-    bottomCollision = Collisions::checkBottomCollision(0, &this->x, &this->y, &ySpeed, 16, 16);
-    leftCollision = Collisions::checkLeftCollision(0, &this->x, &this->y, &xSpeed, 16, 16);
-    rightCollision = Collisions::checkRightCollision(0, &this->x, &this->y, &xSpeed, 16, 16);
-    upperCollision = Collisions::checkUpperCollision(0, &this->x, &this->y, &ySpeed, 16);
+    bottomCollision = Collisions::checkBottomCollision(0, &this->x, &this->y, &ySpeed, 16, 16, false);
+    leftCollision = Collisions::checkLeftCollision(0, &this->x, &this->y, &xSpeed, 16, 16, false);
+    rightCollision = Collisions::checkRightCollision(0, &this->x, &this->y, &xSpeed, 16, 16, false);
+    upperCollision = Collisions::checkUpperCollision(0, &this->x, &this->y, &ySpeed, 16, false);
     Collisions::isStandingOnEdge(0, &this->x, &this->y, &ySpeed, 16, 16);
 
 

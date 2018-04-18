@@ -10,7 +10,7 @@
 #define ARMED_TIME_BLINK_SLOW 2000
 #define ARMED_TIME_BLINK_FAST 2000
 
-#define MAX_X_SPEED_BOMB 1
+#define MAX_X_SPEED_BOMB 3
 #define MAX_Y_SPEED_BOMB 1.5
 
 #include <nds/arm9/sprite.h>

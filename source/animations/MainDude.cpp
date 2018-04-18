@@ -38,9 +38,9 @@ void MainDude::handleKeyInput() {
                             if ((*global::sprites.at(a)).hold_by_main_dude) {
 
                                 if (state == 1)
-                                    (*global::sprites.at(a)).xSpeed = -1;
+                                    (*global::sprites.at(a)).xSpeed = -3;
                                 else
-                                    (*global::sprites.at(a)).xSpeed = 1;
+                                    (*global::sprites.at(a)).xSpeed = 3;
 
                                 (*global::sprites.at(a)).ySpeed = -1;
 
@@ -263,10 +263,10 @@ void MainDude::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos
     Collisions::getNeighboringTiles(global::level_generator->mapTiles, x_current_pos_in_tiles, y_current_pos_in_tiles,
                                     tiles);
 
-    bottomCollision = Collisions::checkBottomCollision(tiles, &this->x, &this->y, &ySpeed, 16, 16);
-    leftCollision = Collisions::checkLeftCollision(tiles, &this->x, &this->y, &xSpeed, 16, 16);
-    rightCollision = Collisions::checkRightCollision(tiles, &this->x, &this->y, &xSpeed, 16, 16);
-    upperCollision = Collisions::checkUpperCollision(tiles, &this->x, &this->y, &ySpeed, 16);
+    bottomCollision = Collisions::checkBottomCollision(tiles, &this->x, &this->y, &ySpeed, 16, 16, false);
+    leftCollision = Collisions::checkLeftCollision(tiles, &this->x, &this->y, &xSpeed, 16, 16, false);
+    rightCollision = Collisions::checkRightCollision(tiles, &this->x, &this->y, &xSpeed, 16, 16, false);
+    upperCollision = Collisions::checkUpperCollision(tiles, &this->x, &this->y, &ySpeed, 16, false);
     Collisions::isStandingOnEdge(tiles, &
             this->x, &this->y, &ySpeed, 16, 16);
 

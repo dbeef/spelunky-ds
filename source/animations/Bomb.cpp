@@ -68,7 +68,7 @@ void Bomb::updateSpeed() {
 
     pos_inc_timer += *timer;
 
-    bool change_pos = (pos_inc_timer > 25) && !hold_by_main_dude;
+    bool change_pos = (pos_inc_timer > 15) && !hold_by_main_dude;
 
     if (change_pos) {
         updatePosition();
@@ -79,12 +79,12 @@ void Bomb::updateSpeed() {
 void Bomb::updatePosition() {
 
     if (xSpeed > 0) {
-        xSpeed -= 0.005;
+        xSpeed -= 0.025;
         if (xSpeed < 0)
             xSpeed = 0;
     }
     if (xSpeed < 0) {
-        xSpeed += 0.005;
+        xSpeed += 0.025;
         if (xSpeed > 0)
             xSpeed = 0;
     }
@@ -142,10 +142,14 @@ void Bomb::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_
     Collisions::getNeighboringTiles(global::level_generator->mapTiles, x_current_pos_in_tiles, y_current_pos_in_tiles,
                                     tiles);
 
-    bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, 8, 8);
-    leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, 8, 8);
-    rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, 8, 8);
-    upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, 8);
+    bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, 8, 8, true);
+    leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, 8, 8, true);
+    rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, 8, 8, true);
+    upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, 8, true);
+
+    if(bottomCollision){
+
+    }
 
 }
 
