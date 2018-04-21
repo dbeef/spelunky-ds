@@ -12,6 +12,7 @@
 #include "../../build/spelunker.h"
 #include "../../build/whip_left.h"
 #include "../../build/pre_whip_left.h"
+#include "Rope.h"
 
 void MainDude::handleKeyInput() {
 
@@ -89,6 +90,16 @@ void MainDude::handleKeyInput() {
             bomb->hold_by_main_dude = true;
 
             global::sprites.push_back(bomb);
+            holding_item = true;
+        }
+        else if (global::input_handler->a_key_down && !holding_item) {
+            //make new bomb object
+
+            Rope *rope= new Rope();
+            rope->init();
+            rope->timer = timer;
+            rope->hold_by_main_dude = true;
+            global::sprites.push_back(rope);
             holding_item = true;
         }
 

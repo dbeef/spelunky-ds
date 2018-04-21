@@ -2,16 +2,8 @@
 // Created by xdbeef on 04.04.18.
 //
 
-#ifndef SPELUNKYDS_BOMB_H
-#define SPELUNKYDS_BOMB_H
-
-#define BOUNCE_VELOCITY_LOSS 0.65
-#define BOMB_SIZE 8
-#define ARMED_TIME_BLINK_SLOW 2000
-#define ARMED_TIME_BLINK_FAST 3500
-
-#define MAX_X_SPEED_BOMB 4
-#define MAX_Y_SPEED_BOMB 4
+#ifndef SPELUNKYDS_ROPE_H
+#define SPELUNKYDS_ROPE_H
 
 #include <nds/arm9/sprite.h>
 #include "../level_layout/SpriteInfo.h"
@@ -20,7 +12,11 @@
 #include "../level_layout/LevelGenerator.h"
 #include "../sprites/MovingObject.h"
 
-class Bomb : public MovingObject {
+#define MAX_Y_SPEED_ROPE 4
+#define MAX_X_SPEED_ROPE 4
+#define ROPE_SIZE 8
+
+class Rope : public MovingObject {
 
 public:
 
@@ -48,21 +44,17 @@ public:
 
     SpriteInfo *mainSpriteInfo = nullptr;
     SpriteInfo *subSpriteInfo = nullptr;
+
     u8 * frameGfx;
 
-    //fixme cloning carried_by_main_dude
-//    bool carried;
-    bool armed;
+    bool thrown;
+    bool finished;
 
-    int armedTimer;
-    int explosionTimer;
+    int throwingTimer;
 
-    int explosionFrame;
-
-    void disarm();
-
-    void arm();
+    void throwingFinished();
+    void notThrown();
 };
 
 
-#endif //SPELUNKYDS_BOMB_H
+#endif //SPELUNKYDS_ROPE_H

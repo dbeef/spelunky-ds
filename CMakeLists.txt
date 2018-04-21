@@ -21,6 +21,8 @@ add_executable(spelunkyds
         source/animations/MainDude.h
         source/animations/Bomb.cpp
         source/animations/Bomb.h
+        source/animations/Rope.h
+        source/animations/Rope.cpp
         source/console/TextManager.cpp
         source/console/TextManager.h
         source/sprites/MovingObject.h

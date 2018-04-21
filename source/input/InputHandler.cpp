@@ -31,11 +31,13 @@ void InputHandler::updateInput() {
         l_bumper_down = (keys_down & KEY_L) != 0;
         x_key_down = (keys_down & KEY_X) != 0;
         y_key_down = (keys_down & KEY_Y) != 0;
+        a_key_down = (keys_down & KEY_A) != 0;
     } else {
         r_bumper_down = false;
         l_bumper_down = false;
         x_key_down = false;
         y_key_down = false;
+        a_key_down = false;
     }
 
 }

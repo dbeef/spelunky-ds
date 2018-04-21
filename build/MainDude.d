@@ -90,7 +90,8 @@ MainDude.o: \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/MapUtils.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../../build/spelunker.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../../build/whip_left.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../../build/pre_whip_left.h
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../../build/pre_whip_left.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Rope.h
 
 /home/xdbeef/devkitPro/libnds/include/nds.h:
 
@@ -273,3 +274,5 @@ MainDude.o: \
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../../build/whip_left.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../../build/pre_whip_left.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Rope.h:

@@ -8,6 +8,7 @@
 enum SpriteType{
     MAIN_DUDE,
     BOMB,
+    ROPES,
     PRE_WHIP,
     WHIP,
     HUD_HEART,

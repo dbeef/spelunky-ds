@@ -27,7 +27,7 @@ SOURCES		:=	source source/level_layout source/console source/input  \
 DATA		:=	data
 INCLUDES	:=	include
 FONTS   	:=	gfx/fonts
-SPRITES	    :=	gfx/sprites gfx/sprites/64x64
+SPRITES	    :=	gfx/sprites gfx/sprites/64x64 gfx/sprites/8x8
 TILEMAPS    :=  gfx/tilemaps
 
 #---------------------------------------------------------------------------------
@@ -143,6 +143,8 @@ $(OUTPUT).elf	:	$(OFILES)
 		grit $< -ff../gfx/tilemaps/tilemap.grit -o$*
 %.s %.h : ../gfx/sprites/64x64/%.png
 		grit $< -ff../gfx/sprites/64x64/sprite.grit -o$*
+%.s %.h : ../gfx/sprites/8x8/%.png
+		grit $< -ff../gfx/sprites/8x8/sprite.grit -o$*
 
 #grit $< -ff../gfx/tilemaps/tilemap.grit -o$*
 #grit $< -ff../gfx/sprites/sprite.grit -o$*
