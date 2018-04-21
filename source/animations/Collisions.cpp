@@ -6,7 +6,8 @@
 #include "MainDude.h"
 #include "../level_layout/MapUtils.h"
 
-#define BOUNCING_FACTOR 0.25
+#define BOUNCING_FACTOR_X 0.15
+#define BOUNCING_FACTOR_Y 0.45
 #define BOUNCING_STOP_SPEED 0.05
 
 
@@ -25,7 +26,7 @@ bool Collisions::checkUpperCollision(MapTile *neighboringTiles[9], int *xPos, in
 
     for (int a = 0; a < 9; a++) {
 
-        if (neighboringTiles[a] == 0)
+        if (neighboringTiles[a] == 0 || !neighboringTiles[a]->collidable)
             continue;
 
         if (!upperCollision) {
@@ -34,11 +35,11 @@ bool Collisions::checkUpperCollision(MapTile *neighboringTiles[9], int *xPos, in
                   (*xPos < (neighboringTiles[a]->x * TILE_W) + TILE_W));
             upperCollision = w1 && w2;
 
-            if (upperCollision ) {
+            if (upperCollision) {
 
 
                 if (bounce) {
-                    *ySpeed = (-1) * BOUNCING_FACTOR * *ySpeed;
+                    *ySpeed = (-1) * BOUNCING_FACTOR_Y * *ySpeed;
 //                    if (*ySpeed < BOUNCING_STOP_SPEED)
 //                        *ySpeed = 0;
                 } else
@@ -65,7 +66,7 @@ bool Collisions::checkBottomCollision(MapTile *neighboringTiles[9], int *xPos, i
 
     for (int a = 0; a < 9; a++) {
 
-        if (neighboringTiles[a] == 0)
+        if (neighboringTiles[a] == 0 || !neighboringTiles[a]->collidable)
             continue;
 
         if (!bottomCollision) {
@@ -81,10 +82,10 @@ bool Collisions::checkBottomCollision(MapTile *neighboringTiles[9], int *xPos, i
 
             bottomCollision = w1 && w2;
 
-            if (bottomCollision ) {
+            if (bottomCollision) {
 
                 if (bounce) {
-                    *ySpeed = (-1) *BOUNCING_FACTOR* *ySpeed;
+                    *ySpeed = (-1) * BOUNCING_FACTOR_Y * *ySpeed;
 //                    if (*ySpeed < BOUNCING_STOP_SPEED)
 //                        *ySpeed = 0;
                 } else
@@ -110,7 +111,7 @@ bool Collisions::checkLeftCollision(MapTile *neighboringTiles[9], int *xPos, int
 
     for (int a = 0; a < 9; a++) {
 
-        if (neighboringTiles[a] == 0)
+        if (neighboringTiles[a] == 0 || !neighboringTiles[a]->collidable)
             continue;
 
         if (!leftCollision) {
@@ -131,7 +132,7 @@ bool Collisions::checkLeftCollision(MapTile *neighboringTiles[9], int *xPos, int
             if (leftCollision) {
 
                 if (bounce) {
-                    *xSpeed = (-1) *BOUNCING_FACTOR* *xSpeed;
+                    *xSpeed = (-1) * BOUNCING_FACTOR_X * *xSpeed;
 //                    if (*xSpeed < BOUNCING_STOP_SPEED)
 //                        *xSpeed = 0;
                 } else
@@ -157,7 +158,7 @@ bool Collisions::checkRightCollision(MapTile *neighboringTiles[9], int *xPos, in
     bool w2;
     for (int a = 0; a < 9; a++) {
 
-        if (neighboringTiles[a] == 0)
+        if (neighboringTiles[a] == 0 || !neighboringTiles[a]->collidable)
             continue;
 
         if (!rightCollision) {
@@ -179,7 +180,7 @@ bool Collisions::checkRightCollision(MapTile *neighboringTiles[9], int *xPos, in
             if (rightCollision) {
 
                 if (bounce) {
-                    *xSpeed = (-1) *BOUNCING_FACTOR * *xSpeed;
+                    *xSpeed = (-1) * BOUNCING_FACTOR_X * *xSpeed;
 //                    if (*xSpeed < BOUNCING_STOP_SPEED)
 //                        *xSpeed = 0;
                 } else
@@ -207,7 +208,7 @@ bool Collisions::isStandingOnEdge(MapTile *neighboringTiles[9], int *xPos, int *
 
     for (int a = 0; a < 32; a++) {
 
-        if (neighboringTiles[a] == 0 /*|| !mapTiles[x][y]->collidable*/)
+        if (neighboringTiles[a] == 0 || !neighboringTiles[a]->collidable)
             continue;
 
 
@@ -267,6 +268,31 @@ void Collisions::getNeighboringTiles(MapTile *mapTiles[32][32], int xx, int yy, 
     neighboringTiles[6] = right_up;
     neighboringTiles[7] = left_down;
     neighboringTiles[8] = right_down;
+}
+
+void Collisions::bombNeighboringTiles(MapTile *mapTiles[32][32], int xx, int yy) {
+
+    if (mapTiles[xx - 1][yy]->destroyable)
+        mapTiles[xx - 1][yy] = nullptr;
+    if (mapTiles[xx + 1][yy] ->destroyable)
+        mapTiles[xx + 1][yy] = nullptr;
+    if (mapTiles[xx][yy - 1]->destroyable)
+        mapTiles[xx][yy - 1] = nullptr;
+    if (mapTiles[xx][yy + 1]->destroyable)
+        mapTiles[xx][yy + 1] = nullptr;
+    if (mapTiles[xx][yy]->destroyable)
+        mapTiles[xx][yy] = nullptr;
+    if (mapTiles[xx - 1][yy - 1]->destroyable)
+        mapTiles[xx - 1][yy - 1] = nullptr;
+    if (mapTiles[xx + 1][yy - 1]->destroyable)
+        mapTiles[xx + 1][yy - 1] = nullptr;
+    if (mapTiles[xx - 1][yy + 1]->destroyable)
+        mapTiles[xx - 1][yy + 1] = nullptr;
+    if (mapTiles[xx + 1][yy + 1]->destroyable)
+        mapTiles[xx + 1][yy + 1] = nullptr;
+    if (mapTiles[xx][yy + 2]->destroyable)
+        mapTiles[xx][yy + 2] = nullptr;
+
 }
 
 void Collisions::getCenterTile(int x_position, int y_position, int height, int width, int *x_tile, int *y_tile) {

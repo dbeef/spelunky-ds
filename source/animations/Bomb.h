@@ -8,10 +8,10 @@
 #define BOUNCE_VELOCITY_LOSS 0.65
 #define BOMB_SIZE 8
 #define ARMED_TIME_BLINK_SLOW 2000
-#define ARMED_TIME_BLINK_FAST 2000
+#define ARMED_TIME_BLINK_FAST 4000
 
-#define MAX_X_SPEED_BOMB 3
-#define MAX_Y_SPEED_BOMB 1.5
+#define MAX_X_SPEED_BOMB 4
+#define MAX_Y_SPEED_BOMB 4
 
 #include <nds/arm9/sprite.h>
 #include "../level_layout/SpriteInfo.h"
@@ -48,13 +48,20 @@ public:
 
     SpriteInfo *mainSpriteInfo = nullptr;
     SpriteInfo *subSpriteInfo = nullptr;
+    u8 * frameGfx;
 
     //fixme cloning carried_by_main_dude
 //    bool carried;
     bool armed;
 
     int armedTimer;
+    int explosionTimer;
 
+    int explosionFrame;
+
+    void disarm();
+
+    void arm();
 };
 
 

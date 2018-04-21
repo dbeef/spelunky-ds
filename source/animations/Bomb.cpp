@@ -7,13 +7,16 @@
 #include "../level_layout/MapUtils.h"
 #include "Collisions.h"
 #include "MainDude.h"
-#include "../../build/bomb_armed.h"
-#include "../../build/bomb_unarmed.h"
+#include "../../build/explosion.h"
+#include <math.h>       /* floor */
+
+extern u16 map[4096];
 
 void Bomb::draw() {
 
 
-    if (hold_by_main_dude == true) {
+    if (hold_by_main_dude) {
+
         y = global::main_dude->y + 6;
 
         if (global::main_dude->state == 1) {
@@ -28,15 +31,82 @@ void Bomb::draw() {
     int sub_x = x - global::camera->x;
     int sub_y = y - global::camera->y - 192;
 
-    if (this->y > 320) {
-        main_x = -16;
-        main_y = -16;
+    if (this->y < 320 + 64 && this->y > 320 - 64) {
+        if (explosionFrame > 0)
+            sub_x -= 64;
+        else
+            sub_x -= 56;
+    } else if (this->y > 320) {
+        main_x = -128;
+        main_y = -128;
+        sub_x -= 56;
+    } else if (this->y < 320) {
+        sub_x = -128;
+        sub_y = -128;
     }
 
-    if (this->y < 320) {
-        sub_x = -16;
-        sub_y = -16;
+    if (activated_by_main_dude && !armed) {
+        arm();
+        armed = true;
+        armedTimer = 0;
     }
+    if (armed) {
+        armedTimer += *timer;
+        if (armedTimer < ARMED_TIME_BLINK_SLOW) {
+            if ((armedTimer) % 250 < 125) {
+                disarm();
+            } else {
+                arm();
+            }
+        } else if (armedTimer < ARMED_TIME_BLINK_FAST) {
+            if ((armedTimer) % 120 < 60) {
+                disarm();
+            } else {
+                arm();
+            }
+        } else {
+
+            main_x -= 32;
+            main_y -= 32;
+
+            sub_x += 32;
+            sub_y -= 32;
+
+            explosionTimer += *timer;
+            if (explosionTimer > 50 && explosionFrame < 10) {
+
+                if (explosionFrame == 0) {
+
+                    int xx = floor_div(this->x + 0.5 * BOMB_SIZE, 16);
+                    int yy = floor_div(this->y + 0.5 * BOMB_SIZE, 16);
+
+                    Collisions::bombNeighboringTiles(global::level_generator->mapTiles, xx, yy);
+                    global::bombed = true;
+
+
+                }
+
+                explosionTimer = 0;
+                explosionFrame++;
+
+
+                if (explosionFrame >= 10) {
+                    subSpriteInfo->updateFrame(nullptr, 64 * 64);
+                    mainSpriteInfo->updateFrame(nullptr, 64 * 64);
+
+                    //explosion! dispose object and remove some tiles
+                } else {
+
+
+                    frameGfx = (u8 *) explosionTiles + (2 + explosionFrame) * 64 * 64 / 2;
+                    subSpriteInfo->updateFrame(frameGfx, 64 * 64);
+                    mainSpriteInfo->updateFrame(frameGfx, 64 * 64);
+                }
+            }
+        }
+
+    }
+
 
     mainSpriteInfo->entry->x = main_x;
     mainSpriteInfo->entry->y = main_y;
@@ -48,10 +118,30 @@ void Bomb::draw() {
 
 
 void Bomb::init() {
-    subSpriteInfo = global::sub_oam_manager->initSprite(bomb_unarmedPal, bomb_unarmedPalLen,
-                                                        bomb_unarmedTiles, bomb_unarmedTilesLen, 8, BOMB);
-    mainSpriteInfo = global::main_oam_manager->initSprite(bomb_unarmedPal, bomb_unarmedPalLen,
-                                                          bomb_unarmedTiles, bomb_unarmedTilesLen, 8,BOMB);
+    subSpriteInfo = global::sub_oam_manager->initSprite(explosionPal, explosionPalLen,
+                                                        nullptr, 64 * 64, 64, BOMB);
+    mainSpriteInfo = global::main_oam_manager->initSprite(explosionPal, explosionPalLen,
+                                                          nullptr, 64 * 64, 64, BOMB);
+    disarm();
+    explosionFrame = 0;
+
+//    frameGfx = (u8 *) explosionTiles + 3* 64 * 64 / 2;
+//    subSpriteInfo->updateFrame(frameGfx, 64 * 64);
+//    mainSpriteInfo->updateFrame(frameGfx, 64 * 64);
+
+
+}
+
+void Bomb::arm() {
+    frameGfx = (u8 *) explosionTiles + 1 * 64 * 64 / 2;
+    subSpriteInfo->updateFrame(frameGfx, 64 * 64);
+    mainSpriteInfo->updateFrame(frameGfx, 64 * 64);
+}
+
+void Bomb::disarm() {
+    frameGfx = (u8 *) explosionTiles; //+ 1 * 8 * 8  / 2; dla drugiej klatki
+    subSpriteInfo->updateFrame(frameGfx, 64 * 64);
+    mainSpriteInfo->updateFrame(frameGfx, 64 * 64);
 }
 
 void Bomb::updateSpeed() {
@@ -68,7 +158,7 @@ void Bomb::updateSpeed() {
 
     pos_inc_timer += *timer;
 
-    bool change_pos = (pos_inc_timer > 15) && !hold_by_main_dude;
+    bool change_pos = (pos_inc_timer > 15) && !hold_by_main_dude && explosionFrame == 0;
 
     if (change_pos) {
         updatePosition();
@@ -78,13 +168,13 @@ void Bomb::updateSpeed() {
 
 void Bomb::updatePosition() {
 
-    if (xSpeed > 0) {
-        xSpeed -= 0.025;
+    if (bottomCollision && xSpeed > 0) {
+        xSpeed -= 0.055;
         if (xSpeed < 0)
             xSpeed = 0;
     }
-    if (xSpeed < 0) {
-        xSpeed += 0.025;
+    if (bottomCollision && xSpeed < 0) {
+        xSpeed += 0.055;
         if (xSpeed > 0)
             xSpeed = 0;
     }
@@ -147,7 +237,7 @@ void Bomb::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_
     rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, 8, 8, true);
     upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, 8, true);
 
-    if(bottomCollision){
+    if (bottomCollision) {
 
     }
 

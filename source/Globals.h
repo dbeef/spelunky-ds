@@ -34,6 +34,7 @@ namespace global {
     extern int bg_sub_address;
     extern std::vector<MovingObject *> sprites;
     extern std::vector<SpriteInfo *> spriteInfos;
+    extern bool bombed;
 }
 
 #endif //SPELUNKYDS_CONSTS_H

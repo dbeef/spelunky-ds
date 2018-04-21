@@ -278,6 +278,7 @@ void LevelGenerator::tilesToMap() {
         for (int y = 0; y < 32; y++) {
             MapTile *t = this->mapTiles[x][y];
             for (int k = 0; k < 4; k++)
+                if(t && t->values[k] != 0)
                 map[t->map_index[k]] = t->values[k];
         }
     }
@@ -368,6 +369,7 @@ void LevelGenerator::generateRooms() {
 //                        std::cout << pos_x << " " << pos_y << '\n';
                         delete (mapTiles[pos_x][pos_y]);
                         MapTile *t = new MapTile();
+                        t->destroyable = true;
 
                         if (tab[tab_y][tab_x] == 1) {
                             t->values[0] = 20;

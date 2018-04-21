@@ -24,10 +24,10 @@ TARGET		:=	$(notdir $(CURDIR))
 BUILD		:=	build
 SOURCES		:=	source source/level_layout source/console source/input  \
                 source/animations source/sprites source/time source/hud
-DATA		:=	data  
+DATA		:=	data
 INCLUDES	:=	include
 FONTS   	:=	gfx/fonts
-SPRITES	    :=	gfx/sprites
+SPRITES	    :=	gfx/sprites gfx/sprites/64x64
 TILEMAPS    :=  gfx/tilemaps
 
 #---------------------------------------------------------------------------------
@@ -141,6 +141,8 @@ $(OUTPUT).elf	:	$(OFILES)
 		grit $< -ff../gfx/sprites/sprite.grit -o$*
 %.s %.h : ../gfx/tilemaps/%.png
 		grit $< -ff../gfx/tilemaps/tilemap.grit -o$*
+%.s %.h : ../gfx/sprites/64x64/%.png
+		grit $< -ff../gfx/sprites/64x64/sprite.grit -o$*
 
 #grit $< -ff../gfx/tilemaps/tilemap.grit -o$*
 #grit $< -ff../gfx/sprites/sprite.grit -o$*

@@ -15,6 +15,7 @@ public:
     bool left_key_held;
     bool right_key_held;
     bool down_key_held;
+    bool up_key_held;
     bool b_key_held;
 
     bool r_bumper_down;

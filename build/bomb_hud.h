@@ -1,9 +1,9 @@
 
-//{{BLOCK(bomb)
+//{{BLOCK(bomb_hud)
 
 //======================================================================
 //
-//	bomb, 16x16@4, 
+//	bomb_hud, 16x16@4, 
 //	Transparent color : 20,9C,00
 //	+ palette 16 entries, not compressed
 //	+ 4 tiles Metatiled by 2x2 not compressed
@@ -15,15 +15,15 @@
 //
 //======================================================================
 
-#ifndef GRIT_BOMB_H
-#define GRIT_BOMB_H
+#ifndef GRIT_BOMB_HUD_H
+#define GRIT_BOMB_HUD_H
 
-#define bombTilesLen 128
-extern const unsigned int bombTiles[32];
+#define bomb_hudTilesLen 128
+extern const unsigned int bomb_hudTiles[32];
 
-#define bombPalLen 32
-extern const unsigned short bombPal[16];
+#define bomb_hudPalLen 32
+extern const unsigned short bomb_hudPal[16];
 
-#endif // GRIT_BOMB_H
+#endif // GRIT_BOMB_HUD_H
 
-//}}BLOCK(bomb)
+//}}BLOCK(bomb_hud)

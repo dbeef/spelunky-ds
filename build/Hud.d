@@ -15,7 +15,7 @@ Hud.o: /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/Hud.cpp \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../animations/../sprites/SpriteTypes.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../../build/heart.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../../build/dollar.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../../build/bomb.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../../build/bomb_hud.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../../build/rope.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../../build/holding_item.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../Globals.h \
@@ -122,7 +122,7 @@ Hud.o: /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/Hud.cpp \
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../../build/dollar.h:
 
-/home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../../build/bomb.h:
+/home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../../build/bomb_hud.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../../build/rope.h:
 

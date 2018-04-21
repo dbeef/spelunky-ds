@@ -60,6 +60,7 @@ public:
     bool rightCollision;
 
     bool hold_by_main_dude;
+    bool activated_by_main_dude; //ex. shooting shotgun, or arming bomb
 
     SpriteType spriteType;
 };

@@ -35,17 +35,18 @@ void spelunker::scroll(u16 *fresh_map) {
 
         global::input_handler->updateInput();
 
-        if ((global::input_handler->b_key_held)) {
+        if ((global::input_handler->b_key_held) || global::bombed) {
             dmaCopyHalfWords(DMA_CHANNEL, fresh_map, map, sizeof(map));
-            global::level_generator->newLayout(timer);
-            global::level_generator->mapBackground();
-            global::level_generator->mapFrame();
-            global::level_generator->generateRooms();
+//            global::level_generator->newLayout(timer);
+//            global::level_generator->mapBackground();
+//            global::level_generator->mapFrame();
+//            global::level_generator->generateRooms();
             global::level_generator->tilesToMap();
             sectorize_map();
             dmaCopyHalfWords(DMA_CHANNEL, map, bgGetMapPtr(global::bg_main_address), sizeof(map));
             dmaCopyHalfWords(DMA_CHANNEL, map, bgGetMapPtr(global::bg_sub_address), sizeof(map));
             global::main_dude->bottomCollision = false;
+            global::bombed = false;
         }
 
         swiWaitForVBlank();

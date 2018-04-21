@@ -16,6 +16,7 @@ void InputHandler::updateInput() {
         right_key_held = (keys_held & KEY_RIGHT) != 0;
         left_key_held = (keys_held & KEY_LEFT) != 0;
         down_key_held = (keys_held & KEY_DOWN) != 0;
+        up_key_held = (keys_held & KEY_UP) != 0;
         b_key_held = (keys_held & KEY_B) != 0;
 
     } else {

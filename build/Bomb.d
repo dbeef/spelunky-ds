@@ -94,8 +94,7 @@ Bomb.o: \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/MapUtils.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Collisions.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/MainDude.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../../build/bomb_armed.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../../build/bomb_unarmed.h
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../../build/explosion.h
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Bomb.h:
 
@@ -285,6 +284,4 @@ Bomb.o: \
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/MainDude.h:
 
-/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../../build/bomb_armed.h:
-
-/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../../build/bomb_unarmed.h:
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../../build/explosion.h:

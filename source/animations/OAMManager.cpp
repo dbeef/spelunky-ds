@@ -110,8 +110,13 @@ OAMManager::initSprite(const unsigned short pallette[], int palLen, const unsign
 
     if (size == 8)
         spriteEntry->size = OBJSIZE_8;
-    else
+    else if (size == 16)
         spriteEntry->size = OBJSIZE_16;
+    else if (size == 32)
+        spriteEntry->size = OBJSIZE_32;
+    else
+        spriteEntry->size = OBJSIZE_64;
+
 
     /*
      *  Configure attribute 2.
@@ -127,7 +132,8 @@ OAMManager::initSprite(const unsigned short pallette[], int palLen, const unsign
     //Re-using already loaded palletes.
     for (int a = 0; a < global::spriteInfos.size(); a++) {
         if (global::spriteInfos.at(a)) {
-            if ((*global::spriteInfos.at(a)).spriteType == type && (*global::spriteInfos.at(a)).oam_address == *oam_address) {
+            if ((*global::spriteInfos.at(a)).spriteType == type &&
+                (*global::spriteInfos.at(a)).oam_address == *oam_address) {
 
 //                std::cout << '\n';
 //                std::cout << "FOUND PROPER PALETTE" << (*global::spriteInfos.at(a)).spriteType << " " << type  <<  " "
@@ -139,7 +145,7 @@ OAMManager::initSprite(const unsigned short pallette[], int palLen, const unsign
         }
     }
 
-    if(!spriteEntry->palette) {
+    if (!spriteEntry->palette) {
 
 //        std::cout << "!PROPER PALETTE" << '\n';
 

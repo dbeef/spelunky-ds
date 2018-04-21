@@ -8,7 +8,7 @@
 #include "Hud.h"
 #include "../../build/heart.h"
 #include "../../build/dollar.h"
-#include "../../build/bomb.h"
+#include "../../build/bomb_hud.h"
 #include "../../build/rope.h"
 #include "../../build/holding_item.h"
 #include "../Globals.h"
@@ -32,7 +32,7 @@ void Hud::init() {
 
     heartSpriteInfo = global::main_oam_manager->initSprite(heartPal, heartPalLen, heartTiles, heartTilesLen, 16, HUD_HEART);
     dollarSpriteInfo = global::main_oam_manager->initSprite(dollarPal, dollarPalLen, dollarTiles, dollarTilesLen, 16, HUD_DOLLAR);
-    bombSpriteInfo = global::main_oam_manager->initSprite(bombPal, bombPalLen, bombTiles, bombTilesLen, 16, HUD_BOMB);
+    bombSpriteInfo = global::main_oam_manager->initSprite(bomb_hudPal, bomb_hudPalLen, bomb_hudTiles, bomb_hudTilesLen, 16, HUD_BOMB);
     ropeSpriteInfo = global::main_oam_manager->initSprite(ropePal, ropePalLen, ropeTiles, ropeTilesLen, 16, HUD_ROPE);
     holdingItemSpriteInfo = global::main_oam_manager->
             initSprite(holding_itemPal, holding_itemPalLen, holding_itemTiles, holding_itemTilesLen, 16, HUD_HOLDING_ITEM);

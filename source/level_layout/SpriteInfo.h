@@ -23,7 +23,7 @@ public:
 
     u16 oam_address;
 
-    void updateFrame(u8 *tile);
+    void updateFrame(u8 *tile, int size);
 };
 
 

@@ -28,6 +28,7 @@ namespace global {
     std::vector<SpriteInfo *> spriteInfos(0, nullptr);
     int bg_main_address = 0;
     int bg_sub_address = 0;
+    bool bombed = false;
 }
 
 int main(void) {

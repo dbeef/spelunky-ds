@@ -32,25 +32,48 @@ void MainDude::handleKeyInput() {
                 if (holding_item) {
 
                     //throw holding item
+                    //if holding bomb, arm it only
 
                     for (int a = 0; a < global::sprites.size(); a++) {
                         if (global::sprites.at(a)) {
                             if ((*global::sprites.at(a)).hold_by_main_dude) {
 
-                                if (state == 1)
-                                    (*global::sprites.at(a)).xSpeed = -3;
-                                else
-                                    (*global::sprites.at(a)).xSpeed = 3;
+                                if ((*global::sprites.at(a)).activated_by_main_dude) {
 
-                                (*global::sprites.at(a)).ySpeed = -1;
+                                    if (!global::input_handler->down_key_held) {
 
-                                (*global::sprites.at(a)).hold_by_main_dude = false;
+                                        if (state == 1)
+                                            (*global::sprites.at(a)).xSpeed = -2.5 - abs(xSpeed);
+                                        else
+                                            (*global::sprites.at(a)).xSpeed = 2.5 + abs(xSpeed);
+
+                                    } else {
+
+                                        if (state == 1)
+                                            (*global::sprites.at(a)).xSpeed = -0.04;
+                                        else
+                                            (*global::sprites.at(a)).xSpeed = 0.04;
+
+                                    }
+
+                                    if(global::input_handler->up_key_held)
+                                    (*global::sprites.at(a)).ySpeed = -3 - abs(ySpeed);
+                                    else
+                                        (*global::sprites.at(a)).ySpeed = -1;
+
+
+                                    (*global::sprites.at(a)).hold_by_main_dude = false;
+                                    holding_item = false;
+
+                                } else {
+                                    (*global::sprites.at(a)).activated_by_main_dude = true;
+                                }
+
                             }
                         }
                     }
 
 
-                    holding_item = false;
                 } else {
                     whip = true;
                     animFrame = 0;
@@ -62,7 +85,6 @@ void MainDude::handleKeyInput() {
 
             Bomb *bomb = new Bomb();
             bomb->init();
-            bomb->xSpeed = 3;
             bomb->timer = timer;
             bomb->hold_by_main_dude = true;
 
@@ -326,12 +348,12 @@ void MainDude::draw() {
     int sub_x = x - global::camera->x;
     int sub_y = y - global::camera->y - 192;
 
-    if (this->y > 320) {
+    if (this->y < 336 && this->y > 304) {
+
+    } else if (this->y > 320) {
         main_x = -16;
         main_y = -16;
-    }
-
-    if (this->y < 320) {
+    } else if (this->y < 320) {
         sub_x = -16;
         sub_y = -16;
     }
@@ -394,8 +416,8 @@ void MainDude::draw() {
 
         frame = (3 * SPRITESHEET_ROW_WIDTH) + animFrame;
         offset = frameGfx + frame * MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT / 2;
-        main_spelunker->updateFrame(offset);
-        sub_spelunker->updateFrame(offset);
+        main_spelunker->updateFrame(offset, 16 * 16);
+        sub_spelunker->updateFrame(offset, 16 * 16);
     } else if (pushing_left || pushing_right) {
 
         if (pushing_left)
@@ -405,8 +427,8 @@ void MainDude::draw() {
 
 
         offset = frameGfx + frame * MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT / 2;
-        main_spelunker->updateFrame(offset);
-        sub_spelunker->updateFrame(offset);
+        main_spelunker->updateFrame(offset, 16 * 16);
+        sub_spelunker->updateFrame(offset, 16 * 16);
 
     } else if (whip) {
 
@@ -418,18 +440,18 @@ void MainDude::draw() {
             offset = frameGfx + frame * MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT / 2;
         }
 
-        main_spelunker->updateFrame(offset);
-        sub_spelunker->updateFrame(offset);
+        main_spelunker->updateFrame(offset, 16 * 16);
+        sub_spelunker->updateFrame(offset, 16 * 16);
     } else if (hangingOnTileRight) {
         frame = (2 * SPRITESHEET_ROW_WIDTH) + 1;
         offset = frameGfx + frame * MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT / 2;
-        main_spelunker->updateFrame(offset);
-        sub_spelunker->updateFrame(offset);
+        main_spelunker->updateFrame(offset, 16 * 16);
+        sub_spelunker->updateFrame(offset, 16 * 16);
     } else if (hangingOnTileLeft) {
         frame = (2 * SPRITESHEET_ROW_WIDTH);
         offset = frameGfx + frame * MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT / 2;
-        main_spelunker->updateFrame(offset);
-        sub_spelunker->updateFrame(offset);
+        main_spelunker->updateFrame(offset, 16 * 16);
+        sub_spelunker->updateFrame(offset, 16 * 16);
     } else if (crawling) {
         //left
         if (state == 1)
@@ -439,8 +461,8 @@ void MainDude::draw() {
 
 
         offset = frameGfx + frame * MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT / 2;
-        main_spelunker->updateFrame(offset);
-        sub_spelunker->updateFrame(offset);
+        main_spelunker->updateFrame(offset, 16 * 16);
+        sub_spelunker->updateFrame(offset, 16 * 16);
     } else if (!bottomCollision) {
 
         if (state == 1) {
@@ -450,8 +472,8 @@ void MainDude::draw() {
             frame = state * FRAMES_PER_ANIMATION;
             offset = frameGfx + frame * MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT / 2;
         }
-        main_spelunker->updateFrame(offset);
-        sub_spelunker->updateFrame(offset);
+        main_spelunker->updateFrame(offset, 16 * 16);
+        sub_spelunker->updateFrame(offset, 16 * 16);
 
     } else {
         if (abs(xSpeed) != 0) {
@@ -467,8 +489,8 @@ void MainDude::draw() {
             }
 
         }
-        main_spelunker->updateFrame(offset);
-        sub_spelunker->updateFrame(offset);
+        main_spelunker->updateFrame(offset, 16 * 16);
+        sub_spelunker->updateFrame(offset, 16 * 16);
     }
 
 }

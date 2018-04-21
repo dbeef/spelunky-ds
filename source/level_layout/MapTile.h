@@ -16,6 +16,7 @@ public:
     int x; //32
     int y; //32
     bool collidable;
+    bool destroyable;
     MapTile();
 };
 
