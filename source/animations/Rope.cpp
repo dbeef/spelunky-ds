@@ -23,11 +23,14 @@ void Rope::draw() {
             x = global::main_dude->x + 10;
     }
 
-
     int main_x = x - global::camera->x;
     int main_y = y - global::camera->y;
     int sub_x = x - global::camera->x;
     int sub_y = y - global::camera->y - 192;
+
+    for (int a = 0; a < ropeChain.size(); a++) {
+        ropeChain.at(a)->draw();
+    }
 
     if (this->y < 320 + 8 && this->y > 320 - 8) {
     } else if (this->y > 320) {
@@ -39,7 +42,7 @@ void Rope::draw() {
         sub_y = -128;
     }
 
-    if (activated_by_main_dude && !thrown) {
+    if (activated_by_main_dude && !thrown && !finished) {
         thrown = true;
         throwingTimer = 0;
 
@@ -47,11 +50,24 @@ void Rope::draw() {
         global::main_dude->holding_item = false;
         hold_by_main_dude = false;
 
-        x = floor_div(global::main_dude->x+ 0.5 * MAIN_DUDE_WIDTH, 16) * TILE_W + ROPE_SIZE * 0.5;
+        x = floor_div(global::main_dude->x + 0.5 * MAIN_DUDE_WIDTH, 16) * TILE_W + ROPE_SIZE * 0.5;
+
         ySpeed = -4;
     }
-    if (thrown) {
+    if (thrown && !finished) {
         throwingTimer += *timer;
+
+        int temp_y = floor_div(this->y + (0.5 * ROPE_SIZE), 16);
+
+        if (!isThereChainForThisTile(temp_y * TILE_H)) {
+            RopeElement *element = new RopeElement();
+            element->init();
+
+            element->x = x;
+            element->y = temp_y * TILE_H;
+
+            ropeChain.push_back(element);
+        }
     }
 
     mainSpriteInfo->entry->x = main_x;
@@ -177,7 +193,7 @@ void Rope::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_
     upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, 8, false);
 
     if (upperCollision) {
-        if(!finished){
+        if (!finished) {
             throwingFinished();
             finished = true;
         }
@@ -185,5 +201,11 @@ void Rope::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_
 
 }
 
-
+bool Rope::isThereChainForThisTile(int rope_y) {
+    for (int a = 0; a < ropeChain.size(); a++) {
+        if (ropeChain.at(a)->y == rope_y)
+            return true;
+    }
+    return false;
+}
 

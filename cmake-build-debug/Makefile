@@ -285,6 +285,33 @@ source/animations/Rope.cpp.s:
 	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/animations/Rope.cpp.s
 .PHONY : source/animations/Rope.cpp.s
 
+source/animations/RopeElement.o: source/animations/RopeElement.cpp.o
+
+.PHONY : source/animations/RopeElement.o
+
+# target to build an object file
+source/animations/RopeElement.cpp.o:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/animations/RopeElement.cpp.o
+.PHONY : source/animations/RopeElement.cpp.o
+
+source/animations/RopeElement.i: source/animations/RopeElement.cpp.i
+
+.PHONY : source/animations/RopeElement.i
+
+# target to preprocess a source file
+source/animations/RopeElement.cpp.i:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/animations/RopeElement.cpp.i
+.PHONY : source/animations/RopeElement.cpp.i
+
+source/animations/RopeElement.s: source/animations/RopeElement.cpp.s
+
+.PHONY : source/animations/RopeElement.s
+
+# target to generate assembly for a file
+source/animations/RopeElement.cpp.s:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/animations/RopeElement.cpp.s
+.PHONY : source/animations/RopeElement.cpp.s
+
 source/animations/Snake.o: source/animations/Snake.cpp.o
 
 .PHONY : source/animations/Snake.o
@@ -636,6 +663,9 @@ help:
 	@echo "... source/animations/Rope.o"
 	@echo "... source/animations/Rope.i"
 	@echo "... source/animations/Rope.s"
+	@echo "... source/animations/RopeElement.o"
+	@echo "... source/animations/RopeElement.i"
+	@echo "... source/animations/RopeElement.s"
 	@echo "... source/animations/Snake.o"
 	@echo "... source/animations/Snake.i"
 	@echo "... source/animations/Snake.s"

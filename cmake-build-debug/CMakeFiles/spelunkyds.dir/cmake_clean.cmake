@@ -1,6 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/spelunkyds.dir/source/animations/MainDude.cpp.o"
   "CMakeFiles/spelunkyds.dir/source/animations/Bomb.cpp.o"
+  "CMakeFiles/spelunkyds.dir/source/animations/RopeElement.cpp.o"
   "CMakeFiles/spelunkyds.dir/source/animations/Rope.cpp.o"
   "CMakeFiles/spelunkyds.dir/source/console/TextManager.cpp.o"
   "CMakeFiles/spelunkyds.dir/source/sprites/MovingObject.cpp.o"

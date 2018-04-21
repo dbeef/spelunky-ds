@@ -2,8 +2,8 @@
 // Created by xdbeef on 04.04.18.
 //
 
-#ifndef SPELUNKYDS_ROPE_H
-#define SPELUNKYDS_ROPE_H
+#ifndef SPELUNKYDS_ROPE_ELEMENT_H
+#define SPELUNKYDS_ROPE_ELEMENT_H
 
 #include <nds/arm9/sprite.h>
 #include <vector>
@@ -12,13 +12,10 @@
 #include "Camera.h"
 #include "../level_layout/LevelGenerator.h"
 #include "../sprites/MovingObject.h"
-#include "RopeElement.h"
 
-#define MAX_Y_SPEED_ROPE 4
-#define MAX_X_SPEED_ROPE 4
-#define ROPE_SIZE 8
+#define ROPE_ELEMENT_SIZE 8
 
-class Rope : public MovingObject {
+class RopeElement : public MovingObject {
 
 public:
 
@@ -41,26 +38,15 @@ public:
     void onCollisionWithMainCharacter() override {};
 
 
-    double *timer = nullptr;
-    double pos_inc_timer;
-
     SpriteInfo *mainSpriteInfo = nullptr;
     SpriteInfo *subSpriteInfo = nullptr;
 
+    SpriteInfo *mainSpriteInfo_2 = nullptr;
+    SpriteInfo *subSpriteInfo_2 = nullptr;
+
     u8 * frameGfx;
 
-    bool thrown;
-    bool finished;
-
-    int throwingTimer;
-    std::vector<RopeElement *> ropeChain;
-
-    void throwingFinished();
-    void notThrown();
-
-
-    bool isThereChainForThisTile(int rope_y_tiles);
 };
 
 
-#endif //SPELUNKYDS_ROPE_H
+#endif //SPELUNKYDS_ROPE_ELEMENT_H
