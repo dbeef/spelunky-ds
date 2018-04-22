@@ -11,10 +11,14 @@
 
 class SpriteInfo {
 public:
-    u16* sprite_address;
+    u16 *sprite_address;
     int offset_multiplier;
 
     int oamId;
+
+    int oamId_palette;
+    int oamId_sprite;
+
     int width;
     int height;
     int angle;

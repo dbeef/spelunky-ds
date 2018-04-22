@@ -38,7 +38,7 @@ public:
 
     void updateCollisionsOtherMoving() override {};
 
-    void onCollisionWithMainCharacter() override {};
+    void onCollisionWithMainCharacter() override;
 
 
     double *timer = nullptr;

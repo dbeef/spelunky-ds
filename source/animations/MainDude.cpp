@@ -57,8 +57,8 @@ void MainDude::handleKeyInput() {
 
                                     }
 
-                                    if(global::input_handler->up_key_held)
-                                    (*global::sprites.at(a)).ySpeed = -3 - abs(ySpeed);
+                                    if (global::input_handler->up_key_held)
+                                        (*global::sprites.at(a)).ySpeed = -3 - abs(ySpeed);
                                     else
                                         (*global::sprites.at(a)).ySpeed = -1;
 
@@ -91,11 +91,10 @@ void MainDude::handleKeyInput() {
 
             global::sprites.push_back(bomb);
             holding_item = true;
-        }
-        else if (global::input_handler->a_key_down && !holding_item) {
+        } else if (global::input_handler->a_key_down && !holding_item) {
             //make new bomb object
 
-            Rope *rope= new Rope();
+            Rope *rope = new Rope();
             rope->init();
             rope->timer = timer;
             rope->hold_by_main_dude = true;
@@ -378,7 +377,9 @@ void MainDude::draw() {
     int frame;
     u8 *offset;
 
-    if (whip) {
+    if (canClimbRope) {
+
+    } else if (whip) {
 
         sub_pre_whip->entry->y = sub_y - 2;
         main_pre_whip->entry->y = main_y - 2;

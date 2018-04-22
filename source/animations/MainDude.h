@@ -77,6 +77,7 @@ public:
     bool pushing_left;
     bool pushing_right;
     bool whip;
+    bool canClimbRope;
 
     bool holding_item;
 

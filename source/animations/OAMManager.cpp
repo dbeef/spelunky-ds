@@ -138,7 +138,7 @@ OAMManager::initSprite(const unsigned short pallette[], int palLen, const unsign
 //                std::cout << '\n';
 //                std::cout << "FOUND PROPER PALETTE" << (*global::spriteInfos.at(a)).spriteType << " " << type  <<  " "
 //                          << (*global::spriteInfos.at(a)).oamId << '\n';
-
+//
                 spriteEntry->palette = (*global::spriteInfos.at(a)).oamId;
                 break;
             }

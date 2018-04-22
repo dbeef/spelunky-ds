@@ -70,6 +70,19 @@ void Rope::draw() {
         }
     }
 
+    //checking if main dude can climb over the rope
+
+    for (int a = 0; a < ropeChain.size(); a++) {
+        if (ropeChain.at(a)->x > global::main_dude->x && ropeChain.at(a)->x < global::main_dude->x + MAIN_DUDE_WIDTH &&
+            ropeChain.at(a)->y > global::main_dude->y && ropeChain.at(a)->y < global::main_dude->y + MAIN_DUDE_HEIGHT) {
+//            std::cout<< " CA NCLIMB " << '\n';
+            global::main_dude->canClimbRope = true;
+        } else {
+            std::cout<< " " << '\n';
+            global::main_dude->canClimbRope = false;
+        }
+    }
+
     mainSpriteInfo->entry->x = main_x;
     mainSpriteInfo->entry->y = main_y;
 
@@ -179,6 +192,9 @@ void Rope::updatePosition() {
 //        ySpeed += GRAVITY_DELTA_SPEED;
 
     pos_inc_timer = 0;
+}
+
+void Rope::onCollisionWithMainCharacter() {
 }
 
 void Rope::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
