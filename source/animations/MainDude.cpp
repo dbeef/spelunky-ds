@@ -98,6 +98,7 @@ void MainDude::handleKeyInput() {
             rope->init();
             rope->timer = timer;
             rope->hold_by_main_dude = true;
+
             global::sprites.push_back(rope);
             holding_item = true;
         }
@@ -326,21 +327,25 @@ void MainDude::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos
 
 void MainDude::init() {
 
-    main_spelunker = global::main_oam_manager->initSprite(spelunkerPal, spelunkerPalLen, spelunkerTiles,
-                                                          spelunkerTilesLen, 16, MAIN_DUDE);
+    main_spelunker = global::main_oam_manager->initSprite(spelunkerPal, spelunkerPalLen, nullptr,
+                                                          16*16, 16, MAIN_DUDE, true, false);
 
     main_pre_whip = global::main_oam_manager->initSprite(pre_whip_leftPal, pre_whip_leftPalLen,
-                                                         pre_whip_leftTiles, pre_whip_leftTilesLen, 16, PRE_WHIP);
+                                                         pre_whip_leftTiles, pre_whip_leftTilesLen, 16, PRE_WHIP, true,
+                                                         false);
 
     main_whip = global::main_oam_manager->initSprite(whip_leftPal, whip_leftPalLen,
-                                                     whip_leftTiles, whip_leftTilesLen, 16, WHIP);
+                                                     whip_leftTiles, whip_leftTilesLen, 16, WHIP, true, false);
 
-    sub_spelunker = global::sub_oam_manager->initSprite(spelunkerPal, spelunkerPalLen, spelunkerTiles,
-                                                        spelunkerTilesLen, 16, MAIN_DUDE);
+    sub_spelunker = global::sub_oam_manager->initSprite(spelunkerPal, spelunkerPalLen, nullptr,
+                                                        16*16, 16, MAIN_DUDE, true, false);
+
     sub_pre_whip = global::sub_oam_manager->initSprite(pre_whip_leftPal, pre_whip_leftPalLen,
-                                                       pre_whip_leftTiles, pre_whip_leftTilesLen, 16, PRE_WHIP);
+                                                       pre_whip_leftTiles, pre_whip_leftTilesLen, 16, PRE_WHIP, true,
+                                                       false);
+
     sub_whip = global::sub_oam_manager->initSprite(whip_leftPal, whip_leftPalLen,
-                                                   whip_leftTiles, whip_leftTilesLen, 16, WHIP);
+                                                   whip_leftTiles, whip_leftTilesLen, 16, WHIP, true, false);
 
 
     frameGfx = (u8 *) spelunkerTiles;
@@ -378,7 +383,7 @@ void MainDude::draw() {
     u8 *offset;
 
     if (canClimbRope) {
-
+        //todo animation
     } else if (whip) {
 
         sub_pre_whip->entry->y = sub_y - 2;

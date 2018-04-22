@@ -30,12 +30,11 @@
 
 void Hud::init() {
 
-    heartSpriteInfo = global::main_oam_manager->initSprite(heartPal, heartPalLen, heartTiles, heartTilesLen, 16, HUD_HEART);
-    dollarSpriteInfo = global::main_oam_manager->initSprite(dollarPal, dollarPalLen, dollarTiles, dollarTilesLen, 16, HUD_DOLLAR);
-    bombSpriteInfo = global::main_oam_manager->initSprite(bomb_hudPal, bomb_hudPalLen, bomb_hudTiles, bomb_hudTilesLen, 16, HUD_BOMB);
-    ropeSpriteInfo = global::main_oam_manager->initSprite(ropePal, ropePalLen, ropeTiles, ropeTilesLen, 16, HUD_ROPE);
-    holdingItemSpriteInfo = global::main_oam_manager->
-            initSprite(holding_itemPal, holding_itemPalLen, holding_itemTiles, holding_itemTilesLen, 16, HUD_HOLDING_ITEM);
+    heartSpriteInfo = global::main_oam_manager->initSprite(heartPal, heartPalLen, heartTiles, heartTilesLen, 16, HUD_HEART, true, false);
+    dollarSpriteInfo = global::main_oam_manager->initSprite(dollarPal, dollarPalLen, dollarTiles, dollarTilesLen, 16, HUD_DOLLAR, true, false);
+    bombSpriteInfo = global::main_oam_manager->initSprite(bomb_hudPal, bomb_hudPalLen, bomb_hudTiles, bomb_hudTilesLen, 16, HUD_BOMB, true, false);
+    ropeSpriteInfo = global::main_oam_manager->initSprite(ropePal, ropePalLen, ropeTiles, ropeTilesLen, 16, HUD_ROPE, true, false);
+    holdingItemSpriteInfo = global::main_oam_manager->initSprite(holding_itemPal, holding_itemPalLen, holding_itemTiles, holding_itemTilesLen, 16, HUD_HOLDING_ITEM, true, false);
 
     heartSpriteInfo->entry->x = HEART_POSITION_X;
     heartSpriteInfo->entry->y = HEART_POSITION_Y;

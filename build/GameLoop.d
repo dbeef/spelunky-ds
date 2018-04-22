@@ -65,6 +65,7 @@ GameLoop.o: \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/MapTile.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/SpriteInfo.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../sprites/SpriteTypes.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/OamType.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/MapUtils.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../Globals.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../input/InputHandler.h \
@@ -74,6 +75,7 @@ GameLoop.o: \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../hud/../animations/OAMManager.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../hud/../animations/../level_layout/SpriteInfo.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../hud/../animations/../sprites/SpriteTypes.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../hud/../animations/OamType.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/Camera.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../level_layout/LevelGenerator.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/MainDude.h \
@@ -222,6 +224,8 @@ GameLoop.o: \
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../sprites/SpriteTypes.h:
 
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/OamType.h:
+
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/MapUtils.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../Globals.h:
@@ -239,6 +243,8 @@ GameLoop.o: \
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../hud/../animations/../level_layout/SpriteInfo.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../hud/../animations/../sprites/SpriteTypes.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../hud/../animations/OamType.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/Camera.h:
 

@@ -13,9 +13,11 @@ RopeElement.o: \
  /home/xdbeef/devkitPro/libnds/include/nds/memory.h \
  /home/xdbeef/devkitPro/libnds/include/nds/system.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../hud/../level_layout/../sprites/SpriteTypes.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../hud/../level_layout/../animations/OamType.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../hud/../animations/OAMManager.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../hud/../animations/../level_layout/SpriteInfo.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../hud/../animations/../sprites/SpriteTypes.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../hud/../animations/OamType.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../animations/Camera.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/LevelGenerator.h \
  /home/xdbeef/devkitPro/libnds/include/nds.h \
@@ -119,11 +121,15 @@ RopeElement.o: \
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../hud/../level_layout/../sprites/SpriteTypes.h:
 
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../hud/../level_layout/../animations/OamType.h:
+
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../hud/../animations/OAMManager.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../hud/../animations/../level_layout/SpriteInfo.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../hud/../animations/../sprites/SpriteTypes.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../hud/../animations/OamType.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../animations/Camera.h:
 

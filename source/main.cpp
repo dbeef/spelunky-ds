@@ -50,8 +50,8 @@ int main(void) {
 //    vramSetBankF(VRAM_F_SPRITE_EXT_PALETTE);
 //    vramSetBankI(VRAM_I_SUB_SPRITE_EXT_PALETTE);
 
-    oamInit(&oamMain, SpriteMapping_1D_32, false);
-    oamInit(&oamSub, SpriteMapping_1D_32, false);
+    oamInit(&oamMain, SpriteMapping_1D_64, false);
+    oamInit(&oamSub, SpriteMapping_1D_64, false);
 
     global::bg_main_address = bgInit(2, BgType_Text4bpp, BgSize_B8_512x512, 22, 4);
     global::bg_sub_address = bgInitSub(3, BgType_Text4bpp, BgSize_B8_512x512, 18, 4);

@@ -17,9 +17,16 @@
 static const int BYTES_PER_16_COLOR_TILE = 32;
 static const int COLORS_PER_PALETTE = 16;
 
-void OAMManager::initOAMTable(u16 *sprite_address, u16 *paletteAddress, u16 *oam_address, int offset_multiplier) {
+static bool nullptrs();
+
+static int countBombsOnThisOAMAddr(u32 oam_address);
+
+
+void
+OAMManager::initOAMTable(u16 *sprite_address, u16 *paletteAddress, u16 *oam_address, int offset_multiplier, OamType o) {
     oam = new OAMTable();
 
+    this->oamType = o;
     this->sprite_address = sprite_address;
     this->palette_address = paletteAddress;
     this->oam_address = oam_address;
@@ -59,21 +66,26 @@ void OAMManager::updateOAM() {
 
 SpriteInfo *
 OAMManager::initSprite(const unsigned short pallette[], int palLen, const unsigned int tiles[], int tilesLen,
-                       int size, SpriteType type) {
+                       int size, SpriteType type, bool reuse_palette, bool reuse_tiles) {
+
+
+//    std::cout << "\n";
 
     /* Keep track of the available tiles */
 
 //    std::cout << " MAKING " << current_oam_id << " " << type << '\n' ;
 
-    assert(current_oam_id < SPRITE_COUNT);
+    assert(current_oam_id_palette < SPRITE_COUNT && current_oam_id_tiles < SPRITE_COUNT);
     SpriteInfo *spriteInfo = new SpriteInfo();/*&spriteInfo[current_oam_id];*/
-    SpriteEntry *spriteEntry = &oam->oamBuffer[current_oam_id];
+    SpriteEntry *spriteEntry = &oam->oamBuffer[current_oam_id_tiles];
 
     /* Initialize spriteInfo */
+    spriteInfo->oamType = oamType;
     spriteInfo->spriteType = type;
     spriteInfo->offset_multiplier = this->offset_multiplier;
     spriteInfo->sprite_address = this->sprite_address;
-    spriteInfo->oamId = current_oam_id;
+    spriteInfo->oamId_tiles = current_oam_id_tiles;
+    spriteInfo->oamId_palette = current_oam_id_palette;
     spriteInfo->width = size;
     spriteInfo->height = size;
     spriteInfo->angle = 462;
@@ -91,7 +103,7 @@ OAMManager::initSprite(const unsigned short pallette[], int palLen, const unsign
      * transformation matrix for this sprite. Of course, you don't have to have
      * the matrix id match the affine id, but if you do make them match, this
      * assert can be helpful. */
-    assert(!spriteEntry->isRotateScale || (spriteInfo->oamId < MATRIX_COUNT));
+    assert(!spriteEntry->isRotateScale || (spriteInfo->oamId_tiles < MATRIX_COUNT));
     spriteEntry->isSizeDouble = false;
 //    spriteEntry->objMode = OBJMODE_NORMAL;
     spriteEntry->isMosaic = false;
@@ -106,7 +118,7 @@ OAMManager::initSprite(const unsigned short pallette[], int palLen, const unsign
      *  since we are making a square sprite, creates a 64x64 sprite.
      */
     spriteEntry->x = 50;
-    spriteEntry->rotationIndex = spriteInfo->oamId;
+    spriteEntry->rotationIndex = spriteInfo->oamId_tiles;
 
     if (size == 8)
         spriteEntry->size = OBJSIZE_8;
@@ -125,51 +137,103 @@ OAMManager::initSprite(const unsigned short pallette[], int palLen, const unsign
      *  be placed onto, which palette the sprite should use, and whether or not
      *  to show the sprite.
      */
-    spriteEntry->gfxIndex = nextAvailableTileIdx;
-    nextAvailableTileIdx += tilesLen / BYTES_PER_16_COLOR_TILE;
-    spriteEntry->priority = OBJPRIORITY_0;
+    if (reuse_palette || reuse_tiles) {
+        //Re-using already loaded palletes / tiles
+        for (int a = 0; a < global::spriteInfos.size(); a++) {
+            if (global::spriteInfos.at(a)) {
 
-    //Re-using already loaded palletes.
-    for (int a = 0; a < global::spriteInfos.size(); a++) {
-        if (global::spriteInfos.at(a)) {
-            if ((*global::spriteInfos.at(a)).spriteType == type &&
-                (*global::spriteInfos.at(a)).oam_address == *oam_address) {
+                if ((*global::spriteInfos.at(a)).spriteType == type &&
+                    (*global::spriteInfos.at(a)).oamType == oamType) {
 
-//                std::cout << '\n';
+//                std::cout <<. '\n';
 //                std::cout << "FOUND PROPER PALETTE" << (*global::spriteInfos.at(a)).spriteType << " " << type  <<  " "
 //                          << (*global::spriteInfos.at(a)).oamId << '\n';
 //
-                spriteEntry->palette = (*global::spriteInfos.at(a)).oamId;
-                break;
+//                    std::cout << "RE USING " << " ID " << (*global::spriteInfos.at(a)).oamId_palette << "\n";
+
+                    if (reuse_palette) {
+                        spriteInfo->oamId_palette = (*global::spriteInfos.at(a)).oamId_palette;
+                        spriteEntry->palette = (*global::spriteInfos.at(a)).oamId_palette;
+                    }
+                    if (reuse_tiles) {
+                        spriteEntry->gfxIndex = (*(*global::spriteInfos.at(a)).entry).gfxIndex;
+                    }
+                    break;
+                }
             }
         }
     }
+
+    if (!spriteEntry->gfxIndex) {
+        spriteEntry->gfxIndex = nextAvailableTileIdx;
+
+        //problem w tym, że przekazuję cały tilesheet, dlatego ten licznik zbyt szybko rośnie
+        //przekazywać tylko pierwszą klatkę!!!
+
+        nextAvailableTileIdx += tilesLen / BYTES_PER_16_COLOR_TILE;
+        dmaCopyHalfWords(3, tiles, &sprite_address[spriteEntry->gfxIndex * this->offset_multiplier], tilesLen);
+//        std::cout << "NEW TILES " << current_oam_id_tiles << " ON " << oam_address << "\n";
+    }
+    spriteEntry->priority = OBJPRIORITY_0;
+
 
     if (!spriteEntry->palette) {
 
 //        std::cout << "!PROPER PALETTE" << '\n';
 
-        spriteEntry->palette = spriteInfo->oamId;
+        spriteEntry->palette = spriteInfo->oamId_palette;
+        spriteInfo->oamId_palette = current_oam_id_palette;
+
         dmaCopyHalfWords(3,
                          pallette,
-                         &palette_address[spriteInfo->oamId *
+                         &palette_address[spriteInfo->oamId_palette *
                                           COLORS_PER_PALETTE],
                          palLen);
+
+//        std::cout << "NEW OAM ID PALETTE " << current_oam_id_palette << " ON " << oam_address << "\n";
+
+        current_oam_id_palette++;
 
     }
 
 
-    dmaCopyHalfWords(3,
-                     tiles,
-                     &sprite_address[spriteEntry->gfxIndex * this->offset_multiplier],
-                     tilesLen);
 
-
-    current_oam_id++;
-
-    global::spriteInfos.push_back(spriteInfo);
 
     spriteInfo->oam_address = *oam_address;
 
+    global::spriteInfos.push_back(spriteInfo);
+
+    current_oam_id_tiles++;
+
+//    std::cout << " SIZE " << global::spriteInfos.size() << " COUNTER " << countBombsOnThisOAMAddr(*oam_address) << "\n";
+
     return spriteInfo;
+}
+
+
+static bool nullptrs() {
+    for (int a = 0; a < global::spriteInfos.size(); a++) {
+        if (global::spriteInfos.at(a) == nullptr)
+            return true;
+    }
+    return false;
+}
+
+static int countBombsOnThisOAMAddr(u32 oam_address) {
+    int c = 0;
+
+    for (int a = 0; a < global::spriteInfos.size(); a++) {
+        if (global::spriteInfos.at(a)) {
+
+            if ((*global::spriteInfos.at(a)).spriteType == BOMB) {
+//                std::cout<<"B:" << (*global::spriteInfos.at(a)).oam_address;
+                if ((*global::spriteInfos.at(a)).oam_address == oam_address) {
+                    c++;
+                }
+            }
+        }
+    }
+//    if (c != 0)
+//        std::cout << '\n';
+    return c;
 }

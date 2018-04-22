@@ -10,9 +10,11 @@ Hud.o: /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/Hud.cpp \
  /home/xdbeef/devkitPro/libnds/include/nds/jtypes.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../level_layout/SpriteInfo.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../level_layout/../sprites/SpriteTypes.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../level_layout/../animations/OamType.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../animations/OAMManager.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../animations/../level_layout/SpriteInfo.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../animations/../sprites/SpriteTypes.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../animations/OamType.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../../build/heart.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../../build/dollar.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../../build/bomb_hud.h \
@@ -112,11 +114,15 @@ Hud.o: /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/Hud.cpp \
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../level_layout/../sprites/SpriteTypes.h:
 
+/home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../level_layout/../animations/OamType.h:
+
 /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../animations/OAMManager.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../animations/../level_layout/SpriteInfo.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../animations/../sprites/SpriteTypes.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../animations/OamType.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../../build/heart.h:
 

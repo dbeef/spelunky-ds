@@ -14,16 +14,27 @@ void RopeElement::draw() {
     int main_y = y - global::camera->y;
     int sub_x = x - global::camera->x;
     int sub_y = y - global::camera->y - 192;
-
+    
     if (this->y < 320 + 8 && this->y > 320 - 8) {
+
     } else if (this->y > 320) {
         main_x = -128;
         main_y = -128;
-        sub_x -= 56;
+//        sub_x -= 56;
     } else if (this->y < 320) {
         sub_x = -128;
         sub_y = -128;
     }
+
+    if (sub_y < 0 || sub_x < 0) {
+        sub_x = -128;
+        sub_y = -128;
+    }
+    if (main_y < 0 || main_x < 0) {
+        main_x = -128;
+        main_y = -128;
+    }
+
 
     mainSpriteInfo->entry->x = main_x;
     mainSpriteInfo->entry->y = main_y;
@@ -42,15 +53,15 @@ void RopeElement::draw() {
 
 void RopeElement::init() {
     subSpriteInfo = global::sub_oam_manager->initSprite(ropesPal, ropesPalLen,
-                                                        nullptr, 8 * 8, 8, ROPES);
+                                                        nullptr, 8 * 8, 8, ROPE_ELEMENT, true, true);
     mainSpriteInfo = global::main_oam_manager->initSprite(ropesPal, ropesPalLen,
-                                                          nullptr, 8 * 8, 8, ROPES);
-    
+                                                          nullptr, 8 * 8, 8, ROPE_ELEMENT, true, true);
+
     subSpriteInfo_2 = global::sub_oam_manager->initSprite(ropesPal, ropesPalLen,
-                                                        nullptr, 8 * 8, 8, ROPES);
+                                                          nullptr, 8 * 8, 8, ROPE_ELEMENT, true, true);
     mainSpriteInfo_2 = global::main_oam_manager->initSprite(ropesPal, ropesPalLen,
-                                                          nullptr, 8 * 8, 8, ROPES);
-    
+                                                            nullptr, 8 * 8, 8, ROPE_ELEMENT, true, true);
+
     frameGfx = (u8 *) ropesTiles + 0 * 8 * 8 / 2;
     subSpriteInfo->updateFrame(frameGfx, 8 * 8);
     mainSpriteInfo->updateFrame(frameGfx, 8 * 8);

@@ -8,16 +8,15 @@
 
 #include <nds/arm9/sprite.h>
 #include "../sprites/SpriteTypes.h"
+#include "../animations/OamType.h"
 
 class SpriteInfo {
 public:
     u16 *sprite_address;
     int offset_multiplier;
 
-    int oamId;
-
     int oamId_palette;
-    int oamId_sprite;
+    int oamId_tiles;
 
     int width;
     int height;
@@ -26,6 +25,7 @@ public:
     SpriteType spriteType;
 
     u16 oam_address;
+    OamType oamType;
 
     void updateFrame(u8 *tile, int size);
 };

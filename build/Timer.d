@@ -66,9 +66,11 @@ Timer.o: /home/xdbeef/NetBeansProjects/spelunkyds/source/time/Timer.cpp \
  /home/xdbeef/devkitPro/libnds/include/nds/jtypes.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/time/../hud/../level_layout/SpriteInfo.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/time/../hud/../level_layout/../sprites/SpriteTypes.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/time/../hud/../level_layout/../animations/OamType.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/time/../hud/../animations/OAMManager.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/time/../hud/../animations/../level_layout/SpriteInfo.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/time/../hud/../animations/../sprites/SpriteTypes.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/time/../hud/../animations/OamType.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/time/../animations/Camera.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/time/../level_layout/LevelGenerator.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/time/../level_layout/MapTile.h \
@@ -220,11 +222,15 @@ Timer.o: /home/xdbeef/NetBeansProjects/spelunkyds/source/time/Timer.cpp \
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/time/../hud/../level_layout/../sprites/SpriteTypes.h:
 
+/home/xdbeef/NetBeansProjects/spelunkyds/source/time/../hud/../level_layout/../animations/OamType.h:
+
 /home/xdbeef/NetBeansProjects/spelunkyds/source/time/../hud/../animations/OAMManager.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/time/../hud/../animations/../level_layout/SpriteInfo.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/time/../hud/../animations/../sprites/SpriteTypes.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/time/../hud/../animations/OamType.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/time/../animations/Camera.h:
 

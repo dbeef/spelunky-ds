@@ -9,7 +9,7 @@
 
 extern u16 map[4096];
 
-static const int BOUNDARY_VALUE = 32; /* This is the default boundary value (can be set in REG_DISPCNT) */
+static const int BOUNDARY_VALUE = 64; /* This is the default boundary value (can be set in REG_DISPCNT) */
 static const int OFFSET_MULTIPLIER_MAIN = BOUNDARY_VALUE / sizeof(SPRITE_GFX[0]);
 static const int OFFSET_MULTIPLIER_SUB = BOUNDARY_VALUE / sizeof(SPRITE_GFX_SUB[0]);
 
@@ -17,8 +17,8 @@ void spelunker::scroll(u16 *fresh_map) {
 
     double timer = 0;
 
-    global::main_oam_manager->initOAMTable(SPRITE_GFX, SPRITE_PALETTE, OAM, OFFSET_MULTIPLIER_MAIN);
-    global::sub_oam_manager->initOAMTable(SPRITE_GFX_SUB, SPRITE_PALETTE_SUB, OAM_SUB, OFFSET_MULTIPLIER_SUB);
+    global::main_oam_manager->initOAMTable(SPRITE_GFX, SPRITE_PALETTE, OAM, OFFSET_MULTIPLIER_MAIN, OamType::MAIN);
+    global::sub_oam_manager->initOAMTable(SPRITE_GFX_SUB, SPRITE_PALETTE_SUB, OAM_SUB, OFFSET_MULTIPLIER_SUB, OamType::SUB);
 
     global::main_dude->x = 100;
     global::main_dude->timer = &timer;
@@ -26,6 +26,8 @@ void spelunker::scroll(u16 *fresh_map) {
     global::main_dude->init();
 
     global::sprites.push_back(global::main_dude);
+
+    //todo wycentrować bombe
 
     global::hud->init();
     

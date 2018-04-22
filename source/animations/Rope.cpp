@@ -36,11 +36,21 @@ void Rope::draw() {
     } else if (this->y > 320) {
         main_x = -128;
         main_y = -128;
-        sub_x -= 56;
+//        sub_x -= 56;
     } else if (this->y < 320) {
         sub_x = -128;
         sub_y = -128;
     }
+
+    if (sub_y < 0 || sub_x < 0) {
+        sub_x = -128;
+        sub_y = -128;
+    }
+    if (main_y < 0 || main_x < 0) {
+        main_x = -128;
+        main_y = -128;
+    }
+
 
     if (activated_by_main_dude && !thrown && !finished) {
         thrown = true;
@@ -60,13 +70,23 @@ void Rope::draw() {
         int temp_y = floor_div(this->y + (0.5 * ROPE_SIZE), 16);
 
         if (!isThereChainForThisTile(temp_y * TILE_H)) {
-            RopeElement *element = new RopeElement();
-            element->init();
 
-            element->x = x;
-            element->y = temp_y * TILE_H;
+            if (temp_y * TILE_H > y) {
 
-            ropeChain.push_back(element);
+                RopeElement *element = new RopeElement();
+                element->init();
+
+                element->x = x;
+                element->y = temp_y * TILE_H;
+
+                element->draw();
+
+                ropeChain.push_back(element);
+                if (ropeChain.size() == 8) {
+                    throwingFinished();
+                    finished = true;
+                }
+            }
         }
     }
 
@@ -78,7 +98,7 @@ void Rope::draw() {
 //            std::cout<< " CA NCLIMB " << '\n';
             global::main_dude->canClimbRope = true;
         } else {
-            std::cout<< " " << '\n';
+//            std::cout<< " " << '\n';
             global::main_dude->canClimbRope = false;
         }
     }
@@ -94,9 +114,9 @@ void Rope::draw() {
 
 void Rope::init() {
     subSpriteInfo = global::sub_oam_manager->initSprite(ropesPal, ropesPalLen,
-                                                        nullptr, 8 * 8, 8, ROPES);
+                                                        nullptr, 8 * 8, 8, ROPES, true, false);
     mainSpriteInfo = global::main_oam_manager->initSprite(ropesPal, ropesPalLen,
-                                                          nullptr, 8 * 8, 8, ROPES);
+                                                          nullptr, 8 * 8, 8, ROPES, true, false);
     notThrown();
 }
 
@@ -126,7 +146,7 @@ void Rope::updateSpeed() {
 
     pos_inc_timer += *timer;
 
-    bool change_pos = (pos_inc_timer > 15) && !hold_by_main_dude;
+    bool change_pos = (pos_inc_timer > 15) && !hold_by_main_dude && !finished;
 
     if (change_pos) {
         updatePosition();
