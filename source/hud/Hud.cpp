@@ -5,6 +5,7 @@
 #include <nds/arm9/sprite.h>
 #include <cstdio>
 #include <iostream>
+#include <nds/arm9/console.h>
 #include "Hud.h"
 #include "../../build/heart.h"
 #include "../../build/dollar.h"
@@ -30,11 +31,17 @@
 
 void Hud::init() {
 
-    heartSpriteInfo = global::main_oam_manager->initSprite(heartPal, heartPalLen, heartTiles, heartTilesLen, 16, HUD_HEART, true, false);
-    dollarSpriteInfo = global::main_oam_manager->initSprite(dollarPal, dollarPalLen, dollarTiles, dollarTilesLen, 16, HUD_DOLLAR, true, false);
-    bombSpriteInfo = global::main_oam_manager->initSprite(bomb_hudPal, bomb_hudPalLen, bomb_hudTiles, bomb_hudTilesLen, 16, HUD_BOMB, true, false);
-    ropeSpriteInfo = global::main_oam_manager->initSprite(ropePal, ropePalLen, ropeTiles, ropeTilesLen, 16, HUD_ROPE, true, false);
-    holdingItemSpriteInfo = global::main_oam_manager->initSprite(holding_itemPal, holding_itemPalLen, holding_itemTiles, holding_itemTilesLen, 16, HUD_HOLDING_ITEM, true, false);
+    heartSpriteInfo = global::main_oam_manager->initSprite(heartPal, heartPalLen, heartTiles, heartTilesLen, 16,
+                                                           HUD_HEART, true, false);
+    dollarSpriteInfo = global::main_oam_manager->initSprite(dollarPal, dollarPalLen, dollarTiles, dollarTilesLen, 16,
+                                                            HUD_DOLLAR, true, false);
+    bombSpriteInfo = global::main_oam_manager->initSprite(bomb_hudPal, bomb_hudPalLen, bomb_hudTiles, bomb_hudTilesLen,
+                                                          16, HUD_BOMB, true, false);
+    ropeSpriteInfo = global::main_oam_manager->initSprite(ropePal, ropePalLen, ropeTiles, ropeTilesLen, 16, HUD_ROPE,
+                                                          true, false);
+    holdingItemSpriteInfo = global::main_oam_manager->initSprite(holding_itemPal, holding_itemPalLen, holding_itemTiles,
+                                                                 holding_itemTilesLen, 16, HUD_HOLDING_ITEM, true,
+                                                                 false);
 
     heartSpriteInfo->entry->x = HEART_POSITION_X;
     heartSpriteInfo->entry->y = HEART_POSITION_Y;
@@ -51,10 +58,17 @@ void Hud::init() {
     holdingItemSpriteInfo->entry->x = HOLDING_ITEM_FRAME_POSITION_X;
     holdingItemSpriteInfo->entry->y = HOLDING_ITEM_FRAME_POSITION_Y;
 
-    std::cout << '\n' << "   4    4    4    1000" ;
+    hearts = 4;
+    ropes = 4;
+    bombs = 4;
+    dollars = 0;
+
+    std::cout << '\n' << "   " << hearts << "    " << bombs<< "    " << ropes<< "    " << dollars;
 
 }
 
+//call only when something changed
 void Hud::draw() {
-    //nothing
+    consoleClear();
+    std::cout << '\n' << "   " << hearts << "    " << bombs<< "    " << ropes<< "    " << dollars;
 }

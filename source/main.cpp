@@ -18,6 +18,7 @@ static u16 *fresh_map;
 
 namespace global {
     InputHandler *input_handler = new InputHandler();
+    TextManager *textManager = new TextManager();
     Camera *camera = new Camera();
     MainDude *main_dude = new MainDude();
     LevelGenerator *level_generator = new LevelGenerator();
@@ -34,7 +35,6 @@ namespace global {
 int main(void) {
 
     Timer *t = new Timer();
-    TextManager *textManager = new TextManager();
 
     videoSetMode(MODE_0_2D);
     videoSetModeSub(MODE_0_2D);
@@ -74,7 +74,7 @@ int main(void) {
     dmaCopyHalfWords(DMA_CHANNEL, map, bgGetMapPtr(global::bg_sub_address), sizeof(map));
     dmaCopy(cavebgPal, BG_PALETTE, cavebgPalLen);
     dmaCopy(cavebgPal, BG_PALETTE_SUB, cavebgPalLen);
-    textManager->initConsole();
+    global::textManager->initConsole();
 
     spelunker::scroll(fresh_map);
 

@@ -6,6 +6,9 @@ Hud.o: /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/Hud.cpp \
  /home/xdbeef/devkitPro/libnds/include/nds/memory.h \
  /home/xdbeef/devkitPro/libnds/include/nds/ndstypes.h \
  /home/xdbeef/devkitPro/libnds/include/nds/system.h \
+ /home/xdbeef/devkitPro/libnds/include/nds/arm9/console.h \
+ /home/xdbeef/devkitPro/libnds/include/nds/arm9/background.h \
+ /home/xdbeef/devkitPro/libnds/include/nds/dma.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/Hud.h \
  /home/xdbeef/devkitPro/libnds/include/nds/jtypes.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../level_layout/SpriteInfo.h \
@@ -45,7 +48,6 @@ Hud.o: /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/Hud.cpp \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/dynamicArray.h \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/linkedlist.h \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/background.h \
- /home/xdbeef/devkitPro/libnds/include/nds/dma.h \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/boxtest.h \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/videoGL.h \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/cache.h \
@@ -54,7 +56,6 @@ Hud.o: /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/Hud.cpp \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/dynamicArray.h \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/cache.h \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/console.h \
- /home/xdbeef/devkitPro/libnds/include/nds/arm9/background.h \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/decompress.h \
  /home/xdbeef/devkitPro/libnds/include/nds/bios.h \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/exceptions.h \
@@ -90,7 +91,9 @@ Hud.o: /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/Hud.cpp \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../animations/../sprites/../animations/OAMManager.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../animations/../sprites/../animations/Camera.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../animations/../sprites/SpriteTypes.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../animations/../input/InputHandler.h
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../animations/../input/InputHandler.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../console/TextManager.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../console/../time/Timer.h
 
 /home/xdbeef/devkitPro/libnds/include/nds/arm9/sprite.h:
 
@@ -105,6 +108,12 @@ Hud.o: /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/Hud.cpp \
 /home/xdbeef/devkitPro/libnds/include/nds/ndstypes.h:
 
 /home/xdbeef/devkitPro/libnds/include/nds/system.h:
+
+/home/xdbeef/devkitPro/libnds/include/nds/arm9/console.h:
+
+/home/xdbeef/devkitPro/libnds/include/nds/arm9/background.h:
+
+/home/xdbeef/devkitPro/libnds/include/nds/dma.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/Hud.h:
 
@@ -184,8 +193,6 @@ Hud.o: /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/Hud.cpp \
 
 /home/xdbeef/devkitPro/libnds/include/nds/arm9/background.h:
 
-/home/xdbeef/devkitPro/libnds/include/nds/dma.h:
-
 /home/xdbeef/devkitPro/libnds/include/nds/arm9/boxtest.h:
 
 /home/xdbeef/devkitPro/libnds/include/nds/arm9/videoGL.h:
@@ -201,8 +208,6 @@ Hud.o: /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/Hud.cpp \
 /home/xdbeef/devkitPro/libnds/include/nds/arm9/cache.h:
 
 /home/xdbeef/devkitPro/libnds/include/nds/arm9/console.h:
-
-/home/xdbeef/devkitPro/libnds/include/nds/arm9/background.h:
 
 /home/xdbeef/devkitPro/libnds/include/nds/arm9/decompress.h:
 
@@ -275,3 +280,7 @@ Hud.o: /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/Hud.cpp \
 /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../animations/../sprites/SpriteTypes.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../animations/../input/InputHandler.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../console/TextManager.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../console/../time/Timer.h:

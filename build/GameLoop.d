@@ -91,6 +91,8 @@ GameLoop.o: \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/../sprites/../animations/Camera.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/../sprites/SpriteTypes.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/../input/InputHandler.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../console/TextManager.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../console/../time/Timer.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/MainDude.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../hud/Hud.h
 
@@ -275,6 +277,10 @@ GameLoop.o: \
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/../sprites/SpriteTypes.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/../input/InputHandler.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../console/TextManager.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../console/../time/Timer.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/MainDude.h:
 

@@ -24,7 +24,8 @@ void MainDude::handleKeyInput() {
                 canClimbRope = false;
                 timeSinceLastJump = 0;
             }
-            if ((hangingOnTileLeft || hangingOnTileRight) && hangingTimer > MIN_HANGING_TIME&& timeSinceLastJump > 100) {
+            if ((hangingOnTileLeft || hangingOnTileRight) && hangingTimer > MIN_HANGING_TIME &&
+                timeSinceLastJump > 100) {
                 ySpeed = -MAIN_DUDE_JUMP_SPEED;
                 hangingOnTileLeft = false;
                 hangingOnTileRight = false;
@@ -85,8 +86,11 @@ void MainDude::handleKeyInput() {
                 }
             }
         }
-        if (global::input_handler->x_key_down && !holding_item) {
+        if (global::input_handler->x_key_down && !holding_item && global::hud->bombs > 0) {
             //make new bomb object
+
+            global::hud->bombs--;
+            global::hud->draw();
 
             Bomb *bomb = new Bomb();
             bomb->init();
@@ -95,8 +99,10 @@ void MainDude::handleKeyInput() {
 
             global::sprites.push_back(bomb);
             holding_item = true;
-        } else if (global::input_handler->a_key_down && !holding_item) {
+        } else if (global::input_handler->a_key_down && !holding_item && global::hud->ropes > 0) {
             //make new bomb object
+            global::hud->ropes--;
+            global::hud->draw();
 
             Rope *rope = new Rope();
             rope->init();
@@ -146,7 +152,7 @@ void MainDude::handleKeyInput() {
                 ySpeed = -1;
             }
 
-            if (!canClimbRope && climbing && onTopOfClimbingSpace ) {
+            if (!canClimbRope && climbing && onTopOfClimbingSpace) {
                 ySpeed = 0;
                 jumpingTimer = 0;
                 xSpeed = 0;
@@ -252,6 +258,10 @@ void MainDude::updateTimers() {
         jumpingTimer += *timer;
 
     if (bottomCollision && jumpingTimer > STUN_FALLING_TIME) {
+        if (global::hud->hearts > 0) {
+            global::hud->hearts--;
+            global::hud->draw();
+        }
         stunned = true;
         jumpingTimer = 0;
     } else if (bottomCollision && jumpingTimer < STUN_FALLING_TIME) {

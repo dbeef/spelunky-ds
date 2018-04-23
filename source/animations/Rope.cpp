@@ -61,7 +61,7 @@ void Rope::draw() {
         hold_by_main_dude = false;
 
         x = floor_div(global::main_dude->x + 0.5 * MAIN_DUDE_WIDTH, 16) * TILE_W + ROPE_SIZE * 0.5;
-
+        y -= 16;
         ySpeed = -4;
     }
     if (thrown && !finished) {

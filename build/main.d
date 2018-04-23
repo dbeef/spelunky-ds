@@ -93,9 +93,9 @@ main.o: /home/xdbeef/NetBeansProjects/spelunkyds/source/main.cpp \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/../animations/Camera.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/SpriteTypes.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../input/InputHandler.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/MapUtils.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/console/TextManager.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/console/../time/Timer.h
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/console/../time/Timer.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/MapUtils.h
 
 /home/xdbeef/devkitPro/libnds/include/nds.h:
 
@@ -285,8 +285,8 @@ main.o: /home/xdbeef/NetBeansProjects/spelunkyds/source/main.cpp \
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../input/InputHandler.h:
 
-/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/MapUtils.h:
-
 /home/xdbeef/NetBeansProjects/spelunkyds/source/console/TextManager.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/console/../time/Timer.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/MapUtils.h:

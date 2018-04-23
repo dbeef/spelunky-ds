@@ -87,6 +87,8 @@ RopeElement.o: \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../animations/../sprites/../animations/Camera.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../animations/../sprites/SpriteTypes.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../animations/../input/InputHandler.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../console/TextManager.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../console/../time/Timer.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../../build/ropes.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/RopeElement.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/SpriteInfo.h \
@@ -268,6 +270,10 @@ RopeElement.o: \
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../animations/../sprites/SpriteTypes.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../animations/../input/InputHandler.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../console/TextManager.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../console/../time/Timer.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../../build/ropes.h:
 

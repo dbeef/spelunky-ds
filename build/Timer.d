@@ -86,7 +86,9 @@ Timer.o: /home/xdbeef/NetBeansProjects/spelunkyds/source/time/Timer.cpp \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/time/../animations/../sprites/../animations/OAMManager.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/time/../animations/../sprites/../animations/Camera.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/time/../animations/../sprites/SpriteTypes.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/time/../animations/../input/InputHandler.h
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/time/../animations/../input/InputHandler.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/time/../console/TextManager.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/time/../console/../time/Timer.h
 
 /home/xdbeef/devkitPro/libnds/include/nds.h:
 
@@ -263,3 +265,7 @@ Timer.o: /home/xdbeef/NetBeansProjects/spelunkyds/source/time/Timer.cpp \
 /home/xdbeef/NetBeansProjects/spelunkyds/source/time/../animations/../sprites/SpriteTypes.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/time/../animations/../input/InputHandler.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/time/../console/TextManager.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/time/../console/../time/Timer.h:

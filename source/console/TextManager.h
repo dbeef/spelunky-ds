@@ -15,7 +15,7 @@ class TextManager {
     int intro_timers[3] = {1000, 3500, 6000};
     bool printed_lines[3] = {0, 0, 0};
     bool console_cleared = 0;
-
+    PrintConsole *printConsole;
 
     char *intro_lines[3] = {"\n\n\n\n\n\n\n\n  MY LIPS CRACKED AND COVERED\n            IN SAND, \n",
                             " I SPOTTED THE CAVE'S ENTRANCE,",
@@ -29,7 +29,6 @@ class TextManager {
 
 public:
     void initConsole();
-
     void printIntro();
 };
 

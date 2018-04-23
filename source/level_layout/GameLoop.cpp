@@ -53,7 +53,6 @@ void spelunker::scroll(u16 *fresh_map) {
 
         swiWaitForVBlank();
         global::main_dude->handleKeyInput();
-        global::hud->draw();
 
         for (int a = 0; a < global::sprites.size(); a++) {
             if (global::sprites.at(a)) {

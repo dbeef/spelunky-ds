@@ -16,6 +16,11 @@ public:
 
     void init();
 
+    int hearts;
+    int bombs;
+    int dollars;
+    int ropes;
+
     SpriteInfo *heartSpriteInfo = nullptr;
     SpriteInfo *bombSpriteInfo = nullptr;
     SpriteInfo *dollarSpriteInfo = nullptr;

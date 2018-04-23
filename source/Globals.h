@@ -10,6 +10,7 @@
 #include "animations/Camera.h"
 #include "level_layout/LevelGenerator.h"
 #include "animations/MainDude.h"
+#include "console/TextManager.h"
 
 #define FRAMES_PER_ANIMATION 6
 #define TICKS_PER_SECOND 30.5554503
@@ -23,6 +24,7 @@
 #define GRAVITY_DELTA_SPEED 0.19
 
 namespace global {
+    extern TextManager *textManager;
     extern MainDude *main_dude;
     extern InputHandler *input_handler;
     extern Camera *camera;

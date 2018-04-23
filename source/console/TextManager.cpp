@@ -13,8 +13,7 @@ void TextManager::initConsole() {
     const int tile_base = 2;
     const int map_base = 8;
 
-    PrintConsole *bottomConsole;
-    consoleInit(bottomConsole, 0, BgType_Text4bpp, BgSize_T_256x256, map_base, tile_base, true, false);
+    consoleInit(printConsole, 0, BgType_Text4bpp, BgSize_T_256x256, map_base, tile_base, true, false);
 
     ConsoleFont font;
 
@@ -26,8 +25,7 @@ void TextManager::initConsole() {
     font.asciiOffset = 32;
     font.convertSingleColor = true;
 
-    consoleSetFont(bottomConsole, &font);
-
+    consoleSetFont(printConsole, &font);
 
 }
 
@@ -59,3 +57,4 @@ void TextManager::updateTimer(int introTimers[], int timeElapsed) {
     }
     console_clear -= timeElapsed;
 }
+
