@@ -5,6 +5,7 @@
 #include "../animations/MainDude.h"
 #include "../hud/Hud.h"
 #include "../animations/Rock.h"
+#include "../animations/Jar.h"
 #include <vector>
 //#include "../Globals.h";
 
@@ -34,6 +35,19 @@ void spelunker::scroll(u16 *fresh_map) {
     global::hud->init();
 
     srand(timerElapsed(1));
+
+    for (int a = 0; a < 2; a++) {
+        Jar *jar = new Jar();
+        jar->init();
+        jar->timer = &timer;
+        global::sprites.push_back(jar);
+
+        int curr_x = rand() % 400 + 48;
+        int curr_y = rand() % 400 + 48;
+
+        jar->x = curr_x;
+        jar->y = curr_y;
+    }
     for (int a = 0; a < 2; a++) {
         Rock *rock = new Rock();
         rock->init();

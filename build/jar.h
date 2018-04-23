@@ -1,13 +1,13 @@
 
-//{{BLOCK(whip_left)
+//{{BLOCK(jar)
 
 //======================================================================
 //
-//	whip_left, 16x16@4, 
+//	jar, 8x8@4, 
 //	Transparent color : 20,9C,00
 //	+ palette 16 entries, not compressed
-//	+ 4 tiles Metatiled by 2x2 not compressed
-//	Total size: 32 + 128 = 160
+//	+ 1 tiles not compressed
+//	Total size: 32 + 32 = 64
 //
 //	Time-stamp: 2018-04-23, 13:44:10
 //	Exported by Cearn's GBA Image Transmogrifier, v0.8.14
@@ -15,15 +15,15 @@
 //
 //======================================================================
 
-#ifndef GRIT_WHIP_LEFT_H
-#define GRIT_WHIP_LEFT_H
+#ifndef GRIT_JAR_H
+#define GRIT_JAR_H
 
-#define whip_leftTilesLen 128
-extern const unsigned int whip_leftTiles[32];
+#define jarTilesLen 32
+extern const unsigned int jarTiles[8];
 
-#define whip_leftPalLen 32
-extern const unsigned short whip_leftPal[16];
+#define jarPalLen 32
+extern const unsigned short jarPal[16];
 
-#endif // GRIT_WHIP_LEFT_H
+#endif // GRIT_JAR_H
 
-//}}BLOCK(whip_left)
+//}}BLOCK(jar)

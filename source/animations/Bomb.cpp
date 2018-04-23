@@ -18,11 +18,12 @@ void Bomb::draw() {
     if (hold_by_main_dude && global::input_handler->y_key_down && global::input_handler->down_key_held) {
         hold_by_main_dude = false;
         global::main_dude->holding_item = false;
-    } else if (global::input_handler->y_key_down && global::input_handler->down_key_held && explosionFrame == 0) {
+    } else if (global::input_handler->y_key_down && global::input_handler->down_key_held && explosionFrame == 0 && !global::main_dude->holding_item) {
 
         if (Collisions::checkCollisionWithMainDude(x, y, 8, 8)) {
             hold_by_main_dude = true;
             global::main_dude->holding_item = true;
+//            std::cout << "TOOK ITEM";
         }
     }
 
@@ -63,13 +64,16 @@ void Bomb::draw() {
             sub_x -= 64;
         else
             sub_x -= 56;
-    } else if (this->y > 320) {
-        main_x = -128;
-        main_y = -128;
-        sub_x -= 56;
-    } else if (this->y < 320) {
-        sub_x = -128;
-        sub_y = -128;
+    }
+else {
+        if (global::camera->y + 192 > this->y + 64 || global::camera->y + 192 + 192 < this->y - 64) {
+            sub_x = -128;
+            sub_y = -128;
+        }
+        if (global::camera->y > this->y + 64 || global::camera->y + 192 < this->y - 64) {
+            main_x = -128;
+            main_y = -128;
+        }
     }
 
 

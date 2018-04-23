@@ -1,21 +1,23 @@
 //
-// Created by xdbeef on 04.04.18.
+// Created by xdbeef on 23.04.18.
 //
 
+#include "Jar.h"
+#include "../sprites/MovingObject.h"
+#include "Collisions.h"
+#include "Rock.h"
 #include "../Globals.h"
 #include "../level_layout/MapUtils.h"
-#include "Collisions.h"
-#include "MainDude.h"
-#include "../../build/rock.h"
-#include "Rock.h"
+#include "../../build/jar.h"
 
 extern u16 map[4096];
 
-void Rock::draw() {
+void Jar::draw() {
     if (hold_by_main_dude && global::input_handler->y_key_down && global::input_handler->down_key_held) {
         hold_by_main_dude = false;
         global::main_dude->holding_item = false;
     } else if (global::input_handler->y_key_down && global::input_handler->down_key_held && bottomCollision && !global::main_dude->holding_item) {
+
         if (Collisions::checkCollisionWithMainDude(x, y, 8, 8)) {
             hold_by_main_dude = true;
             global::main_dude->holding_item = true;
@@ -47,6 +49,7 @@ void Rock::draw() {
     if (global::camera->y > this->y + 8 || global::camera->y + 192 < this->y - 8) {
         main_x = -128;
         main_y = -128;
+
     }
 
 
@@ -74,19 +77,21 @@ void Rock::draw() {
 }
 
 
-void Rock::init() {
-    subSpriteInfo = global::sub_oam_manager->initSprite(rockPal, rockPalLen,
-                                                        nullptr, 8 * 8, 8, ROCK, true, true);
-    mainSpriteInfo = global::main_oam_manager->initSprite(rockPal, rockPalLen,
-                                                          nullptr, 8 * 8, 8, ROCK, true, true);
+void Jar::init() {
+    subSpriteInfo = global::sub_oam_manager->initSprite(jarPal, jarPalLen,
+                                                        nullptr, 8 * 8, 8, JAR, true, true);
+    mainSpriteInfo = global::main_oam_manager->initSprite(jarPal, jarPalLen,
+                                                          nullptr, 8 * 8, 8, JAR, true, true);
 
-    frameGfx = (u8 *) rockTiles;
+    activated_by_main_dude = true;
+
+
+    frameGfx = (u8 *) jarTiles;
     subSpriteInfo->updateFrame(frameGfx, 8 * 8);
     mainSpriteInfo->updateFrame(frameGfx, 8 * 8);
-    activated_by_main_dude = true;
 }
 
-void Rock::updateSpeed() {
+void Jar::updateSpeed() {
 
     if (xSpeed > MAX_X_SPEED_ROCK)
         xSpeed = MAX_X_SPEED_ROCK;
@@ -108,7 +113,7 @@ void Rock::updateSpeed() {
 
 }
 
-void Rock::updatePosition() {
+void Jar::updatePosition() {
 
     if (bottomCollision && xSpeed > 0) {
         xSpeed -= 0.055;
@@ -168,7 +173,7 @@ void Rock::updatePosition() {
     pos_inc_timer = 0;
 }
 
-void Rock::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
+void Jar::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
 
     MapTile *tiles[9];
     Collisions::getNeighboringTiles(global::level_generator->mapTiles, x_current_pos_in_tiles, y_current_pos_in_tiles,
@@ -184,6 +189,4 @@ void Rock::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_
     }
 
 }
-
-
 

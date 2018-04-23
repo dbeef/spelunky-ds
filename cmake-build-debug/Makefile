@@ -204,6 +204,33 @@ source/animations/Collisions.cpp.s:
 	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/animations/Collisions.cpp.s
 .PHONY : source/animations/Collisions.cpp.s
 
+source/animations/Jar.o: source/animations/Jar.cpp.o
+
+.PHONY : source/animations/Jar.o
+
+# target to build an object file
+source/animations/Jar.cpp.o:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/animations/Jar.cpp.o
+.PHONY : source/animations/Jar.cpp.o
+
+source/animations/Jar.i: source/animations/Jar.cpp.i
+
+.PHONY : source/animations/Jar.i
+
+# target to preprocess a source file
+source/animations/Jar.cpp.i:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/animations/Jar.cpp.i
+.PHONY : source/animations/Jar.cpp.i
+
+source/animations/Jar.s: source/animations/Jar.cpp.s
+
+.PHONY : source/animations/Jar.s
+
+# target to generate assembly for a file
+source/animations/Jar.cpp.s:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/animations/Jar.cpp.s
+.PHONY : source/animations/Jar.cpp.s
+
 source/animations/MainDude.o: source/animations/MainDude.cpp.o
 
 .PHONY : source/animations/MainDude.o
@@ -681,6 +708,9 @@ help:
 	@echo "... source/animations/Collisions.o"
 	@echo "... source/animations/Collisions.i"
 	@echo "... source/animations/Collisions.s"
+	@echo "... source/animations/Jar.o"
+	@echo "... source/animations/Jar.i"
+	@echo "... source/animations/Jar.s"
 	@echo "... source/animations/MainDude.o"
 	@echo "... source/animations/MainDude.i"
 	@echo "... source/animations/MainDude.s"

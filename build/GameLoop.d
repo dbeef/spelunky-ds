@@ -95,7 +95,8 @@ GameLoop.o: \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../console/../time/Timer.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/MainDude.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../hud/Hud.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/Rock.h
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/Rock.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/Jar.h
 
 /home/xdbeef/devkitPro/libnds/include/nds.h:
 
@@ -288,3 +289,5 @@ GameLoop.o: \
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../hud/Hud.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/Rock.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/Jar.h:

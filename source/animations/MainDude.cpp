@@ -113,10 +113,10 @@ void MainDude::handleKeyInput() {
             holding_item = true;
         }
 
-        if (global::input_handler->y_key_down && !holding_item && global::input_handler->down_key_held) {
-            //take item from the ground
-            holding_item = true;
-        }
+//        if (global::input_handler->y_key_down && !holding_item && global::input_handler->down_key_held) {
+//            take item from the ground
+//            holding_item = true;
+//        }
 
 
     }

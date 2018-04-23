@@ -1,9 +1,9 @@
 
-@{{BLOCK(rock)
+@{{BLOCK(jar)
 
 @=======================================================================
 @
-@	rock, 8x8@4, 
+@	jar, 8x8@4, 
 @	Transparent color : 20,9C,00
 @	+ palette 16 entries, not compressed
 @	+ 1 tiles not compressed
@@ -17,17 +17,17 @@
 
 	.section .rodata
 	.align	2
-	.global rockTiles		@ 32 unsigned chars
-	.hidden rockTiles
-rockTiles:
-	.word 0x00000000,0x00444400,0x04444450,0x54444540,0x25566440,0x22225440,0x32222410,0x03222100
+	.global jarTiles		@ 32 unsigned chars
+	.hidden jarTiles
+jarTiles:
+	.word 0x00233200,0x03211230,0x01466410,0x01355310,0x74566547,0x74555547,0x13444431,0x01777710
 
 	.section .rodata
 	.align	2
-	.global rockPal		@ 32 unsigned chars
-	.hidden rockPal
-rockPal:
-	.hword 0x0264,0x10E9,0x2108,0x14A4,0x4210,0x6318,0x7FFF,0x0000
+	.global jarPal		@ 32 unsigned chars
+	.hidden jarPal
+jarPal:
+	.hword 0x0264,0x0001,0x0045,0x0487,0x08CA,0x112E,0x1DD4,0x0003
 	.hword 0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000,0x0000
 
-@}}BLOCK(rock)
+@}}BLOCK(jar)

@@ -15,26 +15,15 @@ void RopeElement::draw() {
     int sub_x = x - global::camera->x;
     int sub_y = y - global::camera->y - 192;
     
-    if (this->y < 320 + 8 && this->y > 320 - 8) {
 
-    } else if (this->y > 320) {
-        main_x = -128;
-        main_y = -128;
-//        sub_x -= 56;
-    } else if (this->y < 320) {
+    if (global::camera->y + 192 > this->y + 8 || global::camera->y + 192 + 192  < this->y - 8) {
         sub_x = -128;
         sub_y = -128;
     }
-
-    if (sub_y < 0 || sub_x < 0) {
-        sub_x = -128;
-        sub_y = -128;
-    }
-    if (main_y < 0 || main_x < 0) {
+    if (global::camera->y > this->y + 8 || global::camera->y + 192 < this->y - 8) {
         main_x = -128;
         main_y = -128;
     }
-
 
     mainSpriteInfo->entry->x = main_x;
     mainSpriteInfo->entry->y = main_y;

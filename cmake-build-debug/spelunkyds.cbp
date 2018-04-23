@@ -133,6 +133,12 @@
 		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Collisions.h">
 			<Option target="spelunkyds"/>
 		</Unit>
+		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Jar.cpp">
+			<Option target="spelunkyds"/>
+		</Unit>
+		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Jar.h">
+			<Option target="spelunkyds"/>
+		</Unit>
 		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/MainDude.cpp">
 			<Option target="spelunkyds"/>
 		</Unit>

@@ -19,6 +19,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/spelunkyds.dir/source/animations/Camera.cpp.o"
   "CMakeFiles/spelunkyds.dir/source/animations/OAMManager.cpp.o"
   "CMakeFiles/spelunkyds.dir/source/input/InputHandler.cpp.o"
+  "CMakeFiles/spelunkyds.dir/source/animations/Jar.cpp.o"
   "spelunkyds.pdb"
   "spelunkyds"
 )
