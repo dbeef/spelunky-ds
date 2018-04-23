@@ -15,6 +15,18 @@ extern u16 map[4096];
 void Bomb::draw() {
 
 
+    if (hold_by_main_dude && global::input_handler->y_key_down && global::input_handler->down_key_held) {
+        hold_by_main_dude = false;
+        global::main_dude->holding_item = false;
+    } else if (global::input_handler->y_key_down && global::input_handler->down_key_held && explosionFrame == 0) {
+
+        if (Collisions::checkCollisionWithMainDude(x, y, 8, 8)) {
+            hold_by_main_dude = true;
+            global::main_dude->holding_item = true;
+        }
+    }
+
+
     if (hold_by_main_dude) {
 
         y = global::main_dude->y + 6;
@@ -31,14 +43,14 @@ void Bomb::draw() {
     int sub_x = x - global::camera->x;
     int sub_y = y - global::camera->y - 192;
 
-    if(explosionFrame > 0) {
+    if (explosionFrame > 0) {
         main_x -= 32;
         main_y -= 32;
 
         sub_x += 32;
         sub_y -= 32;
 
-    } else{
+    } else {
         main_x -= 29;
         main_y -= 29;
 

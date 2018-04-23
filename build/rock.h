@@ -1,13 +1,13 @@
 
-//{{BLOCK(bomb)
+//{{BLOCK(rock)
 
 //======================================================================
 //
-//	bomb, 16x16@4, 
+//	rock, 8x8@4, 
 //	Transparent color : 20,9C,00
 //	+ palette 16 entries, not compressed
-//	+ 4 tiles Metatiled by 2x2 not compressed
-//	Total size: 32 + 128 = 160
+//	+ 1 tiles not compressed
+//	Total size: 32 + 32 = 64
 //
 //	Time-stamp: 2018-04-23, 12:29:09
 //	Exported by Cearn's GBA Image Transmogrifier, v0.8.14
@@ -15,15 +15,15 @@
 //
 //======================================================================
 
-#ifndef GRIT_BOMB_H
-#define GRIT_BOMB_H
+#ifndef GRIT_ROCK_H
+#define GRIT_ROCK_H
 
-#define bombTilesLen 128
-extern const unsigned int bombTiles[32];
+#define rockTilesLen 32
+extern const unsigned int rockTiles[8];
 
-#define bombPalLen 32
-extern const unsigned short bombPal[16];
+#define rockPalLen 32
+extern const unsigned short rockPal[16];
 
-#endif // GRIT_BOMB_H
+#endif // GRIT_ROCK_H
 
-//}}BLOCK(bomb)
+//}}BLOCK(rock)

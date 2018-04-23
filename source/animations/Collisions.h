@@ -36,6 +36,8 @@ public:
     static void bombNeighboringTiles(MapTile *mapTiles[32][32], int xx, int yy);
 
     static void getCenterTile(int x_position, int y_position, int height, int width, int *x_tile, int *y_tile);
+
+    static bool checkCollisionWithMainDude(int x, int y, int width, int height);
 };
 
 

@@ -5,6 +5,7 @@
 #include "Collisions.h"
 #include "MainDude.h"
 #include "../level_layout/MapUtils.h"
+#include "../Globals.h"
 
 #define BOUNCING_FACTOR_X 0.15
 #define BOUNCING_FACTOR_Y 0.45
@@ -298,4 +299,9 @@ void Collisions::bombNeighboringTiles(MapTile *mapTiles[32][32], int xx, int yy)
 void Collisions::getCenterTile(int x_position, int y_position, int height, int width, int *x_tile, int *y_tile) {
     floor_div(x_position + 0.5 * width, 16, x_tile);
     floor_div(y_position + 0.5 * height, 16, y_tile);
+}
+
+bool Collisions::checkCollisionWithMainDude(int x, int y, int width, int height) {
+    return x + 8 >= global::main_dude->x && x + width > global::main_dude->x &&
+           y + height > global::main_dude->y && y < global::main_dude->y + MAIN_DUDE_HEIGHT;
 }

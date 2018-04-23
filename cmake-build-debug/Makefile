@@ -258,6 +258,33 @@ source/animations/OAMManager.cpp.s:
 	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/animations/OAMManager.cpp.s
 .PHONY : source/animations/OAMManager.cpp.s
 
+source/animations/Rock.o: source/animations/Rock.cpp.o
+
+.PHONY : source/animations/Rock.o
+
+# target to build an object file
+source/animations/Rock.cpp.o:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/animations/Rock.cpp.o
+.PHONY : source/animations/Rock.cpp.o
+
+source/animations/Rock.i: source/animations/Rock.cpp.i
+
+.PHONY : source/animations/Rock.i
+
+# target to preprocess a source file
+source/animations/Rock.cpp.i:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/animations/Rock.cpp.i
+.PHONY : source/animations/Rock.cpp.i
+
+source/animations/Rock.s: source/animations/Rock.cpp.s
+
+.PHONY : source/animations/Rock.s
+
+# target to generate assembly for a file
+source/animations/Rock.cpp.s:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/animations/Rock.cpp.s
+.PHONY : source/animations/Rock.cpp.s
+
 source/animations/Rope.o: source/animations/Rope.cpp.o
 
 .PHONY : source/animations/Rope.o
@@ -660,6 +687,9 @@ help:
 	@echo "... source/animations/OAMManager.o"
 	@echo "... source/animations/OAMManager.i"
 	@echo "... source/animations/OAMManager.s"
+	@echo "... source/animations/Rock.o"
+	@echo "... source/animations/Rock.i"
+	@echo "... source/animations/Rock.s"
 	@echo "... source/animations/Rope.o"
 	@echo "... source/animations/Rope.i"
 	@echo "... source/animations/Rope.s"

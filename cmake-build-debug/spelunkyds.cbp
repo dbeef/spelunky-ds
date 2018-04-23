@@ -148,6 +148,12 @@
 		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/OamType.h">
 			<Option target="spelunkyds"/>
 		</Unit>
+		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Rock.cpp">
+			<Option target="spelunkyds"/>
+		</Unit>
+		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Rock.h">
+			<Option target="spelunkyds"/>
+		</Unit>
 		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Rope.cpp">
 			<Option target="spelunkyds"/>
 		</Unit>

@@ -3,6 +3,7 @@
 //
 #include <nds.h>
 #include <nds/arm9/input.h>
+#include <iostream>
 #include "InputHandler.h"
 
 void InputHandler::updateInput() {
@@ -18,12 +19,15 @@ void InputHandler::updateInput() {
         down_key_held = (keys_held & KEY_DOWN) != 0;
         up_key_held = (keys_held & KEY_UP) != 0;
         b_key_held = (keys_held & KEY_B) != 0;
+        y_key_held = (keys_held & KEY_Y) != 0;
+
 
     } else {
         left_key_held = false;
         right_key_held = false;
         down_key_held = false;
         b_key_held = false;
+        y_key_held = false;
         up_key_held = false;
     }
 

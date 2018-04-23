@@ -4,6 +4,7 @@
 #include "../Globals.h"
 #include "../animations/MainDude.h"
 #include "../hud/Hud.h"
+#include "../animations/Rock.h"
 #include <vector>
 //#include "../Globals.h";
 
@@ -18,7 +19,8 @@ void spelunker::scroll(u16 *fresh_map) {
     double timer = 0;
 
     global::main_oam_manager->initOAMTable(SPRITE_GFX, SPRITE_PALETTE, OAM, OFFSET_MULTIPLIER_MAIN, OamType::MAIN);
-    global::sub_oam_manager->initOAMTable(SPRITE_GFX_SUB, SPRITE_PALETTE_SUB, OAM_SUB, OFFSET_MULTIPLIER_SUB, OamType::SUB);
+    global::sub_oam_manager->initOAMTable(SPRITE_GFX_SUB, SPRITE_PALETTE_SUB, OAM_SUB, OFFSET_MULTIPLIER_SUB,
+                                          OamType::SUB);
 
     global::main_dude->x = 100;
     global::main_dude->timer = &timer;
@@ -30,7 +32,21 @@ void spelunker::scroll(u16 *fresh_map) {
     //todo wycentrować bombe
 
     global::hud->init();
-    
+
+    srand(timerElapsed(1));
+    for (int a = 0; a < 2; a++) {
+        Rock *rock = new Rock();
+        rock->init();
+        rock->timer = &timer;
+        global::sprites.push_back(rock);
+
+        int curr_x = rand() % 400 + 48;
+        int curr_y = rand() % 400 + 48;
+
+        rock->x = curr_x;
+        rock->y = curr_y;
+    }
+
     while (true) {
 
         timer = timerElapsed(0) / TICKS_PER_SECOND;
@@ -69,6 +85,3 @@ void spelunker::scroll(u16 *fresh_map) {
 
     }
 }
-
-
-

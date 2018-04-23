@@ -1,0 +1,197 @@
+//
+// Created by xdbeef on 04.04.18.
+//
+
+#include "../Globals.h"
+#include "../level_layout/MapUtils.h"
+#include "Collisions.h"
+#include "MainDude.h"
+#include "../../build/rock.h"
+#include "Rock.h"
+
+extern u16 map[4096];
+
+void Rock::draw() {
+    if (hold_by_main_dude && global::input_handler->y_key_down && global::input_handler->down_key_held) {
+        hold_by_main_dude = false;
+        global::main_dude->holding_item = false;
+    } else if (global::input_handler->y_key_down && global::input_handler->down_key_held && bottomCollision) {
+
+        if (Collisions::checkCollisionWithMainDude(x, y, 8, 8)) {
+            hold_by_main_dude = true;
+            global::main_dude->holding_item = true;
+        }
+    }
+
+
+    if (hold_by_main_dude) {
+
+        y = global::main_dude->y + 6;
+
+        if (global::main_dude->state == 1) {
+            x = global::main_dude->x - 2;
+        } else
+            x = global::main_dude->x + 10;
+    }
+
+
+    int main_x = x - global::camera->x;
+    int main_y = y - global::camera->y;
+    int sub_x = x - global::camera->x;
+    int sub_y = y - global::camera->y - 192;
+
+    if (global::camera->y + 192 > this->y + 8 || global::camera->y + 192 + 192  < this->y - 8) {
+        sub_x = -128;
+        sub_y = -128;
+    }
+    if (global::camera->y > this->y + 8 || global::camera->y + 192 < this->y - 8) {
+        main_x = -128;
+        main_y = -128;
+
+        /*if (this->y > 320) {
+            main_x = -128;
+            main_y = -128;
+        } else if (this->y < 320) {
+            sub_x = -128;
+            sub_y = -128;
+        }
+*/
+    }
+
+
+    if (sub_y < 0 || sub_x < 0) {
+        sub_x = -128;
+        sub_y = -128;
+    }
+
+    if (main_y < 0 || main_x < 0) {
+        main_x = -128;
+        main_y = -128;
+    }
+
+
+    if (activated_by_main_dude) {
+        //nothing
+    }
+
+    mainSpriteInfo->entry->x = main_x;
+    mainSpriteInfo->entry->y = main_y;
+
+    subSpriteInfo->entry->x = sub_x;
+    subSpriteInfo->entry->y = sub_y;
+
+}
+
+
+void Rock::init() {
+    subSpriteInfo = global::sub_oam_manager->initSprite(rockPal, rockPalLen,
+                                                        nullptr, 8 * 8, 8, ROCK, true, true);
+    mainSpriteInfo = global::main_oam_manager->initSprite(rockPal, rockPalLen,
+                                                          nullptr, 8 * 8, 8, ROCK, true, true);
+
+    frameGfx = (u8 *) rockTiles;
+    subSpriteInfo->updateFrame(frameGfx, 8 * 8);
+    mainSpriteInfo->updateFrame(frameGfx, 8 * 8);
+}
+
+void Rock::updateSpeed() {
+
+    if (xSpeed > MAX_X_SPEED_ROCK)
+        xSpeed = MAX_X_SPEED_ROCK;
+    if (xSpeed < -MAX_X_SPEED_ROCK)
+        xSpeed = -MAX_X_SPEED_ROCK;
+
+    if (ySpeed > MAX_Y_SPEED_ROCK)
+        ySpeed = MAX_Y_SPEED_ROCK;
+    if (ySpeed < -MAX_Y_SPEED_ROCK)
+        ySpeed = -MAX_Y_SPEED_ROCK;
+
+    pos_inc_timer += *timer;
+
+    bool change_pos = (pos_inc_timer > 15) && !hold_by_main_dude;
+
+    if (change_pos) {
+        updatePosition();
+    }
+
+}
+
+void Rock::updatePosition() {
+
+    if (bottomCollision && xSpeed > 0) {
+        xSpeed -= 0.055;
+        if (xSpeed < 0)
+            xSpeed = 0;
+    }
+    if (bottomCollision && xSpeed < 0) {
+        xSpeed += 0.055;
+        if (xSpeed > 0)
+            xSpeed = 0;
+    }
+
+    double tempXspeed = abs(xSpeed);
+    double tempYspeed = abs(ySpeed);
+
+    int old_xx = -1;
+    int old_yy = -1;
+    int xx;
+    int yy;
+
+    while (tempXspeed > 0 || tempYspeed > 0) {
+        if (tempXspeed > 0) {
+            if (xSpeed > 0) {
+                x += 1;
+            } else if (xSpeed < 0) {
+                x -= 1;
+            }
+        }
+        if (tempYspeed > 0) {
+            if (ySpeed > 0)
+                y += 1;
+            else if (ySpeed < 0)
+                y -= 1;
+        }
+
+//            Collisions::getCenterTile(this->x, this->y, MAIN_DUDE_HEIGHT, MAIN_DUDE_WIDTH, xx, yy);
+//fixme
+
+        xx = floor_div(this->x + 0.5 * BOMB_SIZE, 16);
+        yy = floor_div(this->y + 0.5 * BOMB_SIZE, 16);
+
+        if (old_xx != xx || old_yy != yy) {
+            updateCollisionsMap(xx, yy);
+        }
+
+        old_xx = xx;
+        old_yy = yy;
+
+        tempXspeed--;
+        tempYspeed--;
+    }
+
+
+    if (!bottomCollision)
+        ySpeed += GRAVITY_DELTA_SPEED;
+
+    pos_inc_timer = 0;
+}
+
+void Rock::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
+
+    MapTile *tiles[9];
+    Collisions::getNeighboringTiles(global::level_generator->mapTiles, x_current_pos_in_tiles, y_current_pos_in_tiles,
+                                    tiles);
+
+    bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, 8, 8, true);
+    leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, 8, 8, true);
+    rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, 8, 8, true);
+    upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, 8, true);
+
+    if (bottomCollision) {
+        //nothing
+    }
+
+}
+
+
+
