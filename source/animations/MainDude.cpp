@@ -146,9 +146,8 @@ void MainDude::handleKeyInput() {
                 ySpeed = -1;
             }
 
-            if (!canClimbRope && climbing) {
+            if (!canClimbRope && climbing && onTopOfClimbingSpace ) {
                 ySpeed = 0;
-                climbing = true;
                 jumpingTimer = 0;
                 xSpeed = 0;
             }
@@ -162,10 +161,12 @@ void MainDude::handleKeyInput() {
             if (climbing) {
                 ySpeed = 1;
             }
-            if (!canClimbRope && climbing) {
-                ySpeed = 0;
+
+            if (!canClimbRope && climbing && !onTopOfClimbingSpace) {
+//                ySpeed = 0;
                 jumpingTimer = 0;
-                xSpeed = 0;
+//                xSpeed = 0;
+                climbing = false;
             }
 
 
@@ -557,6 +558,7 @@ void MainDude::draw() {
         sub_spelunker->updateFrame(offset, 16 * 16);
     }
 
+    canClimbRope = false;
 }
 
 void MainDude::canHangOnTile(MapTile *neighboringTiles[9]) {

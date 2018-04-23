@@ -92,19 +92,22 @@ void Rope::draw() {
 
     //checking if main dude can climb over the rope
 
+    bool onTopOfClimbingSpace = global::main_dude->y < y + 6;
+    global::main_dude->onTopOfClimbingSpace = onTopOfClimbingSpace;
+
     for (int a = 0; a < ropeChain.size(); a++) {
+
         if (ropeChain.at(a)->x - 3 > global::main_dude->x &&
             ropeChain.at(a)->x + 11 < global::main_dude->x + MAIN_DUDE_WIDTH &&
             ropeChain.at(a)->y + 5 > global::main_dude->y &&
             ropeChain.at(a)->y - 5 < global::main_dude->y + MAIN_DUDE_HEIGHT
-                && global::main_dude->y > y) {
+            && !onTopOfClimbingSpace) {
 //            std::cout<< " CA NCLIMB " << '\n';
             if (!global::input_handler->r_bumper_down)
                 global::main_dude->canClimbRope = true;
             break;
         } else {
 //            std::cout<< " NOT" << '\n';
-            global::main_dude->canClimbRope = false;
         }
     }
 

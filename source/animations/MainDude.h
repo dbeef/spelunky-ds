@@ -80,6 +80,7 @@ public:
     bool whip;
     bool canClimbRope;
     bool climbing;
+    bool onTopOfClimbingSpace;
 
     bool holding_item;
 
