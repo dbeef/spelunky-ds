@@ -1,122 +1,238 @@
 //
-// Created by xdbeef on 18.03.18.
+// Created by xdbeef on 23.04.18.
 //
 
-#include <nds/arm9/sprite.h>
 #include "Snake.h"
-#include "../../build/snake.h"
-#include "Collisions.h"
 #include "../Globals.h"
+#include "Collisions.h"
+#include "../level_layout/MapUtils.h"
+#include "Rock.h"
+#include "../../build/snake.h"
 
-#define SNAKE_FRAMES_PER_ANIMATION 4
-#define MAIN_DUDE_MAX_X_SPEED 1.5
-#define MAIN_DUDE_MAX_Y_SPEED 2.3
-#define MIN_HANGING_TIME 100
-#define FRICTION_DELTA_TIME_MS 30
-#define FRICTION_DELTA_SPEED 0.25
-#define Y_SPEED_DELTA_TIME_MS 5
-#define GRAVITY_DELTA_SPEED 0.2
-#define X_SPEED_DELTA_TIME_MS 50
-#define X_SPEED_DELTA 1
+extern u16 map[4096];
 
-void Snake::update(int camera_x, int camera_y, int keys_held, int keys_up, LevelGenerator *l) {
-    this->applyFriction();
-    this->updateTimers(timerElapsed(0) / TICKS_PER_SECOND);
-    this->animate(camera_x, camera_y);
-    this->checkCollisionWithMap(l->mapTiles);
+void Snake::draw() {
 
+    int main_x = x - global::camera->x;
+    int main_y = y - global::camera->y;
+    int sub_x = x - global::camera->x;
+    int sub_y = y - global::camera->y - 192;
 
-}
+    if (global::camera->y + 192 > this->y + 16 || global::camera->y + 192 + 192 < this->y - 16) {
+        sub_x = -128;
+        sub_y = -128;
+    }
+    if (global::camera->y > this->y + 16 || global::camera->y + 192 < this->y - 16) {
+        main_x = -128;
+        main_y = -128;
 
-void Snake::init() {
-    spriteGfxMemMain = oamAllocateGfx(&oamMain, SpriteSize_16x16, SpriteColorFormat_256Color);
-    spriteGfxMemSub = oamAllocateGfx(&oamSub, SpriteSize_16x16, SpriteColorFormat_256Color);
-    frameGfx = (u8 *) snakeTiles;
-    dmaCopy(snakePal, SPRITE_PALETTE, 512);
-    dmaCopy(snakePal, SPRITE_PALETTE_SUB, 512);
-}
-
-
-void Snake::updateTimers(int timeElapsed) {
-    speedIncTimerX += timeElapsed;
-    speedIncTimerY += timeElapsed;
-    posIncTimer += timeElapsed;
-    frictionTimer += timeElapsed;
-    if (xSpeed != 0)
-        animationFrameTimer += timeElapsed;
-}
-
-
-void Snake::checkCollisionWithMap(MapTile *mapTiles[32][32]) {
-
-
-    if (xSpeed > MAIN_DUDE_MAX_X_SPEED)
-        xSpeed = MAIN_DUDE_MAX_X_SPEED;
-    if (xSpeed < -MAIN_DUDE_MAX_X_SPEED)
-        xSpeed = -MAIN_DUDE_MAX_X_SPEED;
-
-    if (ySpeed > MAIN_DUDE_MAX_Y_SPEED)
-        ySpeed = MAIN_DUDE_MAX_Y_SPEED;
-    if (ySpeed < -MAIN_DUDE_MAX_Y_SPEED)
-        ySpeed = -MAIN_DUDE_MAX_Y_SPEED;
-
-
-    if (posIncTimer > 10) {
-        x += xSpeed;
-        y += ySpeed;
-        posIncTimer = 0;
     }
 
-    bottomCollision = Collisions::checkBottomCollision(0, &this->x, &this->y, &ySpeed, 16, 16, false);
-    leftCollision = Collisions::checkLeftCollision(0, &this->x, &this->y, &xSpeed, 16, 16, false);
-    rightCollision = Collisions::checkRightCollision(0, &this->x, &this->y, &xSpeed, 16, 16, false);
-    upperCollision = Collisions::checkUpperCollision(0, &this->x, &this->y, &ySpeed, 16, false);
-    Collisions::isStandingOnEdge(0, &this->x, &this->y, &ySpeed, 16, 16);
+    if (sub_y < 0 || sub_x < 0) {
+        sub_x = -128;
+        sub_y = -128;
+    }
+
+    if (main_y < 0 || main_x < 0) {
+        main_x = -128;
+        main_y = -128;
+    }
 
 
-    if (!bottomCollision) {
-        if (speedIncTimerY > Y_SPEED_DELTA_TIME_MS) {
-            ySpeed += GRAVITY_DELTA_SPEED;
-            speedIncTimerY = 0;
+    if (activated_by_main_dude) {
+        //nothing
+    }
+
+    mainSpriteInfo->entry->x = main_x;
+    mainSpriteInfo->entry->y = main_y;
+
+    subSpriteInfo->entry->x = sub_x;
+    subSpriteInfo->entry->y = sub_y;
+
+    animFrameTimer += *timer;
+
+    if (animFrameTimer > 200) {
+//        std::cout<< animFrame << '\n';
+        animFrame++;
+        if (animFrame >= 4)
+            animFrame = 0;
+
+        if (spriteState == 1)
+        frameGfx = (u8 *) snakeTiles + ((16 * 16 * (animFrame + 4)) / 2);
+        else
+            frameGfx = (u8 *) snakeTiles + ((16 * 16 * animFrame) / 2);
+
+        animFrameTimer = 0;
+    }
+
+    subSpriteInfo->updateFrame(frameGfx, 16 * 16);
+    mainSpriteInfo->updateFrame(frameGfx, 16 * 16);
+
+    if(bottomCollision) {
+        if (waitTimer > 0) {
+            waitTimer -= *timer;
+        } else {
+            if (goTimer > 0)
+                goTimer -= *timer;
+
+//            std::cout << goTimer << '\n';
+
+            if (spriteState == 0)
+                xSpeed = 0.5;
+            else
+                xSpeed = -0.5;
+
+            if (goTimer <= 0) {
+//                std::cout << "RAND" << '\n';
+                randomizeMovement();
+                xSpeed = 0;
+            }
         }
     }
+
 }
 
 
-void Snake::animate(int camera_x, int camera_y) {
+void Snake::init() {
+    subSpriteInfo = global::sub_oam_manager->initSprite(snakePal, snakePalLen,
+                                                        nullptr, 16 * 16, 16, SNAKE, true, false);
+    mainSpriteInfo = global::main_oam_manager->initSprite(snakePal, snakePalLen,
+                                                          nullptr, 16 * 16, 16, SNAKE, true, false);
 
+    sameDirectionInRow = 0;
+    frameGfx = (u8 *) snakeTiles;
+    subSpriteInfo->updateFrame(frameGfx, 16 * 16);
+    mainSpriteInfo->updateFrame(frameGfx, 16 * 16);
 
-    if (animationFrameTimer > 70) {
-        animationFrameTimer = 0;
-        animFrame++;
+    randomizeMovement();
+}
+
+void Snake::randomizeMovement() {
+    srand(*timer + x + y + global::main_dude->x + +global::main_dude->y);
+
+    int r = rand() % 2;
+
+    if (r == 0) {
+        if (spriteState == SpriteState::W_LEFT)
+            sameDirectionInRow++;
+        else
+            sameDirectionInRow = 0;
+
+        if (sameDirectionInRow == 2)
+            spriteState = SpriteState::W_RIGHT;
+        else
+            spriteState = SpriteState::W_LEFT;
+
+    } else if (r == 1) {
+        if (spriteState == SpriteState::W_RIGHT)
+            sameDirectionInRow++;
+        else
+            sameDirectionInRow = 0;
+
+        if (sameDirectionInRow == 2)
+            spriteState = SpriteState::W_LEFT;
+        else
+            spriteState = SpriteState::W_RIGHT;
+    }
+    goTimer = rand() % 2000 + 1000;
+    waitTimer = rand() % 1000;
+}
+
+void Snake::updateSpeed() {
+
+    if (xSpeed > MAX_X_SPEED_ROCK)
+        xSpeed = MAX_X_SPEED_ROCK;
+    if (xSpeed < -MAX_X_SPEED_ROCK)
+        xSpeed = -MAX_X_SPEED_ROCK;
+
+    if (ySpeed > MAX_Y_SPEED_ROCK)
+        ySpeed = MAX_Y_SPEED_ROCK;
+    if (ySpeed < -MAX_Y_SPEED_ROCK)
+        ySpeed = -MAX_Y_SPEED_ROCK;
+
+    pos_inc_timer += *timer;
+
+    bool change_pos = (pos_inc_timer > 35) && !hold_by_main_dude;
+
+    if (change_pos) {
+        updatePosition();
     }
 
-    if (animFrame >= SNAKE_FRAMES_PER_ANIMATION) animFrame = 0;
-
-    int state;
-    if (xSpeed < 0)
-        state = 0;
-    else
-        state = 1;
-
-    int frame = animFrame + state * SNAKE_FRAMES_PER_ANIMATION;
-
-    u8 *offset = frameGfx + frame * 16 * 16;
-    dmaCopy(offset, spriteGfxMemMain, 16 * 16);
-    dmaCopy(offset, spriteGfxMemSub, 16 * 16);
-    if (this->y <= 320) {
-        oamSet(&oamMain, 0, x - camera_x, y - camera_y, 0, 0, SpriteSize_16x16, SpriteColorFormat_256Color,
-               spriteGfxMemMain, -1, false, false, false, false, false);
-    } else
-        oamSet(&oamMain, 0, -16, -16, 0, 0, SpriteSize_16x16, SpriteColorFormat_256Color,
-               0, -1, false, false, false, false, false);
-
-    if (this->y >= 320) {
-        oamSet(&oamSub, 0, x - camera_x, y - camera_y - 192, 0, 0, SpriteSize_16x16, SpriteColorFormat_256Color,
-               spriteGfxMemSub, -1, false, false, false, false, false);
-    } else
-        oamSet(&oamSub, 0, -16, -16, 0, 0, SpriteSize_16x16, SpriteColorFormat_256Color,
-               0, -1, false, false, false, false, false);
-
 }
 
+void Snake::updatePosition() {
+
+    if (bottomCollision && xSpeed > 0) {
+        xSpeed -= 0.055;
+        if (xSpeed < 0)
+            xSpeed = 0;
+    }
+    if (bottomCollision && xSpeed < 0) {
+        xSpeed += 0.055;
+        if (xSpeed > 0)
+            xSpeed = 0;
+    }
+
+    double tempXspeed = abs(xSpeed);
+    double tempYspeed = abs(ySpeed);
+
+    int old_xx = -1;
+    int old_yy = -1;
+    int xx;
+    int yy;
+
+    while (tempXspeed > 0 || tempYspeed > 0) {
+        if (tempXspeed > 0) {
+            if (xSpeed > 0) {
+                x += 1;
+            } else if (xSpeed < 0) {
+                x -= 1;
+            }
+        }
+        if (tempYspeed > 0) {
+            if (ySpeed > 0)
+                y += 1;
+            else if (ySpeed < 0)
+                y -= 1;
+        }
+
+//            Collisions::getCenterTile(this->x, this->y, MAIN_DUDE_HEIGHT, MAIN_DUDE_WIDTH, xx, yy);
+//fixme
+
+        xx = floor_div(this->x + 0.5 * BOMB_SIZE, 16);
+        yy = floor_div(this->y + 0.5 * BOMB_SIZE, 16);
+
+        if (old_xx != xx || old_yy != yy) {
+            updateCollisionsMap(xx, yy);
+        }
+
+        old_xx = xx;
+        old_yy = yy;
+
+        tempXspeed--;
+        tempYspeed--;
+    }
+
+
+    if (!bottomCollision)
+        ySpeed += GRAVITY_DELTA_SPEED;
+
+    pos_inc_timer = 0;
+}
+
+void Snake::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
+
+    MapTile *tiles[9];
+    Collisions::getNeighboringTiles(global::level_generator->mapTiles, x_current_pos_in_tiles, y_current_pos_in_tiles,
+                                    tiles);
+
+    bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, 16, 16, false);
+    leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, 16, 16, false);
+    rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, 16, 16, false);
+    upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, 16, false);
+
+    if (bottomCollision) {
+        //nothing
+    }
+
+}

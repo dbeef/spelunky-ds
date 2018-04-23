@@ -10,6 +10,7 @@ enum SpriteType{
     BOMB,
     ROCK,
     JAR,
+    SNAKE,
     ROPES,
     ROPE_ELEMENT,
     PRE_WHIP,

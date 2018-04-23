@@ -1,18 +1,15 @@
 Snake.o: \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Snake.cpp \
- /home/xdbeef/devkitPro/libnds/include/nds/arm9/sprite.h \
- /home/xdbeef/devkitPro/libnds/include/nds/ndstypes.h \
- /home/xdbeef/devkitPro/libnds/include/nds/arm9/video.h \
- /home/xdbeef/devkitPro/libnds/include/nds/arm9/sassert.h \
- /home/xdbeef/devkitPro/libnds/include/nds/memory.h \
- /home/xdbeef/devkitPro/libnds/include/nds/ndstypes.h \
- /home/xdbeef/devkitPro/libnds/include/nds/system.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Snake.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/MovingObject.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/../level_layout/LevelGenerator.h \
  /home/xdbeef/devkitPro/libnds/include/nds.h \
  /home/xdbeef/devkitPro/libnds/include/nds/libversion.h \
  /home/xdbeef/devkitPro/libnds/include/nds/ndstypes.h \
  /home/xdbeef/devkitPro/libnds/include/nds/bios.h \
+ /home/xdbeef/devkitPro/libnds/include/nds/ndstypes.h \
  /home/xdbeef/devkitPro/libnds/include/nds/card.h \
+ /home/xdbeef/devkitPro/libnds/include/nds/ndstypes.h \
  /home/xdbeef/devkitPro/libnds/include/nds/debug.h \
  /home/xdbeef/devkitPro/libnds/include/nds/dma.h \
  /home/xdbeef/devkitPro/libnds/include/nds/interrupts.h \
@@ -28,6 +25,9 @@ Snake.o: \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/dynamicArray.h \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/linkedlist.h \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/background.h \
+ /home/xdbeef/devkitPro/libnds/include/nds/arm9/video.h \
+ /home/xdbeef/devkitPro/libnds/include/nds/arm9/sassert.h \
+ /home/xdbeef/devkitPro/libnds/include/nds/memory.h \
  /home/xdbeef/devkitPro/libnds/include/nds/dma.h \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/boxtest.h \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/videoGL.h \
@@ -56,28 +56,29 @@ Snake.o: \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/sassert.h \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/sound.h \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/sprite.h \
+ /home/xdbeef/devkitPro/libnds/include/nds/system.h \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/window.h \
+ /home/xdbeef/devkitPro/libnds/include/nds/arm9/sprite.h \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/trig_lut.h \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/video.h \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/videoGL.h \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/nand.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/../level_layout/MapTile.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/../animations/OAMManager.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/../animations/../level_layout/SpriteInfo.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/../animations/../level_layout/../sprites/SpriteTypes.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/../animations/../level_layout/../animations/OamType.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/../animations/../sprites/SpriteTypes.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/../animations/OamType.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/../animations/Camera.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/SpriteTypes.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/SpriteState.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/LevelGenerator.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/MapTile.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../../build/snake.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Collisions.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/MapTile.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../Globals.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../input/InputHandler.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../hud/Hud.h \
  /home/xdbeef/devkitPro/libnds/include/nds/jtypes.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../hud/../level_layout/SpriteInfo.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../hud/../level_layout/../sprites/SpriteTypes.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../hud/../level_layout/../animations/OamType.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../hud/../animations/OAMManager.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../hud/../animations/../level_layout/SpriteInfo.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../hud/../animations/../sprites/SpriteTypes.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../hud/../animations/OamType.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../animations/Camera.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/LevelGenerator.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../animations/MainDude.h \
@@ -88,29 +89,23 @@ Snake.o: \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../animations/../level_layout/SpriteInfo.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../animations/Bomb.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../animations/../sprites/MovingObject.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../animations/../sprites/../level_layout/LevelGenerator.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../animations/../sprites/../animations/OAMManager.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../animations/../sprites/../animations/Camera.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../animations/../sprites/SpriteTypes.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../animations/../input/InputHandler.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../console/TextManager.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../console/../time/Timer.h
-
-/home/xdbeef/devkitPro/libnds/include/nds/arm9/sprite.h:
-
-/home/xdbeef/devkitPro/libnds/include/nds/ndstypes.h:
-
-/home/xdbeef/devkitPro/libnds/include/nds/arm9/video.h:
-
-/home/xdbeef/devkitPro/libnds/include/nds/arm9/sassert.h:
-
-/home/xdbeef/devkitPro/libnds/include/nds/memory.h:
-
-/home/xdbeef/devkitPro/libnds/include/nds/ndstypes.h:
-
-/home/xdbeef/devkitPro/libnds/include/nds/system.h:
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../console/../time/Timer.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Collisions.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/MapTile.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/MapUtils.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Rock.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/SpriteInfo.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Camera.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/LevelGenerator.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../../build/snake.h
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Snake.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/MovingObject.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/../level_layout/LevelGenerator.h:
 
 /home/xdbeef/devkitPro/libnds/include/nds.h:
 
@@ -120,7 +115,11 @@ Snake.o: \
 
 /home/xdbeef/devkitPro/libnds/include/nds/bios.h:
 
+/home/xdbeef/devkitPro/libnds/include/nds/ndstypes.h:
+
 /home/xdbeef/devkitPro/libnds/include/nds/card.h:
+
+/home/xdbeef/devkitPro/libnds/include/nds/ndstypes.h:
 
 /home/xdbeef/devkitPro/libnds/include/nds/debug.h:
 
@@ -151,6 +150,12 @@ Snake.o: \
 /home/xdbeef/devkitPro/libnds/include/nds/arm9/linkedlist.h:
 
 /home/xdbeef/devkitPro/libnds/include/nds/arm9/background.h:
+
+/home/xdbeef/devkitPro/libnds/include/nds/arm9/video.h:
+
+/home/xdbeef/devkitPro/libnds/include/nds/arm9/sassert.h:
+
+/home/xdbeef/devkitPro/libnds/include/nds/memory.h:
 
 /home/xdbeef/devkitPro/libnds/include/nds/dma.h:
 
@@ -208,7 +213,11 @@ Snake.o: \
 
 /home/xdbeef/devkitPro/libnds/include/nds/arm9/sprite.h:
 
+/home/xdbeef/devkitPro/libnds/include/nds/system.h:
+
 /home/xdbeef/devkitPro/libnds/include/nds/arm9/window.h:
+
+/home/xdbeef/devkitPro/libnds/include/nds/arm9/sprite.h:
 
 /home/xdbeef/devkitPro/libnds/include/nds/arm9/trig_lut.h:
 
@@ -218,17 +227,25 @@ Snake.o: \
 
 /home/xdbeef/devkitPro/libnds/include/nds/arm9/nand.h:
 
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/../level_layout/MapTile.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/../animations/OAMManager.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/../animations/../level_layout/SpriteInfo.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/../animations/../level_layout/../sprites/SpriteTypes.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/../animations/../level_layout/../animations/OamType.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/../animations/../sprites/SpriteTypes.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/../animations/OamType.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/../animations/Camera.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/SpriteTypes.h:
+
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/SpriteState.h:
-
-/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/LevelGenerator.h:
-
-/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/MapTile.h:
-
-/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../../build/snake.h:
-
-/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Collisions.h:
-
-/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/MapTile.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../Globals.h:
 
@@ -240,17 +257,7 @@ Snake.o: \
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../hud/../level_layout/SpriteInfo.h:
 
-/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../hud/../level_layout/../sprites/SpriteTypes.h:
-
-/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../hud/../level_layout/../animations/OamType.h:
-
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../hud/../animations/OAMManager.h:
-
-/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../hud/../animations/../level_layout/SpriteInfo.h:
-
-/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../hud/../animations/../sprites/SpriteTypes.h:
-
-/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../hud/../animations/OamType.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../animations/Camera.h:
 
@@ -272,16 +279,24 @@ Snake.o: \
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../animations/../sprites/MovingObject.h:
 
-/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../animations/../sprites/../level_layout/LevelGenerator.h:
-
-/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../animations/../sprites/../animations/OAMManager.h:
-
-/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../animations/../sprites/../animations/Camera.h:
-
-/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../animations/../sprites/SpriteTypes.h:
-
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../animations/../input/InputHandler.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../console/TextManager.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../console/../time/Timer.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Collisions.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/MapTile.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/MapUtils.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Rock.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/SpriteInfo.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Camera.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/LevelGenerator.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../../build/snake.h:

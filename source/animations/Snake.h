@@ -1,56 +1,55 @@
 //
-// Created by xdbeef on 18.03.18.
+// Created by xdbeef on 23.04.18.
 //
-//TODO Abstract class and interfaces for both MainDude and Snake to extend
 
 #ifndef SPELUNKYDS_SNAKE_H
 #define SPELUNKYDS_SNAKE_H
 
 
-#include <nds.h>
+#include "../sprites/MovingObject.h"
 #include "SpriteState.h"
-#include "../level_layout/LevelGenerator.h"
 
-class Snake {
+class Snake : public MovingObject {
 
 public:
 
-    int nextRandomizedWalkingTimestamp;
+    void updateOther() override {};
 
-    int animationFrameTimer;
+    void init() override;
 
-    int speedIncTimerX;
-    int speedIncTimerY;
-    int posIncTimer;
+    void draw() override;
 
-    int frictionTimer = 0;
+    void updateTimers() override {};
 
-    bool bottomCollision;
-    bool upperCollision;
-    bool leftCollision;
-    bool rightCollision;
+    void updatePosition() override;
 
-    double xSpeed;
-    double ySpeed;
-    int x;
-    int y;
-    int animFrame;
-    u16 *spriteGfxMemMain;
-    u16 *spriteGfxMemSub;
+    void updateSpeed() override;
+
+    void updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) override;
+
+    void updateCollisionsOtherMoving() override {};
+
+    void onCollisionWithMainCharacter() override {};
+
+
+    double *timer = nullptr;
+    double pos_inc_timer;
+
+    SpriteInfo *mainSpriteInfo = nullptr;
+    SpriteInfo *subSpriteInfo = nullptr;
     u8 *frameGfx;
+    int sameDirectionInRow;
 
-    void animate(int camera_x, int camera_y);
 
-    void init();
+    //Snake goes for random amount of time on random direction, then waits random time and the cycle goes again
+    SpriteState spriteState;
+    int waitTimer;
+    int goTimer;
 
-    void updateTimers(int timeElapsed);
+    int animFrame;
+    int animFrameTimer;
 
-    void applyFriction();
-
-    void checkCollisionWithMap(MapTile *mapTiles[32][32]);
-
-    void update(int camera_x, int camera_y, int keys_held, int keys_up, LevelGenerator *l);
-
+    void randomizeMovement();
 };
 
 

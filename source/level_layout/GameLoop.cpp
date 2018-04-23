@@ -6,6 +6,7 @@
 #include "../hud/Hud.h"
 #include "../animations/Rock.h"
 #include "../animations/Jar.h"
+#include "../animations/Snake.h"
 #include <vector>
 //#include "../Globals.h";
 
@@ -35,6 +36,13 @@ void spelunker::scroll(u16 *fresh_map) {
     global::hud->init();
 
     srand(timerElapsed(1));
+
+    Snake *snake = new Snake();
+    snake->timer = &timer;
+    snake->init();
+    snake->x = 100;
+    snake->y = 100;
+    global::sprites.push_back(snake);
 
     for (int a = 0; a < 2; a++) {
         Jar *jar = new Jar();

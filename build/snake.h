@@ -5,11 +5,11 @@
 //
 //	snake, 64x32@4, 
 //	Transparent color : 20,9C,00
-//	+ palette 256 entries, not compressed
+//	+ palette 16 entries, not compressed
 //	+ 32 tiles Metatiled by 2x2 not compressed
-//	Total size: 512 + 1024 = 1536
+//	Total size: 32 + 1024 = 1056
 //
-//	Time-stamp: 2018-04-23, 13:44:10
+//	Time-stamp: 2018-04-23, 19:05:37
 //	Exported by Cearn's GBA Image Transmogrifier, v0.8.14
 //	( http://www.coranac.com/projects/#grit )
 //
@@ -21,8 +21,8 @@
 #define snakeTilesLen 1024
 extern const unsigned int snakeTiles[256];
 
-#define snakePalLen 512
-extern const unsigned short snakePal[256];
+#define snakePalLen 32
+extern const unsigned short snakePal[16];
 
 #endif // GRIT_SNAKE_H
 
