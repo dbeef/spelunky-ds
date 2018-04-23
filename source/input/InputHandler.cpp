@@ -24,6 +24,7 @@ void InputHandler::updateInput() {
         right_key_held = false;
         down_key_held = false;
         b_key_held = false;
+        up_key_held = false;
     }
 
     if (keys_down) {

@@ -69,6 +69,7 @@ public:
     int jumpingTimer;
     int pushingTimer;
     int whip_timer;
+    int timeSinceLastJump;
 
     bool hangingOnTileLeft;
     bool hangingOnTileRight;
@@ -78,6 +79,7 @@ public:
     bool pushing_right;
     bool whip;
     bool canClimbRope;
+    bool climbing;
 
     bool holding_item;
 

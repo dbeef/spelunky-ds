@@ -51,7 +51,7 @@ void Hud::init() {
     holdingItemSpriteInfo->entry->x = HOLDING_ITEM_FRAME_POSITION_X;
     holdingItemSpriteInfo->entry->y = HOLDING_ITEM_FRAME_POSITION_Y;
 
-    std::cout << '\n' << "   4    4    4    4" ;
+    std::cout << '\n' << "   4    4    4    1000" ;
 
 }
 

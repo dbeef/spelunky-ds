@@ -17,15 +17,19 @@
 void MainDude::handleKeyInput() {
 
     if (!stunned) {
-        if (global::input_handler->r_bumper_down) {
-            if (bottomCollision) {
+        if (global::input_handler->r_bumper_down && timeSinceLastJump > 100) {
+            if (bottomCollision || climbing) {
                 ySpeed = -MAIN_DUDE_JUMP_SPEED;
+                climbing = false;
+                canClimbRope = false;
+                timeSinceLastJump = 0;
             }
-            if ((hangingOnTileLeft || hangingOnTileRight) && hangingTimer > MIN_HANGING_TIME) {
+            if ((hangingOnTileLeft || hangingOnTileRight) && hangingTimer > MIN_HANGING_TIME&& timeSinceLastJump > 100) {
                 ySpeed = -MAIN_DUDE_JUMP_SPEED;
                 hangingOnTileLeft = false;
                 hangingOnTileRight = false;
                 hangingTimer = 0;
+                timeSinceLastJump = 0;
             }
         }
         if (global::input_handler->l_bumper_down) {
@@ -115,7 +119,7 @@ void MainDude::handleKeyInput() {
         if (global::input_handler->left_key_held) {
             state = W_LEFT;
             hangingOnTileLeft = false;
-            if (xSpeed > -MAIN_DUDE_MAX_X_SPEED && !(hangingOnTileRight || hangingOnTileLeft))
+            if (xSpeed > -MAIN_DUDE_MAX_X_SPEED && !(hangingOnTileRight || hangingOnTileLeft) && !climbing)
                 if (speedIncTimer > X_SPEED_DELTA_TIME_MS) {
                     xSpeed -= X_SPEED_DELTA_VALUE;
                     speedIncTimer = 0;
@@ -124,7 +128,7 @@ void MainDude::handleKeyInput() {
         if (global::input_handler->right_key_held) {
             state = W_RIGHT;
             hangingOnTileRight = false;
-            if (xSpeed < MAIN_DUDE_MAX_X_SPEED && !(hangingOnTileRight || hangingOnTileLeft)) {
+            if (xSpeed < MAIN_DUDE_MAX_X_SPEED && !(hangingOnTileRight || hangingOnTileLeft) && !climbing) {
                 if (speedIncTimer > X_SPEED_DELTA_TIME_MS) {
                     xSpeed += X_SPEED_DELTA_VALUE;
                     speedIncTimer = 0;
@@ -132,7 +136,39 @@ void MainDude::handleKeyInput() {
             }
         }
 
+
+        if (global::input_handler->up_key_held) {
+            if (canClimbRope /*&& !climbing*/) {
+//                std::cout<<"CLIMBING" << '\n'
+                climbing = true;
+                jumpingTimer = 0;
+                xSpeed = 0;
+                ySpeed = -1;
+            }
+
+            if (!canClimbRope && climbing) {
+                ySpeed = 0;
+                climbing = true;
+                jumpingTimer = 0;
+                xSpeed = 0;
+            }
+
+        } else if (climbing) {
+            ySpeed = 0;
+        }
+
         if (global::input_handler->down_key_held) {
+
+            if (climbing) {
+                ySpeed = 1;
+            }
+            if (!canClimbRope && climbing) {
+                ySpeed = 0;
+                jumpingTimer = 0;
+                xSpeed = 0;
+            }
+
+
             hangingOnTileLeft = false;
             hangingOnTileRight = false;
             if (bottomCollision)
@@ -168,7 +204,7 @@ void MainDude::updateTimers() {
 
         animationFrameTimer = 0;
 
-        if (!whip || (whip && animFrame < 5))
+        if (!whip || (whip && animFrame < 5) || (climbing && animFrame < 12))
             animFrame++;
 
     }
@@ -211,7 +247,7 @@ void MainDude::updateTimers() {
         animFrame = 0;
 
 
-    if (!bottomCollision && !hangingOnTileLeft && !hangingOnTileRight)
+    if (!bottomCollision && !hangingOnTileLeft && !hangingOnTileRight && !climbing)
         jumpingTimer += *timer;
 
     if (bottomCollision && jumpingTimer > STUN_FALLING_TIME) {
@@ -229,13 +265,14 @@ void MainDude::updateTimers() {
     }
 
 
-    if (xSpeed != 0 || stunned || whip || (pushing_left || pushing_right))
+    if (xSpeed != 0 || stunned || whip || (pushing_left || pushing_right) || (climbing && ySpeed != 0))
         animationFrameTimer += *timer;
 
 
     if (!bottomCollision)
         crawling = false;
 
+    timeSinceLastJump += *timer;
 }
 
 
@@ -282,7 +319,7 @@ void MainDude::updateSpeed() {
         updatePosition();
         posIncTimer = 0;
 
-        if (!bottomCollision && !(hangingOnTileLeft || hangingOnTileRight))
+        if (!bottomCollision && !(hangingOnTileLeft || hangingOnTileRight) && !climbing)
             ySpeed += GRAVITY_DELTA_SPEED;
     }
 
@@ -328,7 +365,7 @@ void MainDude::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos
 void MainDude::init() {
 
     main_spelunker = global::main_oam_manager->initSprite(spelunkerPal, spelunkerPalLen, nullptr,
-                                                          16*16, 16, MAIN_DUDE, true, false);
+                                                          16 * 16, 16, MAIN_DUDE, true, false);
 
     main_pre_whip = global::main_oam_manager->initSprite(pre_whip_leftPal, pre_whip_leftPalLen,
                                                          pre_whip_leftTiles, pre_whip_leftTilesLen, 16, PRE_WHIP, true,
@@ -338,7 +375,7 @@ void MainDude::init() {
                                                      whip_leftTiles, whip_leftTilesLen, 16, WHIP, true, false);
 
     sub_spelunker = global::sub_oam_manager->initSprite(spelunkerPal, spelunkerPalLen, nullptr,
-                                                        16*16, 16, MAIN_DUDE, true, false);
+                                                        16 * 16, 16, MAIN_DUDE, true, false);
 
     sub_pre_whip = global::sub_oam_manager->initSprite(pre_whip_leftPal, pre_whip_leftPalLen,
                                                        pre_whip_leftTiles, pre_whip_leftTilesLen, 16, PRE_WHIP, true,
@@ -382,9 +419,7 @@ void MainDude::draw() {
     int frame;
     u8 *offset;
 
-    if (canClimbRope) {
-        //todo animation
-    } else if (whip) {
+    if (whip) {
 
         sub_pre_whip->entry->y = sub_y - 2;
         main_pre_whip->entry->y = main_y - 2;
@@ -427,7 +462,19 @@ void MainDude::draw() {
         }
 
     }
-    if (stunned) {
+
+
+    if (climbing) {
+
+        if (animFrame >= 12)
+            animFrame = 0;
+
+        frame = ((11) * SPRITESHEET_ROW_WIDTH) + animFrame + 2;
+        offset = frameGfx + frame * MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT / 2;
+        main_spelunker->updateFrame(offset, 16 * 16);
+        sub_spelunker->updateFrame(offset, 16 * 16);
+
+    } else if (stunned) {
         if (animFrame > 4)
             animFrame = 0;
 
@@ -548,8 +595,10 @@ void MainDude::canHangOnTile(MapTile *neighboringTiles[9]) {
         if (rightCollision) {
             this->y = (neighboringTiles[0]->y * 16);
             hangingOnTileRight = true;
+            jumpingTimer = 0;
         }
         if (leftCollision) {
+            jumpingTimer = 0;
             hangingOnTileLeft = true;
             this->y = (neighboringTiles[1]->y * 16);
         }
@@ -561,6 +610,9 @@ void MainDude::updateOther() {
 }
 
 void MainDude::updatePosition() {
+
+//    if (!canClimbRope)
+//        climbing = false;
 
     double tempXspeed = abs(xSpeed);
     double tempYspeed = abs(ySpeed);
