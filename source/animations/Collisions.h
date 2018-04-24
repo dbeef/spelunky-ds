@@ -28,8 +28,8 @@ public:
     static bool
     checkRightCollision(MapTile *neighboringTiles[9], int *xPos, int *yPos, double *xSpeed, int width, int height, bool bounce);
 
-    static bool
-    isStandingOnEdge(MapTile *neighboringTiles[9], int *xPos, int *yPos, double *xSpeed, int width, int height);
+    static bool isStandingOnLeftEdge(MapTile *neighboringTiles[9], int x, int width, int tileX);
+    static bool isStandingOnRightEdge(MapTile *neighboringTiles[9], int x, int width, int tileX);
 
     static void getNeighboringTiles(MapTile *mapTiles[32][32], int xx, int yy, MapTile *neighboringTiles[9]);
 

@@ -9,6 +9,7 @@
 #include "../animations/Snake.h"
 #include <vector>
 //#include "../Globals.h";
+#include <time.h>
 
 extern u16 map[4096];
 
@@ -19,6 +20,7 @@ static const int OFFSET_MULTIPLIER_SUB = BOUNDARY_VALUE / sizeof(SPRITE_GFX_SUB[
 void spelunker::scroll(u16 *fresh_map) {
 
     double timer = 0;
+    int initTimer = 0;
 
     global::main_oam_manager->initOAMTable(SPRITE_GFX, SPRITE_PALETTE, OAM, OFFSET_MULTIPLIER_MAIN, OamType::MAIN);
     global::sub_oam_manager->initOAMTable(SPRITE_GFX_SUB, SPRITE_PALETTE_SUB, OAM_SUB, OFFSET_MULTIPLIER_SUB,
@@ -35,39 +37,8 @@ void spelunker::scroll(u16 *fresh_map) {
 
     global::hud->init();
 
-    srand(timerElapsed(1));
 
-    Snake *snake = new Snake();
-    snake->timer = &timer;
-    snake->init();
-    snake->x = 100;
-    snake->y = 100;
-    global::sprites.push_back(snake);
-
-    for (int a = 0; a < 2; a++) {
-        Jar *jar = new Jar();
-        jar->init();
-        jar->timer = &timer;
-        global::sprites.push_back(jar);
-
-        int curr_x = rand() % 400 + 48;
-        int curr_y = rand() % 400 + 48;
-
-        jar->x = curr_x;
-        jar->y = curr_y;
-    }
-    for (int a = 0; a < 2; a++) {
-        Rock *rock = new Rock();
-        rock->init();
-        rock->timer = &timer;
-        global::sprites.push_back(rock);
-
-        int curr_x = rand() % 400 + 48;
-        int curr_y = rand() % 400 + 48;
-
-        rock->x = curr_x;
-        rock->y = curr_y;
-    }
+    bool initialised = false;
 
     while (true) {
 
@@ -104,6 +75,53 @@ void spelunker::scroll(u16 *fresh_map) {
 
         global::main_oam_manager->updateOAM();
         global::sub_oam_manager->updateOAM();
+
+        initTimer += timer;
+
+        if (!initialised /*&& initTimer > 5000*/) {
+
+            srand(/*time(NULL) + */global::input_handler->seed + global::main_dude->x + global::main_dude->y);
+
+            for (int a = 0; a < 2; a++) {
+                Snake *snake = new Snake();
+                snake->init();
+                snake->timer = &timer;
+                global::sprites.push_back(snake);
+
+                int curr_x = rand() % 400 + 48 + a*16;
+                int curr_y = rand() % 400 + 48;
+
+                snake->x = curr_x;
+                snake->y = curr_y;
+
+            }
+
+            for (int a = 0; a < 2; a++) {
+                Jar *jar = new Jar();
+                jar->init();
+                jar->timer = &timer;
+                global::sprites.push_back(jar);
+
+                int curr_x = rand() % 400 + 48;
+                int curr_y = rand() % 400 + 48;
+
+                jar->x = curr_x;
+                jar->y = curr_y;
+            }
+            for (int a = 0; a < 2; a++) {
+                Rock *rock = new Rock();
+                rock->init();
+                rock->timer = &timer;
+                global::sprites.push_back(rock);
+
+                int curr_x = rand() % 400 + 48;
+                int curr_y = rand() % 400 + 48;
+
+                rock->x = curr_x;
+                rock->y = curr_y;
+                initialised = true;
+            }
+        }
 
     }
 }

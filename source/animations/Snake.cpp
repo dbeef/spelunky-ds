@@ -58,7 +58,7 @@ void Snake::draw() {
             animFrame = 0;
 
         if (spriteState == 1)
-        frameGfx = (u8 *) snakeTiles + ((16 * 16 * (animFrame + 4)) / 2);
+            frameGfx = (u8 *) snakeTiles + ((16 * 16 * (animFrame + 4)) / 2);
         else
             frameGfx = (u8 *) snakeTiles + ((16 * 16 * animFrame) / 2);
 
@@ -68,16 +68,20 @@ void Snake::draw() {
     subSpriteInfo->updateFrame(frameGfx, 16 * 16);
     mainSpriteInfo->updateFrame(frameGfx, 16 * 16);
 
-    if(bottomCollision) {
+    if (bottomCollision) {
         if (waitTimer > 0) {
             waitTimer -= *timer;
         } else {
             if (goTimer > 0)
+
+
                 goTimer -= *timer;
 
 //            std::cout << goTimer << '\n';
 
-            if (spriteState == 0)
+            if (standingOnLeftEdge && spriteState == 1 || standingOnRightEdge && spriteState == 0) {
+                xSpeed = 0;
+            } else if (spriteState == 0)
                 xSpeed = 0.5;
             else
                 xSpeed = -0.5;
@@ -135,7 +139,7 @@ void Snake::randomizeMovement() {
             spriteState = SpriteState::W_RIGHT;
     }
     goTimer = rand() % 2000 + 1000;
-    waitTimer = rand() % 1000;
+    waitTimer = rand() % 500;
 }
 
 void Snake::updateSpeed() {
@@ -226,6 +230,8 @@ void Snake::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in
     Collisions::getNeighboringTiles(global::level_generator->mapTiles, x_current_pos_in_tiles, y_current_pos_in_tiles,
                                     tiles);
 
+    standingOnLeftEdge = Collisions::isStandingOnLeftEdge(tiles, x, 16, x_current_pos_in_tiles);
+    standingOnRightEdge = Collisions::isStandingOnRightEdge(tiles, x, 16, x_current_pos_in_tiles);
     bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, 16, 16, false);
     leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, 16, 16, false);
     rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, 16, 16, false);

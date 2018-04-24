@@ -63,12 +63,17 @@ void Hud::init() {
     bombs = 4;
     dollars = 0;
 
-    std::cout << '\n' << "   " << hearts << "    " << bombs<< "    " << ropes<< "    " << dollars;
+    std::cout << '\n' << "   " << hearts << "    " << bombs << "    " << ropes << "    " << dollars;
 
 }
 
 //call only when something changed
 void Hud::draw() {
     consoleClear();
-    std::cout << '\n' << "   " << hearts << "    " << bombs<< "    " << ropes<< "    " << dollars;
+    std::cout << '\n' << "   " << hearts << "    " << bombs << "    " << ropes << "    " << dollars;
+    //TODO Debug flag for this:
+    std::cout << "\n \n \n \n " << "IPM: " << global::main_oam_manager->current_oam_id_palette << " "
+              << "IPS: " << global::sub_oam_manager->current_oam_id_palette << " "
+              << "ITM: " << global::main_oam_manager->current_oam_id_tiles << " "
+              << "ITS: " << global::sub_oam_manager->current_oam_id_tiles;
 }

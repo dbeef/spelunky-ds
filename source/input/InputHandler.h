@@ -25,6 +25,7 @@ public:
     bool y_key_down;
     bool a_key_down;
 
+    int seed;
 };
 
 

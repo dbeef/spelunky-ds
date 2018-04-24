@@ -348,9 +348,6 @@ void MainDude::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos
     leftCollision = Collisions::checkLeftCollision(tiles, &this->x, &this->y, &xSpeed, 16, 16, false);
     rightCollision = Collisions::checkRightCollision(tiles, &this->x, &this->y, &xSpeed, 16, 16, false);
     upperCollision = Collisions::checkUpperCollision(tiles, &this->x, &this->y, &ySpeed, 16, false);
-    Collisions::isStandingOnEdge(tiles, &
-            this->x, &this->y, &ySpeed, 16, 16);
-
 
     canHangOnTile(tiles);
 

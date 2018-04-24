@@ -54,6 +54,8 @@ public:
     double xSpeed;
     double ySpeed;
 
+    bool standingOnLeftEdge;
+    bool standingOnRightEdge;
     bool bottomCollision;
     bool upperCollision;
     bool leftCollision;

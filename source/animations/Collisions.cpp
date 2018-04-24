@@ -198,55 +198,12 @@ bool Collisions::checkRightCollision(MapTile *neighboringTiles[9], int *xPos, in
     return rightCollision;
 }
 
-//fixme
-bool Collisions::isStandingOnEdge(MapTile *neighboringTiles[9], int *xPos, int *yPos, double *xSpeed, int width,
-                                  int height) {
-
-    bool standingOnEdge = false;
-    bool w0 = false;
-    bool w1 = false;
-    bool w2 = false;
-
-    for (int a = 0; a < 32; a++) {
-
-        if (neighboringTiles[a] == 0 || !neighboringTiles[a]->collidable)
-            continue;
-
-
-        if (!standingOnEdge) {
-            return false;
-/*
-                if (x < 32) {
-
-                    w0 = mapTiles[x + 1][y] == 0;
-                    w1 = (*yPos <= y * TILE_H) && *yPos + height >= (y * TILE_H);
-                    w2 = (*xPos >= (x * TILE_W)) && (*xPos < (x * TILE_W) + TILE_W);
-                    standingOnEdge = w0 && w1 && w2;
-
-                    if (standingOnEdge) {
-                        std::cout << "STANDING ON EDGE - RIGHT" << '\n';
-                    }
-                }
-
-                if (x > 0) {
-
-                    w0 = mapTiles[x - 1][y] == 0;
-                    w1 = (*yPos <= y * TILE_H) && *yPos + height >= (y * TILE_H);
-                    w2 = (*xPos <= (x * TILE_W)) && (*xPos > (x * TILE_W) - width);
-                    standingOnEdge = w0 && w1 && w2;
-                    if (standingOnEdge) {
-                        std::cout << "STANDING ON EDGE - LEFT" << '\n';
-                    }
-
-                }*/
-
-
-        } else
-            return true;
-    }
-    return standingOnEdge;
+bool Collisions::isStandingOnLeftEdge(MapTile *neighboringTiles[9], int x, int width, int tileX) {
+    return (!neighboringTiles[7] && x <= (tileX * 16));
 }
-
+bool Collisions::isStandingOnRightEdge(MapTile *neighboringTiles[9], int x, int width, int tileX) {
+    return  (!neighboringTiles[8] && x >= (tileX * 16) );
+}
 
 void Collisions::getNeighboringTiles(MapTile *mapTiles[32][32], int xx, int yy, MapTile *neighboringTiles[9]) {
 
@@ -275,7 +232,7 @@ void Collisions::bombNeighboringTiles(MapTile *mapTiles[32][32], int xx, int yy)
 
     if (mapTiles[xx - 1][yy]->destroyable)
         mapTiles[xx - 1][yy] = nullptr;
-    if (mapTiles[xx + 1][yy] ->destroyable)
+    if (mapTiles[xx + 1][yy]->destroyable)
         mapTiles[xx + 1][yy] = nullptr;
     if (mapTiles[xx][yy - 1]->destroyable)
         mapTiles[xx][yy - 1] = nullptr;
@@ -302,6 +259,6 @@ void Collisions::getCenterTile(int x_position, int y_position, int height, int w
 }
 
 bool Collisions::checkCollisionWithMainDude(int x, int y, int width, int height) {
-    return x + 8 >= global::main_dude->x && x + width > global::main_dude->x &&
+    return x + width + 4 >= global::main_dude->x && x + width < global::main_dude->x + 16 + 8 &&
            y + height > global::main_dude->y && y < global::main_dude->y + MAIN_DUDE_HEIGHT;
 }
