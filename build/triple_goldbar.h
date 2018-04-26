@@ -1,9 +1,9 @@
 
-//{{BLOCK(holding_item)
+//{{BLOCK(triple_goldbar)
 
 //======================================================================
 //
-//	holding_item, 16x16@4, 
+//	triple_goldbar, 16x16@4, 
 //	Transparent color : 20,9C,00
 //	+ palette 16 entries, not compressed
 //	+ 4 tiles Metatiled by 2x2 not compressed
@@ -15,15 +15,15 @@
 //
 //======================================================================
 
-#ifndef GRIT_HOLDING_ITEM_H
-#define GRIT_HOLDING_ITEM_H
+#ifndef GRIT_TRIPLE_GOLDBAR_H
+#define GRIT_TRIPLE_GOLDBAR_H
 
-#define holding_itemTilesLen 128
-extern const unsigned int holding_itemTiles[32];
+#define triple_goldbarTilesLen 128
+extern const unsigned int triple_goldbarTiles[32];
 
-#define holding_itemPalLen 32
-extern const unsigned short holding_itemPal[16];
+#define triple_goldbarPalLen 32
+extern const unsigned short triple_goldbarPal[16];
 
-#endif // GRIT_HOLDING_ITEM_H
+#endif // GRIT_TRIPLE_GOLDBAR_H
 
-//}}BLOCK(holding_item)
+//}}BLOCK(triple_goldbar)

@@ -258,6 +258,33 @@ source/animations/MainDude.cpp.s:
 	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/animations/MainDude.cpp.s
 .PHONY : source/animations/MainDude.cpp.s
 
+source/animations/Moniez.o: source/animations/Moniez.cpp.o
+
+.PHONY : source/animations/Moniez.o
+
+# target to build an object file
+source/animations/Moniez.cpp.o:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/animations/Moniez.cpp.o
+.PHONY : source/animations/Moniez.cpp.o
+
+source/animations/Moniez.i: source/animations/Moniez.cpp.i
+
+.PHONY : source/animations/Moniez.i
+
+# target to preprocess a source file
+source/animations/Moniez.cpp.i:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/animations/Moniez.cpp.i
+.PHONY : source/animations/Moniez.cpp.i
+
+source/animations/Moniez.s: source/animations/Moniez.cpp.s
+
+.PHONY : source/animations/Moniez.s
+
+# target to generate assembly for a file
+source/animations/Moniez.cpp.s:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/animations/Moniez.cpp.s
+.PHONY : source/animations/Moniez.cpp.s
+
 source/animations/OAMManager.o: source/animations/OAMManager.cpp.o
 
 .PHONY : source/animations/OAMManager.o
@@ -714,6 +741,9 @@ help:
 	@echo "... source/animations/MainDude.o"
 	@echo "... source/animations/MainDude.i"
 	@echo "... source/animations/MainDude.s"
+	@echo "... source/animations/Moniez.o"
+	@echo "... source/animations/Moniez.i"
+	@echo "... source/animations/Moniez.s"
 	@echo "... source/animations/OAMManager.o"
 	@echo "... source/animations/OAMManager.i"
 	@echo "... source/animations/OAMManager.s"

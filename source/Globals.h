@@ -37,6 +37,7 @@ namespace global {
     extern std::vector<MovingObject *> sprites;
     extern std::vector<SpriteInfo *> spriteInfos;
     extern bool bombed;
+    extern double *timer;
 }
 
 #endif //SPELUNKYDS_CONSTS_H

@@ -71,9 +71,59 @@ void Hud::init() {
 void Hud::draw() {
     consoleClear();
     std::cout << '\n' << "   " << hearts << "    " << bombs << "    " << ropes << "    " << dollars;
+    if (dollars_buffer != 0) {
+        std::cout << '\n' << "   " << "    " << "    " << "    " << "   " << "+" << dollars_buffer;
+
+        std::cout << "\n \n \n " << "IPM: " << global::main_oam_manager->current_oam_id_palette << " "
+                  << "IPS: " << global::sub_oam_manager->current_oam_id_palette << " "
+                  << "ITM: " << global::main_oam_manager->current_oam_id_tiles << " "
+                  << "ITS: " << global::sub_oam_manager->current_oam_id_tiles;
+
+    }
+    else
+    {
+
+        std::cout << "\n \n \n " << "IPM: " << global::main_oam_manager->current_oam_id_palette << " "
+                  << "IPS: " << global::sub_oam_manager->current_oam_id_palette << " "
+                  << "ITM: " << global::main_oam_manager->current_oam_id_tiles << " "
+                  << "ITS: " << global::sub_oam_manager->current_oam_id_tiles;
+        }
+
+
     //TODO Debug flag for this:
-    std::cout << "\n \n \n \n " << "IPM: " << global::main_oam_manager->current_oam_id_palette << " "
-              << "IPS: " << global::sub_oam_manager->current_oam_id_palette << " "
-              << "ITM: " << global::main_oam_manager->current_oam_id_tiles << " "
-              << "ITS: " << global::sub_oam_manager->current_oam_id_tiles;
+    }
+
+void Hud::updateMoniez() {
+
+    if (collecting_timer > 0) {
+        collecting_timer -= *global::timer;
+
+        if (collecting_timer <= 0) {
+            collecting_timer = 0;
+            dollars_timer = 0;
+        }
+    }
+
+    if (collecting_timer == 0 && dollars_buffer != 0) {
+        dollars_timer += *global::timer;
+    }
+
+    if (dollars_timer >= 50) {
+        if (dollars_buffer >= 100) {
+            dollars += 100;
+            dollars_buffer -= 100;
+        } else {
+            dollars += dollars_buffer % 100;
+            dollars_buffer -= dollars_buffer % 100;
+        }
+        dollars_timer = 0;
+        draw();
+    }
+
+}
+
+void Hud::collectedMoniez(int value) {
+    collecting_timer += 500;
+    dollars_buffer += value;
+    draw();
 }

@@ -20,6 +20,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/spelunkyds.dir/source/input/InputHandler.cpp.o"
   "CMakeFiles/spelunkyds.dir/source/animations/Jar.cpp.o"
   "CMakeFiles/spelunkyds.dir/source/animations/Snake.cpp.o"
+  "CMakeFiles/spelunkyds.dir/source/animations/Moniez.cpp.o"
   "spelunkyds.pdb"
   "spelunkyds"
 )

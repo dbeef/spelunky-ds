@@ -16,6 +16,11 @@ public:
 
     void init();
 
+    int dollars_buffer;
+    int dollars_timer;
+    //it has to be zero, to pass dollars from dollars_buffer to dollars
+    int collecting_timer;
+
     int hearts;
     int bombs;
     int dollars;
@@ -26,6 +31,9 @@ public:
     SpriteInfo *dollarSpriteInfo = nullptr;
     SpriteInfo *ropeSpriteInfo = nullptr;
     SpriteInfo *holdingItemSpriteInfo = nullptr;
+
+    void updateMoniez();
+    void collectedMoniez(int value);
 };
 
 

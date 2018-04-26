@@ -10,6 +10,8 @@ enum SpriteType{
     BOMB,
     ROCK,
     JAR,
+    MONIEZ_TRIPLE_GOLD_BARS,
+    MONIEZ_RUBY_BIG,
     SNAKE,
     ROPES,
     ROPE_ELEMENT,

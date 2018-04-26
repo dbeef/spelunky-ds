@@ -16,6 +16,7 @@
 
 static u16 *fresh_map;
 
+
 namespace global {
     InputHandler *input_handler = new InputHandler();
     TextManager *textManager = new TextManager();
@@ -30,6 +31,7 @@ namespace global {
     int bg_main_address = 0;
     int bg_sub_address = 0;
     bool bombed = false;
+    double *timer = 0;
 }
 
 int main(void) {

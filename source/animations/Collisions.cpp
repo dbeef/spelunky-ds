@@ -259,6 +259,10 @@ void Collisions::getCenterTile(int x_position, int y_position, int height, int w
 }
 
 bool Collisions::checkCollisionWithMainDude(int x, int y, int width, int height) {
-    return x + width + 4 >= global::main_dude->x && x + width < global::main_dude->x + 16 + 8 &&
+    return x + width + 4 >= global::main_dude->x && x + width < global::main_dude->x + MAIN_DUDE_WIDTH + 8 &&
            y + height > global::main_dude->y && y < global::main_dude->y + MAIN_DUDE_HEIGHT;
+}
+bool Collisions::checkCollisionWithMainDudeWidthBoundary(int x, int y, int width, int height, int x_boundary) {
+    return  global::main_dude->x + 16 > x &&  global::main_dude->x <= x + width &&
+           y + height > global::main_dude->y && y <= global::main_dude->y + MAIN_DUDE_HEIGHT;
 }

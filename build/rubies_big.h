@@ -1,13 +1,13 @@
 
-//{{BLOCK(heart)
+//{{BLOCK(rubies_big)
 
 //======================================================================
 //
-//	heart, 16x16@4, 
+//	rubies_big, 24x8@4, 
 //	Transparent color : 20,9C,00
 //	+ palette 16 entries, not compressed
-//	+ 4 tiles Metatiled by 2x2 not compressed
-//	Total size: 32 + 128 = 160
+//	+ 3 tiles not compressed
+//	Total size: 32 + 96 = 128
 //
 //	Time-stamp: 2018-04-26, 23:52:13
 //	Exported by Cearn's GBA Image Transmogrifier, v0.8.14
@@ -15,15 +15,15 @@
 //
 //======================================================================
 
-#ifndef GRIT_HEART_H
-#define GRIT_HEART_H
+#ifndef GRIT_RUBIES_BIG_H
+#define GRIT_RUBIES_BIG_H
 
-#define heartTilesLen 128
-extern const unsigned int heartTiles[32];
+#define rubies_bigTilesLen 96
+extern const unsigned int rubies_bigTiles[24];
 
-#define heartPalLen 32
-extern const unsigned short heartPal[16];
+#define rubies_bigPalLen 32
+extern const unsigned short rubies_bigPal[16];
 
-#endif // GRIT_HEART_H
+#endif // GRIT_RUBIES_BIG_H
 
-//}}BLOCK(heart)
+//}}BLOCK(rubies_big)

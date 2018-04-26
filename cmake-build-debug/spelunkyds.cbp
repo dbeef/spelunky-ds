@@ -145,6 +145,12 @@
 		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/MainDude.h">
 			<Option target="spelunkyds"/>
 		</Unit>
+		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Moniez.cpp">
+			<Option target="spelunkyds"/>
+		</Unit>
+		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Moniez.h">
+			<Option target="spelunkyds"/>
+		</Unit>
 		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/OAMManager.cpp">
 			<Option target="spelunkyds"/>
 		</Unit>

@@ -7,6 +7,7 @@
 #include "../animations/Rock.h"
 #include "../animations/Jar.h"
 #include "../animations/Snake.h"
+#include "../animations/Moniez.h"
 #include <vector>
 //#include "../Globals.h";
 #include <time.h>
@@ -43,6 +44,8 @@ void spelunker::scroll(u16 *fresh_map) {
     while (true) {
 
         timer = timerElapsed(0) / TICKS_PER_SECOND;
+        //fixme
+        *global::timer = timer;
 
         global::input_handler->updateInput();
 
@@ -78,6 +81,8 @@ void spelunker::scroll(u16 *fresh_map) {
 
         initTimer += timer;
 
+        global::hud->updateMoniez();
+
         if (!initialised /*&& initTimer > 5000*/) {
 
             srand(/*time(NULL) + */global::input_handler->seed + global::main_dude->x + global::main_dude->y);
@@ -88,11 +93,58 @@ void spelunker::scroll(u16 *fresh_map) {
                 snake->timer = &timer;
                 global::sprites.push_back(snake);
 
-                int curr_x = rand() % 400 + 48 + a*16;
+                int curr_x = rand() % 400 + 48 + a * 16;
                 int curr_y = rand() % 400 + 48;
 
                 snake->x = curr_x;
                 snake->y = curr_y;
+
+            }
+
+            for (int a = 0; a < 4; a++) {
+                Moniez *moniez = new Moniez();
+
+                moniez->sprite_height = 16;
+                moniez->sprite_width = 16;
+                moniez->physics_height = 8;
+                moniez->physics_width = 16;
+
+                moniez->spriteType = MONIEZ_TRIPLE_GOLD_BARS;
+                moniez->value = 1000;
+
+                moniez->init();
+
+                moniez->timer = &timer;
+                global::sprites.push_back(moniez);
+
+                int curr_x = rand() % 400 + 48 + a * 16;
+                int curr_y = rand() % 400 + 48;
+
+                moniez->x = curr_x;
+                moniez->y = curr_y;
+
+            }
+            for (int a = 0; a < 4; a++) {
+                Moniez *moniez = new Moniez();
+
+                moniez->sprite_height = 8;
+                moniez->sprite_width = 8;
+                moniez->physics_height = 8;
+                moniez->physics_width = 8;
+
+                moniez->spriteType = MONIEZ_RUBY_BIG;
+                moniez->value = 1200;
+
+                moniez->init();
+
+                moniez->timer = &timer;
+                global::sprites.push_back(moniez);
+
+                int curr_x = rand() % 400 + 48 + a * 16;
+                int curr_y = rand() % 400 + 48;
+
+                moniez->x = curr_x;
+                moniez->y = curr_y;
 
             }
 
