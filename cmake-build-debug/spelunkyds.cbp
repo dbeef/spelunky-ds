@@ -226,6 +226,9 @@
 		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/MapTile.h">
 			<Option target="spelunkyds"/>
 		</Unit>
+		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/MapTileType.h">
+			<Option target="spelunkyds"/>
+		</Unit>
 		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/MapUtils.cpp">
 			<Option target="spelunkyds"/>
 		</Unit>

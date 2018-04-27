@@ -74,6 +74,7 @@ Timer.o: /home/xdbeef/NetBeansProjects/spelunkyds/source/time/Timer.cpp \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/time/../animations/Camera.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/time/../level_layout/LevelGenerator.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/time/../level_layout/MapTile.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/time/../level_layout/MapTileType.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/time/../animations/MainDude.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/time/../animations/SpriteState.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/time/../animations/../level_layout/MapTile.h \
@@ -239,6 +240,8 @@ Timer.o: /home/xdbeef/NetBeansProjects/spelunkyds/source/time/Timer.cpp \
 /home/xdbeef/NetBeansProjects/spelunkyds/source/time/../level_layout/LevelGenerator.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/time/../level_layout/MapTile.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/time/../level_layout/MapTileType.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/time/../animations/MainDude.h:
 

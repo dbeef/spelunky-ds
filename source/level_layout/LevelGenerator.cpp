@@ -371,6 +371,7 @@ void LevelGenerator::generateRooms() {
                         MapTile *t = new MapTile();
                         t->destroyable = true;
                         t->collidable = true;
+                        t->mapTileType = MapTileType::REGULAR;
 
                         if (tab[tab_y][tab_x] == 1) {
                             t->values[0] = 20;
@@ -412,6 +413,7 @@ void LevelGenerator::generateRooms() {
                             t->collidable = false;
                             t->destroyable = false;
                             //todo flag climb-able?
+                            t->mapTileType = MapTileType::LADDER;
 
                         } else if (tab[tab_y][tab_x] == 10) {
 
@@ -423,6 +425,7 @@ void LevelGenerator::generateRooms() {
                             t->collidable = false;
                             t->destroyable = false;
                             //todo flag climb-able?
+                            t->mapTileType = MapTileType::LADDER_WITH_DECK;
 
                         } else if (tab[tab_y][tab_x] == 3) {
                             t->values[0] = 28;

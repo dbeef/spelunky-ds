@@ -75,6 +75,7 @@ Camera.o: \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/videoGL.h \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/nand.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/MapTile.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/MapTileType.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../animations/MainDude.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../animations/SpriteState.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../animations/../level_layout/MapTile.h \
@@ -240,6 +241,8 @@ Camera.o: \
 /home/xdbeef/devkitPro/libnds/include/nds/arm9/nand.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/MapTile.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/MapTileType.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../animations/MainDude.h:
 

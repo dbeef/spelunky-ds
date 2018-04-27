@@ -144,7 +144,16 @@ void MainDude::handleKeyInput() {
 
 
         if (global::input_handler->up_key_held) {
-            if (canClimbRope /*&& !climbing*/) {
+
+
+            int xx = floor_div(this->x + 0.5 * MAIN_DUDE_WIDTH, 16);
+            int yy = floor_div(this->y + 0.5 * MAIN_DUDE_HEIGHT, 16);
+
+            MapTile **neighboringTiles;
+            Collisions::getNeighboringTiles(global::level_generator->mapTiles, xx, yy, neighboringTiles);
+            canClimbLadder = neighboringTiles[4]->mapTileType == MapTileType::LADDER || MapTileType::LADDER_WITH_DECK;
+
+            if (canClimbRope || canClimbLadder/*&& !climbing*/) {
 //                std::cout<<"CLIMBING" << '\n'
                 climbing = true;
                 jumpingTimer = 0;
@@ -152,7 +161,7 @@ void MainDude::handleKeyInput() {
                 ySpeed = -1;
             }
 
-            if (!canClimbRope && climbing && onTopOfClimbingSpace) {
+            if (!canClimbRope && climbing && onTopOfClimbingSpace && !canClimbLadder) {
                 ySpeed = 0;
                 jumpingTimer = 0;
                 xSpeed = 0;
@@ -164,11 +173,19 @@ void MainDude::handleKeyInput() {
 
         if (global::input_handler->down_key_held) {
 
+
+            int xx = floor_div(this->x + 0.5 * MAIN_DUDE_WIDTH, 16);
+            int yy = floor_div(this->y + 0.5 * MAIN_DUDE_HEIGHT, 16);
+
+            MapTile **neighboringTiles;
+            Collisions::getNeighboringTiles(global::level_generator->mapTiles, xx, yy, neighboringTiles);
+            canClimbLadder = neighboringTiles[4]->mapTileType == MapTileType::LADDER || MapTileType::LADDER_WITH_DECK;
+
             if (climbing) {
                 ySpeed = 1;
             }
 
-            if (!canClimbRope && climbing && !onTopOfClimbingSpace) {
+            if (!canClimbRope && climbing && !onTopOfClimbingSpace && !canClimbLadder) {
 //                ySpeed = 0;
                 jumpingTimer = 0;
 //                xSpeed = 0;
@@ -566,6 +583,7 @@ void MainDude::draw() {
     }
 
     canClimbRope = false;
+    canClimbLadder = false;
 }
 
 void MainDude::canHangOnTile(MapTile *neighboringTiles[9]) {

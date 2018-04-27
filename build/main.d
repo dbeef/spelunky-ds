@@ -63,6 +63,7 @@ main.o: /home/xdbeef/NetBeansProjects/spelunkyds/source/main.cpp \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/GameLoop.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/LevelGenerator.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/MapTile.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/MapTileType.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/SpriteInfo.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../sprites/SpriteTypes.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/OamType.h \
@@ -224,6 +225,8 @@ main.o: /home/xdbeef/NetBeansProjects/spelunkyds/source/main.cpp \
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/LevelGenerator.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/MapTile.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/MapTileType.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/SpriteInfo.h:
 

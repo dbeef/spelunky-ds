@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/source/animations/MainDude.cpp" line="294" mnemonic="0" />
+    <bookmark url="file://$PROJECT_DIR$/source/animations/MainDude.cpp" line="303" mnemonic="0" />
   </component>
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true" buildAllGenerated="true">
     <generated>
@@ -15,60 +15,51 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4167ccef-cad0-4b13-8f61-b9437b132076" name="Default" comment="Merge branch 'master' of https://github.com/dbeef/spelunky-ds&#10;&#10;# Conflicts:&#10;#&#9;README.md">
-      <change afterPath="$PROJECT_DIR$/gfx/fonts/font_1bpp.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gfx/fonts/font_yellow.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gfx/fonts/working/font_yellow.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gfx/tilemaps/working/cavebg_256.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/level_layout/MapTileType.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/Bomb.d" beforeDir="false" afterPath="$PROJECT_DIR$/build/Bomb.d" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/Bomb.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/Bomb.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/Camera.d" beforeDir="false" afterPath="$PROJECT_DIR$/build/Camera.d" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/Camera.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/Camera.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/Collisions.d" beforeDir="false" afterPath="$PROJECT_DIR$/build/Collisions.d" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/Collisions.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/Collisions.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/GameLoop.d" beforeDir="false" afterPath="$PROJECT_DIR$/build/GameLoop.d" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/GameLoop.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/GameLoop.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/Hud.d" beforeDir="false" afterPath="$PROJECT_DIR$/build/Hud.d" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/Hud.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/Hud.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/Jar.d" beforeDir="false" afterPath="$PROJECT_DIR$/build/Jar.d" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/Jar.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/Jar.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/LevelGenerator.d" beforeDir="false" afterPath="$PROJECT_DIR$/build/LevelGenerator.d" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/LevelGenerator.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/LevelGenerator.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/MainDude.d" beforeDir="false" afterPath="$PROJECT_DIR$/build/MainDude.d" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/MainDude.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/MainDude.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/MapTile.d" beforeDir="false" afterPath="$PROJECT_DIR$/build/MapTile.d" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/MapTile.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/MapTile.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/Moniez.d" beforeDir="false" afterPath="$PROJECT_DIR$/build/Moniez.d" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/Moniez.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/Moniez.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/MovingObject.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/MovingObject.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/MovingObject.d" beforeDir="false" afterPath="$PROJECT_DIR$/build/MovingObject.d" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/OAMManager.d" beforeDir="false" afterPath="$PROJECT_DIR$/build/OAMManager.d" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/OAMManager.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/OAMManager.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/Rock.d" beforeDir="false" afterPath="$PROJECT_DIR$/build/Rock.d" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/Rock.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/Rock.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/Rope.d" beforeDir="false" afterPath="$PROJECT_DIR$/build/Rope.d" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/Rope.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/Rope.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/RopeElement.d" beforeDir="false" afterPath="$PROJECT_DIR$/build/RopeElement.d" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/RopeElement.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/RopeElement.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/Snake.d" beforeDir="false" afterPath="$PROJECT_DIR$/build/Snake.d" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/Snake.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/Snake.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/TextManager.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/TextManager.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/Timer.d" beforeDir="false" afterPath="$PROJECT_DIR$/build/Timer.d" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/Timer.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/Timer.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/bomb.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/bomb.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/bomb_armed.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/bomb_armed.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/bomb_hud.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/bomb_hud.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/bomb_unarmed.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/bomb_unarmed.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/cavebg.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/cavebg.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/cavebg.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/cavebg.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/dollar.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/dollar.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/explosion.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/explosion.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/font.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/font.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/heart.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/heart.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/holding_item.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/holding_item.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/jar.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/jar.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/main.d" beforeDir="false" afterPath="$PROJECT_DIR$/build/main.d" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/main.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/main.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/pre_whip_left.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/pre_whip_left.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/rock.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/rock.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/rope.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/rope.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/ropes.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/ropes.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/rubies_big.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/rubies_big.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/snake.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/snake.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/spelunker.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/spelunker.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/spelunkyds.map" beforeDir="false" afterPath="$PROJECT_DIR$/build/spelunkyds.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/triple_goldbar.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/triple_goldbar.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/whip_left.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/whip_left.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gfx/fonts/font.grit" beforeDir="false" afterPath="$PROJECT_DIR$/gfx/fonts/font.grit" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gfx/tilemaps/cavebg.png" beforeDir="false" afterPath="$PROJECT_DIR$/gfx/tilemaps/cavebg.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gfx/tilemaps/working/cavebg.png" beforeDir="false" afterPath="$PROJECT_DIR$/gfx/tilemaps/working/cavebg.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/spelunkyds.cbp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/spelunkyds.cbp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/animations/Collisions.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/animations/Collisions.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/console/TextManager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/console/TextManager.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/level_layout/GameLoop.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/level_layout/GameLoop.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/animations/MainDude.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/animations/MainDude.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/animations/MainDude.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/animations/MainDude.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/level_layout/LevelGenerator.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/level_layout/LevelGenerator.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/level_layout/LevelGenerator.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/level_layout/LevelGenerator.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/level_layout/MapTile.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/level_layout/MapTile.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/spelunkyds.elf" beforeDir="false" afterPath="$PROJECT_DIR$/spelunkyds.elf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/spelunkyds.nds" beforeDir="false" afterPath="$PROJECT_DIR$/spelunkyds.nds" afterDir="false" />
     </list>
@@ -83,23 +74,32 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="TextManager.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/source/console/TextManager.h">
+      <file leaf-file-name="TextManager.cpp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/source/console/TextManager.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="450">
-              <caret line="30" column="13" selection-start-line="30" selection-start-column="13" selection-end-line="30" selection-end-column="13" />
+            <state relative-caret-position="345">
+              <caret line="23" column="16" selection-start-line="23" selection-start-column="16" selection-end-line="23" selection-end-column="16" />
+              <folding>
+                <element signature="e#63#92#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TextManager.cpp" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/source/console/TextManager.cpp">
+      <file leaf-file-name="LevelGenerator.cpp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/source/level_layout/LevelGenerator.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="294">
-              <caret line="27" selection-start-line="27" selection-end-line="27" />
-              <folding>
-                <element signature="e#63#92#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="330">
+              <caret line="427" column="74" selection-start-line="427" selection-start-column="74" selection-end-line="427" selection-end-column="74" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MapTile.h" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/source/level_layout/MapTile.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="315">
+              <caret line="21" column="28" selection-start-line="21" selection-start-column="28" selection-end-line="21" selection-end-column="28" />
             </state>
           </provider>
         </entry>
@@ -116,8 +116,8 @@
       <file leaf-file-name="MainDude.h" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/source/animations/MainDude.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="30" column="6" selection-start-line="30" selection-start-column="6" selection-end-line="30" selection-end-column="6" />
+            <state relative-caret-position="362">
+              <caret line="81" column="23" selection-start-line="81" selection-start-column="23" selection-end-line="81" selection-end-column="23" />
             </state>
           </provider>
         </entry>
@@ -131,6 +131,24 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="MainDude.cpp" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/source/animations/MainDude.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="206">
+              <caret line="154" selection-start-line="154" selection-end-line="154" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Collisions.cpp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/source/animations/Collisions.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="345">
+              <caret line="224" column="25" selection-start-line="224" selection-start-column="25" selection-end-line="224" selection-end-column="25" />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="cavebg.png" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/gfx/tilemaps/cavebg.png">
           <provider selected="true" editor-type-id="images" />
@@ -139,8 +157,8 @@
       <file leaf-file-name="main.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/source/main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="58" column="52" selection-start-line="58" selection-start-column="42" selection-end-line="58" selection-end-column="57" />
+            <state relative-caret-position="390">
+              <caret line="26" column="39" selection-start-line="26" selection-start-column="39" selection-end-line="26" selection-end-column="39" />
               <folding>
                 <element signature="e#0#16#0" expanded="true" />
               </folding>
@@ -148,35 +166,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="background.h" pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/devkitPro/libnds/include/nds/arm9/background.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
-              <caret line="500" column="51" selection-start-line="500" selection-start-column="51" selection-end-line="500" selection-end-column="51" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="font_yellow.png" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/gfx/fonts/font_yellow.png">
-          <provider selected="true" editor-type-id="images" />
-        </entry>
-      </file>
-      <file leaf-file-name="font.png" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/gfx/fonts/font.png">
-          <provider selected="true" editor-type-id="images" />
-        </entry>
-      </file>
     </leaf>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>rand</find>
-      <find>randomizeMo</find>
-      <find>srandF</find>
-      <find>updatePosi</find>
-      <find>45</find>
-      <find>wait</find>
       <find>init</find>
       <find>frameGf</find>
       <find>sameDire</find>
@@ -201,6 +194,12 @@
       <find>true</find>
       <find>if(</find>
       <find>text</find>
+      <find>can</find>
+      <find>climb</find>
+      <find>canClimbRope</find>
+      <find>UP</find>
+      <find>int xx</find>
+      <find>canClimb</find>
     </findStrings>
     <replaceStrings>
       <replace>explosion</replace>
@@ -241,7 +240,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/source/level_layout/MapUtils.cpp" />
         <option value="$PROJECT_DIR$/source/Consts.h" />
         <option value="$PROJECT_DIR$/source/level_layout/Scrolling.h" />
         <option value="$PROJECT_DIR$/source/animations/Camera.h" />
@@ -250,7 +248,6 @@
         <option value="$PROJECT_DIR$/source/level_layout/SpriteInfo.cpp" />
         <option value="$PROJECT_DIR$/gfx/sprites/sprite.grit" />
         <option value="$PROJECT_DIR$/gfx/sprites/64x64/sprite.grit" />
-        <option value="$PROJECT_DIR$/source/level_layout/MapTile.h" />
         <option value="$PROJECT_DIR$/notes/notes.txt" />
         <option value="$PROJECT_DIR$/gfx/sprites/8x8/sprite.grit" />
         <option value="$PROJECT_DIR$/source/animations/RopeElement.h" />
@@ -268,7 +265,6 @@
         <option value="$PROJECT_DIR$/source/animations/RopeElement.cpp" />
         <option value="$PROJECT_DIR$/source/animations/Bomb.cpp" />
         <option value="$PROJECT_DIR$/source/animations/Snake.h" />
-        <option value="$PROJECT_DIR$/source/animations/MainDude.cpp" />
         <option value="$PROJECT_DIR$/source/sprites/MovingObject.h" />
         <option value="$PROJECT_DIR$/source/animations/Snake.cpp" />
         <option value="$PROJECT_DIR$/source/input/InputHandler.h" />
@@ -276,7 +272,6 @@
         <option value="$PROJECT_DIR$/source/animations/Rock.cpp" />
         <option value="$PROJECT_DIR$/source/animations/Collisions.h" />
         <option value="$PROJECT_DIR$/source/animations/Moniez.h" />
-        <option value="$PROJECT_DIR$/source/animations/MainDude.h" />
         <option value="$PROJECT_DIR$/source/Globals.h" />
         <option value="$PROJECT_DIR$/source/hud/Hud.h" />
         <option value="$PROJECT_DIR$/Makefile" />
@@ -284,14 +279,18 @@
         <option value="$PROJECT_DIR$/source/hud/Hud.cpp" />
         <option value="$PROJECT_DIR$/source/animations/Moniez.cpp" />
         <option value="$PROJECT_DIR$/source/animations/Jar.cpp" />
-        <option value="$PROJECT_DIR$/source/animations/Collisions.cpp" />
         <option value="$PROJECT_DIR$/source/level_layout/GameLoop.cpp" />
         <option value="$PROJECT_DIR$/source/level_layout/LevelGenerator.h" />
-        <option value="$PROJECT_DIR$/source/level_layout/LevelGenerator.cpp" />
         <option value="$PROJECT_DIR$/gfx/tilemaps/tilemap.grit" />
         <option value="$PROJECT_DIR$/gfx/fonts/font.grit" />
-        <option value="$PROJECT_DIR$/source/main.cpp" />
         <option value="$PROJECT_DIR$/source/console/TextManager.cpp" />
+        <option value="$PROJECT_DIR$/source/main.cpp" />
+        <option value="$PROJECT_DIR$/source/level_layout/MapTileType.h" />
+        <option value="$PROJECT_DIR$/source/level_layout/MapTile.h" />
+        <option value="$PROJECT_DIR$/source/level_layout/LevelGenerator.cpp" />
+        <option value="$PROJECT_DIR$/source/animations/MainDude.h" />
+        <option value="$PROJECT_DIR$/source/animations/Collisions.cpp" />
+        <option value="$PROJECT_DIR$/source/animations/MainDude.cpp" />
       </list>
     </option>
   </component>
@@ -399,6 +398,12 @@
               <item name="spelunkyds" type="462c0819:PsiDirectoryNode" />
               <item name="source" type="462c0819:PsiDirectoryNode" />
               <item name="animations" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="spelunkyds" type="b2602c69:ProjectViewProjectNode" />
+              <item name="spelunkyds" type="462c0819:PsiDirectoryNode" />
+              <item name="source" type="462c0819:PsiDirectoryNode" />
+              <item name="level_layout" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -555,12 +560,12 @@
       <workItem from="1524594974608" duration="7741000" />
       <workItem from="1524767196097" duration="12004000" />
       <workItem from="1524804822701" duration="4369000" />
-      <workItem from="1524810937790" duration="2258000" />
+      <workItem from="1524810937790" duration="2951000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="554367000" />
+    <option name="totallyTimeSpent" value="555060000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -848,13 +853,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/animations/Collisions.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="88" column="23" selection-start-line="88" selection-start-column="23" selection-end-line="88" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/source/animations/Jar.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="264">
@@ -883,20 +881,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/level_layout/LevelGenerator.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="83">
-          <caret line="102" column="39" selection-start-line="102" selection-start-column="39" selection-end-line="102" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/source/level_layout/LevelGenerator.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="287">
-          <caret line="424" column="25" selection-start-line="424" selection-start-column="25" selection-end-line="424" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/devkitPro/libnds/include/nds/arm9/video.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="203">
@@ -914,15 +898,15 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/gfx/fonts/font.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/source/console/TextManager.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="450">
           <caret line="30" column="13" selection-start-line="30" selection-start-column="13" selection-end-line="30" selection-end-column="13" />
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gfx/fonts/font.png">
+      <provider selected="true" editor-type-id="images" />
     </entry>
     <entry file="file://$PROJECT_DIR$/gfx/fonts/font_yellow.png">
       <provider selected="true" editor-type-id="images" />
@@ -934,10 +918,34 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/source/level_layout/MapTileType.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="11" selection-start-line="8" selection-start-column="11" selection-end-line="8" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/level_layout/LevelGenerator.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="248">
+          <caret line="28" column="13" selection-start-line="28" selection-start-column="13" selection-end-line="28" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/console/TextManager.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="23" column="16" selection-start-line="23" selection-start-column="16" selection-end-line="23" selection-end-column="16" />
+          <folding>
+            <element signature="e#63#92#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/source/main.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="58" column="52" selection-start-line="58" selection-start-column="42" selection-end-line="58" selection-end-column="57" />
+        <state relative-caret-position="390">
+          <caret line="26" column="39" selection-start-line="26" selection-start-column="39" selection-end-line="26" selection-end-column="39" />
           <folding>
             <element signature="e#0#16#0" expanded="true" />
           </folding>
@@ -947,17 +955,17 @@
     <entry file="file://$PROJECT_DIR$/gfx/tilemaps/cavebg.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/gfx/tilemaps/tilemap.grit">
+    <entry file="file://$PROJECT_DIR$/source/level_layout/LevelGenerator.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="10" selection-start-line="6" selection-start-column="10" selection-end-line="6" selection-end-column="10" />
+        <state relative-caret-position="330">
+          <caret line="427" column="74" selection-start-line="427" selection-start-column="74" selection-end-line="427" selection-end-column="74" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/animations/MainDude.h">
+    <entry file="file://$PROJECT_DIR$/source/level_layout/MapTile.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="30" column="6" selection-start-line="30" selection-start-column="6" selection-end-line="30" selection-end-column="6" />
+        <state relative-caret-position="315">
+          <caret line="21" column="28" selection-start-line="21" selection-start-column="28" selection-end-line="21" selection-end-column="28" />
         </state>
       </provider>
     </entry>
@@ -968,13 +976,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/console/TextManager.cpp">
+    <entry file="file://$PROJECT_DIR$/source/animations/MainDude.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="294">
-          <caret line="27" selection-start-line="27" selection-end-line="27" />
-          <folding>
-            <element signature="e#63#92#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="362">
+          <caret line="81" column="23" selection-start-line="81" selection-start-column="23" selection-end-line="81" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gfx/tilemaps/tilemap.grit">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="10" selection-start-line="6" selection-start-column="10" selection-end-line="6" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/animations/Collisions.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="224" column="25" selection-start-line="224" selection-start-column="25" selection-end-line="224" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/animations/MainDude.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="206">
+          <caret line="154" selection-start-line="154" selection-end-line="154" />
         </state>
       </provider>
     </entry>

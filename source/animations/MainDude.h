@@ -79,6 +79,7 @@ public:
     bool pushing_right;
     bool whip;
     bool canClimbRope;
+    bool canClimbLadder;
     bool climbing;
     bool onTopOfClimbingSpace;
 

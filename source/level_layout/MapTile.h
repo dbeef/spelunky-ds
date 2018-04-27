@@ -5,6 +5,8 @@
 #ifndef SPELUNKYDS_MAPTILE_H
 #define SPELUNKYDS_MAPTILE_H
 
+#include "MapTileType.h"
+
 class MapTile {
 public:
     //There's 512 px x 512 px map
@@ -17,6 +19,7 @@ public:
     int y; //32
     bool collidable;
     bool destroyable;
+    MapTileType mapTileType;
     MapTile();
 };
 

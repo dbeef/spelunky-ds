@@ -12,6 +12,7 @@ Bomb.o: \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/../sprites/SpriteTypes.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/../animations/OamType.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/MapTile.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/MapTileType.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Camera.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/LevelGenerator.h \
  /home/xdbeef/devkitPro/libnds/include/nds.h \
@@ -123,6 +124,8 @@ Bomb.o: \
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/../animations/OamType.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/MapTile.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/MapTileType.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Camera.h:
 

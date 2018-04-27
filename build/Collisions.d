@@ -2,6 +2,7 @@ Collisions.o: \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Collisions.cpp \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Collisions.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/MapTile.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/MapTileType.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/MainDude.h \
  /home/xdbeef/devkitPro/libnds/include/nds.h \
  /home/xdbeef/devkitPro/libnds/include/nds/libversion.h \
@@ -96,6 +97,8 @@ Collisions.o: \
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Collisions.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/MapTile.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/MapTileType.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/MainDude.h:
 

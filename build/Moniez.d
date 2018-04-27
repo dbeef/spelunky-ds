@@ -64,6 +64,7 @@ Moniez.o: \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/videoGL.h \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/nand.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/../level_layout/MapTile.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/../level_layout/MapTileType.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/../animations/OAMManager.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/../animations/../level_layout/SpriteInfo.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/../animations/../level_layout/../sprites/SpriteTypes.h \
@@ -229,6 +230,8 @@ Moniez.o: \
 /home/xdbeef/devkitPro/libnds/include/nds/arm9/nand.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/../level_layout/MapTile.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/../level_layout/MapTileType.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/../animations/OAMManager.h:
 

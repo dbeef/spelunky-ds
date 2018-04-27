@@ -217,6 +217,7 @@ void Collisions::getNeighboringTiles(MapTile *mapTiles[32][32], int xx, int yy, 
     MapTile *left_down = mapTiles[xx - 1][yy + 1];
     MapTile *right_down = mapTiles[xx + 1][yy + 1];
 
+    //todo enum for these
     neighboringTiles[0] = left_middle;
     neighboringTiles[1] = right_middle;
     neighboringTiles[2] = up_middle;
