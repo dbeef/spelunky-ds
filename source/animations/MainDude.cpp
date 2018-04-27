@@ -340,7 +340,7 @@ void MainDude::updateSpeed() {
     }
 
 
-    bool change_pos = (crawling && posIncTimer > 20) || (!crawling && posIncTimer > 10);
+    bool change_pos = (crawling && posIncTimer > 20) || (!crawling && posIncTimer > 1);
 
 
     if (change_pos) {

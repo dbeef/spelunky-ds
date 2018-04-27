@@ -21,7 +21,7 @@
 #define FRICTION_DELTA_TIME_MS 30
 #define FRICTION_DELTA_SPEED 1
 #define Y_SPEED_DELTA_TIME_MS 2
-#define GRAVITY_DELTA_SPEED 0.19
+#define GRAVITY_DELTA_SPEED 0.22
 
 namespace global {
     extern TextManager *textManager;
