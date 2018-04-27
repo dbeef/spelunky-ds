@@ -28,12 +28,12 @@ void Snake::draw() {
 
     }
 
-    if (sub_y < 0 || sub_x < 0) {
+    if (sub_y + 16< 0 || sub_x + 16< 0) {
         sub_x = -128;
         sub_y = -128;
     }
 
-    if (main_y < 0 || main_x < 0) {
+    if (main_y + 16< 0 || main_x + 16< 0) {
         main_x = -128;
         main_y = -128;
     }
@@ -51,7 +51,7 @@ void Snake::draw() {
 
     animFrameTimer += *timer;
 
-    if (animFrameTimer > 200) {
+    if (animFrameTimer > 125) {
 //        std::cout<< animFrame << '\n';
         animFrame++;
         if (animFrame >= 4)

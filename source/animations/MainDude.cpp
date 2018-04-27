@@ -149,9 +149,22 @@ void MainDude::handleKeyInput() {
             int xx = floor_div(this->x + 0.5 * MAIN_DUDE_WIDTH, 16);
             int yy = floor_div(this->y + 0.5 * MAIN_DUDE_HEIGHT, 16);
 
+//            int yy_a_bit_down = floor_div(this->y + 0.5 * MAIN_DUDE_HEIGHT - 4, 16);
+
             MapTile **neighboringTiles;
+//            MapTile **neighboringTiles_a_bit_down;
             Collisions::getNeighboringTiles(global::level_generator->mapTiles, xx, yy, neighboringTiles);
-            canClimbLadder = neighboringTiles[4]->mapTileType == MapTileType::LADDER || MapTileType::LADDER_WITH_DECK;
+//            Collisions::getNeighboringTiles(global::level_generator->mapTiles, xx, yy_a_bit_down, neighboringTiles_a_bit_down);
+
+            canClimbLadder = neighboringTiles[4] != 0 &&
+                             (neighboringTiles[4]->mapTileType == MapTileType::LADDER ||
+                              neighboringTiles[4]->mapTileType == MapTileType::LADDER_WITH_DECK);
+
+            onTopOfClimbingSpace = onTopOfClimbingSpace || neighboringTiles[2] != 0 && neighboringTiles[2]->mapTileType == MapTileType::REGULAR;
+
+            if (canClimbLadder) {
+                x = neighboringTiles[4]->x * 16;
+            }
 
             if (canClimbRope || canClimbLadder/*&& !climbing*/) {
 //                std::cout<<"CLIMBING" << '\n'
@@ -181,11 +194,19 @@ void MainDude::handleKeyInput() {
             Collisions::getNeighboringTiles(global::level_generator->mapTiles, xx, yy, neighboringTiles);
             canClimbLadder = neighboringTiles[4]->mapTileType == MapTileType::LADDER || MapTileType::LADDER_WITH_DECK;
 
+
+            if(climbing){
+                canClimbLadder = neighboringTiles[4] != 0 &&
+                                 (neighboringTiles[4]->mapTileType == MapTileType::LADDER ||
+                                  neighboringTiles[4]->mapTileType == MapTileType::LADDER_WITH_DECK) &&
+                                 (neighboringTiles[3] == nullptr || neighboringTiles[3]->mapTileType != MapTileType ::REGULAR);
+            }
+
             if (climbing) {
                 ySpeed = 1;
             }
 
-            if (!canClimbRope && climbing && !onTopOfClimbingSpace && !canClimbLadder) {
+            if ((!canClimbRope && climbing && !onTopOfClimbingSpace ) || (!canClimbLadder && climbing)) {
 //                ySpeed = 0;
                 jumpingTimer = 0;
 //                xSpeed = 0;
@@ -425,7 +446,7 @@ void MainDude::draw() {
     int sub_x = x - global::camera->x;
     int sub_y = y - global::camera->y - 192;
 
-    if (this->y < 336 && this->y > 304) {
+    if (this->y <= 320 + 16 && this->y >= 320 - 16) {
 
     } else if (this->y > 320) {
         main_x = -16;
@@ -615,20 +636,22 @@ void MainDude::canHangOnTile(MapTile *neighboringTiles[9]) {
     }
 
     if ((y_bound && x_bound) && hangingTimer > MIN_HANGING_TIME) {
-        hangingTimer = 0;
-        ySpeed = 0;
 
 //        fprintf(stdout, "HANGING" + '\n');
 
-        if (rightCollision) {
+        if (rightCollision && neighboringTiles[0]->collidable) {
             this->y = (neighboringTiles[0]->y * 16);
             hangingOnTileRight = true;
             jumpingTimer = 0;
+            hangingTimer = 0;
+            ySpeed = 0;
         }
-        if (leftCollision) {
+        if (leftCollision&& neighboringTiles[1]->collidable) {
             jumpingTimer = 0;
             hangingOnTileLeft = true;
             this->y = (neighboringTiles[1]->y * 16);
+            hangingTimer = 0;
+            ySpeed = 0;
         }
     }
 

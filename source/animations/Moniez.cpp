@@ -39,13 +39,12 @@ void Moniez::draw() {
 
     }
 
-
-    if (sub_y < 0 || sub_x < 0) {
+    if (sub_y + sprite_height < 0 || sub_x + sprite_width < 0) {
         sub_x = -128;
         sub_y = -128;
     }
 
-    if (main_y < 0 || main_x < 0) {
+    if (main_y + sprite_height < 0 || main_x + sprite_width < 0) {
         main_x = -128;
         main_y = -128;
     }

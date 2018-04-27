@@ -53,12 +53,12 @@ void Jar::draw() {
     }
 
 
-    if (sub_y < 0 || sub_x < 0) {
+    if (sub_y + 8< 0 || sub_x + 8< 0) {
         sub_x = -128;
         sub_y = -128;
     }
 
-    if (main_y < 0 || main_x < 0) {
+    if (main_y + 8< 0 || main_x + 8< 0) {
         main_x = -128;
         main_y = -128;
     }

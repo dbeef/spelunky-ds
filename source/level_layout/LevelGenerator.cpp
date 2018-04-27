@@ -58,7 +58,7 @@ void LevelGenerator::newLayout(int seed) {
     int curr_y = ROOMS_Y - 1;
     int direction = 0;
 
-    layout[curr_x][curr_y] = 1;
+    layout[curr_x][curr_y] = 5;
 
     while (curr_y >= 0) {
 
@@ -118,11 +118,16 @@ void LevelGenerator::newLayout(int seed) {
                     layout[curr_x][curr_y - 1] = 3;
                 }
 
+
                 direction = 0;
                 curr_y--;
-            } else
-                break;
 
+                if (curr_y == 0)
+                    layout[curr_x][curr_y] = 6;
+
+            } else {
+                break;
+            }
         }
     }
 
@@ -207,6 +212,8 @@ void LevelGenerator::mapFrame() {
     for (int a = 0; a < 32; a++) {
         delete (mapTiles[a][0]);
         MapTile *t = new MapTile();
+        t->mapTileType = MapTileType::REGULAR;
+
         t->values[0] = 20;
         t->values[1] = 21;
         t->values[2] = 22;
@@ -224,6 +231,8 @@ void LevelGenerator::mapFrame() {
     for (int a = 0; a < 32; a++) {
         delete (mapTiles[a][31]);
         MapTile *t = new MapTile();
+        t->mapTileType = MapTileType::REGULAR;
+
         t->values[0] = 20;
         t->values[1] = 21;
         t->values[2] = 22;
@@ -241,6 +250,8 @@ void LevelGenerator::mapFrame() {
     for (int a = 0; a < 32; a++) {
         delete (mapTiles[0][a]);
         MapTile *t = new MapTile();
+        t->mapTileType = MapTileType::REGULAR;
+
         t->values[0] = 20;
         t->values[1] = 21;
         t->values[2] = 22;
@@ -258,6 +269,7 @@ void LevelGenerator::mapFrame() {
     for (int a = 0; a < 32; a++) {
         delete (mapTiles[31][a]);
         MapTile *t = new MapTile();
+        t->mapTileType = MapTileType::REGULAR;
         t->values[0] = 20;
         t->values[1] = 21;
         t->values[2] = 22;
@@ -278,8 +290,8 @@ void LevelGenerator::tilesToMap() {
         for (int y = 0; y < 32; y++) {
             MapTile *t = this->mapTiles[x][y];
             for (int k = 0; k < 4; k++)
-                if(t && t->values[k] != 0)
-                map[t->map_index[k]] = t->values[k];
+                if (t && t->values[k] != 0)
+                    map[t->map_index[k]] = t->values[k];
         }
     }
 }
@@ -318,6 +330,12 @@ void LevelGenerator::generateRooms() {
 
             int room_type = layout[a][b];
 
+            if (room_type == 5) {
+                memcpy(tab, entrance_room, sizeof(entrance_room));
+            }
+            if (room_type == 6) {
+                memcpy(tab, exit_room, sizeof(exit_room));
+            }
             if (room_type == 0) {
                 r = (rand() % 3) + 1;
                 if (r == 1)
@@ -327,6 +345,7 @@ void LevelGenerator::generateRooms() {
                 else if (r == 3)
                     memcpy(tab, tab_0_3, sizeof(tab_0_3));
             }
+
             if (room_type == 1) {
                 r = (rand() % 3) + 1;
                 if (r == 1)
@@ -412,7 +431,6 @@ void LevelGenerator::generateRooms() {
 
                             t->collidable = false;
                             t->destroyable = false;
-                            //todo flag climb-able?
                             t->mapTileType = MapTileType::LADDER;
 
                         } else if (tab[tab_y][tab_x] == 10) {
@@ -424,8 +442,41 @@ void LevelGenerator::generateRooms() {
 
                             t->collidable = false;
                             t->destroyable = false;
-                            //todo flag climb-able?
                             t->mapTileType = MapTileType::LADDER_WITH_DECK;
+
+                        } else if (tab[tab_y][tab_x] == 12) {
+
+                            t->values[0] = 56;
+                            t->values[1] = 57;
+                            t->values[2] = 58;
+                            t->values[3] = 59;
+
+                        } else if (tab[tab_y][tab_x] == 13) {
+
+                            t->values[0] = 60;
+                            t->values[1] = 61;
+                            t->values[2] = 62;
+                            t->values[3] = 63;
+
+                        } else if (tab[tab_y][tab_x] == 11) {
+
+                            t->values[0] = 64;
+                            t->values[1] = 65;
+                            t->values[2] = 66;
+                            t->values[3] = 67;
+                            t->collidable = false;
+                            t->destroyable = false;
+                            t->mapTileType = MapTileType::ENTRANCE;
+
+                        } else if (tab[tab_y][tab_x] == 14) {
+
+                            t->values[0] = 68;
+                            t->values[1] = 69;
+                            t->values[2] = 70;
+                            t->values[3] = 71;
+                            t->collidable = false;
+                            t->destroyable = false;
+                            t->mapTileType = MapTileType::EXIT;
 
                         } else if (tab[tab_y][tab_x] == 3) {
                             t->values[0] = 28;
@@ -451,4 +502,17 @@ void LevelGenerator::generateRooms() {
             }
         }
     }
+}
+
+void LevelGenerator::getEntranceTile(MapTile *&m) {
+    https://stackoverflow.com/questions/416162/assignment-inside-function-that-is-passed-as-pointer?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
+    for (int a = 0; a < 32; a++) {
+        for (int b = 0; b < 32; b++) {
+            if (mapTiles[a][b] != 0 && mapTiles[a][b]->mapTileType == MapTileType::ENTRANCE) {
+                m = mapTiles[a][b];
+                break;
+            }
+        }
+    }
+
 }

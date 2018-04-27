@@ -27,10 +27,25 @@ void spelunker::scroll(u16 *fresh_map) {
     global::sub_oam_manager->initOAMTable(SPRITE_GFX_SUB, SPRITE_PALETTE_SUB, OAM_SUB, OFFSET_MULTIPLIER_SUB,
                                           OamType::SUB);
 
-    global::main_dude->x = 100;
     global::main_dude->timer = &timer;
-    global::main_dude->y = 100;
     global::main_dude->init();
+
+    MapTile *entrance;
+    global::level_generator->getEntranceTile(entrance);
+
+    if(entrance == nullptr){
+        global::main_dude->x = 100;
+        global::main_dude->y = 100;
+    }
+    else
+    {
+        global::main_dude->x = entrance->x * 16;
+        global::main_dude->y = entrance->y * 16;
+    }
+
+    //fixme
+    for(int a =0;a<128;a++)
+    global::camera->updatePosition(global::main_dude->x, global::main_dude->y);
 
     global::sprites.push_back(global::main_dude);
 

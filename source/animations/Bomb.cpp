@@ -60,6 +60,8 @@ void Bomb::draw() {
         sub_y -= 29;
     }
 
+    //fixme 320 powinno być obliczane na bieżąco, jest to Y przecięcia ekranów
+
     if (this->y < 320 + 64 && this->y > 320 - 64) {
         if (explosionFrame > 0)
             sub_x -= 64;
@@ -79,11 +81,11 @@ void Bomb::draw() {
     }
 
 
-    if (sub_y < 0 || sub_x < 0) {
+    if (sub_y + 64< 0 || sub_x + 64< 0) {
         sub_x = -128;
         sub_y = -128;
     }
-    if (main_y < 0 || main_x < 0) {
+    if (main_y+ 64 < 0 || main_x + 64< 0) {
         main_x = -128;
         main_y = -128;
     }

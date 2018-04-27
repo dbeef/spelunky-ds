@@ -74,19 +74,19 @@ void Hud::draw() {
     if (dollars_buffer != 0) {
         std::cout << '\n' << "   " << "    " << "    " << "    " << "   " << "+" << dollars_buffer;
 
-        std::cout << "\n \n \n " << "IPM: " << global::main_oam_manager->current_oam_id_palette << " "
-                  << "IPS: " << global::sub_oam_manager->current_oam_id_palette << " "
-                  << "ITM: " << global::main_oam_manager->current_oam_id_tiles << " "
-                  << "ITS: " << global::sub_oam_manager->current_oam_id_tiles;
+//        std::cout << "\n \n \n " << "IPM: " << global::main_oam_manager->current_oam_id_palette << " "
+//                  << "IPS: " << global::sub_oam_manager->current_oam_id_palette << " "
+//                  << "ITM: " << global::main_oam_manager->current_oam_id_tiles << " "
+//                  << "ITS: " << global::sub_oam_manager->current_oam_id_tiles;
 
     }
     else
     {
 
-        std::cout << "\n \n \n " << "IPM: " << global::main_oam_manager->current_oam_id_palette << " "
-                  << "IPS: " << global::sub_oam_manager->current_oam_id_palette << " "
-                  << "ITM: " << global::main_oam_manager->current_oam_id_tiles << " "
-                  << "ITS: " << global::sub_oam_manager->current_oam_id_tiles;
+//        std::cout << "\n \n \n " << "IPM: " << global::main_oam_manager->current_oam_id_palette << " "
+//                  << "IPS: " << global::sub_oam_manager->current_oam_id_palette << " "
+//                  << "ITM: " << global::main_oam_manager->current_oam_id_tiles << " "
+//                  << "ITS: " << global::sub_oam_manager->current_oam_id_tiles;
         }
 
 

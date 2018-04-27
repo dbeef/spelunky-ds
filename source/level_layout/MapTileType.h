@@ -8,7 +8,9 @@
 enum MapTileType{
     REGULAR,
     LADDER,
-    LADDER_WITH_DECK
+    LADDER_WITH_DECK,
+    ENTRANCE,
+    EXIT
 };
 
 #endif //SPELUNKYDS_MAPTILETYPES_H
