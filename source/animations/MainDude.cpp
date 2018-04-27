@@ -573,7 +573,8 @@ void MainDude::canHangOnTile(MapTile *neighboringTiles[9]) {
     if (bottomCollision || (!leftCollision && !rightCollision))
         return;
 
-    if (neighboringTiles[2] != 0 || neighboringTiles[3] != 0)
+    if ((neighboringTiles[2] != 0 && neighboringTiles[2]->collidable) ||
+        (neighboringTiles[3] != 0 && neighboringTiles[3]->collidable))
         return;
 
     bool y_bound = false;
@@ -581,14 +582,14 @@ void MainDude::canHangOnTile(MapTile *neighboringTiles[9]) {
 
     if (rightCollision && state == W_LEFT) {
 
-        if (neighboringTiles[5] != 0)
+        if (neighboringTiles[5] != 0 && neighboringTiles[5]->collidable)
             return;
 
         x_bound = (this->x <= (neighboringTiles[0]->x * 16) + 16 && (this->x >= (neighboringTiles[0]->x * 16) + 12));
         y_bound = (this->y > (neighboringTiles[0]->y * 16) - 2) && (this->y < (neighboringTiles[0]->y * 16) + 8);
     } else if (leftCollision && state == W_RIGHT) {
 
-        if (neighboringTiles[6] != 0)
+        if (neighboringTiles[6] != 0 && neighboringTiles[6]->collidable)
             return;
 
         y_bound = (this->y > (neighboringTiles[1]->y * 16) - 2) && (this->y < (neighboringTiles[1]->y * 16) + 8);

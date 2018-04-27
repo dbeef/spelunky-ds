@@ -55,8 +55,8 @@ int main(void) {
     oamInit(&oamMain, SpriteMapping_1D_64, false);
     oamInit(&oamSub, SpriteMapping_1D_64, false);
 
-    global::bg_main_address = bgInit(2, BgType_Text4bpp, BgSize_B8_512x512, 22, 4);
-    global::bg_sub_address = bgInitSub(3, BgType_Text4bpp, BgSize_B8_512x512, 18, 4);
+    global::bg_main_address = bgInit(2, BgType_Text8bpp, BgSize_B8_512x512, 22, 4);
+    global::bg_sub_address = bgInitSub(3, BgType_Text8bpp, BgSize_B8_512x512, 18, 4);
 
     dmaCopy(cavebgTiles, bgGetGfxPtr(global::bg_main_address), sizeof(cavebgTiles));
     dmaCopy(cavebgTiles, bgGetGfxPtr(global::bg_sub_address), sizeof(cavebgTiles));
@@ -74,9 +74,9 @@ int main(void) {
 
     dmaCopyHalfWords(DMA_CHANNEL, map, bgGetMapPtr(global::bg_main_address), sizeof(map));
     dmaCopyHalfWords(DMA_CHANNEL, map, bgGetMapPtr(global::bg_sub_address), sizeof(map));
+    global::textManager->initConsole();
     dmaCopy(cavebgPal, BG_PALETTE, cavebgPalLen);
     dmaCopy(cavebgPal, BG_PALETTE_SUB, cavebgPalLen);
-    global::textManager->initConsole();
 
     spelunker::scroll(fresh_map);
 

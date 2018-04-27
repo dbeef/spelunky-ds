@@ -87,8 +87,8 @@ bool Collisions::checkBottomCollision(MapTile *neighboringTiles[9], int *xPos, i
 
                 if (bounce) {
                     *ySpeed = (-1) * BOUNCING_FACTOR_Y * *ySpeed;
-//                    if (*ySpeed < BOUNCING_STOP_SPEED)
-//                        *ySpeed = 0;
+                    if (*ySpeed < BOUNCING_STOP_SPEED)
+                        *ySpeed = 0;
                 } else
                     *ySpeed = 0;
 

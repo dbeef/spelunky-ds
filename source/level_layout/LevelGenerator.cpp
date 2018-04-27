@@ -370,6 +370,7 @@ void LevelGenerator::generateRooms() {
                         delete (mapTiles[pos_x][pos_y]);
                         MapTile *t = new MapTile();
                         t->destroyable = true;
+                        t->collidable = true;
 
                         if (tab[tab_y][tab_x] == 1) {
                             t->values[0] = 20;
@@ -401,6 +402,28 @@ void LevelGenerator::generateRooms() {
                             t->values[1] = 17;
                             t->values[2] = 18;
                             t->values[3] = 19;
+                        } else if (tab[tab_y][tab_x] == 9) {
+
+                            t->values[0] = 48;
+                            t->values[1] = 49;
+                            t->values[2] = 50;
+                            t->values[3] = 51;
+
+                            t->collidable = false;
+                            t->destroyable = false;
+                            //todo flag climb-able?
+
+                        } else if (tab[tab_y][tab_x] == 10) {
+
+                            t->values[0] = 52;
+                            t->values[1] = 53;
+                            t->values[2] = 54;
+                            t->values[3] = 55;
+
+                            t->collidable = false;
+                            t->destroyable = false;
+                            //todo flag climb-able?
+
                         } else if (tab[tab_y][tab_x] == 3) {
                             t->values[0] = 28;
                             t->values[1] = 29;
@@ -417,7 +440,6 @@ void LevelGenerator::generateRooms() {
                         t->map_index[1] = room_offset + (tab_x * 2) + (tab_y * LINE_WIDTH * 2) + 1;
                         t->map_index[2] = room_offset + (tab_x * 2) + (LINE_WIDTH + (tab_y * LINE_WIDTH * 2));
                         t->map_index[3] = room_offset + (tab_x * 2) + (LINE_WIDTH + (tab_y * LINE_WIDTH * 2)) + 1;
-                        t->collidable = true;
                         t->x = pos_x;
                         t->y = pos_y;
                         this->mapTiles[pos_x][pos_y] = t;

@@ -171,8 +171,8 @@ void spelunker::scroll(u16 *fresh_map) {
 
                 rock->x = curr_x;
                 rock->y = curr_y;
-                initialised = true;
             }
+            initialised = true;
         }
 
     }

@@ -20,11 +20,10 @@ void TextManager::initConsole() {
     font.gfx = (u16 *) fontTiles;
     font.pal = (u16 *) fontPal;
     font.numChars = 59;
-    font.numColors = fontPalLen / 2;
+    font.numColors = 2 /*fontPalLen / 2*/;
     font.bpp = 4;
     font.asciiOffset = 32;
     font.convertSingleColor = true;
-
     consoleSetFont(printConsole, &font);
 
 }
