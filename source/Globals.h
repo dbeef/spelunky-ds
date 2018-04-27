@@ -38,6 +38,8 @@ namespace global {
     extern std::vector<SpriteInfo *> spriteInfos;
     extern bool bombed;
     extern double *timer;
+    extern u16 current_map[4096];
+    extern u16 base_map[4096];
 }
 
 #endif //SPELUNKYDS_CONSTS_H

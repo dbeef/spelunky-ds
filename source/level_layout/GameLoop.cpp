@@ -12,13 +12,11 @@
 //#include "../Globals.h";
 #include <time.h>
 
-extern u16 map[4096];
-
 static const int BOUNDARY_VALUE = 64; /* This is the default boundary value (can be set in REG_DISPCNT) */
 static const int OFFSET_MULTIPLIER_MAIN = BOUNDARY_VALUE / sizeof(SPRITE_GFX[0]);
 static const int OFFSET_MULTIPLIER_SUB = BOUNDARY_VALUE / sizeof(SPRITE_GFX_SUB[0]);
 
-void spelunker::scroll(u16 *fresh_map) {
+void spelunker::scroll() {
 
     double timer = 0;
     int initTimer = 0;
@@ -44,7 +42,7 @@ void spelunker::scroll(u16 *fresh_map) {
     }
 
     //fixme
-    for(int a =0;a<128;a++)
+    for(int a =0;a<400;a++)
     global::camera->updatePosition(global::main_dude->x, global::main_dude->y);
 
     global::sprites.push_back(global::main_dude);
@@ -56,6 +54,8 @@ void spelunker::scroll(u16 *fresh_map) {
 
     bool initialised = false;
 
+
+
     while (true) {
 
         timer = timerElapsed(0) / TICKS_PER_SECOND;
@@ -65,15 +65,11 @@ void spelunker::scroll(u16 *fresh_map) {
         global::input_handler->updateInput();
 
         if ((global::input_handler->b_key_held) || global::bombed) {
-            dmaCopyHalfWords(DMA_CHANNEL, fresh_map, map, sizeof(map));
-//            global::level_generator->newLayout(timer);
-//            global::level_generator->mapBackground();
-//            global::level_generator->mapFrame();
-//            global::level_generator->generateRooms();
+            dmaCopyHalfWords(DMA_CHANNEL, global::base_map , global::current_map, sizeof(global::current_map));
             global::level_generator->tilesToMap();
             sectorize_map();
-            dmaCopyHalfWords(DMA_CHANNEL, map, bgGetMapPtr(global::bg_main_address), sizeof(map));
-            dmaCopyHalfWords(DMA_CHANNEL, map, bgGetMapPtr(global::bg_sub_address), sizeof(map));
+            dmaCopyHalfWords(DMA_CHANNEL, global::current_map, bgGetMapPtr(global::bg_main_address), sizeof(global::current_map));
+            dmaCopyHalfWords(DMA_CHANNEL, global::current_map, bgGetMapPtr(global::bg_sub_address), sizeof(global::current_map));
             global::main_dude->bottomCollision = false;
             global::bombed = false;
         }

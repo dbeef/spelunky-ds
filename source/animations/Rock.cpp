@@ -9,7 +9,6 @@
 #include "../../build/rock.h"
 #include "Rock.h"
 
-extern u16 map[4096];
 
 void Rock::draw() {
     if (hold_by_main_dude && global::input_handler->y_key_down && global::input_handler->down_key_held) {

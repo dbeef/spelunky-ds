@@ -32,6 +32,7 @@ add_executable(spelunkyds
         source/sprites/MovingObject.cpp
         source/main.cpp
         source/level_layout/GameLoop.cpp
+        source/level_layout/BaseCaveMap.h
         source/level_layout/GameLoop.h
         includes/TextBackgrounds.h
         Makefile

@@ -5,11 +5,11 @@
 #include <cstring>
 #include <cstdlib>
 #include <nds.h>
+#include "../Globals.h"
 
 /**
  * https://stackoverflow.com/questions/11072244/c-multiple-definitions-of-a-variable
  */
-extern u16 map[4096];
 
 int floor_div(int a, int b) {
     div_t r = div(a, b);
@@ -28,9 +28,9 @@ void floor_div(int a, int b, int *return_value) {
 //make it 4 different tiles
 void sectorize_map() {
 
-    //malloc always needed on map declaration! Otherwise won't work
+    //malloc always needed on global::current_map declaration! Otherwise won't work
     u16 *map_temp = (u16 *) std::malloc(sizeof(u16[4096]));
-    dmaCopyHalfWords(3, map, map_temp, sizeof(map));
+    dmaCopyHalfWords(3, global::current_map, map_temp, sizeof(global::current_map));
 
     int b = 0;
 
@@ -40,7 +40,7 @@ void sectorize_map() {
             a += 32;
 
         if (a < 2048) {
-            map[b] = map_temp[a];
+            global::current_map[b] = map_temp[a];
             b++;
         }
     }
@@ -51,7 +51,7 @@ void sectorize_map() {
             a += 32;
 
         if (a < 2048) {
-            map[b] = map_temp[a];
+            global::current_map[b] = map_temp[a];
             b++;
         }
     }
@@ -63,7 +63,7 @@ void sectorize_map() {
             a += 32;
 
         if (a < 4096) {
-            map[b] = map_temp[a];
+            global::current_map[b] = map_temp[a];
             b++;
         }
 
@@ -75,7 +75,7 @@ void sectorize_map() {
             a += 32;
 
         if (a < 4096) {
-            map[b] = map_temp[a];
+            global::current_map[b] = map_temp[a];
             b++;
         }
     }

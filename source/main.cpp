@@ -14,26 +14,6 @@
 #include "level_layout/MapUtils.h"
 #include "console/TextManager.h"
 
-static u16 *fresh_map;
-
-
-namespace global {
-    InputHandler *input_handler = new InputHandler();
-    TextManager *textManager = new TextManager();
-    Camera *camera = new Camera();
-    MainDude *main_dude = new MainDude();
-    LevelGenerator *level_generator = new LevelGenerator();
-    OAMManager *main_oam_manager = new OAMManager();
-    OAMManager *sub_oam_manager = new OAMManager();
-    Hud *hud = new Hud();
-    std::vector<MovingObject *> sprites(0, nullptr);
-    std::vector<SpriteInfo *> spriteInfos(0, nullptr);
-    int bg_main_address = 0;
-    int bg_sub_address = 0;
-    bool bombed = false;
-    double *timer = 0;
-}
-
 int main(void) {
 
     Timer *t = new Timer();
@@ -61,8 +41,9 @@ int main(void) {
     dmaCopy(cavebgTiles, bgGetGfxPtr(global::bg_main_address), sizeof(cavebgTiles));
     dmaCopy(cavebgTiles, bgGetGfxPtr(global::bg_sub_address), sizeof(cavebgTiles));
 
-    fresh_map = (u16 *) std::malloc(sizeof(u16[4096]));
-    dmaCopyHalfWords(3, map, fresh_map, sizeof(map));
+
+//    global::current_map = std::malloc(sizeof(u16[4096]));
+    dmaCopyHalfWords(3, global::base_map, global::current_map, sizeof(global::base_map));
 
     global::level_generator->newLayout(timerElapsed(0));
     global::level_generator->mapBackground();
@@ -72,13 +53,15 @@ int main(void) {
 
     sectorize_map();
 
-    dmaCopyHalfWords(DMA_CHANNEL, map, bgGetMapPtr(global::bg_main_address), sizeof(map));
-    dmaCopyHalfWords(DMA_CHANNEL, map, bgGetMapPtr(global::bg_sub_address), sizeof(map));
+    dmaCopyHalfWords(DMA_CHANNEL, global::current_map, bgGetMapPtr(global::bg_main_address),
+                     sizeof(global::current_map));
+    dmaCopyHalfWords(DMA_CHANNEL, global::current_map, bgGetMapPtr(global::bg_sub_address),
+                     sizeof(global::current_map));
     global::textManager->initConsole();
     dmaCopy(cavebgPal, BG_PALETTE, cavebgPalLen);
     dmaCopy(cavebgPal, BG_PALETTE_SUB, cavebgPalLen);
 
-    spelunker::scroll(fresh_map);
+    spelunker::scroll();
 
     t->stop();
 

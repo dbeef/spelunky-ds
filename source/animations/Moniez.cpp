@@ -12,7 +12,6 @@
 #include "../../build/rubies_big.h"
 #include "Rock.h"
 
-extern u16 map[4096];
 
 void Moniez::draw() {
 

@@ -9,7 +9,6 @@
 #include "Rock.h"
 #include "../../build/snake.h"
 
-extern u16 map[4096];
 
 void Snake::draw() {
 

@@ -6,7 +6,6 @@
 #include "../../build/ropes.h"
 #include "RopeElement.h";
 
-extern u16 map[4096];
 
 void RopeElement::draw() {
 

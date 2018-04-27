@@ -208,6 +208,9 @@
 		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/input/touchUtils.h">
 			<Option target="spelunkyds"/>
 		</Unit>
+		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/BaseCaveMap.h">
+			<Option target="spelunkyds"/>
+		</Unit>
 		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/GameLoop.cpp">
 			<Option target="spelunkyds"/>
 		</Unit>

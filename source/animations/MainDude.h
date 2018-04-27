@@ -82,7 +82,7 @@ public:
     bool canClimbLadder;
     bool climbing;
     bool onTopOfClimbingSpace;
-
+    bool exitingLevel;
     bool holding_item;
 
     SpriteState state;

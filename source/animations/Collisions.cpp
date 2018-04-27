@@ -202,7 +202,7 @@ bool Collisions::isStandingOnLeftEdge(MapTile *neighboringTiles[9], int x, int w
     return (!neighboringTiles[7]  && !neighboringTiles[7]->collidable && x <= (tileX * 16));
 }
 bool Collisions::isStandingOnRightEdge(MapTile *neighboringTiles[9], int x, int width, int tileX) {
-    return  (!neighboringTiles[8] && !neighboringTiles[7]->collidable && x >= (tileX * 16) );
+    return  (!neighboringTiles[8] && !neighboringTiles[8]->collidable && x >= (tileX * 16) );
 }
 
 void Collisions::getNeighboringTiles(MapTile *mapTiles[32][32], int xx, int yy, MapTile *neighboringTiles[9]) {

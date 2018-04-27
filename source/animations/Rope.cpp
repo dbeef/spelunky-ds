@@ -8,7 +8,6 @@
 #include "../../build/ropes.h"
 #include "Rope.h";
 
-extern u16 map[4096];
 
 void Rope::draw() {
 

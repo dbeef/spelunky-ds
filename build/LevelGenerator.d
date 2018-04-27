@@ -62,7 +62,35 @@ LevelGenerator.o: \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/videoGL.h \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/nand.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/MapTile.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/MapTileType.h
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/MapTileType.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../Globals.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../input/InputHandler.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../hud/Hud.h \
+ /home/xdbeef/devkitPro/libnds/include/nds/jtypes.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../hud/../level_layout/SpriteInfo.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../hud/../level_layout/../sprites/SpriteTypes.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../hud/../level_layout/../animations/OamType.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../hud/../animations/OAMManager.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../hud/../animations/../level_layout/SpriteInfo.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../hud/../animations/../sprites/SpriteTypes.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../hud/../animations/OamType.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/Camera.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../level_layout/LevelGenerator.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/MainDude.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/SpriteState.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/../level_layout/MapTile.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/../level_layout/LevelGenerator.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/Camera.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/../level_layout/SpriteInfo.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/Bomb.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/../sprites/MovingObject.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/../sprites/../level_layout/LevelGenerator.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/../sprites/../animations/OAMManager.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/../sprites/../animations/Camera.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/../sprites/SpriteTypes.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/../input/InputHandler.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../console/TextManager.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../console/../time/Timer.h
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/LevelGenerator.h:
 
@@ -189,3 +217,59 @@ LevelGenerator.o: \
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/MapTile.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/MapTileType.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../Globals.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../input/InputHandler.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../hud/Hud.h:
+
+/home/xdbeef/devkitPro/libnds/include/nds/jtypes.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../hud/../level_layout/SpriteInfo.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../hud/../level_layout/../sprites/SpriteTypes.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../hud/../level_layout/../animations/OamType.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../hud/../animations/OAMManager.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../hud/../animations/../level_layout/SpriteInfo.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../hud/../animations/../sprites/SpriteTypes.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../hud/../animations/OamType.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/Camera.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../level_layout/LevelGenerator.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/MainDude.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/SpriteState.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/../level_layout/MapTile.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/../level_layout/LevelGenerator.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/Camera.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/../level_layout/SpriteInfo.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/Bomb.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/../sprites/MovingObject.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/../sprites/../level_layout/LevelGenerator.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/../sprites/../animations/OAMManager.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/../sprites/../animations/Camera.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/../sprites/SpriteTypes.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/../input/InputHandler.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../console/TextManager.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../console/../time/Timer.h:

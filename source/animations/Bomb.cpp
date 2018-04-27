@@ -10,7 +10,6 @@
 #include "../../build/explosion.h"
 #include <math.h>       /* floor */
 
-extern u16 map[4096];
 
 void Bomb::draw() {
 

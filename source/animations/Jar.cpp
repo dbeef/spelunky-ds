@@ -10,7 +10,6 @@
 #include "../level_layout/MapUtils.h"
 #include "../../build/jar.h"
 
-extern u16 map[4096];
 
 void Jar::draw() {
     if (hold_by_main_dude && global::input_handler->y_key_down && global::input_handler->down_key_held) {

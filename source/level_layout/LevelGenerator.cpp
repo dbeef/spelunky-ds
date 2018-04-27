@@ -4,8 +4,8 @@
 
 #include <tgmath.h>
 #include "LevelGenerator.h"
+#include "../Globals.h"
 
-extern u16 map[4096];
 
 #define ROOM_WIDTH 10
 #define ROOM_HEIGHT 10
@@ -291,7 +291,7 @@ void LevelGenerator::tilesToMap() {
             MapTile *t = this->mapTiles[x][y];
             for (int k = 0; k < 4; k++)
                 if (t && t->values[k] != 0)
-                    map[t->map_index[k]] = t->values[k];
+                    global::current_map[t->map_index[k]] = t->values[k];
         }
     }
 }

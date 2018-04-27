@@ -16,7 +16,7 @@
 
 void MainDude::handleKeyInput() {
 
-    if (!stunned) {
+    if (!stunned && !exitingLevel) {
         if (global::input_handler->r_bumper_down && timeSinceLastJump > 100) {
             if (bottomCollision || climbing) {
                 ySpeed = -MAIN_DUDE_JUMP_SPEED;
@@ -120,7 +120,7 @@ void MainDude::handleKeyInput() {
 
 
     }
-    if (!stunned) {
+    if (!stunned && !exitingLevel) {
 
         if (global::input_handler->left_key_held) {
             state = W_LEFT;
@@ -160,7 +160,21 @@ void MainDude::handleKeyInput() {
                              (neighboringTiles[4]->mapTileType == MapTileType::LADDER ||
                               neighboringTiles[4]->mapTileType == MapTileType::LADDER_WITH_DECK);
 
-            onTopOfClimbingSpace = onTopOfClimbingSpace || neighboringTiles[2] != 0 && neighboringTiles[2]->mapTileType == MapTileType::REGULAR;
+            exitingLevel = neighboringTiles[4] != 0 &&
+                           (neighboringTiles[4]->mapTileType == MapTileType::EXIT);
+
+            if (exitingLevel) {
+                x = neighboringTiles[4]->x * 16;
+                y = neighboringTiles[4]->y * 16;
+
+                animFrame = 0;
+                animationFrameTimer = 0;
+                xSpeed = 0;
+                ySpeed = 0;
+            }
+
+            onTopOfClimbingSpace = onTopOfClimbingSpace ||
+                                   neighboringTiles[2] != 0 && neighboringTiles[2]->mapTileType == MapTileType::REGULAR;
 
             if (canClimbLadder) {
                 x = neighboringTiles[4]->x * 16;
@@ -195,18 +209,19 @@ void MainDude::handleKeyInput() {
             canClimbLadder = neighboringTiles[4]->mapTileType == MapTileType::LADDER || MapTileType::LADDER_WITH_DECK;
 
 
-            if(climbing){
+            if (climbing) {
                 canClimbLadder = neighboringTiles[4] != 0 &&
                                  (neighboringTiles[4]->mapTileType == MapTileType::LADDER ||
                                   neighboringTiles[4]->mapTileType == MapTileType::LADDER_WITH_DECK) &&
-                                 (neighboringTiles[3] == nullptr || neighboringTiles[3]->mapTileType != MapTileType ::REGULAR);
+                                 (neighboringTiles[3] == nullptr ||
+                                  neighboringTiles[3]->mapTileType != MapTileType::REGULAR);
             }
 
             if (climbing) {
                 ySpeed = 1;
             }
 
-            if ((!canClimbRope && climbing && !onTopOfClimbingSpace ) || (!canClimbLadder && climbing)) {
+            if ((!canClimbRope && climbing && !onTopOfClimbingSpace) || (!canClimbLadder && climbing)) {
 //                ySpeed = 0;
                 jumpingTimer = 0;
 //                xSpeed = 0;
@@ -249,7 +264,7 @@ void MainDude::updateTimers() {
 
         animationFrameTimer = 0;
 
-        if (!whip || (whip && animFrame < 5) || (climbing && animFrame < 12))
+        if (!whip || (whip && animFrame < 5) || (climbing && animFrame < 12) || (exitingLevel && animFrame < 16))
             animFrame++;
 
     }
@@ -282,7 +297,7 @@ void MainDude::updateTimers() {
         pushing_right = false;
     }
 
-    if (animFrame >= FRAMES_PER_ANIMATION && !crawling && !pushing_left && !pushing_right)
+    if (animFrame >= FRAMES_PER_ANIMATION && !crawling && !pushing_left && !pushing_right && !exitingLevel)
         animFrame = 0;
 
     if (animFrame >= 9 && crawling)
@@ -314,7 +329,7 @@ void MainDude::updateTimers() {
     }
 
 
-    if (xSpeed != 0 || stunned || whip || (pushing_left || pushing_right) || (climbing && ySpeed != 0))
+    if (xSpeed != 0 || stunned || whip || (pushing_left || pushing_right) || (climbing && ySpeed != 0) || exitingLevel)
         animationFrameTimer += *timer;
 
 
@@ -510,12 +525,57 @@ void MainDude::draw() {
     }
 
 
-    if (climbing) {
+    if (exitingLevel) {
+
+        if (animFrame >= 16) {
+            animFrame = 0;
+
+            dmaCopyHalfWords(DMA_CHANNEL, global::base_map, global::current_map, sizeof(global::current_map));
+            global::level_generator->newLayout(*global::timer);
+            global::level_generator->mapBackground();
+            global::level_generator->mapFrame();
+            global::level_generator->generateRooms();
+            global::level_generator->tilesToMap();
+            sectorize_map();
+            dmaCopyHalfWords(DMA_CHANNEL, global::current_map, bgGetMapPtr(global::bg_main_address),
+                             sizeof(global::current_map));
+            dmaCopyHalfWords(DMA_CHANNEL, global::current_map, bgGetMapPtr(global::bg_sub_address),
+                             sizeof(global::current_map));
+            global::main_dude->bottomCollision = false;
+
+
+            MapTile *entrance;
+            global::level_generator->getEntranceTile(entrance);
+
+            if(entrance == nullptr){
+                global::main_dude->x = 100;
+                global::main_dude->y = 100;
+            }
+            else
+            {
+                global::main_dude->x = entrance->x * 16;
+                global::main_dude->y = entrance->y * 16;
+            }
+
+
+            exitingLevel = false;
+
+            for(int a =0;a<400;a++)
+                global::camera->updatePosition(global::main_dude->x, global::main_dude->y);
+
+        }
+
+        frame = ((13) * SPRITESHEET_ROW_WIDTH) + animFrame + 2;
+        offset = frameGfx + frame * MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT / 2;
+        main_spelunker->updateFrame(offset, 16 * 16);
+        sub_spelunker->updateFrame(offset, 16 * 16);
+
+    } else if (climbing) {
 
         if (animFrame >= 12)
             animFrame = 0;
 
-        frame = ((11) * SPRITESHEET_ROW_WIDTH) + animFrame + 2;
+        frame = ((12) * SPRITESHEET_ROW_WIDTH) + animFrame + 2;
         offset = frameGfx + frame * MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT / 2;
         main_spelunker->updateFrame(offset, 16 * 16);
         sub_spelunker->updateFrame(offset, 16 * 16);
@@ -646,7 +706,7 @@ void MainDude::canHangOnTile(MapTile *neighboringTiles[9]) {
             hangingTimer = 0;
             ySpeed = 0;
         }
-        if (leftCollision&& neighboringTiles[1]->collidable) {
+        if (leftCollision && neighboringTiles[1]->collidable) {
             jumpingTimer = 0;
             hangingOnTileLeft = true;
             this->y = (neighboringTiles[1]->y * 16);
