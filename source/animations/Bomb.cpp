@@ -8,7 +8,9 @@
 #include "Collisions.h"
 #include "MainDude.h"
 #include "../../build/explosion.h"
+#include "../../build/soundbank.h"
 #include <math.h>       /* floor */
+#include <maxmod9.h>
 
 
 void Bomb::draw() {
@@ -118,6 +120,8 @@ void Bomb::draw() {
             if (explosionTimer > 50 && explosionFrame < 10) {
 
                 if (explosionFrame == 0) {
+
+                    mmEffect(SFX_XEXPLOSION);
 
                     int xx = floor_div(this->x + 0.5 * BOMB_SIZE, 16);
                     int yy = floor_div(this->y + 0.5 * BOMB_SIZE, 16);

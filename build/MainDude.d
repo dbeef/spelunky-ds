@@ -60,6 +60,8 @@ MainDude.o: \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/video.h \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/videoGL.h \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/nand.h \
+ /home/xdbeef/devkitPro/libnds/include/maxmod9.h \
+ /home/xdbeef/devkitPro/libnds/include/mm_types.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/MainDude.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/SpriteState.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/MapTile.h \
@@ -97,7 +99,11 @@ MainDude.o: \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../../build/whip_left.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../../build/pre_whip_left.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Rope.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/RopeElement.h
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/RopeElement.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../../build/soundbank_bin.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../../build/soundbank.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Blood.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/BloodElement.h
 
 /home/xdbeef/devkitPro/libnds/include/nds.h:
 
@@ -219,6 +225,10 @@ MainDude.o: \
 
 /home/xdbeef/devkitPro/libnds/include/nds/arm9/nand.h:
 
+/home/xdbeef/devkitPro/libnds/include/maxmod9.h:
+
+/home/xdbeef/devkitPro/libnds/include/mm_types.h:
+
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/MainDude.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/SpriteState.h:
@@ -294,3 +304,11 @@ MainDude.o: \
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Rope.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/RopeElement.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../../build/soundbank_bin.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../../build/soundbank.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Blood.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/BloodElement.h:

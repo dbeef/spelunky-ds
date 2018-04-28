@@ -60,6 +60,8 @@ main.o: /home/xdbeef/NetBeansProjects/spelunkyds/source/main.cpp \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/videoGL.h \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/nand.h \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/console.h \
+ /home/xdbeef/devkitPro/libnds/include/maxmod9.h \
+ /home/xdbeef/devkitPro/libnds/include/mm_types.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/GameLoop.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/LevelGenerator.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/MapTile.h \
@@ -101,7 +103,9 @@ main.o: /home/xdbeef/NetBeansProjects/spelunkyds/source/main.cpp \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/LevelGenerator.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/MainDude.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/console/TextManager.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/MapUtils.h
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/MapUtils.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/../build/soundbank.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/../build/soundbank_bin.h
 
 /home/xdbeef/devkitPro/libnds/include/nds.h:
 
@@ -225,6 +229,10 @@ main.o: /home/xdbeef/NetBeansProjects/spelunkyds/source/main.cpp \
 
 /home/xdbeef/devkitPro/libnds/include/nds/arm9/console.h:
 
+/home/xdbeef/devkitPro/libnds/include/maxmod9.h:
+
+/home/xdbeef/devkitPro/libnds/include/mm_types.h:
+
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/GameLoop.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/LevelGenerator.h:
@@ -308,3 +316,7 @@ main.o: /home/xdbeef/NetBeansProjects/spelunkyds/source/main.cpp \
 /home/xdbeef/NetBeansProjects/spelunkyds/source/console/TextManager.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/MapUtils.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/../build/soundbank.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/../build/soundbank_bin.h:

@@ -1,5 +1,7 @@
 Moniez.o: \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Moniez.cpp \
+ /home/xdbeef/devkitPro/libnds/include/maxmod9.h \
+ /home/xdbeef/devkitPro/libnds/include/mm_types.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Jar.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/MovingObject.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/../level_layout/LevelGenerator.h \
@@ -101,7 +103,12 @@ Moniez.o: \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Rock.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/SpriteInfo.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Camera.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/LevelGenerator.h
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/LevelGenerator.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../../build/soundbank.h
+
+/home/xdbeef/devkitPro/libnds/include/maxmod9.h:
+
+/home/xdbeef/devkitPro/libnds/include/mm_types.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Jar.h:
 
@@ -306,3 +313,5 @@ Moniez.o: \
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Camera.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/LevelGenerator.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../../build/soundbank.h:

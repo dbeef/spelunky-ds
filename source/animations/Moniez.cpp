@@ -2,6 +2,7 @@
 // Created by xdbeef on 23.04.18.
 //
 
+#include <maxmod9.h>
 #include "Jar.h"
 #include "../sprites/MovingObject.h"
 #include "Collisions.h"
@@ -11,12 +12,20 @@
 #include "../../build/triple_goldbar.h"
 #include "../../build/rubies_big.h"
 #include "Rock.h"
+#include "../../build/soundbank.h"
 
 
 void Moniez::draw() {
 
     if (!collected && Collisions::checkCollisionWithMainDudeWidthBoundary(x, y, physics_width, physics_height, 8)) {
         global::hud->draw();
+
+        if (spriteType == SpriteType::MONIEZ_RUBY_BIG) {
+            mmEffect(SFX_XGEM);
+        } else if (spriteType == SpriteType::MONIEZ_TRIPLE_GOLD_BARS) {
+            mmEffect(SFX_XCOIN);
+        }
+
         global::hud->collectedMoniez(value);
         collected = true;
         subSpriteInfo->entry->isHidden = true;

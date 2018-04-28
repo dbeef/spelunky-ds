@@ -100,7 +100,9 @@ Snake.o: \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/SpriteInfo.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Camera.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/LevelGenerator.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../../build/snake.h
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../../build/snake.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Blood.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/BloodElement.h
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Snake.h:
 
@@ -303,3 +305,7 @@ Snake.o: \
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/LevelGenerator.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../../build/snake.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Blood.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/BloodElement.h:

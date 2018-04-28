@@ -49,6 +49,8 @@ public:
     int animFrame;
     int animFrameTimer;
 
+    bool killed;
+
     void randomizeMovement();
 };
 

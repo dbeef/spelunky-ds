@@ -123,6 +123,60 @@ spelunkyds/fast:
 	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/build
 .PHONY : spelunkyds/fast
 
+source/animations/Blood.o: source/animations/Blood.cpp.o
+
+.PHONY : source/animations/Blood.o
+
+# target to build an object file
+source/animations/Blood.cpp.o:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/animations/Blood.cpp.o
+.PHONY : source/animations/Blood.cpp.o
+
+source/animations/Blood.i: source/animations/Blood.cpp.i
+
+.PHONY : source/animations/Blood.i
+
+# target to preprocess a source file
+source/animations/Blood.cpp.i:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/animations/Blood.cpp.i
+.PHONY : source/animations/Blood.cpp.i
+
+source/animations/Blood.s: source/animations/Blood.cpp.s
+
+.PHONY : source/animations/Blood.s
+
+# target to generate assembly for a file
+source/animations/Blood.cpp.s:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/animations/Blood.cpp.s
+.PHONY : source/animations/Blood.cpp.s
+
+source/animations/BloodElement.o: source/animations/BloodElement.cpp.o
+
+.PHONY : source/animations/BloodElement.o
+
+# target to build an object file
+source/animations/BloodElement.cpp.o:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/animations/BloodElement.cpp.o
+.PHONY : source/animations/BloodElement.cpp.o
+
+source/animations/BloodElement.i: source/animations/BloodElement.cpp.i
+
+.PHONY : source/animations/BloodElement.i
+
+# target to preprocess a source file
+source/animations/BloodElement.cpp.i:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/animations/BloodElement.cpp.i
+.PHONY : source/animations/BloodElement.cpp.i
+
+source/animations/BloodElement.s: source/animations/BloodElement.cpp.s
+
+.PHONY : source/animations/BloodElement.s
+
+# target to generate assembly for a file
+source/animations/BloodElement.cpp.s:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/animations/BloodElement.cpp.s
+.PHONY : source/animations/BloodElement.cpp.s
+
 source/animations/Bomb.o: source/animations/Bomb.cpp.o
 
 .PHONY : source/animations/Bomb.o
@@ -726,6 +780,12 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... spelunkyds"
+	@echo "... source/animations/Blood.o"
+	@echo "... source/animations/Blood.i"
+	@echo "... source/animations/Blood.s"
+	@echo "... source/animations/BloodElement.o"
+	@echo "... source/animations/BloodElement.i"
+	@echo "... source/animations/BloodElement.s"
 	@echo "... source/animations/Bomb.o"
 	@echo "... source/animations/Bomb.i"
 	@echo "... source/animations/Bomb.s"

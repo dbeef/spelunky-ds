@@ -1,5 +1,7 @@
 Rope.o: \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Rope.cpp \
+ /home/xdbeef/devkitPro/libnds/include/maxmod9.h \
+ /home/xdbeef/devkitPro/libnds/include/mm_types.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../Globals.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../input/InputHandler.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../hud/Hud.h \
@@ -99,7 +101,12 @@ Rope.o: \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Camera.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/LevelGenerator.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/MovingObject.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/RopeElement.h
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/RopeElement.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../../build/soundbank.h
+
+/home/xdbeef/devkitPro/libnds/include/maxmod9.h:
+
+/home/xdbeef/devkitPro/libnds/include/mm_types.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../Globals.h:
 
@@ -300,3 +307,5 @@ Rope.o: \
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/MovingObject.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/RopeElement.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../../build/soundbank.h:

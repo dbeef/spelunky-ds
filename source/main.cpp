@@ -6,6 +6,7 @@
 #include <array>
 #include <iostream>
 #include <cstring>
+#include <maxmod9.h>
 #include "level_layout/GameLoop.h"
 #include "../build/cavebg.h"
 #include "level_layout/BaseCaveMap.h"
@@ -13,8 +14,22 @@
 #include "Globals.h"
 #include "level_layout/MapUtils.h"
 #include "console/TextManager.h"
+#include "../build/soundbank.h"
+#include "../build/soundbank_bin.h"
+
 
 int main(void) {
+
+    mmInitDefaultMem((mm_addr) soundbank_bin);
+    mmLoadEffect(SFX_XJUMP);
+    mmLoadEffect(SFX_XWHIP);
+    mmLoadEffect(SFX_XCOIN);
+    mmLoadEffect(SFX_XTHROW);
+    mmLoadEffect(SFX_XGEM);
+    mmLoadEffect(SFX_XEXPLOSION);
+    mmLoadEffect(SFX_XSTEPS);
+    mmLoadEffect(SFX_XLAND);
+
 
     Timer *t = new Timer();
 

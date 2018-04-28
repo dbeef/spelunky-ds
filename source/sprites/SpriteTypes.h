@@ -21,7 +21,8 @@ enum SpriteType{
     HUD_DOLLAR,
     HUD_BOMB,
     HUD_ROPE,
-    HUD_HOLDING_ITEM
+    HUD_HOLDING_ITEM,
+    BLOOD
 };
 
 #endif //SPELUNKYDS_SPRITETYPES_H

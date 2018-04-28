@@ -585,6 +585,54 @@ CMakeFiles/spelunkyds.dir/source/animations/Moniez.cpp.o.provides: CMakeFiles/sp
 CMakeFiles/spelunkyds.dir/source/animations/Moniez.cpp.o.provides.build: CMakeFiles/spelunkyds.dir/source/animations/Moniez.cpp.o
 
 
+CMakeFiles/spelunkyds.dir/source/animations/Blood.cpp.o: CMakeFiles/spelunkyds.dir/flags.make
+CMakeFiles/spelunkyds.dir/source/animations/Blood.cpp.o: ../source/animations/Blood.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/xdbeef/NetBeansProjects/spelunkyds/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Building CXX object CMakeFiles/spelunkyds.dir/source/animations/Blood.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/spelunkyds.dir/source/animations/Blood.cpp.o -c /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Blood.cpp
+
+CMakeFiles/spelunkyds.dir/source/animations/Blood.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/spelunkyds.dir/source/animations/Blood.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Blood.cpp > CMakeFiles/spelunkyds.dir/source/animations/Blood.cpp.i
+
+CMakeFiles/spelunkyds.dir/source/animations/Blood.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/spelunkyds.dir/source/animations/Blood.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Blood.cpp -o CMakeFiles/spelunkyds.dir/source/animations/Blood.cpp.s
+
+CMakeFiles/spelunkyds.dir/source/animations/Blood.cpp.o.requires:
+
+.PHONY : CMakeFiles/spelunkyds.dir/source/animations/Blood.cpp.o.requires
+
+CMakeFiles/spelunkyds.dir/source/animations/Blood.cpp.o.provides: CMakeFiles/spelunkyds.dir/source/animations/Blood.cpp.o.requires
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/animations/Blood.cpp.o.provides.build
+.PHONY : CMakeFiles/spelunkyds.dir/source/animations/Blood.cpp.o.provides
+
+CMakeFiles/spelunkyds.dir/source/animations/Blood.cpp.o.provides.build: CMakeFiles/spelunkyds.dir/source/animations/Blood.cpp.o
+
+
+CMakeFiles/spelunkyds.dir/source/animations/BloodElement.cpp.o: CMakeFiles/spelunkyds.dir/flags.make
+CMakeFiles/spelunkyds.dir/source/animations/BloodElement.cpp.o: ../source/animations/BloodElement.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/xdbeef/NetBeansProjects/spelunkyds/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building CXX object CMakeFiles/spelunkyds.dir/source/animations/BloodElement.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/spelunkyds.dir/source/animations/BloodElement.cpp.o -c /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/BloodElement.cpp
+
+CMakeFiles/spelunkyds.dir/source/animations/BloodElement.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/spelunkyds.dir/source/animations/BloodElement.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/BloodElement.cpp > CMakeFiles/spelunkyds.dir/source/animations/BloodElement.cpp.i
+
+CMakeFiles/spelunkyds.dir/source/animations/BloodElement.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/spelunkyds.dir/source/animations/BloodElement.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/BloodElement.cpp -o CMakeFiles/spelunkyds.dir/source/animations/BloodElement.cpp.s
+
+CMakeFiles/spelunkyds.dir/source/animations/BloodElement.cpp.o.requires:
+
+.PHONY : CMakeFiles/spelunkyds.dir/source/animations/BloodElement.cpp.o.requires
+
+CMakeFiles/spelunkyds.dir/source/animations/BloodElement.cpp.o.provides: CMakeFiles/spelunkyds.dir/source/animations/BloodElement.cpp.o.requires
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/animations/BloodElement.cpp.o.provides.build
+.PHONY : CMakeFiles/spelunkyds.dir/source/animations/BloodElement.cpp.o.provides
+
+CMakeFiles/spelunkyds.dir/source/animations/BloodElement.cpp.o.provides.build: CMakeFiles/spelunkyds.dir/source/animations/BloodElement.cpp.o
+
+
 # Object files for target spelunkyds
 spelunkyds_OBJECTS = \
 "CMakeFiles/spelunkyds.dir/source/animations/MainDude.cpp.o" \
@@ -608,7 +656,9 @@ spelunkyds_OBJECTS = \
 "CMakeFiles/spelunkyds.dir/source/input/InputHandler.cpp.o" \
 "CMakeFiles/spelunkyds.dir/source/animations/Jar.cpp.o" \
 "CMakeFiles/spelunkyds.dir/source/animations/Snake.cpp.o" \
-"CMakeFiles/spelunkyds.dir/source/animations/Moniez.cpp.o"
+"CMakeFiles/spelunkyds.dir/source/animations/Moniez.cpp.o" \
+"CMakeFiles/spelunkyds.dir/source/animations/Blood.cpp.o" \
+"CMakeFiles/spelunkyds.dir/source/animations/BloodElement.cpp.o"
 
 # External object files for target spelunkyds
 spelunkyds_EXTERNAL_OBJECTS =
@@ -635,9 +685,11 @@ spelunkyds: CMakeFiles/spelunkyds.dir/source/input/InputHandler.cpp.o
 spelunkyds: CMakeFiles/spelunkyds.dir/source/animations/Jar.cpp.o
 spelunkyds: CMakeFiles/spelunkyds.dir/source/animations/Snake.cpp.o
 spelunkyds: CMakeFiles/spelunkyds.dir/source/animations/Moniez.cpp.o
+spelunkyds: CMakeFiles/spelunkyds.dir/source/animations/Blood.cpp.o
+spelunkyds: CMakeFiles/spelunkyds.dir/source/animations/BloodElement.cpp.o
 spelunkyds: CMakeFiles/spelunkyds.dir/build.make
 spelunkyds: CMakeFiles/spelunkyds.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/xdbeef/NetBeansProjects/spelunkyds/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Linking CXX executable spelunkyds"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/xdbeef/NetBeansProjects/spelunkyds/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Linking CXX executable spelunkyds"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/spelunkyds.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -667,6 +719,8 @@ CMakeFiles/spelunkyds.dir/requires: CMakeFiles/spelunkyds.dir/source/input/Input
 CMakeFiles/spelunkyds.dir/requires: CMakeFiles/spelunkyds.dir/source/animations/Jar.cpp.o.requires
 CMakeFiles/spelunkyds.dir/requires: CMakeFiles/spelunkyds.dir/source/animations/Snake.cpp.o.requires
 CMakeFiles/spelunkyds.dir/requires: CMakeFiles/spelunkyds.dir/source/animations/Moniez.cpp.o.requires
+CMakeFiles/spelunkyds.dir/requires: CMakeFiles/spelunkyds.dir/source/animations/Blood.cpp.o.requires
+CMakeFiles/spelunkyds.dir/requires: CMakeFiles/spelunkyds.dir/source/animations/BloodElement.cpp.o.requires
 
 .PHONY : CMakeFiles/spelunkyds.dir/requires
 

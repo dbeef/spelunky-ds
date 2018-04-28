@@ -2,11 +2,13 @@
 // Created by xdbeef on 04.04.18.
 //
 
+#include <maxmod9.h>
 #include "../Globals.h"
 #include "../level_layout/MapUtils.h"
 #include "Collisions.h"
 #include "../../build/ropes.h"
 #include "Rope.h";
+#include "../../build/soundbank.h"
 
 
 void Rope::draw() {
@@ -29,8 +31,8 @@ void Rope::draw() {
 
     for (int a = 0; a < ropeChain.size(); a++) {
         ropeChain.at(a)->draw();
+        ropeChain.at(a)->update();
     }
-
 
     if (global::camera->y + 192 > this->y + 8 || global::camera->y + 192 + 192  < this->y - 8) {
         sub_x = -128;
@@ -43,6 +45,8 @@ void Rope::draw() {
 
 
     if (activated_by_main_dude && !thrown && !finished) {
+        mmEffect(SFX_XTHROW);
+
         thrown = true;
         throwingTimer = 0;
 
@@ -60,6 +64,7 @@ void Rope::draw() {
         int temp_y = floor_div(this->y + (0.5 * ROPE_SIZE), 16);
 
         if (!isThereChainForThisTile(temp_y * TILE_H)) {
+
 
             if (temp_y * TILE_H > y) {
 

@@ -1,0 +1,11 @@
+#define SFX_XSTEPS	0
+#define SFX_XCOIN	1
+#define SFX_XLAND	2
+#define SFX_XJUMP	3
+#define SFX_XTHROW	4
+#define SFX_XEXPLOSION	5
+#define SFX_XWHIP	6
+#define SFX_XGEM	7
+#define MSL_NSONGS	0
+#define MSL_NSAMPS	8
+#define MSL_BANKSIZE	8

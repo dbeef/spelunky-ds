@@ -115,6 +115,18 @@
 		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/Globals.h">
 			<Option target="spelunkyds"/>
 		</Unit>
+		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Blood.cpp">
+			<Option target="spelunkyds"/>
+		</Unit>
+		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Blood.h">
+			<Option target="spelunkyds"/>
+		</Unit>
+		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/BloodElement.cpp">
+			<Option target="spelunkyds"/>
+		</Unit>
+		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/BloodElement.h">
+			<Option target="spelunkyds"/>
+		</Unit>
 		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Bomb.cpp">
 			<Option target="spelunkyds"/>
 		</Unit>

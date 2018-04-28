@@ -199,10 +199,11 @@ bool Collisions::checkRightCollision(MapTile *neighboringTiles[9], int *xPos, in
 }
 
 bool Collisions::isStandingOnLeftEdge(MapTile *neighboringTiles[9], int x, int width, int tileX) {
-    return (!neighboringTiles[7]  && !neighboringTiles[7]->collidable && x <= (tileX * 16));
+    return (!neighboringTiles[7] && !neighboringTiles[7]->collidable && x <= (tileX * 16));
 }
+
 bool Collisions::isStandingOnRightEdge(MapTile *neighboringTiles[9], int x, int width, int tileX) {
-    return  (!neighboringTiles[8] && !neighboringTiles[8]->collidable && x >= (tileX * 16) );
+    return (!neighboringTiles[8] && !neighboringTiles[8]->collidable && x >= (tileX * 16));
 }
 
 void Collisions::getNeighboringTiles(MapTile *mapTiles[32][32], int xx, int yy, MapTile *neighboringTiles[9]) {
@@ -263,7 +264,19 @@ bool Collisions::checkCollisionWithMainDude(int x, int y, int width, int height)
     return x + width + 4 >= global::main_dude->x && x + width < global::main_dude->x + MAIN_DUDE_WIDTH + 8 &&
            y + height > global::main_dude->y && y < global::main_dude->y + MAIN_DUDE_HEIGHT;
 }
+
 bool Collisions::checkCollisionWithMainDudeWidthBoundary(int x, int y, int width, int height, int x_boundary) {
-    return  global::main_dude->x + 16 > x &&  global::main_dude->x <= x + width &&
+    return global::main_dude->x + 16 > x && global::main_dude->x <= x + width &&
            y + height > global::main_dude->y && y <= global::main_dude->y + MAIN_DUDE_HEIGHT;
+}
+
+bool Collisions::checkCollisionWithMainDudeWhip(int x, int y, int width, int height) {
+    if (global::main_dude->state == SpriteState::W_LEFT) {
+        return x + width >= global::main_dude->x - 10 && x + width < global::main_dude->x + MAIN_DUDE_WIDTH &&
+               y + height > global::main_dude->y && y < global::main_dude->y + MAIN_DUDE_HEIGHT;
+    } else if (global::main_dude->state == SpriteState::W_RIGHT) {
+        return x + width >= global::main_dude->x && x + width < global::main_dude->x + MAIN_DUDE_WIDTH + 20 &&
+               y + height > global::main_dude->y && y < global::main_dude->y + MAIN_DUDE_HEIGHT;
+    } else return false;
+
 }

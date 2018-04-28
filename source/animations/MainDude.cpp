@@ -5,6 +5,7 @@
 #include <nds.h>
 #include <nds/arm9/sprite.h>
 #include <iostream>
+#include <maxmod9.h>
 #include "MainDude.h"
 #include "../Globals.h"
 #include "Collisions.h"
@@ -13,6 +14,10 @@
 #include "../../build/whip_left.h"
 #include "../../build/pre_whip_left.h"
 #include "Rope.h"
+
+#include "../../build/soundbank_bin.h"
+#include "../../build/soundbank.h"
+#include "Blood.h"
 
 void MainDude::handleKeyInput() {
 
@@ -23,9 +28,14 @@ void MainDude::handleKeyInput() {
                 climbing = false;
                 canClimbRope = false;
                 timeSinceLastJump = 0;
+
+                mmEffect(SFX_XJUMP);
+
             }
             if ((hangingOnTileLeft || hangingOnTileRight) && hangingTimer > MIN_HANGING_TIME &&
                 timeSinceLastJump > 100) {
+                mmEffect(SFX_XJUMP);
+
                 ySpeed = -MAIN_DUDE_JUMP_SPEED;
                 hangingOnTileLeft = false;
                 hangingOnTileRight = false;
@@ -71,6 +81,8 @@ void MainDude::handleKeyInput() {
                                     (*global::sprites.at(a)).hold_by_main_dude = false;
                                     holding_item = false;
 
+                                    mmEffect(SFX_XTHROW);
+
                                 } else {
                                     (*global::sprites.at(a)).activated_by_main_dude = true;
                                 }
@@ -81,6 +93,9 @@ void MainDude::handleKeyInput() {
 
 
                 } else {
+
+                    mmEffect(SFX_XWHIP);
+
                     whip = true;
                     animFrame = 0;
                 }
@@ -88,6 +103,7 @@ void MainDude::handleKeyInput() {
         }
         if (global::input_handler->x_key_down && !holding_item && global::hud->bombs > 0) {
             //make new bomb object
+
 
             global::hud->bombs--;
             global::hud->draw();
@@ -164,6 +180,9 @@ void MainDude::handleKeyInput() {
                            (neighboringTiles[4]->mapTileType == MapTileType::EXIT);
 
             if (exitingLevel) {
+
+                mmEffect(SFX_XSTEPS);
+
                 x = neighboringTiles[4]->x * 16;
                 y = neighboringTiles[4]->y * 16;
 
@@ -316,6 +335,8 @@ void MainDude::updateTimers() {
             global::hud->draw();
         }
         stunned = true;
+        mmEffect(SFX_XLAND);
+
         jumpingTimer = 0;
     } else if (bottomCollision && jumpingTimer < STUN_FALLING_TIME) {
         jumpingTimer = 0;
@@ -547,12 +568,10 @@ void MainDude::draw() {
             MapTile *entrance;
             global::level_generator->getEntranceTile(entrance);
 
-            if(entrance == nullptr){
+            if (entrance == nullptr) {
                 global::main_dude->x = 100;
                 global::main_dude->y = 100;
-            }
-            else
-            {
+            } else {
                 global::main_dude->x = entrance->x * 16;
                 global::main_dude->y = entrance->y * 16;
             }
@@ -560,7 +579,7 @@ void MainDude::draw() {
 
             exitingLevel = false;
 
-            for(int a =0;a<400;a++)
+            for (int a = 0; a < 400; a++)
                 global::camera->updatePosition(global::main_dude->x, global::main_dude->y);
 
         }

@@ -8,6 +8,7 @@
 #include "../level_layout/MapUtils.h"
 #include "Rock.h"
 #include "../../build/snake.h"
+#include "Blood.h"
 
 
 void Snake::draw() {
@@ -27,12 +28,12 @@ void Snake::draw() {
 
     }
 
-    if (sub_y + 16< 0 || sub_x + 16< 0) {
+    if (sub_y + 16 < 0 || sub_x + 16 < 0) {
         sub_x = -128;
         sub_y = -128;
     }
 
-    if (main_y + 16< 0 || main_x + 16< 0) {
+    if (main_y + 16 < 0 || main_x + 16 < 0) {
         main_x = -128;
         main_y = -128;
     }
@@ -90,6 +91,33 @@ void Snake::draw() {
                 randomizeMovement();
                 xSpeed = 0;
             }
+        }
+    }
+
+
+    if (global::main_dude->whip && !killed && global::main_dude->whip_timer > 120) {
+
+
+        if (Collisions::checkCollisionWithMainDudeWhip(x, y, 16, 16)) {
+            subSpriteInfo->entry->isHidden = true;
+            mainSpriteInfo->entry->isHidden = true;
+
+            for (int a = 0; a < 4; a++) {
+                Blood *blood = new Blood();
+                blood->init();
+                blood->x = x;
+                blood->y = y;
+
+                if (a % 2 == 0)
+                    blood->xSpeed = (1 / a);
+                else
+                    blood->xSpeed = (-1 / a);
+
+                blood->ySpeed = -1 / a;
+                global::sprites.push_back(blood);
+            }
+            killed = true;
+
         }
     }
 

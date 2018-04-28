@@ -9,6 +9,8 @@ Hud.o: /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/Hud.cpp \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/console.h \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/background.h \
  /home/xdbeef/devkitPro/libnds/include/nds/dma.h \
+ /home/xdbeef/devkitPro/libnds/include/maxmod9.h \
+ /home/xdbeef/devkitPro/libnds/include/mm_types.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/Hud.h \
  /home/xdbeef/devkitPro/libnds/include/nds/jtypes.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../level_layout/SpriteInfo.h \
@@ -94,7 +96,8 @@ Hud.o: /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/Hud.cpp \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../animations/../sprites/SpriteTypes.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../animations/../input/InputHandler.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../console/TextManager.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../console/../time/Timer.h
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../console/../time/Timer.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../../build/soundbank.h
 
 /home/xdbeef/devkitPro/libnds/include/nds/arm9/sprite.h:
 
@@ -115,6 +118,10 @@ Hud.o: /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/Hud.cpp \
 /home/xdbeef/devkitPro/libnds/include/nds/arm9/background.h:
 
 /home/xdbeef/devkitPro/libnds/include/nds/dma.h:
+
+/home/xdbeef/devkitPro/libnds/include/maxmod9.h:
+
+/home/xdbeef/devkitPro/libnds/include/mm_types.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/Hud.h:
 
@@ -287,3 +294,5 @@ Hud.o: /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/Hud.cpp \
 /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../console/TextManager.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../console/../time/Timer.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../../build/soundbank.h:

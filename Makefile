@@ -29,6 +29,8 @@ INCLUDES	:=	include
 FONTS   	:=	gfx/fonts
 SPRITES	    :=	gfx/sprites gfx/sprites/64x64 gfx/sprites/8x8
 TILEMAPS    :=  gfx/tilemaps
+SOUNDS      :=  sounds
+SOUNDBANK_NAME := soundbank
 
 #---------------------------------------------------------------------------------
 # options for code generation
@@ -49,7 +51,7 @@ LDFLAGS	=	-specs=ds_arm9.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)
 #---------------------------------------------------------------------------------
 # any extra libraries we wish to link with the project
 #---------------------------------------------------------------------------------
-LIBS	:= -lnds9
+LIBS	:= -lnds9 -lmm9
 
 
 #---------------------------------------------------------------------------------
@@ -74,16 +76,19 @@ export VPATH	:=	$(foreach dir,$(SOURCES),$(CURDIR)/$(dir)) \
 					$(foreach dir,$(FONTS),$(CURDIR)/$(dir)) \
 					$(foreach dir,$(SPRITES),$(CURDIR)/$(dir)) \
 					$(foreach dir,$(TILEMAPS),$(CURDIR)/$(dir)) \
+					$(foreach dir,$(SOUNDS),$(CURDIR)/$(dir)) \
 
 export DEPSDIR	:=	$(CURDIR)/$(BUILD)
 
 CFILES		:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.c)))
 CPPFILES	:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.cpp)))
 SFILES		:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.s)))
-BINFILES	:=	$(foreach dir,$(DATA),$(notdir $(wildcard $(dir)/*.*)))
+BINFILES	:=	$(foreach dir,$(DATA),$(notdir $(wildcard $(dir)/*))) $(SOUNDBANK_NAME).bin
 SPRITE_FILES	:=	$(foreach dir,$(FONTS),$(notdir $(wildcard $(dir)/*.png))) \
 					$(foreach dir,$(SPRITES),$(notdir $(wildcard $(dir)/*.png)))
 TILEMAP_FILES	:=	$(foreach dir,$(TILEMAPS),$(notdir $(wildcard $(dir)/*.png)))
+AUDIOFILES	:=	$(foreach dir,$(SOUNDS),$(notdir $(wildcard $(dir)/*)))
+
 
 #---------------------------------------------------------------------------------
 # use CXX for linking C++ projects, CC for standard C
@@ -104,6 +109,9 @@ export OFILES	:=	$(addsuffix .o,$(BINFILES)) \
 					$(SPRITE_FILES:.png=.o) \
 					$(TILEMAP_FILES:.png=.o) \
 					$(CPPFILES:.cpp=.o) $(CFILES:.c=.o) $(SFILES:.s=.o)
+
+export AUDIOFILES       :=      $(foreach dir,$(SOUNDS),$(notdir $(wildcard $(dir)/*)))
+
 
 export INCLUDE	:=	$(foreach dir,$(INCLUDES),-I$(CURDIR)/$(dir)) \
 					$(foreach dir,$(LIBDIRS),-I$(dir)/include) \
@@ -180,7 +188,19 @@ $(OUTPUT).elf	:	$(OFILES)
 #---------------------------------------------------------------------------------
 	grit $< -fts -o$*
 
- 
+
+#---------------------------------------------------------------------------------
+# This rule creates the soundbank file for your project using mmutil.
+# mmutil takes all audio files in the audio folder and puts them into a
+# soundbank file.
+#---------------------------------------------------------------------------------
+$(SOUNDBANK_NAME).bin : $(AUDIOFILES)
+#---------------------------------------------------------------------------------
+	@echo $(notdir $^)
+	@mmutil -d $^ -o$(SOUNDBANK_NAME).bin -h$(SOUNDBANK_NAME).h
+
+
+
 -include $(DEPENDS)
  
 #---------------------------------------------------------------------------------------

@@ -6,6 +6,7 @@
 #include <cstdio>
 #include <iostream>
 #include <nds/arm9/console.h>
+#include <maxmod9.h>
 #include "Hud.h"
 #include "../../build/heart.h"
 #include "../../build/dollar.h"
@@ -13,6 +14,7 @@
 #include "../../build/rope.h"
 #include "../../build/holding_item.h"
 #include "../Globals.h"
+#include "../../build/soundbank.h"
 
 #define HEART_POSITION_X 5
 #define HEART_POSITION_Y 5
