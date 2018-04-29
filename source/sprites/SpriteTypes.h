@@ -17,11 +17,7 @@ enum SpriteType{
     ROPE_ELEMENT,
     PRE_WHIP,
     WHIP,
-    HUD_HEART,
-    HUD_DOLLAR,
-    HUD_BOMB,
-    HUD_ROPE,
-    HUD_HOLDING_ITEM,
+    HUD,
     BLOOD
 };
 

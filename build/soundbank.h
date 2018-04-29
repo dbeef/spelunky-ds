@@ -4,8 +4,9 @@
 #define SFX_XJUMP	3
 #define SFX_XTHROW	4
 #define SFX_XEXPLOSION	5
-#define SFX_XWHIP	6
-#define SFX_XGEM	7
+#define SFX_MCAVE	6
+#define SFX_XWHIP	7
+#define SFX_XGEM	8
 #define MSL_NSONGS	0
-#define MSL_NSAMPS	8
-#define MSL_BANKSIZE	8
+#define MSL_NSAMPS	9
+#define MSL_BANKSIZE	9

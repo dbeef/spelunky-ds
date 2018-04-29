@@ -17,10 +17,10 @@
 #include "../build/soundbank.h"
 #include "../build/soundbank_bin.h"
 
-
 int main(void) {
 
     mmInitDefaultMem((mm_addr) soundbank_bin);
+    mmLoadEffect(SFX_MCAVE);
     mmLoadEffect(SFX_XJUMP);
     mmLoadEffect(SFX_XWHIP);
     mmLoadEffect(SFX_XCOIN);
@@ -44,9 +44,6 @@ int main(void) {
     vramSetBankE(VRAM_E_MAIN_SPRITE);
     vramSetBankD(VRAM_D_SUB_SPRITE);
 
-//    vramSetBankF(VRAM_F_SPRITE_EXT_PALETTE);
-//    vramSetBankI(VRAM_I_SUB_SPRITE_EXT_PALETTE);
-
     oamInit(&oamMain, SpriteMapping_1D_64, false);
     oamInit(&oamSub, SpriteMapping_1D_64, false);
 
@@ -57,7 +54,6 @@ int main(void) {
     dmaCopy(cavebgTiles, bgGetGfxPtr(global::bg_sub_address), sizeof(cavebgTiles));
 
 
-//    global::current_map = std::malloc(sizeof(u16[4096]));
     dmaCopyHalfWords(3, global::base_map, global::current_map, sizeof(global::base_map));
 
     global::level_generator->newLayout(timerElapsed(0));
@@ -76,7 +72,7 @@ int main(void) {
     dmaCopy(cavebgPal, BG_PALETTE, cavebgPalLen);
     dmaCopy(cavebgPal, BG_PALETTE_SUB, cavebgPalLen);
 
-    spelunker::scroll();
+    gameloop::scroll();
 
     t->stop();
 

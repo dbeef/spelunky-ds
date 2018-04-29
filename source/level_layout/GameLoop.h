@@ -8,15 +8,19 @@
 #include <nds/arm9/sprite.h>
 #include "LevelGenerator.h"
 #include "SpriteInfo.h"
+#include "../animations/Moniez.h"
+#include "../Globals.h"
+#include "../animations/Snake.h"
+#include "../animations/Jar.h"
+#include "../animations/Rock.h"
 
-namespace spelunker {
+namespace gameloop {
 
     void scroll();
-    void initOAMTable(OAMTable * oam);
 
-    void updateOAM(OAMTable *oam);
+    void populateCaveNpcs();
 
-    void initSprites(OAMTable *oam, SpriteInfo *spriteInfo);
+    void populateCaveItems();
+
 }
-
 #endif //SPELUNKYDS_SCROLLING_H

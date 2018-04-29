@@ -1,6 +1,6 @@
-grit ../gfx/sprites/spelunker.png -ff../gfx/sprites/sprite.grit -ospelunker
-spelunker.s
-arm-none-eabi-gcc -MMD -MP -MF /home/xdbeef/NetBeansProjects/spelunkyds/build/spelunker.d -x assembler-with-cpp -g -mthumb -mthumb-interwork -c spelunker.s -o spelunker.o 
+grit ../gfx/sprites/gameloop.png -ff../gfx/sprites/sprite.grit -ospelunker
+gameloop.s
+arm-none-eabi-gcc -MMD -MP -MF /home/xdbeef/NetBeansProjects/spelunkyds/build/gameloop.d -x assembler-with-cpp -g -mthumb -mthumb-interwork -c gameloop.s -o gameloop.o
 grit ../gfx/sprites/dollar.png -ff../gfx/sprites/sprite.grit -odollar
 dollar.s
 arm-none-eabi-gcc -MMD -MP -MF /home/xdbeef/NetBeansProjects/spelunkyds/build/dollar.d -x assembler-with-cpp -g -mthumb -mthumb-interwork -c dollar.s -o dollar.o 
@@ -25,5 +25,5 @@ arm-none-eabi-gcc -MMD -MP -MF /home/xdbeef/NetBeansProjects/spelunkyds/build/ca
 main.cpp
 arm-none-eabi-g++ -MMD -MP -MF /home/xdbeef/NetBeansProjects/spelunkyds/build/main.d -g -Wall -O2 -march=armv5te -mtune=arm946e-s -fomit-frame-pointer -ffast-math -mthumb -mthumb-interwork -I/home/xdbeef/NetBeansProjects/spelunkyds/include -I/home/xdbeef/devkitPro/libnds/include -I/home/xdbeef/NetBeansProjects/spelunkyds/build  -DARM9 -fno-rtti -fno-exceptions -std=c++14 -DNDEBUG -c /home/xdbeef/NetBeansProjects/spelunkyds/source/main.cpp -o main.o 
 /home/xdbeef/devkitPro/devkitARM/base_rules:79: recipe for target 'main.o' failed
-rm snake.s cavebg.s dollar.s heart.s rope.s spelunker.s holding_item.s bomb.s
+rm snake.s cavebg.s dollar.s heart.s rope.s gameloop.s holding_item.s bomb.s
 Makefile:118: recipe for target 'build' failed

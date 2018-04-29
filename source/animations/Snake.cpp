@@ -25,7 +25,6 @@ void Snake::draw() {
     if (global::camera->y > this->y + 16 || global::camera->y + 192 < this->y - 16) {
         main_x = -128;
         main_y = -128;
-
     }
 
     if (sub_y + 16 < 0 || sub_x + 16 < 0) {
@@ -57,16 +56,18 @@ void Snake::draw() {
         if (animFrame >= 4)
             animFrame = 0;
 
-        if (spriteState == 1)
+        if (spriteState == SpriteState::W_LEFT) {
             frameGfx = (u8 *) snakeTiles + ((16 * 16 * (animFrame + 4)) / 2);
-        else
+        }
+        else if(spriteState == SpriteState::W_RIGHT) {
             frameGfx = (u8 *) snakeTiles + ((16 * 16 * animFrame) / 2);
-
+        }
         animFrameTimer = 0;
+
+        subSpriteInfo->updateFrame(frameGfx, 16 * 16);
+        mainSpriteInfo->updateFrame(frameGfx, 16 * 16);
     }
 
-    subSpriteInfo->updateFrame(frameGfx, 16 * 16);
-    mainSpriteInfo->updateFrame(frameGfx, 16 * 16);
 
     if (bottomCollision) {
         if (waitTimer > 0) {
@@ -135,11 +136,14 @@ void Snake::init() {
     subSpriteInfo->updateFrame(frameGfx, 16 * 16);
     mainSpriteInfo->updateFrame(frameGfx, 16 * 16);
 
+    //idk why do i have to do that, if it is already flipped in image
+    subSpriteInfo->entry->hFlip= true;
+
     randomizeMovement();
 }
 
 void Snake::randomizeMovement() {
-    srand(*timer + x + y + global::main_dude->x + +global::main_dude->y);
+//    srand(*timer + x + y + global::main_dude->x + +global::main_dude->y);
 
     int r = rand() % 2;
 

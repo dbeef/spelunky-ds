@@ -33,6 +33,18 @@ OAMManager::initOAMTable(u16 *sprite_address, u16 *paletteAddress, u16 *oam_addr
     this->oam = oam;
     this->offset_multiplier = offset_multiplier;
 
+    clearAllSprites();
+
+    updateOAM();
+}
+
+void OAMManager::clearAllSprites(){
+
+    current_oam_id_palette = 0;
+    current_oam_id_tiles = 0;
+    global::spriteInfos.clear();
+    global::sprites.clear();
+
     /*
      * For all 128 sprites on the DS, disable and clear any attributes they
      * might have. This prevents any garbage from being displayed and gives
@@ -53,7 +65,6 @@ OAMManager::initOAMTable(u16 *sprite_address, u16 *paletteAddress, u16 *oam_addr
         oam->matrixBuffer[i].vdx = 0;
         oam->matrixBuffer[i].vdy = 1 << 8;
     }
-    updateOAM();
 }
 
 void OAMManager::updateOAM() {

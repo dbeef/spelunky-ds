@@ -103,7 +103,21 @@ MainDude.o: \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../../build/soundbank_bin.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../../build/soundbank.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Blood.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/BloodElement.h
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/BloodElement.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/GameLoop.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/LevelGenerator.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/SpriteInfo.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/../animations/Moniez.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/../animations/../sprites/MovingObject.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/../Globals.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/../animations/Snake.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/../animations/SpriteState.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/../animations/Jar.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/../animations/Rock.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/../animations/../level_layout/SpriteInfo.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/../animations/../level_layout/MapTile.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/../animations/Camera.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/../animations/../level_layout/LevelGenerator.h
 
 /home/xdbeef/devkitPro/libnds/include/nds.h:
 
@@ -312,3 +326,31 @@ MainDude.o: \
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Blood.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/BloodElement.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/GameLoop.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/LevelGenerator.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/SpriteInfo.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/../animations/Moniez.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/../animations/../sprites/MovingObject.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/../Globals.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/../animations/Snake.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/../animations/SpriteState.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/../animations/Jar.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/../animations/Rock.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/../animations/../level_layout/SpriteInfo.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/../animations/../level_layout/MapTile.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/../animations/Camera.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/../animations/../level_layout/LevelGenerator.h:

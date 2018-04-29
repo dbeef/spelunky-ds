@@ -1,1 +1,0 @@
-rope.o: rope.s

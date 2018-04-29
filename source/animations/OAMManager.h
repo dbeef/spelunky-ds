@@ -34,6 +34,8 @@ public:
 
     SpriteInfo *initSprite(const unsigned short pallette[], int palLen, const unsigned int tiles[], int tilesLen,
                            int size, SpriteType spriteType, bool reuse_palette, bool reuse_tiles);
+
+    void clearAllSprites();
 };
 
 

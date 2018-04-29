@@ -8,11 +8,7 @@
 #include <nds/arm9/console.h>
 #include <maxmod9.h>
 #include "Hud.h"
-#include "../../build/heart.h"
-#include "../../build/dollar.h"
-#include "../../build/bomb_hud.h"
-#include "../../build/rope.h"
-#include "../../build/holding_item.h"
+#include "../../build/hud.h"
 #include "../Globals.h"
 #include "../../build/soundbank.h"
 
@@ -33,17 +29,30 @@
 
 void Hud::init() {
 
-    heartSpriteInfo = global::main_oam_manager->initSprite(heartPal, heartPalLen, heartTiles, heartTilesLen, 16,
-                                                           HUD_HEART, true, false);
-    dollarSpriteInfo = global::main_oam_manager->initSprite(dollarPal, dollarPalLen, dollarTiles, dollarTilesLen, 16,
-                                                            HUD_DOLLAR, true, false);
-    bombSpriteInfo = global::main_oam_manager->initSprite(bomb_hudPal, bomb_hudPalLen, bomb_hudTiles, bomb_hudTilesLen,
-                                                          16, HUD_BOMB, true, false);
-    ropeSpriteInfo = global::main_oam_manager->initSprite(ropePal, ropePalLen, ropeTiles, ropeTilesLen, 16, HUD_ROPE,
-                                                          true, false);
-    holdingItemSpriteInfo = global::main_oam_manager->initSprite(holding_itemPal, holding_itemPalLen, holding_itemTiles,
-                                                                 holding_itemTilesLen, 16, HUD_HOLDING_ITEM, true,
+    consoleClear();
+
+    heartSpriteInfo = global::main_oam_manager->initSprite(hudPal, hudPalLen, nullptr, 16 * 16, 16, HUD, true, false);
+    dollarSpriteInfo = global::main_oam_manager->initSprite(hudPal, hudPalLen, nullptr, 16 * 16, 16, HUD, true, false);
+    bombSpriteInfo = global::main_oam_manager->initSprite(hudPal, hudPalLen, nullptr, 16 * 16, 16, HUD, true, false);
+    ropeSpriteInfo = global::main_oam_manager->initSprite(hudPal, hudPalLen, nullptr, 16 * 16, 16, HUD, true, false);
+    holdingItemSpriteInfo = global::main_oam_manager->initSprite(hudPal, hudPalLen, nullptr, 16 * 16, 16, HUD, true,
                                                                  false);
+
+    u8 *frameGfxHeart = (u8 *) hudTiles + 0 * 16 * 16 / 2;
+    heartSpriteInfo->updateFrame(frameGfxHeart, 16 * 16);
+
+    u8 *frameGfxHoldingItem = (u8 *) hudTiles + 1 * 16 * 16 / 2;
+    holdingItemSpriteInfo->updateFrame(frameGfxHoldingItem, 16 * 16);
+
+    u8 *frameGfxRope = (u8 *) hudTiles + 2 * 16 * 16 / 2;
+    ropeSpriteInfo->updateFrame(frameGfxRope, 16 * 16);
+
+    u8 *frameGfxBomb = (u8 *) hudTiles + 3 * 16 * 16 / 2;
+    bombSpriteInfo->updateFrame(frameGfxBomb, 16 * 16);
+
+    u8 *frameGfxDollar = (u8 *) hudTiles + 4 * 16 * 16 / 2;
+    dollarSpriteInfo->updateFrame(frameGfxDollar, 16 * 16);
+
 
     heartSpriteInfo->entry->x = HEART_POSITION_X;
     heartSpriteInfo->entry->y = HEART_POSITION_Y;
@@ -76,24 +85,22 @@ void Hud::draw() {
     if (dollars_buffer != 0) {
         std::cout << '\n' << "   " << "    " << "    " << "    " << "   " << "+" << dollars_buffer;
 
-//        std::cout << "\n \n \n " << "IPM: " << global::main_oam_manager->current_oam_id_palette << " "
-//                  << "IPS: " << global::sub_oam_manager->current_oam_id_palette << " "
-//                  << "ITM: " << global::main_oam_manager->current_oam_id_tiles << " "
-//                  << "ITS: " << global::sub_oam_manager->current_oam_id_tiles;
+        std::cout << "\n \n \n " << "IPM: " << global::main_oam_manager->current_oam_id_palette << " "
+                  << "IPS: " << global::sub_oam_manager->current_oam_id_palette << " "
+                  << "ITM: " << global::main_oam_manager->current_oam_id_tiles << " "
+                  << "ITS: " << global::sub_oam_manager->current_oam_id_tiles;
 
+    } else {
+
+        std::cout << "\n \n \n " << "IPM: " << global::main_oam_manager->current_oam_id_palette << " "
+                  << "IPS: " << global::sub_oam_manager->current_oam_id_palette << " "
+                  << "ITM: " << global::main_oam_manager->current_oam_id_tiles << " "
+                  << "ITS: " << global::sub_oam_manager->current_oam_id_tiles;
     }
-    else
-    {
-
-//        std::cout << "\n \n \n " << "IPM: " << global::main_oam_manager->current_oam_id_palette << " "
-//                  << "IPS: " << global::sub_oam_manager->current_oam_id_palette << " "
-//                  << "ITM: " << global::main_oam_manager->current_oam_id_tiles << " "
-//                  << "ITS: " << global::sub_oam_manager->current_oam_id_tiles;
-        }
 
 
     //TODO Debug flag for this:
-    }
+}
 
 void Hud::updateMoniez() {
 

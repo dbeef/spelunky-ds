@@ -18,6 +18,7 @@
 #include "../../build/soundbank_bin.h"
 #include "../../build/soundbank.h"
 #include "Blood.h"
+#include "../level_layout/GameLoop.h"
 
 void MainDude::handleKeyInput() {
 
@@ -578,6 +579,18 @@ void MainDude::draw() {
 
 
             exitingLevel = false;
+
+            global::main_oam_manager->clearAllSprites();
+            global::sub_oam_manager->clearAllSprites();
+            init();
+
+            global::sprites.push_back(global::main_dude);
+
+            //todo wycentrować bombe
+
+            global::hud->init();
+            gameloop::populateCaveNpcs();
+
 
             for (int a = 0; a < 400; a++)
                 global::camera->updatePosition(global::main_dude->x, global::main_dude->y);
