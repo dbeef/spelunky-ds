@@ -2,6 +2,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/spelunkyds.dir/source/animations/MainDude.cpp.o"
   "CMakeFiles/spelunkyds.dir/source/animations/Bomb.cpp.o"
   "CMakeFiles/spelunkyds.dir/source/animations/Rock.cpp.o"
+  "CMakeFiles/spelunkyds.dir/source/animations/Copyrights.cpp.o"
   "CMakeFiles/spelunkyds.dir/source/animations/RopeElement.cpp.o"
   "CMakeFiles/spelunkyds.dir/source/animations/Rope.cpp.o"
   "CMakeFiles/spelunkyds.dir/source/console/TextManager.cpp.o"
@@ -23,6 +24,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/spelunkyds.dir/source/animations/Moniez.cpp.o"
   "CMakeFiles/spelunkyds.dir/source/animations/Blood.cpp.o"
   "CMakeFiles/spelunkyds.dir/source/animations/BloodElement.cpp.o"
+  "CMakeFiles/spelunkyds.dir/source/animations/SpelunkyTitle.cpp.o"
   "spelunkyds.pdb"
   "spelunkyds"
 )

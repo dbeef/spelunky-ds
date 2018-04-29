@@ -1,0 +1,1 @@
+copyrights.o: copyrights.s

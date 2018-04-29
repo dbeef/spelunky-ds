@@ -145,6 +145,12 @@
 		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Collisions.h">
 			<Option target="spelunkyds"/>
 		</Unit>
+		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Copyrights.cpp">
+			<Option target="spelunkyds"/>
+		</Unit>
+		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Copyrights.h">
+			<Option target="spelunkyds"/>
+		</Unit>
 		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Jar.cpp">
 			<Option target="spelunkyds"/>
 		</Unit>
@@ -194,6 +200,12 @@
 			<Option target="spelunkyds"/>
 		</Unit>
 		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Snake.h">
+			<Option target="spelunkyds"/>
+		</Unit>
+		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/SpelunkyTitle.cpp">
+			<Option target="spelunkyds"/>
+		</Unit>
+		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/SpelunkyTitle.h">
 			<Option target="spelunkyds"/>
 		</Unit>
 		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/SpriteState.h">

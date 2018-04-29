@@ -18,7 +18,9 @@ enum SpriteType{
     PRE_WHIP,
     WHIP,
     HUD,
-    BLOOD
+    BLOOD,
+    SPELUNKY_TITLE,
+    SPELUNKY_COPYRIGHTS,
 };
 
 #endif //SPELUNKYDS_SPRITETYPES_H

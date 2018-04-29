@@ -101,6 +101,8 @@ GameLoop.o: \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/MainDude.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../hud/Hud.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../../build/soundbank.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/SpelunkyTitle.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/Copyrights.h \
  /home/xdbeef/devkitPro/libnds/include/maxmod9.h \
  /home/xdbeef/devkitPro/libnds/include/mm_types.h
 
@@ -305,6 +307,10 @@ GameLoop.o: \
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../hud/Hud.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../../build/soundbank.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/SpelunkyTitle.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/Copyrights.h:
 
 /home/xdbeef/devkitPro/libnds/include/maxmod9.h:
 

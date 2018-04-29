@@ -9,6 +9,8 @@
 #include "../animations/Snake.h"
 #include "../animations/Moniez.h"
 #include "../../build/soundbank.h"
+#include "../animations/SpelunkyTitle.h"
+#include "../animations/Copyrights.h"
 #include <vector>
 //#include "../Globals.h";
 #include <time.h>
@@ -21,7 +23,7 @@ static const int OFFSET_MULTIPLIER_SUB = BOUNDARY_VALUE / sizeof(SPRITE_GFX_SUB[
 void gameloop::scroll() {
 
 //    mmStart(SFX_MCAVE, MM_PLAY_LOOP);
-    mmEffect(SFX_MCAVE);
+//    mmEffect(SFX_MCAVE);
 
     double timer = 0;
     int initTimer = 0;
@@ -33,29 +35,53 @@ void gameloop::scroll() {
     global::main_dude->timer = &timer;
     global::main_dude->init();
 
+    global::camera->x = 0;
+    global::camera->y = 127;
+
+
     MapTile *entrance;
-    global::level_generator->getEntranceTile(entrance);
+//    global::level_generator->getEntranceTile(entrance);
 
     if (entrance == nullptr) {
-        global::main_dude->x = 100;
-        global::main_dude->y = 100;
+        global::main_dude->x = 224;
+        global::main_dude->y = 300;
     } else {
         global::main_dude->x = entrance->x * 16;
         global::main_dude->y = entrance->y * 16;
     }
 
-    //fixme
-    global::camera->followMainDude = true;
-    for (int a = 0; a < 400; a++)
-        global::camera->updatePosition(global::main_dude->x, global::main_dude->y);
 
+//    global::camera->followMainDude = true;
+//    for (int a = 0; a < 400; a++)
+//        global::camera->updatePosition(global::main_dude->x, global::main_dude->y);
+//    global::camera->followMainDude = false;
+    //fixme
 
     global::sprites.push_back(global::main_dude);
 
     //todo wycentrować bombe
 
     global::hud->init();
+    global::hud->hide();
+    global::hud->bombs = 0;
+    global::hud->ropes = 0;
 
+    SpelunkyTitle *spelunkyTitle = new SpelunkyTitle();
+    spelunkyTitle->oamType = OamType::MAIN;
+    spelunkyTitle->init();
+    spelunkyTitle->x = 60;
+    spelunkyTitle->y = 175;
+
+
+    global::sprites.push_back(spelunkyTitle);
+
+    Copyrights *copyrights = new Copyrights();
+    copyrights->oamType = OamType::SUB;
+    copyrights->init();
+    copyrights->x = 60;
+    copyrights->y = 380;
+
+    global::sprites.push_back(copyrights);
 
     bool initialised = false;
 
@@ -105,7 +131,7 @@ void gameloop::scroll() {
             srand(global::input_handler->seed + global::main_dude->x + global::main_dude->y);
 
 //            populateCaveItems();
-            populateCaveNpcs();
+//            populateCaveNpcs();
 
             initialised = true;
         }

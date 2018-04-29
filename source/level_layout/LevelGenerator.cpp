@@ -328,16 +328,29 @@ void LevelGenerator::generateSplashScreen(int room_type) {
     int tab[12][16];
     int a, b = 0;
 
-    if (room_type == 20) {
-        a = 0;
-        b = 0;
-        memcpy(tab, on_level_done_upper, sizeof(on_level_done_upper));
-    }
-    if (room_type == 21) {
+    if (room_type == 21 || room_type == 23) {
         a = 0;
         b = 1;
+    }
+    if (room_type == 20 || room_type == 22) {
+        a = 0;
+        b = 0;
+    }
+
+
+    if (room_type == 20) {
         memcpy(tab, on_level_done_lower, sizeof(on_level_done_lower));
     }
+    if (room_type == 23) {
+        memcpy(tab, start_screen_upper, sizeof(start_screen_upper));
+    }
+    if(room_type == 21) {
+        memcpy(tab, on_level_done_upper, sizeof(on_level_done_upper));
+    }
+    if(room_type == 22) {
+        memcpy(tab, start_screen_lower, sizeof(start_screen_lower));
+    }
+
 
 
     for (int tab_y = 0; tab_y < 12; tab_y++) {
@@ -613,7 +626,7 @@ void LevelGenerator::matchTile(MapTile *t, int value) {
         t->values[3] = 95;
         t->collidable = false;
         t->destroyable = false;
-    }else if (value == 15) {
+    } else if (value == 15) {
 
         t->values[0] = 96;
         t->values[1] = 97;
@@ -621,8 +634,7 @@ void LevelGenerator::matchTile(MapTile *t, int value) {
         t->values[3] = 99;
         t->collidable = false;
         t->destroyable = false;
-    }
-    else if (value == 18) {
+    } else if (value == 18) {
 
         t->values[0] = 100;
         t->values[1] = 101;
@@ -630,8 +642,7 @@ void LevelGenerator::matchTile(MapTile *t, int value) {
         t->values[3] = 103;
         t->collidable = false;
         t->destroyable = false;
-    }
-    else if (value == 23) {
+    } else if (value == 23) {
 
         t->values[0] = 104;
         t->values[1] = 105;

@@ -258,6 +258,33 @@ source/animations/Collisions.cpp.s:
 	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/animations/Collisions.cpp.s
 .PHONY : source/animations/Collisions.cpp.s
 
+source/animations/Copyrights.o: source/animations/Copyrights.cpp.o
+
+.PHONY : source/animations/Copyrights.o
+
+# target to build an object file
+source/animations/Copyrights.cpp.o:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/animations/Copyrights.cpp.o
+.PHONY : source/animations/Copyrights.cpp.o
+
+source/animations/Copyrights.i: source/animations/Copyrights.cpp.i
+
+.PHONY : source/animations/Copyrights.i
+
+# target to preprocess a source file
+source/animations/Copyrights.cpp.i:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/animations/Copyrights.cpp.i
+.PHONY : source/animations/Copyrights.cpp.i
+
+source/animations/Copyrights.s: source/animations/Copyrights.cpp.s
+
+.PHONY : source/animations/Copyrights.s
+
+# target to generate assembly for a file
+source/animations/Copyrights.cpp.s:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/animations/Copyrights.cpp.s
+.PHONY : source/animations/Copyrights.cpp.s
+
 source/animations/Jar.o: source/animations/Jar.cpp.o
 
 .PHONY : source/animations/Jar.o
@@ -473,6 +500,33 @@ source/animations/Snake.s: source/animations/Snake.cpp.s
 source/animations/Snake.cpp.s:
 	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/animations/Snake.cpp.s
 .PHONY : source/animations/Snake.cpp.s
+
+source/animations/SpelunkyTitle.o: source/animations/SpelunkyTitle.cpp.o
+
+.PHONY : source/animations/SpelunkyTitle.o
+
+# target to build an object file
+source/animations/SpelunkyTitle.cpp.o:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/animations/SpelunkyTitle.cpp.o
+.PHONY : source/animations/SpelunkyTitle.cpp.o
+
+source/animations/SpelunkyTitle.i: source/animations/SpelunkyTitle.cpp.i
+
+.PHONY : source/animations/SpelunkyTitle.i
+
+# target to preprocess a source file
+source/animations/SpelunkyTitle.cpp.i:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/animations/SpelunkyTitle.cpp.i
+.PHONY : source/animations/SpelunkyTitle.cpp.i
+
+source/animations/SpelunkyTitle.s: source/animations/SpelunkyTitle.cpp.s
+
+.PHONY : source/animations/SpelunkyTitle.s
+
+# target to generate assembly for a file
+source/animations/SpelunkyTitle.cpp.s:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/animations/SpelunkyTitle.cpp.s
+.PHONY : source/animations/SpelunkyTitle.cpp.s
 
 source/console/TextManager.o: source/console/TextManager.cpp.o
 
@@ -795,6 +849,9 @@ help:
 	@echo "... source/animations/Collisions.o"
 	@echo "... source/animations/Collisions.i"
 	@echo "... source/animations/Collisions.s"
+	@echo "... source/animations/Copyrights.o"
+	@echo "... source/animations/Copyrights.i"
+	@echo "... source/animations/Copyrights.s"
 	@echo "... source/animations/Jar.o"
 	@echo "... source/animations/Jar.i"
 	@echo "... source/animations/Jar.s"
@@ -819,6 +876,9 @@ help:
 	@echo "... source/animations/Snake.o"
 	@echo "... source/animations/Snake.i"
 	@echo "... source/animations/Snake.s"
+	@echo "... source/animations/SpelunkyTitle.o"
+	@echo "... source/animations/SpelunkyTitle.i"
+	@echo "... source/animations/SpelunkyTitle.s"
 	@echo "... source/console/TextManager.o"
 	@echo "... source/console/TextManager.i"
 	@echo "... source/console/TextManager.s"

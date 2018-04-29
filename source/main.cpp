@@ -59,8 +59,11 @@ int main(void) {
     global::level_generator->newLayout(timerElapsed(0));
     global::level_generator->mapBackground();
     global::level_generator->mapFrame();
-    global::level_generator->generateRooms();
+    global::level_generator->generateSplashScreen(22);
+    global::level_generator->generateSplashScreen(23);
     global::level_generator->tilesToMap();
+
+
 
     sectorize_map();
 

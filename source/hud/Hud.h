@@ -41,6 +41,10 @@ public:
     void collectedMoniez(int value);
 
     void drawSplashScreenOnLevelDone();
+
+    void hide();
+
+    void show();
 };
 
 

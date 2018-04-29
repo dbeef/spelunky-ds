@@ -27,6 +27,24 @@
 #define HOLDING_ITEM_FRAME_POSITION_X 5
 #define HOLDING_ITEM_FRAME_POSITION_Y 20
 
+void Hud::hide(){
+    heartSpriteInfo->entry->isHidden = true;
+    dollarSpriteInfo->entry->isHidden = true;
+    bombSpriteInfo->entry->isHidden = true;
+    ropeSpriteInfo->entry->isHidden = true;
+    holdingItemSpriteInfo->entry->isHidden = true;
+    consoleClear();
+}
+
+void Hud::show(){
+    heartSpriteInfo->entry->isHidden = false;
+    dollarSpriteInfo->entry->isHidden = false;
+    bombSpriteInfo->entry->isHidden = false;
+    ropeSpriteInfo->entry->isHidden = false;
+    holdingItemSpriteInfo->entry->isHidden = false;
+    draw();
+}
+
 void Hud::init() {
 
     consoleClear();
