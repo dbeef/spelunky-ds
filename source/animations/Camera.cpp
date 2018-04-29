@@ -12,6 +12,9 @@
 
 void Camera::updatePosition(int main_dude_x, int main_dude_y) {
 
+    if(!followMainDude)
+        return;
+
     static int BOUNDARY_X = 32;
     static int BOUNDARY_Y = 16;
 

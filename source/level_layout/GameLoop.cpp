@@ -45,8 +45,10 @@ void gameloop::scroll() {
     }
 
     //fixme
+    global::camera->followMainDude = true;
     for (int a = 0; a < 400; a++)
         global::camera->updatePosition(global::main_dude->x, global::main_dude->y);
+
 
     global::sprites.push_back(global::main_dude);
 

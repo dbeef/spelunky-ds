@@ -8,6 +8,7 @@
 
 class Camera {
 public:
+    bool followMainDude;
     int x;
     int y;
     void updatePosition(int main_dude_x, int main_dude_y);

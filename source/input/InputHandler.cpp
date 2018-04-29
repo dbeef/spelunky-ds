@@ -8,6 +8,9 @@
 
 void InputHandler::updateInput() {
 
+    if(stop_handling)
+        return;
+
     scanKeys();
     keys_held = keysHeld();
     keys_down = keysDown();

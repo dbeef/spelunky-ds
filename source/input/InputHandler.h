@@ -26,6 +26,7 @@ public:
     bool a_key_down;
 
     int seed;
+    bool stop_handling;
 };
 
 

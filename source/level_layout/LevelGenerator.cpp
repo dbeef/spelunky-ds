@@ -9,6 +9,10 @@
 
 #define ROOM_WIDTH 10
 #define ROOM_HEIGHT 10
+
+#define ROOM_WIDTH_SPLASH_SCREEN 16
+#define ROOM_HEIGHT_SPLASH_SCREEN 12
+
 #define GRIT_TILE_WIDTH 8
 #define GRIT_TILE_HEIGHT 8
 #define MAPPY_TILE_WIDTH 16
@@ -320,6 +324,57 @@ void LevelGenerator::clearCollidedTile(int px, int py, int camera_x, int camera_
     tilesToMap();
 }
 
+void LevelGenerator::generateSplashScreen(int room_type) {
+    int tab[12][16];
+    int a, b = 0;
+
+    if (room_type == 20) {
+        a = 0;
+        b = 0;
+        memcpy(tab, on_level_done_upper, sizeof(on_level_done_upper));
+    }
+    if (room_type == 21) {
+        a = 0;
+        b = 1;
+        memcpy(tab, on_level_done_lower, sizeof(on_level_done_lower));
+    }
+
+
+    for (int tab_y = 0; tab_y < 12; tab_y++) {
+        for (int tab_x = 0; tab_x < 16; tab_x++) {
+
+            if (tab[tab_y][tab_x] != 0) {
+
+                u16 room_offset = 2 * ROOM_WIDTH_SPLASH_SCREEN * a +
+                                  2 * ROOM_HEIGHT_SPLASH_SCREEN * LINE_WIDTH * ((ROOMS_Y - b) - 1)
+                                  - 4 * OFFSET_Y;
+
+                u16 pos_x = (tab_x * 2 + 2 * ROOM_WIDTH_SPLASH_SCREEN * a) / 2;
+                u16 pos_y = tab_y + ROOM_HEIGHT_SPLASH_SCREEN * ((ROOMS_Y - b) - 1) - 4;
+
+
+//                u16 room_offset =
+//                        OFFSET_X + OFFSET_Y + 2 * ROOM_WIDTH * a +
+//                        2 * ROOM_HEIGHT * LINE_WIDTH * ((ROOMS_Y - b) - 1);
+//                u16 pos_x = (OFFSET_X + tab_x * 2 + 2 * ROOM_WIDTH * a) / 2;
+//                u16 pos_y = (OFFSET_X + tab_y * 2 + 2 * ROOM_HEIGHT * ((ROOMS_Y - b) - 1)) / 2;
+
+
+                delete (mapTiles[pos_x][pos_y]);
+                MapTile *t = new MapTile();
+                matchTile(t, tab[tab_y][tab_x]);
+                t->map_index[0] = room_offset + (tab_x * 2) + (tab_y * LINE_WIDTH * 2);
+                t->map_index[1] = room_offset + (tab_x * 2) + (tab_y * LINE_WIDTH * 2) + 1;
+                t->map_index[2] = room_offset + (tab_x * 2) + (LINE_WIDTH + (tab_y * LINE_WIDTH * 2));
+                t->map_index[3] = room_offset + (tab_x * 2) + (LINE_WIDTH + (tab_y * LINE_WIDTH * 2)) + 1;
+                t->x = pos_x;
+                t->y = pos_y;
+                this->mapTiles[pos_x][pos_y] = t;
+            }
+        }
+    }
+}
+
 void LevelGenerator::generateRooms() {
 
     int tab[10][10];
@@ -375,8 +430,11 @@ void LevelGenerator::generateRooms() {
                     memcpy(tab, tab_3_3, sizeof(tab_3_3));
 
             }
+
+
             for (int tab_y = 0; tab_y < 10; tab_y++) {
                 for (int tab_x = 0; tab_x < 10; tab_x++) {
+
                     if (tab[tab_y][tab_x] != 0) {
 
                         u16 room_offset =
@@ -385,111 +443,9 @@ void LevelGenerator::generateRooms() {
                         u16 pos_x = (OFFSET_X + tab_x * 2 + 2 * ROOM_WIDTH * a) / 2;
                         u16 pos_y = (OFFSET_X + tab_y * 2 + 2 * ROOM_HEIGHT * ((ROOMS_Y - b) - 1)) / 2;
 
-//                        std::cout << pos_x << " " << pos_y << '\n';
                         delete (mapTiles[pos_x][pos_y]);
                         MapTile *t = new MapTile();
-                        t->destroyable = true;
-                        t->collidable = true;
-                        t->mapTileType = MapTileType::REGULAR;
-
-                        if (tab[tab_y][tab_x] == 1) {
-                            t->values[0] = 20;
-                            t->values[1] = 21;
-                            t->values[2] = 22;
-                            t->values[3] = 23;
-                        } else if (tab[tab_y][tab_x] == 2) {
-                            t->values[0] = 40;
-                            t->values[1] = 41;
-                            t->values[2] = 42;
-                            t->values[3] = 43;
-                        } else if (tab[tab_y][tab_x] == 5) {
-                            t->values[0] = 24;
-                            t->values[1] = 25;
-                            t->values[2] = 26;
-                            t->values[3] = 27;
-                        } else if (tab[tab_y][tab_x] == 6) {
-                            t->values[0] = 32;
-                            t->values[1] = 33;
-                            t->values[2] = 34;
-                            t->values[3] = 35;
-                        } else if (tab[tab_y][tab_x] == 7) {
-                            t->values[0] = 36;
-                            t->values[1] = 37;
-                            t->values[2] = 38;
-                            t->values[3] = 39;
-                        } else if (tab[tab_y][tab_x] == 8) {
-                            t->values[0] = 16;
-                            t->values[1] = 17;
-                            t->values[2] = 18;
-                            t->values[3] = 19;
-                        } else if (tab[tab_y][tab_x] == 9) {
-
-                            t->values[0] = 48;
-                            t->values[1] = 49;
-                            t->values[2] = 50;
-                            t->values[3] = 51;
-
-                            t->collidable = false;
-                            t->destroyable = false;
-                            t->mapTileType = MapTileType::LADDER;
-
-                        } else if (tab[tab_y][tab_x] == 10) {
-
-                            t->values[0] = 52;
-                            t->values[1] = 53;
-                            t->values[2] = 54;
-                            t->values[3] = 55;
-
-                            t->collidable = false;
-                            t->destroyable = false;
-                            t->mapTileType = MapTileType::LADDER_WITH_DECK;
-
-                        } else if (tab[tab_y][tab_x] == 12) {
-
-                            t->values[0] = 56;
-                            t->values[1] = 57;
-                            t->values[2] = 58;
-                            t->values[3] = 59;
-
-                        } else if (tab[tab_y][tab_x] == 13) {
-
-                            t->values[0] = 60;
-                            t->values[1] = 61;
-                            t->values[2] = 62;
-                            t->values[3] = 63;
-
-                        } else if (tab[tab_y][tab_x] == 11) {
-
-                            t->values[0] = 64;
-                            t->values[1] = 65;
-                            t->values[2] = 66;
-                            t->values[3] = 67;
-                            t->collidable = false;
-                            t->destroyable = false;
-                            t->mapTileType = MapTileType::ENTRANCE;
-
-                        } else if (tab[tab_y][tab_x] == 14) {
-
-                            t->values[0] = 68;
-                            t->values[1] = 69;
-                            t->values[2] = 70;
-                            t->values[3] = 71;
-                            t->collidable = false;
-                            t->destroyable = false;
-                            t->mapTileType = MapTileType::EXIT;
-
-                        } else if (tab[tab_y][tab_x] == 3) {
-                            t->values[0] = 28;
-                            t->values[1] = 29;
-                            t->values[2] = 30;
-                            t->values[3] = 31;
-                        } else if (tab[tab_y][tab_x] == 4) {
-                            t->values[0] = 44;
-                            t->values[1] = 45;
-                            t->values[2] = 46;
-                            t->values[3] = 47;
-                        }
-
+                        matchTile(t, tab[tab_y][tab_x]);
                         t->map_index[0] = room_offset + (tab_x * 2) + (tab_y * LINE_WIDTH * 2);
                         t->map_index[1] = room_offset + (tab_x * 2) + (tab_y * LINE_WIDTH * 2) + 1;
                         t->map_index[2] = room_offset + (tab_x * 2) + (LINE_WIDTH + (tab_y * LINE_WIDTH * 2));
@@ -503,6 +459,190 @@ void LevelGenerator::generateRooms() {
         }
     }
 }
+
+void LevelGenerator::matchTile(MapTile *t, int value) {
+//                        std::cout << pos_x << " " << pos_y << '\n';
+    t->destroyable = true;
+    t->collidable = true;
+    t->mapTileType = MapTileType::REGULAR;
+
+    if (value == 1) {
+        t->values[0] = 20;
+        t->values[1] = 21;
+        t->values[2] = 22;
+        t->values[3] = 23;
+    } else if (value == 2) {
+        t->values[0] = 40;
+        t->values[1] = 41;
+        t->values[2] = 42;
+        t->values[3] = 43;
+    } else if (value == 5) {
+        t->values[0] = 24;
+        t->values[1] = 25;
+        t->values[2] = 26;
+        t->values[3] = 27;
+    } else if (value == 6) {
+        t->values[0] = 32;
+        t->values[1] = 33;
+        t->values[2] = 34;
+        t->values[3] = 35;
+    } else if (value == 7) {
+        t->values[0] = 36;
+        t->values[1] = 37;
+        t->values[2] = 38;
+        t->values[3] = 39;
+    } else if (value == 8) {
+        t->values[0] = 16;
+        t->values[1] = 17;
+        t->values[2] = 18;
+        t->values[3] = 19;
+    } else if (value == 9) {
+
+        t->values[0] = 48;
+        t->values[1] = 49;
+        t->values[2] = 50;
+        t->values[3] = 51;
+
+        t->collidable = false;
+        t->destroyable = false;
+        t->mapTileType = MapTileType::LADDER;
+
+    } else if (value == 10) {
+
+        t->values[0] = 52;
+        t->values[1] = 53;
+        t->values[2] = 54;
+        t->values[3] = 55;
+
+        t->collidable = false;
+        t->destroyable = false;
+        t->mapTileType = MapTileType::LADDER_WITH_DECK;
+
+    } else if (value == 12) {
+
+        t->values[0] = 56;
+        t->values[1] = 57;
+        t->values[2] = 58;
+        t->values[3] = 59;
+
+    } else if (value == 13) {
+
+        t->values[0] = 60;
+        t->values[1] = 61;
+        t->values[2] = 62;
+        t->values[3] = 63;
+
+    } else if (value == 11) {
+
+        t->values[0] = 64;
+        t->values[1] = 65;
+        t->values[2] = 66;
+        t->values[3] = 67;
+        t->collidable = false;
+        t->destroyable = false;
+        t->mapTileType = MapTileType::ENTRANCE;
+
+    } else if (value == 14) {
+
+        t->values[0] = 68;
+        t->values[1] = 69;
+        t->values[2] = 70;
+        t->values[3] = 71;
+        t->collidable = false;
+        t->destroyable = false;
+        t->mapTileType = MapTileType::EXIT;
+
+    } else if (value == 3) {
+        t->values[0] = 28;
+        t->values[1] = 29;
+        t->values[2] = 30;
+        t->values[3] = 31;
+    } else if (value == 4) {
+        t->values[0] = 44;
+        t->values[1] = 45;
+        t->values[2] = 46;
+        t->values[3] = 47;
+    } else if (value == 16) {
+
+        t->values[0] = 72;
+        t->values[1] = 73;
+        t->values[2] = 74;
+        t->values[3] = 75;
+        t->collidable = false;
+        t->destroyable = false;
+
+    } else if (value == 19) {
+
+        t->values[0] = 76;
+        t->values[1] = 77;
+        t->values[2] = 78;
+        t->values[3] = 79;
+        t->collidable = false;
+        t->destroyable = false;
+
+    } else if (value == 17) {
+
+        t->values[0] = 80;
+        t->values[1] = 81;
+        t->values[2] = 82;
+        t->values[3] = 83;
+        t->collidable = false;
+        t->destroyable = false;
+
+    } else if (value == 20) {
+
+        t->values[0] = 84;
+        t->values[1] = 85;
+        t->values[2] = 86;
+        t->values[3] = 87;
+        t->collidable = false;
+        t->destroyable = false;
+    } else if (value == 21) {
+
+        t->values[0] = 88;
+        t->values[1] = 89;
+        t->values[2] = 90;
+        t->values[3] = 91;
+        t->collidable = false;
+        t->destroyable = false;
+    } else if (value == 22) {
+
+        t->values[0] = 92;
+        t->values[1] = 93;
+        t->values[2] = 94;
+        t->values[3] = 95;
+        t->collidable = false;
+        t->destroyable = false;
+    }else if (value == 15) {
+
+        t->values[0] = 96;
+        t->values[1] = 97;
+        t->values[2] = 98;
+        t->values[3] = 99;
+        t->collidable = false;
+        t->destroyable = false;
+    }
+    else if (value == 18) {
+
+        t->values[0] = 100;
+        t->values[1] = 101;
+        t->values[2] = 102;
+        t->values[3] = 103;
+        t->collidable = false;
+        t->destroyable = false;
+    }
+    else if (value == 23) {
+
+        t->values[0] = 104;
+        t->values[1] = 105;
+        t->values[2] = 106;
+        t->values[3] = 107;
+        t->collidable = false;
+        t->destroyable = false;
+    }
+
+}
+
 
 void LevelGenerator::getEntranceTile(MapTile *&m) {
     https://stackoverflow.com/questions/416162/assignment-inside-function-that-is-passed-as-pointer?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa

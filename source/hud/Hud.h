@@ -26,6 +26,11 @@ public:
     int dollars;
     int ropes;
 
+    double time_spent_on_level;
+    double total_time_spent;
+    int money_on_this_level;
+    int level;
+
     SpriteInfo *heartSpriteInfo = nullptr;
     SpriteInfo *bombSpriteInfo = nullptr;
     SpriteInfo *dollarSpriteInfo = nullptr;
@@ -34,6 +39,8 @@ public:
 
     void updateMoniez();
     void collectedMoniez(int value);
+
+    void drawSplashScreenOnLevelDone();
 };
 
 

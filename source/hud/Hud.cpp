@@ -102,6 +102,27 @@ void Hud::draw() {
     //TODO Debug flag for this:
 }
 
+void Hud::drawSplashScreenOnLevelDone() {
+    consoleClear();
+
+    int seconds_on_level = time_spent_on_level / 1000;
+    int seconds_total = total_time_spent / 1000;
+
+    int minutes_on_level = seconds_on_level / 60;
+    int minutes_total = seconds_total / 60;
+
+    seconds_on_level = seconds_on_level - minutes_on_level * 60;
+    seconds_total = seconds_total - minutes_total * 60;
+
+    std::cout << '\n' << '\n' << '\n' << '\n' << '\n' << "   " << "  " << "LEVEL " << level << " COMPLETED!" << '\n'
+              << '\n';
+    std::cout << "   " << "  " << "TIME : " << minutes_on_level << ":" << seconds_on_level << " - " << minutes_total<< ":" << seconds_total<< '\n' << '\n';
+    std::cout << "   " << "  " << "LOOT : " << '\n' << '\n';
+    std::cout << "   " << "  " << "KILLS : " << '\n' << '\n';
+    std::cout << "   " << "  " << "MONEY : " << money_on_this_level << " - " << dollars << '\n' << '\n';
+
+}
+
 void Hud::updateMoniez() {
 
     if (collecting_timer > 0) {
@@ -129,10 +150,14 @@ void Hud::updateMoniez() {
         draw();
     }
 
+
+    if (!global::splash_screen)
+        time_spent_on_level += *global::timer;
 }
 
 void Hud::collectedMoniez(int value) {
     collecting_timer += 500;
     dollars_buffer += value;
+    money_on_this_level += value;
     draw();
 }

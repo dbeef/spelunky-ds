@@ -29,6 +29,8 @@ namespace global {
     int bg_sub_address = 0;
     bool bombed = false;
     double *timer = 0;
+    bool splash_screen = false;
+
 
     u16 current_map[4096];
     u16 base_map[4096] = {

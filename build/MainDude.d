@@ -62,6 +62,7 @@ MainDude.o: \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/nand.h \
  /home/xdbeef/devkitPro/libnds/include/maxmod9.h \
  /home/xdbeef/devkitPro/libnds/include/mm_types.h \
+ /home/xdbeef/devkitPro/libnds/include/nds/arm9/console.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/MainDude.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/SpriteState.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/MapTile.h \
@@ -242,6 +243,8 @@ MainDude.o: \
 /home/xdbeef/devkitPro/libnds/include/maxmod9.h:
 
 /home/xdbeef/devkitPro/libnds/include/mm_types.h:
+
+/home/xdbeef/devkitPro/libnds/include/nds/arm9/console.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/MainDude.h:
 

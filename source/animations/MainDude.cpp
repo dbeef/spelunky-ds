@@ -6,6 +6,7 @@
 #include <nds/arm9/sprite.h>
 #include <iostream>
 #include <maxmod9.h>
+#include <nds/arm9/console.h>
 #include "MainDude.h"
 #include "../Globals.h"
 #include "Collisions.h"
@@ -549,14 +550,16 @@ void MainDude::draw() {
 
     if (exitingLevel) {
 
-        if (animFrame >= 16) {
+        if (animFrame >= 16 && !global::splash_screen) {
             animFrame = 0;
 
             dmaCopyHalfWords(DMA_CHANNEL, global::base_map, global::current_map, sizeof(global::current_map));
             global::level_generator->newLayout(*global::timer);
             global::level_generator->mapBackground();
-            global::level_generator->mapFrame();
-            global::level_generator->generateRooms();
+//            global::level_generator->mapFrame();
+//            global::level_generator->generateRooms();
+            global::level_generator->generateSplashScreen(20);
+            global::level_generator->generateSplashScreen(21);
             global::level_generator->tilesToMap();
             sectorize_map();
             dmaCopyHalfWords(DMA_CHANNEL, global::current_map, bgGetMapPtr(global::bg_main_address),
@@ -578,23 +581,40 @@ void MainDude::draw() {
             }
 
 
-            exitingLevel = false;
 
             global::main_oam_manager->clearAllSprites();
             global::sub_oam_manager->clearAllSprites();
             init();
 
             global::sprites.push_back(global::main_dude);
+            consoleClear();
 
             //todo wycentrować bombe
 
-            global::hud->init();
-            gameloop::populateCaveNpcs();
+//            global::hud->init();
+//            gameloop::populateCaveNpcs();
+
+            global::hud->total_time_spent += global::hud->time_spent_on_level;
+            global::hud->level++;
+
+            global::splash_screen = true;
+
+            global::input_handler->stop_handling = true;
+            global::input_handler->right_key_held = true;
+            global::input_handler->up_key_held = true;
 
 
             for (int a = 0; a < 400; a++)
                 global::camera->updatePosition(global::main_dude->x, global::main_dude->y);
 
+            global::camera->followMainDude = false;
+            exitingLevel = false;
+            global::hud->drawSplashScreenOnLevelDone();
+
+        }
+        else if(animFrame >= 16){
+            main_spelunker->entry->isHidden = true;
+            sub_spelunker->entry->isHidden = true;
         }
 
         frame = ((13) * SPRITESHEET_ROW_WIDTH) + animFrame + 2;
