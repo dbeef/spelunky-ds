@@ -21,6 +21,8 @@ int main(void) {
 
     mmInitDefaultMem((mm_addr) soundbank_bin);
     mmLoadEffect(SFX_MCAVE);
+    mmLoadEffect(SFX_MCAVE);
+    mmLoadEffect(SFX_MTITLE);
     mmLoadEffect(SFX_XJUMP);
     mmLoadEffect(SFX_XWHIP);
     mmLoadEffect(SFX_XCOIN);
@@ -30,6 +32,8 @@ int main(void) {
     mmLoadEffect(SFX_XSTEPS);
     mmLoadEffect(SFX_XLAND);
 
+    //todo zapisać handler w globals
+    mmEffect(SFX_MTITLE);
 
     Timer *t = new Timer();
 
@@ -62,8 +66,6 @@ int main(void) {
     global::level_generator->generateSplashScreen(22);
     global::level_generator->generateSplashScreen(23);
     global::level_generator->tilesToMap();
-
-
 
     sectorize_map();
 

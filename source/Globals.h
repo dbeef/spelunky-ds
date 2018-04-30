@@ -39,8 +39,10 @@ namespace global {
     extern bool bombed;
     extern double *timer;
     extern bool splash_screen;
+    extern bool levels_transition_screen;
     extern u16 current_map[4096];
     extern u16 base_map[4096];
+    extern bool in_main_menu;
 }
 
 #endif //SPELUNKYDS_CONSTS_H

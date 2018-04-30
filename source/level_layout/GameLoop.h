@@ -22,5 +22,6 @@ namespace gameloop {
 
     void populateCaveItems();
 
+    void populateCaveMoniez();
 }
 #endif //SPELUNKYDS_SCROLLING_H

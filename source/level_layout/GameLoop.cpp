@@ -23,7 +23,6 @@ static const int OFFSET_MULTIPLIER_SUB = BOUNDARY_VALUE / sizeof(SPRITE_GFX_SUB[
 void gameloop::scroll() {
 
 //    mmStart(SFX_MCAVE, MM_PLAY_LOOP);
-//    mmEffect(SFX_MCAVE);
 
     double timer = 0;
     int initTimer = 0;
@@ -90,7 +89,7 @@ void gameloop::scroll() {
 
         timer = timerElapsed(0) / TICKS_PER_SECOND;
         //fixme
-        *global::timer = timer;
+        global::timer = &timer;
 
         global::input_handler->updateInput();
 
@@ -125,8 +124,8 @@ void gameloop::scroll() {
         initTimer += timer;
 
         global::hud->updateMoniez();
-
-        if (!initialised /*&& initTimer > 5000*/) {
+/*
+        if (!initialised *//*&& initTimer > 5000*//*) {
 
             srand(global::input_handler->seed + global::main_dude->x + global::main_dude->y);
 
@@ -134,13 +133,13 @@ void gameloop::scroll() {
 //            populateCaveNpcs();
 
             initialised = true;
-        }
+        }*/
 
     }
 
 }
 
-void gameloop::populateCaveItems() {
+void gameloop::populateCaveMoniez(){
 
     for (int a = 0; a < 4; a++) {
         Moniez *moniez = new Moniez();
@@ -158,8 +157,8 @@ void gameloop::populateCaveItems() {
         moniez->timer = global::timer;
         global::sprites.push_back(moniez);
 
-        int curr_x = rand() % 400 + 48 + a * 16;
-        int curr_y = rand() % 400 + 48;
+        int curr_x = (rand() % 400 )+ 48 + a * 16;
+        int curr_y = (rand() % 400 )+ 48;
 
         moniez->x = curr_x;
         moniez->y = curr_y;
@@ -181,13 +180,17 @@ void gameloop::populateCaveItems() {
         moniez->timer = global::timer;
         global::sprites.push_back(moniez);
 
-        int curr_x = rand() % 400 + 48 + a * 16;
-        int curr_y = rand() % 400 + 48;
+        int curr_x = (rand() % 400) + 48 + a * 16;
+        int curr_y = (rand() % 400) + 48;
 
         moniez->x = curr_x;
         moniez->y = curr_y;
 
     }
+}
+
+void gameloop::populateCaveItems() {
+
 
     for (int a = 0; a < 2; a++) {
         Jar *jar = new Jar();
@@ -195,8 +198,8 @@ void gameloop::populateCaveItems() {
         jar->timer = global::timer;
         global::sprites.push_back(jar);
 
-        int curr_x = rand() % 400 + 48;
-        int curr_y = rand() % 400 + 48;
+        int curr_x = (rand() % 400 )+ 48;
+        int curr_y = (rand() % 400 )+ 48;
 
         jar->x = curr_x;
         jar->y = curr_y;
@@ -207,8 +210,8 @@ void gameloop::populateCaveItems() {
         rock->timer = global::timer;
         global::sprites.push_back(rock);
 
-        int curr_x = rand() % 400 + 48;
-        int curr_y = rand() % 400 + 48;
+        int curr_x = (rand() % 400 )+ 48;
+        int curr_y = (rand() % 400) + 48;
 
         rock->x = curr_x;
         rock->y = curr_y;
@@ -225,8 +228,8 @@ void gameloop::populateCaveNpcs() {
         snake->timer = global::timer;
         global::sprites.push_back(snake);
 
-        int curr_x = rand() % 400 + 48 + a * 16;
-        int curr_y = rand() % 400 + 48;
+        int curr_x = (rand() % 400) + 48 + a * 16;
+        int curr_y = (rand() % 400) + 48;
 
         snake->x = curr_x;
         snake->y = curr_y;

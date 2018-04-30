@@ -6,6 +6,7 @@
 #include "MainDude.h"
 #include "../level_layout/MapUtils.h"
 #include "../Globals.h"
+#include "../level_layout/TileOrientation.h"
 
 #define BOUNCING_FACTOR_X 0.15
 #define BOUNCING_FACTOR_Y 0.45
@@ -199,11 +200,11 @@ bool Collisions::checkRightCollision(MapTile *neighboringTiles[9], int *xPos, in
 }
 
 bool Collisions::isStandingOnLeftEdge(MapTile *neighboringTiles[9], int x, int width, int tileX) {
-    return (!neighboringTiles[7] && !neighboringTiles[7]->collidable && x <= (tileX * 16));
+    return (!neighboringTiles[TileOrientation::LEFT_DOWN]/* && !neighboringTiles[7]->collidable && x <= (tileX * 16)*/);
 }
 
 bool Collisions::isStandingOnRightEdge(MapTile *neighboringTiles[9], int x, int width, int tileX) {
-    return (!neighboringTiles[8] && !neighboringTiles[8]->collidable && x >= (tileX * 16));
+    return (!neighboringTiles[TileOrientation::RIGHT_DOWN] /*&& !neighboringTiles[8]->collidable && x >= (tileX * 16)*/);
 }
 
 void Collisions::getNeighboringTiles(MapTile *mapTiles[32][32], int xx, int yy, MapTile *neighboringTiles[9]) {
@@ -218,16 +219,15 @@ void Collisions::getNeighboringTiles(MapTile *mapTiles[32][32], int xx, int yy, 
     MapTile *left_down = mapTiles[xx - 1][yy + 1];
     MapTile *right_down = mapTiles[xx + 1][yy + 1];
 
-    //todo enum for these
-    neighboringTiles[0] = left_middle;
-    neighboringTiles[1] = right_middle;
-    neighboringTiles[2] = up_middle;
-    neighboringTiles[3] = down_middle;
-    neighboringTiles[4] = center;
-    neighboringTiles[5] = left_up;
-    neighboringTiles[6] = right_up;
-    neighboringTiles[7] = left_down;
-    neighboringTiles[8] = right_down;
+    neighboringTiles[TileOrientation::LEFT_MIDDLE] = left_middle;
+    neighboringTiles[TileOrientation::RIGHT_MIDDLE] = right_middle;
+    neighboringTiles[TileOrientation::UP_MIDDLE] = up_middle;
+    neighboringTiles[TileOrientation::DOWN_MIDDLE] = down_middle;
+    neighboringTiles[TileOrientation::CENTER] = center;
+    neighboringTiles[TileOrientation::LEFT_UP] = left_up;
+    neighboringTiles[TileOrientation::RIGHT_UP] = right_up;
+    neighboringTiles[TileOrientation::LEFT_DOWN] = left_down;
+    neighboringTiles[TileOrientation::RIGHT_DOWN] = right_down;
 }
 
 void Collisions::bombNeighboringTiles(MapTile *mapTiles[32][32], int xx, int yy) {

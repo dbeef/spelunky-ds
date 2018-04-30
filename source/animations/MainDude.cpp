@@ -20,6 +20,7 @@
 #include "../../build/soundbank.h"
 #include "Blood.h"
 #include "../level_layout/GameLoop.h"
+#include "../level_layout/TileOrientation.h"
 
 void MainDude::handleKeyInput() {
 
@@ -174,19 +175,19 @@ void MainDude::handleKeyInput() {
             Collisions::getNeighboringTiles(global::level_generator->mapTiles, xx, yy, neighboringTiles);
 //            Collisions::getNeighboringTiles(global::level_generator->mapTiles, xx, yy_a_bit_down, neighboringTiles_a_bit_down);
 
-            canClimbLadder = neighboringTiles[4] != 0 &&
-                             (neighboringTiles[4]->mapTileType == MapTileType::LADDER ||
-                              neighboringTiles[4]->mapTileType == MapTileType::LADDER_WITH_DECK);
+            canClimbLadder = neighboringTiles[CENTER] != 0 &&
+                             (neighboringTiles[CENTER]->mapTileType == MapTileType::LADDER ||
+                              neighboringTiles[CENTER]->mapTileType == MapTileType::LADDER_WITH_DECK);
 
-            exitingLevel = neighboringTiles[4] != 0 &&
-                           (neighboringTiles[4]->mapTileType == MapTileType::EXIT);
+            exitingLevel = neighboringTiles[CENTER] != 0 &&
+                           (neighboringTiles[CENTER]->mapTileType == MapTileType::EXIT);
 
             if (exitingLevel) {
 
                 mmEffect(SFX_XSTEPS);
 
-                x = neighboringTiles[4]->x * 16;
-                y = neighboringTiles[4]->y * 16;
+                x = neighboringTiles[CENTER]->x * 16;
+                y = neighboringTiles[CENTER]->y * 16;
 
                 animFrame = 0;
                 animationFrameTimer = 0;
@@ -195,10 +196,10 @@ void MainDude::handleKeyInput() {
             }
 
             onTopOfClimbingSpace = onTopOfClimbingSpace ||
-                                   neighboringTiles[2] != 0 && neighboringTiles[2]->mapTileType == MapTileType::REGULAR;
+                                   neighboringTiles[UP_MIDDLE] != 0 && neighboringTiles[UP_MIDDLE]->mapTileType == MapTileType::REGULAR;
 
             if (canClimbLadder) {
-                x = neighboringTiles[4]->x * 16;
+                x = neighboringTiles[CENTER]->x * 16;
             }
 
             if (canClimbRope || canClimbLadder/*&& !climbing*/) {
@@ -227,15 +228,15 @@ void MainDude::handleKeyInput() {
 
             MapTile **neighboringTiles;
             Collisions::getNeighboringTiles(global::level_generator->mapTiles, xx, yy, neighboringTiles);
-            canClimbLadder = neighboringTiles[4]->mapTileType == MapTileType::LADDER || MapTileType::LADDER_WITH_DECK;
+            canClimbLadder = neighboringTiles[CENTER]->mapTileType == MapTileType::LADDER || MapTileType::LADDER_WITH_DECK;
 
 
             if (climbing) {
-                canClimbLadder = neighboringTiles[4] != 0 &&
-                                 (neighboringTiles[4]->mapTileType == MapTileType::LADDER ||
-                                  neighboringTiles[4]->mapTileType == MapTileType::LADDER_WITH_DECK) &&
-                                 (neighboringTiles[3] == nullptr ||
-                                  neighboringTiles[3]->mapTileType != MapTileType::REGULAR);
+                canClimbLadder = neighboringTiles[CENTER] != 0 &&
+                                 (neighboringTiles[CENTER]->mapTileType == MapTileType::LADDER ||
+                                  neighboringTiles[CENTER]->mapTileType == MapTileType::LADDER_WITH_DECK) &&
+                                 (neighboringTiles[DOWN_MIDDLE] == nullptr ||
+                                  neighboringTiles[DOWN_MIDDLE]->mapTileType != MapTileType::REGULAR);
             }
 
             if (climbing) {
@@ -556,10 +557,16 @@ void MainDude::draw() {
             dmaCopyHalfWords(DMA_CHANNEL, global::base_map, global::current_map, sizeof(global::current_map));
             global::level_generator->newLayout(*global::timer);
             global::level_generator->mapBackground();
-//            global::level_generator->mapFrame();
-//            global::level_generator->generateRooms();
-            global::level_generator->generateSplashScreen(20);
-            global::level_generator->generateSplashScreen(21);
+
+            if(global::in_main_menu || global::levels_transition_screen) {
+                global::level_generator->mapFrame();
+                global::level_generator->generateRooms();
+            }
+            else {
+                global::level_generator->generateSplashScreen(20);
+                global::level_generator->generateSplashScreen(21);
+            }
+
             global::level_generator->tilesToMap();
             sectorize_map();
             dmaCopyHalfWords(DMA_CHANNEL, global::current_map, bgGetMapPtr(global::bg_main_address),
@@ -584,6 +591,7 @@ void MainDude::draw() {
 
             global::main_oam_manager->clearAllSprites();
             global::sub_oam_manager->clearAllSprites();
+
             init();
 
             global::sprites.push_back(global::main_dude);
@@ -591,30 +599,48 @@ void MainDude::draw() {
 
             //todo wycentrować bombe
 
-//            global::hud->init();
-//            gameloop::populateCaveNpcs();
-
-            global::hud->total_time_spent += global::hud->time_spent_on_level;
-            global::hud->level++;
-
-            global::splash_screen = true;
-
-            global::input_handler->stop_handling = true;
-            global::input_handler->right_key_held = true;
-            global::input_handler->up_key_held = true;
-
-
-            for (int a = 0; a < 400; a++)
+            global::camera->followMainDude = true;
+            for (int a = 0; a < 400; a++) {
                 global::camera->updatePosition(global::main_dude->x, global::main_dude->y);
+            }
 
-            global::camera->followMainDude = false;
+            if(global::in_main_menu || global::levels_transition_screen) {
+                global::hud->init();
+                gameloop::populateCaveNpcs();
+                gameloop::populateCaveMoniez();
+                global::levels_transition_screen = false;
+
+            }else
+            {
+                global::hud->total_time_spent += global::hud->time_spent_on_level;
+                global::hud->level++;
+
+                global::levels_transition_screen = true;
+
+                global::splash_screen = true;
+
+                global::input_handler->stop_handling = true;
+                global::input_handler->right_key_held = true;
+                global::input_handler->up_key_held = true;
+                global::camera->followMainDude = false;
+                global::hud->drawSplashScreenOnLevelDone();
+
+            }
+
             exitingLevel = false;
-            global::hud->drawSplashScreenOnLevelDone();
+            global::in_main_menu = false;
+            mmEffectCancel(SFX_MCAVE);
 
         }
-        else if(animFrame >= 16){
+        else if(animFrame >= 16 && global::splash_screen){
+
             main_spelunker->entry->isHidden = true;
             sub_spelunker->entry->isHidden = true;
+            global::input_handler->stop_handling = false;
+
+            if(global::input_handler->l_bumper_down || global::input_handler->l_bumper_down ){
+                global::splash_screen = false;
+            }
         }
 
         frame = ((13) * SPRITESHEET_ROW_WIDTH) + animFrame + 2;
@@ -724,8 +750,8 @@ void MainDude::canHangOnTile(MapTile *neighboringTiles[9]) {
     if (bottomCollision || (!leftCollision && !rightCollision))
         return;
 
-    if ((neighboringTiles[2] != 0 && neighboringTiles[2]->collidable) ||
-        (neighboringTiles[3] != 0 && neighboringTiles[3]->collidable))
+    if ((neighboringTiles[UP_MIDDLE] != 0 && neighboringTiles[UP_MIDDLE]->collidable) ||
+        (neighboringTiles[DOWN_MIDDLE] != 0 && neighboringTiles[DOWN_MIDDLE]->collidable))
         return;
 
     bool y_bound = false;
@@ -733,35 +759,35 @@ void MainDude::canHangOnTile(MapTile *neighboringTiles[9]) {
 
     if (rightCollision && state == W_LEFT) {
 
-        if (neighboringTiles[5] != 0 && neighboringTiles[5]->collidable)
+        if (neighboringTiles[LEFT_UP] != 0 && neighboringTiles[LEFT_UP]->collidable)
             return;
 
-        x_bound = (this->x <= (neighboringTiles[0]->x * 16) + 16 && (this->x >= (neighboringTiles[0]->x * 16) + 12));
-        y_bound = (this->y > (neighboringTiles[0]->y * 16) - 2) && (this->y < (neighboringTiles[0]->y * 16) + 8);
+        x_bound = (this->x <= (neighboringTiles[LEFT_MIDDLE]->x * 16) + 16 && (this->x >= (neighboringTiles[LEFT_MIDDLE]->x * 16) + 12));
+        y_bound = (this->y > (neighboringTiles[LEFT_MIDDLE]->y * 16) - 2) && (this->y < (neighboringTiles[LEFT_MIDDLE]->y * 16) + 8);
     } else if (leftCollision && state == W_RIGHT) {
 
-        if (neighboringTiles[6] != 0 && neighboringTiles[6]->collidable)
+        if (neighboringTiles[RIGHT_UP] != 0 && neighboringTiles[RIGHT_UP]->collidable)
             return;
 
-        y_bound = (this->y > (neighboringTiles[1]->y * 16) - 2) && (this->y < (neighboringTiles[1]->y * 16) + 8);
-        x_bound = (this->x <= (neighboringTiles[1]->x * 16) - 12 && (this->x >= (neighboringTiles[1]->x * 16) - 16));
+        y_bound = (this->y > (neighboringTiles[RIGHT_MIDDLE]->y * 16) - 2) && (this->y < (neighboringTiles[RIGHT_MIDDLE]->y * 16) + 8);
+        x_bound = (this->x <= (neighboringTiles[RIGHT_MIDDLE]->x * 16) - 12 && (this->x >= (neighboringTiles[RIGHT_MIDDLE]->x * 16) - 16));
     }
 
     if ((y_bound && x_bound) && hangingTimer > MIN_HANGING_TIME) {
 
 //        fprintf(stdout, "HANGING" + '\n');
 
-        if (rightCollision && neighboringTiles[0]->collidable) {
-            this->y = (neighboringTiles[0]->y * 16);
+        if (rightCollision && neighboringTiles[LEFT_MIDDLE]->collidable) {
+            this->y = (neighboringTiles[LEFT_MIDDLE]->y * 16);
             hangingOnTileRight = true;
             jumpingTimer = 0;
             hangingTimer = 0;
             ySpeed = 0;
         }
-        if (leftCollision && neighboringTiles[1]->collidable) {
+        if (leftCollision && neighboringTiles[RIGHT_MIDDLE]->collidable) {
             jumpingTimer = 0;
             hangingOnTileLeft = true;
-            this->y = (neighboringTiles[1]->y * 16);
+            this->y = (neighboringTiles[RIGHT_MIDDLE]->y * 16);
             hangingTimer = 0;
             ySpeed = 0;
         }

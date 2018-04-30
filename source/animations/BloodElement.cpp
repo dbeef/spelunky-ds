@@ -67,6 +67,8 @@ void BloodElement::init() {
     subSpriteInfo->updateFrame(frameGfx, 8 * 8);
     mainSpriteInfo->updateFrame(frameGfx, 8 * 8);
 
+    hold_by_main_dude = false;
+    activated_by_main_dude = false;
 
 }
 

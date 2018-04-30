@@ -48,7 +48,7 @@ void Snake::draw() {
     subSpriteInfo->entry->x = sub_x;
     subSpriteInfo->entry->y = sub_y;
 
-    animFrameTimer += *timer;
+    animFrameTimer += *global::timer;
 
     if (animFrameTimer > 125) {
 //        std::cout<< animFrame << '\n';
@@ -71,12 +71,12 @@ void Snake::draw() {
 
     if (bottomCollision) {
         if (waitTimer > 0) {
-            waitTimer -= *timer;
+            waitTimer -= *global::timer;
         } else {
             if (goTimer > 0)
 
 
-                goTimer -= *timer;
+                goTimer -= *global::timer;
 
 //            std::cout << goTimer << '\n';
 
@@ -121,7 +121,6 @@ void Snake::draw() {
 
         }
     }
-
 }
 
 
@@ -143,7 +142,7 @@ void Snake::init() {
 }
 
 void Snake::randomizeMovement() {
-//    srand(*timer + x + y + global::main_dude->x + +global::main_dude->y);
+//    srand(*global::timer + x + y + global::main_dude->x + +global::main_dude->y);
 
     int r = rand() % 2;
 
@@ -169,7 +168,8 @@ void Snake::randomizeMovement() {
         else
             spriteState = SpriteState::W_RIGHT;
     }
-    goTimer = rand() % 2000 + 1000;
+
+    goTimer = (rand() % 2000) + 1000;
     waitTimer = rand() % 500;
 }
 
@@ -185,9 +185,9 @@ void Snake::updateSpeed() {
     if (ySpeed < -MAX_Y_SPEED_ROCK)
         ySpeed = -MAX_Y_SPEED_ROCK;
 
-    pos_inc_timer += *timer;
+    pos_inc_timer += *global::timer;
 
-    bool change_pos = (pos_inc_timer > 35) && !hold_by_main_dude;
+    bool change_pos = (pos_inc_timer > 35);
 
     if (change_pos) {
         updatePosition();
@@ -234,8 +234,8 @@ void Snake::updatePosition() {
 //            Collisions::getCenterTile(this->x, this->y, MAIN_DUDE_HEIGHT, MAIN_DUDE_WIDTH, xx, yy);
 //fixme
 
-        xx = floor_div(this->x + 0.5 * BOMB_SIZE, 16);
-        yy = floor_div(this->y + 0.5 * BOMB_SIZE, 16);
+        xx = floor_div(this->x + 0.5 * 16, 16);
+        yy = floor_div(this->y + 0.5 * 16, 16);
 
         if (old_xx != xx || old_yy != yy) {
             updateCollisionsMap(xx, yy);
@@ -256,6 +256,7 @@ void Snake::updatePosition() {
 }
 
 void Snake::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
+
 
     MapTile *tiles[9];
     Collisions::getNeighboringTiles(global::level_generator->mapTiles, x_current_pos_in_tiles, y_current_pos_in_tiles,

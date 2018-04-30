@@ -33,7 +33,7 @@ void Blood::draw() {
 
 
     if (!finished) {
-        frameTimer += *timer;
+        frameTimer += *global::timer;
 
         if (frameTimer > 150) {
             frameTimer = 0;
@@ -86,6 +86,8 @@ void Blood::init() {
     subSpriteInfo->updateFrame(frameGfx, 8 * 8);
     mainSpriteInfo->updateFrame(frameGfx, 8 * 8);
 
+    hold_by_main_dude = false;
+    activated_by_main_dude = false;
 
 }
 
@@ -101,7 +103,7 @@ void Blood::updateSpeed() {
     if (ySpeed < -MAX_Y_SPEED_BLOOD)
         ySpeed = -MAX_Y_SPEED_BLOOD;
 
-    pos_inc_timer += *timer;
+    pos_inc_timer += *global::timer;
 
     bool change_pos = (pos_inc_timer > 25) && !finished;
 

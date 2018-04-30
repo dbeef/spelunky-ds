@@ -92,7 +92,8 @@ Collisions.o: \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/LevelGenerator.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../animations/MainDude.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../console/TextManager.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../console/../time/Timer.h
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../console/../time/Timer.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/TileOrientation.h
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Collisions.h:
 
@@ -279,3 +280,5 @@ Collisions.o: \
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../console/TextManager.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../console/../time/Timer.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/TileOrientation.h:

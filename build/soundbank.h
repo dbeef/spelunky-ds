@@ -3,10 +3,11 @@
 #define SFX_XLAND	2
 #define SFX_XJUMP	3
 #define SFX_XTHROW	4
-#define SFX_XEXPLOSION	5
-#define SFX_MCAVE	6
-#define SFX_XWHIP	7
-#define SFX_XGEM	8
+#define SFX_MTITLE	5
+#define SFX_XEXPLOSION	6
+#define SFX_MCAVE	7
+#define SFX_XWHIP	8
+#define SFX_XGEM	9
 #define MSL_NSONGS	0
-#define MSL_NSAMPS	9
-#define MSL_BANKSIZE	9
+#define MSL_NSAMPS	10
+#define MSL_BANKSIZE	10
