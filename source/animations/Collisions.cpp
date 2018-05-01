@@ -200,24 +200,45 @@ bool Collisions::checkRightCollision(MapTile *neighboringTiles[9], int *xPos, in
 }
 
 bool Collisions::isStandingOnLeftEdge(MapTile *neighboringTiles[9], int x, int width, int tileX) {
-    return (!neighboringTiles[TileOrientation::LEFT_DOWN]/* && !neighboringTiles[7]->collidable && x <= (tileX * 16)*/);
+    return (!neighboringTiles[TileOrientation::LEFT_DOWN] && !neighboringTiles[7]->collidable && x <= (tileX * 16));
 }
 
 bool Collisions::isStandingOnRightEdge(MapTile *neighboringTiles[9], int x, int width, int tileX) {
-    return (!neighboringTiles[TileOrientation::RIGHT_DOWN] /*&& !neighboringTiles[8]->collidable && x >= (tileX * 16)*/);
+    return (!neighboringTiles[TileOrientation::RIGHT_DOWN] && !neighboringTiles[8]->collidable && x >= (tileX * 16));
 }
 
+#include <cassert>
 void Collisions::getNeighboringTiles(MapTile *mapTiles[32][32], int xx, int yy, MapTile *out_neighboringTiles[9]) {
 
-    MapTile *left_middle = mapTiles[xx - 1][yy];
-    MapTile *right_middle = mapTiles[xx + 1][yy];
-    MapTile *up_middle = mapTiles[xx][yy - 1];
-    MapTile *down_middle = mapTiles[xx][yy + 1];
-    MapTile *center = mapTiles[xx][yy];
-    MapTile *left_up = mapTiles[xx - 1][yy - 1];
-    MapTile *right_up = mapTiles[xx + 1][yy - 1];
-    MapTile *left_down = mapTiles[xx - 1][yy + 1];
-    MapTile *right_down = mapTiles[xx + 1][yy + 1];
+    assert(xx>=0 && yy>=0 && xx<32 && yy<32);
+
+    MapTile *left_middle = nullptr,
+            *right_middle = nullptr,
+            *up_middle = nullptr,
+            *down_middle = nullptr,
+            *center = nullptr,
+            *left_up = nullptr,
+            *right_up = nullptr,
+            *left_down = nullptr,
+            *right_down = nullptr;
+  
+    if (xx>0)
+      left_middle = mapTiles[xx - 1][yy];
+    if (xx<31)
+      right_middle = mapTiles[xx + 1][yy];
+    if (yy>0)
+      up_middle = mapTiles[xx][yy - 1];
+    if (yy<31)
+      down_middle = mapTiles[xx][yy + 1];
+    center = mapTiles[xx][yy];
+    if (xx>0 && yy>0)
+      left_up = mapTiles[xx - 1][yy - 1];
+    if (xx<31 && yy>0)
+      right_up = mapTiles[xx + 1][yy - 1];
+    if (xx>0 && yy<31)
+      left_down = mapTiles[xx - 1][yy + 1];
+    if (xx<31 && yy<31)
+      right_down = mapTiles[xx + 1][yy + 1];
 
     out_neighboringTiles[TileOrientation::LEFT_MIDDLE] = left_middle;
     out_neighboringTiles[TileOrientation::RIGHT_MIDDLE] = right_middle;
