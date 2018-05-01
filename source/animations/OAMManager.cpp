@@ -218,6 +218,8 @@ OAMManager::initSprite(const unsigned short pallette[], int palLen, const unsign
 
 //    std::cout << " SIZE " << global::spriteInfos.size() << " COUNTER " << countBombsOnThisOAMAddr(*oam_address) << "\n";
 
+//    global::hud->draw();
+
     return spriteInfo;
 }
 

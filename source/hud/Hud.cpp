@@ -27,7 +27,7 @@
 #define HOLDING_ITEM_FRAME_POSITION_X 5
 #define HOLDING_ITEM_FRAME_POSITION_Y 20
 
-void Hud::hide(){
+void Hud::hide() {
     heartSpriteInfo->entry->isHidden = true;
     dollarSpriteInfo->entry->isHidden = true;
     bombSpriteInfo->entry->isHidden = true;
@@ -36,7 +36,7 @@ void Hud::hide(){
     consoleClear();
 }
 
-void Hud::show(){
+void Hud::show() {
     heartSpriteInfo->entry->isHidden = false;
     dollarSpriteInfo->entry->isHidden = false;
     bombSpriteInfo->entry->isHidden = false;
@@ -107,17 +107,18 @@ void Hud::draw() {
         std::cout << "\n \n \n " << "IPM: " << global::main_oam_manager->current_oam_id_palette << " "
                   << "IPS: " << global::sub_oam_manager->current_oam_id_palette << " "
                   << "ITM: " << global::main_oam_manager->current_oam_id_tiles << " "
-                  << "ITS: " << global::sub_oam_manager->current_oam_id_tiles;
+                  << "ITS: " << global::sub_oam_manager->current_oam_id_tiles
+                  << "N: " << global::sub_oam_manager->nextAvailableTileIdx;
 */
 
     } else {
-
 /*
         std::cout << "\n \n \n " << "IPM: " << global::main_oam_manager->current_oam_id_palette << " "
                   << "IPS: " << global::sub_oam_manager->current_oam_id_palette << " "
                   << "ITM: " << global::main_oam_manager->current_oam_id_tiles << " "
-                  << "ITS: " << global::sub_oam_manager->current_oam_id_tiles;
-*/
+                  << "ITS: " << global::sub_oam_manager->current_oam_id_tiles
+                  << "N: " << global::sub_oam_manager->nextAvailableTileIdx;*/
+
     }
 
 
@@ -138,7 +139,8 @@ void Hud::drawSplashScreenOnLevelDone() {
 
     std::cout << '\n' << '\n' << '\n' << '\n' << '\n' << "   " << "  " << "LEVEL " << level << " COMPLETED!" << '\n'
               << '\n';
-    std::cout << "   " << "  " << "TIME : " << minutes_on_level << ":" << seconds_on_level << " - " << minutes_total<< ":" << seconds_total<< '\n' << '\n';
+    std::cout << "   " << "  " << "TIME : " << minutes_on_level << ":" << seconds_on_level << " - " << minutes_total
+              << ":" << seconds_total << '\n' << '\n';
     std::cout << "   " << "  " << "LOOT : " << '\n' << '\n';
     std::cout << "   " << "  " << "KILLS : " << '\n' << '\n';
     std::cout << "   " << "  " << "MONEY : " << money_on_this_level << " - " << dollars << '\n' << '\n';

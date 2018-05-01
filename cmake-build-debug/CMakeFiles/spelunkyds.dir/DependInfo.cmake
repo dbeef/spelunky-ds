@@ -19,6 +19,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/RopeElement.cpp" "/home/xdbeef/NetBeansProjects/spelunkyds/cmake-build-debug/CMakeFiles/spelunkyds.dir/source/animations/RopeElement.cpp.o"
   "/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Snake.cpp" "/home/xdbeef/NetBeansProjects/spelunkyds/cmake-build-debug/CMakeFiles/spelunkyds.dir/source/animations/Snake.cpp.o"
   "/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/SpelunkyTitle.cpp" "/home/xdbeef/NetBeansProjects/spelunkyds/cmake-build-debug/CMakeFiles/spelunkyds.dir/source/animations/SpelunkyTitle.cpp.o"
+  "/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/TitleMenuSign.cpp" "/home/xdbeef/NetBeansProjects/spelunkyds/cmake-build-debug/CMakeFiles/spelunkyds.dir/source/animations/TitleMenuSign.cpp.o"
   "/home/xdbeef/NetBeansProjects/spelunkyds/source/console/TextManager.cpp" "/home/xdbeef/NetBeansProjects/spelunkyds/cmake-build-debug/CMakeFiles/spelunkyds.dir/source/console/TextManager.cpp.o"
   "/home/xdbeef/NetBeansProjects/spelunkyds/source/hud/Hud.cpp" "/home/xdbeef/NetBeansProjects/spelunkyds/cmake-build-debug/CMakeFiles/spelunkyds.dir/source/hud/Hud.cpp.o"
   "/home/xdbeef/NetBeansProjects/spelunkyds/source/input/InputHandler.cpp" "/home/xdbeef/NetBeansProjects/spelunkyds/cmake-build-debug/CMakeFiles/spelunkyds.dir/source/input/InputHandler.cpp.o"

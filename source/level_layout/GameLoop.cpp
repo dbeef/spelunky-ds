@@ -11,6 +11,8 @@
 #include "../../build/soundbank.h"
 #include "../animations/SpelunkyTitle.h"
 #include "../animations/Copyrights.h"
+#include "../animations/TitleMenuSign.h"
+#include "../animations/Rope.h"
 #include <vector>
 //#include "../Globals.h";
 #include <time.h>
@@ -28,7 +30,7 @@ void gameloop::scroll() {
     int initTimer = 0;
 
     global::main_oam_manager->initOAMTable(SPRITE_GFX, SPRITE_PALETTE, OAM, OFFSET_MULTIPLIER_MAIN, OamType::MAIN);
-    global::sub_oam_manager->initOAMTable(SPRITE_GFX_SUB, SPRITE_PALETTE_SUB, OAM_SUB, OFFSET_MULTIPLIER_SUB,
+    global::sub_oam_manager->initOAMTable(SPRITE_GFX_SUB, SPRITE_PALETTE_SUB, OAM_SUB , OFFSET_MULTIPLIER_SUB,
                                           OamType::SUB);
 
     global::main_dude->timer = &timer;
@@ -79,11 +81,48 @@ void gameloop::scroll() {
     copyrights->init();
     copyrights->x = 60;
     copyrights->y = 380;
-
     global::sprites.push_back(copyrights);
 
-    bool initialised = false;
+    TitleMenuSign *start = new TitleMenuSign();
+    start->oamType = OamType::MAIN;
+    start->menuSignType = MenuSignType ::START;
+    start->init();
+    start->x = 50;
+    start->y = 272;
+    global::sprites.push_back(start);
 
+    TitleMenuSign *scores = new TitleMenuSign();
+    scores->oamType = OamType::MAIN;
+    scores->menuSignType = MenuSignType ::SCORES;
+    scores->init();
+    scores->x = 98;
+    scores->y = 272;
+    global::sprites.push_back(scores);
+
+    TitleMenuSign *tutorial= new TitleMenuSign();
+    tutorial->oamType = OamType::MAIN;
+    tutorial->menuSignType = MenuSignType ::TUTORIAL;
+    tutorial->init();
+    tutorial->x = 0;
+    tutorial->y = 272;
+    global::sprites.push_back(tutorial);
+
+    TitleMenuSign *quit= new TitleMenuSign();
+    quit->oamType = OamType::MAIN;
+    quit->menuSignType = MenuSignType ::QUIT;
+    quit->init();
+    quit->x = 192;
+    quit->y = 143;
+    global::sprites.push_back(quit);
+
+    Rope *rope = new Rope();
+    rope->init();
+    rope->timer = &timer;
+    rope->hold_by_main_dude = false;
+    rope->activated_by_main_dude= true;
+    rope->x = 200;
+    rope->y = 260;
+    global::sprites.push_back(rope);
 
     while (true) {
 

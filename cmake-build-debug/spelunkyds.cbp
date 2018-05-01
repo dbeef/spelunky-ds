@@ -163,6 +163,9 @@
 		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/MainDude.h">
 			<Option target="spelunkyds"/>
 		</Unit>
+		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/MenuSignType.h">
+			<Option target="spelunkyds"/>
+		</Unit>
 		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Moniez.cpp">
 			<Option target="spelunkyds"/>
 		</Unit>
@@ -209,6 +212,12 @@
 			<Option target="spelunkyds"/>
 		</Unit>
 		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/SpriteState.h">
+			<Option target="spelunkyds"/>
+		</Unit>
+		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/TitleMenuSign.cpp">
+			<Option target="spelunkyds"/>
+		</Unit>
+		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/TitleMenuSign.h">
 			<Option target="spelunkyds"/>
 		</Unit>
 		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/console/TextManager.cpp">

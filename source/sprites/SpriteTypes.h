@@ -7,6 +7,8 @@
 
 enum SpriteType{
     MAIN_DUDE,
+    MENU_SIGNS_TUTORIAL_QUIT,
+    MENU_SIGNS_START_SCORES,
     BOMB,
     ROCK,
     JAR,
