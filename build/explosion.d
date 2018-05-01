@@ -1,1 +1,0 @@
-explosion.o: explosion.s
