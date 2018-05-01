@@ -207,7 +207,7 @@ bool Collisions::isStandingOnRightEdge(MapTile *neighboringTiles[9], int x, int 
     return (!neighboringTiles[TileOrientation::RIGHT_DOWN] /*&& !neighboringTiles[8]->collidable && x >= (tileX * 16)*/);
 }
 
-void Collisions::getNeighboringTiles(MapTile *mapTiles[32][32], int xx, int yy, MapTile *neighboringTiles[9]) {
+void Collisions::getNeighboringTiles(MapTile *mapTiles[32][32], int xx, int yy, MapTile *out_neighboringTiles[9]) {
 
     MapTile *left_middle = mapTiles[xx - 1][yy];
     MapTile *right_middle = mapTiles[xx + 1][yy];
@@ -219,15 +219,15 @@ void Collisions::getNeighboringTiles(MapTile *mapTiles[32][32], int xx, int yy, 
     MapTile *left_down = mapTiles[xx - 1][yy + 1];
     MapTile *right_down = mapTiles[xx + 1][yy + 1];
 
-    neighboringTiles[TileOrientation::LEFT_MIDDLE] = left_middle;
-    neighboringTiles[TileOrientation::RIGHT_MIDDLE] = right_middle;
-    neighboringTiles[TileOrientation::UP_MIDDLE] = up_middle;
-    neighboringTiles[TileOrientation::DOWN_MIDDLE] = down_middle;
-    neighboringTiles[TileOrientation::CENTER] = center;
-    neighboringTiles[TileOrientation::LEFT_UP] = left_up;
-    neighboringTiles[TileOrientation::RIGHT_UP] = right_up;
-    neighboringTiles[TileOrientation::LEFT_DOWN] = left_down;
-    neighboringTiles[TileOrientation::RIGHT_DOWN] = right_down;
+    out_neighboringTiles[TileOrientation::LEFT_MIDDLE] = left_middle;
+    out_neighboringTiles[TileOrientation::RIGHT_MIDDLE] = right_middle;
+    out_neighboringTiles[TileOrientation::UP_MIDDLE] = up_middle;
+    out_neighboringTiles[TileOrientation::DOWN_MIDDLE] = down_middle;
+    out_neighboringTiles[TileOrientation::CENTER] = center;
+    out_neighboringTiles[TileOrientation::LEFT_UP] = left_up;
+    out_neighboringTiles[TileOrientation::RIGHT_UP] = right_up;
+    out_neighboringTiles[TileOrientation::LEFT_DOWN] = left_down;
+    out_neighboringTiles[TileOrientation::RIGHT_DOWN] = right_down;
 }
 
 void Collisions::bombNeighboringTiles(MapTile *mapTiles[32][32], int xx, int yy) {
