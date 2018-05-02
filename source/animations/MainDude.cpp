@@ -174,11 +174,11 @@ void MainDude::handleKeyInput() {
 //            Collisions::getNeighboringTiles(global::level_generator->mapTiles, xx, yy_a_bit_down, neighboringTiles_a_bit_down);
 
             canClimbLadder = neighboringTiles[CENTER] != 0 &&
-                             (neighboringTiles[CENTER]->mapTileType == MapTileType::TILE_LADDER ||
-                              neighboringTiles[CENTER]->mapTileType == MapTileType::TILE_LADDER_WITH_DECK);
+                             (neighboringTiles[CENTER]->mapTileType == MapTileType::LADDER ||
+                              neighboringTiles[CENTER]->mapTileType == MapTileType::LADDER_DECK);
 
             exitingLevel = neighboringTiles[CENTER] != 0 &&
-                           (neighboringTiles[CENTER]->mapTileType == MapTileType::TILE_EXIT);
+                           (neighboringTiles[CENTER]->mapTileType == MapTileType::EXIT);
 
             if (exitingLevel) {
 
@@ -195,7 +195,7 @@ void MainDude::handleKeyInput() {
 
             onTopOfClimbingSpace = onTopOfClimbingSpace ||
                                    neighboringTiles[UP_MIDDLE] != 0 &&
-                                   neighboringTiles[UP_MIDDLE]->mapTileType == MapTileType::TILE_REGULAR;
+                                   neighboringTiles[UP_MIDDLE]->collidable;
 
             if (canClimbLadder) {
                 x = neighboringTiles[CENTER]->x * 16;
@@ -228,15 +228,16 @@ void MainDude::handleKeyInput() {
             MapTile **neighboringTiles;
             Collisions::getNeighboringTiles(global::level_generator->mapTiles, xx, yy, neighboringTiles);
             canClimbLadder =
-                    neighboringTiles[CENTER]->mapTileType == MapTileType::TILE_LADDER || MapTileType::TILE_LADDER_WITH_DECK;
+                    neighboringTiles[CENTER]->mapTileType == MapTileType::LADDER ||
+                    MapTileType::LADDER_DECK;
 
 
             if (climbing) {
                 canClimbLadder = neighboringTiles[CENTER] != 0 &&
-                                 (neighboringTiles[CENTER]->mapTileType == MapTileType::TILE_LADDER ||
-                                  neighboringTiles[CENTER]->mapTileType == MapTileType::TILE_LADDER_WITH_DECK) &&
+                                 (neighboringTiles[CENTER]->mapTileType == MapTileType::LADDER ||
+                                  neighboringTiles[CENTER]->mapTileType == MapTileType::LADDER_DECK) &&
                                  (neighboringTiles[DOWN_MIDDLE] == nullptr ||
-                                  neighboringTiles[DOWN_MIDDLE]->mapTileType != MapTileType::TILE_REGULAR);
+                                  !neighboringTiles[DOWN_MIDDLE]->collidable);
             }
 
             if (climbing) {
@@ -573,7 +574,7 @@ void MainDude::draw() {
                 mmEffectCancel(global::cave_music_handler);
                 global::cave_music_handler = mmEffect(SFX_MCAVE);
 
-                global::level_generator->mapFrame();
+                global::level_generator->generateFrame();
                 global::level_generator->generateRooms();
             } else {
                 if (global::scores_screen) {
@@ -602,7 +603,7 @@ void MainDude::draw() {
 
 
             MapTile *entrance;
-            global::level_generator->getFirstTile(MapTileType::TILE_ENTRANCE, entrance);
+            global::level_generator->getFirstTile(MapTileType::ENTRANCE, entrance);
 
             if (entrance == nullptr) {
                 global::main_dude->x = 32;

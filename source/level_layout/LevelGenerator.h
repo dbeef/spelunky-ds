@@ -29,11 +29,9 @@ public:
 
     void tilesToMap();
 
-    void mapFrame();
+    void generateFrame();
 
     void generateRooms();
-
-    void clearCollidedTile(int x, int y, int camera_x, int camera_y, int bg);
 
     void generateSplashScreen(int room_type);
 

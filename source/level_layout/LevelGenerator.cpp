@@ -15,16 +15,15 @@
 #include "rooms/SplashScreens.h"
 #include "rooms/RoomType.h"
 
-#define ROOM_WIDTH 10
-#define ROOM_HEIGHT 10
+#define ROOM_TILE_WIDTH_SPLASH_SCREEN 16
+#define ROOM_TILE_HEIGHT_SPLASH_SCREEN 12
 
-#define ROOM_WIDTH_SPLASH_SCREEN 16
-#define ROOM_HEIGHT_SPLASH_SCREEN 12
+#define ROOM_TILE_WIDTH_GAME 10
+#define ROOM_TILE_HEIGHT_GAME 10
 
-#define GRIT_TILE_WIDTH 8
-#define GRIT_TILE_HEIGHT 8
-#define MAPPY_TILE_WIDTH 16
-#define MAPPY_TILE_HEIGHT 16
+#define MAP_GAME_HEIGHT_TILES 32
+#define MAP_GAME_WIDTH_TILES 32
+
 #define LINE_WIDTH 64
 //Offset of 2 tiles, 8 px each
 #define OFFSET_X 2
@@ -32,36 +31,24 @@
 #define OFFSET_Y 128
 
 /**
- * Wartość layout
- * 0 brak wyjść
- * 1 wyjście w lewo + prawo
- * 2 wyjście w lewo, prawo dół
- * 3 wyjście w dół, lewo, prawo, w górę
- * Dest
- * idziemy w lewo
- * idziemy w prawo
- * idziemy w dół
  * http:www.cplusplus.com/reference/cstdlib/rand/, liczba z przedziału 0-3
- * punkt 0,0 to lewy górny róg mapy
+ * 0,0 is upper-left corner of the map
  * @param seed 
  */
 void LevelGenerator::newLayout(int seed) {
 
-    for (int x = 0; x < 32; x++) {
-        for (int y = 0; y < 32; y++) {
+    for (int x = 0; x < MAP_GAME_WIDTH_TILES; x++) {
+        for (int y = 0; y < MAP_GAME_HEIGHT_TILES; y++) {
             mapTiles[x][y] = 0;
         }
     }
-
-    srand(timerElapsed(1));
-
-//    std::cout << " " << seed << '\n';
-
     for (int a = 0; a < ROOMS_X; a++) {
         for (int b = 0; b < ROOMS_Y; b++) {
             layout[a][b] = 0;
         }
     }
+
+    srand(timerElapsed(1));
 
     //value of '3' crashes program
     int curr_x = rand() % 3;
@@ -143,87 +130,67 @@ void LevelGenerator::newLayout(int seed) {
         }
     }
 
-    for (int b = ROOMS_Y - 1; b >= 0; b--) {
-        for (int a = 0; a < ROOMS_X; a++) {
-//            std::cout << " " << layout[a][b];
-        }
-//        std::cout << ('\n');
-    }
-
 }
 
-void LevelGenerator::mapFrame() {
+void LevelGenerator::generateFrame() {
 
-    for (int a = 0; a < 32; a++) {
+    for (int a = 0; a < MAP_GAME_HEIGHT_TILES; a++) {
         delete (mapTiles[a][0]);
         MapTile *t = new MapTile();
-        t->mapTileType = MapTileType::TILE_REGULAR;
-
-        t->values[0] = 20;
-        t->values[1] = 21;
-        t->values[2] = 22;
-        t->values[3] = 23;
+        matchTile(t, MapTileType::CAVE_REGULAR);
         t->map_index[0] = a * 2;
         t->map_index[1] = a * 2 + 1;
         t->map_index[2] = LINE_WIDTH + a * 2;
         t->map_index[3] = LINE_WIDTH + a * 2 + 1;
         t->collidable = true;
+        t->destroyable = false;
         t->x = a;
         t->y = 0;
         this->mapTiles[a][0] = t;
     }
 
-    for (int a = 0; a < 32; a++) {
-        delete (mapTiles[a][31]);
+    for (int a = 0; a < MAP_GAME_HEIGHT_TILES; a++) {
+        delete (mapTiles[a][MAP_GAME_WIDTH_TILES - 1]);
         MapTile *t = new MapTile();
-        t->mapTileType = MapTileType::TILE_REGULAR;
-
-        t->values[0] = 20;
-        t->values[1] = 21;
-        t->values[2] = 22;
-        t->values[3] = 23;
+        matchTile(t, MapTileType::CAVE_REGULAR);
         t->map_index[0] = 62 * LINE_WIDTH + a * 2;
         t->map_index[1] = 62 * LINE_WIDTH + a * 2 + 1;
         t->map_index[2] = 63 * LINE_WIDTH + a * 2;
         t->map_index[3] = 63 * LINE_WIDTH + a * 2 + 1;
         t->collidable = true;
+        t->destroyable = false;
         t->x = a;
         t->y = 31;
         this->mapTiles[a][31] = t;
     }
 
-    for (int a = 0; a < 32; a++) {
+    for (int a = 0; a < MAP_GAME_WIDTH_TILES; a++) {
         delete (mapTiles[0][a]);
         MapTile *t = new MapTile();
-        t->mapTileType = MapTileType::TILE_REGULAR;
-
-        t->values[0] = 20;
-        t->values[1] = 21;
-        t->values[2] = 22;
-        t->values[3] = 23;
+        matchTile(t, MapTileType::CAVE_REGULAR);
         t->map_index[0] = a * 2 * LINE_WIDTH + 0;
         t->map_index[1] = a * 2 * LINE_WIDTH + 1;
         t->map_index[2] = a * 2 * LINE_WIDTH + LINE_WIDTH;
         t->map_index[3] = a * 2 * LINE_WIDTH + LINE_WIDTH + 1;
         t->collidable = true;
+        t->destroyable = false;
         t->x = 0;
         t->y = a;
         this->mapTiles[0][a] = t;
     }
 
-    for (int a = 0; a < 32; a++) {
-        delete (mapTiles[31][a]);
+    for (int a = 0; a < MAP_GAME_WIDTH_TILES; a++) {
+        delete (mapTiles[MAP_GAME_HEIGHT_TILES- 1][a]);
         MapTile *t = new MapTile();
-        t->mapTileType = MapTileType::TILE_REGULAR;
-        t->values[0] = 20;
-        t->values[1] = 21;
-        t->values[2] = 22;
-        t->values[3] = 23;
+
+        matchTile(t, MapTileType::CAVE_REGULAR);
+
         t->map_index[0] = a * 2 * LINE_WIDTH - 2 + LINE_WIDTH;
         t->map_index[1] = a * 2 * LINE_WIDTH - 1 + LINE_WIDTH;
         t->map_index[2] = a * 2 * LINE_WIDTH + LINE_WIDTH - 2 + LINE_WIDTH;
         t->map_index[3] = a * 2 * LINE_WIDTH + LINE_WIDTH - 1 + LINE_WIDTH;
         t->collidable = true;
+        t->destroyable = false;
         t->x = 31;
         t->y = a;
         this->mapTiles[31][a] = t;
@@ -231,37 +198,14 @@ void LevelGenerator::mapFrame() {
 }
 
 void LevelGenerator::tilesToMap() {
-    for (int x = 0; x < 32; x++) {
-        for (int y = 0; y < 32; y++) {
+    for (int x = 0; x < MAP_GAME_WIDTH_TILES; x++) {
+        for (int y = 0; y < MAP_GAME_HEIGHT_TILES; y++) {
             MapTile *t = this->mapTiles[x][y];
             for (int k = 0; k < 4; k++)
                 if (t && t->values[k] != 0)
                     global::current_map[t->map_index[k]] = t->values[k];
         }
     }
-}
-
-void LevelGenerator::clearCollidedTile(int px, int py, int camera_x, int camera_y, int bg) {
-    for (int x = 0; x < 32; x++) {
-        for (int y = 0; y < 32; y++) {
-
-            MapTile *t = this->mapTiles[x][y];
-
-            int viewport_x = px + camera_x;
-            int viewport_y = py + camera_y;
-
-            bool x_collision = viewport_x >= (x * 16) && viewport_x <= (x * 16) + 16;
-            bool y_collision = viewport_y >= (y * 16) && viewport_y <= (y * 16) + 16;
-
-            if (x_collision && y_collision) {
-                t->values[0] = 0;
-                t->values[1] = 0;
-                t->values[2] = 0;
-                t->values[3] = 0;
-            }
-        }
-    }
-    tilesToMap();
 }
 
 void LevelGenerator::generateSplashScreen(int room_type) {
@@ -299,12 +243,12 @@ void LevelGenerator::generateSplashScreen(int room_type) {
 
             if (tab[tab_y][tab_x] != 0) {
 
-                u16 room_offset = 2 * ROOM_WIDTH_SPLASH_SCREEN * a +
-                                  2 * ROOM_HEIGHT_SPLASH_SCREEN * LINE_WIDTH * ((ROOMS_Y - b) - 1)
+                u16 room_offset = 2 * ROOM_TILE_WIDTH_SPLASH_SCREEN * a +
+                                  2 * ROOM_TILE_HEIGHT_SPLASH_SCREEN * LINE_WIDTH * ((ROOMS_Y - b) - 1)
                                   - 4 * OFFSET_Y;
 
-                u16 pos_x = (tab_x * 2 + 2 * ROOM_WIDTH_SPLASH_SCREEN * a) / 2;
-                u16 pos_y = tab_y + ROOM_HEIGHT_SPLASH_SCREEN * ((ROOMS_Y - b) - 1) - 4;
+                u16 pos_x = (tab_x * 2 + 2 * ROOM_TILE_WIDTH_SPLASH_SCREEN * a) / 2;
+                u16 pos_y = tab_y + ROOM_TILE_HEIGHT_SPLASH_SCREEN * ((ROOMS_Y - b) - 1) - 4;
 
                 delete (mapTiles[pos_x][pos_y]);
                 MapTile *t = new MapTile();
@@ -355,16 +299,16 @@ void LevelGenerator::generateRooms() {
                     break;
             }
 
-            for (int tab_y = 0; tab_y < 10; tab_y++) {
-                for (int tab_x = 0; tab_x < 10; tab_x++) {
+            for (int tab_y = 0; tab_y < ROOM_TILE_HEIGHT_GAME; tab_y++) {
+                for (int tab_x = 0; tab_x < ROOM_TILE_WIDTH_GAME; tab_x++) {
 
                     if (tab[tab_y][tab_x] != 0) {
 
                         u16 room_offset =
-                                OFFSET_X + OFFSET_Y + 2 * ROOM_WIDTH * a +
-                                2 * ROOM_HEIGHT * LINE_WIDTH * ((ROOMS_Y - b) - 1);
-                        u16 pos_x = (OFFSET_X + tab_x * 2 + 2 * ROOM_WIDTH * a) / 2;
-                        u16 pos_y = (OFFSET_X + tab_y * 2 + 2 * ROOM_HEIGHT * ((ROOMS_Y - b) - 1)) / 2;
+                                OFFSET_X + OFFSET_Y + 2 * ROOM_TILE_WIDTH_GAME * a +
+                                2 * ROOM_TILE_HEIGHT_GAME * LINE_WIDTH * ((ROOMS_Y - b) - 1);
+                        u16 pos_x = (OFFSET_X + tab_x * 2 + 2 * ROOM_TILE_WIDTH_GAME * a) / 2;
+                        u16 pos_y = (OFFSET_X + tab_y * 2 + 2 * ROOM_TILE_HEIGHT_GAME * ((ROOMS_Y - b) - 1)) / 2;
 
                         delete (mapTiles[pos_x][pos_y]);
                         MapTile *t = new MapTile();
@@ -387,187 +331,226 @@ void LevelGenerator::matchTile(MapTile *t, int value) {
 
     t->destroyable = true;
     t->collidable = true;
-    t->mapTileType = MapTileType::TILE_REGULAR;
 
-    if (value == 1) {
-        t->values[0] = 20;
-        t->values[1] = 21;
-        t->values[2] = 22;
-        t->values[3] = 23;
-    } else if (value == 2) {
-        t->values[0] = 40;
-        t->values[1] = 41;
-        t->values[2] = 42;
-        t->values[3] = 43;
-    } else if (value == 5) {
-        t->values[0] = 24;
-        t->values[1] = 25;
-        t->values[2] = 26;
-        t->values[3] = 27;
-    } else if (value == 6) {
-        t->values[0] = 32;
-        t->values[1] = 33;
-        t->values[2] = 34;
-        t->values[3] = 35;
-    } else if (value == 7) {
-        t->values[0] = 36;
-        t->values[1] = 37;
-        t->values[2] = 38;
-        t->values[3] = 39;
-    } else if (value == 8) {
-        t->values[0] = 16;
-        t->values[1] = 17;
-        t->values[2] = 18;
-        t->values[3] = 19;
-    } else if (value == 9) {
+    switch (value) {
+        case MapTileType::CAVE_REGULAR:
+            t->values[0] = 20;
+            t->values[1] = 21;
+            t->values[2] = 22;
+            t->values[3] = 23;
+            t->mapTileType = MapTileType::CAVE_REGULAR;
+            break;
+        case MapTileType::CAVE_UP_ORIENTED:
+            t->values[0] = 40;
+            t->values[1] = 41;
+            t->values[2] = 42;
+            t->values[3] = 43;
+            t->mapTileType = MapTileType::CAVE_UP_ORIENTED;
+            break;
+        case MapTileType::STONE_BLOCK:
+            t->values[0] = 24;
+            t->values[1] = 25;
+            t->values[2] = 26;
+            t->values[3] = 27;
+            t->mapTileType = MapTileType::STONE_BLOCK;
+            break;
 
-        t->values[0] = 48;
-        t->values[1] = 49;
-        t->values[2] = 50;
-        t->values[3] = 51;
+        case MapTileType::CAVE_SOME_GOLD:
+            t->values[0] = 32;
+            t->values[1] = 33;
+            t->values[2] = 34;
+            t->values[3] = 35;
+            t->mapTileType = MapTileType::CAVE_SOME_GOLD;
+            break;
+        case MapTileType::CAVE_MUCH_GOLD:
+            t->values[0] = 36;
+            t->values[1] = 37;
+            t->values[2] = 38;
+            t->values[3] = 39;
+            t->mapTileType = MapTileType::CAVE_MUCH_GOLD;
+            break;
+        case MapTileType::CAVE_ROCK:
+            t->values[0] = 16;
+            t->values[1] = 17;
+            t->values[2] = 18;
+            t->values[3] = 19;
+            t->mapTileType = MapTileType::CAVE_ROCK;
+            break;
+        case MapTileType::LADDER:
 
-        t->collidable = false;
-        t->destroyable = false;
-        t->mapTileType = MapTileType::TILE_LADDER;
+            t->values[0] = 48;
+            t->values[1] = 49;
+            t->values[2] = 50;
+            t->values[3] = 51;
 
-    } else if (value == 10) {
+            t->collidable = false;
+            t->destroyable = false;
+            t->mapTileType = MapTileType::LADDER;
+            break;
+        case MapTileType::LADDER_DECK:
 
-        t->values[0] = 52;
-        t->values[1] = 53;
-        t->values[2] = 54;
-        t->values[3] = 55;
+            t->values[0] = 52;
+            t->values[1] = 53;
+            t->values[2] = 54;
+            t->values[3] = 55;
 
-        t->collidable = false;
-        t->destroyable = false;
-        t->mapTileType = MapTileType::TILE_LADDER_WITH_DECK;
+            t->collidable = false;
+            t->destroyable = false;
+            t->mapTileType = MapTileType::LADDER_DECK;
+            break;
 
-    } else if (value == 12) {
+        case MapTileType::ARROW_TRAP_LEFT:
 
-        t->values[0] = 56;
-        t->values[1] = 57;
-        t->values[2] = 58;
-        t->values[3] = 59;
+            t->values[0] = 56;
+            t->values[1] = 57;
+            t->values[2] = 58;
+            t->values[3] = 59;
+            t->mapTileType = MapTileType::ARROW_TRAP_LEFT;
+            break;
 
-    } else if (value == 13) {
+        case MapTileType::ARROW_TRAP_RIGHT:
+            t->values[0] = 60;
+            t->values[1] = 61;
+            t->values[2] = 62;
+            t->values[3] = 63;
+            t->mapTileType = MapTileType::ARROW_TRAP_RIGHT;
+            break;
+        case MapTileType::ENTRANCE:
 
-        t->values[0] = 60;
-        t->values[1] = 61;
-        t->values[2] = 62;
-        t->values[3] = 63;
+            t->values[0] = 64;
+            t->values[1] = 65;
+            t->values[2] = 66;
+            t->values[3] = 67;
+            t->collidable = false;
+            t->destroyable = false;
+            t->mapTileType = MapTileType::ENTRANCE;
+            break;
 
-    } else if (value == 11) {
+        case MapTileType::EXIT:
+            t->values[0] = 68;
+            t->values[1] = 69;
+            t->values[2] = 70;
+            t->values[3] = 71;
+            t->collidable = false;
+            t->destroyable = false;
+            t->mapTileType = MapTileType::EXIT;
+            break;
 
-        t->values[0] = 64;
-        t->values[1] = 65;
-        t->values[2] = 66;
-        t->values[3] = 67;
-        t->collidable = false;
-        t->destroyable = false;
-        t->mapTileType = MapTileType::TILE_ENTRANCE;
+        case MapTileType::CAVE_DOWN_ORIENTED:
+            t->values[0] = 28;
+            t->values[1] = 29;
+            t->values[2] = 30;
+            t->values[3] = 31;
+            t->mapTileType = MapTileType::CAVE_DOWN_ORIENTED;
+            break;
+        case MapTileType::CAVE_UP_DOWN_ORIENTED:
+            t->values[0] = 44;
+            t->values[1] = 45;
+            t->values[2] = 46;
+            t->values[3] = 47;
+            t->mapTileType = MapTileType::CAVE_UP_DOWN_ORIENTED;
+            break;
 
-    } else if (value == 14) {
+        case MapTileType::CONSOLE_LEFT_BAR_TOP_ROUNDED:
+            t->values[0] = 72;
+            t->values[1] = 73;
+            t->values[2] = 74;
+            t->values[3] = 75;
+            t->collidable = false;
+            t->destroyable = false;
+            t->mapTileType = MapTileType::CONSOLE_LEFT_BAR_TOP_ROUNDED;
+            break;
+        case MapTileType::CONSOLE_RIGHT_BAR_TOP_ROUNDED:
+            t->values[0] = 76;
+            t->values[1] = 77;
+            t->values[2] = 78;
+            t->values[3] = 79;
+            t->collidable = false;
+            t->destroyable = false;
+            t->mapTileType = MapTileType::CONSOLE_RIGHT_BAR_TOP_ROUNDED;
+            break;
+        case MapTileType::CONSOLE_LEFT_BAR_BOT_ROUNDED:
 
-        t->values[0] = 68;
-        t->values[1] = 69;
-        t->values[2] = 70;
-        t->values[3] = 71;
-        t->collidable = false;
-        t->destroyable = false;
-        t->mapTileType = MapTileType::TILE_EXIT;
+            t->values[0] = 80;
+            t->values[1] = 81;
+            t->values[2] = 82;
+            t->values[3] = 83;
+            t->collidable = false;
+            t->destroyable = false;
+            t->mapTileType = MapTileType::CONSOLE_LEFT_BAR_BOT_ROUNDED;
+            break;
 
-    } else if (value == 3) {
-        t->values[0] = 28;
-        t->values[1] = 29;
-        t->values[2] = 30;
-        t->values[3] = 31;
-    } else if (value == 4) {
-        t->values[0] = 44;
-        t->values[1] = 45;
-        t->values[2] = 46;
-        t->values[3] = 47;
-    } else if (value == 16) {
+        case MapTileType::CONSOLE_RIGHT_BAR_BOT_ROUNDED:
 
-        t->values[0] = 72;
-        t->values[1] = 73;
-        t->values[2] = 74;
-        t->values[3] = 75;
-        t->collidable = false;
-        t->destroyable = false;
+            t->values[0] = 84;
+            t->values[1] = 85;
+            t->values[2] = 86;
+            t->values[3] = 87;
+            t->collidable = false;
+            t->destroyable = false;
+            t->mapTileType = MapTileType::CONSOLE_RIGHT_BAR_BOT_ROUNDED;
+            break;
 
-    } else if (value == 19) {
+        case MapTileType::CONSOLE_TOP_BAR:
+            t->values[0] = 88;
+            t->values[1] = 89;
+            t->values[2] = 90;
+            t->values[3] = 91;
+            t->collidable = false;
+            t->destroyable = false;
+            t->mapTileType = MapTileType::CONSOLE_TOP_BAR;
+            break;
 
-        t->values[0] = 76;
-        t->values[1] = 77;
-        t->values[2] = 78;
-        t->values[3] = 79;
-        t->collidable = false;
-        t->destroyable = false;
+        case MapTileType::CONSOLE_BOTTOM_BAR:
 
-    } else if (value == 17) {
+            t->values[0] = 92;
+            t->values[1] = 93;
+            t->values[2] = 94;
+            t->values[3] = 95;
+            t->collidable = false;
+            t->destroyable = false;
+            t->mapTileType = MapTileType::CONSOLE_BOTTOM_BAR;
+            break;
 
-        t->values[0] = 80;
-        t->values[1] = 81;
-        t->values[2] = 82;
-        t->values[3] = 83;
-        t->collidable = false;
-        t->destroyable = false;
+        case MapTileType::CONSOLE_LEFT_BAR:
+            t->values[0] = 96;
+            t->values[1] = 97;
+            t->values[2] = 98;
+            t->values[3] = 99;
+            t->collidable = false;
+            t->destroyable = false;
+            t->mapTileType = MapTileType::CONSOLE_LEFT_BAR;
+            break;
 
-    } else if (value == 20) {
-
-        t->values[0] = 84;
-        t->values[1] = 85;
-        t->values[2] = 86;
-        t->values[3] = 87;
-        t->collidable = false;
-        t->destroyable = false;
-    } else if (value == 21) {
-
-        t->values[0] = 88;
-        t->values[1] = 89;
-        t->values[2] = 90;
-        t->values[3] = 91;
-        t->collidable = false;
-        t->destroyable = false;
-    } else if (value == 22) {
-
-        t->values[0] = 92;
-        t->values[1] = 93;
-        t->values[2] = 94;
-        t->values[3] = 95;
-        t->collidable = false;
-        t->destroyable = false;
-    } else if (value == 15) {
-
-        t->values[0] = 96;
-        t->values[1] = 97;
-        t->values[2] = 98;
-        t->values[3] = 99;
-        t->collidable = false;
-        t->destroyable = false;
-    } else if (value == 18) {
-
-        t->values[0] = 100;
-        t->values[1] = 101;
-        t->values[2] = 102;
-        t->values[3] = 103;
-        t->collidable = false;
-        t->destroyable = false;
-    } else if (value == 23) {
-
-        t->values[0] = 104;
-        t->values[1] = 105;
-        t->values[2] = 106;
-        t->values[3] = 107;
-        t->collidable = false;
-        t->destroyable = false;
+        case MapTileType::CONSOLE_RIGHT_BAR:
+            t->values[0] = 100;
+            t->values[1] = 101;
+            t->values[2] = 102;
+            t->values[3] = 103;
+            t->collidable = false;
+            t->destroyable = false;
+            t->mapTileType = MapTileType::CONSOLE_RIGHT_BAR;
+            break;
+        case MapTileType::CONSOLE_BLACK_BACKGROUND:
+            t->values[0] = 104;
+            t->values[1] = 105;
+            t->values[2] = 106;
+            t->values[3] = 107;
+            t->collidable = false;
+            t->destroyable = false;
+            t->mapTileType = MapTileType::CONSOLE_BLACK_BACKGROUND;
+            break;
+        default:
+            break;
     }
+
 
 }
 
-void LevelGenerator::getFirstTile(MapTileType mapTileType, MapTile *&m){
+void LevelGenerator::getFirstTile(MapTileType mapTileType, MapTile *&m) {
     https://stackoverflow.com/questions/416162/assignment-inside-function-that-is-passed-as-pointer?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
-    for (int a = 0; a < 32; a++) {
-        for (int b = 0; b < 32; b++) {
+    for (int a = 0; a < MAP_GAME_WIDTH_TILES; a++) {
+        for (int b = 0; b < MAP_GAME_HEIGHT_TILES; b++) {
             if (mapTiles[a][b] != 0 && mapTiles[a][b]->mapTileType == mapTileType) {
                 m = mapTiles[a][b];
                 break;
