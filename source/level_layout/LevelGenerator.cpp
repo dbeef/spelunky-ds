@@ -15,20 +15,6 @@
 #include "rooms/SplashScreens.h"
 #include "rooms/RoomType.h"
 
-#define ROOM_TILE_WIDTH_SPLASH_SCREEN 16
-#define ROOM_TILE_HEIGHT_SPLASH_SCREEN 12
-
-#define ROOM_TILE_WIDTH_GAME 10
-#define ROOM_TILE_HEIGHT_GAME 10
-
-#define MAP_GAME_HEIGHT_TILES 32
-#define MAP_GAME_WIDTH_TILES 32
-
-#define LINE_WIDTH 64
-//Offset of 2 tiles, 8 px each
-#define OFFSET_X 2
-//Offset of 128 tiles, 8px  each (2 lines, 64 each)
-#define OFFSET_Y 128
 
 /**
  * http:www.cplusplus.com/reference/cstdlib/rand/, liczba z przedziału 0-3
@@ -129,6 +115,9 @@ void LevelGenerator::newLayout(int seed) {
             }
         }
     }
+
+    //todo post-generation things, like founding patterns, i.e if there's a well of '0' type rooms, then make
+    //a special, long room
 
 }
 

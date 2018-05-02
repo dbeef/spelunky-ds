@@ -23,6 +23,7 @@ enum SpriteType{
     BLOOD,
     SPELUNKY_TITLE,
     SPELUNKY_COPYRIGHTS,
+    BAT
 };
 
 #endif //SPELUNKYDS_SPRITETYPES_H

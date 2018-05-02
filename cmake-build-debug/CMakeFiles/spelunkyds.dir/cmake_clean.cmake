@@ -26,6 +26,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/spelunkyds.dir/source/animations/BloodElement.cpp.o"
   "CMakeFiles/spelunkyds.dir/source/animations/SpelunkyTitle.cpp.o"
   "CMakeFiles/spelunkyds.dir/source/animations/TitleMenuSign.cpp.o"
+  "CMakeFiles/spelunkyds.dir/source/animations/Bat.cpp.o"
   "spelunkyds.pdb"
   "spelunkyds"
 )

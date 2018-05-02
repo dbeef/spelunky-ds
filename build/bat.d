@@ -1,0 +1,1 @@
+bat.o: bat.s

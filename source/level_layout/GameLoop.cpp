@@ -13,6 +13,7 @@
 #include "../animations/Copyrights.h"
 #include "../animations/TitleMenuSign.h"
 #include "../animations/Rope.h"
+#include "../animations/Bat.h"
 #include <vector>
 #include <time.h>
 #include <maxmod9.h>
@@ -186,6 +187,19 @@ void gameloop::populateCaveNpcs() {
 
         snake->x = curr_x;
         snake->y = curr_y;
+    }
+    
+    for(int a =0;a<2;a++){
+        Bat *bat = new Bat();
+        bat->init();
+        bat->timer = global::timer;
+        global::sprites.push_back(bat);
+
+        int curr_x = (rand() % 400) + 48 + a * 16;
+        int curr_y = (rand() % 400) + 48;
+
+        bat->x = curr_x;
+        bat->y = curr_y;
 
     }
 

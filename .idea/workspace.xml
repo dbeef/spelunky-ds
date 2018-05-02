@@ -15,19 +15,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4167ccef-cad0-4b13-8f61-b9437b132076" name="Default" comment="Merge branch 'master' of https://github.com/dbeef/spelunky-ds&#10;&#10;# Conflicts:&#10;#&#9;README.md">
+      <change afterPath="$PROJECT_DIR$/gfx/sprites/bat.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/animations/Bat.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/animations/Bat.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/Blood.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/Blood.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/BloodElement.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/BloodElement.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/Bomb.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/Bomb.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/Camera.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/Camera.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/Collisions.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/Collisions.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/Copyrights.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/Copyrights.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/GameLoop.d" beforeDir="false" afterPath="$PROJECT_DIR$/build/GameLoop.d" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/GameLoop.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/GameLoop.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/Hud.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/Hud.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/Jar.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/Jar.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/LevelGenerator.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/LevelGenerator.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/MainDude.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/MainDude.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/MapTile.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/MapTile.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/MapUtils.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/MapUtils.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/Moniez.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/Moniez.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/OAMManager.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/OAMManager.o" afterDir="false" />
@@ -36,37 +40,68 @@
       <change beforePath="$PROJECT_DIR$/build/RopeElement.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/RopeElement.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/Snake.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/Snake.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/SpelunkyTitle.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/SpelunkyTitle.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/SpriteInfo.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/SpriteInfo.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/Timer.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/Timer.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/TitleMenuSign.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/TitleMenuSign.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/blood.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/blood.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/blood.s" beforeDir="false" afterPath="$PROJECT_DIR$/build/blood.s" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/bomb_armed.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/bomb_armed.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/bomb_armed.s" beforeDir="false" afterPath="$PROJECT_DIR$/build/bomb_armed.s" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/bomb_unarmed.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/bomb_unarmed.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/bomb_unarmed.s" beforeDir="false" afterPath="$PROJECT_DIR$/build/bomb_unarmed.s" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/cavebg.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/cavebg.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/cavebg.s" beforeDir="false" afterPath="$PROJECT_DIR$/build/cavebg.s" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/copyrights.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/copyrights.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/copyrights.s" beforeDir="false" afterPath="$PROJECT_DIR$/build/copyrights.s" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/explosion.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/explosion.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/explosion.s" beforeDir="false" afterPath="$PROJECT_DIR$/build/explosion.s" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/font.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/font.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/font.s" beforeDir="false" afterPath="$PROJECT_DIR$/build/font.s" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/font_1bpp.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/font_1bpp.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/font_1bpp.s" beforeDir="false" afterPath="$PROJECT_DIR$/build/font_1bpp.s" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/font_yellow.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/font_yellow.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/font_yellow.s" beforeDir="false" afterPath="$PROJECT_DIR$/build/font_yellow.s" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/hud.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/hud.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/hud.s" beforeDir="false" afterPath="$PROJECT_DIR$/build/hud.s" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/jar.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/jar.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/jar.s" beforeDir="false" afterPath="$PROJECT_DIR$/build/jar.s" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/main.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/main.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/menu_signs_start_scores.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/menu_signs_start_scores.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/menu_signs_start_scores.s" beforeDir="false" afterPath="$PROJECT_DIR$/build/menu_signs_start_scores.s" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/menu_signs_tutorial_quit.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/menu_signs_tutorial_quit.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/menu_signs_tutorial_quit.s" beforeDir="false" afterPath="$PROJECT_DIR$/build/menu_signs_tutorial_quit.s" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/pre_whip_left.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/pre_whip_left.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/pre_whip_left.s" beforeDir="false" afterPath="$PROJECT_DIR$/build/pre_whip_left.s" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/rock.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/rock.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/rock.s" beforeDir="false" afterPath="$PROJECT_DIR$/build/rock.s" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/ropes.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/ropes.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/ropes.s" beforeDir="false" afterPath="$PROJECT_DIR$/build/ropes.s" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/rubies_big.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/rubies_big.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/rubies_big.s" beforeDir="false" afterPath="$PROJECT_DIR$/build/rubies_big.s" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/snake.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/snake.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/snake.s" beforeDir="false" afterPath="$PROJECT_DIR$/build/snake.s" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/spelunker.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/spelunker.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/spelunker.s" beforeDir="false" afterPath="$PROJECT_DIR$/build/spelunker.s" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/spelunky_title.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/spelunky_title.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/spelunky_title.s" beforeDir="false" afterPath="$PROJECT_DIR$/build/spelunky_title.s" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/spelunkyds.map" beforeDir="false" afterPath="$PROJECT_DIR$/build/spelunkyds.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/triple_goldbar.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/triple_goldbar.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/triple_goldbar.s" beforeDir="false" afterPath="$PROJECT_DIR$/build/triple_goldbar.s" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/whip_left.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/whip_left.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/animations/MainDude.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/animations/MainDude.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/whip_left.s" beforeDir="false" afterPath="$PROJECT_DIR$/build/whip_left.s" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/progress.marks" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/progress.marks" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/spelunkyds.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/spelunkyds.dir/DependInfo.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/spelunkyds.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/spelunkyds.dir/build.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/spelunkyds.dir/cmake_clean.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/spelunkyds.dir/cmake_clean.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/spelunkyds.dir/link.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/spelunkyds.dir/link.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/spelunkyds.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/spelunkyds.dir/progress.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/spelunkyds.cbp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/spelunkyds.cbp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/level_layout/GameLoop.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/level_layout/GameLoop.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/level_layout/LevelGenerator.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/level_layout/LevelGenerator.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/level_layout/LevelGenerator.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/level_layout/LevelGenerator.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/level_layout/MapTileType.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/level_layout/MapTileType.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/level_layout/rooms/_info.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/sprites/SpriteTypes.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/sprites/SpriteTypes.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/spelunkyds.elf" beforeDir="false" afterPath="$PROJECT_DIR$/spelunkyds.elf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/spelunkyds.nds" beforeDir="false" afterPath="$PROJECT_DIR$/spelunkyds.nds" afterDir="false" />
     </list>
@@ -81,20 +116,11 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="LevelGenerator.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/source/level_layout/LevelGenerator.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="27" column="12" selection-start-line="27" selection-start-column="12" selection-end-line="27" selection-end-column="12" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="LevelGenerator.cpp" pinned="false" current-in-tab="true">
+      <file leaf-file-name="LevelGenerator.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/source/level_layout/LevelGenerator.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-5023">
-              <caret line="182" column="46" selection-start-line="182" selection-start-column="46" selection-end-line="182" selection-end-column="46" />
+            <state relative-caret-position="240">
+              <caret line="119" column="26" selection-start-line="119" selection-start-column="26" selection-end-line="119" selection-end-column="26" />
               <folding>
                 <element signature="e#41#60#0" expanded="true" />
               </folding>
@@ -102,64 +128,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="EntranceRooms.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/source/level_layout/rooms/EntranceRooms.h">
+      <file leaf-file-name="Bat.cpp" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/source/animations/Bat.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="20" selection-start-line="20" selection-end-line="20" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SplashScreens.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/source/level_layout/rooms/SplashScreens.h">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file leaf-file-name="LeftRightRooms.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/source/level_layout/rooms/LeftRightRooms.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="662">
-              <caret line="50" selection-start-line="50" selection-end-line="50" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TitleMenuSign.cpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/source/animations/TitleMenuSign.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="437">
-              <caret line="126" column="4" selection-start-line="126" selection-start-column="4" selection-end-line="126" selection-end-column="4" />
-              <folding>
-                <element signature="e#41#67#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MapTile.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/source/level_layout/MapTile.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="21" column="4" selection-start-line="21" selection-start-column="4" selection-end-line="21" selection-end-column="4" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="RoomType.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/source/level_layout/rooms/RoomType.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="13" column="9" selection-start-line="13" selection-start-column="9" selection-end-line="13" selection-end-column="9" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MainDude.cpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/source/animations/MainDude.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="632">
-              <caret line="605" column="71" selection-start-line="605" selection-start-column="71" selection-end-line="605" selection-end-column="71" />
+            <state relative-caret-position="285">
+              <caret line="56" selection-start-line="56" selection-end-line="56" />
               <folding>
                 <element signature="e#41#57#0" expanded="true" />
               </folding>
@@ -167,26 +140,90 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MapTileType.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/source/level_layout/MapTileType.h">
+      <file leaf-file-name="Bat.h" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/source/animations/Bat.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="450">
-              <caret line="30" column="33" selection-start-line="30" selection-start-column="4" selection-end-line="30" selection-end-column="33" />
+            <state relative-caret-position="587">
+              <caret line="46" column="17" selection-start-line="46" selection-start-column="17" selection-end-line="46" selection-end-column="17" />
+              <folding>
+                <element signature="e#92#128#0" expanded="true" />
+              </folding>
             </state>
           </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SpriteTypes.h" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/source/sprites/SpriteTypes.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="375">
+              <caret line="25" column="7" selection-start-line="25" selection-start-column="7" selection-end-line="25" selection-end-column="7" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Snake.cpp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/source/animations/Snake.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="662">
+              <caret line="287" selection-start-line="11" selection-end-line="287" />
+              <folding>
+                <element signature="e#41#59#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Snake.h" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/source/animations/Snake.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="632">
+              <caret line="56" selection-start-line="11" selection-end-line="56" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GameLoop.cpp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/source/level_layout/GameLoop.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="268">
+              <caret line="89" column="18" selection-start-line="89" selection-start-column="18" selection-end-line="89" selection-end-column="18" />
+              <folding>
+                <element signature="e#0#16#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ClosedRooms.h" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/source/level_layout/rooms/ClosedRooms.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="315">
+              <caret line="21" column="9" selection-start-line="21" selection-start-column="9" selection-end-line="21" selection-end-column="9" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="main.cpp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/source/main.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="580">
+              <caret line="70" column="19" selection-start-line="70" selection-start-column="19" selection-end-line="70" selection-end-column="19" />
+              <folding>
+                <element signature="e#0#16#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="bat.png" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/gfx/sprites/bat.png">
+          <provider selected="true" editor-type-id="images" />
         </entry>
       </file>
     </leaf>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>collecting</find>
-      <find>stunned</find>
-      <find>stunned = tru</find>
-      <find>splashScreen</find>
-      <find>SplashScreen</find>
-      <find>init</find>
-      <find>menu_</find>
       <find>generateSplashScre</find>
       <find>dead</find>
       <find>dead = t</find>
@@ -210,10 +247,15 @@
       <find>ROOM_WIDTH</find>
       <find>32</find>
       <find>31</find>
+      <find>Snake::</find>
+      <find>snake</find>
+      <find>hunting</find>
+      <find>-2</find>
+      <find>pos_</find>
+      <find>!huntng</find>
+      <find>w</find>
     </findStrings>
     <replaceStrings>
-      <replace>0</replace>
-      <replace>StaticSprite::</replace>
       <replace>spelunky_title</replace>
       <replace>64 * 64</replace>
       <replace>64</replace>
@@ -242,6 +284,8 @@
       <replace>type</replace>
       <replace>type ==</replace>
       <replace>//</replace>
+      <replace>Bat::</replace>
+      <replace>bat</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -250,9 +294,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/source/animations/BloodElement.h" />
-        <option value="$PROJECT_DIR$/source/animations/Blood.h" />
-        <option value="$PROJECT_DIR$/source/level_layout/GameLoop.h" />
         <option value="$PROJECT_DIR$/source/animations/Camera.h" />
         <option value="$PROJECT_DIR$/source/animations/Camera.cpp" />
         <option value="$PROJECT_DIR$/source/input/InputHandler.h" />
@@ -271,7 +312,6 @@
         <option value="$PROJECT_DIR$/source/animations/Blood.cpp" />
         <option value="$PROJECT_DIR$/source/animations/MenuSignType.h" />
         <option value="$PROJECT_DIR$/source/animations/TitleMenuSign.h" />
-        <option value="$PROJECT_DIR$/source/sprites/SpriteTypes.h" />
         <option value="$PROJECT_DIR$/source/animations/TitleMenuSign.cpp" />
         <option value="$PROJECT_DIR$/source/animations/OAMManager.cpp" />
         <option value="$PROJECT_DIR$/source/animations/Collisions.h" />
@@ -295,12 +335,16 @@
         <option value="$PROJECT_DIR$/source/level_layout/rooms/ExitRooms.h" />
         <option value="$PROJECT_DIR$/source/level_layout/rooms/RoomType.h" />
         <option value="$PROJECT_DIR$/source/main.cpp" />
-        <option value="$PROJECT_DIR$/source/level_layout/GameLoop.cpp" />
         <option value="$PROJECT_DIR$/source/level_layout/rooms/_info.txt" />
         <option value="$PROJECT_DIR$/source/animations/MainDude.cpp" />
         <option value="$PROJECT_DIR$/source/level_layout/MapTileType.h" />
         <option value="$PROJECT_DIR$/source/level_layout/LevelGenerator.h" />
+        <option value="$PROJECT_DIR$/source/level_layout/rooms/LeftRightDownRooms.h" />
         <option value="$PROJECT_DIR$/source/level_layout/LevelGenerator.cpp" />
+        <option value="$PROJECT_DIR$/source/sprites/SpriteTypes.h" />
+        <option value="$PROJECT_DIR$/source/animations/Bat.h" />
+        <option value="$PROJECT_DIR$/source/level_layout/GameLoop.cpp" />
+        <option value="$PROJECT_DIR$/source/animations/Bat.cpp" />
       </list>
     </option>
   </component>
@@ -367,6 +411,17 @@
             <path>
               <item name="spelunkyds" type="b2602c69:ProjectViewProjectNode" />
               <item name="spelunkyds" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="spelunkyds" type="b2602c69:ProjectViewProjectNode" />
+              <item name="spelunkyds" type="462c0819:PsiDirectoryNode" />
+              <item name="gfx" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="spelunkyds" type="b2602c69:ProjectViewProjectNode" />
+              <item name="spelunkyds" type="462c0819:PsiDirectoryNode" />
+              <item name="gfx" type="462c0819:PsiDirectoryNode" />
+              <item name="sprites" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="spelunkyds" type="b2602c69:ProjectViewProjectNode" />
@@ -589,12 +644,12 @@
       <workItem from="1525023046337" duration="17569000" />
       <workItem from="1525155632357" duration="8395000" />
       <workItem from="1525240138884" duration="16404000" />
-      <workItem from="1525268095454" duration="5821000" />
+      <workItem from="1525268095454" duration="9602000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="666596000" />
+    <option name="totallyTimeSpent" value="670377000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -677,29 +732,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$USER_HOME$/devkitPro/libnds/include/maxmod9.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="241">
-          <caret line="303" column="11" selection-start-line="303" selection-start-column="11" selection-end-line="303" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/source/animations/Blood.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="28" column="11" selection-start-line="28" selection-start-column="11" selection-end-line="28" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/source/animations/Blood.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#41#59#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/source/animations/BloodElement.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
@@ -814,27 +846,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/animations/Snake.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="127" column="8" selection-start-line="127" selection-start-column="8" selection-end-line="133" selection-end-column="9" />
-          <folding>
-            <element signature="e#41#59#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/source/level_layout/TileOrientation.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
           <caret line="7" column="5" selection-start-line="7" selection-start-column="5" selection-end-line="7" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/source/animations/Snake.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="19" column="25" selection-start-line="19" selection-start-column="25" selection-end-line="19" selection-end-column="25" />
         </state>
       </provider>
     </entry>
@@ -865,13 +880,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/sprites/SpriteTypes.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="28" selection-start-line="9" selection-start-column="28" selection-end-line="9" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/source/animations/MainDude.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="465">
@@ -886,13 +894,6 @@
           <folding>
             <element signature="e#98#119#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/source/level_layout/rooms/LeftRightDownRooms.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="675">
-          <caret line="45" selection-start-line="45" selection-end-line="45" />
         </state>
       </provider>
     </entry>
@@ -933,58 +934,10 @@
     <entry file="file://$PROJECT_DIR$/source/level_layout/GameLoop.h">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/level_layout/rooms/LeftRightUpRooms.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="690">
-          <caret line="46" selection-start-line="46" selection-end-line="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/source/level_layout/rooms/ExitRooms.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="22" selection-start-line="22" selection-end-line="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/source/level_layout/rooms/ClosedRooms.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="20" column="10" selection-start-line="20" selection-start-column="10" selection-end-line="20" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/source/main.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="317">
-          <caret line="54" column="29" selection-start-line="54" selection-start-column="29" selection-end-line="54" selection-end-column="29" />
-          <folding>
-            <element signature="e#0#16#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/source/level_layout/GameLoop.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="100" selection-start-line="100" selection-end-line="100" />
-          <folding>
-            <element signature="e#0#16#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/source/level_layout/MapTile.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="315">
           <caret line="21" column="4" selection-start-line="21" selection-start-column="4" selection-end-line="21" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/source/level_layout/rooms/RoomType.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="13" column="9" selection-start-line="13" selection-start-column="9" selection-end-line="13" selection-end-column="9" />
         </state>
       </provider>
     </entry>
@@ -1015,17 +968,24 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/level_layout/LevelGenerator.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="27" column="12" selection-start-line="27" selection-start-column="12" selection-end-line="27" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/source/level_layout/rooms/_info.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
           <caret line="16" column="9" lean-forward="true" selection-start-line="16" selection-start-column="9" selection-end-line="16" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/level_layout/rooms/EntranceRooms.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="20" selection-start-line="20" selection-end-line="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/level_layout/rooms/ExitRooms.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="22" selection-start-line="22" selection-end-line="22" />
         </state>
       </provider>
     </entry>
@@ -1036,22 +996,120 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/source/level_layout/rooms/LeftRightUpRooms.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="690">
+          <caret line="46" selection-start-line="46" selection-end-line="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/level_layout/rooms/RoomType.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="13" column="9" selection-start-line="13" selection-start-column="9" selection-end-line="13" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/level_layout/LevelGenerator.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="662">
+          <caret line="61" selection-start-line="61" selection-end-line="61" />
+          <folding>
+            <element signature="e#178#196#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/source/level_layout/rooms/SplashScreens.h">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/level_layout/rooms/EntranceRooms.h">
+    <entry file="file://$PROJECT_DIR$/source/level_layout/rooms/LeftRightDownRooms.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="20" selection-start-line="20" selection-end-line="20" />
+        <state relative-caret-position="270">
+          <caret line="18" column="47" selection-start-line="18" selection-start-column="47" selection-end-line="18" selection-end-column="47" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/source/level_layout/LevelGenerator.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-5023">
-          <caret line="182" column="46" selection-start-line="182" selection-start-column="46" selection-end-line="182" selection-end-column="46" />
+        <state relative-caret-position="240">
+          <caret line="119" column="26" selection-start-line="119" selection-start-column="26" selection-end-line="119" selection-end-column="26" />
           <folding>
             <element signature="e#41#60#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gfx/sprites/bat.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/main.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="580">
+          <caret line="70" column="19" selection-start-line="70" selection-start-column="19" selection-end-line="70" selection-end-column="19" />
+          <folding>
+            <element signature="e#0#16#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/level_layout/rooms/ClosedRooms.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="21" column="9" selection-start-line="21" selection-start-column="9" selection-end-line="21" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/level_layout/GameLoop.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="268">
+          <caret line="89" column="18" selection-start-line="89" selection-start-column="18" selection-end-line="89" selection-end-column="18" />
+          <folding>
+            <element signature="e#0#16#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/animations/Snake.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="632">
+          <caret line="56" selection-start-line="11" selection-end-line="56" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/animations/Snake.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="662">
+          <caret line="287" selection-start-line="11" selection-end-line="287" />
+          <folding>
+            <element signature="e#41#59#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/sprites/SpriteTypes.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="25" column="7" selection-start-line="25" selection-start-column="7" selection-end-line="25" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/animations/Bat.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="587">
+          <caret line="46" column="17" selection-start-line="46" selection-start-column="17" selection-end-line="46" selection-end-column="17" />
+          <folding>
+            <element signature="e#92#128#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/animations/Bat.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="56" selection-start-line="56" selection-end-line="56" />
+          <folding>
+            <element signature="e#41#57#0" expanded="true" />
           </folding>
         </state>
       </provider>
