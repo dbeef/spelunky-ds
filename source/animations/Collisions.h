@@ -42,6 +42,7 @@ public:
     static bool checkCollisionWithMainDudeWidthBoundary(int x, int y, int width, int height, int x_boundary);
 
     static bool checkCollisionWithMainDudeWhip(int x, int y, int width, int height);
+
 };
 
 

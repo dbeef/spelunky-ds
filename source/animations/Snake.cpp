@@ -121,7 +121,33 @@ void Snake::draw() {
         }
     }
 
-    if (!killed && !global::main_dude->dead && Collisions::checkCollisionWithMainDude(x, y, 16, 16) && global::main_dude->time_since_last_damage > 1000) {
+
+    if (!killed && Collisions::checkCollisionWithMainDude(x, y, 16, 16) && global::main_dude->ySpeed > 0 &&
+        global::main_dude->y - 4 < y) {
+        subSpriteInfo->entry->isHidden = true;
+        mainSpriteInfo->entry->isHidden = true;
+
+        for (int a = 0; a < 4; a++) {
+            Blood *blood = new Blood();
+            blood->init();
+            blood->x = x;
+            blood->y = y;
+
+            if (a % 2 == 0)
+                blood->xSpeed = (1 / a);
+            else
+                blood->xSpeed = (-1 / a);
+
+            blood->ySpeed = -1 / a;
+            global::sprites.push_back(blood);
+        }
+        killed = true;
+
+        global::main_dude->ySpeed = -2;
+    }
+
+    if (!killed && !global::main_dude->dead && Collisions::checkCollisionWithMainDude(x, y, 16, 16) &&
+        global::main_dude->time_since_last_damage > 1000) {
 
         global::main_dude->time_since_last_damage = 0;
         global::hud->hearts--;
@@ -134,6 +160,7 @@ void Snake::draw() {
         }
 
     }
+
 
 }
 
