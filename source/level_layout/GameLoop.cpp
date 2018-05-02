@@ -14,7 +14,6 @@
 #include "../animations/TitleMenuSign.h"
 #include "../animations/Rope.h"
 #include <vector>
-//#include "../Globals.h";
 #include <time.h>
 #include <maxmod9.h>
 
@@ -24,13 +23,11 @@ static const int OFFSET_MULTIPLIER_SUB = BOUNDARY_VALUE / sizeof(SPRITE_GFX_SUB[
 
 void gameloop::scroll() {
 
-//    mmStart(SFX_MCAVE, MM_PLAY_LOOP);
-
     double timer = 0;
     int initTimer = 0;
 
     global::main_oam_manager->initOAMTable(SPRITE_GFX, SPRITE_PALETTE, OAM, OFFSET_MULTIPLIER_MAIN, OamType::MAIN);
-    global::sub_oam_manager->initOAMTable(SPRITE_GFX_SUB, SPRITE_PALETTE_SUB, OAM_SUB , OFFSET_MULTIPLIER_SUB,
+    global::sub_oam_manager->initOAMTable(SPRITE_GFX_SUB, SPRITE_PALETTE_SUB, OAM_SUB, OFFSET_MULTIPLIER_SUB,
                                           OamType::SUB);
     global::timer = &timer;
 
@@ -41,23 +38,8 @@ void gameloop::scroll() {
     global::camera->y = 127;
 
 
-    MapTile *entrance;
-//    global::level_generator->getEntranceTile(entrance);
-
-    if (entrance == nullptr) {
-        global::main_dude->x = 224;
-        global::main_dude->y = 300;
-    } else {
-        global::main_dude->x = entrance->x * 16;
-        global::main_dude->y = entrance->y * 16;
-    }
-
-
-//    global::camera->followMainDude = true;
-//    for (int a = 0; a < 400; a++)
-//        global::camera->updatePosition(global::main_dude->x, global::main_dude->y);
-//    global::camera->followMainDude = false;
-    //fixme
+    global::main_dude->x = 224;
+    global::main_dude->y = 300;
 
     global::sprites.push_back(global::main_dude);
 
@@ -105,22 +87,12 @@ void gameloop::scroll() {
         initTimer += timer;
 
         global::hud->update();
-/*
-        if (!initialised *//*&& initTimer > 5000*//*) {
-
-            srand(global::input_handler->seed + global::main_dude->x + global::main_dude->y);
-
-//            populateCaveItems();
-//            populateCaveNpcs();
-
-            initialised = true;
-        }*/
 
     }
 
 }
 
-void gameloop::populateCaveMoniez(){
+void gameloop::populateCaveMoniez() {
 
     for (int a = 0; a < 4; a++) {
         Moniez *moniez = new Moniez();
@@ -138,8 +110,8 @@ void gameloop::populateCaveMoniez(){
         moniez->timer = global::timer;
         global::sprites.push_back(moniez);
 
-        int curr_x = (rand() % 400 )+ 48 + a * 16;
-        int curr_y = (rand() % 400 )+ 48;
+        int curr_x = (rand() % 400) + 48 + a * 16;
+        int curr_y = (rand() % 400) + 48;
 
         moniez->x = curr_x;
         moniez->y = curr_y;
@@ -179,8 +151,8 @@ void gameloop::populateCaveItems() {
         jar->timer = global::timer;
         global::sprites.push_back(jar);
 
-        int curr_x = (rand() % 400 )+ 48;
-        int curr_y = (rand() % 400 )+ 48;
+        int curr_x = (rand() % 400) + 48;
+        int curr_y = (rand() % 400) + 48;
 
         jar->x = curr_x;
         jar->y = curr_y;
@@ -191,7 +163,7 @@ void gameloop::populateCaveItems() {
         rock->timer = global::timer;
         global::sprites.push_back(rock);
 
-        int curr_x = (rand() % 400 )+ 48;
+        int curr_x = (rand() % 400) + 48;
         int curr_y = (rand() % 400) + 48;
 
         rock->x = curr_x;
@@ -219,7 +191,7 @@ void gameloop::populateCaveNpcs() {
 
 }
 
-void gameloop::populate_main_menu(){
+void gameloop::populate_main_menu() {
 
     global::hud->hide();
     global::hud->bombs = 0;
@@ -243,7 +215,7 @@ void gameloop::populate_main_menu(){
 
     TitleMenuSign *start = new TitleMenuSign();
     start->oamType = OamType::MAIN;
-    start->menuSignType = MenuSignType ::START;
+    start->menuSignType = MenuSignType::START;
     start->init();
     start->x = 50;
     start->y = 272;
@@ -251,23 +223,23 @@ void gameloop::populate_main_menu(){
 
     TitleMenuSign *scores = new TitleMenuSign();
     scores->oamType = OamType::MAIN;
-    scores->menuSignType = MenuSignType ::SCORES;
+    scores->menuSignType = MenuSignType::SCORES;
     scores->init();
     scores->x = 98;
     scores->y = 272;
     global::sprites.push_back(scores);
 
-    TitleMenuSign *tutorial= new TitleMenuSign();
+    TitleMenuSign *tutorial = new TitleMenuSign();
     tutorial->oamType = OamType::MAIN;
-    tutorial->menuSignType = MenuSignType ::TUTORIAL;
+    tutorial->menuSignType = MenuSignType::TUTORIAL;
     tutorial->init();
     tutorial->x = 0;
     tutorial->y = 272;
     global::sprites.push_back(tutorial);
 
-    TitleMenuSign *quit= new TitleMenuSign();
+    TitleMenuSign *quit = new TitleMenuSign();
     quit->oamType = OamType::MAIN;
-    quit->menuSignType = MenuSignType ::QUIT;
+    quit->menuSignType = MenuSignType::QUIT;
     quit->init();
     quit->x = 192;
     quit->y = 143;
@@ -281,8 +253,8 @@ void gameloop::populate_main_menu(){
     rope->ySpeed = -4;
 
     rope->hold_by_main_dude = false;
-    rope->activated_by_main_dude= false;
-    rope->thrown= true;
+    rope->activated_by_main_dude = false;
+    rope->thrown = true;
 
     global::sprites.push_back(rope);
 

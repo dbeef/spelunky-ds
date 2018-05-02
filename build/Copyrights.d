@@ -74,6 +74,7 @@ Copyrights.o: \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/../animations/Camera.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/SpriteTypes.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../Globals.h \
+ /home/xdbeef/devkitPro/libnds/include/mm_types.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../input/InputHandler.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../hud/Hud.h \
  /home/xdbeef/devkitPro/libnds/include/nds/jtypes.h \
@@ -242,6 +243,8 @@ Copyrights.o: \
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/SpriteTypes.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../Globals.h:
+
+/home/xdbeef/devkitPro/libnds/include/mm_types.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../input/InputHandler.h:
 

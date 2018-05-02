@@ -42,8 +42,8 @@ public:
     void update();
     void collectedMoniez(int value);
 
-    void drawSplashScreenOnLevelDone();
-    void drawScoresScreen();
+    void draw_on_level_done();
+    void draw_scores();
 
     void hide();
 

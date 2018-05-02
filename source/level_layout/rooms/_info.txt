@@ -1,0 +1,39 @@
+TILE INFO FOR MAPS
+
+0 - nothing (background)
+1 - just regular tile
+2 - tile up-oriented
+3 - tile down-oriented
+4 - tile both up and down oriented
+5 - block
+6 - tile with gold
+7 - tile with more gold
+8 - regular tile with rock
+9 - ladder
+10 - ladder with deck
+11 - entrance
+12 - arrow trap left
+13 - arrow trap right
+14 - exit
+
+15 left bar
+16 left bar, top rounded
+17 left bar, bot rounded
+
+18 right bar
+19 right bar, top rounded
+20 right bar, bottom rounded
+
+21 top bar
+22 bottom bar
+
+23 black background
+
+INFO FOR ROOM GENERATOR
+
+tabs closed room, type 0
+tabs left-right, type 1
+tabs left-right-down, type 2
+tabs left-right-up, type 3
+entrance room - type 5
+entrance room - type 6

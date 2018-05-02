@@ -77,6 +77,7 @@ Blood.o: \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Collisions.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/MapTile.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../Globals.h \
+ /home/xdbeef/devkitPro/libnds/include/mm_types.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../input/InputHandler.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../hud/Hud.h \
  /home/xdbeef/devkitPro/libnds/include/nds/jtypes.h \
@@ -251,6 +252,8 @@ Blood.o: \
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/MapTile.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../Globals.h:
+
+/home/xdbeef/devkitPro/libnds/include/mm_types.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../input/InputHandler.h:
 

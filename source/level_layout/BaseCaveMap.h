@@ -33,6 +33,8 @@ namespace global {
     bool scores_screen = false;
     bool in_main_menu = true;
     bool levels_transition_screen = false;
+    mm_sfxhand menu_music_handler = 0;
+    mm_sfxhand cave_music_handler = 0;
 
 
     u16 current_map[4096];

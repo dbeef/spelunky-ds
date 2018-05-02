@@ -64,6 +64,7 @@ LevelGenerator.o: \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/MapTile.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/MapTileType.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../Globals.h \
+ /home/xdbeef/devkitPro/libnds/include/mm_types.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../input/InputHandler.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../hud/Hud.h \
  /home/xdbeef/devkitPro/libnds/include/nds/jtypes.h \
@@ -90,7 +91,16 @@ LevelGenerator.o: \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/../sprites/SpriteTypes.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/../input/InputHandler.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../console/TextManager.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../console/../time/Timer.h
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../console/../time/Timer.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/SplashScreenType.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/rooms/EntranceRooms.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/rooms/ExitRooms.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/rooms/ClosedRooms.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/rooms/LeftRightRooms.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/rooms/LeftRightDownRooms.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/rooms/LeftRightUpRooms.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/rooms/SplashScreens.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/rooms/RoomType.h
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/LevelGenerator.h:
 
@@ -220,6 +230,8 @@ LevelGenerator.o: \
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../Globals.h:
 
+/home/xdbeef/devkitPro/libnds/include/mm_types.h:
+
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../input/InputHandler.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../hud/Hud.h:
@@ -273,3 +285,21 @@ LevelGenerator.o: \
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../console/TextManager.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../console/../time/Timer.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/SplashScreenType.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/rooms/EntranceRooms.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/rooms/ExitRooms.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/rooms/ClosedRooms.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/rooms/LeftRightRooms.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/rooms/LeftRightDownRooms.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/rooms/LeftRightUpRooms.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/rooms/SplashScreens.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/rooms/RoomType.h:

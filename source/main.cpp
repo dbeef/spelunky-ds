@@ -9,12 +9,13 @@
 #include "level_layout/MapUtils.h"
 #include "../build/soundbank.h"
 #include "../build/soundbank_bin.h"
+#include "level_layout/SplashScreenType.h"
 
 int main(void) {
 
     mmInitDefaultMem((mm_addr) soundbank_bin);
-//    mmLoadEffect(SFX_MCAVE);
-//    mmLoadEffect(SFX_MTITLE);
+    mmLoadEffect(SFX_MCAVE);
+    mmLoadEffect(SFX_MTITLE);
     mmLoadEffect(SFX_XJUMP);
     mmLoadEffect(SFX_XWHIP);
     mmLoadEffect(SFX_XCOIN);
@@ -23,9 +24,7 @@ int main(void) {
     mmLoadEffect(SFX_XEXPLOSION);
     mmLoadEffect(SFX_XSTEPS);
     mmLoadEffect(SFX_XLAND);
-
-    //todo zapisać handler w globals
-//    mmEffect(SFX_MTITLE);
+    global::menu_music_handler = mmEffect(SFX_MTITLE);
 
     Timer *t = new Timer();
 
@@ -53,9 +52,8 @@ int main(void) {
     dmaCopyHalfWords(3, global::base_map, global::current_map, sizeof(global::base_map));
 
     global::level_generator->newLayout(timerElapsed(0));
-    global::level_generator->mapBackground();
-    global::level_generator->generateSplashScreen(22);
-    global::level_generator->generateSplashScreen(23);
+    global::level_generator->generateSplashScreen(SplashScreenType::MAIN_MENU_UPPER);
+    global::level_generator->generateSplashScreen(SplashScreenType::MAIN_MENU_LOWER);
     global::level_generator->tilesToMap();
 
     sectorize_map();
@@ -64,7 +62,9 @@ int main(void) {
                      sizeof(global::current_map));
     dmaCopyHalfWords(DMA_CHANNEL, global::current_map, bgGetMapPtr(global::bg_sub_address),
                      sizeof(global::current_map));
+
     global::textManager->initConsole();
+
     dmaCopy(cavebgPal, BG_PALETTE, cavebgPalLen);
     dmaCopy(cavebgPal, BG_PALETTE_SUB, cavebgPalLen);
 

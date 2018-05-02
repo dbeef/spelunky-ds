@@ -5,7 +5,15 @@
 #include <tgmath.h>
 #include "LevelGenerator.h"
 #include "../Globals.h"
-
+#include "SplashScreenType.h"
+#include "rooms/EntranceRooms.h"
+#include "rooms/ExitRooms.h"
+#include "rooms/ClosedRooms.h"
+#include "rooms/LeftRightRooms.h"
+#include "rooms/LeftRightDownRooms.h"
+#include "rooms/LeftRightUpRooms.h"
+#include "rooms/SplashScreens.h"
+#include "rooms/RoomType.h"
 
 #define ROOM_WIDTH 10
 #define ROOM_HEIGHT 10
@@ -62,7 +70,7 @@ void LevelGenerator::newLayout(int seed) {
     int curr_y = ROOMS_Y - 1;
     int direction = 0;
 
-    layout[curr_x][curr_y] = 5;
+    layout[curr_x][curr_y] = 4;
 
     while (curr_y >= 0) {
 
@@ -127,7 +135,7 @@ void LevelGenerator::newLayout(int seed) {
                 curr_y--;
 
                 if (curr_y == 0)
-                    layout[curr_x][curr_y] = 6;
+                    layout[curr_x][curr_y] = 5;
 
             } else {
                 break;
@@ -144,79 +152,12 @@ void LevelGenerator::newLayout(int seed) {
 
 }
 
-void LevelGenerator::mapBackground() {
-/*
-    for (int a = 0; a < 32; a += 2)
-        for (int b = 0; b < 32; b += 2) {
-            delete (mapTiles[b][a]);
-            MapTile *t = new MapTile();
-            t->values[0] = 0;
-            t->values[1] = 1;
-            t->values[2] = 2;
-            t->values[3] = 3;
-            t->map_index[0] = (b * 2) + 0 + (a * LINE_WIDTH);
-            t->map_index[1] = (b * 2) + 1 + (a * LINE_WIDTH);
-            t->map_index[2] = (b * 2) + 0 + (a * LINE_WIDTH) + LINE_WIDTH;
-            t->map_index[3] = (b * 2) + 1 + (a * LINE_WIDTH) + LINE_WIDTH;
-            t->collidable = false;
-            this->mapTiles[b][a] = t;
-        }
-
-    for (int a = 0; a < 32; a += 2)
-        for (int b = 1; b < 32; b += 2) {
-            delete (mapTiles[b][a]);
-            MapTile *t = new MapTile();
-            t->values[0] = 4;
-            t->values[1] = 5;
-            t->values[2] = 6;
-            t->values[3] = 7;
-            t->map_index[0] = (b * 2) + 0 + (a * LINE_WIDTH);
-            t->map_index[1] = (b * 2) + 1 + (a * LINE_WIDTH);
-            t->map_index[2] = (b * 2) + 0 + (a * LINE_WIDTH) + LINE_WIDTH;
-            t->map_index[3] = (b * 2) + 1 + (a * LINE_WIDTH) + LINE_WIDTH;
-            t->collidable = false;
-            this->mapTiles[b][a] = t;
-        }
-
-    for (int a = 1; a < 32; a += 2)
-        for (int b = 0; b < 32; b += 2) {
-            delete (mapTiles[b][a]);
-            MapTile *t = new MapTile();
-            t->values[0] = 8;
-            t->values[1] = 9;
-            t->values[2] = 10;
-            t->values[3] = 11;
-            t->map_index[0] = (b * 2) + 0 + (a * LINE_WIDTH);
-            t->map_index[1] = (b * 2) + 1 + (a * LINE_WIDTH);
-            t->map_index[2] = (b * 2) + 0 + (a * LINE_WIDTH) + LINE_WIDTH;
-            t->map_index[3] = (b * 2) + 1 + (a * LINE_WIDTH) + LINE_WIDTH;
-            t->collidable = false;
-            this->mapTiles[b][a] = t;
-        }
-
-    for (int a = 1; a < 32; a += 2)
-        for (int b = 1; b < 32; b += 2) {
-            delete (mapTiles[b][a]);
-            MapTile *t = new MapTile();
-            t->values[0] = 12;
-            t->values[1] = 13;
-            t->values[2] = 14;
-            t->values[3] = 15;
-            t->map_index[0] = (b * 2) + 0 + (a * LINE_WIDTH);
-            t->map_index[1] = (b * 2) + 1 + (a * LINE_WIDTH);
-            t->map_index[2] = (b * 2) + 0 + (a * LINE_WIDTH) + LINE_WIDTH;
-            t->map_index[3] = (b * 2) + 1 + (a * LINE_WIDTH) + LINE_WIDTH;
-            t->collidable = false;
-            this->mapTiles[b][a] = t;
-        }*/
-}
-
 void LevelGenerator::mapFrame() {
 
     for (int a = 0; a < 32; a++) {
         delete (mapTiles[a][0]);
         MapTile *t = new MapTile();
-        t->mapTileType = MapTileType::REGULAR;
+        t->mapTileType = MapTileType::TILE_REGULAR;
 
         t->values[0] = 20;
         t->values[1] = 21;
@@ -235,7 +176,7 @@ void LevelGenerator::mapFrame() {
     for (int a = 0; a < 32; a++) {
         delete (mapTiles[a][31]);
         MapTile *t = new MapTile();
-        t->mapTileType = MapTileType::REGULAR;
+        t->mapTileType = MapTileType::TILE_REGULAR;
 
         t->values[0] = 20;
         t->values[1] = 21;
@@ -254,7 +195,7 @@ void LevelGenerator::mapFrame() {
     for (int a = 0; a < 32; a++) {
         delete (mapTiles[0][a]);
         MapTile *t = new MapTile();
-        t->mapTileType = MapTileType::REGULAR;
+        t->mapTileType = MapTileType::TILE_REGULAR;
 
         t->values[0] = 20;
         t->values[1] = 21;
@@ -273,7 +214,7 @@ void LevelGenerator::mapFrame() {
     for (int a = 0; a < 32; a++) {
         delete (mapTiles[31][a]);
         MapTile *t = new MapTile();
-        t->mapTileType = MapTileType::REGULAR;
+        t->mapTileType = MapTileType::TILE_REGULAR;
         t->values[0] = 20;
         t->values[1] = 21;
         t->values[2] = 22;
@@ -317,7 +258,6 @@ void LevelGenerator::clearCollidedTile(int px, int py, int camera_x, int camera_
                 t->values[1] = 0;
                 t->values[2] = 0;
                 t->values[3] = 0;
-//                std::cout << " " << px << " " << py << " " << camera_x << " " << camera_y << '\n';
             }
         }
     }
@@ -325,44 +265,37 @@ void LevelGenerator::clearCollidedTile(int px, int py, int camera_x, int camera_
 }
 
 void LevelGenerator::generateSplashScreen(int room_type) {
-    int tab[12][16];
+    int tab[SPLASH_SCREEN_HEIGHT][SPLASH_SCREEN_WIDTH];
     int a, b = 0;
 
-    //upper
-    if (room_type == 21 || room_type == 23 || room_type == 25) {
+    if (room_type == ON_LEVEL_DONE_UPPER || room_type == SCORES_UPPER || room_type == MAIN_MENU_UPPER) {
         a = 0;
         b = 1;
+
+        if (room_type == MAIN_MENU_UPPER) {
+            memcpy(tab, main_menu_upper, sizeof(main_menu_upper));
+        } else if (room_type == ON_LEVEL_DONE_UPPER) {
+            memcpy(tab, on_level_done_upper, sizeof(on_level_done_upper));
+        } else if (room_type == SCORES_UPPER) {
+            memcpy(tab, scores_upper, sizeof(scores_upper));
+        }
     }
-    //lower
-    if (room_type == 20 || room_type == 22 || room_type == 24) {
+
+    if (room_type == ON_LEVEL_DONE_LOWER || room_type == SCORES_LOWER || room_type == MAIN_MENU_LOWER) {
         a = 0;
         b = 0;
+
+        if (room_type == ON_LEVEL_DONE_LOWER) {
+            memcpy(tab, on_level_done_lower, sizeof(on_level_done_lower));
+        } else if (room_type == MAIN_MENU_LOWER) {
+            memcpy(tab, main_menu_lower, sizeof(main_menu_lower));
+        } else if (room_type == SCORES_LOWER) {
+            memcpy(tab, scores_lower, sizeof(scores_lower));
+        }
     }
 
-
-    if (room_type == 20) {
-        memcpy(tab, on_level_done_lower, sizeof(on_level_done_lower));
-    }
-    if (room_type == 23) {
-        memcpy(tab, start_screen_upper, sizeof(start_screen_upper));
-    }
-    if(room_type == 21) {
-        memcpy(tab, on_level_done_upper, sizeof(on_level_done_upper));
-    }
-    if(room_type == 22) {
-        memcpy(tab, start_screen_lower, sizeof(start_screen_lower));
-    }
-    if(room_type == 25) {
-        memcpy(tab, scores_screen_upper, sizeof(scores_screen_upper));
-    }
-    if(room_type == 24) {
-        memcpy(tab, scores_screen_lower, sizeof(scores_screen_lower));
-    }
-
-
-
-    for (int tab_y = 0; tab_y < 12; tab_y++) {
-        for (int tab_x = 0; tab_x < 16; tab_x++) {
+    for (int tab_y = 0; tab_y < SPLASH_SCREEN_HEIGHT; tab_y++) {
+        for (int tab_x = 0; tab_x < SPLASH_SCREEN_WIDTH; tab_x++) {
 
             if (tab[tab_y][tab_x] != 0) {
 
@@ -372,14 +305,6 @@ void LevelGenerator::generateSplashScreen(int room_type) {
 
                 u16 pos_x = (tab_x * 2 + 2 * ROOM_WIDTH_SPLASH_SCREEN * a) / 2;
                 u16 pos_y = tab_y + ROOM_HEIGHT_SPLASH_SCREEN * ((ROOMS_Y - b) - 1) - 4;
-
-
-//                u16 room_offset =
-//                        OFFSET_X + OFFSET_Y + 2 * ROOM_WIDTH * a +
-//                        2 * ROOM_HEIGHT * LINE_WIDTH * ((ROOMS_Y - b) - 1);
-//                u16 pos_x = (OFFSET_X + tab_x * 2 + 2 * ROOM_WIDTH * a) / 2;
-//                u16 pos_y = (OFFSET_X + tab_y * 2 + 2 * ROOM_HEIGHT * ((ROOMS_Y - b) - 1)) / 2;
-
 
                 delete (mapTiles[pos_x][pos_y]);
                 MapTile *t = new MapTile();
@@ -405,53 +330,30 @@ void LevelGenerator::generateRooms() {
         for (int a = 0; a < ROOMS_X; a++) {
 
             int room_type = layout[a][b];
+            r = rand() % 3;
 
-            if (room_type == 5) {
-                memcpy(tab, entrance_room, sizeof(entrance_room));
+            switch (room_type) {
+                case RoomType::ROOM_CLOSED:
+                    memcpy(tab, closed_rooms[r], sizeof(closed_rooms[r]));
+                    break;
+                case RoomType::ROOM_LEFT_RIGHT:
+                    memcpy(tab, left_right_rooms[r], sizeof(left_right_rooms[r]));
+                    break;
+                case RoomType::ROOM_LEFT_RIGHT_DOWN:
+                    memcpy(tab, left_right_down_rooms[r], sizeof(left_right_down_rooms[r]));
+                    break;
+                case RoomType::ROOM_LEFT_RIGHT_UP:
+                    memcpy(tab, left_right_up_rooms[r], sizeof(left_right_up_rooms[r]));
+                    break;
+                case RoomType::ROOM_ENTRANCE:
+                    memcpy(tab, entrance_room, sizeof(entrance_room));
+                    break;
+                case RoomType::ROOM_EXIT:
+                    memcpy(tab, exit_room, sizeof(exit_room));
+                    break;
+                default:
+                    break;
             }
-            if (room_type == 6) {
-                memcpy(tab, exit_room, sizeof(exit_room));
-            }
-            if (room_type == 0) {
-                r = (rand() % 3) + 1;
-                if (r == 1)
-                    memcpy(tab, tab_0_1, sizeof(tab_0_1));
-                else if (r == 2)
-                    memcpy(tab, tab_0_2, sizeof(tab_0_2));
-                else if (r == 3)
-                    memcpy(tab, tab_0_3, sizeof(tab_0_3));
-            }
-
-            if (room_type == 1) {
-                r = (rand() % 3) + 1;
-                if (r == 1)
-                    memcpy(tab, tab_1_1, sizeof(tab_1_1));
-                else if (r == 2)
-                    memcpy(tab, tab_1_2, sizeof(tab_1_2));
-                else if (r == 3)
-                    memcpy(tab, tab_1_3, sizeof(tab_1_3));
-
-            }
-            if (room_type == 2) {
-                r = (rand() % 3) + 1;
-                if (r == 1)
-                    memcpy(tab, tab_2_1, sizeof(tab_2_1));
-                else if (r == 2)
-                    memcpy(tab, tab_2_2, sizeof(tab_2_2));
-                else if (r == 3)
-                    memcpy(tab, tab_2_3, sizeof(tab_2_3));
-            }
-            if (room_type == 3) {
-                r = (rand() % 3) + 1;
-                if (r == 1)
-                    memcpy(tab, tab_3_1, sizeof(tab_3_1));
-                else if (r == 2)
-                    memcpy(tab, tab_3_2, sizeof(tab_3_2));
-                else if (r == 3)
-                    memcpy(tab, tab_3_3, sizeof(tab_3_3));
-
-            }
-
 
             for (int tab_y = 0; tab_y < 10; tab_y++) {
                 for (int tab_x = 0; tab_x < 10; tab_x++) {
@@ -482,10 +384,10 @@ void LevelGenerator::generateRooms() {
 }
 
 void LevelGenerator::matchTile(MapTile *t, int value) {
-//                        std::cout << pos_x << " " << pos_y << '\n';
+
     t->destroyable = true;
     t->collidable = true;
-    t->mapTileType = MapTileType::REGULAR;
+    t->mapTileType = MapTileType::TILE_REGULAR;
 
     if (value == 1) {
         t->values[0] = 20;
@@ -526,7 +428,7 @@ void LevelGenerator::matchTile(MapTile *t, int value) {
 
         t->collidable = false;
         t->destroyable = false;
-        t->mapTileType = MapTileType::LADDER;
+        t->mapTileType = MapTileType::TILE_LADDER;
 
     } else if (value == 10) {
 
@@ -537,7 +439,7 @@ void LevelGenerator::matchTile(MapTile *t, int value) {
 
         t->collidable = false;
         t->destroyable = false;
-        t->mapTileType = MapTileType::LADDER_WITH_DECK;
+        t->mapTileType = MapTileType::TILE_LADDER_WITH_DECK;
 
     } else if (value == 12) {
 
@@ -561,7 +463,7 @@ void LevelGenerator::matchTile(MapTile *t, int value) {
         t->values[3] = 67;
         t->collidable = false;
         t->destroyable = false;
-        t->mapTileType = MapTileType::ENTRANCE;
+        t->mapTileType = MapTileType::TILE_ENTRANCE;
 
     } else if (value == 14) {
 
@@ -571,7 +473,7 @@ void LevelGenerator::matchTile(MapTile *t, int value) {
         t->values[3] = 71;
         t->collidable = false;
         t->destroyable = false;
-        t->mapTileType = MapTileType::EXIT;
+        t->mapTileType = MapTileType::TILE_EXIT;
 
     } else if (value == 3) {
         t->values[0] = 28;
@@ -662,16 +564,15 @@ void LevelGenerator::matchTile(MapTile *t, int value) {
 
 }
 
-
-void LevelGenerator::getEntranceTile(MapTile *&m) {
+void LevelGenerator::getFirstTile(MapTileType mapTileType, MapTile *&m){
     https://stackoverflow.com/questions/416162/assignment-inside-function-that-is-passed-as-pointer?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
     for (int a = 0; a < 32; a++) {
         for (int b = 0; b < 32; b++) {
-            if (mapTiles[a][b] != 0 && mapTiles[a][b]->mapTileType == MapTileType::ENTRANCE) {
+            if (mapTiles[a][b] != 0 && mapTiles[a][b]->mapTileType == mapTileType) {
                 m = mapTiles[a][b];
                 break;
             }
         }
     }
-
 }
+

@@ -5,6 +5,7 @@
 #ifndef SPELUNKYDS_CONSTS_H
 #define SPELUNKYDS_CONSTS_H
 
+#include <mm_types.h>
 #include "input/InputHandler.h"
 #include "hud/Hud.h"
 #include "animations/Camera.h"
@@ -44,6 +45,9 @@ namespace global {
     extern u16 current_map[4096];
     extern u16 base_map[4096];
     extern bool in_main_menu;
+    extern mm_sfxhand menu_music_handler;
+    extern mm_sfxhand cave_music_handler;
+
 }
 
 #endif //SPELUNKYDS_CONSTS_H

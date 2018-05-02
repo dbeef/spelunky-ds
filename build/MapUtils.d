@@ -61,6 +61,7 @@ MapUtils.o: \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/videoGL.h \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/nand.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../Globals.h \
+ /home/xdbeef/devkitPro/libnds/include/mm_types.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../input/InputHandler.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../hud/Hud.h \
  /home/xdbeef/devkitPro/libnds/include/nds/jtypes.h \
@@ -212,6 +213,8 @@ MapUtils.o: \
 /home/xdbeef/devkitPro/libnds/include/nds/arm9/nand.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../Globals.h:
+
+/home/xdbeef/devkitPro/libnds/include/mm_types.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../input/InputHandler.h:
 

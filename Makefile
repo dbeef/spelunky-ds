@@ -23,7 +23,7 @@ include $(DEVKITARM)/ds_rules
 TARGET		:=	$(notdir $(CURDIR))
 BUILD		:=	build
 SOURCES		:=	source source/level_layout source/console source/input  \
-                source/animations source/sprites source/time source/hud
+                source/animations source/sprites source/time source/hud source/level_layout/rooms
 DATA		:=	data
 INCLUDES	:=	include
 FONTS   	:=	gfx/fonts

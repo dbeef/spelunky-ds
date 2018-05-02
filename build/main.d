@@ -108,7 +108,8 @@ main.o: /home/xdbeef/NetBeansProjects/spelunkyds/source/main.cpp \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../hud/Hud.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/MapUtils.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/../build/soundbank.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/../build/soundbank_bin.h
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/../build/soundbank_bin.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/SplashScreenType.h
 
 /home/xdbeef/devkitPro/libnds/include/nds.h:
 
@@ -329,3 +330,5 @@ main.o: /home/xdbeef/NetBeansProjects/spelunkyds/source/main.cpp \
 /home/xdbeef/NetBeansProjects/spelunkyds/source/../build/soundbank.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/../build/soundbank_bin.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/SplashScreenType.h:

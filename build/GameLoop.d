@@ -77,6 +77,7 @@ GameLoop.o: \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/../sprites/../animations/Camera.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/../sprites/SpriteTypes.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../Globals.h \
+ /home/xdbeef/devkitPro/libnds/include/mm_types.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../input/InputHandler.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../hud/Hud.h \
  /home/xdbeef/devkitPro/libnds/include/nds/jtypes.h \
@@ -107,8 +108,7 @@ GameLoop.o: \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/MenuSignType.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/Rope.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/RopeElement.h \
- /home/xdbeef/devkitPro/libnds/include/maxmod9.h \
- /home/xdbeef/devkitPro/libnds/include/mm_types.h
+ /home/xdbeef/devkitPro/libnds/include/maxmod9.h
 
 /home/xdbeef/devkitPro/libnds/include/nds.h:
 
@@ -264,6 +264,8 @@ GameLoop.o: \
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../Globals.h:
 
+/home/xdbeef/devkitPro/libnds/include/mm_types.h:
+
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../input/InputHandler.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../hud/Hud.h:
@@ -325,5 +327,3 @@ GameLoop.o: \
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/RopeElement.h:
 
 /home/xdbeef/devkitPro/libnds/include/maxmod9.h:
-
-/home/xdbeef/devkitPro/libnds/include/mm_types.h:

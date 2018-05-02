@@ -21,6 +21,7 @@
 #include "Blood.h"
 #include "../level_layout/GameLoop.h"
 #include "../level_layout/TileOrientation.h"
+#include "../level_layout/SplashScreenType.h"
 
 void MainDude::handleKeyInput() {
 
@@ -173,11 +174,11 @@ void MainDude::handleKeyInput() {
 //            Collisions::getNeighboringTiles(global::level_generator->mapTiles, xx, yy_a_bit_down, neighboringTiles_a_bit_down);
 
             canClimbLadder = neighboringTiles[CENTER] != 0 &&
-                             (neighboringTiles[CENTER]->mapTileType == MapTileType::LADDER ||
-                              neighboringTiles[CENTER]->mapTileType == MapTileType::LADDER_WITH_DECK);
+                             (neighboringTiles[CENTER]->mapTileType == MapTileType::TILE_LADDER ||
+                              neighboringTiles[CENTER]->mapTileType == MapTileType::TILE_LADDER_WITH_DECK);
 
             exitingLevel = neighboringTiles[CENTER] != 0 &&
-                           (neighboringTiles[CENTER]->mapTileType == MapTileType::EXIT);
+                           (neighboringTiles[CENTER]->mapTileType == MapTileType::TILE_EXIT);
 
             if (exitingLevel) {
 
@@ -194,7 +195,7 @@ void MainDude::handleKeyInput() {
 
             onTopOfClimbingSpace = onTopOfClimbingSpace ||
                                    neighboringTiles[UP_MIDDLE] != 0 &&
-                                   neighboringTiles[UP_MIDDLE]->mapTileType == MapTileType::REGULAR;
+                                   neighboringTiles[UP_MIDDLE]->mapTileType == MapTileType::TILE_REGULAR;
 
             if (canClimbLadder) {
                 x = neighboringTiles[CENTER]->x * 16;
@@ -227,15 +228,15 @@ void MainDude::handleKeyInput() {
             MapTile **neighboringTiles;
             Collisions::getNeighboringTiles(global::level_generator->mapTiles, xx, yy, neighboringTiles);
             canClimbLadder =
-                    neighboringTiles[CENTER]->mapTileType == MapTileType::LADDER || MapTileType::LADDER_WITH_DECK;
+                    neighboringTiles[CENTER]->mapTileType == MapTileType::TILE_LADDER || MapTileType::TILE_LADDER_WITH_DECK;
 
 
             if (climbing) {
                 canClimbLadder = neighboringTiles[CENTER] != 0 &&
-                                 (neighboringTiles[CENTER]->mapTileType == MapTileType::LADDER ||
-                                  neighboringTiles[CENTER]->mapTileType == MapTileType::LADDER_WITH_DECK) &&
+                                 (neighboringTiles[CENTER]->mapTileType == MapTileType::TILE_LADDER ||
+                                  neighboringTiles[CENTER]->mapTileType == MapTileType::TILE_LADDER_WITH_DECK) &&
                                  (neighboringTiles[DOWN_MIDDLE] == nullptr ||
-                                  neighboringTiles[DOWN_MIDDLE]->mapTileType != MapTileType::REGULAR);
+                                  neighboringTiles[DOWN_MIDDLE]->mapTileType != MapTileType::TILE_REGULAR);
             }
 
             if (climbing) {
@@ -337,6 +338,14 @@ void MainDude::updateTimers() {
             global::hud->draw();
         }
         stunned = true;
+
+
+        if (global::hud->hearts == 0) {
+            global::hud->hide();
+            global::main_dude->ySpeed = -MAIN_DUDE_JUMP_SPEED * 0.25;
+            global::main_dude->dead = true;
+        }
+
         mmEffect(SFX_XLAND);
 
         jumpingTimer = 0;
@@ -557,21 +566,29 @@ void MainDude::draw() {
 
             dmaCopyHalfWords(DMA_CHANNEL, global::base_map, global::current_map, sizeof(global::current_map));
             global::level_generator->newLayout(*global::timer);
-            global::level_generator->mapBackground();
 
             if (global::in_main_menu || global::levels_transition_screen) {
+
+                mmEffectCancel(global::menu_music_handler);
+                mmEffectCancel(global::cave_music_handler);
+                global::cave_music_handler = mmEffect(SFX_MCAVE);
+
                 global::level_generator->mapFrame();
                 global::level_generator->generateRooms();
             } else {
                 if (global::scores_screen) {
-                    global::level_generator->generateSplashScreen(22);
-                    global::level_generator->generateSplashScreen(23);
+
+                    mmEffectCancel(global::cave_music_handler);
+                    global::menu_music_handler = mmEffect(SFX_MTITLE);
+
+                    global::level_generator->generateSplashScreen(SplashScreenType::MAIN_MENU_UPPER);
+                    global::level_generator->generateSplashScreen(SplashScreenType::MAIN_MENU_LOWER);
                 } else if (dead) {
-                    global::level_generator->generateSplashScreen(24);
-                    global::level_generator->generateSplashScreen(25);
+                    global::level_generator->generateSplashScreen(SplashScreenType::SCORES_UPPER);
+                    global::level_generator->generateSplashScreen(SplashScreenType::SCORES_LOWER);
                 } else {
-                    global::level_generator->generateSplashScreen(20);
-                    global::level_generator->generateSplashScreen(21);
+                    global::level_generator->generateSplashScreen(SplashScreenType::ON_LEVEL_DONE_UPPER);
+                    global::level_generator->generateSplashScreen(SplashScreenType::ON_LEVEL_DONE_LOWER);
                 }
             }
 
@@ -585,7 +602,7 @@ void MainDude::draw() {
 
 
             MapTile *entrance;
-            global::level_generator->getEntranceTile(entrance);
+            global::level_generator->getFirstTile(MapTileType::TILE_ENTRANCE, entrance);
 
             if (entrance == nullptr) {
                 global::main_dude->x = 32;
@@ -615,6 +632,7 @@ void MainDude::draw() {
 
                 global::hud->init();
                 gameloop::populateCaveNpcs();
+                gameloop::populateCaveItems();
                 gameloop::populateCaveMoniez();
                 global::levels_transition_screen = false;
                 global::in_main_menu = false;
@@ -629,7 +647,7 @@ void MainDude::draw() {
                     dead = false;
                     global::scores_screen = true;
                     global::hud->hide();
-                    global::hud->drawScoresScreen();
+                    global::hud->draw_scores();
                     global::camera->followMainDude = false;
 
                 } else {
@@ -644,7 +662,7 @@ void MainDude::draw() {
                     global::input_handler->right_key_held = true;
                     global::input_handler->up_key_held = true;
                     global::camera->followMainDude = false;
-                    global::hud->drawSplashScreenOnLevelDone();
+                    global::hud->draw_on_level_done();
                 }
             }
 

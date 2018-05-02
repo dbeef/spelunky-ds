@@ -87,7 +87,7 @@ void Hud::init() {
     holdingItemSpriteInfo->entry->x = HOLDING_ITEM_FRAME_POSITION_X;
     holdingItemSpriteInfo->entry->y = HOLDING_ITEM_FRAME_POSITION_Y;
 
-    hearts = 1;
+    hearts = 4;
     ropes = 4;
     bombs = 4;
     dollars = 0;
@@ -144,7 +144,7 @@ void Hud::draw() {
     //TODO Debug flag for this:
 }
 
-void Hud::drawSplashScreenOnLevelDone() {
+void Hud::draw_on_level_done() {
     consoleClear();
 
     int seconds_on_level = time_spent_on_level / 1000;
@@ -166,7 +166,7 @@ void Hud::drawSplashScreenOnLevelDone() {
 
 }
 
-void Hud::drawScoresScreen() {
+void Hud::draw_scores() {
 
     hide();
     std::cout << '\n' << '\n' << '\n' << "    " << "    " << "    " << "    " << "TOP DEFILERS";

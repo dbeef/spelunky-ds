@@ -119,7 +119,8 @@ MainDude.o: \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/../animations/../level_layout/MapTile.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/../animations/Camera.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/../animations/../level_layout/LevelGenerator.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/TileOrientation.h
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/TileOrientation.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/SplashScreenType.h
 
 /home/xdbeef/devkitPro/libnds/include/nds.h:
 
@@ -360,3 +361,5 @@ MainDude.o: \
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/../animations/../level_layout/LevelGenerator.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/TileOrientation.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/SplashScreenType.h:
