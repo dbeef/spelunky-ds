@@ -31,16 +31,19 @@ public:
     int money_on_this_level;
     int level;
 
+    int game_over_timer;
+
     SpriteInfo *heartSpriteInfo = nullptr;
     SpriteInfo *bombSpriteInfo = nullptr;
     SpriteInfo *dollarSpriteInfo = nullptr;
     SpriteInfo *ropeSpriteInfo = nullptr;
     SpriteInfo *holdingItemSpriteInfo = nullptr;
 
-    void updateMoniez();
+    void update();
     void collectedMoniez(int value);
 
     void drawSplashScreenOnLevelDone();
+    void drawScoresScreen();
 
     void hide();
 

@@ -172,7 +172,8 @@ void Moniez::updatePosition() {
         yy = floor_div(this->y + 0.5 * BOMB_SIZE, 16);
 
         if (old_xx != xx || old_yy != yy) {
-            updateCollisionsMap(xx, yy);
+            if(xx < 31 && yy< 31)
+                updateCollisionsMap(xx, yy);
         }
 
         old_xx = xx;
@@ -192,8 +193,7 @@ void Moniez::updatePosition() {
 void Moniez::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
 
     MapTile *tiles[9];
-    Collisions::getNeighboringTiles(global::level_generator->mapTiles, x_current_pos_in_tiles, y_current_pos_in_tiles,
-                                    tiles);
+    Collisions::getNeighboringTiles(global::level_generator->mapTiles, x_current_pos_in_tiles, y_current_pos_in_tiles, tiles);
 
     bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, sprite_width, sprite_width, true);
     leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, sprite_width, sprite_width, true);

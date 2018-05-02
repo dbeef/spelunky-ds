@@ -328,11 +328,13 @@ void LevelGenerator::generateSplashScreen(int room_type) {
     int tab[12][16];
     int a, b = 0;
 
-    if (room_type == 21 || room_type == 23) {
+    //upper
+    if (room_type == 21 || room_type == 23 || room_type == 25) {
         a = 0;
         b = 1;
     }
-    if (room_type == 20 || room_type == 22) {
+    //lower
+    if (room_type == 20 || room_type == 22 || room_type == 24) {
         a = 0;
         b = 0;
     }
@@ -349,6 +351,12 @@ void LevelGenerator::generateSplashScreen(int room_type) {
     }
     if(room_type == 22) {
         memcpy(tab, start_screen_lower, sizeof(start_screen_lower));
+    }
+    if(room_type == 25) {
+        memcpy(tab, scores_screen_upper, sizeof(scores_screen_upper));
+    }
+    if(room_type == 24) {
+        memcpy(tab, scores_screen_lower, sizeof(scores_screen_lower));
     }
 
 

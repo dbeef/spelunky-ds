@@ -40,6 +40,7 @@ namespace global {
     extern double *timer;
     extern bool splash_screen;
     extern bool levels_transition_screen;
+    extern bool scores_screen;
     extern u16 current_map[4096];
     extern u16 base_map[4096];
     extern bool in_main_menu;

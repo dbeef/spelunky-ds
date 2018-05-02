@@ -24,7 +24,7 @@
 
 void MainDude::handleKeyInput() {
 
-    if (!stunned && !exitingLevel) {
+    if (!stunned && !exitingLevel && !dead) {
         if (global::input_handler->r_bumper_down && timeSinceLastJump > 100) {
             if (bottomCollision || climbing) {
                 ySpeed = -MAIN_DUDE_JUMP_SPEED;
@@ -138,9 +138,6 @@ void MainDude::handleKeyInput() {
 //        }
 
 
-    }
-    if (!stunned && !exitingLevel) {
-
         if (global::input_handler->left_key_held) {
             state = W_LEFT;
             hangingOnTileLeft = false;
@@ -196,7 +193,8 @@ void MainDude::handleKeyInput() {
             }
 
             onTopOfClimbingSpace = onTopOfClimbingSpace ||
-                                   neighboringTiles[UP_MIDDLE] != 0 && neighboringTiles[UP_MIDDLE]->mapTileType == MapTileType::REGULAR;
+                                   neighboringTiles[UP_MIDDLE] != 0 &&
+                                   neighboringTiles[UP_MIDDLE]->mapTileType == MapTileType::REGULAR;
 
             if (canClimbLadder) {
                 x = neighboringTiles[CENTER]->x * 16;
@@ -228,7 +226,8 @@ void MainDude::handleKeyInput() {
 
             MapTile **neighboringTiles;
             Collisions::getNeighboringTiles(global::level_generator->mapTiles, xx, yy, neighboringTiles);
-            canClimbLadder = neighboringTiles[CENTER]->mapTileType == MapTileType::LADDER || MapTileType::LADDER_WITH_DECK;
+            canClimbLadder =
+                    neighboringTiles[CENTER]->mapTileType == MapTileType::LADDER || MapTileType::LADDER_WITH_DECK;
 
 
             if (climbing) {
@@ -361,6 +360,7 @@ void MainDude::updateTimers() {
         crawling = false;
 
     timeSinceLastJump += *timer;
+    time_since_last_damage += *timer;
 }
 
 
@@ -421,10 +421,10 @@ void MainDude::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos
     Collisions::getNeighboringTiles(global::level_generator->mapTiles, x_current_pos_in_tiles, y_current_pos_in_tiles,
                                     tiles);
 
-    bottomCollision = Collisions::checkBottomCollision(tiles, &this->x, &this->y, &ySpeed, 16, 16, false);
-    leftCollision = Collisions::checkLeftCollision(tiles, &this->x, &this->y, &xSpeed, 16, 16, false);
-    rightCollision = Collisions::checkRightCollision(tiles, &this->x, &this->y, &xSpeed, 16, 16, false);
-    upperCollision = Collisions::checkUpperCollision(tiles, &this->x, &this->y, &ySpeed, 16, false);
+    bottomCollision = Collisions::checkBottomCollision(tiles, &this->x, &this->y, &ySpeed, 16, 16, dead);
+    leftCollision = Collisions::checkLeftCollision(tiles, &this->x, &this->y, &xSpeed, 16, 16, dead);
+    rightCollision = Collisions::checkRightCollision(tiles, &this->x, &this->y, &xSpeed, 16, 16, dead);
+    upperCollision = Collisions::checkUpperCollision(tiles, &this->x, &this->y, &ySpeed, 16, dead);
 
     canHangOnTile(tiles);
 
@@ -475,6 +475,7 @@ void MainDude::init() {
     main_whip->entry->isHidden = true;
     sub_pre_whip->entry->isHidden = true;
     main_pre_whip->entry->isHidden = true;
+    time_since_last_damage = DAMAGE_PROTECTION_TIME + 1;
 }
 
 //todo split
@@ -549,22 +550,29 @@ void MainDude::draw() {
     }
 
 
-    if (exitingLevel) {
+    if (exitingLevel || (dead && global::input_handler->l_bumper_down)) {
 
-        if (animFrame >= 16 && !global::splash_screen) {
+        if ((dead && global::input_handler->l_bumper_down) || (animFrame >= 16 && !global::splash_screen)) {
             animFrame = 0;
 
             dmaCopyHalfWords(DMA_CHANNEL, global::base_map, global::current_map, sizeof(global::current_map));
             global::level_generator->newLayout(*global::timer);
             global::level_generator->mapBackground();
 
-            if(global::in_main_menu || global::levels_transition_screen) {
+            if (global::in_main_menu || global::levels_transition_screen) {
                 global::level_generator->mapFrame();
                 global::level_generator->generateRooms();
-            }
-            else {
-                global::level_generator->generateSplashScreen(20);
-                global::level_generator->generateSplashScreen(21);
+            } else {
+                if (global::scores_screen) {
+                    global::level_generator->generateSplashScreen(22);
+                    global::level_generator->generateSplashScreen(23);
+                } else if (dead) {
+                    global::level_generator->generateSplashScreen(24);
+                    global::level_generator->generateSplashScreen(25);
+                } else {
+                    global::level_generator->generateSplashScreen(20);
+                    global::level_generator->generateSplashScreen(21);
+                }
             }
 
             global::level_generator->tilesToMap();
@@ -580,13 +588,12 @@ void MainDude::draw() {
             global::level_generator->getEntranceTile(entrance);
 
             if (entrance == nullptr) {
-                global::main_dude->x = 100;
-                global::main_dude->y = 100;
+                global::main_dude->x = 32;
+                global::main_dude->y = 280;
             } else {
                 global::main_dude->x = entrance->x * 16;
                 global::main_dude->y = entrance->y * 16;
             }
-
 
 
             global::main_oam_manager->clearAllSprites();
@@ -604,46 +611,69 @@ void MainDude::draw() {
                 global::camera->updatePosition(global::main_dude->x, global::main_dude->y);
             }
 
-            if(global::in_main_menu || global::levels_transition_screen) {
+            if (global::in_main_menu || global::levels_transition_screen) {
+
                 global::hud->init();
                 gameloop::populateCaveNpcs();
                 gameloop::populateCaveMoniez();
                 global::levels_transition_screen = false;
+                global::in_main_menu = false;
 
-            }else
-            {
-                global::hud->total_time_spent += global::hud->time_spent_on_level;
-                global::hud->level++;
+            } else {
+                if (global::scores_screen) {
+                    global::in_main_menu = true;
+                    global::levels_transition_screen = false;
+                    global::scores_screen = false;
+                    gameloop::populate_main_menu();
+                } else if (dead) {
+                    dead = false;
+                    global::scores_screen = true;
+                    global::hud->hide();
+                    global::hud->drawScoresScreen();
+                    global::camera->followMainDude = false;
 
-                global::levels_transition_screen = true;
+                } else {
+                    global::hud->total_time_spent += global::hud->time_spent_on_level;
+                    global::hud->level++;
 
-                global::splash_screen = true;
+                    global::levels_transition_screen = true;
 
-                global::input_handler->stop_handling = true;
-                global::input_handler->right_key_held = true;
-                global::input_handler->up_key_held = true;
-                global::camera->followMainDude = false;
-                global::hud->drawSplashScreenOnLevelDone();
+                    global::splash_screen = true;
 
+                    global::input_handler->stop_handling = true;
+                    global::input_handler->right_key_held = true;
+                    global::input_handler->up_key_held = true;
+                    global::camera->followMainDude = false;
+                    global::hud->drawSplashScreenOnLevelDone();
+                }
             }
 
             exitingLevel = false;
-            global::in_main_menu = false;
             mmEffectCancel(SFX_MCAVE);
 
-        }
-        else if(animFrame >= 16 && global::splash_screen){
+        } else if (animFrame >= 16 && global::splash_screen) {
 
             main_spelunker->entry->isHidden = true;
             sub_spelunker->entry->isHidden = true;
             global::input_handler->stop_handling = false;
 
-            if(global::input_handler->l_bumper_down || global::input_handler->l_bumper_down ){
+            if (global::input_handler->l_bumper_down || global::input_handler->l_bumper_down) {
                 global::splash_screen = false;
             }
         }
 
         frame = ((13) * SPRITESHEET_ROW_WIDTH) + animFrame + 2;
+        offset = frameGfx + frame * MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT / 2;
+        main_spelunker->updateFrame(offset, 16 * 16);
+        sub_spelunker->updateFrame(offset, 16 * 16);
+
+    } else if (dead) {
+
+        if (bottomCollision) {
+            frame = ((2) * SPRITESHEET_ROW_WIDTH) + 5;
+        } else
+            frame = ((2) * SPRITESHEET_ROW_WIDTH) + 4;
+
         offset = frameGfx + frame * MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT / 2;
         main_spelunker->updateFrame(offset, 16 * 16);
         sub_spelunker->updateFrame(offset, 16 * 16);
@@ -743,6 +773,21 @@ void MainDude::draw() {
 
     canClimbRope = false;
     canClimbLadder = false;
+
+    if (!global::levels_transition_screen) {
+        if (time_since_last_damage < DAMAGE_PROTECTION_TIME) {
+            if (time_since_last_damage % 100 < 50) {
+                main_spelunker->entry->isHidden = true;
+                sub_spelunker->entry->isHidden = true;
+            } else {
+                main_spelunker->entry->isHidden = false;
+                sub_spelunker->entry->isHidden = false;
+            }
+        } else {
+            main_spelunker->entry->isHidden = false;
+            sub_spelunker->entry->isHidden = false;
+        }
+    }
 }
 
 void MainDude::canHangOnTile(MapTile *neighboringTiles[9]) {
@@ -762,15 +807,19 @@ void MainDude::canHangOnTile(MapTile *neighboringTiles[9]) {
         if (neighboringTiles[LEFT_UP] != 0 && neighboringTiles[LEFT_UP]->collidable)
             return;
 
-        x_bound = (this->x <= (neighboringTiles[LEFT_MIDDLE]->x * 16) + 16 && (this->x >= (neighboringTiles[LEFT_MIDDLE]->x * 16) + 12));
-        y_bound = (this->y > (neighboringTiles[LEFT_MIDDLE]->y * 16) - 2) && (this->y < (neighboringTiles[LEFT_MIDDLE]->y * 16) + 8);
+        x_bound = (this->x <= (neighboringTiles[LEFT_MIDDLE]->x * 16) + 16 &&
+                   (this->x >= (neighboringTiles[LEFT_MIDDLE]->x * 16) + 12));
+        y_bound = (this->y > (neighboringTiles[LEFT_MIDDLE]->y * 16) - 2) &&
+                  (this->y < (neighboringTiles[LEFT_MIDDLE]->y * 16) + 8);
     } else if (leftCollision && state == W_RIGHT) {
 
         if (neighboringTiles[RIGHT_UP] != 0 && neighboringTiles[RIGHT_UP]->collidable)
             return;
 
-        y_bound = (this->y > (neighboringTiles[RIGHT_MIDDLE]->y * 16) - 2) && (this->y < (neighboringTiles[RIGHT_MIDDLE]->y * 16) + 8);
-        x_bound = (this->x <= (neighboringTiles[RIGHT_MIDDLE]->x * 16) - 12 && (this->x >= (neighboringTiles[RIGHT_MIDDLE]->x * 16) - 16));
+        y_bound = (this->y > (neighboringTiles[RIGHT_MIDDLE]->y * 16) - 2) &&
+                  (this->y < (neighboringTiles[RIGHT_MIDDLE]->y * 16) + 8);
+        x_bound = (this->x <= (neighboringTiles[RIGHT_MIDDLE]->x * 16) - 12 &&
+                   (this->x >= (neighboringTiles[RIGHT_MIDDLE]->x * 16) - 16));
     }
 
     if ((y_bound && x_bound) && hangingTimer > MIN_HANGING_TIME) {
@@ -835,7 +884,8 @@ void MainDude::updatePosition() {
         yy = floor_div(this->y + 0.5 * MAIN_DUDE_HEIGHT, 16);
 
         if (old_xx != xx || old_yy != yy) {
-            updateCollisionsMap(xx, yy);
+            if (xx < 31 && yy < 31)
+                updateCollisionsMap(xx, yy);
         }
 
         old_xx = xx;

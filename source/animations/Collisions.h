@@ -31,7 +31,7 @@ public:
     static bool isStandingOnLeftEdge(MapTile *neighboringTiles[9], int x, int width, int tileX);
     static bool isStandingOnRightEdge(MapTile *neighboringTiles[9], int x, int width, int tileX);
 
-    static void getNeighboringTiles(MapTile *mapTiles[32][32], int xx, int yy, MapTile *neighboringTiles[9]);
+    static void getNeighboringTiles(MapTile *mapTiles[32][32], int xx, int yy, MapTile *out_neighboringTiles[9]);
 
     static void bombNeighboringTiles(MapTile *mapTiles[32][32], int xx, int yy);
 

@@ -106,10 +106,7 @@ main.o: /home/xdbeef/NetBeansProjects/spelunkyds/source/main.cpp \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/Camera.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/MainDude.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../hud/Hud.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/time/Timer.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/Globals.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/MapUtils.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/console/TextManager.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/../build/soundbank.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/../build/soundbank_bin.h
 
@@ -327,13 +324,7 @@ main.o: /home/xdbeef/NetBeansProjects/spelunkyds/source/main.cpp \
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../hud/Hud.h:
 
-/home/xdbeef/NetBeansProjects/spelunkyds/source/time/Timer.h:
-
-/home/xdbeef/NetBeansProjects/spelunkyds/source/Globals.h:
-
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/MapUtils.h:
-
-/home/xdbeef/NetBeansProjects/spelunkyds/source/console/TextManager.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/../build/soundbank.h:
 

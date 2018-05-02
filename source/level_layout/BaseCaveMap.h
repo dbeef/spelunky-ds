@@ -30,6 +30,7 @@ namespace global {
     bool bombed = false;
     double *timer = 0;
     bool splash_screen = false;
+    bool scores_screen = false;
     bool in_main_menu = true;
     bool levels_transition_screen = false;
 

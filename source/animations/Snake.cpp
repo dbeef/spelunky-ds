@@ -58,8 +58,7 @@ void Snake::draw() {
 
         if (spriteState == SpriteState::W_LEFT) {
             frameGfx = (u8 *) snakeTiles + ((16 * 16 * (animFrame + 4)) / 2);
-        }
-        else if(spriteState == SpriteState::W_RIGHT) {
+        } else if (spriteState == SpriteState::W_RIGHT) {
             frameGfx = (u8 *) snakeTiles + ((16 * 16 * animFrame) / 2);
         }
         animFrameTimer = 0;
@@ -121,6 +120,21 @@ void Snake::draw() {
 
         }
     }
+
+    if (!killed && !global::main_dude->dead && Collisions::checkCollisionWithMainDude(x, y, 16, 16) && global::main_dude->time_since_last_damage > 1000) {
+
+        global::main_dude->time_since_last_damage = 0;
+        global::hud->hearts--;
+        global::hud->draw();
+
+        if (global::hud->hearts == 0) {
+            global::hud->hide();
+            global::main_dude->ySpeed = -MAIN_DUDE_JUMP_SPEED * 0.25;
+            global::main_dude->dead = true;
+        }
+
+    }
+
 }
 
 
@@ -136,7 +150,7 @@ void Snake::init() {
     mainSpriteInfo->updateFrame(frameGfx, 16 * 16);
 
     //idk why do i have to do that, if it is already flipped in image
-    subSpriteInfo->entry->hFlip= true;
+    subSpriteInfo->entry->hFlip = true;
 
     randomizeMovement();
 }
@@ -231,11 +245,8 @@ void Snake::updatePosition() {
                 y -= 1;
         }
 
-//            Collisions::getCenterTile(this->x, this->y, MAIN_DUDE_HEIGHT, MAIN_DUDE_WIDTH, xx, yy);
-//fixme
-
-        xx = floor_div(this->x + 0.5 * 16, 16);
-        yy = floor_div(this->y + 0.5 * 16, 16);
+        xx = floor_div(x + (0.5 * 16), 16);
+        yy = floor_div(y + (0.5 * 16), 16);
 
         if (old_xx != xx || old_yy != yy) {
             updateCollisionsMap(xx, yy);
@@ -257,10 +268,9 @@ void Snake::updatePosition() {
 
 void Snake::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
 
-
-    MapTile *tiles[9];
-    Collisions::getNeighboringTiles(global::level_generator->mapTiles, x_current_pos_in_tiles, y_current_pos_in_tiles,
-                                    tiles);
+    MapTile *tiles[9] = {};
+    Collisions::getNeighboringTiles(global::level_generator->mapTiles, x_current_pos_in_tiles,
+                                    y_current_pos_in_tiles, tiles);
 
     standingOnLeftEdge = Collisions::isStandingOnLeftEdge(tiles, x, 16, x_current_pos_in_tiles);
     standingOnRightEdge = Collisions::isStandingOnRightEdge(tiles, x, 16, x_current_pos_in_tiles);
@@ -272,5 +282,6 @@ void Snake::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in
     if (bottomCollision) {
         //nothing
     }
+
 
 }

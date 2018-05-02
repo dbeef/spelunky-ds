@@ -87,7 +87,7 @@ void Hud::init() {
     holdingItemSpriteInfo->entry->x = HOLDING_ITEM_FRAME_POSITION_X;
     holdingItemSpriteInfo->entry->y = HOLDING_ITEM_FRAME_POSITION_Y;
 
-    hearts = 4;
+    hearts = 1;
     ropes = 4;
     bombs = 4;
     dollars = 0;
@@ -99,9 +99,12 @@ void Hud::init() {
 //call only when something changed
 void Hud::draw() {
     consoleClear();
-    std::cout << '\n' << "   " << hearts << "    " << bombs << "    " << ropes << "    " << dollars;
-    if (dollars_buffer != 0) {
-        std::cout << '\n' << "   " << "    " << "    " << "    " << "   " << "+" << dollars_buffer;
+
+    if(!global::main_dude->dead) {
+        std::cout << '\n' << "   " << hearts << "    " << bombs << "    " << ropes << "    " << dollars;
+        if (dollars_buffer != 0) {
+            std::cout << '\n' << "   " << "    " << "    " << "    " << "   " << "+" << dollars_buffer;
+
 
 /*
         std::cout << "\n \n \n " << "IPM: " << global::main_oam_manager->current_oam_id_palette << " "
@@ -111,7 +114,7 @@ void Hud::draw() {
                   << "N: " << global::sub_oam_manager->nextAvailableTileIdx;
 */
 
-    } else {
+        } else {
 /*
         std::cout << "\n \n \n " << "IPM: " << global::main_oam_manager->current_oam_id_palette << " "
                   << "IPS: " << global::sub_oam_manager->current_oam_id_palette << " "
@@ -119,8 +122,24 @@ void Hud::draw() {
                   << "ITS: " << global::sub_oam_manager->current_oam_id_tiles
                   << "N: " << global::sub_oam_manager->nextAvailableTileIdx;*/
 
+        }
     }
 
+    if (global::main_dude->dead && global::main_dude->time_since_last_damage > DAMAGE_PROTECTION_TIME) {
+
+        hide();
+
+        std::cout << '\n' << '\n' << '\n' << '\n' << '\n' << "    " << "    " << "  " << "GAME OVER";
+
+        if (game_over_timer > 2000) {
+            std::cout << '\n' << '\n' << '\n' << "    " << "    " << "  " << "FINAL SCORE:";
+        }
+
+        if (game_over_timer > 3000) {
+            std::cout << '\n' << "    " << "    " << "  " << "$" << dollars;
+            std::cout << '\n' << '\n' << '\n' << "    " << "" << "PRESS X FOR HIGH SCORES.";
+        }
+    }
 
     //TODO Debug flag for this:
 }
@@ -147,7 +166,21 @@ void Hud::drawSplashScreenOnLevelDone() {
 
 }
 
-void Hud::updateMoniez() {
+void Hud::drawScoresScreen() {
+
+    hide();
+    std::cout << '\n' << '\n' << '\n' << "    " << "    " << "    " << "    " << "TOP DEFILERS";
+    std::cout << '\n' << '\n' << "    " << "    " << "    " << "  " << "MONEY:" << "  " << dollars;
+    std::cout << '\n' << '\n' << "    " << "    " << "    " << "  " << "KILLS:" << "  " << 0;
+    std::cout << '\n' << '\n' << "    " << "    " << "    " << "  " << "SAVES:" << "  " << 0;
+    std::cout << '\n' << '\n' << "    " << "    " << "    " << "    " << "STATISTICS";
+    std::cout << '\n' << '\n' << "    " << "    " << "    " << "  "<< "PLAYS: " << "  " << 0;
+    std::cout << '\n' << '\n' << "    " << "    " << "    " << "  "<< "DEATHS:" << "  " << 0;
+    std::cout << '\n' << '\n' << "    " << "    " << "    " << "  "<< "WINS:  " << "  " << 0;
+
+}
+
+void Hud::update() {
 
     if (collecting_timer > 0) {
         collecting_timer -= *global::timer;
@@ -177,6 +210,11 @@ void Hud::updateMoniez() {
 
     if (!global::splash_screen)
         time_spent_on_level += *global::timer;
+    if (global::main_dude->dead && global::main_dude->time_since_last_damage > DAMAGE_PROTECTION_TIME) {
+        draw();
+        game_over_timer += *global::timer;
+    }
+
 }
 
 void Hud::collectedMoniez(int value) {

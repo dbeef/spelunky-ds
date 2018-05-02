@@ -16,6 +16,7 @@
 #define STUN_TIME 2000
 #define STUN_FALLING_TIME 1200
 #define PUSHING_TIME 500
+#define DAMAGE_PROTECTION_TIME 1500
 
 #include <nds.h>
 #include <vector>
@@ -70,6 +71,7 @@ public:
     int pushingTimer;
     int whip_timer;
     int timeSinceLastJump;
+    int time_since_last_damage;
 
     bool hangingOnTileLeft;
     bool hangingOnTileRight;
@@ -84,6 +86,7 @@ public:
     bool onTopOfClimbingSpace;
     bool exitingLevel;
     bool holding_item;
+    bool dead;
 
     SpriteState state;
     int animFrame;
