@@ -12,10 +12,12 @@
 
 
 void Jar::draw() {
+
     if (hold_by_main_dude && global::input_handler->y_key_down && global::input_handler->down_key_held) {
         hold_by_main_dude = false;
         global::main_dude->holding_item = false;
-    } else if (global::input_handler->y_key_down && global::input_handler->down_key_held && /*bottomCollision && */!global::main_dude->holding_item) {
+    } else if (!killed && global::input_handler->y_key_down && global::input_handler->down_key_held &&
+               /*bottomCollision && */!global::main_dude->holding_item) {
 
         if (Collisions::checkCollisionWithMainDude(x, y, 8, 8)) {
             hold_by_main_dude = true;
@@ -41,7 +43,7 @@ void Jar::draw() {
     int sub_x = x - global::camera->x;
     int sub_y = y - global::camera->y - 192 + 1;
 
-    if (global::camera->y + 192 > this->y + 8 || global::camera->y + 192 + 192  < this->y - 8) {
+    if (global::camera->y + 192 > this->y + 8 || global::camera->y + 192 + 192 < this->y - 8) {
         sub_x = -128;
         sub_y = -128;
     }
@@ -52,20 +54,53 @@ void Jar::draw() {
     }
 
 
-    if (sub_y + 8< 0 || sub_x + 8< 0) {
+    if (sub_y + 8 < 0 || sub_x + 8 < 0) {
         sub_x = -128;
         sub_y = -128;
     }
 
-    if (main_y + 8< 0 || main_x + 8< 0) {
+    if (main_y + 8 < 0 || main_x + 8 < 0) {
         main_x = -128;
         main_y = -128;
     }
 
 
-    if (activated_by_main_dude) {
-        //nothing
+    if (killed && frame < 7) {
+
+        frameTimer += *global::timer;
+
+        if (frameTimer > 50) {
+            frame++;
+
+            frameGfx = (u8 *) jarTiles + ((frame + 1) * 8 * 8 / 2);
+            subSpriteInfo->updateFrame(frameGfx, 8 * 8);
+            mainSpriteInfo->updateFrame(frameGfx, 8 * 8);
+
+            frameTimer = 0;
+        }
+
+        if (frame >= 7) {
+            mainSpriteInfo->entry->isHidden = true;
+            subSpriteInfo->entry->isHidden = true;
+        }
+
     }
+
+    if (xSpeed > 0 || ySpeed > 0) {
+        for (int a = 0; a < global::sprites.size(); a++) {
+            if ((global::sprites.at(a)->spriteType == SpriteType::SNAKE ||
+                 global::sprites.at(a)->spriteType == SpriteType::BAT)
+                && !global::sprites.at(a)->killed) {
+                if (Collisions::checkCollisionBodies(x, y, 8, 8, global::sprites.at(a)->x, global::sprites.at(a)->y, 16,
+                                                     16)) {
+                    global::sprites.at(a)->kill();
+                    killed = true;
+                    frame = 1;
+                }
+            }
+        }
+    }
+
 
     mainSpriteInfo->entry->x = main_x;
     mainSpriteInfo->entry->y = main_y;
@@ -73,24 +108,21 @@ void Jar::draw() {
     subSpriteInfo->entry->x = sub_x;
     subSpriteInfo->entry->y = sub_y;
 
-    if (xSpeed > 0 || ySpeed > 0) {
-        for (int a = 0; a < global::sprites.size(); a++) {
-            if((global::sprites.at(a)->spriteType == SpriteType::SNAKE || global::sprites.at(a)->spriteType == SpriteType::BAT)
-               && !global::sprites.at(a)->killed){
-                if(Collisions::checkCollisionBodies(x, y, 8, 8, global::sprites.at(a)->x, global::sprites.at(a)->y, 16, 16)){
-                    global::sprites.at(a)->kill();
-                }
-            }
+
+    if (global::main_dude->whip && !killed && global::main_dude->whip_timer > 120) {
+        if (Collisions::checkCollisionWithMainDudeWhip(x, y, 8, 8)) {
+            killed = true;
         }
     }
+
 }
 
 
 void Jar::init() {
     subSpriteInfo = global::sub_oam_manager->initSprite(jarPal, jarPalLen,
-                                                        nullptr, 8 * 8, 8, JAR, true, true);
+                                                        nullptr, 8 * 8, 8, JAR, true, false);
     mainSpriteInfo = global::main_oam_manager->initSprite(jarPal, jarPalLen,
-                                                          nullptr, 8 * 8, 8, JAR, true, true);
+                                                          nullptr, 8 * 8, 8, JAR, true, false);
 
     activated_by_main_dude = true;
 
@@ -101,6 +133,9 @@ void Jar::init() {
 }
 
 void Jar::updateSpeed() {
+
+    if(killed)
+        return;
 
     if (xSpeed > MAX_X_SPEED_ROCK)
         xSpeed = MAX_X_SPEED_ROCK;
@@ -193,8 +228,8 @@ void Jar::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_t
     rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, 8, 8, true);
     upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, 8, true);
 
-    if (bottomCollision) {
-        //nothing
+    if ((abs(xSpeed) > 1 || abs(ySpeed) > 1) && (bottomCollision || leftCollision || rightCollision || upperCollision)) {
+        killed = true;
     }
 
 }

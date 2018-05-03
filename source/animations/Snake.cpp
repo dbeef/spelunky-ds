@@ -96,8 +96,6 @@ void Snake::draw() {
 
 
     if (global::main_dude->whip && !killed && global::main_dude->whip_timer > 120) {
-
-
         if (Collisions::checkCollisionWithMainDudeWhip(x, y, 16, 16)) {
             kill();
         }
@@ -290,11 +288,11 @@ void Snake::kill() {
         blood->y = y;
 
         if (a % 2 == 0)
-            blood->xSpeed = (1 / a);
+            blood->xSpeed = (1.3 / a);
         else
-            blood->xSpeed = (-1 / a);
+            blood->xSpeed = (-1.3 / a);
 
-        blood->ySpeed = -1 / a;
+        blood->ySpeed = -2 / a;
         global::sprites.push_back(blood);
     }
     killed = true;

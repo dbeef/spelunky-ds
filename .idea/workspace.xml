@@ -15,97 +15,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4167ccef-cad0-4b13-8f61-b9437b132076" name="Default" comment="Merge branch 'master' of https://github.com/dbeef/spelunky-ds&#10;&#10;# Conflicts:&#10;#&#9;README.md">
+      <change afterPath="$PROJECT_DIR$/gfx/sprites/8x8/working/jar.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/Bat.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/Bat.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/Blood.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/Blood.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/BloodElement.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/BloodElement.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/Bomb.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/Bomb.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/Collisions.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/Collisions.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/Copyrights.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/Copyrights.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/GameLoop.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/GameLoop.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/Jar.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/Jar.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/MainDude.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/MainDude.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/Moniez.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/Moniez.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/MovingObject.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/MovingObject.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/Rock.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/Rock.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/Rope.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/Rope.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/RopeElement.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/RopeElement.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/Snake.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/Snake.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/SpelunkyTitle.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/SpelunkyTitle.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/TitleMenuSign.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/TitleMenuSign.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/bat.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/bat.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/bat.s" beforeDir="false" afterPath="$PROJECT_DIR$/build/bat.s" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/blood.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/blood.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/blood.s" beforeDir="false" afterPath="$PROJECT_DIR$/build/blood.s" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/bomb_armed.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/bomb_armed.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/bomb_armed.s" beforeDir="false" afterPath="$PROJECT_DIR$/build/bomb_armed.s" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/bomb_unarmed.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/bomb_unarmed.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/bomb_unarmed.s" beforeDir="false" afterPath="$PROJECT_DIR$/build/bomb_unarmed.s" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/cavebg.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/cavebg.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/cavebg.s" beforeDir="false" afterPath="$PROJECT_DIR$/build/cavebg.s" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/copyrights.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/copyrights.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/copyrights.s" beforeDir="false" afterPath="$PROJECT_DIR$/build/copyrights.s" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/explosion.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/explosion.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/explosion.s" beforeDir="false" afterPath="$PROJECT_DIR$/build/explosion.s" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/font.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/font.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/font.s" beforeDir="false" afterPath="$PROJECT_DIR$/build/font.s" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/font_1bpp.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/font_1bpp.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/font_1bpp.s" beforeDir="false" afterPath="$PROJECT_DIR$/build/font_1bpp.s" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/font_yellow.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/font_yellow.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/font_yellow.s" beforeDir="false" afterPath="$PROJECT_DIR$/build/font_yellow.s" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/hud.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/hud.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/hud.s" beforeDir="false" afterPath="$PROJECT_DIR$/build/hud.s" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/jar.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/jar.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/jar.s" beforeDir="false" afterPath="$PROJECT_DIR$/build/jar.s" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/main.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/main.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/menu_signs_start_scores.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/menu_signs_start_scores.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/menu_signs_start_scores.s" beforeDir="false" afterPath="$PROJECT_DIR$/build/menu_signs_start_scores.s" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/menu_signs_tutorial_quit.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/menu_signs_tutorial_quit.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/menu_signs_tutorial_quit.s" beforeDir="false" afterPath="$PROJECT_DIR$/build/menu_signs_tutorial_quit.s" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/pre_whip_left.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/pre_whip_left.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/pre_whip_left.s" beforeDir="false" afterPath="$PROJECT_DIR$/build/pre_whip_left.s" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/rock.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/rock.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/rock.s" beforeDir="false" afterPath="$PROJECT_DIR$/build/rock.s" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/ropes.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/ropes.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/ropes.s" beforeDir="false" afterPath="$PROJECT_DIR$/build/ropes.s" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/rubies_big.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/rubies_big.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/rubies_big.s" beforeDir="false" afterPath="$PROJECT_DIR$/build/rubies_big.s" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/snake.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/snake.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/snake.s" beforeDir="false" afterPath="$PROJECT_DIR$/build/snake.s" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/spelunker.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/spelunker.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/spelunker.s" beforeDir="false" afterPath="$PROJECT_DIR$/build/spelunker.s" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/spelunky_title.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/spelunky_title.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/spelunky_title.s" beforeDir="false" afterPath="$PROJECT_DIR$/build/spelunky_title.s" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/spelunkyds.map" beforeDir="false" afterPath="$PROJECT_DIR$/build/spelunkyds.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/triple_goldbar.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/triple_goldbar.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/triple_goldbar.s" beforeDir="false" afterPath="$PROJECT_DIR$/build/triple_goldbar.s" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/whip_left.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/whip_left.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/whip_left.s" beforeDir="false" afterPath="$PROJECT_DIR$/build/whip_left.s" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gfx/sprites/8x8/jar.png" beforeDir="false" afterPath="$PROJECT_DIR$/gfx/sprites/8x8/jar.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/animations/Bat.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/animations/Bat.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/animations/Bat.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/animations/Bat.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/animations/Blood.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/animations/Blood.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/animations/BloodElement.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/animations/BloodElement.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/animations/Bomb.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/animations/Bomb.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/animations/Blood.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/animations/Blood.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/animations/BloodElement.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/animations/BloodElement.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/animations/Collisions.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/animations/Collisions.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/animations/Collisions.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/animations/Collisions.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/animations/Copyrights.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/animations/Copyrights.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/animations/Jar.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/animations/Jar.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/animations/Jar.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/animations/Jar.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/animations/MainDude.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/animations/MainDude.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/animations/MainDude.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/animations/MainDude.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/animations/Moniez.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/animations/Moniez.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/animations/Moniez.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/animations/Moniez.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/animations/Rock.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/animations/Rock.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/animations/Rock.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/animations/Rock.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/animations/Rope.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/animations/Rope.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/animations/RopeElement.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/animations/RopeElement.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/animations/Snake.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/animations/Snake.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/animations/Snake.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/animations/Snake.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/animations/SpelunkyTitle.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/animations/SpelunkyTitle.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/animations/TitleMenuSign.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/animations/TitleMenuSign.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/sprites/MovingObject.h" beforeDir="false" afterPath="$PROJECT_DIR$/source/sprites/MovingObject.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/spelunkyds.elf" beforeDir="false" afterPath="$PROJECT_DIR$/spelunkyds.elf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/spelunkyds.nds" beforeDir="false" afterPath="$PROJECT_DIR$/spelunkyds.nds" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -121,8 +40,8 @@
       <file leaf-file-name="Bat.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/source/animations/Bat.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="358">
-              <caret line="90" column="51" selection-start-line="90" selection-start-column="51" selection-end-line="90" selection-end-column="51" />
+            <state relative-caret-position="527">
+              <caret line="239" column="32" selection-start-line="239" selection-start-column="32" selection-end-line="239" selection-end-column="32" />
               <folding>
                 <element signature="e#41#57#0" expanded="true" />
               </folding>
@@ -154,8 +73,8 @@
       <file leaf-file-name="Snake.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/source/animations/Snake.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="251" column="19" selection-start-line="251" selection-start-column="19" selection-end-line="251" selection-end-column="19" />
+            <state relative-caret-position="632">
+              <caret line="300" selection-start-line="300" selection-end-line="300" />
               <folding>
                 <element signature="e#41#59#0" expanded="true" />
               </folding>
@@ -163,34 +82,13 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Collisions.cpp" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Collisions.cpp" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/source/animations/Collisions.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="392">
-              <caret line="320" column="103" selection-start-line="320" selection-start-column="103" selection-end-line="320" selection-end-column="103" />
+            <state relative-caret-position="452">
+              <caret line="147" column="8" selection-start-line="147" selection-start-column="8" selection-end-line="147" selection-end-column="8" />
               <folding>
                 <element signature="e#40#59#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Moniez.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/source/animations/Moniez.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="77">
-              <caret line="19" column="12" selection-start-line="19" selection-start-column="12" selection-end-line="19" selection-end-column="12" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Moniez.cpp" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/source/animations/Moniez.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="74" column="8" selection-start-line="74" selection-start-column="8" selection-end-line="74" selection-end-column="8" />
-              <folding>
-                <element signature="e#41#61#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -200,16 +98,7 @@
         <entry file="file://$PROJECT_DIR$/source/animations/Jar.h">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="255">
-              <caret line="17" column="11" selection-start-line="17" selection-start-column="11" selection-end-line="17" selection-end-column="11" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Snake.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/source/animations/Snake.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="21" column="13" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
+              <caret line="17" column="10" selection-start-line="17" selection-start-column="10" selection-end-line="17" selection-end-column="10" />
             </state>
           </provider>
         </entry>
@@ -217,8 +106,35 @@
       <file leaf-file-name="Jar.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/source/animations/Jar.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="20" column="37" selection-start-line="20" selection-start-column="37" selection-end-line="20" selection-end-column="37" />
+            <state relative-caret-position="572">
+              <caret line="218" column="45" selection-start-line="218" selection-start-column="45" selection-end-line="218" selection-end-column="45" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Blood.h" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/source/animations/Blood.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="137">
+              <caret line="32" column="11" selection-start-line="32" selection-start-column="11" selection-end-line="32" selection-end-column="11" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Blood.cpp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/source/animations/Blood.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="15">
+              <caret line="39" column="27" selection-start-line="39" selection-start-column="27" selection-end-line="39" selection-end-column="27" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BloodElement.cpp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/source/animations/BloodElement.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="420">
+              <caret line="33" column="27" selection-start-line="33" selection-start-column="27" selection-end-line="33" selection-end-column="27" />
             </state>
           </provider>
         </entry>
@@ -227,11 +143,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>switch</find>
-      <find>ENTRANCE</find>
-      <find>room</find>
-      <find>mapBackgr</find>
-      <find>matchTile</find>
       <find>value</find>
       <find>value ==</find>
       <find>//</find>
@@ -257,6 +168,11 @@
       <find>new b</find>
       <find>checkCollision</find>
       <find>main</find>
+      <find>updatePos</find>
+      <find>h</find>
+      <find>new Blood</find>
+      <find>anima</find>
+      <find>new bloo</find>
     </findStrings>
     <replaceStrings>
       <replace>spelunky_title</replace>
@@ -297,9 +213,7 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/source/animations/BloodElement.cpp" />
         <option value="$PROJECT_DIR$/source/animations/Rope.cpp" />
-        <option value="$PROJECT_DIR$/source/animations/Blood.cpp" />
         <option value="$PROJECT_DIR$/source/animations/MenuSignType.h" />
         <option value="$PROJECT_DIR$/source/animations/TitleMenuSign.cpp" />
         <option value="$PROJECT_DIR$/source/animations/OAMManager.cpp" />
@@ -329,7 +243,6 @@
         <option value="$PROJECT_DIR$/source/animations/Collisions.h" />
         <option value="$PROJECT_DIR$/source/sprites/MovingObject.h" />
         <option value="$PROJECT_DIR$/source/animations/Rock.h" />
-        <option value="$PROJECT_DIR$/source/animations/Jar.h" />
         <option value="$PROJECT_DIR$/source/animations/MainDude.h" />
         <option value="$PROJECT_DIR$/source/animations/Moniez.h" />
         <option value="$PROJECT_DIR$/source/animations/TitleMenuSign.h" />
@@ -341,13 +254,16 @@
         <option value="$PROJECT_DIR$/source/animations/BloodElement.h" />
         <option value="$PROJECT_DIR$/source/animations/RopeElement.h" />
         <option value="$PROJECT_DIR$/source/animations/Bat.h" />
-        <option value="$PROJECT_DIR$/source/animations/Bat.cpp" />
         <option value="$PROJECT_DIR$/source/animations/Rock.cpp" />
         <option value="$PROJECT_DIR$/source/animations/Snake.h" />
+        <option value="$PROJECT_DIR$/source/animations/Moniez.cpp" />
+        <option value="$PROJECT_DIR$/source/animations/Jar.h" />
+        <option value="$PROJECT_DIR$/source/animations/Bat.cpp" />
         <option value="$PROJECT_DIR$/source/animations/Snake.cpp" />
+        <option value="$PROJECT_DIR$/source/animations/BloodElement.cpp" />
+        <option value="$PROJECT_DIR$/source/animations/Blood.cpp" />
         <option value="$PROJECT_DIR$/source/animations/Jar.cpp" />
         <option value="$PROJECT_DIR$/source/animations/Collisions.cpp" />
-        <option value="$PROJECT_DIR$/source/animations/Moniez.cpp" />
       </list>
     </option>
   </component>
@@ -429,6 +345,13 @@
             <path>
               <item name="spelunkyds" type="b2602c69:ProjectViewProjectNode" />
               <item name="spelunkyds" type="462c0819:PsiDirectoryNode" />
+              <item name="gfx" type="462c0819:PsiDirectoryNode" />
+              <item name="sprites" type="462c0819:PsiDirectoryNode" />
+              <item name="8x8" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="spelunkyds" type="b2602c69:ProjectViewProjectNode" />
+              <item name="spelunkyds" type="462c0819:PsiDirectoryNode" />
               <item name="source" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -503,7 +426,7 @@
               <item name="spelunkyds" type="cbb8eebc:String" user="spelunkyds" />
               <item name="gfx" type="cbb8eebc:String" user="gfx" />
               <item name="sprites" type="cbb8eebc:String" user="sprites" />
-              <item name="64x64" type="cbb8eebc:String" user="64x64" />
+              <item name="8x8" type="cbb8eebc:String" user="8x8" />
             </path>
           </expand>
           <select />
@@ -519,19 +442,19 @@
     <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/gfx/sprites" />
-      <recent name="$PROJECT_DIR$/gfx/sprites/32x32" />
-      <recent name="$PROJECT_DIR$/sounds" />
-      <recent name="$PROJECT_DIR$/source/animations" />
-      <recent name="$PROJECT_DIR$/gfx/sprites/64x64" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/source/level_layout/rooms" />
       <recent name="$PROJECT_DIR$/gfx/sprites/32x32" />
       <recent name="$PROJECT_DIR$/gfx/sprites/8x8" />
       <recent name="$PROJECT_DIR$/gfx/sprites/64x64" />
       <recent name="$PROJECT_DIR$/scratches" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/gfx/sprites/8x8" />
+      <recent name="$PROJECT_DIR$/gfx/sprites/8x8/working" />
+      <recent name="$PROJECT_DIR$/gfx/sprites" />
+      <recent name="$PROJECT_DIR$/gfx/sprites/32x32" />
+      <recent name="$PROJECT_DIR$/sounds" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -648,12 +571,12 @@
       <workItem from="1525155632357" duration="8395000" />
       <workItem from="1525240138884" duration="16404000" />
       <workItem from="1525268095454" duration="13730000" />
-      <workItem from="1525331312560" duration="3618000" />
+      <workItem from="1525331312560" duration="6985000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="678123000" />
+    <option name="totallyTimeSpent" value="681490000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -671,6 +594,7 @@
       <window_info anchor="bottom" id="TODO" order="5" weight="0.32875" />
       <window_info anchor="bottom" id="CMake" order="8" weight="0.32957393" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.51007146" side_tool="true" weight="0.36557788" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32875" />
       <window_info anchor="bottom" id="Version Control" order="10" weight="0.32875" />
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.24951267" />
@@ -684,7 +608,6 @@
       <window_info anchor="bottom" id="Messages" order="7" weight="0.32957393" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32875" />
     </layout>
     <layout-to-restore>
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -736,30 +659,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/source/animations/OAMManager.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3315">
-          <caret line="221" selection-start-line="221" selection-end-line="221" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/source/animations/Bomb.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="422">
-          <caret line="275" column="24" selection-start-line="275" selection-start-column="24" selection-end-line="275" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/source/animations/Rope.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="56" column="11" selection-start-line="56" selection-start-column="11" selection-end-line="56" selection-end-column="11" />
-          <folding>
-            <element signature="e#41#61#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/source/level_layout/TileOrientation.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
@@ -913,6 +812,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="580">
           <caret line="70" column="19" selection-start-line="70" selection-start-column="19" selection-end-line="70" selection-end-column="19" />
+          <folding>
+            <element signature="e#0#16#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1019,13 +921,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/animations/Blood.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="393">
-          <caret line="31" selection-start-line="31" selection-end-line="31" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/source/animations/BloodElement.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
@@ -1040,34 +935,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/animations/Jar.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="20" column="37" selection-start-line="20" selection-start-column="37" selection-end-line="20" selection-end-column="37" />
-        </state>
-      </provider>
+    <entry file="file://$PROJECT_DIR$/gfx/sprites/8x8/jar.png">
+      <provider selected="true" editor-type-id="images" />
     </entry>
     <entry file="file://$PROJECT_DIR$/source/animations/Snake.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="21" column="13" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
+        <state relative-caret-position="345">
+          <caret line="24" selection-start-line="24" selection-end-line="24" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/animations/Jar.h">
+    <entry file="file://$PROJECT_DIR$/source/animations/Moniez.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" column="11" selection-start-line="17" selection-start-column="11" selection-end-line="17" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/source/animations/Snake.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="251" column="19" selection-start-line="251" selection-start-column="19" selection-end-line="251" selection-end-column="19" />
+        <state relative-caret-position="360">
+          <caret line="174" column="7" selection-start-line="174" selection-start-column="7" selection-end-line="174" selection-end-column="7" />
           <folding>
-            <element signature="e#41#59#0" expanded="true" />
+            <element signature="e#41#61#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/animations/Moniez.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="77">
+          <caret line="19" column="12" selection-start-line="19" selection-start-column="12" selection-end-line="19" selection-end-column="12" />
         </state>
       </provider>
     </entry>
@@ -1090,37 +981,65 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/source/animations/Bat.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="358">
-          <caret line="90" column="51" selection-start-line="90" selection-start-column="51" selection-end-line="90" selection-end-column="51" />
+        <state relative-caret-position="527">
+          <caret line="239" column="32" selection-start-line="239" selection-start-column="32" selection-end-line="239" selection-end-column="32" />
           <folding>
             <element signature="e#41#57#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/animations/Collisions.cpp">
+    <entry file="file://$PROJECT_DIR$/source/animations/Snake.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="392">
-          <caret line="320" column="103" selection-start-line="320" selection-start-column="103" selection-end-line="320" selection-end-column="103" />
+        <state relative-caret-position="632">
+          <caret line="300" selection-start-line="300" selection-end-line="300" />
           <folding>
-            <element signature="e#40#59#0" expanded="true" />
+            <element signature="e#41#59#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/animations/Moniez.h">
+    <entry file="file://$PROJECT_DIR$/source/animations/Blood.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="77">
-          <caret line="19" column="12" selection-start-line="19" selection-start-column="12" selection-end-line="19" selection-end-column="12" />
+        <state relative-caret-position="137">
+          <caret line="32" column="11" selection-start-line="32" selection-start-column="11" selection-end-line="32" selection-end-column="11" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/animations/Moniez.cpp">
+    <entry file="file://$PROJECT_DIR$/source/animations/BloodElement.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="74" column="8" selection-start-line="74" selection-start-column="8" selection-end-line="74" selection-end-column="8" />
+        <state relative-caret-position="420">
+          <caret line="33" column="27" selection-start-line="33" selection-start-column="27" selection-end-line="33" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/animations/Blood.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="39" column="27" selection-start-line="39" selection-start-column="27" selection-end-line="39" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/animations/Jar.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="17" column="10" selection-start-line="17" selection-start-column="10" selection-end-line="17" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/animations/Jar.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="572">
+          <caret line="218" column="45" selection-start-line="218" selection-start-column="45" selection-end-line="218" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/animations/Collisions.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="452">
+          <caret line="147" column="8" selection-start-line="147" selection-start-column="8" selection-end-line="147" selection-end-column="8" />
           <folding>
-            <element signature="e#41#61#0" expanded="true" />
+            <element signature="e#40#59#0" expanded="true" />
           </folding>
         </state>
       </provider>

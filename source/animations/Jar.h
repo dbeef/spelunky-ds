@@ -39,6 +39,9 @@ public:
     SpriteInfo *subSpriteInfo = nullptr;
     u8 * frameGfx;
 
+    int frame;
+    int frameTimer;
+
 };
 
 

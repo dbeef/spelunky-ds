@@ -142,6 +142,7 @@ bool Collisions::checkLeftCollision(MapTile *neighboringTiles[9], int *xPos, int
 
 
                 *xPos = (neighboringTiles[a]->x * TILE_W) - width;
+                return true;
             }
 
         } else {
@@ -189,6 +190,7 @@ bool Collisions::checkRightCollision(MapTile *neighboringTiles[9], int *xPos, in
                     *xSpeed = 0;
 
                 *xPos = (neighboringTiles[a]->x * TILE_W) + TILE_W;
+                return true;
             }
 
         } else {
@@ -228,25 +230,15 @@ void Collisions::getNeighboringTiles(MapTile *mapTiles[32][32], int xx, int yy, 
             *left_down = nullptr,
             *right_down = nullptr;
 
-    if (xx > 0)
-        left_middle = mapTiles[xx - 1][yy];
-    if (xx < 31)
-        right_middle = mapTiles[xx + 1][yy];
-    if (yy > 0)
-        up_middle = mapTiles[xx][yy - 1];
-    if (yy < 31)
-        down_middle = mapTiles[xx][yy + 1];
-
+    left_middle = mapTiles[xx - 1][yy];
+    right_middle = mapTiles[xx + 1][yy];
+    up_middle = mapTiles[xx][yy - 1];
+    down_middle = mapTiles[xx][yy + 1];
     center = mapTiles[xx][yy];
-
-    if (xx > 0 && yy > 0)
-        left_up = mapTiles[xx - 1][yy - 1];
-    if (xx < 31 && yy > 0)
-        right_up = mapTiles[xx + 1][yy - 1];
-    if (xx > 0 && yy < 31)
-        left_down = mapTiles[xx - 1][yy + 1];
-    if (xx < 31 && yy < 31)
-        right_down = mapTiles[xx + 1][yy + 1];
+    left_up = mapTiles[xx - 1][yy - 1];
+    right_up = mapTiles[xx + 1][yy - 1];
+    left_down = mapTiles[xx - 1][yy + 1];
+    right_down = mapTiles[xx + 1][yy + 1];
 
     out_neighboringTiles[TileOrientation::LEFT_MIDDLE] = left_middle;
     out_neighboringTiles[TileOrientation::RIGHT_MIDDLE] = right_middle;
@@ -258,31 +250,6 @@ void Collisions::getNeighboringTiles(MapTile *mapTiles[32][32], int xx, int yy, 
     out_neighboringTiles[TileOrientation::LEFT_DOWN] = left_down;
     out_neighboringTiles[TileOrientation::RIGHT_DOWN] = right_down;
 
-
-
-
-
-
-    /*
-    MapTile *left_middle = mapTiles[xx - 1][yy];
-    MapTile *right_middle = mapTiles[xx + 1][yy];
-    MapTile *up_middle = mapTiles[xx][yy - 1];
-    MapTile *down_middle = mapTiles[xx][yy + 1];
-    MapTile *center = mapTiles[xx][yy];
-    MapTile *left_up = mapTiles[xx - 1][yy - 1];
-    MapTile *right_up = mapTiles[xx + 1][yy - 1];
-    MapTile *left_down = mapTiles[xx - 1][yy + 1];
-    MapTile *right_down = mapTiles[xx + 1][yy + 1];
-
-    neighboringTiles[TileOrientation::LEFT_MIDDLE] = left_middle;
-    neighboringTiles[TileOrientation::RIGHT_MIDDLE] = right_middle;
-    neighboringTiles[TileOrientation::UP_MIDDLE] = up_middle;
-    neighboringTiles[TileOrientation::DOWN_MIDDLE] = down_middle;
-    neighboringTiles[TileOrientation::CENTER] = center;
-    neighboringTiles[TileOrientation::LEFT_UP] = left_up;
-    neighboringTiles[TileOrientation::RIGHT_UP] = right_up;
-    neighboringTiles[TileOrientation::LEFT_DOWN] = left_down;
-    neighboringTiles[TileOrientation::RIGHT_DOWN] = right_down;*/
 }
 
 void Collisions::bombNeighboringTiles(MapTile *mapTiles[32][32], int xx, int yy) {

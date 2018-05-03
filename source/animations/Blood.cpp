@@ -105,7 +105,7 @@ void Blood::updateSpeed() {
 
     pos_inc_timer += *global::timer;
 
-    bool change_pos = (pos_inc_timer > 25) && !finished;
+    bool change_pos = (pos_inc_timer > 20) && !finished;
 
     if (change_pos) {
         updatePosition();

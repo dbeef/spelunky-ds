@@ -237,11 +237,11 @@ void Bat::kill() {
         blood->y = y;
 
         if (a % 2 == 0)
-            blood->xSpeed = (1 / a);
+            blood->xSpeed = (1.3 / a);
         else
-            blood->xSpeed = (-1 / a);
+            blood->xSpeed = (-1.3 / a);
 
-        blood->ySpeed = -1 / a;
+        blood->ySpeed = -2 / a;
         global::sprites.push_back(blood);
     }
     killed = true;

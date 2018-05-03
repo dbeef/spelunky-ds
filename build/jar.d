@@ -1,0 +1,1 @@
+jar.o: jar.s
