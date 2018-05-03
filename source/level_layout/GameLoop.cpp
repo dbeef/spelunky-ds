@@ -15,9 +15,12 @@
 #include "../animations/Rope.h"
 #include "../animations/Bat.h"
 #include "../animations/Spider.h"
+#include "rooms/LeftRightRooms.h"
+#include "rooms/RoomType.h"
 #include <vector>
 #include <time.h>
 #include <maxmod9.h>
+#include <nds/arm9/console.h>
 
 static const int BOUNDARY_VALUE = 64; /* This is the default boundary value (can be set in REG_DISPCNT) */
 static const int OFFSET_MULTIPLIER_MAIN = BOUNDARY_VALUE / sizeof(SPRITE_GFX[0]);
@@ -177,43 +180,70 @@ void gameloop::populateCaveItems() {
 
 void gameloop::populateCaveNpcs() {
 
-    for (int a = 0; a < 2; a++) {
-        Snake *snake = new Snake();
-        snake->init();
-        snake->timer = global::timer;
-        global::sprites.push_back(snake);
+    int bats_left = 3;
+    int spiders_left = 3;
+    int snakes_left = 3;
 
-        int curr_x = (rand() % 400) + 48 + a * 16;
-        int curr_y = (rand() % 400) + 48;
+    std::cout << '\n' << '\n';
 
-        snake->x = curr_x;
-        snake->y = curr_y;
-    }
-    
-    for(int a =0;a<2;a++){
-        Bat *bat = new Bat();
-        bat->init();
-        bat->timer = global::timer;
-        global::sprites.push_back(bat);
+    for (int b = ROOMS_Y - 1; b >= 0; b--) {
+        for (int a = 0; a < ROOMS_X; a++) {
 
-        int curr_x = (rand() % 400) + 48 + a * 16;
-        int curr_y = (rand() % 400) + 48;
+            int room_type = global::level_generator->layout_room_types[a][b];
+            int room_id = global::level_generator->layout_room_ids[a][b];
 
-        bat->x = curr_x;
-        bat->y = curr_y;
-    }
-    
-    for(int a =0;a<2;a++){
-        Spider *spider = new Spider();
-        spider->init();
-        spider->timer = global::timer;
-        global::sprites.push_back(spider);
 
-        int curr_x = (rand() % 400) + 48 + a * 16;
-        int curr_y = (rand() % 400) + 48;
+            if(room_id == -1)
+                continue;
 
-        spider->x = curr_x;
-        spider->y = curr_y;
+            if (room_type == RoomType::ROOM_LEFT_RIGHT) {
+
+                for (int tab_y = 0; tab_y < ROOM_TILE_HEIGHT_GAME; tab_y++) {
+                    for (int tab_x = 0; tab_x < ROOM_TILE_WIDTH_GAME; tab_x++) {
+
+                        int npc = left_right_npcs[room_id][tab_y][tab_x];
+                        int r = rand() % 5;
+
+                        u16 pos_x = (OFFSET_X + tab_x * 2 + 2 * ROOM_TILE_WIDTH_GAME * a) / 2;
+                        u16 pos_y = (OFFSET_X + tab_y * 2 + 2 * ROOM_TILE_HEIGHT_GAME * ((ROOMS_Y - b) - 1)) / 2;
+
+
+                        if (npc == 1 && snakes_left > 0 && r == 1) {
+                            Snake *snake = new Snake();
+                            snake->init();
+                            snake->timer = global::timer;
+                            global::sprites.push_back(snake);
+                            snake->x = pos_x * 16;
+                            snake->y = pos_y* 16;
+                            snakes_left--;
+                        }
+
+                        if (npc == 2 && bats_left > 0 && r == 1) {
+                            Bat *bat = new Bat();
+                            bat->init();
+                            bat->timer = global::timer;
+                            global::sprites.push_back(bat);
+                            bats_left--;
+                            bat->x = pos_x* 16;
+                            bat->y = pos_y* 16;
+                        }
+
+                        if (npc == 3 && spiders_left > 0 && r == 1) {
+                            Spider *spider = new Spider();
+                            spider->init();
+                            spider->timer = global::timer;
+                            global::sprites.push_back(spider);
+                            spider->x = pos_x* 16;
+                            spider->y = pos_y* 16;
+                            spiders_left--;
+                        }
+
+
+                    }
+                }
+            }
+
+        }
     }
 
 }

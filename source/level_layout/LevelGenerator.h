@@ -40,7 +40,8 @@ class LevelGenerator {
 public:
 
     MapTile *mapTiles[32][32];
-    int layout[ROOMS_X][ROOMS_Y];
+    int layout_room_types[ROOMS_X][ROOMS_Y];
+    int layout_room_ids[ROOMS_X][ROOMS_Y];
 
     void newLayout(int seed);
 

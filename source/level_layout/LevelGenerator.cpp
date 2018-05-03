@@ -30,7 +30,7 @@ void LevelGenerator::newLayout(int seed) {
     }
     for (int a = 0; a < ROOMS_X; a++) {
         for (int b = 0; b < ROOMS_Y; b++) {
-            layout[a][b] = 0;
+            layout_room_types[a][b] = 0;
         }
     }
 
@@ -43,7 +43,7 @@ void LevelGenerator::newLayout(int seed) {
     int curr_y = ROOMS_Y - 1;
     int direction = 0;
 
-    layout[curr_x][curr_y] = 4;
+    layout_room_types[curr_x][curr_y] = 4;
 
     while (curr_y >= 0) {
 
@@ -82,7 +82,7 @@ void LevelGenerator::newLayout(int seed) {
                 direction = 3;
             } else {
                 curr_x--;
-                layout[curr_x][curr_y] = 1;
+                layout_room_types[curr_x][curr_y] = 1;
             }
         } else if (direction == 2) {
 
@@ -90,17 +90,17 @@ void LevelGenerator::newLayout(int seed) {
                 direction = 3;
             } else {
                 curr_x++;
-                layout[curr_x][curr_y] = 1;
+                layout_room_types[curr_x][curr_y] = 1;
             }
 
         } else if (direction == 3) {
 
             if (curr_y > 0) {
 
-                layout[curr_x][curr_y] = 2;
+                layout_room_types[curr_x][curr_y] = 2;
 
                 if (curr_y >= 1) {
-                    layout[curr_x][curr_y - 1] = 3;
+                    layout_room_types[curr_x][curr_y - 1] = 3;
                 }
 
 
@@ -108,7 +108,7 @@ void LevelGenerator::newLayout(int seed) {
                 curr_y--;
 
                 if (curr_y == 0)
-                    layout[curr_x][curr_y] = 5;
+                    layout_room_types[curr_x][curr_y] = 5;
 
             } else {
                 break;
@@ -262,11 +262,14 @@ void LevelGenerator::generateRooms() {
     for (int b = ROOMS_Y - 1; b >= 0; b--) {
         for (int a = 0; a < ROOMS_X; a++) {
 
-            int room_type = layout[a][b];
+            int room_type = layout_room_types[a][b];
             r = rand() % 3;
+            layout_room_ids[a][b] = r;
+            //-1 if no NPC's
 
             switch (room_type) {
                 case RoomType::ROOM_CLOSED:
+                    layout_room_ids[a][b] = -1;
                     memcpy(tab, closed_rooms[r], sizeof(closed_rooms[r]));
                     break;
                 case RoomType::ROOM_LEFT_RIGHT:
@@ -279,9 +282,11 @@ void LevelGenerator::generateRooms() {
                     memcpy(tab, left_right_up_rooms[r], sizeof(left_right_up_rooms[r]));
                     break;
                 case RoomType::ROOM_ENTRANCE:
+                    layout_room_ids[a][b] = -1;
                     memcpy(tab, entrance_room, sizeof(entrance_room));
                     break;
                 case RoomType::ROOM_EXIT:
+                    layout_room_ids[a][b] = -1;
                     memcpy(tab, exit_room, sizeof(exit_room));
                     break;
                 default:

@@ -6,7 +6,7 @@ public class Generator {
         final int x = 4;
         final int y = 4;
 
-        int layout[][] = new int[x][y];
+        int layout_room_types[][] = new int[x][y];
 
         Random rand = new Random();
 
@@ -15,7 +15,7 @@ public class Generator {
         int curr_y = y - 1;
         int direction = 0;
 
-        layout[curr_x][curr_y] = 1;
+        layout_room_types[curr_x][curr_y] = 1;
 
         //System.out.println("Starting with " + curr_x + " " + curr_y);
 
@@ -62,10 +62,10 @@ public class Generator {
                     direction = 3;
                 } else {
                     curr_x--;
-                    layout[curr_x][curr_y] = 1;
+                    layout_room_types[curr_x][curr_y] = 1;
                     //System.out.println("Direction " + direction + " Setting " + curr_x + "," + curr_y + " as " + 1);
                     for (int b = 0; b < y; b++) {
-                        //System.out.print(" " + layout[b][curr_y]);
+                        //System.out.print(" " + layout_room_types[b][curr_y]);
                     }
                     //System.out.println();
                 }
@@ -75,10 +75,10 @@ public class Generator {
                     direction = 3;
                 } else {
                     curr_x++;
-                    layout[curr_x][curr_y] = 1;
+                    layout_room_types[curr_x][curr_y] = 1;
                     //System.out.println("Direction " + direction + " Setting " + curr_x + "," + curr_y + " as " + 1);
                     for (int b = 0; b < y; b++) {
-                        //System.out.print(" " + layout[b][curr_y]);
+                        //System.out.print(" " + layout_room_types[b][curr_y]);
                     }
                     //System.out.println();
                 }
@@ -88,18 +88,18 @@ public class Generator {
                 if (curr_y > 0) {
 
                     //System.out.println("Direction " + direction + " Setting " + curr_x + "," + curr_y + " as " + 2);
-                    layout[curr_x][curr_y] = 2;
+                    layout_room_types[curr_x][curr_y] = 2;
 
                     for (int b = 0; b < y; b++) {
-                        //System.out.print(" " + layout[b][curr_y]);
+                        //System.out.print(" " + layout_room_types[b][curr_y]);
                     }
                     //System.out.println();
 
                     if (curr_y >= 1) {
-                        layout[curr_x][curr_y - 1] = 3;
+                        layout_room_types[curr_x][curr_y - 1] = 3;
                         //System.out.println("Direction " + direction + " Setting " + curr_x + "," + (curr_y - 1) + " as " + 3);
                         for (int b = 0; b < y; b++) {
-                            //System.out.print(" " + layout[b][curr_y]);
+                            //System.out.print(" " + layout_room_types[b][curr_y]);
                         }
                         //System.out.println();
                     }
@@ -114,7 +114,7 @@ public class Generator {
 
         for (int b = y - 1; b >= 0; b--) {
             for (int a = 0; a < x; a++) {
-                System.out.print(" " + layout[a][b]);
+                System.out.print(" " + layout_room_types[a][b]);
             }
             System.out.println('\n');
         }

@@ -110,7 +110,10 @@ GameLoop.o: \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/RopeElement.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/Bat.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/Spider.h \
- /home/xdbeef/devkitPro/libnds/include/maxmod9.h
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/rooms/LeftRightRooms.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/rooms/RoomType.h \
+ /home/xdbeef/devkitPro/libnds/include/maxmod9.h \
+ /home/xdbeef/devkitPro/libnds/include/nds/arm9/console.h
 
 /home/xdbeef/devkitPro/libnds/include/nds.h:
 
@@ -332,4 +335,10 @@ GameLoop.o: \
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/Spider.h:
 
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/rooms/LeftRightRooms.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/rooms/RoomType.h:
+
 /home/xdbeef/devkitPro/libnds/include/maxmod9.h:
+
+/home/xdbeef/devkitPro/libnds/include/nds/arm9/console.h:
