@@ -19,7 +19,7 @@
 /**
  * http:www.cplusplus.com/reference/cstdlib/rand/, liczba z przedziału 0-3
  * 0,0 is upper-left corner of the map
- * @param seed 
+ * @param seed
  */
 void LevelGenerator::newLayout(int seed) {
 
@@ -169,7 +169,7 @@ void LevelGenerator::generateFrame() {
     }
 
     for (int a = 0; a < MAP_GAME_WIDTH_TILES; a++) {
-        delete (mapTiles[MAP_GAME_HEIGHT_TILES- 1][a]);
+        delete (mapTiles[MAP_GAME_HEIGHT_TILES - 1][a]);
         MapTile *t = new MapTile();
 
         matchTile(t, MapTileType::CAVE_REGULAR);
@@ -529,6 +529,51 @@ void LevelGenerator::matchTile(MapTile *t, int value) {
             t->destroyable = false;
             t->mapTileType = MapTileType::CONSOLE_BLACK_BACKGROUND;
             break;
+        case MapTileType::CAVE_SMOOTH:
+            t->values[0] = 108;
+            t->values[1] = 109;
+            t->values[2] = 110;
+            t->values[3] = 111;
+            t->collidable = true;
+            t->destroyable = true;
+            t->mapTileType = MapTileType::CAVE_SMOOTH;
+            break;
+        case MapTileType::SCORES_STAR_DOOR:
+            t->values[0] = 112;
+            t->values[1] = 113;
+            t->values[2] = 114;
+            t->values[3] = 115;
+            t->collidable = false;
+            t->destroyable = false;
+            t->mapTileType = MapTileType::SCORES_STAR_DOOR;
+            break;
+        case MapTileType::SCORES_SUN_DOOR:
+            t->values[0] = 116;
+            t->values[1] = 117;
+            t->values[2] = 118;
+            t->values[3] = 119;
+            t->collidable = false;
+            t->destroyable = false;
+            t->mapTileType = MapTileType::SCORES_SUN_DOOR;
+            break;
+        case MapTileType::SCORES_MOON_DOOR:
+            t->values[0] = 120;
+            t->values[1] = 121;
+            t->values[2] = 122;
+            t->values[3] = 123;
+            t->collidable = false;
+            t->destroyable = false;
+            t->mapTileType = MapTileType::SCORES_MOON_DOOR;
+            break;
+        case MapTileType::SCORES_CHANGING_DOOR:
+            t->values[0] = 124;
+            t->values[1] = 125;
+            t->values[2] = 126;
+            t->values[3] = 127;
+            t->collidable = false;
+            t->destroyable = false;
+            t->mapTileType = MapTileType::SCORES_CHANGING_DOOR;
+            break;
         default:
             break;
     }
@@ -537,7 +582,7 @@ void LevelGenerator::matchTile(MapTile *t, int value) {
 }
 
 void LevelGenerator::getFirstTile(MapTileType mapTileType, MapTile *&m) {
-    https://stackoverflow.com/questions/416162/assignment-inside-function-that-is-passed-as-pointer?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
+//    https://stackoverflow.com/questions/416162/assignment-inside-function-that-is-passed-as-pointer?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
     for (int a = 0; a < MAP_GAME_WIDTH_TILES; a++) {
         for (int b = 0; b < MAP_GAME_HEIGHT_TILES; b++) {
             if (mapTiles[a][b] != 0 && mapTiles[a][b]->mapTileType == mapTileType) {

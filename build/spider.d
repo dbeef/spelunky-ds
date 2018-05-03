@@ -1,0 +1,1 @@
+spider.o: spider.s

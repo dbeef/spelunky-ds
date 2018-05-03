@@ -14,6 +14,7 @@
 #include "../animations/TitleMenuSign.h"
 #include "../animations/Rope.h"
 #include "../animations/Bat.h"
+#include "../animations/Spider.h"
 #include <vector>
 #include <time.h>
 #include <maxmod9.h>
@@ -200,7 +201,19 @@ void gameloop::populateCaveNpcs() {
 
         bat->x = curr_x;
         bat->y = curr_y;
+    }
+    
+    for(int a =0;a<2;a++){
+        Spider *spider = new Spider();
+        spider->init();
+        spider->timer = global::timer;
+        global::sprites.push_back(spider);
 
+        int curr_x = (rand() % 400) + 48 + a * 16;
+        int curr_y = (rand() % 400) + 48;
+
+        spider->x = curr_x;
+        spider->y = curr_y;
     }
 
 }

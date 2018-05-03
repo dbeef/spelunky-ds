@@ -555,6 +555,33 @@ source/animations/SpelunkyTitle.cpp.s:
 	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/animations/SpelunkyTitle.cpp.s
 .PHONY : source/animations/SpelunkyTitle.cpp.s
 
+source/animations/Spider.o: source/animations/Spider.cpp.o
+
+.PHONY : source/animations/Spider.o
+
+# target to build an object file
+source/animations/Spider.cpp.o:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/animations/Spider.cpp.o
+.PHONY : source/animations/Spider.cpp.o
+
+source/animations/Spider.i: source/animations/Spider.cpp.i
+
+.PHONY : source/animations/Spider.i
+
+# target to preprocess a source file
+source/animations/Spider.cpp.i:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/animations/Spider.cpp.i
+.PHONY : source/animations/Spider.cpp.i
+
+source/animations/Spider.s: source/animations/Spider.cpp.s
+
+.PHONY : source/animations/Spider.s
+
+# target to generate assembly for a file
+source/animations/Spider.cpp.s:
+	$(MAKE) -f CMakeFiles/spelunkyds.dir/build.make CMakeFiles/spelunkyds.dir/source/animations/Spider.cpp.s
+.PHONY : source/animations/Spider.cpp.s
+
 source/animations/TitleMenuSign.o: source/animations/TitleMenuSign.cpp.o
 
 .PHONY : source/animations/TitleMenuSign.o
@@ -936,6 +963,9 @@ help:
 	@echo "... source/animations/SpelunkyTitle.o"
 	@echo "... source/animations/SpelunkyTitle.i"
 	@echo "... source/animations/SpelunkyTitle.s"
+	@echo "... source/animations/Spider.o"
+	@echo "... source/animations/Spider.i"
+	@echo "... source/animations/Spider.s"
 	@echo "... source/animations/TitleMenuSign.o"
 	@echo "... source/animations/TitleMenuSign.i"
 	@echo "... source/animations/TitleMenuSign.s"

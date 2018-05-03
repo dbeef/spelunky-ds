@@ -31,7 +31,12 @@ enum MapTileType {
     CONSOLE_RIGHT_BAR_BOT_ROUNDED,  //20
     CONSOLE_TOP_BAR,                //21
     CONSOLE_BOTTOM_BAR,             //22
-    CONSOLE_BLACK_BACKGROUND        //23
+    CONSOLE_BLACK_BACKGROUND,       //23
+    CAVE_SMOOTH,                    //24
+    SCORES_STAR_DOOR,               //25
+    SCORES_SUN_DOOR,                //26
+    SCORES_MOON_DOOR,               //27
+    SCORES_CHANGING_DOOR,           //28
 };
 
 #endif //SPELUNKYDS_MAPTILETYPES_H

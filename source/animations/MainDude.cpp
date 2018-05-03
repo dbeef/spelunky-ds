@@ -183,6 +183,7 @@ void MainDude::handleKeyInput() {
             if (exitingLevel) {
 
                 mmEffect(SFX_XSTEPS);
+                mmEffectCancel(global::cave_music_handler);
 
                 x = neighboringTiles[CENTER]->x * 16;
                 y = neighboringTiles[CENTER]->y * 16;
@@ -445,11 +446,11 @@ void MainDude::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos
 
 
     if (!bottomCollision) {
-        if ((tiles[1] == 0 && (tiles[6] != 0 && tiles[8] != 0))) {
+        if (((tiles[1] == nullptr || !tiles[1]->collidable) && (tiles[6] != nullptr && tiles[8] != nullptr))) {
             if (xSpeed > 0)
                 x += 2;
         }
-        if ((tiles[0] == 0 && (tiles[5] != 0 && tiles[7] != 0))) {
+        if (((tiles[0] == nullptr || !tiles[0]->collidable) && (tiles[5] != nullptr && tiles[7] != nullptr))) {
             if (xSpeed < 0)
                 x -= 2;
         }
@@ -581,7 +582,6 @@ void MainDude::draw() {
 
                     mmEffectCancel(global::cave_music_handler);
                     global::menu_music_handler = mmEffect(SFX_MTITLE);
-
                     global::level_generator->generateSplashScreen(SplashScreenType::MAIN_MENU_UPPER);
                     global::level_generator->generateSplashScreen(SplashScreenType::MAIN_MENU_LOWER);
                 } else if (dead) {
@@ -640,6 +640,7 @@ void MainDude::draw() {
 
             } else {
                 if (global::scores_screen) {
+                    global::camera->followMainDude = false;
                     global::in_main_menu = true;
                     global::levels_transition_screen = false;
                     global::scores_screen = false;

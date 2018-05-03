@@ -109,6 +109,7 @@ GameLoop.o: \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/Rope.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/RopeElement.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/Bat.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/Spider.h \
  /home/xdbeef/devkitPro/libnds/include/maxmod9.h
 
 /home/xdbeef/devkitPro/libnds/include/nds.h:
@@ -328,5 +329,7 @@ GameLoop.o: \
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/RopeElement.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/Bat.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/Spider.h:
 
 /home/xdbeef/devkitPro/libnds/include/maxmod9.h:

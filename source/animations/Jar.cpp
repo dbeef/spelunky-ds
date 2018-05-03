@@ -89,7 +89,8 @@ void Jar::draw() {
     if (xSpeed > 0 || ySpeed > 0) {
         for (int a = 0; a < global::sprites.size(); a++) {
             if ((global::sprites.at(a)->spriteType == SpriteType::SNAKE ||
-                 global::sprites.at(a)->spriteType == SpriteType::BAT)
+                 global::sprites.at(a)->spriteType == SpriteType::BAT||
+                 global::sprites.at(a)->spriteType == SpriteType::SPIDER)
                 && !global::sprites.at(a)->killed) {
                 if (Collisions::checkCollisionBodies(x, y, 8, 8, global::sprites.at(a)->x, global::sprites.at(a)->y, 16,
                                                      16)) {
