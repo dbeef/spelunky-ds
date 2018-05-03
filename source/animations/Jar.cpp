@@ -37,9 +37,9 @@ void Jar::draw() {
 
 
     int main_x = x - global::camera->x;
-    int main_y = y - global::camera->y;
+    int main_y = y - global::camera->y + 1;
     int sub_x = x - global::camera->x;
-    int sub_y = y - global::camera->y - 192;
+    int sub_y = y - global::camera->y - 192 + 1;
 
     if (global::camera->y + 192 > this->y + 8 || global::camera->y + 192 + 192  < this->y - 8) {
         sub_x = -128;
@@ -73,6 +73,16 @@ void Jar::draw() {
     subSpriteInfo->entry->x = sub_x;
     subSpriteInfo->entry->y = sub_y;
 
+    if (xSpeed > 0 || ySpeed > 0) {
+        for (int a = 0; a < global::sprites.size(); a++) {
+            if((global::sprites.at(a)->spriteType == SpriteType::SNAKE || global::sprites.at(a)->spriteType == SpriteType::BAT)
+               && !global::sprites.at(a)->killed){
+                if(Collisions::checkCollisionBodies(x, y, 8, 8, global::sprites.at(a)->x, global::sprites.at(a)->y, 16, 16)){
+                    global::sprites.at(a)->kill();
+                }
+            }
+        }
+    }
 }
 
 
@@ -115,12 +125,12 @@ void Jar::updateSpeed() {
 void Jar::updatePosition() {
 
     if (bottomCollision && xSpeed > 0) {
-        xSpeed -= 0.055;
+        xSpeed -= 0.2;
         if (xSpeed < 0)
             xSpeed = 0;
     }
     if (bottomCollision && xSpeed < 0) {
-        xSpeed += 0.055;
+        xSpeed += 0.2;
         if (xSpeed > 0)
             xSpeed = 0;
     }
@@ -167,7 +177,7 @@ void Jar::updatePosition() {
 
 
     if (!bottomCollision)
-        ySpeed += GRAVITY_DELTA_SPEED;
+        ySpeed += GRAVITY_DELTA_SPEED * 0.8;
 
     pos_inc_timer = 0;
 }

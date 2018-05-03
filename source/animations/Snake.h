@@ -19,6 +19,8 @@ public:
 
     void draw() override;
 
+    void kill() override ;
+
     void updateTimers() override {};
 
     void updatePosition() override;
@@ -48,8 +50,6 @@ public:
 
     int animFrame;
     int animFrameTimer;
-
-    bool killed;
 
     void randomizeMovement();
 };

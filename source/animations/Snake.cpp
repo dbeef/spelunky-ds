@@ -99,50 +99,14 @@ void Snake::draw() {
 
 
         if (Collisions::checkCollisionWithMainDudeWhip(x, y, 16, 16)) {
-            subSpriteInfo->entry->isHidden = true;
-            mainSpriteInfo->entry->isHidden = true;
-
-            for (int a = 0; a < 4; a++) {
-                Blood *blood = new Blood();
-                blood->init();
-                blood->x = x;
-                blood->y = y;
-
-                if (a % 2 == 0)
-                    blood->xSpeed = (1 / a);
-                else
-                    blood->xSpeed = (-1 / a);
-
-                blood->ySpeed = -1 / a;
-                global::sprites.push_back(blood);
-            }
-            killed = true;
-
+            kill();
         }
     }
 
 
     if (!killed && Collisions::checkCollisionWithMainDude(x, y, 16, 16) && global::main_dude->ySpeed > 0 &&
         global::main_dude->y - 4 < y) {
-        subSpriteInfo->entry->isHidden = true;
-        mainSpriteInfo->entry->isHidden = true;
-
-        for (int a = 0; a < 4; a++) {
-            Blood *blood = new Blood();
-            blood->init();
-            blood->x = x;
-            blood->y = y;
-
-            if (a % 2 == 0)
-                blood->xSpeed = (1 / a);
-            else
-                blood->xSpeed = (-1 / a);
-
-            blood->ySpeed = -1 / a;
-            global::sprites.push_back(blood);
-        }
-        killed = true;
-
+        kill();
         global::main_dude->ySpeed = -2;
     }
 
@@ -178,6 +142,8 @@ void Snake::init() {
 
     //idk why do i have to do that, if it is already flipped in image
     subSpriteInfo->entry->hFlip = true;
+
+    spriteType = SpriteType::SNAKE;
 
     randomizeMovement();
 }
@@ -310,5 +276,27 @@ void Snake::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in
         //nothing
     }
 
+
+}
+
+void Snake::kill() {
+    subSpriteInfo->entry->isHidden = true;
+    mainSpriteInfo->entry->isHidden = true;
+
+    for (int a = 0; a < 4; a++) {
+        Blood *blood = new Blood();
+        blood->init();
+        blood->x = x;
+        blood->y = y;
+
+        if (a % 2 == 0)
+            blood->xSpeed = (1 / a);
+        else
+            blood->xSpeed = (-1 / a);
+
+        blood->ySpeed = -1 / a;
+        global::sprites.push_back(blood);
+    }
+    killed = true;
 
 }

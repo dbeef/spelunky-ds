@@ -31,6 +31,8 @@ public:
 
     virtual void draw() = 0;
 
+    virtual void kill() = 0;
+
     virtual void init() = 0;
 
     virtual void updateTimers() = 0;
@@ -63,6 +65,9 @@ public:
 
     bool hold_by_main_dude;
     bool activated_by_main_dude; //ex. shooting shotgun, or arming bomb
+
+    bool killed;
+    bool ready_to_dispose;
 
     SpriteType spriteType;
 };

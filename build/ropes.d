@@ -1,1 +1,0 @@
-ropes.o: ropes.s

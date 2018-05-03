@@ -68,6 +68,12 @@ void Moniez::draw() {
     subSpriteInfo->entry->x = sub_x;
     subSpriteInfo->entry->y = sub_y;
 
+    mainSpriteInfo->entry->vFlip = false;
+    mainSpriteInfo->entry->hFlip = false;
+    
+    subSpriteInfo->entry->vFlip = false;
+    subSpriteInfo->entry->hFlip = false;
+    
 }
 
 

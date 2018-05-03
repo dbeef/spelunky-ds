@@ -43,6 +43,7 @@ public:
 
     static bool checkCollisionWithMainDudeWhip(int x, int y, int width, int height);
 
+    static bool checkCollisionBodies(int x1, int y1, int w1, int h1, int x2, int y2, int w2, int h2);
 };
 
 

@@ -63,9 +63,9 @@ void MainDude::handleKeyInput() {
                                     if (!global::input_handler->down_key_held) {
 
                                         if (state == 1)
-                                            (*global::sprites.at(a)).xSpeed = -2.5 - abs(xSpeed);
+                                            (*global::sprites.at(a)).xSpeed = -4 - abs(xSpeed);
                                         else
-                                            (*global::sprites.at(a)).xSpeed = 2.5 + abs(xSpeed);
+                                            (*global::sprites.at(a)).xSpeed = 4 + abs(xSpeed);
 
                                     } else {
 

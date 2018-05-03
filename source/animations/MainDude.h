@@ -35,6 +35,8 @@ public:
 
     void updateOther() override;
 
+    void kill() override {};
+
     void draw() override;
 
     void updateTimers() override;

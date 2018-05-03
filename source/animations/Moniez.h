@@ -19,6 +19,8 @@ public:
 
     void draw() override;
 
+    void kill() override {};
+
     void updateTimers() override {};
 
     void updatePosition() override ;

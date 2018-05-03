@@ -1,1 +1,0 @@
-menu_signs_start_scores.o: menu_signs_start_scores.s

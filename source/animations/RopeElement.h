@@ -21,6 +21,8 @@ public:
 
     void updateOther() override {};
 
+    void kill() override {};
+
     void init() override;
 
     void draw() override;

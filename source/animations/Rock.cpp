@@ -14,7 +14,8 @@ void Rock::draw() {
     if (hold_by_main_dude && global::input_handler->y_key_down && global::input_handler->down_key_held) {
         hold_by_main_dude = false;
         global::main_dude->holding_item = false;
-    } else if (global::input_handler->y_key_down && global::input_handler->down_key_held && /*bottomCollision &&*/ !global::main_dude->holding_item) {
+    } else if (global::input_handler->y_key_down && global::input_handler->down_key_held &&
+               /*bottomCollision &&*/ !global::main_dude->holding_item) {
         if (Collisions::checkCollisionWithMainDude(x, y, 8, 8)) {
             hold_by_main_dude = true;
             global::main_dude->holding_item = true;
@@ -39,7 +40,7 @@ void Rock::draw() {
     int sub_x = x - global::camera->x;
     int sub_y = y - global::camera->y - 192;
 
-    if (global::camera->y + 192 > this->y + 8 || global::camera->y + 192 + 192  < this->y - 8) {
+    if (global::camera->y + 192 > this->y + 8 || global::camera->y + 192 + 192 < this->y - 8) {
         sub_x = -128;
         sub_y = -128;
     }
@@ -49,12 +50,12 @@ void Rock::draw() {
     }
 
 
-    if (sub_y < 0 + 8 || sub_x + 8< 0) {
+    if (sub_y < 0 + 8 || sub_x + 8 < 0) {
         sub_x = -128;
         sub_y = -128;
     }
 
-    if (main_y + 8< 0 || main_x + 8< 0) {
+    if (main_y + 8 < 0 || main_x + 8 < 0) {
         main_x = -128;
         main_y = -128;
     }
@@ -69,6 +70,17 @@ void Rock::draw() {
 
     subSpriteInfo->entry->x = sub_x;
     subSpriteInfo->entry->y = sub_y;
+
+    if (xSpeed > 0 || ySpeed > 0) {
+        for (int a = 0; a < global::sprites.size(); a++) {
+            if((global::sprites.at(a)->spriteType == SpriteType::SNAKE || global::sprites.at(a)->spriteType == SpriteType::BAT)
+                    && !global::sprites.at(a)->killed){
+                if(Collisions::checkCollisionBodies(x, y, 8, 8, global::sprites.at(a)->x, global::sprites.at(a)->y, 16, 16)){
+                    global::sprites.at(a)->kill();
+                }
+            }
+        }
+    }
 
 }
 
@@ -110,12 +122,12 @@ void Rock::updateSpeed() {
 void Rock::updatePosition() {
 
     if (bottomCollision && xSpeed > 0) {
-        xSpeed -= 0.055;
+        xSpeed -= 0.2;
         if (xSpeed < 0)
             xSpeed = 0;
     }
     if (bottomCollision && xSpeed < 0) {
-        xSpeed += 0.055;
+        xSpeed += 0.2;
         if (xSpeed > 0)
             xSpeed = 0;
     }
@@ -162,7 +174,7 @@ void Rock::updatePosition() {
 
 
     if (!bottomCollision)
-        ySpeed += GRAVITY_DELTA_SPEED;
+        ySpeed += GRAVITY_DELTA_SPEED * 0.8;
 
     pos_inc_timer = 0;
 }

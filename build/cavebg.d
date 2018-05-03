@@ -1,1 +1,0 @@
-cavebg.o: cavebg.s

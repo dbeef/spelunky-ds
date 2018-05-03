@@ -310,14 +310,8 @@ void Collisions::bombNeighboringTiles(MapTile *mapTiles[32][32], int xx, int yy)
 
 }
 
-void Collisions::getCenterTile(int x_position, int y_position, int height, int width, int *x_tile, int *y_tile) {
-    floor_div(x_position + 0.5 * width, 16, x_tile);
-    floor_div(y_position + 0.5 * height, 16, y_tile);
-}
-
 bool Collisions::checkCollisionWithMainDude(int x, int y, int width, int height) {
-    return x + width + 4 >= global::main_dude->x && x + width < global::main_dude->x + MAIN_DUDE_WIDTH + 8 &&
-           y + height > global::main_dude->y && y < global::main_dude->y + MAIN_DUDE_HEIGHT;
+    return checkCollisionBodies(x, y, width, height, global::main_dude->x, global::main_dude->y, 16, 16);
 }
 
 bool Collisions::checkCollisionWithMainDudeWidthBoundary(int x, int y, int width, int height, int x_boundary) {
@@ -334,4 +328,8 @@ bool Collisions::checkCollisionWithMainDudeWhip(int x, int y, int width, int hei
                y + height > global::main_dude->y && y < global::main_dude->y + MAIN_DUDE_HEIGHT;
     } else return false;
 
+}
+
+bool Collisions::checkCollisionBodies(int x1, int y1, int w1, int h1, int x2, int y2, int w2, int h2) {
+    return x1 + w1 >= x2 && x1 < x2 + w2 && y1 + h1 > y2 && y1 < y2 + h2;
 }

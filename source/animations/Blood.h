@@ -28,6 +28,8 @@ public:
 
     void init() override;
 
+    void kill() override {};
+
     void draw() override;
 
     void updateTimers() override {};
