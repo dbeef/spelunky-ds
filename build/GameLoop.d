@@ -113,6 +113,11 @@ GameLoop.o: \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/Spider.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/rooms/LeftRightRooms.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/rooms/RoomType.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/rooms/LeftRightDownRooms.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/rooms/LeftRightUpRooms.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/rooms/EntranceRooms.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/rooms/ExitRooms.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/rooms/ClosedRooms.h \
  /home/xdbeef/devkitPro/libnds/include/maxmod9.h \
  /home/xdbeef/devkitPro/libnds/include/nds/arm9/console.h
 
@@ -341,6 +346,16 @@ GameLoop.o: \
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/rooms/LeftRightRooms.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/rooms/RoomType.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/rooms/LeftRightDownRooms.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/rooms/LeftRightUpRooms.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/rooms/EntranceRooms.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/rooms/ExitRooms.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/rooms/ClosedRooms.h:
 
 /home/xdbeef/devkitPro/libnds/include/maxmod9.h:
 

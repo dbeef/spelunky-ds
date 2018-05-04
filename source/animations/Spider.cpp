@@ -76,6 +76,7 @@ void Spider::draw() {
         global::main_dude->y - 4 < y) {
         kill();
         global::main_dude->ySpeed = -2;
+        global::main_dude->jumpingTimer = 0;
     }
 
 
@@ -115,6 +116,8 @@ void Spider::draw() {
     if (hunting && bottomCollision && !hanging) {
 
         int diff = global::main_dude->x - x > 0;
+        if(diff > 40)
+            diff = 40;
 
         if (diff)
             random_speed = 1.1 + ((rand() % diff) / 10);

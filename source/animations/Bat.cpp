@@ -25,7 +25,7 @@ void Bat::draw() {
 
 
     if (!hunting)
-        hunting = abs(x - global::main_dude->x) < 9 * 16 && abs(y - global::main_dude->y) < 9 * 16 &&
+        hunting = abs(x - global::main_dude->x) < 7 * 16 && abs(y - global::main_dude->y) < 7 * 16 &&
                   global::main_dude->y > y;
     else
         hunting = abs(x - global::main_dude->x) < 9 * 16 && abs(y - global::main_dude->y) < 9 * 16;
@@ -64,6 +64,7 @@ void Bat::draw() {
         global::main_dude->y - 4 < y) {
         kill();
         global::main_dude->ySpeed = -2;
+        global::main_dude->jumpingTimer = 0;
     }
 
 

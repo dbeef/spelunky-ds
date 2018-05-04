@@ -8,7 +8,7 @@
 //	+ 59 tiles not compressed
 //	Total size: 4 + 1888 = 1892
 //
-//	Time-stamp: 2018-05-04, 13:51:11
+//	Time-stamp: 2018-05-04, 16:47:10
 //	Exported by Cearn's GBA Image Transmogrifier, v0.8.14
 //	( http://www.coranac.com/projects/#grit )
 //

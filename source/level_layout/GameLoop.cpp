@@ -17,6 +17,11 @@
 #include "../animations/Spider.h"
 #include "rooms/LeftRightRooms.h"
 #include "rooms/RoomType.h"
+#include "rooms/LeftRightDownRooms.h"
+#include "rooms/LeftRightUpRooms.h"
+#include "rooms/EntranceRooms.h"
+#include "rooms/ExitRooms.h"
+#include "rooms/ClosedRooms.h"
 #include <vector>
 #include <time.h>
 #include <maxmod9.h>
@@ -133,81 +138,132 @@ void gameloop::scroll() {
 
 void gameloop::populateCaveMoniez() {
 
-    for (int a = 0; a < 4; a++) {
-        Moniez *moniez = new Moniez();
 
-        moniez->sprite_height = 16;
-        moniez->sprite_width = 16;
-        moniez->physics_height = 8;
-        moniez->physics_width = 16;
+    int last_placement = 3;
 
-        moniez->spriteType = MONIEZ_TRIPLE_GOLD_BARS;
-        moniez->value = 1000;
+    int gold_bars_left = 8;
+    int rubies_left = 8;
+    int rocks_left = 8;
+    int jars_left = 8;
 
-        moniez->init();
+    std::cout << '\n' << '\n';
 
-        moniez->timer = global::timer;
-        global::sprites.push_back(moniez);
+    for (int b = ROOMS_Y - 1; b >= 0; b--) {
+        for (int a = 0; a < ROOMS_X; a++) {
 
-        int curr_x = (rand() % 400) + 48 + a * 16;
-        int curr_y = (rand() % 400) + 48;
+            int room_type = global::level_generator->layout_room_types[a][b];
+            int room_id = global::level_generator->layout_room_ids[a][b];
 
-        moniez->x = curr_x;
-        moniez->y = curr_y;
 
+            if (room_id == -1)
+                continue;
+
+
+            for (int tab_y = 0; tab_y < ROOM_TILE_HEIGHT_GAME; tab_y++) {
+                for (int tab_x = 0; tab_x < ROOM_TILE_WIDTH_GAME; tab_x++) {
+
+                    last_placement++;
+                    if (last_placement < 4)
+                        continue;
+
+                    int npc;
+
+                    if (room_type == RoomType::ROOM_LEFT_RIGHT)
+                        npc = left_right_loot[room_id][tab_y][tab_x];
+                    else if (room_type == RoomType::ROOM_LEFT_RIGHT_UP)
+                        npc = left_right_up_loot[room_id][tab_y][tab_x];
+                    else if (room_type == RoomType::ROOM_LEFT_RIGHT_DOWN)
+                        npc = left_right_down_loot[room_id][tab_y][tab_x];
+                    else if (room_type == RoomType::ROOM_ENTRANCE)
+                        npc = entrance_room_loot[room_id][tab_y][tab_x];
+                    else if (room_type == RoomType::ROOM_EXIT)
+                        npc = exit_room_loot[room_id][tab_y][tab_x];
+                    else if (room_type == RoomType::ROOM_CLOSED)
+                        npc = closed_rooms_loot[room_id][tab_y][tab_x];
+                    else
+                        continue;
+
+                    if (npc == 0)
+                        continue;
+
+                    int r = rand() % 3;
+                    int loot_type = rand() % 4;
+
+                    u16 pos_x = (OFFSET_X + tab_x * 2 + 2 * ROOM_TILE_WIDTH_GAME * a) / 2;
+                    u16 pos_y = (OFFSET_X + tab_y * 2 + 2 * ROOM_TILE_HEIGHT_GAME * ((ROOMS_Y - b) - 1)) / 2;
+
+
+                    if (loot_type == 1 && gold_bars_left > 0 && r == 1) {
+
+                        Moniez *moniez = new Moniez();
+
+                        moniez->sprite_height = 16;
+                        moniez->sprite_width = 16;
+                        moniez->physics_height = 8;
+                        moniez->physics_width = 16;
+
+                        moniez->spriteType = MONIEZ_TRIPLE_GOLD_BARS;
+                        moniez->value = 1000;
+
+                        moniez->init();
+
+                        moniez->timer = global::timer;
+                        global::sprites.push_back(moniez);
+
+                        moniez->x = pos_x * 16;
+                        moniez->y = pos_y * 16;
+
+                        gold_bars_left--;
+                        last_placement = 0;
+                    }
+
+                    if (loot_type == 2 && rubies_left > 0 && r == 1) {
+                        Moniez *moniez = new Moniez();
+                        moniez->sprite_height = 8;
+                        moniez->sprite_width = 8;
+                        moniez->physics_height = 8;
+                        moniez->physics_width = 8;
+                        moniez->spriteType = MONIEZ_RUBY_BIG;
+                        moniez->value = 1200;
+                        moniez->init();
+                        moniez->timer = global::timer;
+                        global::sprites.push_back(moniez);
+                        moniez->x = pos_x * 16;
+                        moniez->y = pos_y * 16;
+                        rubies_left--;
+                        last_placement = 0;
+                    }
+
+                    if (loot_type == 3 && jars_left > 0 && r == 1) {
+                        Jar *jar = new Jar();
+                        jar->init();
+                        jar->timer = global::timer;
+                        global::sprites.push_back(jar);
+                        jar->x = pos_x * 16;
+                        jar->y = pos_y * 16;
+                        jars_left--;
+                        last_placement = 0;
+                    }
+
+                    if (loot_type == 0 && rocks_left > 0 && r == 1) {
+                        Rock *rock = new Rock();
+                        rock->init();
+                        rock->timer = global::timer;
+                        global::sprites.push_back(rock);
+                        rock->x = pos_x * 16;
+                        rock->y = pos_y * 16;
+                        rocks_left--;
+                        last_placement = 0;
+                    }
+                }
+            }
+        }
     }
-    for (int a = 0; a < 4; a++) {
-        Moniez *moniez = new Moniez();
 
-        moniez->sprite_height = 8;
-        moniez->sprite_width = 8;
-        moniez->physics_height = 8;
-        moniez->physics_width = 8;
 
-        moniez->spriteType = MONIEZ_RUBY_BIG;
-        moniez->value = 1200;
-
-        moniez->init();
-
-        moniez->timer = global::timer;
-        global::sprites.push_back(moniez);
-
-        int curr_x = (rand() % 400) + 48 + a * 16;
-        int curr_y = (rand() % 400) + 48;
-
-        moniez->x = curr_x;
-        moniez->y = curr_y;
-
-    }
 }
 
 void gameloop::populateCaveItems() {
-
-
-    for (int a = 0; a < 2; a++) {
-        Jar *jar = new Jar();
-        jar->init();
-        jar->timer = global::timer;
-        global::sprites.push_back(jar);
-
-        int curr_x = (rand() % 400) + 48;
-        int curr_y = (rand() % 400) + 48;
-
-        jar->x = curr_x;
-        jar->y = curr_y;
-    }
-    for (int a = 0; a < 2; a++) {
-        Rock *rock = new Rock();
-        rock->init();
-        rock->timer = global::timer;
-        global::sprites.push_back(rock);
-
-        int curr_x = (rand() % 400) + 48;
-        int curr_y = (rand() % 400) + 48;
-
-        rock->x = curr_x;
-        rock->y = curr_y;
-    }
 
 }
 
@@ -232,60 +288,69 @@ void gameloop::populateCaveNpcs() {
             if (room_id == -1)
                 continue;
 
-            if (room_type == RoomType::ROOM_LEFT_RIGHT) {
 
-                for (int tab_y = 0; tab_y < ROOM_TILE_HEIGHT_GAME; tab_y++) {
-                    for (int tab_x = 0; tab_x < ROOM_TILE_WIDTH_GAME; tab_x++) {
+            for (int tab_y = 0; tab_y < ROOM_TILE_HEIGHT_GAME; tab_y++) {
+                for (int tab_x = 0; tab_x < ROOM_TILE_WIDTH_GAME; tab_x++) {
 
-                        last_placement++;
-//                        if(last_placement < 3)
-//                            continue;
+                    last_placement++;
+                    if (last_placement < 4)
+                        continue;
 
-                        int npc = left_right_npcs[room_id][tab_y][tab_x];
-                        int r = 1;
-
-                        u16 pos_x = (OFFSET_X + tab_x * 2 + 2 * ROOM_TILE_WIDTH_GAME * a) / 2;
-                        u16 pos_y = (OFFSET_X + tab_y * 2 + 2 * ROOM_TILE_HEIGHT_GAME * ((ROOMS_Y - b) - 1)) / 2;
-
-
-                        if (npc == 1 && snakes_left > 0 && r == 1) {
-                            Snake *snake = new Snake();
-                            snake->init();
-                            snake->timer = global::timer;
-                            global::sprites.push_back(snake);
-                            snake->x = pos_x * 16;
-                            snake->y = pos_y * 16;
-                            snakes_left--;
-                            last_placement = 0;
-                        }
-
-                        if (npc == 2 && bats_left > 0 && r == 1) {
-                            Bat *bat = new Bat();
-                            bat->init();
-                            bat->timer = global::timer;
-                            global::sprites.push_back(bat);
-                            bats_left--;
-                            bat->x = pos_x * 16;
-                            bat->y = pos_y * 16;
-                            last_placement = 0;
-                        }
-
-                        if (npc == 3 && spiders_left > 0 && r == 1) {
-                            Spider *spider = new Spider();
-                            spider->init();
-                            spider->timer = global::timer;
-                            global::sprites.push_back(spider);
-                            spider->x = pos_x * 16;
-                            spider->y = pos_y * 16;
-                            spiders_left--;
-                            last_placement = 0;
-                        }
+                    int npc;
+                    if (room_type == RoomType::ROOM_LEFT_RIGHT)
+                        npc = left_right_npcs[room_id][tab_y][tab_x];
+                    else if (room_type == RoomType::ROOM_LEFT_RIGHT_DOWN)
+                        npc = left_right_down_npcs[room_id][tab_y][tab_x];
+                    else if (room_type == RoomType::ROOM_LEFT_RIGHT_UP)
+                        npc = left_right_up_npcs[room_id][tab_y][tab_x];
+                    else if (room_type == RoomType::ROOM_EXIT)
+                        npc = exit_room_npcs[room_id][tab_y][tab_x];
+                    else if (room_type == RoomType::ROOM_CLOSED)
+                        npc = closed_rooms_npcs[room_id][tab_y][tab_x];
+                    else
+                        continue;
 
 
+                    int r = rand() % 3;
+
+                    u16 pos_x = (OFFSET_X + tab_x * 2 + 2 * ROOM_TILE_WIDTH_GAME * a) / 2;
+                    u16 pos_y = (OFFSET_X + tab_y * 2 + 2 * ROOM_TILE_HEIGHT_GAME * ((ROOMS_Y - b) - 1)) / 2;
+
+
+                    if (npc == 1 && snakes_left > 0 && r == 1) {
+                        Snake *snake = new Snake();
+                        snake->init();
+                        snake->timer = global::timer;
+                        global::sprites.push_back(snake);
+                        snake->x = pos_x * 16;
+                        snake->y = pos_y * 16;
+                        snakes_left--;
+                        last_placement = 0;
+                    }
+
+                    if (npc == 2 && bats_left > 0 && r == 1) {
+                        Bat *bat = new Bat();
+                        bat->init();
+                        bat->timer = global::timer;
+                        global::sprites.push_back(bat);
+                        bats_left--;
+                        bat->x = pos_x * 16;
+                        bat->y = pos_y * 16;
+                        last_placement = 0;
+                    }
+
+                    if (npc == 3 && spiders_left > 0 && r == 1) {
+                        Spider *spider = new Spider();
+                        spider->init();
+                        spider->timer = global::timer;
+                        global::sprites.push_back(spider);
+                        spider->x = pos_x * 16;
+                        spider->y = pos_y * 16;
+                        spiders_left--;
+                        last_placement = 0;
                     }
                 }
             }
-
         }
     }
 

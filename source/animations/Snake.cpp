@@ -23,6 +23,9 @@ void Snake::draw() {
     mainSpriteInfo->entry->hFlip = true;
     subSpriteInfo->entry->hFlip = true;
 
+    mainSpriteInfo->entry->vFlip = false;
+    subSpriteInfo->entry->vFlip = false;
+
     mainSpriteInfo->entry->isHidden = false;
     subSpriteInfo->entry->isHidden = false;
 
@@ -82,6 +85,7 @@ void Snake::draw() {
         global::main_dude->y - 4 < y) {
         kill();
         global::main_dude->ySpeed = -2;
+        global::main_dude->jumpingTimer = 0;
     }
 
     if (!killed && !global::main_dude->dead && Collisions::checkCollisionWithMainDude(x, y, 16, 16) &&

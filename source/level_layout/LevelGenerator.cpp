@@ -36,9 +36,8 @@ void LevelGenerator::newLayout(int seed) {
 
     srand(timerElapsed(1));
 
-    //value of '3' crashes program
     int curr_x = rand() % 3;
-//    std::cout << " " << curr_x << '\n';
+    //    std::cout << " " << curr_x << '\n';
 
     int curr_y = ROOMS_Y - 1;
     int direction = 0;
@@ -269,7 +268,6 @@ void LevelGenerator::generateRooms() {
 
             switch (room_type) {
                 case RoomType::ROOM_CLOSED:
-                    layout_room_ids[a][b] = -1;
                     memcpy(tab, closed_rooms[r], sizeof(closed_rooms[r]));
                     break;
                 case RoomType::ROOM_LEFT_RIGHT:
@@ -282,12 +280,10 @@ void LevelGenerator::generateRooms() {
                     memcpy(tab, left_right_up_rooms[r], sizeof(left_right_up_rooms[r]));
                     break;
                 case RoomType::ROOM_ENTRANCE:
-                    layout_room_ids[a][b] = -1;
-                    memcpy(tab, entrance_room, sizeof(entrance_room));
+                    memcpy(tab, entrance_room[r], sizeof(entrance_room[r]));
                     break;
                 case RoomType::ROOM_EXIT:
-                    layout_room_ids[a][b] = -1;
-                    memcpy(tab, exit_room, sizeof(exit_room));
+                    memcpy(tab, exit_room[r], sizeof(exit_room[r]));
                     break;
                 default:
                     break;

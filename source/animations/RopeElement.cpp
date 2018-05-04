@@ -36,6 +36,14 @@ void RopeElement::draw() {
     subSpriteInfo_2->entry->x = sub_x;
     subSpriteInfo_2->entry->y = sub_y + 8;
 
+    mainSpriteInfo->entry->isHidden = false;
+    mainSpriteInfo_2->entry->isHidden = false;
+
+    subSpriteInfo->entry->isHidden = false;
+    subSpriteInfo_2->entry->isHidden = false;
+
+
+
 }
 
 
@@ -54,6 +62,7 @@ void RopeElement::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_
 }
 
 void RopeElement::initSprite() {
+
     subSpriteInfo = global::sub_oam_manager->initSprite(ropesPal, ropesPalLen,
                                                         nullptr, 8 * 8, 8, ROPE_ELEMENT, true, true);
     mainSpriteInfo = global::main_oam_manager->initSprite(ropesPal, ropesPalLen,
@@ -63,11 +72,15 @@ void RopeElement::initSprite() {
                                                           nullptr, 8 * 8, 8, ROPE_ELEMENT, true, true);
     mainSpriteInfo_2 = global::main_oam_manager->initSprite(ropesPal, ropesPalLen,
                                                             nullptr, 8 * 8, 8, ROPE_ELEMENT, true, true);
+
     frameGfx = (u8 *) ropesTiles + 0 * 8 * 8 / 2;
+
     subSpriteInfo->updateFrame(frameGfx, 8 * 8);
     mainSpriteInfo->updateFrame(frameGfx, 8 * 8);
     subSpriteInfo_2->updateFrame(frameGfx, 8 * 8);
     mainSpriteInfo_2->updateFrame(frameGfx, 8 * 8);
+
+
 
 }
 

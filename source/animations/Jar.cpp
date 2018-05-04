@@ -121,6 +121,12 @@ void Jar::draw() {
     mainSpriteInfo->entry->x = main_x;
     mainSpriteInfo->entry->y = main_y;
 
+    mainSpriteInfo->entry->hFlip=false;
+    subSpriteInfo->entry->hFlip= false;
+
+    mainSpriteInfo->entry->vFlip=false;
+    subSpriteInfo->entry->vFlip= false;
+
     subSpriteInfo->entry->x = sub_x;
     subSpriteInfo->entry->y = sub_y;
 

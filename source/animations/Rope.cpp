@@ -251,11 +251,20 @@ bool Rope::isThereChainForThisTile(int rope_y) {
 }
 
 void Rope::initSprite() {
+
+
     subSpriteInfo = global::sub_oam_manager->initSprite(ropesPal, ropesPalLen,
                                                         nullptr, 8 * 8, 8, ROPES, true, false);
     mainSpriteInfo = global::main_oam_manager->initSprite(ropesPal, ropesPalLen,
                                                           nullptr, 8 * 8, 8, ROPES, true, false);
+
+    mainSpriteInfo->entry->isHidden = false;
+    subSpriteInfo->entry->isHidden = false;
+
     notThrown();
 
+    for (int a = 0; a < ropeChain.size(); a++) {
+        ropeChain.at(a)->initSprite();
+    }
 }
 

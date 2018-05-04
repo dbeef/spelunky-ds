@@ -478,7 +478,7 @@ void MainDude::draw() {
     int sub_x = x - global::camera->x;
     int sub_y = y - global::camera->y - 192;
 
-    if (this->y <= 320 + 16 && this->y >= 320 - 16) {
+    /*if (this->y <= 320 + 16 && this->y >= 320 - 16) {
 
     } else if (this->y > 320) {
         main_x = -16;
@@ -487,6 +487,19 @@ void MainDude::draw() {
         sub_x = -16;
         sub_y = -16;
     }
+
+*/
+    if (global::camera->y + 192 > this->y + 16 || global::camera->y + 192 + 192 < this->y - 16) {
+        sub_x = -128;
+        sub_y = -128;
+    }
+    if (global::camera->y > this->y + 16 || global::camera->y + 192 < this->y - 16) {
+        main_x = -128;
+        main_y = -128;
+    }
+
+
+
 
     main_spelunker->entry->x = main_x;
     main_spelunker->entry->y = main_y;

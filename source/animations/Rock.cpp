@@ -82,6 +82,12 @@ void Rock::draw() {
         }
     }
 
+
+    mainSpriteInfo->entry->hFlip=false;
+    subSpriteInfo->entry->hFlip= false;
+
+    mainSpriteInfo->entry->vFlip=false;
+    subSpriteInfo->entry->vFlip= false;
 }
 
 

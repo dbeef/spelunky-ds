@@ -167,7 +167,7 @@ void Hud::draw_on_level_done() {
             snake->init();
             snake->timer = global::timer;
             global::sprites.push_back(snake);
-            snake->x = 98 + (a * 8);
+            snake->x = 95 + (a * 8);
             snake->y = 208;
             snake->ready_to_dispose = true;
             snake->set_position();
@@ -177,7 +177,7 @@ void Hud::draw_on_level_done() {
             bat->init();
             bat->timer = global::timer;
             global::sprites.push_back(bat);
-            bat->x = 98+ (a * 8);
+            bat->x = 95+ (a * 8);
             bat->y = 208;
             bat->ready_to_dispose = true;
             bat->set_sprite_flying_left();
@@ -187,7 +187,7 @@ void Hud::draw_on_level_done() {
             spider->init();
             spider->timer = global::timer;
             global::sprites.push_back(spider);
-            spider->x = 98+ (a * 8);
+            spider->x = 95+ (a * 8);
             spider->y = 208;
             spider->ready_to_dispose = true;
             spider->set_sprite_falling();
