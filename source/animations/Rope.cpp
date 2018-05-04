@@ -117,6 +117,16 @@ void Rope::draw() {
     subSpriteInfo->entry->x = sub_x;
     subSpriteInfo->entry->y = sub_y;
 
+    if (!finished) {
+        for (int a = 0; a < global::sprites.size(); a++) {
+            if((global::sprites.at(a)->spriteType == SpritesheetType::SNAKE || global::sprites.at(a)->spriteType == SpritesheetType::BAT|| global::sprites.at(a)->spriteType == SpritesheetType::SPIDER)
+               && !global::sprites.at(a)->killed){
+                if(Collisions::checkCollisionBodies(x, y, 8, 8, global::sprites.at(a)->x, global::sprites.at(a)->y, 16, 16)){
+                    global::sprites.at(a)->kill();
+                }
+            }
+        }
+    }
 }
 
 
@@ -211,6 +221,8 @@ void Rope::updatePosition() {
         tempXspeed--;
         tempYspeed--;
     }
+
+
 
 
 //    if (!bottomCollision)
