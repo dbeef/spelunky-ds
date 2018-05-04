@@ -17,12 +17,15 @@
 
 void Moniez::draw() {
 
+    if(ready_to_dispose)
+        return;
+
     if (!collected && Collisions::checkCollisionWithMainDudeWidthBoundary(x, y, physics_width, physics_height, 8)) {
         global::hud->draw();
 
-        if (spriteType == SpriteType::MONIEZ_RUBY_BIG) {
+        if (spriteType == SpritesheetType::MONIEZ_RUBY_BIG) {
             mmEffect(SFX_XGEM);
-        } else if (spriteType == SpriteType::MONIEZ_TRIPLE_GOLD_BARS) {
+        } else if (spriteType == SpritesheetType::MONIEZ_TRIPLE_GOLD_BARS) {
             mmEffect(SFX_XCOIN);
         }
 
@@ -30,6 +33,10 @@ void Moniez::draw() {
         collected = true;
         subSpriteInfo->entry->isHidden = true;
         mainSpriteInfo->entry->isHidden = true;
+
+        subSpriteInfo->entry = nullptr;
+        mainSpriteInfo->entry = nullptr;
+        ready_to_dispose = true;
     }
 
     int main_x = x - global::camera->x;
@@ -78,39 +85,13 @@ void Moniez::draw() {
 
 
 void Moniez::init() {
-    if (spriteType == SpriteType::MONIEZ_TRIPLE_GOLD_BARS) {
-        subSpriteInfo = global::sub_oam_manager->initSprite(triple_goldbarPal, triple_goldbarPalLen,
-                                                            nullptr, sprite_width * sprite_height, sprite_width,
-                                                            spriteType, true, true);
-        mainSpriteInfo = global::main_oam_manager->initSprite(triple_goldbarPal, triple_goldbarPalLen,
-                                                              nullptr, sprite_width * sprite_height, sprite_width,
-                                                              spriteType, true, true);
-        frameGfx = (u8 *) triple_goldbarTiles;
-    } else if (spriteType == SpriteType::MONIEZ_RUBY_BIG) {
-        subSpriteInfo = global::sub_oam_manager->initSprite(rubies_bigPal, rubies_bigPalLen,
-                                                            nullptr, sprite_width * sprite_height, sprite_width,
-                                                            spriteType, true, true);
-        mainSpriteInfo = global::main_oam_manager->initSprite(rubies_bigPal, rubies_bigPalLen,
-                                                              nullptr, sprite_width * sprite_height, sprite_width,
-                                                              spriteType, true, true);
+    ruby_type = rand() % 3;
 
-        int a = rand() % 3;
-
-        if (a == 0)
-            frameGfx = (u8 *) rubies_bigTiles;
-        else if (a == 1)
-            frameGfx = (u8 *) rubies_bigTiles + 8 * 8 * 1 / 2;
-        else if (a == 2)
-            frameGfx = (u8 *) rubies_bigTiles + 8 * 8 * 2 / 2;
-
-
-    }
+    initSprite();
 
     activated_by_main_dude = true;
     collected = false;
 
-    subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
-    mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
 }
 
 void Moniez::updateSpeed() {
@@ -210,5 +191,39 @@ void Moniez::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_i
         //nothing
     }
 
+}
+
+void Moniez::initSprite() {
+
+    if (spriteType == SpritesheetType::MONIEZ_TRIPLE_GOLD_BARS) {
+        subSpriteInfo = global::sub_oam_manager->initSprite(triple_goldbarPal, triple_goldbarPalLen,
+                                                            nullptr, sprite_width * sprite_height, sprite_width,
+                                                            spriteType, true, true);
+        mainSpriteInfo = global::main_oam_manager->initSprite(triple_goldbarPal, triple_goldbarPalLen,
+                                                              nullptr, sprite_width * sprite_height, sprite_width,
+                                                              spriteType, true, true);
+        frameGfx = (u8 *) triple_goldbarTiles;
+    } else if (spriteType == SpritesheetType::MONIEZ_RUBY_BIG) {
+        subSpriteInfo = global::sub_oam_manager->initSprite(rubies_bigPal, rubies_bigPalLen,
+                                                            nullptr, sprite_width * sprite_height, sprite_width,
+                                                            spriteType, true, true);
+        mainSpriteInfo = global::main_oam_manager->initSprite(rubies_bigPal, rubies_bigPalLen,
+                                                              nullptr, sprite_width * sprite_height, sprite_width,
+                                                              spriteType, true, true);
+
+        
+        if (ruby_type == 0)
+            frameGfx = (u8 *) rubies_bigTiles;
+        else if (ruby_type == 1)
+            frameGfx = (u8 *) rubies_bigTiles + 8 * 8 * 1 / 2;
+        else if (ruby_type == 2)
+            frameGfx = (u8 *) rubies_bigTiles + 8 * 8 * 2 / 2;
+
+
+    }
+
+
+    subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
+    mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
 }
 

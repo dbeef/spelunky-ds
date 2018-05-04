@@ -11,6 +11,9 @@
 
 void Blood::draw() {
 
+    if(ready_to_dispose)
+        return;
+
     int main_x = x - global::camera->x;
     int main_y = y - global::camera->y;
     int sub_x = x - global::camera->x;
@@ -43,15 +46,14 @@ void Blood::draw() {
                 finished = true;
                 mainSpriteInfo->entry->isHidden = true;
                 subSpriteInfo->entry->isHidden = true;
-            }
-            else {
+            } else {
                 frameGfx = (u8 *) bloodTiles + (currentFrame * 8 * 8 / 2);
                 subSpriteInfo->updateFrame(frameGfx, 8 * 8);
                 mainSpriteInfo->updateFrame(frameGfx, 8 * 8);
             }
 
 
-            if(currentFrame % 2 == 0 && !finished) {
+            if (currentFrame % 2 == 0 && !finished && bloodTrail.size() < 3) {
 
                 BloodElement *element = new BloodElement();
                 element->x = x;
@@ -74,14 +76,39 @@ void Blood::draw() {
     subSpriteInfo->entry->x = sub_x;
     subSpriteInfo->entry->y = sub_y;
 
+    if (finished) {
+//        std::cout<<"X" << ready_to_dispose << &bloodTrail;
+
+        bool chain_finished = true;
+
+        for (int a = 0; a < bloodTrail.size(); a++) {
+            if (!bloodTrail.at(a)->finished) {
+                chain_finished = false;
+                break;
+            } else {
+                bloodTrail.at(a)->ready_to_dispose = true;
+                bloodTrail.at(a)->mainSpriteInfo = nullptr;
+                bloodTrail.at(a)->subSpriteInfo= nullptr;
+            }
+        }
+
+        if (chain_finished && !ready_to_dispose) {
+
+            ready_to_dispose = true;
+//            delete(this);
+            subSpriteInfo = nullptr;
+            mainSpriteInfo= nullptr;
+
+        }
+    }
+
 }
 
 
 void Blood::init() {
-    subSpriteInfo = global::sub_oam_manager->initSprite(bloodPal, bloodPalLen,
-                                                        nullptr, 8 * 8, 8, BLOOD, true, false);
-    mainSpriteInfo = global::main_oam_manager->initSprite(bloodPal, bloodPalLen,
-                                                          nullptr, 8 * 8, 8, BLOOD, true, false);
+
+    initSprite();
+
     frameGfx = (u8 *) bloodTiles + 0 * 8 * 8 / 2;
     subSpriteInfo->updateFrame(frameGfx, 8 * 8);
     mainSpriteInfo->updateFrame(frameGfx, 8 * 8);
@@ -165,7 +192,7 @@ void Blood::updatePosition() {
 
 
     if (!bottomCollision)
-        ySpeed += GRAVITY_DELTA_SPEED ;
+        ySpeed += GRAVITY_DELTA_SPEED;
 
     pos_inc_timer = 0;
 }
@@ -183,4 +210,11 @@ void Blood::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in
     rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, 8, 8, true);
     upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, 8, true);
 
+}
+
+void Blood::initSprite() {
+        subSpriteInfo = global::sub_oam_manager->initSprite(bloodPal, bloodPalLen,
+                                                            nullptr, 8 * 8, 8, BLOOD, true, false);
+        mainSpriteInfo = global::main_oam_manager->initSprite(bloodPal, bloodPalLen,
+                                                              nullptr, 8 * 8, 8, BLOOD, true, false);
 }

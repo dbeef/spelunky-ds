@@ -12,41 +12,16 @@
 
 void Bat::draw() {
 
-    int main_x = x - global::camera->x;
-    int main_y = y - global::camera->y;
-    int sub_x = x - global::camera->x;
-    int sub_y = y - global::camera->y - 192;
+    if(ready_to_dispose)
+        return;
 
-    if (global::camera->y + 192 > this->y + 16 || global::camera->y + 192 + 192 < this->y - 16) {
-        sub_x = -128;
-        sub_y = -128;
-    }
-    if (global::camera->y > this->y + 16 || global::camera->y + 192 < this->y - 16) {
-        main_x = -128;
-        main_y = -128;
-    }
+    set_position();
 
-    if (sub_y + 16 < 0 || sub_x + 16 < 0) {
-        sub_x = -128;
-        sub_y = -128;
-    }
-
-    if (main_y + 16 < 0 || main_x + 16 < 0) {
-        main_x = -128;
-        main_y = -128;
-    }
-
-
-    if (activated_by_main_dude) {
-        //nothing
-    }
-
-    mainSpriteInfo->entry->x = main_x;
-    mainSpriteInfo->entry->y = main_y;
-
-    subSpriteInfo->entry->x = sub_x;
-    subSpriteInfo->entry->y = sub_y;
-
+    mainSpriteInfo->entry->isHidden = false;
+    subSpriteInfo->entry->isHidden = false;
+    //idk why do i have to do that, if it is already flipped in image
+    subSpriteInfo->entry->hFlip = true;
+    mainSpriteInfo->entry->hFlip = true;
 
 
     if (!hunting)
@@ -64,18 +39,15 @@ void Bat::draw() {
             animFrame = 0;
 
         if (hanging) {
-            frameGfx = (u8 *) batTiles + (16 * 16 * (0) / 2);
+            set_sprite_hanging();
         } else if (xSpeed >= 0) {
-            frameGfx = (u8 *) batTiles + (16 * 16 * (animFrame + 1) / 2);
+            set_sprite_flying_right();
         } else if (xSpeed <= 0) {
-            frameGfx = (u8 *) batTiles + (16 * 16 * (animFrame + 4) / 2);
+            set_sprite_flying_left();
         }
 
         animFrameTimer = 0;
-
-        subSpriteInfo->updateFrame(frameGfx, 16 * 16);
-        mainSpriteInfo->updateFrame(frameGfx, 16 * 16);
-    }
+        }
 
 
 
@@ -131,19 +103,14 @@ void Bat::draw() {
 
 
 void Bat::init() {
-    subSpriteInfo = global::sub_oam_manager->initSprite(batPal, batPalLen,
-                                                        nullptr, 16 * 16, 16, BAT, true, false);
-    mainSpriteInfo = global::main_oam_manager->initSprite(batPal, batPalLen,
-                                                          nullptr, 16 * 16, 16, BAT, true, false);
+
+    initSprite();
 
     frameGfx = (u8 *) batTiles;
     subSpriteInfo->updateFrame(frameGfx, 16 * 16);
     mainSpriteInfo->updateFrame(frameGfx, 16 * 16);
 
-    //idk why do i have to do that, if it is already flipped in image
-    subSpriteInfo->entry->hFlip = true;
-
-    spriteType = SpriteType ::BAT;
+    spriteType = SpritesheetType ::BAT;
 }
 
 void Bat::updateSpeed() {
@@ -230,6 +197,9 @@ void Bat::kill() {
     subSpriteInfo->entry->isHidden = true;
     mainSpriteInfo->entry->isHidden = true;
 
+    subSpriteInfo = nullptr;
+    mainSpriteInfo= nullptr;
+
     for (int a = 0; a < 4; a++) {
         Blood *blood = new Blood();
         blood->init();
@@ -245,4 +215,90 @@ void Bat::kill() {
         global::sprites.push_back(blood);
     }
     killed = true;
+    ready_to_dispose = true;
+    global::hud->draw();
+    global::killedNpcs.push_back(spriteType);
+
+
+}
+
+void Bat::initSprite() {
+    subSpriteInfo = global::sub_oam_manager->initSprite(batPal, batPalLen,
+                                                        nullptr, 16 * 16, 16, BAT, true, false);
+    mainSpriteInfo = global::main_oam_manager->initSprite(batPal, batPalLen,
+                                                          nullptr, 16 * 16, 16, BAT, true, false);
+    subSpriteInfo->entry->isHidden = false;
+    mainSpriteInfo->entry->isHidden = false;
+/*
+    subSpriteInfo->entry->vFlip = false;
+    subSpriteInfo->entry->hFlip= false;
+
+    mainSpriteInfo->entry->vFlip = false;
+    mainSpriteInfo->entry->hFlip= false;*/
+}
+
+void Bat::set_sprite_hanging(){
+    frameGfx = (u8 *) batTiles + (16 * 16 * (0) / 2);
+    subSpriteInfo->updateFrame(frameGfx, 16 * 16);
+    mainSpriteInfo->updateFrame(frameGfx, 16 * 16);
+}
+
+void Bat::set_sprite_flying_right(){
+    frameGfx = (u8 *) batTiles + (16 * 16 * (animFrame + 1) / 2);
+    subSpriteInfo->updateFrame(frameGfx, 16 * 16);
+    mainSpriteInfo->updateFrame(frameGfx, 16 * 16);
+
+    //idk why do i have to do that, if it is already flipped in image
+    subSpriteInfo->entry->hFlip = true;
+    mainSpriteInfo->entry->hFlip = true;
+
+    mainSpriteInfo->entry->isHidden = false;
+    subSpriteInfo->entry->isHidden = false;
+}
+
+void Bat::set_sprite_flying_left() {
+    frameGfx = (u8 *) batTiles + (16 * 16 * (animFrame + 4) / 2);
+    subSpriteInfo->updateFrame(frameGfx, 16 * 16);
+    mainSpriteInfo->updateFrame(frameGfx, 16 * 16);
+
+    //idk why do i have to do that, if it is already flipped in image
+    subSpriteInfo->entry->hFlip = true;
+    mainSpriteInfo->entry->hFlip = true;
+
+    mainSpriteInfo->entry->isHidden = false;
+    subSpriteInfo->entry->isHidden = false;
+}
+
+void Bat::set_position() {
+
+    int main_x = x - global::camera->x;
+    int main_y = y - global::camera->y;
+    int sub_x = x - global::camera->x;
+    int sub_y = y - global::camera->y - 192;
+
+    if (global::camera->y + 192 > this->y + 16 || global::camera->y + 192 + 192 < this->y - 16) {
+        sub_x = -128;
+        sub_y = -128;
+    }
+    if (global::camera->y > this->y + 16 || global::camera->y + 192 < this->y - 16) {
+        main_x = -128;
+        main_y = -128;
+    }
+
+    if (sub_y + 16 < 0 || sub_x + 16 < 0) {
+        sub_x = -128;
+        sub_y = -128;
+    }
+
+    if (main_y + 16 < 0 || main_x + 16 < 0) {
+        main_x = -128;
+        main_y = -128;
+    }
+
+    mainSpriteInfo->entry->x = main_x;
+    mainSpriteInfo->entry->y = main_y;
+
+    subSpriteInfo->entry->x = sub_x;
+    subSpriteInfo->entry->y = sub_y;
+
 }

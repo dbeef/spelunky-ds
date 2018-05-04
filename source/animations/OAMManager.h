@@ -8,7 +8,7 @@
 #define MAX_SPRITE_NUMBER 128
 
 #include "../level_layout/SpriteInfo.h"
-#include "../sprites/SpriteTypes.h"
+#include "../sprites/SpritesheetTypes.h"
 #include "OamType.h"
 
 
@@ -33,7 +33,7 @@ public:
     void updateOAM();
 
     SpriteInfo *initSprite(const unsigned short pallette[], int palLen, const unsigned int tiles[], int tilesLen,
-                           int size, SpriteType spriteType, bool reuse_palette, bool reuse_tiles);
+                           int size, SpritesheetType spriteType, bool reuse_palette, bool reuse_tiles);
 
     void clearAllSprites();
 };

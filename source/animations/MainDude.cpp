@@ -7,13 +7,13 @@
 #include <iostream>
 #include <maxmod9.h>
 #include <nds/arm9/console.h>
+#include <algorithm>
 #include "MainDude.h"
 #include "../Globals.h"
 #include "Collisions.h"
 #include "../level_layout/MapUtils.h"
 #include "../../build/spelunker.h"
-#include "../../build/whip_left.h"
-#include "../../build/pre_whip_left.h"
+#include "../../build/whip.h"
 #include "Rope.h"
 
 #include "../../build/soundbank_bin.h"
@@ -460,26 +460,7 @@ void MainDude::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos
 
 void MainDude::init() {
 
-    main_spelunker = global::main_oam_manager->initSprite(spelunkerPal, spelunkerPalLen, nullptr,
-                                                          16 * 16, 16, MAIN_DUDE, true, false);
-
-    main_pre_whip = global::main_oam_manager->initSprite(pre_whip_leftPal, pre_whip_leftPalLen,
-                                                         pre_whip_leftTiles, pre_whip_leftTilesLen, 16, PRE_WHIP, true,
-                                                         false);
-
-    main_whip = global::main_oam_manager->initSprite(whip_leftPal, whip_leftPalLen,
-                                                     whip_leftTiles, whip_leftTilesLen, 16, WHIP, true, false);
-
-    sub_spelunker = global::sub_oam_manager->initSprite(spelunkerPal, spelunkerPalLen, nullptr,
-                                                        16 * 16, 16, MAIN_DUDE, true, false);
-
-    sub_pre_whip = global::sub_oam_manager->initSprite(pre_whip_leftPal, pre_whip_leftPalLen,
-                                                       pre_whip_leftTiles, pre_whip_leftTilesLen, 16, PRE_WHIP, true,
-                                                       false);
-
-    sub_whip = global::sub_oam_manager->initSprite(whip_leftPal, whip_leftPalLen,
-                                                   whip_leftTiles, whip_leftTilesLen, 16, WHIP, true, false);
-
+    initSprite();
 
     frameGfx = (u8 *) spelunkerTiles;
     sub_whip->entry->isHidden = true;
@@ -585,6 +566,8 @@ void MainDude::draw() {
                     global::level_generator->generateSplashScreen(SplashScreenType::MAIN_MENU_UPPER);
                     global::level_generator->generateSplashScreen(SplashScreenType::MAIN_MENU_LOWER);
                 } else if (dead) {
+
+
                     global::level_generator->generateSplashScreen(SplashScreenType::SCORES_UPPER);
                     global::level_generator->generateSplashScreen(SplashScreenType::SCORES_LOWER);
                 } else {
@@ -616,13 +599,12 @@ void MainDude::draw() {
 
             global::main_oam_manager->clearAllSprites();
             global::sub_oam_manager->clearAllSprites();
+            global::sprites.clear();
 
             init();
 
             global::sprites.push_back(global::main_dude);
             consoleClear();
-
-            //todo wycentrować bombe
 
             global::camera->followMainDude = true;
             for (int a = 0; a < 400; a++) {
@@ -637,6 +619,7 @@ void MainDude::draw() {
                 gameloop::populateCaveMoniez();
                 global::levels_transition_screen = false;
                 global::in_main_menu = false;
+                global::killedNpcs.clear();
 
             } else {
                 if (global::scores_screen) {
@@ -915,5 +898,69 @@ void MainDude::updatePosition() {
         tempYspeed--;
 
     }
+}
+
+void MainDude::initSprite() {
+
+    main_spelunker = global::main_oam_manager->initSprite(spelunkerPal, spelunkerPalLen, nullptr,
+                                                          16 * 16, 16, MAIN_DUDE, true, false);
+
+    main_pre_whip = global::main_oam_manager->initSprite(whipPal, whipPalLen,
+                                                         nullptr, 16 * 16, 16, PRE_WHIP, true,
+                                                         false);
+
+    main_whip = global::main_oam_manager->initSprite(whipPal, whipPalLen,
+                                                     nullptr, 16 * 16, 16, WHIP, true, false);
+
+    sub_spelunker = global::sub_oam_manager->initSprite(spelunkerPal, spelunkerPalLen, nullptr,
+                                                        16 * 16, 16, MAIN_DUDE, true, false);
+
+    sub_pre_whip = global::sub_oam_manager->initSprite(whipPal, whipPalLen,
+                                                       nullptr, 16 * 16, 16, PRE_WHIP, true,
+                                                       false);
+
+    sub_whip = global::sub_oam_manager->initSprite(whipPal, whipPalLen,
+                                                   nullptr, 16 * 16, 16, WHIP, true, false);
+
+
+    u8* frameGfx_whip = (u8 *) whipTiles;
+
+    u8 *gfx_pre_whip = (frameGfx_whip+ (1 * 16 * 16 / 2));
+    u8 *gfx_whip =  (frameGfx_whip+ (0 * 16 * 16 / 2));
+
+    main_pre_whip->updateFrame(gfx_pre_whip, 16 * 16);
+    sub_pre_whip->updateFrame(gfx_pre_whip, 16 * 16);
+
+    main_whip->updateFrame(gfx_whip, 16 * 16);
+    sub_whip->updateFrame(gfx_whip, 16 * 16);
+
+
+    sub_whip->entry->isHidden = true;
+    main_whip->entry->isHidden = true;
+    sub_pre_whip->entry->isHidden = true;
+    main_pre_whip->entry->isHidden = true;
+
+
+    int main_x = x - global::camera->x;
+    int main_y = y - global::camera->y;
+    int sub_x = x - global::camera->x;
+    int sub_y = y - global::camera->y - 192;
+
+    if (this->y <= 320 + 16 && this->y >= 320 - 16) {
+
+    } else if (this->y > 320) {
+        main_x = -16;
+        main_y = -16;
+    } else if (this->y < 320) {
+        sub_x = -16;
+        sub_y = -16;
+    }
+
+    main_spelunker->entry->x = main_x;
+    main_spelunker->entry->y = main_y;
+
+    sub_spelunker->entry->x = sub_x;
+    sub_spelunker->entry->y = sub_y;
+
 }
 

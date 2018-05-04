@@ -47,7 +47,8 @@ namespace global {
     extern bool in_main_menu;
     extern mm_sfxhand menu_music_handler;
     extern mm_sfxhand cave_music_handler;
-
+    extern std::vector<SpritesheetType> killedNpcs;
+    extern std::vector<SpritesheetType> collectedLoot;
 }
 
 #endif //SPELUNKYDS_CONSTS_H

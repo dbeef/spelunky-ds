@@ -30,6 +30,8 @@ public:
 
     void kill() override {};
 
+    void initSprite() override;
+
     void draw() override;
 
     void updateTimers() override {};

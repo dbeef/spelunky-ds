@@ -14,13 +14,14 @@
  * There's a maximum of 4 bit palettes and it is 16!
  */
 
+/**
+ * When there's a sprite that can be disposed, clear all sprites in oam manager by calling clearAllSprites,
+ * then call loadOAM on every sprite in global::sprites
+ */
 static const int BYTES_PER_16_COLOR_TILE = 32;
 static const int COLORS_PER_PALETTE = 16;
 
 static bool nullptrs();
-
-static int countBombsOnThisOAMAddr(u32 oam_address);
-
 
 void
 OAMManager::initOAMTable(u16 *sprite_address, u16 *paletteAddress, u16 *oam_address, int offset_multiplier, OamType o) {
@@ -38,12 +39,20 @@ OAMManager::initOAMTable(u16 *sprite_address, u16 *paletteAddress, u16 *oam_addr
     updateOAM();
 }
 
-void OAMManager::clearAllSprites(){
+void OAMManager::clearAllSprites() {
+
+//    delete(oam);
+//    oam = new OAMTable();
 
     current_oam_id_palette = 0;
     current_oam_id_tiles = 0;
+    nextAvailableTileIdx = 0;
+
+//    for(int a =0;a<global::spriteInfos.size();a++)
+//        global::spriteInfos.at(a);
+
     global::spriteInfos.clear();
-    global::sprites.clear();
+//    global::sprites.clear();
 
     /*
      * For all 128 sprites on the DS, disable and clear any attributes they
@@ -65,6 +74,10 @@ void OAMManager::clearAllSprites(){
         oam->matrixBuffer[i].vdx = 0;
         oam->matrixBuffer[i].vdy = 1 << 8;
     }
+
+    updateOAM();
+
+
 }
 
 void OAMManager::updateOAM() {
@@ -77,7 +90,7 @@ void OAMManager::updateOAM() {
 
 SpriteInfo *
 OAMManager::initSprite(const unsigned short pallette[], int palLen, const unsigned int tiles[], int tilesLen,
-                       int size, SpriteType type, bool reuse_palette, bool reuse_tiles) {
+                       int size, SpritesheetType type, bool reuse_palette, bool reuse_tiles) {
 
 
 //    std::cout << "\n";
@@ -153,11 +166,12 @@ OAMManager::initSprite(const unsigned short pallette[], int palLen, const unsign
         for (int a = 0; a < global::spriteInfos.size(); a++) {
             if (global::spriteInfos.at(a)) {
 
+
                 if ((*global::spriteInfos.at(a)).spriteType == type &&
                     (*global::spriteInfos.at(a)).oamType == oamType) {
 
 //                std::cout <<. '\n';
-//                std::cout << "FOUND PROPER PALETTE" << (*global::spriteInfos.at(a)).spriteType << " " << type  <<  " "
+//                std::cout << "FOUND PROPER PALETTE" << (*global::spriteInfos.at(a)).spriteType << '\n'; /*<< type  <<  " "*/
 //                          << (*global::spriteInfos.at(a)).oamId << '\n';
 //
 //                    std::cout << "RE USING " << " ID " << (*global::spriteInfos.at(a)).oamId_palette << "\n";
@@ -190,7 +204,7 @@ OAMManager::initSprite(const unsigned short pallette[], int palLen, const unsign
 
     if (!spriteEntry->palette) {
 
-//        std::cout << "!PROPER PALETTE" << '\n';
+//        std::cout << "!PROPER PALETTE" << type << '\n';
 
         spriteEntry->palette = spriteInfo->oamId_palette;
         spriteInfo->oamId_palette = current_oam_id_palette;
@@ -206,8 +220,6 @@ OAMManager::initSprite(const unsigned short pallette[], int palLen, const unsign
         current_oam_id_palette++;
 
     }
-
-
 
 
     spriteInfo->oam_address = *oam_address;
@@ -230,23 +242,4 @@ static bool nullptrs() {
             return true;
     }
     return false;
-}
-
-static int countBombsOnThisOAMAddr(u32 oam_address) {
-    int c = 0;
-
-    for (int a = 0; a < global::spriteInfos.size(); a++) {
-        if (global::spriteInfos.at(a)) {
-
-            if ((*global::spriteInfos.at(a)).spriteType == BOMB) {
-//                std::cout<<"B:" << (*global::spriteInfos.at(a)).oam_address;
-                if ((*global::spriteInfos.at(a)).oam_address == oam_address) {
-                    c++;
-                }
-            }
-        }
-    }
-//    if (c != 0)
-//        std::cout << '\n';
-    return c;
 }

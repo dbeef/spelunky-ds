@@ -69,11 +69,11 @@ LevelGenerator.o: \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../hud/Hud.h \
  /home/xdbeef/devkitPro/libnds/include/nds/jtypes.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../hud/../level_layout/SpriteInfo.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../hud/../level_layout/../sprites/SpriteTypes.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../hud/../level_layout/../sprites/SpritesheetTypes.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../hud/../level_layout/../animations/OamType.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../hud/../animations/OAMManager.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../hud/../animations/../level_layout/SpriteInfo.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../hud/../animations/../sprites/SpriteTypes.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../hud/../animations/../sprites/SpritesheetTypes.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../hud/../animations/OamType.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/Camera.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../level_layout/LevelGenerator.h \
@@ -88,7 +88,7 @@ LevelGenerator.o: \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/../sprites/../level_layout/LevelGenerator.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/../sprites/../animations/OAMManager.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/../sprites/../animations/Camera.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/../sprites/SpriteTypes.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/../sprites/SpritesheetTypes.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/../input/InputHandler.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../console/TextManager.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../console/../time/Timer.h \
@@ -240,7 +240,7 @@ LevelGenerator.o: \
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../hud/../level_layout/SpriteInfo.h:
 
-/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../hud/../level_layout/../sprites/SpriteTypes.h:
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../hud/../level_layout/../sprites/SpritesheetTypes.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../hud/../level_layout/../animations/OamType.h:
 
@@ -248,7 +248,7 @@ LevelGenerator.o: \
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../hud/../animations/../level_layout/SpriteInfo.h:
 
-/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../hud/../animations/../sprites/SpriteTypes.h:
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../hud/../animations/../sprites/SpritesheetTypes.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../hud/../animations/OamType.h:
 
@@ -278,7 +278,7 @@ LevelGenerator.o: \
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/../sprites/../animations/Camera.h:
 
-/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/../sprites/SpriteTypes.h:
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/../sprites/SpritesheetTypes.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/../input/InputHandler.h:
 

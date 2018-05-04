@@ -13,6 +13,8 @@ class TitleMenuSign : public MovingObject {
 
 public:
 
+    void initSprite() override;
+
     void updateOther() override {};
 
     void init() override;

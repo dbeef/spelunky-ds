@@ -8,7 +8,7 @@
 #include "../level_layout/LevelGenerator.h"
 #include "../animations/OAMManager.h"
 #include "../animations/Camera.h"
-#include "SpriteTypes.h"
+#include "SpritesheetTypes.h"
 
 /**
  *  https://en.wikibooks.org/wiki/C%2B%2B_Programming/Classes/Abstract_Classes
@@ -28,6 +28,9 @@ public:
         updateSpeed();
         updateTimers();
     };
+
+
+    virtual void initSprite() = 0;
 
     virtual void draw() = 0;
 
@@ -69,7 +72,7 @@ public:
     bool killed;
     bool ready_to_dispose;
 
-    SpriteType spriteType;
+    SpritesheetType spriteType;
 };
 
 

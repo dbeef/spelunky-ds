@@ -56,16 +56,31 @@ void SpelunkyTitle::draw() {
 
 
 void SpelunkyTitle::init() {
- 
+ initSprite();
+    
+}
+
+void SpelunkyTitle::updateSpeed() {
+
+}
+
+void SpelunkyTitle::updatePosition() {
+}
+
+void SpelunkyTitle::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
+}
+
+void SpelunkyTitle::initSprite() {
+
     if(oamType == OamType::MAIN) {
         mainSpriteInfo_1 = global::main_oam_manager->initSprite(spelunky_titlePal, spelunky_titlePalLen,
-                                                                nullptr, 64 * 64, 64, SpriteType::SPELUNKY_TITLE, true,
+                                                                nullptr, 64 * 64, 64, SpritesheetType::SPELUNKY_TITLE, true,
                                                                 false);
         mainSpriteInfo_2 = global::main_oam_manager->initSprite(spelunky_titlePal, spelunky_titlePalLen,
-                                                                nullptr, 64 * 64, 64, SpriteType::SPELUNKY_TITLE, true,
+                                                                nullptr, 64 * 64, 64, SpritesheetType::SPELUNKY_TITLE, true,
                                                                 false);
         mainSpriteInfo_3 = global::main_oam_manager->initSprite(spelunky_titlePal, spelunky_titlePalLen,
-                                                                nullptr, 64 * 64, 64, SpriteType::SPELUNKY_TITLE, true,
+                                                                nullptr, 64 * 64, 64, SpritesheetType::SPELUNKY_TITLE, true,
                                                                 false);
 
         u8 *frameGfx1 = (u8 *) spelunky_titleTiles + 0 * 64 * 64 / 2;
@@ -80,17 +95,17 @@ void SpelunkyTitle::init() {
         mainSpriteInfo_2->entry->hFlip = false;
         mainSpriteInfo_3->entry->hFlip = false;
     }
-    
+
     if(oamType == OamType::SUB) {
         subSpriteInfo_1 = global::sub_oam_manager->initSprite(spelunky_titlePal, spelunky_titlePalLen,
-                                                                nullptr, 64 * 64, 64, SpriteType::SPELUNKY_TITLE, true,
-                                                                false);
+                                                              nullptr, 64 * 64, 64, SpritesheetType::SPELUNKY_TITLE, true,
+                                                              false);
         subSpriteInfo_2 = global::sub_oam_manager->initSprite(spelunky_titlePal, spelunky_titlePalLen,
-                                                                nullptr, 64 * 64, 64, SpriteType::SPELUNKY_TITLE, true,
-                                                                false);
+                                                              nullptr, 64 * 64, 64, SpritesheetType::SPELUNKY_TITLE, true,
+                                                              false);
         subSpriteInfo_3 = global::sub_oam_manager->initSprite(spelunky_titlePal, spelunky_titlePalLen,
-                                                                nullptr, 64 * 64, 64, SpriteType::SPELUNKY_TITLE, true,
-                                                                false);
+                                                              nullptr, 64 * 64, 64, SpritesheetType::SPELUNKY_TITLE, true,
+                                                              false);
 
         u8 *frameGfx1 = (u8 *) spelunky_titleTiles + 0 * 64 * 64 / 2;
         u8 *frameGfx2 = (u8 *) spelunky_titleTiles + 1 * 64 * 64 / 2;
@@ -104,16 +119,5 @@ void SpelunkyTitle::init() {
         subSpriteInfo_2->entry->hFlip = false;
         subSpriteInfo_3->entry->hFlip = false;
     }
-    
-}
-
-void SpelunkyTitle::updateSpeed() {
-
-}
-
-void SpelunkyTitle::updatePosition() {
-}
-
-void SpelunkyTitle::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
 }
 

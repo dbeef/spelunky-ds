@@ -12,11 +12,13 @@
 
 void BloodElement::draw() {
 
+    if(ready_to_dispose)
+        return;
+
     int main_x = x - global::camera->x;
     int main_y = y - global::camera->y;
     int sub_x = x - global::camera->x;
     int sub_y = y - global::camera->y - 192;
-
 
     if (global::camera->y + 192 > this->y + 8 || global::camera->y + 192 + 192 < this->y - 8) {
         sub_x = -128;
@@ -58,10 +60,7 @@ void BloodElement::draw() {
 
 
 void BloodElement::init() {
-    subSpriteInfo = global::sub_oam_manager->initSprite(bloodPal, bloodPalLen,
-                                                        nullptr, 8 * 8, 8, BLOOD, true, true);
-    mainSpriteInfo = global::main_oam_manager->initSprite(bloodPal, bloodPalLen,
-                                                          nullptr, 8 * 8, 8, BLOOD, true, true);
+    initSprite();
 
     frameGfx = (u8 *) bloodTiles + currentFrame * 8 * 8 / 2;
     subSpriteInfo->updateFrame(frameGfx, 8 * 8);
@@ -165,5 +164,13 @@ void BloodElement::updateCollisionsMap(int x_current_pos_in_tiles, int y_current
     rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, 8, 8, true);
     upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, 8, true);
 
+
+}
+
+void BloodElement::initSprite() {
+    subSpriteInfo = global::sub_oam_manager->initSprite(bloodPal, bloodPalLen,
+                                                        nullptr, 8 * 8, 8, BLOOD, true, true);
+    mainSpriteInfo = global::main_oam_manager->initSprite(bloodPal, bloodPalLen,
+                                                          nullptr, 8 * 8, 8, BLOOD, true, true);
 
 }

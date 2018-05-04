@@ -19,35 +19,17 @@
 
 void Spider::draw() {
 
-    int main_x = x - global::camera->x;
-    int main_y = y - global::camera->y - 8;
-    int sub_x = x - global::camera->x;
-    int sub_y = y - global::camera->y - 192 - 8;
+    if(ready_to_dispose)
+        return;
 
-    if (global::camera->y + 192 > this->y + 16 || global::camera->y + 192 + 192 < this->y - 16) {
-        sub_x = -128;
-        sub_y = -128;
-    }
-    if (global::camera->y > this->y + 16 || global::camera->y + 192 < this->y - 16) {
-        main_x = -128;
-        main_y = -128;
-    }
+    set_position();
 
-    if (sub_y + 16 < 0 || sub_x + 16 < 0) {
-        sub_x = -128;
-        sub_y = -128;
-    }
+    //idk why do i have to do that, if it is already flipped in image
+    subSpriteInfo->entry->hFlip = true;
+    mainSpriteInfo->entry->hFlip = true;
 
-    if (main_y + 16 < 0 || main_x + 16 < 0) {
-        main_x = -128;
-        main_y = -128;
-    }
-
-    mainSpriteInfo->entry->x = main_x;
-    mainSpriteInfo->entry->y = main_y;
-
-    subSpriteInfo->entry->x = sub_x;
-    subSpriteInfo->entry->y = sub_y;
+    mainSpriteInfo->entry->isHidden = false;
+    subSpriteInfo->entry->isHidden = false;
 
     if (!hunting)
         hunting = abs(y - global::main_dude->y) < 9 * 16 && global::main_dude->x + MAIN_DUDE_WIDTH > x &&
@@ -70,19 +52,16 @@ void Spider::draw() {
         }
 
         if (hanging && !hunting) {
-            frameGfx = (u8 *) spiderTiles + (16 * 16 * (4) / 2);
+            set_sprite_hanging();
         } else if (hanging && hunting) {
-            frameGfx = (u8 *) spiderTiles + (16 * 16 * (animFrame + 4) / 2);
+            set_sprite_flipping();
         } else if (!hanging && hunting && jumping) {
-            frameGfx = (u8 *) spiderTiles + (16 * 16 * (animFrame) / 2);
+            set_sprite_jumping();
         } else {
-            frameGfx = (u8 *) spiderTiles + (16 * 16 * (0) / 2);
+            set_sprite_falling();
         }
 
         animFrameTimer = 0;
-
-        subSpriteInfo->updateFrame(frameGfx, 16 * 16);
-        mainSpriteInfo->updateFrame(frameGfx, 16 * 16);
     }
 
 
@@ -151,19 +130,7 @@ void Spider::draw() {
 
 
 void Spider::init() {
-    subSpriteInfo = global::sub_oam_manager->initSprite(spiderPal, spiderPalLen,
-                                                        nullptr, 16 * 16, 16, SPIDER, true, false);
-    mainSpriteInfo = global::main_oam_manager->initSprite(spiderPal, spiderPalLen,
-                                                          nullptr, 16 * 16, 16, SPIDER, true, false);
-
-    frameGfx = (u8 *) spiderTiles + 16*16*4/2;
-    subSpriteInfo->updateFrame(frameGfx, 16 * 16);
-    mainSpriteInfo->updateFrame(frameGfx, 16 * 16);
-
-    //idk why do i have to do that, if it is already flipped in image
-    subSpriteInfo->entry->hFlip = true;
-
-    spriteType = SpriteType::SPIDER;
+    initSprite();
     random_speed = 0;
     hanging  =true;
 }
@@ -258,6 +225,9 @@ void Spider::kill() {
     subSpriteInfo->entry->isHidden = true;
     mainSpriteInfo->entry->isHidden = true;
 
+    subSpriteInfo = nullptr;
+    mainSpriteInfo= nullptr;
+
     for (int a = 0; a < 4; a++) {
         Blood *blood = new Blood();
         blood->init();
@@ -273,4 +243,103 @@ void Spider::kill() {
         global::sprites.push_back(blood);
     }
     killed = true;
+    ready_to_dispose = true;
+    global::hud->draw();
+    global::killedNpcs.push_back(spriteType);
+
+}
+
+void Spider::initSprite() {
+
+    subSpriteInfo = global::sub_oam_manager->initSprite(spiderPal, spiderPalLen,
+                                                        nullptr, 16 * 16, 16, SPIDER, true, false);
+    mainSpriteInfo = global::main_oam_manager->initSprite(spiderPal, spiderPalLen,
+                                                          nullptr, 16 * 16, 16, SPIDER, true, false);
+
+    frameGfx = (u8 *) spiderTiles + 16*16*4/2;
+    subSpriteInfo->updateFrame(frameGfx, 16 * 16);
+    mainSpriteInfo->updateFrame(frameGfx, 16 * 16);
+
+    spriteType = SpritesheetType::SPIDER;
+
+
+    subSpriteInfo->entry->isHidden = false;
+    mainSpriteInfo->entry->isHidden = false;
+
+    subSpriteInfo->entry->vFlip = false;
+    subSpriteInfo->entry->hFlip= false;
+
+    mainSpriteInfo->entry->vFlip = false;
+    mainSpriteInfo->entry->hFlip= false;
+}
+
+void Spider::set_sprite_hanging() {
+    frameGfx = (u8 *) spiderTiles + (16 * 16 * (4) / 2);
+    subSpriteInfo->updateFrame(frameGfx, 16 * 16);
+    mainSpriteInfo->updateFrame(frameGfx, 16 * 16);
+}
+
+void Spider::set_sprite_flipping() {
+    frameGfx = (u8 *) spiderTiles + (16 * 16 * (animFrame + 4) / 2);
+    subSpriteInfo->updateFrame(frameGfx, 16 * 16);
+    mainSpriteInfo->updateFrame(frameGfx, 16 * 16);
+}
+
+void Spider::set_sprite_jumping() {
+    frameGfx = (u8 *) spiderTiles + (16 * 16 * (animFrame) / 2);
+    subSpriteInfo->updateFrame(frameGfx, 16 * 16);
+    mainSpriteInfo->updateFrame(frameGfx, 16 * 16);
+}
+
+void Spider::set_sprite_falling() {
+    frameGfx = (u8 *) spiderTiles + (16 * 16 * (0) / 2);
+    subSpriteInfo->updateFrame(frameGfx, 16 * 16);
+    mainSpriteInfo->updateFrame(frameGfx, 16 * 16);
+
+    //idk why do i have to do that, if it is already flipped in image
+    subSpriteInfo->entry->hFlip = true;
+    mainSpriteInfo->entry->hFlip = true;
+
+    mainSpriteInfo->entry->isHidden = false;
+    subSpriteInfo->entry->isHidden = false;
+}
+
+void Spider::set_position() {
+
+    int offset;
+
+    if(!hanging)
+        offset = 8;
+    else
+        offset = 0;
+
+    int main_x = x - global::camera->x;
+    int main_y = y - global::camera->y - offset;
+    int sub_x = x - global::camera->x;
+    int sub_y = y - global::camera->y - 192 - offset;
+
+    if (global::camera->y + 192 > this->y + 16 || global::camera->y + 192 + 192 < this->y - 16) {
+        sub_x = -128;
+        sub_y = -128;
+    }
+    if (global::camera->y > this->y + 16 || global::camera->y + 192 < this->y - 16) {
+        main_x = -128;
+        main_y = -128;
+    }
+
+    if (sub_y + 16 < 0 || sub_x + 16 < 0) {
+        sub_x = -128;
+        sub_y = -128;
+    }
+
+    if (main_y + 16 < 0 || main_x + 16 < 0) {
+        main_x = -128;
+        main_y = -128;
+    }
+
+    mainSpriteInfo->entry->x = main_x;
+    mainSpriteInfo->entry->y = main_y;
+
+    subSpriteInfo->entry->x = sub_x;
+    subSpriteInfo->entry->y = sub_y;
 }

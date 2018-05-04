@@ -13,6 +13,12 @@
 
 void Jar::draw() {
 
+    if (frame >= 7) {
+        mainSpriteInfo->entry->isHidden = true;
+        subSpriteInfo->entry->isHidden = true;
+        return;
+    }
+
     if (hold_by_main_dude && global::input_handler->y_key_down && global::input_handler->down_key_held) {
         hold_by_main_dude = false;
         global::main_dude->holding_item = false;
@@ -82,21 +88,30 @@ void Jar::draw() {
         if (frame >= 7) {
             mainSpriteInfo->entry->isHidden = true;
             subSpriteInfo->entry->isHidden = true;
+            ready_to_dispose = true;
+//            std::cout<<"HIDDEN";
+//            mainSpriteInfo = nullptr;
+//            subSpriteInfo = nullptr;
         }
 
     }
 
     if (xSpeed > 0 || ySpeed > 0) {
         for (int a = 0; a < global::sprites.size(); a++) {
-            if ((global::sprites.at(a)->spriteType == SpriteType::SNAKE ||
-                 global::sprites.at(a)->spriteType == SpriteType::BAT||
-                 global::sprites.at(a)->spriteType == SpriteType::SPIDER)
+            if ((global::sprites.at(a)->spriteType == SpritesheetType::SNAKE ||
+                 global::sprites.at(a)->spriteType == SpritesheetType::BAT||
+                 global::sprites.at(a)->spriteType == SpritesheetType::SPIDER)
                 && !global::sprites.at(a)->killed) {
                 if (Collisions::checkCollisionBodies(x, y, 8, 8, global::sprites.at(a)->x, global::sprites.at(a)->y, 16,
                                                      16)) {
                     global::sprites.at(a)->kill();
                     killed = true;
                     frame = 1;
+                    mainSpriteInfo->entry->isHidden = true;
+                    subSpriteInfo->entry->isHidden = true;
+                    ready_to_dispose = true;
+                    global::killedNpcs.push_back(spriteType);
+//                    std::cout<<"HIDDEN";
                 }
             }
         }
@@ -113,6 +128,10 @@ void Jar::draw() {
     if (global::main_dude->whip && !killed && global::main_dude->whip_timer > 120) {
         if (Collisions::checkCollisionWithMainDudeWhip(x, y, 8, 8)) {
             killed = true;
+            mainSpriteInfo->entry->isHidden = true;
+            subSpriteInfo->entry->isHidden = true;
+            ready_to_dispose = true;
+//            std::cout<<"HIDDEN";
         }
     }
 
@@ -120,17 +139,11 @@ void Jar::draw() {
 
 
 void Jar::init() {
-    subSpriteInfo = global::sub_oam_manager->initSprite(jarPal, jarPalLen,
-                                                        nullptr, 8 * 8, 8, JAR, true, false);
-    mainSpriteInfo = global::main_oam_manager->initSprite(jarPal, jarPalLen,
-                                                          nullptr, 8 * 8, 8, JAR, true, false);
+
+    initSprite();
 
     activated_by_main_dude = true;
 
-
-    frameGfx = (u8 *) jarTiles;
-    subSpriteInfo->updateFrame(frameGfx, 8 * 8);
-    mainSpriteInfo->updateFrame(frameGfx, 8 * 8);
 }
 
 void Jar::updateSpeed() {
@@ -231,7 +244,23 @@ void Jar::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_t
 
     if ((abs(xSpeed) > 1 || abs(ySpeed) > 1) && (bottomCollision || leftCollision || rightCollision || upperCollision)) {
         killed = true;
+        mainSpriteInfo->entry->isHidden = true;
+        subSpriteInfo->entry->isHidden = true;
+        ready_to_dispose = true;
+//        std::cout<<"HIDDEN";
     }
 
+}
+
+void Jar::initSprite() {
+    subSpriteInfo = global::sub_oam_manager->initSprite(jarPal, jarPalLen,
+                                                        nullptr, 8 * 8, 8, JAR, true, false);
+    mainSpriteInfo = global::main_oam_manager->initSprite(jarPal, jarPalLen,
+                                                          nullptr, 8 * 8, 8, JAR, true, false);
+
+
+    frameGfx = (u8 *) jarTiles;
+    subSpriteInfo->updateFrame(frameGfx, 8 * 8);
+    mainSpriteInfo->updateFrame(frameGfx, 8 * 8);
 }
 

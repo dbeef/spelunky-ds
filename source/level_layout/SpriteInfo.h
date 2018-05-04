@@ -7,7 +7,7 @@
 
 
 #include <nds/arm9/sprite.h>
-#include "../sprites/SpriteTypes.h"
+#include "../sprites/SpritesheetTypes.h"
 #include "../animations/OamType.h"
 
 class SpriteInfo {
@@ -22,12 +22,22 @@ public:
     int height;
     int angle;
     SpriteEntry *entry;
-    SpriteType spriteType;
+    SpritesheetType spriteType;
 
     u16 oam_address;
     OamType oamType;
 
     void updateFrame(u8 *tile, int size);
+
+    /*void init();
+
+    void assignValues(OamType o, bool reuse_tiles, bool reuse_pal, int size, int pal_len, const unsigned short *pal_pointer, SpritesheetType s);
+
+    bool reuse_tiles;
+    bool reuse_pal;
+    int size;
+    int pal_len;
+    const unsigned short *pal_pointer;*/
 };
 
 

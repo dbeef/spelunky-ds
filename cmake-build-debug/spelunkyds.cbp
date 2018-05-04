@@ -331,7 +331,10 @@
 		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/sprites/MovingObject.h">
 			<Option target="spelunkyds"/>
 		</Unit>
-		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/sprites/SpriteTypes.h">
+		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/sprites/SpriteType.h">
+			<Option target="spelunkyds"/>
+		</Unit>
+		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/sprites/SpritesheetTypes.h">
 			<Option target="spelunkyds"/>
 		</Unit>
 		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/source/time/Timer.cpp">

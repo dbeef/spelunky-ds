@@ -21,6 +21,8 @@ public:
 
     void updateOther() override {};
 
+    void initSprite() override;
+
     void init() override;
 
     void kill() override {};

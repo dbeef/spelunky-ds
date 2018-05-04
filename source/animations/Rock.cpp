@@ -73,7 +73,7 @@ void Rock::draw() {
 
     if (xSpeed > 0 || ySpeed > 0) {
         for (int a = 0; a < global::sprites.size(); a++) {
-            if((global::sprites.at(a)->spriteType == SpriteType::SNAKE || global::sprites.at(a)->spriteType == SpriteType::BAT|| global::sprites.at(a)->spriteType == SpriteType::SPIDER)
+            if((global::sprites.at(a)->spriteType == SpritesheetType::SNAKE || global::sprites.at(a)->spriteType == SpritesheetType::BAT|| global::sprites.at(a)->spriteType == SpritesheetType::SPIDER)
                     && !global::sprites.at(a)->killed){
                 if(Collisions::checkCollisionBodies(x, y, 8, 8, global::sprites.at(a)->x, global::sprites.at(a)->y, 16, 16)){
                     global::sprites.at(a)->kill();
@@ -86,14 +86,8 @@ void Rock::draw() {
 
 
 void Rock::init() {
-    subSpriteInfo = global::sub_oam_manager->initSprite(rockPal, rockPalLen,
-                                                        nullptr, 8 * 8, 8, ROCK, true, true);
-    mainSpriteInfo = global::main_oam_manager->initSprite(rockPal, rockPalLen,
-                                                          nullptr, 8 * 8, 8, ROCK, true, true);
 
-    frameGfx = (u8 *) rockTiles;
-    subSpriteInfo->updateFrame(frameGfx, 8 * 8);
-    mainSpriteInfo->updateFrame(frameGfx, 8 * 8);
+    initSprite();
     activated_by_main_dude = true;
 }
 
@@ -193,6 +187,20 @@ void Rock::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_
     if (bottomCollision) {
         //nothing
     }
+
+}
+
+void Rock::initSprite() {
+
+    subSpriteInfo = global::sub_oam_manager->initSprite(rockPal, rockPalLen,
+                                                        nullptr, 8 * 8, 8, ROCK, true, true);
+    mainSpriteInfo = global::main_oam_manager->initSprite(rockPal, rockPalLen,
+                                                          nullptr, 8 * 8, 8, ROCK, true, true);
+
+
+    frameGfx = (u8 *) rockTiles;
+    subSpriteInfo->updateFrame(frameGfx, 8 * 8);
+    mainSpriteInfo->updateFrame(frameGfx, 8 * 8);
 
 }
 

@@ -12,6 +12,8 @@ class Copyrights : public MovingObject {
 
 public:
 
+    void initSprite() override;
+
     void updateOther() override {};
 
     void kill() override {};

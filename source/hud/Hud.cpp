@@ -7,10 +7,14 @@
 #include <iostream>
 #include <nds/arm9/console.h>
 #include <maxmod9.h>
+#include <algorithm>
 #include "Hud.h"
 #include "../../build/hud.h"
 #include "../Globals.h"
 #include "../../build/soundbank.h"
+#include "../animations/Snake.h"
+#include "../animations/Bat.h"
+#include "../animations/Spider.h"
 
 #define HEART_POSITION_X 5
 #define HEART_POSITION_Y 5
@@ -45,9 +49,7 @@ void Hud::show() {
     draw();
 }
 
-void Hud::init() {
-
-    consoleClear();
+void Hud::initSprites() {
 
     heartSpriteInfo = global::main_oam_manager->initSprite(hudPal, hudPalLen, nullptr, 16 * 16, 16, HUD, true, false);
     dollarSpriteInfo = global::main_oam_manager->initSprite(hudPal, hudPalLen, nullptr, 16 * 16, 16, HUD, true, false);
@@ -71,21 +73,12 @@ void Hud::init() {
     u8 *frameGfxDollar = (u8 *) hudTiles + 4 * 16 * 16 / 2;
     dollarSpriteInfo->updateFrame(frameGfxDollar, 16 * 16);
 
+    set_position();
+}
 
-    heartSpriteInfo->entry->x = HEART_POSITION_X;
-    heartSpriteInfo->entry->y = HEART_POSITION_Y;
-
-    bombSpriteInfo->entry->x = BOMB_POSITION_X;
-    bombSpriteInfo->entry->y = BOMB_POSITION_Y;
-
-    dollarSpriteInfo->entry->x = DOLLAR_POSITION_X;
-    dollarSpriteInfo->entry->y = DOLLAR_POSITION_Y;
-
-    ropeSpriteInfo->entry->x = ROPE_POSITION_X;
-    ropeSpriteInfo->entry->y = ROPE_POSITION_Y;
-
-    holdingItemSpriteInfo->entry->x = HOLDING_ITEM_FRAME_POSITION_X;
-    holdingItemSpriteInfo->entry->y = HOLDING_ITEM_FRAME_POSITION_Y;
+void Hud::init() {
+    consoleClear();
+    initSprites();
 
     hearts = 4;
     ropes = 4;
@@ -100,13 +93,13 @@ void Hud::init() {
 void Hud::draw() {
     consoleClear();
 
-    if(!global::main_dude->dead) {
+    if (!global::main_dude->dead) {
         std::cout << '\n' << "   " << hearts << "    " << bombs << "    " << ropes << "    " << dollars;
         if (dollars_buffer != 0) {
             std::cout << '\n' << "   " << "    " << "    " << "    " << "   " << "+" << dollars_buffer;
 
-
 /*
+
         std::cout << "\n \n \n " << "IPM: " << global::main_oam_manager->current_oam_id_palette << " "
                   << "IPS: " << global::sub_oam_manager->current_oam_id_palette << " "
                   << "ITM: " << global::main_oam_manager->current_oam_id_tiles << " "
@@ -120,7 +113,8 @@ void Hud::draw() {
                   << "IPS: " << global::sub_oam_manager->current_oam_id_palette << " "
                   << "ITM: " << global::main_oam_manager->current_oam_id_tiles << " "
                   << "ITS: " << global::sub_oam_manager->current_oam_id_tiles
-                  << "N: " << global::sub_oam_manager->nextAvailableTileIdx;*/
+                  << "N: " << global::sub_oam_manager->nextAvailableTileIdx;
+*/
 
         }
     }
@@ -156,6 +150,7 @@ void Hud::draw_on_level_done() {
     seconds_on_level = seconds_on_level - minutes_on_level * 60;
     seconds_total = seconds_total - minutes_total * 60;
 
+
     std::cout << '\n' << '\n' << '\n' << '\n' << '\n' << "   " << "  " << "LEVEL " << level << " COMPLETED!" << '\n'
               << '\n';
     std::cout << "   " << "  " << "TIME : " << minutes_on_level << ":" << seconds_on_level << " - " << minutes_total
@@ -163,6 +158,43 @@ void Hud::draw_on_level_done() {
     std::cout << "   " << "  " << "LOOT : " << '\n' << '\n';
     std::cout << "   " << "  " << "KILLS : " << '\n' << '\n';
     std::cout << "   " << "  " << "MONEY : " << money_on_this_level << " - " << dollars << '\n' << '\n';
+
+    std::sort (global::killedNpcs.begin(), global::killedNpcs.end());
+
+    for (int a = 0; a < global::killedNpcs.size(); a++) {
+        if (global::killedNpcs.at(a) == SpritesheetType::SNAKE) {
+            Snake *snake = new Snake();
+            snake->init();
+            snake->timer = global::timer;
+            global::sprites.push_back(snake);
+            snake->x = 98 + (a * 8);
+            snake->y = 208;
+            snake->ready_to_dispose = true;
+            snake->set_position();
+            snake->set_sprite_left();
+        } else if (global::killedNpcs.at(a) == SpritesheetType::BAT) {
+            Bat *bat = new Bat();
+            bat->init();
+            bat->timer = global::timer;
+            global::sprites.push_back(bat);
+            bat->x = 98+ (a * 8);
+            bat->y = 208;
+            bat->ready_to_dispose = true;
+            bat->set_sprite_flying_left();
+            bat->set_position();
+        } else if (global::killedNpcs.at(a) == SpritesheetType::SPIDER) {
+            Spider *spider = new Spider();
+            spider->init();
+            spider->timer = global::timer;
+            global::sprites.push_back(spider);
+            spider->x = 98+ (a * 8);
+            spider->y = 208;
+            spider->ready_to_dispose = true;
+            spider->set_sprite_falling();
+            spider->set_position();
+        }
+    }
+
 
 }
 
@@ -174,13 +206,18 @@ void Hud::draw_scores() {
     std::cout << '\n' << '\n' << "    " << "    " << "    " << "  " << "KILLS:" << "  " << 0;
     std::cout << '\n' << '\n' << "    " << "    " << "    " << "  " << "SAVES:" << "  " << 0;
     std::cout << '\n' << '\n' << "    " << "    " << "    " << "    " << "STATISTICS";
-    std::cout << '\n' << '\n' << "    " << "    " << "    " << "  "<< "PLAYS: " << "  " << 0;
-    std::cout << '\n' << '\n' << "    " << "    " << "    " << "  "<< "DEATHS:" << "  " << 0;
-    std::cout << '\n' << '\n' << "    " << "    " << "    " << "  "<< "WINS:  " << "  " << 0;
+    std::cout << '\n' << '\n' << "    " << "    " << "    " << "  " << "PLAYS: " << "  " << 0;
+    std::cout << '\n' << '\n' << "    " << "    " << "    " << "  " << "DEATHS:" << "  " << 0;
+    std::cout << '\n' << '\n' << "    " << "    " << "    " << "  " << "WINS:  " << "  " << 0;
 
 }
 
 void Hud::update() {
+
+    if (!global::in_main_menu && !global::scores_screen && !global::levels_transition_screen) {
+        set_position();
+    }
+
 
     if (collecting_timer > 0) {
         collecting_timer -= *global::timer;
@@ -222,4 +259,45 @@ void Hud::collectedMoniez(int value) {
     dollars_buffer += value;
     money_on_this_level += value;
     draw();
+}
+
+void Hud::set_position() {
+
+//    std::cout<<"SET POS" << '\n';
+
+    heartSpriteInfo->entry->hFlip = false;
+    heartSpriteInfo->entry->vFlip = false;
+    heartSpriteInfo->entry->isHidden = false;
+
+    dollarSpriteInfo->entry->hFlip = false;
+    dollarSpriteInfo->entry->vFlip = false;
+    dollarSpriteInfo->entry->isHidden = false;
+
+    bombSpriteInfo->entry->hFlip = false;
+    bombSpriteInfo->entry->vFlip = false;
+    bombSpriteInfo->entry->isHidden = false;
+
+    ropeSpriteInfo->entry->hFlip = false;
+    ropeSpriteInfo->entry->vFlip = false;
+    ropeSpriteInfo->entry->isHidden = false;
+
+    holdingItemSpriteInfo->entry->hFlip = false;
+    holdingItemSpriteInfo->entry->vFlip = false;
+    holdingItemSpriteInfo->entry->isHidden = false;
+
+    heartSpriteInfo->entry->x = HEART_POSITION_X;
+    heartSpriteInfo->entry->y = HEART_POSITION_Y;
+
+    bombSpriteInfo->entry->x = BOMB_POSITION_X;
+    bombSpriteInfo->entry->y = BOMB_POSITION_Y;
+
+    dollarSpriteInfo->entry->x = DOLLAR_POSITION_X;
+    dollarSpriteInfo->entry->y = DOLLAR_POSITION_Y;
+
+    ropeSpriteInfo->entry->x = ROPE_POSITION_X;
+    ropeSpriteInfo->entry->y = ROPE_POSITION_Y;
+
+    holdingItemSpriteInfo->entry->x = HOLDING_ITEM_FRAME_POSITION_X;
+    holdingItemSpriteInfo->entry->y = HOLDING_ITEM_FRAME_POSITION_Y;
+
 }

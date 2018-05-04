@@ -66,12 +66,12 @@ Jar.o: /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Jar.cpp \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/../level_layout/MapTileType.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/../animations/OAMManager.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/../animations/../level_layout/SpriteInfo.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/../animations/../level_layout/../sprites/SpriteTypes.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/../animations/../level_layout/../sprites/SpritesheetTypes.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/../animations/../level_layout/../animations/OamType.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/../animations/../sprites/SpriteTypes.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/../animations/../sprites/SpritesheetTypes.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/../animations/OamType.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/../animations/Camera.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/SpriteTypes.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/SpritesheetTypes.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Collisions.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/MapTile.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Rock.h \
@@ -235,17 +235,17 @@ Jar.o: /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Jar.cpp \
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/../animations/../level_layout/SpriteInfo.h:
 
-/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/../animations/../level_layout/../sprites/SpriteTypes.h:
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/../animations/../level_layout/../sprites/SpritesheetTypes.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/../animations/../level_layout/../animations/OamType.h:
 
-/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/../animations/../sprites/SpriteTypes.h:
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/../animations/../sprites/SpritesheetTypes.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/../animations/OamType.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/../animations/Camera.h:
 
-/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/SpriteTypes.h:
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/SpritesheetTypes.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Collisions.h:
 

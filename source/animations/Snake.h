@@ -33,6 +33,7 @@ public:
 
     void onCollisionWithMainCharacter() override {};
 
+    void initSprite() override;
 
     double *timer = nullptr;
     double pos_inc_timer;
@@ -52,6 +53,12 @@ public:
     int animFrameTimer;
 
     void randomizeMovement();
+
+    void set_position();
+
+    void set_sprite_left();
+
+    void set_sprite_right();
 };
 
 

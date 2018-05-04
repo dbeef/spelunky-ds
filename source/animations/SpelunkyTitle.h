@@ -16,6 +16,8 @@ public:
 
     void kill() override {};
 
+    void initSprite() override;
+
     void init() override;
 
     void draw() override;

@@ -32,6 +32,8 @@ public:
 
     void onCollisionWithMainCharacter() override {};
 
+    void initSprite() override;
+
     double *timer = nullptr;
     double pos_inc_timer;
 
@@ -46,6 +48,14 @@ public:
 
     bool hanging;
     bool hunting;
+
+    void set_sprite_hanging();
+
+    void set_sprite_flying_right();
+
+    void set_sprite_flying_left();
+
+    void set_position();
 };
 
 

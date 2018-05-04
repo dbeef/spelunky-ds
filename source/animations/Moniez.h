@@ -19,6 +19,8 @@ public:
 
     void draw() override;
 
+    void initSprite() override;
+
     void kill() override {};
 
     void updateTimers() override {};
@@ -49,8 +51,9 @@ public:
 
     int value;
 
+    int ruby_type;
     bool collected;
-    SpriteType  spriteType;
+    SpritesheetType  spriteType;
 };
 
 

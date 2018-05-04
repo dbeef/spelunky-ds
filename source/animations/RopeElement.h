@@ -29,6 +29,8 @@ public:
 
     void updateTimers() override {};
 
+    void initSprite() override;
+
     void updatePosition() override ;
 
     void updateSpeed() override;

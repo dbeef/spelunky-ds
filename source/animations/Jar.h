@@ -25,6 +25,8 @@ public:
 
     void updateSpeed() override;
 
+    void initSprite() override;
+
     void updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) override;
 
     void updateCollisionsOtherMoving() override {};

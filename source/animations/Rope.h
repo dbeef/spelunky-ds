@@ -30,6 +30,8 @@ public:
 
     void draw() override;
 
+    void initSprite() override;
+
     void updateTimers() override {};
 
     void updatePosition() override ;

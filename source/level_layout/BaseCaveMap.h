@@ -35,7 +35,7 @@ namespace global {
     bool levels_transition_screen = false;
     mm_sfxhand menu_music_handler = 0;
     mm_sfxhand cave_music_handler = 0;
-
+    std::vector<SpritesheetType> killedNpcs(0);
 
     u16 current_map[4096];
     u16 base_map[4096] = {

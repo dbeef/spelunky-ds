@@ -121,10 +121,7 @@ void Rope::draw() {
 
 
 void Rope::init() {
-    subSpriteInfo = global::sub_oam_manager->initSprite(ropesPal, ropesPalLen,
-                                                        nullptr, 8 * 8, 8, ROPES, true, false);
-    mainSpriteInfo = global::main_oam_manager->initSprite(ropesPal, ropesPalLen,
-                                                          nullptr, 8 * 8, 8, ROPES, true, false);
+    initSprite();
     notThrown();
 }
 
@@ -251,5 +248,14 @@ bool Rope::isThereChainForThisTile(int rope_y) {
             return true;
     }
     return false;
+}
+
+void Rope::initSprite() {
+    subSpriteInfo = global::sub_oam_manager->initSprite(ropesPal, ropesPalLen,
+                                                        nullptr, 8 * 8, 8, ROPES, true, false);
+    mainSpriteInfo = global::main_oam_manager->initSprite(ropesPal, ropesPalLen,
+                                                          nullptr, 8 * 8, 8, ROPES, true, false);
+    notThrown();
+
 }
 

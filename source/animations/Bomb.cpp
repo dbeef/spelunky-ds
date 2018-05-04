@@ -15,6 +15,9 @@
 
 void Bomb::draw() {
 
+    if(ready_to_dispose)
+        return;
+
 
     if (hold_by_main_dude && global::input_handler->y_key_down && global::input_handler->down_key_held) {
         hold_by_main_dude = false;
@@ -140,7 +143,10 @@ void Bomb::draw() {
                     subSpriteInfo->updateFrame(nullptr, 64 * 64);
                     mainSpriteInfo->updateFrame(nullptr, 64 * 64);
 
-                    //explosion! todo dispose object
+                    subSpriteInfo = nullptr;
+                    mainSpriteInfo= nullptr;
+
+                    ready_to_dispose = true;
                 } else {
                     frameGfx = (u8 *) explosionTiles + (2 + explosionFrame) * 64 * 64 / 2;
                     subSpriteInfo->updateFrame(frameGfx, 64 * 64);
@@ -161,10 +167,7 @@ void Bomb::draw() {
 
 
 void Bomb::init() {
-    subSpriteInfo = global::sub_oam_manager->initSprite(explosionPal, explosionPalLen,
-                                                        nullptr, 64 * 64, 64, BOMB, true, false);
-    mainSpriteInfo = global::main_oam_manager->initSprite(explosionPal, explosionPalLen,
-                                                          nullptr, 64 * 64, 64, BOMB, true, false);
+    initSprite();
     disarm();
     explosionFrame = 0;
 
@@ -285,6 +288,13 @@ void Bomb::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_
 
     }
 
+}
+
+void Bomb::initSprite() {
+    subSpriteInfo = global::sub_oam_manager->initSprite(explosionPal, explosionPalLen,
+                                                        nullptr, 64 * 64, 64, BOMB, true, false);
+    mainSpriteInfo = global::main_oam_manager->initSprite(explosionPal, explosionPalLen,
+                                                          nullptr, 64 * 64, 64, BOMB, true, false);
 }
 
 

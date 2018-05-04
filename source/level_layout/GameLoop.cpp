@@ -21,12 +21,16 @@
 #include <time.h>
 #include <maxmod9.h>
 #include <nds/arm9/console.h>
+#include<algorithm>
+
 
 static const int BOUNDARY_VALUE = 64; /* This is the default boundary value (can be set in REG_DISPCNT) */
 static const int OFFSET_MULTIPLIER_MAIN = BOUNDARY_VALUE / sizeof(SPRITE_GFX[0]);
 static const int OFFSET_MULTIPLIER_SUB = BOUNDARY_VALUE / sizeof(SPRITE_GFX_SUB[0]);
 
 void gameloop::scroll() {
+
+    int garbage_timer = 0;
 
     double timer = 0;
     int initTimer = 0;
@@ -57,6 +61,7 @@ void gameloop::scroll() {
     while (true) {
 
         timer = timerElapsed(0) / TICKS_PER_SECOND;
+        garbage_timer += timer;
         //fixme
 
         global::input_handler->updateInput();
@@ -73,11 +78,10 @@ void gameloop::scroll() {
             global::bombed = false;
         }
 
-        swiWaitForVBlank();
         global::main_dude->handleKeyInput();
 
         for (int a = 0; a < global::sprites.size(); a++) {
-            if (global::sprites.at(a)) {
+            if (global::sprites.at(a) && !global::sprites.at(a)->ready_to_dispose && !global::sprites.at(a)->killed) {
                 (*global::sprites.at(a)).update();
                 (*global::sprites.at(a)).draw();
             }
@@ -85,13 +89,41 @@ void gameloop::scroll() {
 
         global::camera->updatePosition(global::main_dude->x, global::main_dude->y);
         global::camera->setScroll();
+        global::hud->update();
+
+
+        swiWaitForVBlank();
 
         global::main_oam_manager->updateOAM();
         global::sub_oam_manager->updateOAM();
 
         initTimer += timer;
 
-        global::hud->update();
+        if (garbage_timer > 2500 && global::main_oam_manager->current_oam_id_tiles >= 108) {
+
+            global::main_oam_manager->clearAllSprites();
+            global::sub_oam_manager->clearAllSprites();
+
+
+
+//            global::hud->ropes++;
+//            std::cout << "            "<< "MEM CLEAN";
+
+
+            for (int a = 0; a < global::sprites.size(); a++) {
+                //fixme - being killed not always means it's ready for disposing!
+                if (!global::sprites.at(a)->ready_to_dispose && !global::sprites.at(a)->killed)
+                    global::sprites.at(a)->initSprite();
+                else {
+//                    delete (global::sprites.at(a));
+                }
+            }
+
+            global::hud->initSprites();
+
+
+            garbage_timer = 0;
+        }
 
     }
 
@@ -180,9 +212,11 @@ void gameloop::populateCaveItems() {
 
 void gameloop::populateCaveNpcs() {
 
-    int bats_left = 3;
-    int spiders_left = 3;
-    int snakes_left = 3;
+    int last_placement = 3;
+
+    int bats_left = 8;
+    int spiders_left = 8;
+    int snakes_left = 8;
 
     std::cout << '\n' << '\n';
 
@@ -193,7 +227,7 @@ void gameloop::populateCaveNpcs() {
             int room_id = global::level_generator->layout_room_ids[a][b];
 
 
-            if(room_id == -1)
+            if (room_id == -1)
                 continue;
 
             if (room_type == RoomType::ROOM_LEFT_RIGHT) {
@@ -201,8 +235,12 @@ void gameloop::populateCaveNpcs() {
                 for (int tab_y = 0; tab_y < ROOM_TILE_HEIGHT_GAME; tab_y++) {
                     for (int tab_x = 0; tab_x < ROOM_TILE_WIDTH_GAME; tab_x++) {
 
+                        last_placement++;
+//                        if(last_placement < 3)
+//                            continue;
+
                         int npc = left_right_npcs[room_id][tab_y][tab_x];
-                        int r = rand() % 5;
+                        int r = 1;
 
                         u16 pos_x = (OFFSET_X + tab_x * 2 + 2 * ROOM_TILE_WIDTH_GAME * a) / 2;
                         u16 pos_y = (OFFSET_X + tab_y * 2 + 2 * ROOM_TILE_HEIGHT_GAME * ((ROOMS_Y - b) - 1)) / 2;
@@ -214,8 +252,9 @@ void gameloop::populateCaveNpcs() {
                             snake->timer = global::timer;
                             global::sprites.push_back(snake);
                             snake->x = pos_x * 16;
-                            snake->y = pos_y* 16;
+                            snake->y = pos_y * 16;
                             snakes_left--;
+                            last_placement = 0;
                         }
 
                         if (npc == 2 && bats_left > 0 && r == 1) {
@@ -224,8 +263,9 @@ void gameloop::populateCaveNpcs() {
                             bat->timer = global::timer;
                             global::sprites.push_back(bat);
                             bats_left--;
-                            bat->x = pos_x* 16;
-                            bat->y = pos_y* 16;
+                            bat->x = pos_x * 16;
+                            bat->y = pos_y * 16;
+                            last_placement = 0;
                         }
 
                         if (npc == 3 && spiders_left > 0 && r == 1) {
@@ -233,9 +273,10 @@ void gameloop::populateCaveNpcs() {
                             spider->init();
                             spider->timer = global::timer;
                             global::sprites.push_back(spider);
-                            spider->x = pos_x* 16;
-                            spider->y = pos_y* 16;
+                            spider->x = pos_x * 16;
+                            spider->y = pos_y * 16;
                             spiders_left--;
+                            last_placement = 0;
                         }
 
 

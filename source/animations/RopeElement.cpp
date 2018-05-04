@@ -40,21 +40,8 @@ void RopeElement::draw() {
 
 
 void RopeElement::init() {
-    subSpriteInfo = global::sub_oam_manager->initSprite(ropesPal, ropesPalLen,
-                                                        nullptr, 8 * 8, 8, ROPE_ELEMENT, true, true);
-    mainSpriteInfo = global::main_oam_manager->initSprite(ropesPal, ropesPalLen,
-                                                          nullptr, 8 * 8, 8, ROPE_ELEMENT, true, true);
 
-    subSpriteInfo_2 = global::sub_oam_manager->initSprite(ropesPal, ropesPalLen,
-                                                          nullptr, 8 * 8, 8, ROPE_ELEMENT, true, true);
-    mainSpriteInfo_2 = global::main_oam_manager->initSprite(ropesPal, ropesPalLen,
-                                                            nullptr, 8 * 8, 8, ROPE_ELEMENT, true, true);
-
-    frameGfx = (u8 *) ropesTiles + 0 * 8 * 8 / 2;
-    subSpriteInfo->updateFrame(frameGfx, 8 * 8);
-    mainSpriteInfo->updateFrame(frameGfx, 8 * 8);
-    subSpriteInfo_2->updateFrame(frameGfx, 8 * 8);
-    mainSpriteInfo_2->updateFrame(frameGfx, 8 * 8);
+    initSprite();
 }
 
 void RopeElement::updateSpeed() {
@@ -64,5 +51,23 @@ void RopeElement::updatePosition() {
 }
 
 void RopeElement::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
+}
+
+void RopeElement::initSprite() {
+    subSpriteInfo = global::sub_oam_manager->initSprite(ropesPal, ropesPalLen,
+                                                        nullptr, 8 * 8, 8, ROPE_ELEMENT, true, true);
+    mainSpriteInfo = global::main_oam_manager->initSprite(ropesPal, ropesPalLen,
+                                                          nullptr, 8 * 8, 8, ROPE_ELEMENT, true, true);
+
+    subSpriteInfo_2 = global::sub_oam_manager->initSprite(ropesPal, ropesPalLen,
+                                                          nullptr, 8 * 8, 8, ROPE_ELEMENT, true, true);
+    mainSpriteInfo_2 = global::main_oam_manager->initSprite(ropesPal, ropesPalLen,
+                                                            nullptr, 8 * 8, 8, ROPE_ELEMENT, true, true);
+    frameGfx = (u8 *) ropesTiles + 0 * 8 * 8 / 2;
+    subSpriteInfo->updateFrame(frameGfx, 8 * 8);
+    mainSpriteInfo->updateFrame(frameGfx, 8 * 8);
+    subSpriteInfo_2->updateFrame(frameGfx, 8 * 8);
+    mainSpriteInfo_2->updateFrame(frameGfx, 8 * 8);
+
 }
 

@@ -69,41 +69,62 @@ void Copyrights::draw() {
 
 
 void Copyrights::init() {
- 
+ initSprite();
+
+    subSpriteInfo_1->entry->hFlip = false;
+    subSpriteInfo_2->entry->hFlip = false;
+    subSpriteInfo_3->entry->hFlip = false;
+    subSpriteInfo_4->entry->hFlip = false;
+    subSpriteInfo_5->entry->hFlip = false;
+
+}
+
+void Copyrights::updateSpeed() {
+
+}
+
+void Copyrights::updatePosition() {
+}
+
+void Copyrights::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
+}
+
+void Copyrights::initSprite() {
+
     if(oamType == OamType::MAIN) {
         mainSpriteInfo_1 = global::main_oam_manager->initSprite(copyrightsPal, copyrightsPalLen,
-                                                                nullptr, 32 * 32, 32, SpriteType::SPELUNKY_COPYRIGHTS, true,
+                                                                nullptr, 32 * 32, 32, SpritesheetType::SPELUNKY_COPYRIGHTS, true,
                                                                 false);
         mainSpriteInfo_2 = global::main_oam_manager->initSprite(copyrightsPal, copyrightsPalLen,
-                                                                nullptr, 32 * 32, 32, SpriteType::SPELUNKY_COPYRIGHTS, true,
+                                                                nullptr, 32 * 32, 32, SpritesheetType::SPELUNKY_COPYRIGHTS, true,
                                                                 false);
         mainSpriteInfo_3 = global::main_oam_manager->initSprite(copyrightsPal, copyrightsPalLen,
-                                                                nullptr, 32 * 32, 32, SpriteType::SPELUNKY_COPYRIGHTS, true,
+                                                                nullptr, 32 * 32, 32, SpritesheetType::SPELUNKY_COPYRIGHTS, true,
                                                                 false);
         mainSpriteInfo_4 = global::main_oam_manager->initSprite(copyrightsPal, copyrightsPalLen,
-                                                                nullptr, 32 * 32, 32, SpriteType::SPELUNKY_COPYRIGHTS, true,
+                                                                nullptr, 32 * 32, 32, SpritesheetType::SPELUNKY_COPYRIGHTS, true,
                                                                 false);
         mainSpriteInfo_4 = global::main_oam_manager->initSprite(copyrightsPal, copyrightsPalLen,
-                                                                nullptr, 32 * 32, 32, SpriteType::SPELUNKY_COPYRIGHTS, true,
+                                                                nullptr, 32 * 32, 32, SpritesheetType::SPELUNKY_COPYRIGHTS, true,
                                                                 false);
-        }
-    
+    }
+
     if(oamType == OamType::SUB) {
         subSpriteInfo_1 = global::sub_oam_manager->initSprite(copyrightsPal, copyrightsPalLen,
-                                                                nullptr, 32 * 32, 32, SpriteType::SPELUNKY_COPYRIGHTS, true,
-                                                                false);
+                                                              nullptr, 32 * 32, 32, SpritesheetType::SPELUNKY_COPYRIGHTS, true,
+                                                              false);
         subSpriteInfo_2 = global::sub_oam_manager->initSprite(copyrightsPal, copyrightsPalLen,
-                                                                nullptr, 32 * 32, 32, SpriteType::SPELUNKY_COPYRIGHTS, true,
-                                                                false);
+                                                              nullptr, 32 * 32, 32, SpritesheetType::SPELUNKY_COPYRIGHTS, true,
+                                                              false);
         subSpriteInfo_3 = global::sub_oam_manager->initSprite(copyrightsPal, copyrightsPalLen,
-                                                                nullptr, 32 * 32, 32, SpriteType::SPELUNKY_COPYRIGHTS, true,
-                                                                false);
+                                                              nullptr, 32 * 32, 32, SpritesheetType::SPELUNKY_COPYRIGHTS, true,
+                                                              false);
         subSpriteInfo_4 = global::sub_oam_manager->initSprite(copyrightsPal, copyrightsPalLen,
-                                                                nullptr, 32 * 32, 32, SpriteType::SPELUNKY_COPYRIGHTS, true,
-                                                                false);
+                                                              nullptr, 32 * 32, 32, SpritesheetType::SPELUNKY_COPYRIGHTS, true,
+                                                              false);
         subSpriteInfo_5 = global::sub_oam_manager->initSprite(copyrightsPal, copyrightsPalLen,
-                                                                nullptr, 32 * 32, 32, SpriteType::SPELUNKY_COPYRIGHTS, true,
-                                                                false);
+                                                              nullptr, 32 * 32, 32, SpritesheetType::SPELUNKY_COPYRIGHTS, true,
+                                                              false);
     }
 
     u8 *frameGfx1 = (u8 *) copyrightsTiles + 0 * 32 * 32 / 2;
@@ -129,22 +150,5 @@ void Copyrights::init() {
     subSpriteInfo_3->updateFrame(frameGfx3, 32 * 32);
     subSpriteInfo_4->updateFrame(frameGfx4, 32 * 32);
     subSpriteInfo_5->updateFrame(frameGfx5, 32 * 32);
-
-    subSpriteInfo_1->entry->hFlip = false;
-    subSpriteInfo_2->entry->hFlip = false;
-    subSpriteInfo_3->entry->hFlip = false;
-    subSpriteInfo_4->entry->hFlip = false;
-    subSpriteInfo_5->entry->hFlip = false;
-
-}
-
-void Copyrights::updateSpeed() {
-
-}
-
-void Copyrights::updatePosition() {
-}
-
-void Copyrights::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
 }
 

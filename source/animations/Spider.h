@@ -14,6 +14,8 @@ class Spider : public MovingObject {
 
 public:
 
+    void initSprite() override;
+
     void updateOther() override {};
 
     void init() override;
@@ -52,6 +54,15 @@ public:
     bool hunting;
     bool jumping;
 
+    void set_sprite_hanging();
+
+    void set_sprite_flipping();
+
+    void set_sprite_jumping();
+
+    void set_sprite_falling();
+
+    void set_position();
 };
 
 

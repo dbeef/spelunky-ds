@@ -48,6 +48,10 @@ public:
     void hide();
 
     void show();
+
+    void initSprites();
+
+    void set_position();
 };
 
 
