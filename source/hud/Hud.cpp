@@ -15,6 +15,7 @@
 #include "../animations/Snake.h"
 #include "../animations/Bat.h"
 #include "../animations/Spider.h"
+#include "../animations/Moniez.h"
 
 #define HEART_POSITION_X 5
 #define HEART_POSITION_Y 5
@@ -79,11 +80,6 @@ void Hud::initSprites() {
 void Hud::init() {
     consoleClear();
     initSprites();
-
-    hearts = 4;
-    ropes = 4;
-    bombs = 4;
-    dollars = 0;
 
     std::cout << '\n' << "   " << hearts << "    " << bombs << "    " << ropes << "    " << dollars;
 
@@ -153,13 +149,17 @@ void Hud::draw_on_level_done() {
 
     std::cout << '\n' << '\n' << '\n' << '\n' << '\n' << "   " << "  " << "LEVEL " << level << " COMPLETED!" << '\n'
               << '\n';
-    std::cout << "   " << "  " << "TIME : " << minutes_on_level << ":" << seconds_on_level << " - " << minutes_total
-              << ":" << seconds_total << '\n' << '\n';
+    std::cout << "   " << "  " << "TIME : " << minutes_on_level << ":";
+    printf("%02d", seconds_on_level);
+    std::cout << " - " << minutes_total << ":";
+    printf("%02d", seconds_total);
+    std::cout << '\n' << '\n';
     std::cout << "   " << "  " << "LOOT : " << '\n' << '\n';
     std::cout << "   " << "  " << "KILLS : " << '\n' << '\n';
     std::cout << "   " << "  " << "MONEY : " << money_on_this_level << " - " << dollars << '\n' << '\n';
 
     std::sort (global::killedNpcs.begin(), global::killedNpcs.end());
+    std::sort (global::collectedLoot.begin(), global::collectedLoot.end());
 
     for (int a = 0; a < global::killedNpcs.size(); a++) {
         if (global::killedNpcs.at(a) == SpritesheetType::SNAKE) {
@@ -194,6 +194,84 @@ void Hud::draw_on_level_done() {
             spider->set_position();
         }
     }
+
+    for (int a = 0; a < global::collectedLoot.size(); a++) {
+        if (global::collectedLoot.at(a) == SpriteType ::S_MONIEZ_TRIPLE_GOLD_BARS) {
+            Moniez *moniez = new Moniez();
+            moniez->sprite_height = 16;
+            moniez->sprite_width = 16;
+            moniez->physics_height = 8;
+            moniez->physics_width = 16;
+            moniez->spriteType = MONIEZ_TRIPLE_GOLD_BARS;
+            moniez->value = 1000;
+            moniez->init();
+            moniez->timer = global::timer;
+            global::sprites.push_back(moniez);
+            moniez->x = 90+ (a * 8);
+            moniez->y = 190;
+            moniez->ready_to_dispose = true;
+            moniez->set_position();
+
+        }
+        else if (global::collectedLoot.at(a) == SpriteType ::S_MONIEZ_RUBY_BIG_RED) {
+
+            Moniez *moniez = new Moniez();
+            moniez->sprite_height = 8;
+            moniez->sprite_width = 8;
+            moniez->physics_height = 8;
+            moniez->physics_width = 8;
+            moniez->spriteType = MONIEZ_RUBY_BIG;
+            moniez->value = 1200;
+            moniez->ruby_type = 0;
+            moniez->initSprite();
+            moniez->timer = global::timer;
+            global::sprites.push_back(moniez);
+            moniez->x = 96+ (a * 8);
+            moniez->y = 198;
+            moniez->ready_to_dispose = true;
+            moniez->set_position();
+
+        } else if (global::collectedLoot.at(a) == SpriteType ::S_MONIEZ_RUBY_BIG_GREEN) {
+
+            Moniez *moniez = new Moniez();
+            moniez->sprite_height = 8;
+            moniez->sprite_width = 8;
+            moniez->physics_height = 8;
+            moniez->physics_width = 8;
+            moniez->spriteType = MONIEZ_RUBY_BIG;
+            moniez->value = 1200;
+            moniez->ruby_type = 1;
+            moniez->initSprite();
+            moniez->timer = global::timer;
+            global::sprites.push_back(moniez);
+            moniez->x = 96+ (a * 8);
+            moniez->y = 198;
+            moniez->ready_to_dispose = true;
+            moniez->set_position();
+
+        }
+         else if (global::collectedLoot.at(a) == SpriteType ::S_MONIEZ_RUBY_BIG_BLUE) {
+
+            Moniez *moniez = new Moniez();
+            moniez->sprite_height = 8;
+            moniez->sprite_width = 8;
+            moniez->physics_height = 8;
+            moniez->physics_width = 8;
+            moniez->spriteType = MONIEZ_RUBY_BIG;
+            moniez->value = 1200;
+            moniez->ruby_type = 2;
+            moniez->initSprite();
+            moniez->timer = global::timer;
+            global::sprites.push_back(moniez);
+            moniez->x = 96+ (a * 8);
+            moniez->y = 198;
+            moniez->ready_to_dispose = true;
+            moniez->set_position();
+        }
+
+
+    }
+
 
 
 }

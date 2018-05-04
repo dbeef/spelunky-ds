@@ -97,6 +97,7 @@ Bomb.o: \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../animations/../input/InputHandler.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../console/TextManager.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../console/../time/Timer.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/SpriteType.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/MapUtils.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Collisions.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/MainDude.h \
@@ -297,6 +298,8 @@ Bomb.o: \
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../console/TextManager.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../console/../time/Timer.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/SpriteType.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/MapUtils.h:
 

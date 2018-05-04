@@ -54,6 +54,8 @@ public:
     int ruby_type;
     bool collected;
     SpritesheetType  spriteType;
+
+    void set_position();
 };
 
 

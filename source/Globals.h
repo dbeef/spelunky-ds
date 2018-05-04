@@ -12,6 +12,7 @@
 #include "level_layout/LevelGenerator.h"
 #include "animations/MainDude.h"
 #include "console/TextManager.h"
+#include "sprites/SpriteType.h"
 
 #define FRAMES_PER_ANIMATION 6
 #define TICKS_PER_SECOND 30.5554503
@@ -48,7 +49,7 @@ namespace global {
     extern mm_sfxhand menu_music_handler;
     extern mm_sfxhand cave_music_handler;
     extern std::vector<SpritesheetType> killedNpcs;
-    extern std::vector<SpritesheetType> collectedLoot;
+    extern std::vector<SpriteType> collectedLoot;
 }
 
 #endif //SPELUNKYDS_CONSTS_H

@@ -92,6 +92,7 @@ LevelGenerator.o: \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/../input/InputHandler.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../console/TextManager.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../console/../time/Timer.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../sprites/SpriteType.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/SplashScreenType.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/rooms/EntranceRooms.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/rooms/ExitRooms.h \
@@ -285,6 +286,8 @@ LevelGenerator.o: \
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../console/TextManager.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../console/../time/Timer.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../sprites/SpriteType.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/SplashScreenType.h:
 

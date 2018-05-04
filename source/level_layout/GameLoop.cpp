@@ -54,6 +54,8 @@ void gameloop::scroll() {
 
     //todo wycentrować bombe
 
+
+
     global::hud->init();
 
     populate_main_menu();

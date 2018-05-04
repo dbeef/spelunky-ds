@@ -96,6 +96,7 @@ main.o: /home/xdbeef/NetBeansProjects/spelunkyds/source/main.cpp \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/../input/InputHandler.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../console/TextManager.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../console/../time/Timer.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../sprites/SpriteType.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/Snake.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/Jar.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/Rock.h \
@@ -304,6 +305,8 @@ main.o: /home/xdbeef/NetBeansProjects/spelunkyds/source/main.cpp \
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../console/TextManager.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../console/../time/Timer.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../sprites/SpriteType.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/Snake.h:
 

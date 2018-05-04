@@ -94,6 +94,7 @@ MainDude.o: \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../animations/MainDude.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../console/TextManager.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../console/../time/Timer.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/SpriteType.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Collisions.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/MapUtils.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../../build/spelunker.h \
@@ -308,6 +309,8 @@ MainDude.o: \
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../console/TextManager.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../console/../time/Timer.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/SpriteType.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Collisions.h:
 

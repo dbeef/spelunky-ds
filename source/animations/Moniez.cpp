@@ -13,11 +13,12 @@
 #include "../../build/rubies_big.h"
 #include "Rock.h"
 #include "../../build/soundbank.h"
+#include "../sprites/SpriteType.h"
 
 
 void Moniez::draw() {
 
-    if(ready_to_dispose)
+    if (ready_to_dispose)
         return;
 
     if (!collected && Collisions::checkCollisionWithMainDudeWidthBoundary(x, y, physics_width, physics_height, 8)) {
@@ -34,53 +35,29 @@ void Moniez::draw() {
         subSpriteInfo->entry->isHidden = true;
         mainSpriteInfo->entry->isHidden = true;
 
+        if(spriteType == SpritesheetType::MONIEZ_RUBY_BIG) {
+            if (ruby_type == 0) {
+                global::collectedLoot.push_back(SpriteType::S_MONIEZ_RUBY_BIG_RED);
+            } else if (ruby_type == 1) {
+                global::collectedLoot.push_back(SpriteType::S_MONIEZ_RUBY_BIG_GREEN);
+            } else if (ruby_type == 2) {
+                global::collectedLoot.push_back(SpriteType::S_MONIEZ_RUBY_BIG_BLUE);
+            }
+        }
+        else
+        {
+            global::collectedLoot.push_back(SpriteType::S_MONIEZ_TRIPLE_GOLD_BARS);
+        }
+
+
+
         subSpriteInfo->entry = nullptr;
         mainSpriteInfo->entry = nullptr;
         ready_to_dispose = true;
     }
 
-    int main_x = x - global::camera->x;
-    int main_y = y - global::camera->y;
-    int sub_x = x - global::camera->x;
-    int sub_y = y - global::camera->y - 192;
 
-    if (global::camera->y + 192 > this->y + sprite_height || global::camera->y + 192 + 192 < this->y - sprite_height) {
-        sub_x = -128;
-        sub_y = -128;
-    }
-    if (global::camera->y > this->y + sprite_height || global::camera->y + 192 < this->y - sprite_height) {
-        main_x = -128;
-        main_y = -128;
-
-    }
-
-    if (sub_y + sprite_height < 0 || sub_x + sprite_width < 0) {
-        sub_x = -128;
-        sub_y = -128;
-    }
-
-    if (main_y + sprite_height < 0 || main_x + sprite_width < 0) {
-        main_x = -128;
-        main_y = -128;
-    }
-
-
-    if (activated_by_main_dude) {
-        //nothing
-    }
-
-    mainSpriteInfo->entry->x = main_x;
-    mainSpriteInfo->entry->y = main_y;
-
-    subSpriteInfo->entry->x = sub_x;
-    subSpriteInfo->entry->y = sub_y;
-
-    mainSpriteInfo->entry->vFlip = false;
-    mainSpriteInfo->entry->hFlip = false;
-    
-    subSpriteInfo->entry->vFlip = false;
-    subSpriteInfo->entry->hFlip = false;
-    
+    set_position();
 }
 
 
@@ -159,7 +136,7 @@ void Moniez::updatePosition() {
         yy = floor_div(this->y + 0.5 * BOMB_SIZE, 16);
 
         if (old_xx != xx || old_yy != yy) {
-            if(xx < 31 && yy< 31)
+            if (xx < 31 && yy < 31)
                 updateCollisionsMap(xx, yy);
         }
 
@@ -180,7 +157,8 @@ void Moniez::updatePosition() {
 void Moniez::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
 
     MapTile *tiles[9];
-    Collisions::getNeighboringTiles(global::level_generator->mapTiles, x_current_pos_in_tiles, y_current_pos_in_tiles, tiles);
+    Collisions::getNeighboringTiles(global::level_generator->mapTiles, x_current_pos_in_tiles, y_current_pos_in_tiles,
+                                    tiles);
 
     bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, sprite_width, sprite_width, true);
     leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, sprite_width, sprite_width, true);
@@ -211,7 +189,8 @@ void Moniez::initSprite() {
                                                               nullptr, sprite_width * sprite_height, sprite_width,
                                                               spriteType, true, true);
 
-        
+
+        //r g b
         if (ruby_type == 0)
             frameGfx = (u8 *) rubies_bigTiles;
         else if (ruby_type == 1)
@@ -225,5 +204,47 @@ void Moniez::initSprite() {
 
     subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
     mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
+}
+
+void Moniez::set_position() {
+
+    int main_x = x - global::camera->x;
+    int main_y = y - global::camera->y;
+    int sub_x = x - global::camera->x;
+    int sub_y = y - global::camera->y - 192;
+
+    if (global::camera->y + 192 > this->y + sprite_height || global::camera->y + 192 + 192 < this->y - sprite_height) {
+        sub_x = -128;
+        sub_y = -128;
+    }
+    if (global::camera->y > this->y + sprite_height || global::camera->y + 192 < this->y - sprite_height) {
+        main_x = -128;
+        main_y = -128;
+
+    }
+
+    if (sub_y + sprite_height < 0 || sub_x + sprite_width < 0) {
+        sub_x = -128;
+        sub_y = -128;
+    }
+
+    if (main_y + sprite_height < 0 || main_x + sprite_width < 0) {
+        main_x = -128;
+        main_y = -128;
+    }
+
+
+    mainSpriteInfo->entry->x = main_x;
+    mainSpriteInfo->entry->y = main_y;
+
+    subSpriteInfo->entry->x = sub_x;
+    subSpriteInfo->entry->y = sub_y;
+
+    mainSpriteInfo->entry->vFlip = false;
+    mainSpriteInfo->entry->hFlip = false;
+
+    subSpriteInfo->entry->vFlip = false;
+    subSpriteInfo->entry->hFlip = false;
+
 }
 

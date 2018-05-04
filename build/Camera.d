@@ -91,7 +91,8 @@ Camera.o: \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../animations/../sprites/SpritesheetTypes.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../animations/../input/InputHandler.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../console/TextManager.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../console/../time/Timer.h
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../console/../time/Timer.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/SpriteType.h
 
 /home/xdbeef/devkitPro/libnds/include/nds/arm9/background.h:
 
@@ -276,3 +277,5 @@ Camera.o: \
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../console/TextManager.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../console/../time/Timer.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/SpriteType.h:

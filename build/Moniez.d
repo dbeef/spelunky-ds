@@ -97,6 +97,7 @@ Moniez.o: \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../animations/../input/InputHandler.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../console/TextManager.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../console/../time/Timer.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/SpriteType.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/MapUtils.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../../build/triple_goldbar.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../../build/rubies_big.h \
@@ -104,7 +105,8 @@ Moniez.o: \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/SpriteInfo.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Camera.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/LevelGenerator.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../../build/soundbank.h
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../../build/soundbank.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/SpriteType.h
 
 /home/xdbeef/devkitPro/libnds/include/maxmod9.h:
 
@@ -300,6 +302,8 @@ Moniez.o: \
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../console/../time/Timer.h:
 
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/SpriteType.h:
+
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/MapUtils.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../../build/triple_goldbar.h:
@@ -315,3 +319,5 @@ Moniez.o: \
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../level_layout/LevelGenerator.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../../build/soundbank.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/SpriteType.h:

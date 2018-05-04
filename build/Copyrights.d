@@ -93,6 +93,7 @@ Copyrights.o: \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../animations/../input/InputHandler.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../console/TextManager.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../console/../time/Timer.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/SpriteType.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../../build/copyrights.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Copyrights.h
 
@@ -281,6 +282,8 @@ Copyrights.o: \
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../console/TextManager.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../console/../time/Timer.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/SpriteType.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../../build/copyrights.h:
 

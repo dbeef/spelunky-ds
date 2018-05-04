@@ -90,7 +90,8 @@ MapUtils.o: \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/../sprites/SpritesheetTypes.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../animations/../input/InputHandler.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../console/TextManager.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../console/../time/Timer.h
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../console/../time/Timer.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../sprites/SpriteType.h
 
 /home/xdbeef/devkitPro/libnds/include/nds.h:
 
@@ -273,3 +274,5 @@ MapUtils.o: \
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../console/TextManager.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../console/../time/Timer.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/level_layout/../sprites/SpriteType.h:

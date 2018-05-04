@@ -93,10 +93,12 @@ Hud.o: /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/Hud.cpp \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../animations/../input/InputHandler.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../console/TextManager.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../console/../time/Timer.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../sprites/SpriteType.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../../build/soundbank.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../animations/Snake.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../animations/Bat.h \
- /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../animations/Spider.h
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../animations/Spider.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../animations/Moniez.h
 
 /home/xdbeef/devkitPro/libnds/include/nds/arm9/sprite.h:
 
@@ -286,6 +288,8 @@ Hud.o: /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/Hud.cpp \
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../console/../time/Timer.h:
 
+/home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../sprites/SpriteType.h:
+
 /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../../build/soundbank.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../animations/Snake.h:
@@ -293,3 +297,5 @@ Hud.o: /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/Hud.cpp \
 /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../animations/Bat.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../animations/Spider.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/hud/../animations/Moniez.h:

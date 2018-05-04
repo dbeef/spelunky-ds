@@ -96,6 +96,7 @@ Spider.o: \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../animations/../input/InputHandler.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../console/TextManager.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../console/../time/Timer.h \
+ /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/SpriteType.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Blood.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/BloodElement.h \
  /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Collisions.h \
@@ -296,6 +297,8 @@ Spider.o: \
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../console/TextManager.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../console/../time/Timer.h:
+
+/home/xdbeef/NetBeansProjects/spelunkyds/source/animations/../sprites/SpriteType.h:
 
 /home/xdbeef/NetBeansProjects/spelunkyds/source/animations/Blood.h:
 

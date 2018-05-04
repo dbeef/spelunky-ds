@@ -567,7 +567,6 @@ void MainDude::draw() {
                     global::level_generator->generateSplashScreen(SplashScreenType::MAIN_MENU_LOWER);
                 } else if (dead) {
 
-
                     global::level_generator->generateSplashScreen(SplashScreenType::SCORES_UPPER);
                     global::level_generator->generateSplashScreen(SplashScreenType::SCORES_LOWER);
                 } else {
@@ -613,6 +612,14 @@ void MainDude::draw() {
 
             if (global::in_main_menu || global::levels_transition_screen) {
 
+                if(global::in_main_menu)
+                {
+                    global::hud->hearts = 4;
+                    global::hud->ropes = 4;
+                    global::hud->bombs = 4;
+                    global::hud->dollars = 0;
+                }
+
                 global::hud->init();
                 gameloop::populateCaveNpcs();
                 gameloop::populateCaveItems();
@@ -620,6 +627,11 @@ void MainDude::draw() {
                 global::levels_transition_screen = false;
                 global::in_main_menu = false;
                 global::killedNpcs.clear();
+                global::collectedLoot.clear();
+                global::hud->money_on_this_level = 0;
+
+                this->holding_item = false;
+
 
             } else {
                 if (global::scores_screen) {
