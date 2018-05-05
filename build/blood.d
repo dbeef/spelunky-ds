@@ -1,1 +1,0 @@
-blood.o: blood.s

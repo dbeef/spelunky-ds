@@ -27,7 +27,7 @@ SOURCES		:=	source source/level_layout source/console source/input  \
 DATA		:=	data
 INCLUDES	:=	include
 FONTS   	:=	gfx/fonts
-SPRITES	    :=	gfx/sprites gfx/sprites/64x64 gfx/sprites/8x8 gfx/sprites/32x32
+SPRITES	    :=	gfx/sprites gfx/sprites/64x64 gfx/sprites/8x8 gfx/sprites/32x32 gfx/sprites/16x16
 TILEMAPS    :=  gfx/tilemaps
 SOUNDS      :=  sounds
 SOUNDBANK_NAME := soundbank
@@ -155,6 +155,8 @@ $(OUTPUT).elf	:	$(OFILES)
 		grit $< -ff../gfx/sprites/8x8/sprite.grit -o$*
 %.s %.h : ../gfx/sprites/32x32/%.png
 		grit $< -ff../gfx/sprites/32x32/sprite.grit -o$*
+%.s %.h : ../gfx/sprites/16x16/%.png
+		grit $< -ff../gfx/sprites/16x16/sprite.grit -o$*
 
 #grit $< -ff../gfx/tilemaps/tilemap.grit -o$*
 #grit $< -ff../gfx/sprites/sprite.grit -o$*

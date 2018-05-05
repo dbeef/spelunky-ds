@@ -1,1 +1,0 @@
-whip.o: whip.s

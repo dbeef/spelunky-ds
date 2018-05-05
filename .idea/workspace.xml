@@ -12,11 +12,88 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4167ccef-cad0-4b13-8f61-b9437b132076" name="Default" comment="Merge branch 'master' of https://github.com/dbeef/spelunky-ds&#10;&#10;# Conflicts:&#10;#&#9;README.md">
-      <change beforePath="$PROJECT_DIR$/build/Bomb.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/Bomb.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/Rope.o" beforeDir="false" afterPath="$PROJECT_DIR$/build/Rope.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/bat.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/bat.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/bat.s" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/blood.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/blood.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/blood.s" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/cavebg.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/cavebg.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/cavebg.s" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/copyrights.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/copyrights.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/copyrights.s" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/explosion.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/explosion.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/explosion.s" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/font.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/font.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/font.s" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/font_1bpp.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/font_1bpp.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/font_1bpp.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/font_1bpp.s" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/font_yellow.d" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/font_yellow.h" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/font_yellow.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/font_yellow.s" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/hud.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/hud.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/hud.s" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/jar.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/jar.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/jar.s" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/menu_signs_start_scores.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/menu_signs_start_scores.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/menu_signs_start_scores.s" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/menu_signs_tutorial_quit.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/menu_signs_tutorial_quit.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/menu_signs_tutorial_quit.s" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/rock.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/rock.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/rock.s" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/ropes.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/ropes.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/ropes.s" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/rubies_big.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/rubies_big.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/rubies_big.s" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/snake.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/snake.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/snake.s" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/spelunker.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/spelunker.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/spelunker.s" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/spelunky_title.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/spelunky_title.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/spelunky_title.s" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/build/spelunkyds.map" beforeDir="false" afterPath="$PROJECT_DIR$/build/spelunkyds.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/animations/Bomb.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/animations/Bomb.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/animations/Rope.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/source/animations/Rope.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/spider.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/spider.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/spider.s" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/triple_goldbar.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/triple_goldbar.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/triple_goldbar.s" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/whip.h" beforeDir="false" afterPath="$PROJECT_DIR$/build/whip.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/whip.s" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/TargetDirectories.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/TargetDirectories.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/progress.marks" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/progress.marks" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/spelunkyds.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/spelunkyds.dir/progress.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/spelunkyds.cbp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/spelunkyds.cbp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gfx/fonts/font_1bpp.png" beforeDir="false" afterPath="$PROJECT_DIR$/gfx/_not_used/fonts/font_1bpp.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gfx/fonts/font_yellow.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gfx/fonts/working/font.bmp" beforeDir="false" afterPath="$PROJECT_DIR$/gfx/_not_used/fonts/font.bmp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gfx/fonts/working/font.grit" beforeDir="false" afterPath="$PROJECT_DIR$/gfx/_not_used/fonts/font.grit" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gfx/fonts/working/font.png" beforeDir="false" afterPath="$PROJECT_DIR$/gfx/_not_used/fonts/font.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gfx/fonts/working/font_yellow.png" beforeDir="false" afterPath="$PROJECT_DIR$/gfx/_not_used/fonts/font_yellow.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gfx/sprites/64x64/working/explosion.png" beforeDir="false" afterPath="$PROJECT_DIR$/gfx/_not_used/sprites/explosion.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gfx/sprites/8x8/working/jar.png" beforeDir="false" afterPath="$PROJECT_DIR$/gfx/_not_used/sprites/jar.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gfx/sprites/bat.png" beforeDir="false" afterPath="$PROJECT_DIR$/gfx/sprites/16x16/bat.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gfx/sprites/hud.png" beforeDir="false" afterPath="$PROJECT_DIR$/gfx/sprites/16x16/hud.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gfx/sprites/menu_signs_tutorial_quit.png" beforeDir="false" afterPath="$PROJECT_DIR$/gfx/sprites/16x16/menu_signs_tutorial_quit.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gfx/sprites/snake.png" beforeDir="false" afterPath="$PROJECT_DIR$/gfx/sprites/16x16/snake.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gfx/sprites/spelunker.png" beforeDir="false" afterPath="$PROJECT_DIR$/gfx/sprites/16x16/spelunker.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gfx/sprites/spider.png" beforeDir="false" afterPath="$PROJECT_DIR$/gfx/sprites/16x16/spider.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gfx/sprites/sprite.grit" beforeDir="false" afterPath="$PROJECT_DIR$/gfx/sprites/16x16/sprite.grit" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gfx/sprites/triple_goldbar.png" beforeDir="false" afterPath="$PROJECT_DIR$/gfx/sprites/16x16/triple_goldbar.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gfx/sprites/whip.png" beforeDir="false" afterPath="$PROJECT_DIR$/gfx/sprites/16x16/whip.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gfx/sprites/working/heart.png" beforeDir="false" afterPath="$PROJECT_DIR$/gfx/_not_used/sprites/heart.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gfx/sprites/working/snake.png" beforeDir="false" afterPath="$PROJECT_DIR$/gfx/_not_used/sprites/snake.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gfx/sprites/working/spelunker.png" beforeDir="false" afterPath="$PROJECT_DIR$/gfx/_not_used/sprites/spelunker.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gfx/sprites/working/sprite.grit" beforeDir="false" afterPath="$PROJECT_DIR$/gfx/_not_used/sprites/sprite.grit" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gfx/tilemaps/working/cavebg.png" beforeDir="false" afterPath="$PROJECT_DIR$/gfx/_not_used/tilemaps/cavebg.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gfx/tilemaps/working/cavebg_256.png" beforeDir="false" afterPath="$PROJECT_DIR$/gfx/_not_used/tilemaps/cavebg_256.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gfx/tilemaps/working/tilemap.grit" beforeDir="false" afterPath="$PROJECT_DIR$/gfx/_not_used/tilemaps/tilemap.grit" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gfx/tilemaps/working/tiles.png" beforeDir="false" afterPath="$PROJECT_DIR$/gfx/_not_used/tilemaps/tiles.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/spelunkyds.elf" beforeDir="false" afterPath="$PROJECT_DIR$/spelunkyds.elf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/spelunkyds.nds" beforeDir="false" afterPath="$PROJECT_DIR$/spelunkyds.nds" afterDir="false" />
     </list>
@@ -31,47 +108,44 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="RopeElement.cpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/source/animations/RopeElement.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="602">
-              <caret line="82" selection-start-line="82" selection-end-line="82" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="Rope.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/source/animations/Rope.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="707">
-              <caret line="224" selection-start-line="224" selection-end-line="224" />
+            <state relative-caret-position="660">
+              <caret line="182" column="5" selection-start-line="182" selection-start-column="5" selection-end-line="182" selection-end-column="5" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Bomb.cpp" pinned="false" current-in-tab="true">
+      <file leaf-file-name="font.png" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/gfx/fonts/font.png">
+          <provider selected="true" editor-type-id="images" />
+        </entry>
+      </file>
+      <file leaf-file-name="font_1bpp.png" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/gfx/_not_used/fonts/font_1bpp.png">
+          <provider selected="true" editor-type-id="images" />
+        </entry>
+      </file>
+      <file leaf-file-name="font_yellow.png" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/gfx/_not_used/fonts/font_yellow.png">
+          <provider selected="true" editor-type-id="images" />
+        </entry>
+      </file>
+      <file leaf-file-name="Makefile" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Makefile">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="6">
+              <caret line="156" column="39" selection-start-line="156" selection-start-column="34" selection-end-line="156" selection-end-column="39" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Bomb.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/source/animations/Bomb.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="175" selection-start-line="175" selection-end-line="175" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SpritesheetTypes.h" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/source/sprites/SpritesheetTypes.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="510">
-              <caret line="34" selection-start-line="34" selection-end-line="34" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Moniez.cpp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/source/animations/Moniez.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="283">
-              <caret line="194" column="46" selection-start-line="194" selection-start-column="46" selection-end-line="194" selection-end-column="46" />
+            <state relative-caret-position="2115">
+              <caret line="141" selection-start-line="141" selection-end-line="141" />
             </state>
           </provider>
         </entry>
@@ -79,7 +153,7 @@
       <file leaf-file-name="Rock.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/source/animations/Rock.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="375">
+            <state relative-caret-position="1095">
               <caret line="73" selection-start-line="73" selection-end-line="83" />
             </state>
           </provider>
@@ -88,7 +162,7 @@
       <file leaf-file-name="MainDude.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/source/animations/MainDude.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="268">
+            <state relative-caret-position="7350">
               <caret line="490" column="2" selection-start-line="480" selection-start-column="4" selection-end-line="490" selection-end-column="2" />
             </state>
           </provider>
@@ -97,7 +171,7 @@
       <file leaf-file-name="Hud.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/source/hud/Hud.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="602">
+            <state relative-caret-position="2835">
               <caret line="189" column="26" selection-start-line="189" selection-start-column="26" selection-end-line="189" selection-end-column="26" />
             </state>
           </provider>
@@ -106,24 +180,16 @@
       <file leaf-file-name="Spider.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/source/animations/Spider.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
+            <state relative-caret-position="810">
               <caret line="54" column="33" selection-start-line="54" selection-start-column="33" selection-end-line="54" selection-end-column="33" />
             </state>
           </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ropes.png" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/gfx/sprites/8x8/ropes.png">
-          <provider selected="true" editor-type-id="images" />
         </entry>
       </file>
     </leaf>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>sort</find>
-      <find>.clear</find>
-      <find>new moni</find>
       <find>money_on_this_level</find>
       <find>dollars =</find>
       <find>menu</find>
@@ -151,6 +217,9 @@
       <find>8</find>
       <find>kill</find>
       <find>hunting</find>
+      <find>32x432</find>
+      <find>32</find>
+      <find>32x32</find>
     </findStrings>
     <replaceStrings>
       <replace>menu_signs_start_scores</replace>
@@ -191,7 +260,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/source/level_layout/MapTileType.h" />
         <option value="$PROJECT_DIR$/source/level_layout/LevelGenerator.h" />
         <option value="$PROJECT_DIR$/source/level_layout/SpriteInfo.cpp" />
         <option value="$PROJECT_DIR$/source/level_layout/SpriteInfo.h" />
@@ -240,8 +308,9 @@
         <option value="$PROJECT_DIR$/source/hud/Hud.cpp" />
         <option value="$PROJECT_DIR$/source/animations/Rock.cpp" />
         <option value="$PROJECT_DIR$/source/animations/Spider.cpp" />
-        <option value="$PROJECT_DIR$/source/animations/Rope.cpp" />
         <option value="$PROJECT_DIR$/source/animations/Bomb.cpp" />
+        <option value="$PROJECT_DIR$/source/animations/Rope.cpp" />
+        <option value="$PROJECT_DIR$/Makefile" />
       </list>
     </option>
   </component>
@@ -302,28 +371,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="spelunkyds" type="b2602c69:ProjectViewProjectNode" />
-              <item name="spelunkyds" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="spelunkyds" type="b2602c69:ProjectViewProjectNode" />
-              <item name="spelunkyds" type="462c0819:PsiDirectoryNode" />
-              <item name="source" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="spelunkyds" type="b2602c69:ProjectViewProjectNode" />
-              <item name="spelunkyds" type="462c0819:PsiDirectoryNode" />
-              <item name="source" type="462c0819:PsiDirectoryNode" />
-              <item name="sprites" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
       <pane id="Scope">
         <subPane subId="Project Files">
           <expand>
@@ -373,6 +420,17 @@
           <select />
         </subPane>
       </pane>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="spelunkyds" type="b2602c69:ProjectViewProjectNode" />
+              <item name="spelunkyds" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -383,19 +441,19 @@
     <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/gfx/sprites/16x16" />
+      <recent name="$PROJECT_DIR$/gfx/_not_used/sprites" />
+      <recent name="$PROJECT_DIR$/gfx/_not_used/tilemaps" />
+      <recent name="$PROJECT_DIR$/gfx/_not_used/fonts" />
+      <recent name="$PROJECT_DIR$/source/level_layout/rooms" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/gfx/sprites" />
       <recent name="$PROJECT_DIR$/gfx/tilemaps" />
       <recent name="$PROJECT_DIR$/gfx/sprites/8x8" />
       <recent name="$PROJECT_DIR$/gfx/sprites/8x8/working" />
       <recent name="$PROJECT_DIR$/gfx/sprites/32x32" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/source/level_layout/rooms" />
-      <recent name="$PROJECT_DIR$/gfx/sprites/32x32" />
-      <recent name="$PROJECT_DIR$/gfx/sprites/8x8" />
-      <recent name="$PROJECT_DIR$/gfx/sprites/64x64" />
-      <recent name="$PROJECT_DIR$/scratches" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -517,12 +575,13 @@
       <workItem from="1525411980243" duration="18153000" />
       <workItem from="1525439798644" duration="3219000" />
       <workItem from="1525443033295" duration="2024000" />
-      <workItem from="1525445073800" duration="2171000" />
+      <workItem from="1525445073800" duration="4235000" />
+      <workItem from="1525541164625" duration="823000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="740459000" />
+    <option name="totallyTimeSpent" value="743346000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -543,7 +602,7 @@
       <window_info anchor="bottom" id="Version Control" order="10" weight="0.32875" />
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.24951267" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="11" sideWeight="0.4899285" visible="true" weight="0.945" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="11" sideWeight="0.4899285" visible="true" weight="0.39625" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -556,23 +615,23 @@
       <window_info anchor="bottom" id="Find" order="1" weight="0.32875" />
     </layout>
     <layout-to-restore>
-      <window_info anchor="bottom" id="CMake" order="8" weight="0.32957393" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.22936971" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.24951267" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="TODO" order="5" weight="0.32957393" />
+      <window_info anchor="bottom" id="Version Control" order="10" weight="0.32957393" />
       <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32957393" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Messages" order="7" weight="0.32957393" />
       <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.4899285" visible="true" weight="0.29125" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.51007146" side_tool="true" weight="0.36557788" />
-      <window_info anchor="bottom" id="Version Control" order="10" weight="0.32957393" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32957393" />
-      <window_info anchor="bottom" id="Messages" order="7" weight="0.32957393" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="CMake" order="8" weight="0.32957393" />
       <window_info id="Favorites" order="2" side_tool="true" />
     </layout-to-restore>
   </component>
@@ -605,27 +664,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/source/animations/RopeElement.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1050">
-          <caret line="70" selection-start-line="70" selection-end-line="76" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/source/animations/Rope.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3885">
-          <caret line="259" column="4" selection-start-line="259" selection-start-column="4" selection-end-line="259" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/source/level_layout/MapTileType.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" selection-start-line="1" selection-end-line="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/source/level_layout/LevelGenerator.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4260">
@@ -899,13 +937,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/source/animations/RopeElement.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="602">
+        <state relative-caret-position="1230">
           <caret line="82" selection-start-line="82" selection-end-line="82" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gfx/sprites/8x8/ropes.png">
-      <provider selected="true" editor-type-id="images" />
     </entry>
     <entry file="file://$PROJECT_DIR$/source/sprites/SpritesheetTypes.h">
       <provider selected="true" editor-type-id="text-editor">
@@ -916,50 +951,66 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/source/animations/Moniez.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="283">
+        <state relative-caret-position="2910">
           <caret line="194" column="46" selection-start-line="194" selection-start-column="46" selection-end-line="194" selection-end-column="46" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/source/animations/MainDude.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="268">
+        <state relative-caret-position="7350">
           <caret line="490" column="2" selection-start-line="480" selection-start-column="4" selection-end-line="490" selection-end-column="2" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/source/hud/Hud.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="602">
+        <state relative-caret-position="2835">
           <caret line="189" column="26" selection-start-line="189" selection-start-column="26" selection-end-line="189" selection-end-column="26" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/source/animations/Spider.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
+        <state relative-caret-position="810">
           <caret line="54" column="33" selection-start-line="54" selection-start-column="33" selection-end-line="54" selection-end-column="33" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/source/animations/Rock.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
+        <state relative-caret-position="1095">
           <caret line="73" selection-start-line="73" selection-end-line="83" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/source/animations/Rope.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="707">
-          <caret line="224" selection-start-line="224" selection-end-line="224" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/source/animations/Bomb.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="175" selection-start-line="175" selection-end-line="175" />
+        <state relative-caret-position="2115">
+          <caret line="141" selection-start-line="141" selection-end-line="141" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/animations/Rope.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="660">
+          <caret line="182" column="5" selection-start-line="182" selection-start-column="5" selection-end-line="182" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gfx/fonts/font.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gfx/_not_used/fonts/font_1bpp.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gfx/_not_used/fonts/font_yellow.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Makefile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6">
+          <caret line="156" column="39" selection-start-line="156" selection-start-column="34" selection-end-line="156" selection-end-column="39" />
         </state>
       </provider>
     </entry>

@@ -103,7 +103,7 @@
 		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/gfx/fonts/font.grit">
 			<Option target="spelunkyds"/>
 		</Unit>
-		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/gfx/sprites/sprite.grit">
+		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/gfx/sprites/16x16/sprite.grit">
 			<Option target="spelunkyds"/>
 		</Unit>
 		<Unit filename="/home/xdbeef/NetBeansProjects/spelunkyds/includes/TextBackgrounds.h">
