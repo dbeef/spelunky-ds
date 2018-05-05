@@ -6,7 +6,7 @@
 #include "Timer.h"
 #include "../Globals.h"
 
-u16 Timer::getMillisecondsElapsed() {
+u16 Timer::get_ms_since_last_frame() {
     return timerElapsed(0) / TICKS_PER_SECOND;
 }
 
@@ -14,7 +14,11 @@ void Timer::stop() {
     timerStop(0);
 }
 
-Timer::Timer() {
+void Timer::start() {
     timerStart(0, ClockDivider_1024, 1000, 0);
     timerStart(1, ClockDivider_1, 10, 0);
+}
+
+Timer::Timer() {
+
 }

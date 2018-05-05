@@ -13,11 +13,13 @@
 class Timer {
 
 public:
+
     Timer();
 
-    u16 getMillisecondsElapsed();
+    u16 get_ms_since_last_frame();
 
     void stop();
+    void start();
 };
 
 

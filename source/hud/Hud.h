@@ -6,8 +6,7 @@
 #define SPELUNKYDS_HUD_H
 
 #include <nds/jtypes.h>
-#include "../level_layout/SpriteInfo.h"
-#include "../animations/OAMManager.h"
+#include "../memory/OAMManager.h"
 
 class Hud {
 

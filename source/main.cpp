@@ -3,13 +3,14 @@
 #include <nds/arm9/sprite.h>
 #include <nds/arm9/console.h>
 #include <maxmod9.h>
-#include "level_layout/GameLoop.h"
 #include "../build/cavebg.h"
-#include "level_layout/BaseCaveMap.h"
-#include "level_layout/MapUtils.h"
 #include "../build/soundbank.h"
 #include "../build/soundbank_bin.h"
-#include "level_layout/SplashScreenType.h"
+#include "Globals.h"
+#include "tiles/MapUtils.h"
+#include "tiles/SplashScreenType.h"
+#include "GameLoop.h"
+#include "tiles/BaseCaveMap.h"
 
 int main(void) {
 
@@ -27,6 +28,7 @@ int main(void) {
     global::menu_music_handler = mmEffect(SFX_MTITLE);
 
     Timer *t = new Timer();
+    t->start();
 
     videoSetMode(MODE_0_2D);
     videoSetModeSub(MODE_0_2D);

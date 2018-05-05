@@ -8,11 +8,12 @@
 #include <mm_types.h>
 #include "input/InputHandler.h"
 #include "hud/Hud.h"
-#include "animations/Camera.h"
-#include "level_layout/LevelGenerator.h"
-#include "animations/MainDude.h"
+#include "camera/Camera.h"
+#include "sprites/main_dude/MainDude.h"
 #include "console/TextManager.h"
 #include "sprites/SpriteType.h"
+#include "tiles/LevelGenerator.h"
+#include "sprites/SpriteInfo.h"
 
 #define FRAMES_PER_ANIMATION 6
 #define TICKS_PER_SECOND 30.5554503

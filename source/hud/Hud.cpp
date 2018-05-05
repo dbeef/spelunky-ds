@@ -12,10 +12,10 @@
 #include "../../build/hud.h"
 #include "../Globals.h"
 #include "../../build/soundbank.h"
-#include "../animations/Snake.h"
-#include "../animations/Bat.h"
-#include "../animations/Spider.h"
-#include "../animations/Moniez.h"
+#include "../sprites/enemies/Snake.h"
+#include "../sprites/enemies/Bat.h"
+#include "../sprites/enemies/Spider.h"
+#include "../sprites/collectibles/Moniez.h"
 
 #define HEART_POSITION_X 5
 #define HEART_POSITION_Y 5

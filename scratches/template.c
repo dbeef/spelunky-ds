@@ -31,7 +31,7 @@ often they are being used and be sure to mark all a sprites frames as unused whe
 
 This demo is using a very rigid animation engine in that it assumes that each frame of sprite
 graphics is the same size, that each sprite can only walk up down left or right and that
-each of these states is 3 frames in durration.  Significantly more advance animations can be
+each of these states is 3 frames in durration.  Significantly more advance collisions can be
 done by creating data structures to describe an animation sequence.  Perhaps more advanced
 demos will follow this one.
 

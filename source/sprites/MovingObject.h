@@ -5,9 +5,8 @@
 #ifndef SPELUNKYDS_MOVINGOBJECT_H
 #define SPELUNKYDS_MOVINGOBJECT_H
 
-#include "../level_layout/LevelGenerator.h"
-#include "../animations/OAMManager.h"
-#include "../animations/Camera.h"
+#include "../memory/OAMManager.h"
+#include "../camera/Camera.h"
 #include "SpritesheetTypes.h"
 
 /**

@@ -1,0 +1,1 @@
+Remove initialising from text manager to hud, then remove text manager
