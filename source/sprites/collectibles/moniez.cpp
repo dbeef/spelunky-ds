@@ -37,16 +37,16 @@ void Moniez::draw() {
 
         if(spriteType == SpritesheetType::MONIEZ_RUBY_BIG) {
             if (ruby_type == 0) {
-                global::collected_loot.push_back(sprite_type::S_MONIEZ_RUBY_BIG_RED);
+                global::collected_loot.push_back(SpriteType ::S_MONIEZ_RUBY_BIG_RED);
             } else if (ruby_type == 1) {
-                global::collected_loot.push_back(sprite_type::S_MONIEZ_RUBY_BIG_GREEN);
+                global::collected_loot.push_back(SpriteType ::S_MONIEZ_RUBY_BIG_GREEN);
             } else if (ruby_type == 2) {
-                global::collected_loot.push_back(sprite_type::S_MONIEZ_RUBY_BIG_BLUE);
+                global::collected_loot.push_back(SpriteType ::S_MONIEZ_RUBY_BIG_BLUE);
             }
         }
         else
         {
-            global::collected_loot.push_back(sprite_type::S_MONIEZ_TRIPLE_GOLD_BARS);
+            global::collected_loot.push_back(SpriteType ::S_MONIEZ_TRIPLE_GOLD_BARS);
         }
 
 

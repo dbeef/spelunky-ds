@@ -51,7 +51,7 @@ namespace global {
     extern mm_sfxhand menu_music_handler;
     extern mm_sfxhand cave_music_handler;
     extern std::vector<SpritesheetType> killed_npcs;
-    extern std::vector<sprite_type> collected_loot;
+    extern std::vector<SpriteType> collected_loot;
     extern PrintConsole *printConsole;
 
 }

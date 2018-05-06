@@ -92,7 +92,7 @@ public:
     bool holding_item;
     bool dead;
 
-    sprite_state state;
+    SpriteState state;
     int animFrame;
     u8 *frameGfx = nullptr;
 

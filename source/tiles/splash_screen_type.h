@@ -5,7 +5,7 @@
 #ifndef SPELUNKYDS_SPLASHSCREENTYPE_H
 #define SPELUNKYDS_SPLASHSCREENTYPE_H
 
-enum splash_screen_type {
+enum SplashScreenType {
     ON_LEVEL_DONE_UPPER,
     ON_LEVEL_DONE_LOWER,
     SCORES_UPPER,

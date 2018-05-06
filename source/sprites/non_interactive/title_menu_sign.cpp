@@ -10,7 +10,7 @@
 void TitleMenuSign::draw() {
 
     int offset;
-    if(menuSignType == menu_sign_type::TUTORIAL || menuSignType == menu_sign_type::QUIT)
+    if(menuSignType == MenuSignType::TUTORIAL || menuSignType == MenuSignType::QUIT)
         offset = 16;
     else
         offset = 32;
@@ -81,9 +81,9 @@ void TitleMenuSign::updateCollisionsMap(int x_current_pos_in_tiles, int y_curren
 void TitleMenuSign::initSprite() {
 
     OAMManager *used_oam_manager;
-    if (oamType == oam_type::MAIN) {
+    if (oamType == OamType::MAIN) {
         used_oam_manager = global::main_oam_manager;
-    } else if (oamType == oam_type::SUB) {
+    } else if (oamType == OamType::SUB) {
         used_oam_manager = global::sub_oam_manager;
     }
 
@@ -92,7 +92,7 @@ void TitleMenuSign::initSprite() {
 
     switch (menuSignType) {
 
-        case menu_sign_type::QUIT:
+        case MenuSignType::QUIT:
             mainSpriteInfo_1 = used_oam_manager->initSprite(gfx_menu_signs_tutorial_quitPal, gfx_menu_signs_tutorial_quitPalLen,
                                                             nullptr, 16 * 16, 16, SpritesheetType::MENU_SIGNS_TUTORIAL_QUIT, true, false);
             mainSpriteInfo_2 = used_oam_manager->initSprite(gfx_menu_signs_tutorial_quitPal, gfx_menu_signs_tutorial_quitPalLen,
@@ -101,7 +101,7 @@ void TitleMenuSign::initSprite() {
             frameGfx2 = (u8 *) gfx_menu_signs_tutorial_quitTiles + 3 * 16 * 16 / 2;
 
             break;
-        case menu_sign_type::SCORES:
+        case MenuSignType::SCORES:
             mainSpriteInfo_1 = used_oam_manager->initSprite(gfx_menu_signs_start_scoresPal, gfx_menu_signs_start_scoresPalLen,
                                                             nullptr, 32 * 32, 32, SpritesheetType::MENU_SIGNS_START_SCORES, true, false);
             mainSpriteInfo_2 = used_oam_manager->initSprite(gfx_menu_signs_start_scoresPal, gfx_menu_signs_start_scoresPalLen,
@@ -109,7 +109,7 @@ void TitleMenuSign::initSprite() {
             frameGfx1 = (u8 *) gfx_menu_signs_start_scoresTiles + 2 * 32 * 32 / 2;
             frameGfx2 = (u8 *) gfx_menu_signs_start_scoresTiles + 3 * 32 * 32 / 2;
             break;
-        case menu_sign_type::START:
+        case MenuSignType::START:
             mainSpriteInfo_1 = used_oam_manager->initSprite(gfx_menu_signs_start_scoresPal, gfx_menu_signs_start_scoresPalLen,
                                                             nullptr, 32 * 32, 32, SpritesheetType::MENU_SIGNS_START_SCORES, true, false);
             mainSpriteInfo_2 = used_oam_manager->initSprite(gfx_menu_signs_start_scoresPal, gfx_menu_signs_start_scoresPalLen,
@@ -117,7 +117,7 @@ void TitleMenuSign::initSprite() {
             frameGfx1 = (u8 *) gfx_menu_signs_start_scoresTiles + 0 * 32 * 32 / 2;
             frameGfx2 = (u8 *) gfx_menu_signs_start_scoresTiles + 1 * 32 * 32 / 2;
             break;
-        case menu_sign_type::TUTORIAL:
+        case MenuSignType::TUTORIAL:
             mainSpriteInfo_1 = used_oam_manager->initSprite(gfx_menu_signs_tutorial_quitPal, gfx_menu_signs_tutorial_quitPalLen,
                                                             nullptr, 16 * 16, 16, SpritesheetType::MENU_SIGNS_TUTORIAL_QUIT, true, false);
             mainSpriteInfo_2 = used_oam_manager->initSprite(gfx_menu_signs_tutorial_quitPal, gfx_menu_signs_tutorial_quitPalLen,
@@ -130,7 +130,7 @@ void TitleMenuSign::initSprite() {
 
     }
 
-    if(menuSignType == menu_sign_type::TUTORIAL || menuSignType == menu_sign_type::QUIT) {
+    if(menuSignType == MenuSignType::TUTORIAL || menuSignType == MenuSignType::QUIT) {
         mainSpriteInfo_1->updateFrame(frameGfx1, 16 * 16);
         mainSpriteInfo_2->updateFrame(frameGfx2, 16 * 16);
     }

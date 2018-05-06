@@ -42,7 +42,7 @@ public:
     SpriteInfo *subSpriteInfo = nullptr;
     u8 *frameGfx;
 
-    sprite_state spriteState;
+    SpriteState spriteState;
 
     int animFrame;
     int animFrameTimer;

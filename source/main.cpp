@@ -43,8 +43,8 @@ int main() {
     dmaCopyHalfWords(3, global::base_map, global::current_map, sizeof(global::base_map));
 
     global::level_generator->newLayout(timerElapsed(0));
-    global::level_generator->generateSplashScreen(splash_screen_type::MAIN_MENU_UPPER);
-    global::level_generator->generateSplashScreen(splash_screen_type::MAIN_MENU_LOWER);
+    global::level_generator->generateSplashScreen(SplashScreenType ::MAIN_MENU_UPPER);
+    global::level_generator->generateSplashScreen(SplashScreenType ::MAIN_MENU_LOWER);
     global::level_generator->tilesToMap();
 
     sectorize_map();

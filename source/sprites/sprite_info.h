@@ -25,7 +25,7 @@ public:
     SpritesheetType spriteType;
 
     u16 oam_address;
-    oam_type oamType;
+    OamType oamType;
 
     void updateFrame(u8 *tile, int size);
 

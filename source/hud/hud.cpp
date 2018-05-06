@@ -193,7 +193,7 @@ void Hud::draw_on_level_done() {
     }
 
     for (int a = 0; a < global::collected_loot.size(); a++) {
-        if (global::collected_loot.at(a) == sprite_type ::S_MONIEZ_TRIPLE_GOLD_BARS) {
+        if (global::collected_loot.at(a) == SpriteType ::S_MONIEZ_TRIPLE_GOLD_BARS) {
             Moniez *moniez = new Moniez();
             moniez->sprite_height = 16;
             moniez->sprite_width = 16;
@@ -209,7 +209,7 @@ void Hud::draw_on_level_done() {
             moniez->set_position();
 
         }
-        else if (global::collected_loot.at(a) == sprite_type ::S_MONIEZ_RUBY_BIG_RED) {
+        else if (global::collected_loot.at(a) == SpriteType  ::S_MONIEZ_RUBY_BIG_RED) {
 
             Moniez *moniez = new Moniez();
             moniez->sprite_height = 8;
@@ -226,7 +226,7 @@ void Hud::draw_on_level_done() {
             moniez->ready_to_dispose = true;
             moniez->set_position();
 
-        } else if (global::collected_loot.at(a) == sprite_type ::S_MONIEZ_RUBY_BIG_GREEN) {
+        } else if (global::collected_loot.at(a) == SpriteType  ::S_MONIEZ_RUBY_BIG_GREEN) {
 
             Moniez *moniez = new Moniez();
             moniez->sprite_height = 8;
@@ -244,7 +244,7 @@ void Hud::draw_on_level_done() {
             moniez->set_position();
 
         }
-         else if (global::collected_loot.at(a) == sprite_type ::S_MONIEZ_RUBY_BIG_BLUE) {
+         else if (global::collected_loot.at(a) == SpriteType  ::S_MONIEZ_RUBY_BIG_BLUE) {
 
             Moniez *moniez = new Moniez();
             moniez->sprite_height = 8;

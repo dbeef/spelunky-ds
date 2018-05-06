@@ -72,7 +72,7 @@ void SpelunkyTitle::updateCollisionsMap(int x_current_pos_in_tiles, int y_curren
 
 void SpelunkyTitle::initSprite() {
 
-    if(oamType == oam_type::MAIN) {
+    if(oamType == OamType::MAIN) {
         mainSpriteInfo_1 = global::main_oam_manager->initSprite(gfx_spelunky_titlePal, gfx_spelunky_titlePalLen,
                                                                 nullptr, 64 * 64, 64, SpritesheetType::SPELUNKY_TITLE, true,
                                                                 false);
@@ -96,7 +96,7 @@ void SpelunkyTitle::initSprite() {
         mainSpriteInfo_3->entry->hFlip = false;
     }
 
-    if(oamType == oam_type::SUB) {
+    if(oamType == OamType::SUB) {
         subSpriteInfo_1 = global::sub_oam_manager->initSprite(gfx_spelunky_titlePal, gfx_spelunky_titlePalLen,
                                                               nullptr, 64 * 64, 64, SpritesheetType::SPELUNKY_TITLE, true,
                                                               false);

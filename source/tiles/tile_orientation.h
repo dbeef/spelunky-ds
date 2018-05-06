@@ -5,7 +5,7 @@
 #ifndef SPELUNKYDS_TILEORIENTATION_H
 #define SPELUNKYDS_TILEORIENTATION_H
 
-enum tile_orientation{
+enum TileOrientation{
     LEFT_MIDDLE, //0
     RIGHT_MIDDLE,//1
     UP_MIDDLE,   //2

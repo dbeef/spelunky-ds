@@ -1,5 +1,7 @@
 import java.util.Random;
 
+//java scratch for current level generator
+
 public class Generator {
     public static void main(String... args) {
 

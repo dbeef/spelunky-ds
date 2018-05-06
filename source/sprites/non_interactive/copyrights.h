@@ -46,7 +46,7 @@ public:
     SpriteInfo *subSpriteInfo_4 = nullptr;
     SpriteInfo *subSpriteInfo_5 = nullptr;
 
-    oam_type oamType;
+    OamType oamType;
 };
 
 

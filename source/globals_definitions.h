@@ -36,7 +36,7 @@ namespace global {
     mm_sfxhand menu_music_handler = 0;
     mm_sfxhand cave_music_handler = 0;
     std::vector <SpritesheetType> killed_npcs(0);
-    std::vector <sprite_type> collected_loot(0);
+    std::vector <SpriteType> collected_loot(0);
     PrintConsole *printConsole = nullptr;
 
     u16 current_map[4096];

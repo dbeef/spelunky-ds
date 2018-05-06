@@ -37,9 +37,9 @@ void Snake::draw() {
         if (animFrame >= 4)
             animFrame = 0;
 
-        if (spriteState == sprite_state::W_LEFT) {
+        if (spriteState == SpriteState::W_LEFT) {
             set_sprite_left();
-        } else if (spriteState == sprite_state::W_RIGHT) {
+        } else if (spriteState == SpriteState::W_RIGHT) {
             set_sprite_right();
         }
         animFrameTimer = 0;
@@ -127,26 +127,26 @@ void Snake::randomizeMovement() {
     int r = rand() % 2;
 
     if (r == 0) {
-        if (spriteState == sprite_state::W_LEFT)
+        if (spriteState == SpriteState::W_LEFT)
             sameDirectionInRow++;
         else
             sameDirectionInRow = 0;
 
         if (sameDirectionInRow == 2)
-            spriteState = sprite_state::W_RIGHT;
+            spriteState = SpriteState::W_RIGHT;
         else
-            spriteState = sprite_state::W_LEFT;
+            spriteState = SpriteState::W_LEFT;
 
     } else if (r == 1) {
-        if (spriteState == sprite_state::W_RIGHT)
+        if (spriteState == SpriteState::W_RIGHT)
             sameDirectionInRow++;
         else
             sameDirectionInRow = 0;
 
         if (sameDirectionInRow == 2)
-            spriteState = sprite_state::W_LEFT;
+            spriteState = SpriteState::W_LEFT;
         else
-            spriteState = sprite_state::W_RIGHT;
+            spriteState = SpriteState::W_RIGHT;
     }
 
     goTimer = (rand() % 2000) + 1000;

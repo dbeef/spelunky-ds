@@ -172,11 +172,11 @@ void MainDude::handleKeyInput() {
 
 
             canClimbLadder = neighboringTiles[CENTER] != nullptr &&
-                             (neighboringTiles[CENTER]->mapTileType == map_tile_type::LADDER ||
-                              neighboringTiles[CENTER]->mapTileType == map_tile_type::LADDER_DECK);
+                             (neighboringTiles[CENTER]->mapTileType == MapTileType::LADDER ||
+                              neighboringTiles[CENTER]->mapTileType == MapTileType::LADDER_DECK);
 
             exitingLevel = neighboringTiles[CENTER] != nullptr &&
-                           (neighboringTiles[CENTER]->mapTileType == map_tile_type::EXIT);
+                           (neighboringTiles[CENTER]->mapTileType == MapTileType::EXIT);
 
             if (exitingLevel) {
 
@@ -227,13 +227,13 @@ void MainDude::handleKeyInput() {
             MapTile *neighboringTiles[9] = {};
 
             Collisions::getNeighboringTiles(global::level_generator->mapTiles, xx, yy, neighboringTiles);
-            canClimbLadder = neighboringTiles[CENTER]->mapTileType == map_tile_type::LADDER ||
-                    neighboringTiles[CENTER]->mapTileType == map_tile_type::LADDER_DECK;
+            canClimbLadder = neighboringTiles[CENTER]->mapTileType == MapTileType::LADDER ||
+                    neighboringTiles[CENTER]->mapTileType == MapTileType::LADDER_DECK;
 
             if (climbing) {
                 canClimbLadder = neighboringTiles[CENTER] != nullptr &&
-                                 (neighboringTiles[CENTER]->mapTileType == map_tile_type::LADDER ||
-                                  neighboringTiles[CENTER]->mapTileType == map_tile_type::LADDER_DECK) &&
+                                 (neighboringTiles[CENTER]->mapTileType == MapTileType::LADDER ||
+                                  neighboringTiles[CENTER]->mapTileType == MapTileType::LADDER_DECK) &&
                                  (neighboringTiles[DOWN_MIDDLE] == nullptr ||
                                   !neighboringTiles[DOWN_MIDDLE]->collidable);
             }
@@ -570,15 +570,15 @@ void MainDude::draw() {
 
                     mmEffectCancel(global::cave_music_handler);
                     global::menu_music_handler = mmEffect(SFX_MTITLE);
-                    global::level_generator->generateSplashScreen(splash_screen_type::MAIN_MENU_UPPER);
-                    global::level_generator->generateSplashScreen(splash_screen_type::MAIN_MENU_LOWER);
+                    global::level_generator->generateSplashScreen(SplashScreenType::MAIN_MENU_UPPER);
+                    global::level_generator->generateSplashScreen(SplashScreenType::MAIN_MENU_LOWER);
                 } else if (dead) {
 
-                    global::level_generator->generateSplashScreen(splash_screen_type::SCORES_UPPER);
-                    global::level_generator->generateSplashScreen(splash_screen_type::SCORES_LOWER);
+                    global::level_generator->generateSplashScreen(SplashScreenType::SCORES_UPPER);
+                    global::level_generator->generateSplashScreen(SplashScreenType::SCORES_LOWER);
                 } else {
-                    global::level_generator->generateSplashScreen(splash_screen_type::ON_LEVEL_DONE_UPPER);
-                    global::level_generator->generateSplashScreen(splash_screen_type::ON_LEVEL_DONE_LOWER);
+                    global::level_generator->generateSplashScreen(SplashScreenType::ON_LEVEL_DONE_UPPER);
+                    global::level_generator->generateSplashScreen(SplashScreenType::ON_LEVEL_DONE_LOWER);
                 }
             }
 
@@ -592,7 +592,7 @@ void MainDude::draw() {
 
 
             MapTile *entrance;
-            global::level_generator->getFirstTile(map_tile_type::ENTRANCE, entrance);
+            global::level_generator->getFirstTile(MapTileType ::ENTRANCE, entrance);
 
             if (entrance == nullptr) {
                 global::main_dude->x = 32;

@@ -25,9 +25,9 @@ void gameloop::scroll() {
 
     int garbage_timer = 0;
 
-    global::main_oam_manager->initOAMTable(SPRITE_GFX, SPRITE_PALETTE, OAM, OFFSET_MULTIPLIER_MAIN, oam_type::MAIN);
+    global::main_oam_manager->initOAMTable(SPRITE_GFX, SPRITE_PALETTE, OAM, OFFSET_MULTIPLIER_MAIN, OamType::MAIN);
     global::sub_oam_manager->initOAMTable(SPRITE_GFX_SUB, SPRITE_PALETTE_SUB, OAM_SUB, OFFSET_MULTIPLIER_SUB,
-                                          oam_type::SUB);
+                                          OamType::SUB);
     global::main_dude->init();
     global::camera->x = 0;
     global::camera->y = 127;
@@ -60,6 +60,10 @@ void gameloop::scroll() {
 
         global::main_dude->handleKeyInput();
 
+
+
+        global::camera->updatePosition(global::main_dude->x, global::main_dude->y);
+
         for (int a = 0; a < global::sprites.size(); a++) {
             if (global::sprites.at(a) && !global::sprites.at(a)->ready_to_dispose && !global::sprites.at(a)->killed) {
                 (*global::sprites.at(a)).update();
@@ -67,15 +71,16 @@ void gameloop::scroll() {
             }
         }
 
-        global::camera->updatePosition(global::main_dude->x, global::main_dude->y);
-        global::camera->setScroll();
         global::hud->update();
 
 
         swiWaitForVBlank();
+        global::camera->setScroll();
+
 
         global::main_oam_manager->updateOAM();
         global::sub_oam_manager->updateOAM();
+
 
         if (garbage_timer > 2500 && global::main_oam_manager->current_oam_id_tiles >= 108) {
 
@@ -320,7 +325,7 @@ void gameloop::populate_main_menu() {
     global::hud->ropes = 0;
 
     SpelunkyTitle *spelunkyTitle = new SpelunkyTitle();
-    spelunkyTitle->oamType = oam_type::MAIN;
+    spelunkyTitle->oamType = OamType::MAIN;
     spelunkyTitle->init();
     spelunkyTitle->x = 60;
     spelunkyTitle->y = 175;
@@ -329,39 +334,39 @@ void gameloop::populate_main_menu() {
     global::sprites.push_back(spelunkyTitle);
 
     Copyrights *copyrights = new Copyrights();
-    copyrights->oamType = oam_type::SUB;
+    copyrights->oamType = OamType::SUB;
     copyrights->init();
     copyrights->x = 60;
     copyrights->y = 380;
     global::sprites.push_back(copyrights);
 
     TitleMenuSign *start = new TitleMenuSign();
-    start->oamType = oam_type::MAIN;
-    start->menuSignType = menu_sign_type::START;
+    start->oamType = OamType::MAIN;
+    start->menuSignType = MenuSignType::START;
     start->init();
     start->x = 50;
     start->y = 272;
     global::sprites.push_back(start);
 
     TitleMenuSign *scores = new TitleMenuSign();
-    scores->oamType = oam_type::MAIN;
-    scores->menuSignType = menu_sign_type::SCORES;
+    scores->oamType = OamType::MAIN;
+    scores->menuSignType = MenuSignType::SCORES;
     scores->init();
     scores->x = 98;
     scores->y = 272;
     global::sprites.push_back(scores);
 
     TitleMenuSign *tutorial = new TitleMenuSign();
-    tutorial->oamType = oam_type::MAIN;
-    tutorial->menuSignType = menu_sign_type::TUTORIAL;
+    tutorial->oamType = OamType::MAIN;
+    tutorial->menuSignType = MenuSignType::TUTORIAL;
     tutorial->init();
     tutorial->x = 0;
     tutorial->y = 272;
     global::sprites.push_back(tutorial);
 
     TitleMenuSign *quit = new TitleMenuSign();
-    quit->oamType = oam_type::MAIN;
-    quit->menuSignType = menu_sign_type::QUIT;
+    quit->oamType = OamType::MAIN;
+    quit->menuSignType = MenuSignType::QUIT;
     quit->init();
     quit->x = 192;
     quit->y = 143;

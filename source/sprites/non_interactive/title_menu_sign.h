@@ -41,8 +41,8 @@ public:
     SpriteInfo *subSpriteInfo_1 = nullptr;
     SpriteInfo *subSpriteInfo_2 = nullptr;
 
-    oam_type oamType;
-    menu_sign_type  menuSignType;
+    OamType oamType;
+    MenuSignType menuSignType;
 };
 
 

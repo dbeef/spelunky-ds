@@ -24,7 +24,7 @@ static const int COLORS_PER_PALETTE = 16;
 static bool nullptrs();
 
 void
-OAMManager::initOAMTable(u16 *sprite_address, u16 *paletteAddress, u16 *oam_address, int offset_multiplier, oam_type o) {
+OAMManager::initOAMTable(u16 *sprite_address, u16 *paletteAddress, u16 *oam_address, int offset_multiplier, OamType o) {
     oam = new OAMTable();
 
     this->oamType = o;

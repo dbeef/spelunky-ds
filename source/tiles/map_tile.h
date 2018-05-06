@@ -19,7 +19,7 @@ public:
     int y; //32
     bool collidable;
     bool destroyable;
-    map_tile_type mapTileType;
+    MapTileType mapTileType;
     MapTile();
 };
 

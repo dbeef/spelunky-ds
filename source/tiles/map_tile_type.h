@@ -7,7 +7,7 @@
 #ifndef SPELUNKYDS_MAPTILETYPES_H
 #define SPELUNKYDS_MAPTILETYPES_H
 
-enum map_tile_type {
+enum MapTileType {
     NOTHING,                        //0  NON_COLLIDABLE
     CAVE_REGULAR,                   //1 
     CAVE_UP_ORIENTED,               //2

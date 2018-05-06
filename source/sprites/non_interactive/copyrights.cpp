@@ -91,7 +91,7 @@ void Copyrights::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_p
 
 void Copyrights::initSprite() {
 
-    if(oamType == oam_type::MAIN) {
+    if(oamType == OamType::MAIN) {
         mainSpriteInfo_1 = global::main_oam_manager->initSprite(gfx_copyrightsPal, gfx_copyrightsPalLen,
                                                                 nullptr, 32 * 32, 32, SpritesheetType::SPELUNKY_COPYRIGHTS, true,
                                                                 false);
@@ -109,7 +109,7 @@ void Copyrights::initSprite() {
                                                                 false);
     }
 
-    if(oamType == oam_type::SUB) {
+    if(oamType == OamType::SUB) {
         subSpriteInfo_1 = global::sub_oam_manager->initSprite(gfx_copyrightsPal, gfx_copyrightsPalLen,
                                                               nullptr, 32 * 32, 32, SpritesheetType::SPELUNKY_COPYRIGHTS, true,
                                                               false);

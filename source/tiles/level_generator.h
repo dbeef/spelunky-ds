@@ -55,7 +55,7 @@ public:
 
     void matchTile(MapTile *t, int value);
 
-    void getFirstTile(map_tile_type mapTileType, MapTile *&m);
+    void getFirstTile(MapTileType mapTileType, MapTile *&m);
 };
 
 #endif //SPELUNKYDS_LEVELGENERATOR_H

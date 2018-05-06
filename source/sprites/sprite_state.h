@@ -5,7 +5,7 @@
 #ifndef SPELUNKYDS_SPRITESTATE_H
 #define SPELUNKYDS_SPRITESTATE_H
 
-enum sprite_state {
+enum SpriteState {
     W_RIGHT = 0,
     W_LEFT = 1,
     HANGING = 3,

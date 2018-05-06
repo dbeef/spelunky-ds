@@ -14,7 +14,7 @@
 
 class OAMManager {
 public:
-    oam_type oamType;
+    OamType oamType;
     int offset_multiplier;
     u16 *sprite_address;
     u16 *palette_address;
@@ -28,7 +28,7 @@ public:
 
     OAMTable *oam;
 
-    void initOAMTable(u16 *spriteAddress, u16 *paletteAddress, u16 *oam_address, int offset_multiplier, oam_type o);
+    void initOAMTable(u16 *spriteAddress, u16 *paletteAddress, u16 *oam_address, int offset_multiplier, OamType o);
 
     void updateOAM();
 

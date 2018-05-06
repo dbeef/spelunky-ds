@@ -45,7 +45,7 @@ public:
 
 
     //Snake goes for random amount of time on random direction, then waits random time and the cycle goes again
-    sprite_state spriteState;
+    SpriteState spriteState;
     int waitTimer;
     int goTimer;
 

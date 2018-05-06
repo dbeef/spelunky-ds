@@ -9,7 +9,7 @@
  * SpriteType is focused on particular sprite, what it represents on screen, i.e blue ruby, or a single goldbar.
  * Helpful when it comes to count all killed npcs or collected loot.
  */
-enum sprite_type {
+enum SpriteType {
     S_MAIN_DUDE,                  //0
     S_MENU_SIGNS_TUTORIAL_QUIT,   //1
     S_MENU_SIGNS_START_SCORES,    //2

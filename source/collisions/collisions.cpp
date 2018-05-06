@@ -1,3 +1,5 @@
+//fixme this shoudn't be a class
+
 //
 // Created by xdbeef on 18.03.18.
 //
@@ -201,11 +203,11 @@ bool Collisions::checkRightCollision(MapTile *neighboringTiles[9], int *xPos, in
 }
 
 bool Collisions::isStandingOnLeftEdge(MapTile *neighboringTiles[9], int x, int width, int tileX) {
-    return (!neighboringTiles[tile_orientation::LEFT_DOWN] /*&& !neighboringTiles[7]->collidable && x <= (tileX * 16)*/);
+    return (!neighboringTiles[TileOrientation::LEFT_DOWN] /*&& !neighboringTiles[7]->collidable && x <= (tileX * 16)*/);
 }
 
 bool Collisions::isStandingOnRightEdge(MapTile *neighboringTiles[9], int x, int width, int tileX) {
-    return (!neighboringTiles[tile_orientation::RIGHT_DOWN] /*&& !neighboringTiles[8]->collidable && x >= (tileX * 16)*/);
+    return (!neighboringTiles[TileOrientation::RIGHT_DOWN] /*&& !neighboringTiles[8]->collidable && x >= (tileX * 16)*/);
 }
 
 //#include <cassert>
@@ -250,15 +252,15 @@ void Collisions::getNeighboringTiles(MapTile *mapTiles[32][32], int xx, int yy, 
     if (xx < 31 && yy < 31)
         right_down = mapTiles[xx + 1][yy + 1];
 
-    out_neighboringTiles[tile_orientation::LEFT_MIDDLE] = left_middle;
-    out_neighboringTiles[tile_orientation::RIGHT_MIDDLE] = right_middle;
-    out_neighboringTiles[tile_orientation::UP_MIDDLE] = up_middle;
-    out_neighboringTiles[tile_orientation::DOWN_MIDDLE] = down_middle;
-    out_neighboringTiles[tile_orientation::CENTER] = center;
-    out_neighboringTiles[tile_orientation::LEFT_UP] = left_up;
-    out_neighboringTiles[tile_orientation::RIGHT_UP] = right_up;
-    out_neighboringTiles[tile_orientation::LEFT_DOWN] = left_down;
-    out_neighboringTiles[tile_orientation::RIGHT_DOWN] = right_down;
+    out_neighboringTiles[TileOrientation::LEFT_MIDDLE] = left_middle;
+    out_neighboringTiles[TileOrientation::RIGHT_MIDDLE] = right_middle;
+    out_neighboringTiles[TileOrientation::UP_MIDDLE] = up_middle;
+    out_neighboringTiles[TileOrientation::DOWN_MIDDLE] = down_middle;
+    out_neighboringTiles[TileOrientation::CENTER] = center;
+    out_neighboringTiles[TileOrientation::LEFT_UP] = left_up;
+    out_neighboringTiles[TileOrientation::RIGHT_UP] = right_up;
+    out_neighboringTiles[TileOrientation::LEFT_DOWN] = left_down;
+    out_neighboringTiles[TileOrientation::RIGHT_DOWN] = right_down;
 
 }
 
@@ -297,10 +299,10 @@ bool Collisions::checkCollisionWithMainDudeWidthBoundary(int x, int y, int width
 }
 
 bool Collisions::checkCollisionWithMainDudeWhip(int x, int y, int width, int height) {
-    if (global::main_dude->state == sprite_state::W_LEFT) {
+    if (global::main_dude->state == SpriteState::W_LEFT) {
         return x + width >= global::main_dude->x - 10 && x + width < global::main_dude->x + MAIN_DUDE_WIDTH &&
                y + height > global::main_dude->y && y < global::main_dude->y + MAIN_DUDE_HEIGHT;
-    } else if (global::main_dude->state == sprite_state::W_RIGHT) {
+    } else if (global::main_dude->state == SpriteState::W_RIGHT) {
         return x + width >= global::main_dude->x && x + width < global::main_dude->x + MAIN_DUDE_WIDTH + 20 &&
                y + height > global::main_dude->y && y < global::main_dude->y + MAIN_DUDE_HEIGHT;
     } else return false;
