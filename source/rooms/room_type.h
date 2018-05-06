@@ -1,0 +1,17 @@
+//
+// Created by xdbeef on 02.05.18.
+//
+
+#ifndef SPELUNKYDS_ROOMTYPE_H
+#define SPELUNKYDS_ROOMTYPE_H
+
+enum room_type {
+    ROOM_CLOSED,
+    ROOM_LEFT_RIGHT,
+    ROOM_LEFT_RIGHT_DOWN,
+    ROOM_LEFT_RIGHT_UP,
+    ROOM_ENTRANCE,
+    ROOM_EXIT
+};
+
+#endif //SPELUNKYDS_ROOMTYPE_H

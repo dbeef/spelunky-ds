@@ -1,23 +1,21 @@
+<*> GUIDELINES FOR FURTHER DEVELOPMENT
+
+Please, do this:
+
+https://google.github.io/styleguide/cppguide.html
+
+Please, do not:
+https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md
+https://stackoverflow.com/questions/3706379/what-is-a-good-naming-convention-for-vars-methods-etc-in-c
+https://stackoverflow.com/questions/1228161/why-use-prefixes-on-member-variables-in-c-classes/1229360#1229360
+
 <*> GENERAL NOTES:
 
-Ladders are not destructable, neither are ropes.
-
-Rope is up to 8 tiles height (8 x 16px)
+- Ladders are not destructable, neither are ropes.
+- Rope is up to 8 tiles height (8 x 16px)
 
 **********************************************************************
 
 <*> TODO LIST:
 
-TODO MEMORY OPTIMIZATION: Adressing and disposing sprites on the fly:
-when ie. bomb explodes, all sprites with OAM_ID higher than the bomb's id, got to be readress to the left side of
-the memory bank, to fill the blank space,
-main character sprite has its own sprite on the lower screen only when it is there, if not, no sprite is
-created for the lower screen
-
-TODO Rope: reuse bomb code, when thrown, go up with certain speed untill bottom collision or
-max height (8 x 16 px) is reached.
-If so, change image to the finished image.
-Every reached tile, add new rope sprite on that place (it is 16x8 px in the original, but we will have it 16x16,
-because of the limit of 128 sprites per engine).
-
-TODO Ability of picking up already thrown bombs
+- todo update this list

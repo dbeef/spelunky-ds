@@ -1,0 +1,17 @@
+//
+// Created by xdbeef on 02.05.18.
+//
+
+#ifndef SPELUNKYDS_SPLASHSCREENTYPE_H
+#define SPELUNKYDS_SPLASHSCREENTYPE_H
+
+enum splash_screen_type {
+    ON_LEVEL_DONE_UPPER,
+    ON_LEVEL_DONE_LOWER,
+    SCORES_UPPER,
+    SCORES_LOWER,
+    MAIN_MENU_UPPER,
+    MAIN_MENU_LOWER,
+};
+
+#endif //SPELUNKYDS_SPLASHSCREENTYPE_H

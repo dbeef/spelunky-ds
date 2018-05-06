@@ -1,0 +1,64 @@
+//
+// Created by xdbeef on 26.04.18.
+//
+
+#ifndef SPELUNKYDS_MONIEZ_H
+#define SPELUNKYDS_MONIEZ_H
+
+
+
+#include "../moving_object.h"
+#include "../sprite_info.h"
+
+class Moniez: public MovingObject {
+
+public:
+
+    void updateOther() override {};
+
+    void init() override;
+
+    void draw() override;
+
+    void initSprite() override;
+
+    void kill() override {};
+
+    void updateTimers() override {};
+
+    void updatePosition() override ;
+
+    void updateSpeed() override;
+
+    void updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) override;
+
+    void updateCollisionsOtherMoving() override {};
+
+    void onCollisionWithMainCharacter() override {};
+
+
+    double *timer = nullptr;
+    double pos_inc_timer;
+
+    SpriteInfo *mainSpriteInfo = nullptr;
+    SpriteInfo *subSpriteInfo = nullptr;
+    u8 * frameGfx;
+
+    int sprite_width;
+    int sprite_height;
+
+    int physics_width;
+    int physics_height;
+
+    int value;
+
+    int ruby_type;
+    bool collected;
+    SpritesheetType  spriteType;
+
+    void set_position();
+};
+
+
+
+#endif //SPELUNKYDS_MONIEZ_H

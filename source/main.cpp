@@ -3,16 +3,16 @@
 #include <nds/arm9/sprite.h>
 #include <nds/arm9/console.h>
 #include <maxmod9.h>
-#include "../build/cavebg.h"
+#include "../build/gfx_cavebg.h"
 #include "../build/soundbank.h"
 #include "../build/soundbank_bin.h"
-#include "Globals.h"
-#include "tiles/MapUtils.h"
-#include "tiles/SplashScreenType.h"
-#include "GameLoop.h"
-#include "tiles/BaseCaveMap.h"
+#include "globals_declarations.h"
+#include "globals_definitions.h"
+#include "tiles/map_utils.h"
+#include "tiles/splash_screen_type.h"
+#include "game_loop.h"
 
-int main(void) {
+int main() {
 
     mmInitDefaultMem((mm_addr) soundbank_bin);
     mmLoadEffect(SFX_MCAVE);
@@ -47,15 +47,15 @@ int main(void) {
     global::bg_main_address = bgInit(2, BgType_Text8bpp, BgSize_B8_512x512, 22, 4);
     global::bg_sub_address = bgInitSub(3, BgType_Text8bpp, BgSize_B8_512x512, 18, 4);
 
-    dmaCopy(cavebgTiles, bgGetGfxPtr(global::bg_main_address), sizeof(cavebgTiles));
-    dmaCopy(cavebgTiles, bgGetGfxPtr(global::bg_sub_address), sizeof(cavebgTiles));
+    dmaCopy(gfx_cavebgTiles, bgGetGfxPtr(global::bg_main_address), sizeof(gfx_cavebgTiles));
+    dmaCopy(gfx_cavebgTiles, bgGetGfxPtr(global::bg_sub_address), sizeof(gfx_cavebgTiles));
 
 
     dmaCopyHalfWords(3, global::base_map, global::current_map, sizeof(global::base_map));
 
     global::level_generator->newLayout(timerElapsed(0));
-    global::level_generator->generateSplashScreen(SplashScreenType::MAIN_MENU_UPPER);
-    global::level_generator->generateSplashScreen(SplashScreenType::MAIN_MENU_LOWER);
+    global::level_generator->generateSplashScreen(splash_screen_type::MAIN_MENU_UPPER);
+    global::level_generator->generateSplashScreen(splash_screen_type::MAIN_MENU_LOWER);
     global::level_generator->tilesToMap();
 
     sectorize_map();
@@ -65,10 +65,10 @@ int main(void) {
     dmaCopyHalfWords(DMA_CHANNEL, global::current_map, bgGetMapPtr(global::bg_sub_address),
                      sizeof(global::current_map));
 
-    global::textManager->initConsole();
+    global::text_manager->initConsole();
 
-    dmaCopy(cavebgPal, BG_PALETTE, cavebgPalLen);
-    dmaCopy(cavebgPal, BG_PALETTE_SUB, cavebgPalLen);
+    dmaCopy(gfx_cavebgPal, BG_PALETTE, gfx_cavebgPalLen);
+    dmaCopy(gfx_cavebgPal, BG_PALETTE_SUB, gfx_cavebgPalLen);
 
     gameloop::scroll();
 

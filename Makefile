@@ -30,7 +30,7 @@ SOURCES		:=	source source/tiles source/console source/input  \
 DATA		:=	data
 INCLUDES	:=	include
 FONTS   	:=	gfx/fonts
-SPRITES	    :=	gfx/sprites gfx/sprites/64x64 gfx/sprites/8x8 gfx/sprites/32x32 gfx/sprites/16x16
+SPRITES	    :=	gfx/sprites/64x64 gfx/sprites/8x8 gfx/sprites/32x32 gfx/sprites/16x16
 TILEMAPS    :=  gfx/tilemaps
 SOUNDS      :=  sounds
 SOUNDBANK_NAME := soundbank
@@ -148,8 +148,6 @@ $(OUTPUT).nds	: 	$(OUTPUT).elf
 $(OUTPUT).elf	:	$(OFILES)
 %.s %.h : ../gfx/fonts/%.png
 		grit $< -ff../gfx/fonts/font.grit -o$*
-%.s %.h : ../gfx/sprites/%.png
-		grit $< -ff../gfx/sprites/sprite.grit -o$*
 %.s %.h : ../gfx/tilemaps/%.png
 		grit $< -ff../gfx/tilemaps/tilemap.grit -o$*
 %.s %.h : ../gfx/sprites/64x64/%.png

@@ -1,1 +1,1 @@
-Remove initialising from text manager to hud, then remove text manager
+Remove initialising from text manager to Hud, then remove text manager

@@ -17,25 +17,24 @@ add_executable(spelunkyds
         gfx/fonts/font.grit
         scratches/font.png
         gfx/sprites/16x16/sprite.grit
-        source/sprites/main_dude/MainDude.cpp
-        source/sprites/main_dude/MainDude.h
-        source/sprites/items/Bomb.cpp
-        source/sprites/items/Rock.cpp
-        source/sprites/items/Bomb.h
-        source/sprites/items/Rope.h
-        source/sprites/non_interactive/Copyrights.cpp
-        source/sprites/non_interactive/Copyrights.h
-        source/sprites/items/RopeElement.h
-        source/sprites/items/RopeElement.cpp
-        source/sprites/items/Rope.cpp
-        source/console/TextManager.cpp
-        source/console/TextManager.h
-        source/sprites/MovingObject.h
-        source/sprites/MovingObject.cpp
+        source/sprites/main_dude/main_dude.cpp
+        source/sprites/main_dude/main_dude.h
+        source/sprites/items/bomb.cpp
+        source/sprites/items/rock.cpp
+        source/sprites/items/bomb.h
+        source/sprites/items/rope.h
+        source/sprites/non_interactive/copyrights.cpp
+        source/sprites/non_interactive/copyrights.h
+        source/sprites/items/rope_element.h
+        source/sprites/items/rope_element.cpp
+        source/sprites/items/rope.cpp
+        source/console/text_manager.cpp
+        source/console/text_manager.h
+        source/sprites/moving_object.h
+        source/sprites/moving_object.cpp
         source/main.cpp
-        source/GameLoop.cpp
-        source/tiles/BaseCaveMap.h
-        source/GameLoop.h
+        source/game_loop.cpp
+        source/game_loop.h
         includes/TextBackgrounds.h
         Makefile
-        README.md source/sprites/main_dude/MainDude.cpp source/sprites/main_dude/MainDude.h source/sprites/SpriteState.h source/tiles/ScreenPositions.h source/Globals.h source/GameLoop.h source/tiles/LevelGenerator.cpp source/tiles/LevelGenerator.h source/time/Timer.cpp source/time/Timer.h source/console/TextManager.cpp source/console/TextManager.h source/tiles/MapUtils.cpp source/tiles/MapUtils.h source/tiles/MapTile.cpp source/tiles/MapTile.h source/collisions/Collisions.cpp source/collisions/Collisions.h source/hud/Hud.cpp source/hud/Hud.h source/sprites/SpriteInfo.cpp source/sprites/SpriteInfo.h source/camera/Camera.cpp source/camera/Camera.h source/memory/OAMManager.cpp source/memory/OAMManager.h source/input/InputHandler.cpp source/input/InputHandler.h source/sprites/SpritesheetTypes.h source/memory/OamType.h source/sprites/items/Rock.h source/sprites/items/Jar.cpp source/sprites/items/Jar.h source/sprites/enemies/Snake.cpp source/sprites/enemies/Snake.h source/sprites/collectibles/Moniez.cpp source/sprites/collectibles/Moniez.h source/tiles/MapTileType.h source/sprites/animations/Blood.cpp source/sprites/animations/Blood.h source/sprites/animations/BloodElement.cpp source/sprites/animations/BloodElement.h source/sprites/non_interactive/SpelunkyTitle.cpp source/sprites/non_interactive/SpelunkyTitle.h source/tiles/TileOrientation.h source/sprites/non_interactive/TitleMenuSign.cpp source/sprites/non_interactive/TitleMenuSign.h source/sprites/MenuSignType.h source/tiles/SplashScreenType.h source/rooms/LeftRightRooms.h source/rooms/LeftRightDownRooms.h source/rooms/LeftRightUpRooms.h source/rooms/ClosedRooms.h source/rooms/SplashScreens.h source/rooms/EntranceRooms.h source/rooms/ExitRooms.h source/rooms/RoomType.h source/sprites/enemies/Bat.cpp source/sprites/enemies/Bat.h source/sprites/enemies/Spider.cpp source/sprites/enemies/Spider.h source/sprites/SpriteType.h)
+        README.md source/sprites/main_dude/main_dude.cpp source/sprites/main_dude/main_dude.h source/sprites/sprite_state.h source/tiles/screen_positions.h source/globals_declarations.h source/game_loop.h source/tiles/level_generator.cpp source/tiles/level_generator.h source/time/timer.cpp source/time/timer.h source/console/text_manager.cpp source/console/text_manager.h source/tiles/map_utils.cpp source/tiles/map_utils.h source/tiles/map_tile.cpp source/tiles/map_tile.h source/collisions/collisions.cpp source/collisions/collisions.h source/hud/hud.cpp source/hud/hud.h source/sprites/sprite_info.cpp source/sprites/sprite_info.h source/camera/camera.cpp source/camera/camera.h source/memory/oam_manager.cpp source/memory/oam_manager.h source/input/input_handler.cpp source/input/input_handler.h source/sprites/spritesheet_type.h source/memory/oam_type.h source/sprites/items/rock.h source/sprites/items/jar.cpp source/sprites/items/jar.h source/sprites/enemies/snake.cpp source/sprites/enemies/snake.h source/sprites/collectibles/moniez.cpp source/sprites/collectibles/moniez.h source/tiles/map_tile_type.h source/sprites/animations/blood.cpp source/sprites/animations/blood.h source/sprites/animations/blood_element.cpp source/sprites/animations/blood_element.h source/sprites/non_interactive/spelunky_title.cpp source/sprites/non_interactive/spelunky_title.h source/tiles/tile_orientation.h source/sprites/non_interactive/title_menu_sign.cpp source/sprites/non_interactive/title_menu_sign.h source/sprites/menu_sign_type.h source/tiles/splash_screen_type.h source/rooms/left_right_rooms.h source/rooms/left_right_down_rooms.h source/rooms/left_right_up_rooms.h source/rooms/closed_rooms.h source/rooms/splash_screens.h source/rooms/entrance_rooms.h source/rooms/exit_rooms.h source/rooms/room_type.h source/sprites/enemies/bat.cpp source/sprites/enemies/bat.h source/sprites/enemies/spider.cpp source/sprites/enemies/spider.h source/sprites/sprite_type.h source/globals_definitions.h)
