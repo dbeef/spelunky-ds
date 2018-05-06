@@ -131,7 +131,7 @@ void Bomb::draw() {
                     int xx = floor_div(this->x + 0.5 * BOMB_SIZE, 16);
                     int yy = floor_div(this->y + 0.5 * BOMB_SIZE, 16);
 
-                    Collisions::bombNeighboringTiles(global::level_generator->mapTiles, xx, yy);
+                    Collisions::bombNeighboringTiles(global::level_generator->map_tiles, xx, yy);
                     global::bombed = true;
 //                    std::cout<< main_x << " " << main_y << " " << x << " "<<  y << '\n';
 
@@ -289,7 +289,7 @@ void Bomb::updatePosition() {
 void Bomb::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
 
     MapTile *tiles[9];
-    Collisions::getNeighboringTiles(global::level_generator->mapTiles, x_current_pos_in_tiles, y_current_pos_in_tiles,
+    Collisions::getNeighboringTiles(global::level_generator->map_tiles, x_current_pos_in_tiles, y_current_pos_in_tiles,
                                     tiles);
 
     bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, 8, 8, true);

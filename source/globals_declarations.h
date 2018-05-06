@@ -45,6 +45,7 @@ namespace global {
     extern bool splash_screen;
     extern bool levels_transition_screen;
     extern bool scores_screen;
+    extern int clean_unused_oam_timer;
     extern u16 current_map[4096];
     extern u16 base_map[4096];
     extern bool in_main_menu;

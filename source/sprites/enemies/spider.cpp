@@ -76,7 +76,7 @@ void Spider::draw() {
         global::main_dude->y - 4 < y) {
         kill();
         global::main_dude->ySpeed = -2;
-        global::main_dude->jumpingTimer = 0;
+        global::main_dude->jumping_timer = 0;
     }
 
 
@@ -211,7 +211,7 @@ void Spider::updatePosition() {
 void Spider::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
 
     MapTile *tiles[9] = {};
-    Collisions::getNeighboringTiles(global::level_generator->mapTiles, x_current_pos_in_tiles,
+    Collisions::getNeighboringTiles(global::level_generator->map_tiles, x_current_pos_in_tiles,
                                     y_current_pos_in_tiles, tiles);
 
     standingOnLeftEdge = Collisions::isStandingOnLeftEdge(tiles, x, 16, x_current_pos_in_tiles);

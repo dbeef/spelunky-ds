@@ -88,7 +88,7 @@ void Rope::draw() {
     //checking if main dude can climb over the rope
 
     bool onTopOfClimbingSpace = global::main_dude->y < y + 6;
-    global::main_dude->onTopOfClimbingSpace = onTopOfClimbingSpace;
+    global::main_dude->on_top_of_climbing_space = onTopOfClimbingSpace;
 
     for (int a = 0; a < ropeChain.size(); a++) {
 
@@ -99,7 +99,7 @@ void Rope::draw() {
             && !onTopOfClimbingSpace) {
 //            std::cout<< " CA NCLIMB " << '\n';
             if (!global::input_handler->r_bumper_down) {
-                global::main_dude->canClimbRope = true;
+                global::main_dude->can_climb_rope = true;
                 if(global::input_handler->up_key_held){
                     global::main_dude->x = ropeChain.at(a)->x - 4;
                 }
@@ -237,7 +237,7 @@ void Rope::onCollisionWithMainCharacter() {
 void Rope::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
 
     MapTile *tiles[9];
-    Collisions::getNeighboringTiles(global::level_generator->mapTiles, x_current_pos_in_tiles, y_current_pos_in_tiles,
+    Collisions::getNeighboringTiles(global::level_generator->map_tiles, x_current_pos_in_tiles, y_current_pos_in_tiles,
                                     tiles);
 
     bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, 8, 8, true);

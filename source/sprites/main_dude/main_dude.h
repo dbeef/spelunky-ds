@@ -7,8 +7,8 @@
 
 #define MAIN_DUDE_MAX_X_SPEED 2
 #define MAIN_DUDE_MAX_X_SPEED_CRAWLING 1.5
-#define MAIN_DUDE_MAX_Y_SPEED 2.5
-#define MAIN_DUDE_JUMP_SPEED 3.3
+#define MAIN_DUDE_MAX_Y_SPEED 3.3
+#define MAIN_DUDE_JUMP_SPEED 2.55
 #define MAIN_DUDE_HEIGHT 16
 #define MAIN_DUDE_WIDTH 16
 
@@ -62,33 +62,32 @@ public:
     SpriteInfo *main_spelunker = nullptr;
     SpriteInfo *sub_spelunker = nullptr;
 
-    int animationFrameTimer;
-    int speedIncTimer;
-    int posIncTimer;
-    int frictionTimer;
-    //How much time was spent on hanging, since last flag hangingOnTileLeft/right occured.
-    int hangingTimer;
+    int animation_frame_timer;
+    int speed_inc_timer;
+    int pos_inc_timer;
+    //How much time was spent on hanging, since last flag hanging_on_tile_left/right occured.
+    int hanging_timer;
 
 
-    int stunnedTimer;
-    int jumpingTimer;
-    int pushingTimer;
+    int stunned_timer;
+    int jumping_timer;
+    int pushing_timer;
     int whip_timer;
-    int timeSinceLastJump;
+    int time_since_last_jump;
     int time_since_last_damage;
 
-    bool hangingOnTileLeft;
-    bool hangingOnTileRight;
+    bool hanging_on_tile_left;
+    bool hanging_on_tile_right;
     bool stunned;
     bool crawling;
     bool pushing_left;
     bool pushing_right;
     bool whip;
-    bool canClimbRope;
-    bool canClimbLadder;
+    bool can_climb_rope;
+    bool can_climb_ladder;
     bool climbing;
-    bool onTopOfClimbingSpace;
-    bool exitingLevel;
+    bool on_top_of_climbing_space;
+    bool exiting_level;
     bool holding_item;
     bool dead;
 
@@ -96,11 +95,34 @@ public:
     int animFrame;
     u8 *frameGfx = nullptr;
 
-    void handleKeyInput();
+    void handle_key_input();
 
-    void canHangOnTile(MapTile *neighboringTiles[9]);
+    void can_hang_on_tile(MapTile **neighboringTiles);
 
 
+    void apply_crawling_sprite();
+
+    void apply_hanging_on_tile_sprite();
+
+    void apply_whip_sprite();
+
+    void apply_pushing_sprite();
+
+    void apply_stunned_sprite();
+
+    void apply_climbing_sprite();
+
+    void apply_dead_sprite();
+
+    void apply_walking_sprite();
+
+    void apply_falling_sprite();
+
+    void apply_exiting_level_sprite();
+
+    void apply_blinking_on_damage();
+
+    void reset_values_checked_every_frame();
 };
 
 

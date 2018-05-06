@@ -240,7 +240,7 @@ void Jar::updatePosition() {
 void Jar::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
 
     MapTile *tiles[9];
-    Collisions::getNeighboringTiles(global::level_generator->mapTiles, x_current_pos_in_tiles, y_current_pos_in_tiles,
+    Collisions::getNeighboringTiles(global::level_generator->map_tiles, x_current_pos_in_tiles, y_current_pos_in_tiles,
                                     tiles);
 
     bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, 8, 8, true);

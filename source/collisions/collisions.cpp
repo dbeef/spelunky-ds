@@ -14,7 +14,7 @@
 #define BOUNCING_STOP_SPEED 0.05
 
 
-//(TILE_W * a), (TILE_H * b) makes x,y point placed in the left-upper corner of the tile from passed *mapTiles[a][b].
+//(TILE_W * a), (TILE_H * b) makes x,y point placed in the left-upper corner of the tile from passed *map_tiles[a][b].
 //Sprite's x,y positions that are given to the following functions are expected to be upper-left corner.
 //The x,y coordinates go from up to down on the y's, and from left to right on the x's - (0,0) is upper-left corner of
 //the map.

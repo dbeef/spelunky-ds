@@ -23,7 +23,7 @@ int main() {
     videoSetModeSub(MODE_0_2D);
 
     vramSetBankA(VRAM_A_MAIN_BG_0x06000000);
-    //vram c is used by the console
+    //vram c is used by the console (by default):
     vramSetBankC(VRAM_C_SUB_BG_0x06200000);
 
 
@@ -40,19 +40,10 @@ int main() {
     dmaCopy(gfx_cavebgTiles, bgGetGfxPtr(global::bg_sub_address), sizeof(gfx_cavebgTiles));
 
 
-    dmaCopyHalfWords(3, global::base_map, global::current_map, sizeof(global::base_map));
-
     global::level_generator->newLayout(timerElapsed(0));
-    global::level_generator->generateSplashScreen(SplashScreenType ::MAIN_MENU_UPPER);
-    global::level_generator->generateSplashScreen(SplashScreenType ::MAIN_MENU_LOWER);
-    global::level_generator->tilesToMap();
-
-    sectorize_map();
-
-    dmaCopyHalfWords(DMA_CHANNEL, global::current_map, bgGetMapPtr(global::bg_main_address),
-                     sizeof(global::current_map));
-    dmaCopyHalfWords(DMA_CHANNEL, global::current_map, bgGetMapPtr(global::bg_sub_address),
-                     sizeof(global::current_map));
+    global::level_generator->generate_splash_screen(SplashScreenType::MAIN_MENU_UPPER);
+    global::level_generator->generate_splash_screen(SplashScreenType::MAIN_MENU_LOWER);
+    global::level_generator->render_tiles_on_base_map();
 
     console::init();
 

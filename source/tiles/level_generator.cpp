@@ -14,7 +14,18 @@
 #include "../rooms/left_right_up_rooms.h"
 #include "../rooms/splash_screens.h"
 #include "../rooms/room_type.h"
+#include "map_utils.h"
 
+
+void LevelGenerator::render_tiles_on_base_map(){
+    dmaCopyHalfWords(DMA_CHANNEL, global::base_map, global::current_map, sizeof(global::current_map));
+    tiles_to_map();
+    sectorize_map();
+    dmaCopyHalfWords(DMA_CHANNEL, global::current_map, bgGetMapPtr(global::bg_main_address),
+                     sizeof(global::current_map));
+    dmaCopyHalfWords(DMA_CHANNEL, global::current_map, bgGetMapPtr(global::bg_sub_address),
+                     sizeof(global::current_map));
+}
 
 /**
  * http:www.cplusplus.com/reference/cstdlib/rand/, liczba z przedziału 0-3
@@ -25,7 +36,7 @@ void LevelGenerator::newLayout(int seed) {
 
     for (int x = 0; x < MAP_GAME_WIDTH_TILES; x++) {
         for (int y = 0; y < MAP_GAME_HEIGHT_TILES; y++) {
-            mapTiles[x][y] = 0;
+            map_tiles[x][y] = 0;
         }
     }
     for (int a = 0; a < ROOMS_X; a++) {
@@ -120,12 +131,12 @@ void LevelGenerator::newLayout(int seed) {
 
 }
 
-void LevelGenerator::generateFrame() {
+void LevelGenerator::generate_frame() {
 
     for (int a = 0; a < MAP_GAME_HEIGHT_TILES; a++) {
-        delete (mapTiles[a][0]);
+        delete (map_tiles[a][0]);
         MapTile *t = new MapTile();
-        matchTile(t, MapTileType::CAVE_REGULAR);
+        match_tile(t, MapTileType::CAVE_REGULAR);
         t->map_index[0] = a * 2;
         t->map_index[1] = a * 2 + 1;
         t->map_index[2] = LINE_WIDTH + a * 2;
@@ -134,13 +145,13 @@ void LevelGenerator::generateFrame() {
         t->destroyable = false;
         t->x = a;
         t->y = 0;
-        this->mapTiles[a][0] = t;
+        this->map_tiles[a][0] = t;
     }
 
     for (int a = 0; a < MAP_GAME_HEIGHT_TILES; a++) {
-        delete (mapTiles[a][MAP_GAME_WIDTH_TILES - 1]);
+        delete (map_tiles[a][MAP_GAME_WIDTH_TILES - 1]);
         MapTile *t = new MapTile();
-        matchTile(t, MapTileType::CAVE_REGULAR);
+        match_tile(t, MapTileType::CAVE_REGULAR);
         t->map_index[0] = 62 * LINE_WIDTH + a * 2;
         t->map_index[1] = 62 * LINE_WIDTH + a * 2 + 1;
         t->map_index[2] = 63 * LINE_WIDTH + a * 2;
@@ -149,13 +160,13 @@ void LevelGenerator::generateFrame() {
         t->destroyable = false;
         t->x = a;
         t->y = 31;
-        this->mapTiles[a][31] = t;
+        this->map_tiles[a][31] = t;
     }
 
     for (int a = 0; a < MAP_GAME_WIDTH_TILES; a++) {
-        delete (mapTiles[0][a]);
+        delete (map_tiles[0][a]);
         MapTile *t = new MapTile();
-        matchTile(t, MapTileType::CAVE_REGULAR);
+        match_tile(t, MapTileType::CAVE_REGULAR);
         t->map_index[0] = a * 2 * LINE_WIDTH + 0;
         t->map_index[1] = a * 2 * LINE_WIDTH + 1;
         t->map_index[2] = a * 2 * LINE_WIDTH + LINE_WIDTH;
@@ -164,14 +175,14 @@ void LevelGenerator::generateFrame() {
         t->destroyable = false;
         t->x = 0;
         t->y = a;
-        this->mapTiles[0][a] = t;
+        this->map_tiles[0][a] = t;
     }
 
     for (int a = 0; a < MAP_GAME_WIDTH_TILES; a++) {
-        delete (mapTiles[MAP_GAME_HEIGHT_TILES - 1][a]);
+        delete (map_tiles[MAP_GAME_HEIGHT_TILES - 1][a]);
         MapTile *t = new MapTile();
 
-        matchTile(t, MapTileType::CAVE_REGULAR);
+        match_tile(t, MapTileType::CAVE_REGULAR);
 
         t->map_index[0] = a * 2 * LINE_WIDTH - 2 + LINE_WIDTH;
         t->map_index[1] = a * 2 * LINE_WIDTH - 1 + LINE_WIDTH;
@@ -181,14 +192,14 @@ void LevelGenerator::generateFrame() {
         t->destroyable = false;
         t->x = 31;
         t->y = a;
-        this->mapTiles[31][a] = t;
+        this->map_tiles[31][a] = t;
     }
 }
 
-void LevelGenerator::tilesToMap() {
+void LevelGenerator::tiles_to_map() {
     for (int x = 0; x < MAP_GAME_WIDTH_TILES; x++) {
         for (int y = 0; y < MAP_GAME_HEIGHT_TILES; y++) {
-            MapTile *t = this->mapTiles[x][y];
+            MapTile *t = this->map_tiles[x][y];
             for (int k = 0; k < 4; k++)
                 if (t && t->values[k] != 0)
                     global::current_map[t->map_index[k]] = t->values[k];
@@ -196,7 +207,7 @@ void LevelGenerator::tilesToMap() {
     }
 }
 
-void LevelGenerator::generateSplashScreen(int room_type) {
+void LevelGenerator::generate_splash_screen(int room_type) {
     int tab[SPLASH_SCREEN_HEIGHT][SPLASH_SCREEN_WIDTH];
     int a, b = 0;
 
@@ -238,22 +249,22 @@ void LevelGenerator::generateSplashScreen(int room_type) {
                 u16 pos_x = (tab_x * 2 + 2 * ROOM_TILE_WIDTH_SPLASH_SCREEN * a) / 2;
                 u16 pos_y = tab_y + ROOM_TILE_HEIGHT_SPLASH_SCREEN * ((ROOMS_Y - b) - 1) - 4;
 
-                delete (mapTiles[pos_x][pos_y]);
+                delete (map_tiles[pos_x][pos_y]);
                 MapTile *t = new MapTile();
-                matchTile(t, tab[tab_y][tab_x]);
+                match_tile(t, tab[tab_y][tab_x]);
                 t->map_index[0] = room_offset + (tab_x * 2) + (tab_y * LINE_WIDTH * 2);
                 t->map_index[1] = room_offset + (tab_x * 2) + (tab_y * LINE_WIDTH * 2) + 1;
                 t->map_index[2] = room_offset + (tab_x * 2) + (LINE_WIDTH + (tab_y * LINE_WIDTH * 2));
                 t->map_index[3] = room_offset + (tab_x * 2) + (LINE_WIDTH + (tab_y * LINE_WIDTH * 2)) + 1;
                 t->x = pos_x;
                 t->y = pos_y;
-                this->mapTiles[pos_x][pos_y] = t;
+                this->map_tiles[pos_x][pos_y] = t;
             }
         }
     }
 }
 
-void LevelGenerator::generateRooms() {
+void LevelGenerator::generate_rooms() {
 
     int tab[10][10];
     int r;
@@ -300,16 +311,16 @@ void LevelGenerator::generateRooms() {
                         u16 pos_x = (OFFSET_X + tab_x * 2 + 2 * ROOM_TILE_WIDTH_GAME * a) / 2;
                         u16 pos_y = (OFFSET_X + tab_y * 2 + 2 * ROOM_TILE_HEIGHT_GAME * ((ROOMS_Y - b) - 1)) / 2;
 
-                        delete (mapTiles[pos_x][pos_y]);
+                        delete (map_tiles[pos_x][pos_y]);
                         MapTile *t = new MapTile();
-                        matchTile(t, tab[tab_y][tab_x]);
+                        match_tile(t, tab[tab_y][tab_x]);
                         t->map_index[0] = room_offset + (tab_x * 2) + (tab_y * LINE_WIDTH * 2);
                         t->map_index[1] = room_offset + (tab_x * 2) + (tab_y * LINE_WIDTH * 2) + 1;
                         t->map_index[2] = room_offset + (tab_x * 2) + (LINE_WIDTH + (tab_y * LINE_WIDTH * 2));
                         t->map_index[3] = room_offset + (tab_x * 2) + (LINE_WIDTH + (tab_y * LINE_WIDTH * 2)) + 1;
                         t->x = pos_x;
                         t->y = pos_y;
-                        this->mapTiles[pos_x][pos_y] = t;
+                        this->map_tiles[pos_x][pos_y] = t;
                     }
                 }
             }
@@ -317,7 +328,7 @@ void LevelGenerator::generateRooms() {
     }
 }
 
-void LevelGenerator::matchTile(MapTile *t, int value) {
+void LevelGenerator::match_tile(MapTile *t, int value) {
 
     t->destroyable = true;
     t->collidable = true;
@@ -582,12 +593,12 @@ void LevelGenerator::matchTile(MapTile *t, int value) {
 
 }
 
-void LevelGenerator::getFirstTile(MapTileType mapTileType, MapTile *&m) {
+void LevelGenerator::get_first_tile(MapTileType mapTileType, MapTile *&m) {
 //    https://stackoverflow.com/questions/416162/assignment-inside-function-that-is-passed-as-pointer?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
     for (int a = 0; a < MAP_GAME_WIDTH_TILES; a++) {
         for (int b = 0; b < MAP_GAME_HEIGHT_TILES; b++) {
-            if (mapTiles[a][b] != 0 && mapTiles[a][b]->mapTileType == mapTileType) {
-                m = mapTiles[a][b];
+            if (map_tiles[a][b] != 0 && map_tiles[a][b]->mapTileType == mapTileType) {
+                m = map_tiles[a][b];
                 break;
             }
         }

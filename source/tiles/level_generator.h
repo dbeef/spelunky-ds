@@ -39,23 +39,25 @@ class LevelGenerator {
 
 public:
 
-    MapTile *mapTiles[32][32];
+    MapTile *map_tiles[32][32];
     int layout_room_types[ROOMS_X][ROOMS_Y];
     int layout_room_ids[ROOMS_X][ROOMS_Y];
 
     void newLayout(int seed);
 
-    void tilesToMap();
+    void tiles_to_map();
 
-    void generateFrame();
+    void generate_frame();
 
-    void generateRooms();
+    void generate_rooms();
 
-    void generateSplashScreen(int room_type);
+    void generate_splash_screen(int room_type);
 
-    void matchTile(MapTile *t, int value);
+    void match_tile(MapTile *t, int value);
 
-    void getFirstTile(MapTileType mapTileType, MapTile *&m);
+    void get_first_tile(MapTileType mapTileType, MapTile *&m);
+
+    void render_tiles_on_base_map();
 };
 
 #endif //SPELUNKYDS_LEVELGENERATOR_H

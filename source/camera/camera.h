@@ -5,15 +5,16 @@
 #ifndef SPELUNKYDS_CAMERA_H
 #define SPELUNKYDS_CAMERA_H
 
-
 class Camera {
 public:
-    bool followMainDude;
+    bool follow_main_dude;
+    int position_update_timer;
     int x;
     int y;
-    void updatePosition(int main_dude_x, int main_dude_y);
-    void setScroll();
+    void update_position();
+    void set_scroll();
+    void instant_focus();
+    void apply_map_boundaries();
 };
-
 
 #endif //SPELUNKYDS_CAMERA_H

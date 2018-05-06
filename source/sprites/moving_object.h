@@ -22,12 +22,17 @@ public:
 
     //todo virtual void for Oam init
 
+//    MovingObject(int p_physical_width, int p_physical_height, int p_sprite_width, int p_sprite_height);
+
     void update() {
         updateOther();
         updateSpeed();
         updateTimers();
     };
 
+    void limit_speed(int max_x, int max_y);
+
+    void apply_friction(int friction_delta_time_ms, int friction_delta_speed);
 
     virtual void initSprite() = 0;
 
@@ -55,6 +60,14 @@ public:
     int x;
     int y;
 
+    //for rendering
+    int sprite_width;
+    int sprite_height;
+
+    //for collisions
+    int physical_width;
+    int physical_height;
+
     double xSpeed;
     double ySpeed;
 
@@ -70,6 +83,8 @@ public:
 
     bool killed;
     bool ready_to_dispose;
+
+    int friction_timer;
 
     SpritesheetType spriteType;
 };

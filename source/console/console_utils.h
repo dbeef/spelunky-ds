@@ -9,12 +9,14 @@
 #include "../../build/font.h"
 #include "../globals_definitions.h"
 
-namespace console{
+namespace console {
 
-    void init(){
+    void init() {
         const int tile_base = 2;
         const int map_base = 8;
 
+        //The default instance utilizes the sub display, approximatly 15KiB of vram C starting
+        //at tile base 0 and 2KiB of map at map base 30.
         consoleInit(global::printConsole, 0, BgType_Text4bpp, BgSize_T_256x256, map_base, tile_base, true, false);
 
         ConsoleFont font;

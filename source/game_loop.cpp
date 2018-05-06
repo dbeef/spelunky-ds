@@ -16,14 +16,13 @@
 #include "rooms/closed_rooms.h"
 #include <algorithm>
 #include "time/time_utils.h"
+#include "memory/oam_utils.h"
 
 static const int BOUNDARY_VALUE = 64; /* This is the default boundary value (can be set in REG_DISPCNT) */
 static const int OFFSET_MULTIPLIER_MAIN = BOUNDARY_VALUE / sizeof(SPRITE_GFX[0]);
 static const int OFFSET_MULTIPLIER_SUB = BOUNDARY_VALUE / sizeof(SPRITE_GFX_SUB[0]);
 
 void gameloop::scroll() {
-
-    int garbage_timer = 0;
 
     global::main_oam_manager->initOAMTable(SPRITE_GFX, SPRITE_PALETTE, OAM, OFFSET_MULTIPLIER_MAIN, OamType::MAIN);
     global::sub_oam_manager->initOAMTable(SPRITE_GFX_SUB, SPRITE_PALETTE_SUB, OAM_SUB, OFFSET_MULTIPLIER_SUB,
@@ -42,27 +41,19 @@ void gameloop::scroll() {
     while (true) {
 
         time::update_ms_since_last_frame();
-        garbage_timer += *global::timer;
 
         global::input_handler->updateInput();
 
-        if ((global::input_handler->b_key_held) || global::bombed) {
-            dmaCopyHalfWords(DMA_CHANNEL, global::base_map, global::current_map, sizeof(global::current_map));
-            global::level_generator->tilesToMap();
-            sectorize_map();
-            dmaCopyHalfWords(DMA_CHANNEL, global::current_map, bgGetMapPtr(global::bg_main_address),
-                             sizeof(global::current_map));
-            dmaCopyHalfWords(DMA_CHANNEL, global::current_map, bgGetMapPtr(global::bg_sub_address),
-                             sizeof(global::current_map));
-            global::main_dude->bottomCollision = false;
+        if (global::bombed) {
+            global::level_generator->render_tiles_on_base_map();
             global::bombed = false;
+            for (int a = 0; a < global::sprites.size(); a++)
+                (*global::sprites.at(a)).bottomCollision = false;
         }
 
-        global::main_dude->handleKeyInput();
+        global::main_dude->handle_key_input();
 
-
-
-        global::camera->updatePosition(global::main_dude->x, global::main_dude->y);
+        global::camera->update_position();
 
         for (int a = 0; a < global::sprites.size(); a++) {
             if (global::sprites.at(a) && !global::sprites.at(a)->ready_to_dispose && !global::sprites.at(a)->killed) {
@@ -75,35 +66,14 @@ void gameloop::scroll() {
 
 
         swiWaitForVBlank();
-        global::camera->setScroll();
+        global::camera->set_scroll();
 
 
         global::main_oam_manager->updateOAM();
         global::sub_oam_manager->updateOAM();
 
 
-        if (garbage_timer > 2500 && global::main_oam_manager->current_oam_id_tiles >= 108) {
-
-            global::main_oam_manager->clearAllSprites();
-            global::sub_oam_manager->clearAllSprites();
-
-            //            std::cout << "            "<< "MEM CLEAN";
-
-
-            for (int a = 0; a < global::sprites.size(); a++) {
-                //fixme - being killed not always means it's ready for disposing!
-                if (!global::sprites.at(a)->ready_to_dispose && !global::sprites.at(a)->killed)
-                    global::sprites.at(a)->initSprite();
-                else {
-//                    delete (global::sprites.at(a));
-                }
-            }
-
-            global::hud->initSprites();
-
-
-            garbage_timer = 0;
-        }
+        oam_utils::clean_unused_oam();
 
     }
 
