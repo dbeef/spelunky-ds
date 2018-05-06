@@ -4,4 +4,4 @@
 
 #include "map_tile.h"
 
-map_tile::map_tile() {}
+MapTile::MapTile() {}

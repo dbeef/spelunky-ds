@@ -105,7 +105,7 @@ void Bomb::draw() {
     }
 
     if (armed) {
-        armedTimer += *timer;
+        armedTimer += *global::timer;
         if (armedTimer < ARMED_TIME_BLINK_SLOW) {
             if ((armedTimer) % 250 < 125) {
                 disarm();
@@ -121,7 +121,7 @@ void Bomb::draw() {
         } else {
 
 
-            explosionTimer += *timer;
+            explosionTimer += *global::timer;
             if (explosionTimer > 50 && explosionFrame < 10) {
 
                 if (explosionFrame == 0) {
@@ -216,7 +216,7 @@ void Bomb::updateSpeed() {
     if (ySpeed < -MAX_Y_SPEED_BOMB)
         ySpeed = -MAX_Y_SPEED_BOMB;
 
-    pos_inc_timer += *timer;
+    pos_inc_timer += *global::timer;
 
     bool change_pos = (pos_inc_timer > 15) && !hold_by_main_dude && explosionFrame == 0;
 
@@ -288,7 +288,7 @@ void Bomb::updatePosition() {
 
 void Bomb::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
 
-    map_tile *tiles[9];
+    MapTile *tiles[9];
     Collisions::getNeighboringTiles(global::level_generator->mapTiles, x_current_pos_in_tiles, y_current_pos_in_tiles,
                                     tiles);
 

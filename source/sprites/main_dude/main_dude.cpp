@@ -114,7 +114,6 @@ void MainDude::handleKeyInput() {
 
             Bomb *bomb = new Bomb();
             bomb->init();
-            bomb->timer = timer;
             bomb->hold_by_main_dude = true;
 
             global::sprites.push_back(bomb);
@@ -126,7 +125,6 @@ void MainDude::handleKeyInput() {
 
             Rope *rope = new Rope();
             rope->init();
-            rope->timer = timer;
             rope->hold_by_main_dude = true;
 
             global::sprites.push_back(rope);
@@ -162,22 +160,22 @@ void MainDude::handleKeyInput() {
 
         if (global::input_handler->up_key_held) {
 
+//            std::cout<< *global::timer << '\n';
 
             int xx = floor_div(this->x + 0.5 * MAIN_DUDE_WIDTH, 16);
             int yy = floor_div(this->y + 0.5 * MAIN_DUDE_HEIGHT, 16);
 
-//            int yy_a_bit_down = floor_div(this->y + 0.5 * MAIN_DUDE_HEIGHT - 4, 16);
+//            std::cout<< *global::timer << '\n';
 
-            map_tile **neighboringTiles;
-//            map_tile **neighboringTiles_a_bit_down;
+            MapTile *neighboringTiles[9] = {};
             Collisions::getNeighboringTiles(global::level_generator->mapTiles, xx, yy, neighboringTiles);
-//            Collisions::getNeighboringTiles(global::LevelGenerator->mapTiles, xx, yy_a_bit_down, neighboringTiles_a_bit_down);
 
-            canClimbLadder = neighboringTiles[CENTER] != 0 &&
+
+            canClimbLadder = neighboringTiles[CENTER] != nullptr &&
                              (neighboringTiles[CENTER]->mapTileType == map_tile_type::LADDER ||
                               neighboringTiles[CENTER]->mapTileType == map_tile_type::LADDER_DECK);
 
-            exitingLevel = neighboringTiles[CENTER] != 0 &&
+            exitingLevel = neighboringTiles[CENTER] != nullptr &&
                            (neighboringTiles[CENTER]->mapTileType == map_tile_type::EXIT);
 
             if (exitingLevel) {
@@ -192,10 +190,11 @@ void MainDude::handleKeyInput() {
                 animationFrameTimer = 0;
                 xSpeed = 0;
                 ySpeed = 0;
+
             }
 
             onTopOfClimbingSpace = onTopOfClimbingSpace ||
-                                   neighboringTiles[UP_MIDDLE] != 0 &&
+                                   neighboringTiles[UP_MIDDLE] != nullptr &&
                                    neighboringTiles[UP_MIDDLE]->collidable;
 
             if (canClimbLadder) {
@@ -222,19 +221,17 @@ void MainDude::handleKeyInput() {
 
         if (global::input_handler->down_key_held) {
 
-
             int xx = floor_div(this->x + 0.5 * MAIN_DUDE_WIDTH, 16);
             int yy = floor_div(this->y + 0.5 * MAIN_DUDE_HEIGHT, 16);
 
-            map_tile **neighboringTiles;
-            Collisions::getNeighboringTiles(global::level_generator->mapTiles, xx, yy, neighboringTiles);
-            canClimbLadder =
-                    neighboringTiles[CENTER]->mapTileType == map_tile_type::LADDER ||
-                    map_tile_type::LADDER_DECK;
+            MapTile *neighboringTiles[9] = {};
 
+            Collisions::getNeighboringTiles(global::level_generator->mapTiles, xx, yy, neighboringTiles);
+            canClimbLadder = neighboringTiles[CENTER]->mapTileType == map_tile_type::LADDER ||
+                    neighboringTiles[CENTER]->mapTileType == map_tile_type::LADDER_DECK;
 
             if (climbing) {
-                canClimbLadder = neighboringTiles[CENTER] != 0 &&
+                canClimbLadder = neighboringTiles[CENTER] != nullptr &&
                                  (neighboringTiles[CENTER]->mapTileType == map_tile_type::LADDER ||
                                   neighboringTiles[CENTER]->mapTileType == map_tile_type::LADDER_DECK) &&
                                  (neighboringTiles[DOWN_MIDDLE] == nullptr ||
@@ -246,12 +243,9 @@ void MainDude::handleKeyInput() {
             }
 
             if ((!canClimbRope && climbing && !onTopOfClimbingSpace) || (!canClimbLadder && climbing)) {
-//                ySpeed = 0;
                 jumpingTimer = 0;
-//                xSpeed = 0;
                 climbing = false;
             }
-
 
             hangingOnTileLeft = false;
             hangingOnTileRight = false;
@@ -267,13 +261,13 @@ void MainDude::handleKeyInput() {
 
 void MainDude::updateTimers() {
 
-    posIncTimer += *timer;
-    frictionTimer += *timer;
-    speedIncTimer += *timer;
-    hangingTimer += *timer;
+    posIncTimer += *global::timer;
+    frictionTimer += *global::timer;
+    speedIncTimer += *global::timer;
+    hangingTimer += *global::timer;
 
     if (whip) {
-        whip_timer += *timer;
+        whip_timer += *global::timer;
         if (whip_timer > 420 + 0 * 70) {
             whip_timer = 0;
             whip = false;
@@ -304,7 +298,7 @@ void MainDude::updateTimers() {
 
     if ((leftCollision || rightCollision) && !crawling && !hangingOnTileLeft && !hangingOnTileRight &&
         (global::input_handler->left_key_held || global::input_handler->right_key_held)) {
-        pushingTimer += *timer;
+        pushingTimer += *global::timer;
         if (pushingTimer > PUSHING_TIME) {
             if (leftCollision) {
                 pushing_right = true;
@@ -332,7 +326,7 @@ void MainDude::updateTimers() {
 
 
     if (!bottomCollision && !hangingOnTileLeft && !hangingOnTileRight && !climbing)
-        jumpingTimer += *timer;
+        jumpingTimer += *global::timer;
 
     if (bottomCollision && jumpingTimer > STUN_FALLING_TIME) {
         if (global::hud->hearts > 0) {
@@ -356,7 +350,7 @@ void MainDude::updateTimers() {
     }
 
     if (stunned)
-        stunnedTimer += *timer;
+        stunnedTimer += *global::timer;
     if (stunnedTimer > STUN_TIME) {
         stunned = false;
         stunnedTimer = 0;
@@ -364,14 +358,14 @@ void MainDude::updateTimers() {
 
 
     if (xSpeed != 0 || stunned || whip || (pushing_left || pushing_right) || (climbing && ySpeed != 0) || exitingLevel)
-        animationFrameTimer += *timer;
+        animationFrameTimer += *global::timer;
 
 
     if (!bottomCollision)
         crawling = false;
 
-    timeSinceLastJump += *timer;
-    time_since_last_damage += *timer;
+    timeSinceLastJump += *global::timer;
+    time_since_last_damage += *global::timer;
 }
 
 
@@ -428,7 +422,7 @@ void MainDude::updateSpeed() {
 
 void MainDude::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
 
-    map_tile *tiles[9];
+    MapTile *tiles[9];
     Collisions::getNeighboringTiles(global::level_generator->mapTiles, x_current_pos_in_tiles, y_current_pos_in_tiles,
                                     tiles);
 
@@ -597,7 +591,7 @@ void MainDude::draw() {
             global::main_dude->bottomCollision = false;
 
 
-            map_tile *entrance;
+            MapTile *entrance;
             global::level_generator->getFirstTile(map_tile_type::ENTRANCE, entrance);
 
             if (entrance == nullptr) {
@@ -817,7 +811,7 @@ void MainDude::draw() {
     }
 }
 
-void MainDude::canHangOnTile(map_tile *neighboringTiles[9]) {
+void MainDude::canHangOnTile(MapTile *neighboringTiles[9]) {
 
     if (bottomCollision || (!leftCollision && !rightCollision))
         return;

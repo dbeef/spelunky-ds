@@ -36,7 +36,6 @@ public:
 
     void initSprite() override;
 
-    double *timer = nullptr;
     double pos_inc_timer;
 
     SpriteInfo *mainSpriteInfo = nullptr;

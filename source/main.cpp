@@ -2,33 +2,22 @@
 #include <nds/arm9/video.h>
 #include <nds/arm9/sprite.h>
 #include <nds/arm9/console.h>
-#include <maxmod9.h>
 #include "../build/gfx_cavebg.h"
-#include "../build/soundbank.h"
-#include "../build/soundbank_bin.h"
 #include "globals_declarations.h"
 #include "globals_definitions.h"
 #include "tiles/map_utils.h"
 #include "tiles/splash_screen_type.h"
 #include "game_loop.h"
+#include "sound/sound_utils.h"
+#include "time/time_utils.h"
+#include "console/console_utils.h"
 
 int main() {
 
-    mmInitDefaultMem((mm_addr) soundbank_bin);
-    mmLoadEffect(SFX_MCAVE);
-    mmLoadEffect(SFX_MTITLE);
-    mmLoadEffect(SFX_XJUMP);
-    mmLoadEffect(SFX_XWHIP);
-    mmLoadEffect(SFX_XCOIN);
-    mmLoadEffect(SFX_XTHROW);
-    mmLoadEffect(SFX_XGEM);
-    mmLoadEffect(SFX_XEXPLOSION);
-    mmLoadEffect(SFX_XSTEPS);
-    mmLoadEffect(SFX_XLAND);
-    global::menu_music_handler = mmEffect(SFX_MTITLE);
+    sound::load_sounds();
+    sound::start_menu_music();
 
-    Timer *t = new Timer();
-    t->start();
+    time::start();
 
     videoSetMode(MODE_0_2D);
     videoSetModeSub(MODE_0_2D);
@@ -65,14 +54,14 @@ int main() {
     dmaCopyHalfWords(DMA_CHANNEL, global::current_map, bgGetMapPtr(global::bg_sub_address),
                      sizeof(global::current_map));
 
-    global::text_manager->initConsole();
+    console::init();
 
     dmaCopy(gfx_cavebgPal, BG_PALETTE, gfx_cavebgPalLen);
     dmaCopy(gfx_cavebgPal, BG_PALETTE_SUB, gfx_cavebgPalLen);
 
     gameloop::scroll();
 
-    t->stop();
+    time::stop();
 
     return 0;
 }

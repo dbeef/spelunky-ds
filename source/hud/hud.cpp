@@ -165,7 +165,6 @@ void Hud::draw_on_level_done() {
         if (global::killed_npcs.at(a) == SpritesheetType::SNAKE) {
             Snake *snake = new Snake();
             snake->init();
-            snake->timer = global::timer;
             global::sprites.push_back(snake);
             snake->x = 95 + (a * 8);
             snake->y = 208;
@@ -175,7 +174,6 @@ void Hud::draw_on_level_done() {
         } else if (global::killed_npcs.at(a) == SpritesheetType::BAT) {
             Bat *bat = new Bat();
             bat->init();
-            bat->timer = global::timer;
             global::sprites.push_back(bat);
             bat->x = 95+ (a * 8);
             bat->y = 208;
@@ -185,7 +183,6 @@ void Hud::draw_on_level_done() {
         } else if (global::killed_npcs.at(a) == SpritesheetType::SPIDER) {
             Spider *spider = new Spider();
             spider->init();
-            spider->timer = global::timer;
             global::sprites.push_back(spider);
             spider->x = 95+ (a * 8);
             spider->y = 208;
@@ -205,7 +202,6 @@ void Hud::draw_on_level_done() {
             moniez->spriteType = MONIEZ_TRIPLE_GOLD_BARS;
             moniez->value = 1000;
             moniez->init();
-            moniez->timer = global::timer;
             global::sprites.push_back(moniez);
             moniez->x = 90+ (a * 8);
             moniez->y = 190;
@@ -224,7 +220,6 @@ void Hud::draw_on_level_done() {
             moniez->value = 1200;
             moniez->ruby_type = 0;
             moniez->initSprite();
-            moniez->timer = global::timer;
             global::sprites.push_back(moniez);
             moniez->x = 96+ (a * 8);
             moniez->y = 198;
@@ -242,7 +237,6 @@ void Hud::draw_on_level_done() {
             moniez->value = 1200;
             moniez->ruby_type = 1;
             moniez->initSprite();
-            moniez->timer = global::timer;
             global::sprites.push_back(moniez);
             moniez->x = 96+ (a * 8);
             moniez->y = 198;
@@ -261,7 +255,6 @@ void Hud::draw_on_level_done() {
             moniez->value = 1200;
             moniez->ruby_type = 2;
             moniez->initSprite();
-            moniez->timer = global::timer;
             global::sprites.push_back(moniez);
             moniez->x = 96+ (a * 8);
             moniez->y = 198;
@@ -296,6 +289,7 @@ void Hud::update() {
         set_position();
     }
 
+//    std::cout<<*global::timer << '\n';
 
     if (collecting_timer > 0) {
         collecting_timer -= *global::timer;

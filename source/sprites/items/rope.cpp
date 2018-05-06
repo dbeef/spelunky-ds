@@ -59,7 +59,7 @@ void Rope::draw() {
         ySpeed = -4;
     }
     if (thrown && !finished) {
-        throwingTimer += *timer;
+        throwingTimer += *global::timer;
 
         int temp_y = floor_div(this->y + (0.5 * ROPE_SIZE), 16);
 
@@ -159,7 +159,7 @@ void Rope::updateSpeed() {
     if (ySpeed < -MAX_Y_SPEED_ROPE)
         ySpeed = -MAX_Y_SPEED_ROPE;
 
-    pos_inc_timer += *timer;
+    pos_inc_timer += *global::timer;
 
     bool change_pos = (pos_inc_timer > 15) && !hold_by_main_dude && !finished;
 
@@ -236,7 +236,7 @@ void Rope::onCollisionWithMainCharacter() {
 
 void Rope::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
 
-    map_tile *tiles[9];
+    MapTile *tiles[9];
     Collisions::getNeighboringTiles(global::level_generator->mapTiles, x_current_pos_in_tiles, y_current_pos_in_tiles,
                                     tiles);
 

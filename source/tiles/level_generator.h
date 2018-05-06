@@ -39,7 +39,7 @@ class LevelGenerator {
 
 public:
 
-    map_tile *mapTiles[32][32];
+    MapTile *mapTiles[32][32];
     int layout_room_types[ROOMS_X][ROOMS_Y];
     int layout_room_ids[ROOMS_X][ROOMS_Y];
 
@@ -53,9 +53,9 @@ public:
 
     void generateSplashScreen(int room_type);
 
-    void matchTile(map_tile *t, int value);
+    void matchTile(MapTile *t, int value);
 
-    void getFirstTile(map_tile_type mapTileType, map_tile *&m);
+    void getFirstTile(map_tile_type mapTileType, MapTile *&m);
 };
 
 #endif //SPELUNKYDS_LEVELGENERATOR_H

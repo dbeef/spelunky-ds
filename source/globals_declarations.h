@@ -6,11 +6,11 @@
 #define SPELUNKYDS_CONSTS_H
 
 #include <mm_types.h>
+#include <nds/arm9/console.h>
 #include "input/input_handler.h"
 #include "hud/hud.h"
 #include "camera/camera.h"
 #include "sprites/main_dude/main_dude.h"
-#include "console/text_manager.h"
 #include "sprites/sprite_type.h"
 #include "tiles/level_generator.h"
 #include "sprites/sprite_info.h"
@@ -29,7 +29,6 @@
 //https://stackoverflow.com/questions/21505021/extern-and-global-same-variable-in-same-file
 //https://stackoverflow.com/questions/37323227/benefits-of-using-extern-declaration-in-same-file-as-definition
 namespace global {
-    extern TextManager *text_manager;
     extern MainDude *main_dude;
     extern InputHandler *input_handler;
     extern Camera *camera;
@@ -53,6 +52,8 @@ namespace global {
     extern mm_sfxhand cave_music_handler;
     extern std::vector<SpritesheetType> killed_npcs;
     extern std::vector<sprite_type> collected_loot;
+    extern PrintConsole *printConsole;
+
 }
 
 #endif //SPELUNKYDS_CONSTS_H

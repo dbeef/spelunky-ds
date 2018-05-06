@@ -5,7 +5,6 @@
 #ifndef SPELUNKYDS_HUD_H
 #define SPELUNKYDS_HUD_H
 
-#include <nds/jtypes.h>
 #include "../memory/oam_manager.h"
 
 class Hud {
@@ -31,6 +30,7 @@ public:
     int level;
 
     int game_over_timer;
+
 
     SpriteInfo *heartSpriteInfo = nullptr;
     SpriteInfo *bombSpriteInfo = nullptr;

@@ -1,1 +1,0 @@
-Remove initialising from text manager to Hud, then remove text manager

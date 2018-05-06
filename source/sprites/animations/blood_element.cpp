@@ -155,7 +155,7 @@ void BloodElement::updatePosition() {
 void BloodElement::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
 
 
-    map_tile *tiles[9];
+    MapTile *tiles[9];
     Collisions::getNeighboringTiles(global::level_generator->mapTiles, x_current_pos_in_tiles, y_current_pos_in_tiles,
                                     tiles);
 

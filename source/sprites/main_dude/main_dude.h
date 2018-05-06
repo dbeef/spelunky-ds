@@ -96,11 +96,9 @@ public:
     int animFrame;
     u8 *frameGfx = nullptr;
 
-    double *timer = nullptr;
-
     void handleKeyInput();
 
-    void canHangOnTile(map_tile *neighboringTiles[9]);
+    void canHangOnTile(MapTile *neighboringTiles[9]);
 
 
 };

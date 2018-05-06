@@ -40,7 +40,6 @@ public:
     void onCollisionWithMainCharacter() override;
 
 
-    double *timer = nullptr;
     double pos_inc_timer;
 
     SpriteInfo *mainSpriteInfo = nullptr;

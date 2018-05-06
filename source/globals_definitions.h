@@ -13,12 +13,10 @@
 #include "hud/hud.h"
 #include "tiles/level_generator.h"
 #include "sprites/main_dude/main_dude.h"
-#include "console/text_manager.h"
 
 namespace global {
 
     InputHandler *input_handler = new InputHandler();
-    TextManager *text_manager = new TextManager();
     Camera *camera = new Camera();
     MainDude *main_dude = new MainDude();
     LevelGenerator *level_generator = new LevelGenerator();
@@ -39,6 +37,7 @@ namespace global {
     mm_sfxhand cave_music_handler = 0;
     std::vector <SpritesheetType> killed_npcs(0);
     std::vector <sprite_type> collected_loot(0);
+    PrintConsole *printConsole = nullptr;
 
     u16 current_map[4096];
 

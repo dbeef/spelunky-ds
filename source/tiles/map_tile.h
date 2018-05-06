@@ -7,7 +7,7 @@
 
 #include "map_tile_type.h"
 
-class map_tile {
+class MapTile {
 public:
     //There's 512 px x 512 px map
     //That makes 64x64 of (8x8) tiles
@@ -20,7 +20,7 @@ public:
     bool collidable;
     bool destroyable;
     map_tile_type mapTileType;
-    map_tile();
+    MapTile();
 };
 
 

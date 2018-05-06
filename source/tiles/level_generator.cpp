@@ -124,7 +124,7 @@ void LevelGenerator::generateFrame() {
 
     for (int a = 0; a < MAP_GAME_HEIGHT_TILES; a++) {
         delete (mapTiles[a][0]);
-        map_tile *t = new map_tile();
+        MapTile *t = new MapTile();
         matchTile(t, map_tile_type::CAVE_REGULAR);
         t->map_index[0] = a * 2;
         t->map_index[1] = a * 2 + 1;
@@ -139,7 +139,7 @@ void LevelGenerator::generateFrame() {
 
     for (int a = 0; a < MAP_GAME_HEIGHT_TILES; a++) {
         delete (mapTiles[a][MAP_GAME_WIDTH_TILES - 1]);
-        map_tile *t = new map_tile();
+        MapTile *t = new MapTile();
         matchTile(t, map_tile_type::CAVE_REGULAR);
         t->map_index[0] = 62 * LINE_WIDTH + a * 2;
         t->map_index[1] = 62 * LINE_WIDTH + a * 2 + 1;
@@ -154,7 +154,7 @@ void LevelGenerator::generateFrame() {
 
     for (int a = 0; a < MAP_GAME_WIDTH_TILES; a++) {
         delete (mapTiles[0][a]);
-        map_tile *t = new map_tile();
+        MapTile *t = new MapTile();
         matchTile(t, map_tile_type::CAVE_REGULAR);
         t->map_index[0] = a * 2 * LINE_WIDTH + 0;
         t->map_index[1] = a * 2 * LINE_WIDTH + 1;
@@ -169,7 +169,7 @@ void LevelGenerator::generateFrame() {
 
     for (int a = 0; a < MAP_GAME_WIDTH_TILES; a++) {
         delete (mapTiles[MAP_GAME_HEIGHT_TILES - 1][a]);
-        map_tile *t = new map_tile();
+        MapTile *t = new MapTile();
 
         matchTile(t, map_tile_type::CAVE_REGULAR);
 
@@ -188,7 +188,7 @@ void LevelGenerator::generateFrame() {
 void LevelGenerator::tilesToMap() {
     for (int x = 0; x < MAP_GAME_WIDTH_TILES; x++) {
         for (int y = 0; y < MAP_GAME_HEIGHT_TILES; y++) {
-            map_tile *t = this->mapTiles[x][y];
+            MapTile *t = this->mapTiles[x][y];
             for (int k = 0; k < 4; k++)
                 if (t && t->values[k] != 0)
                     global::current_map[t->map_index[k]] = t->values[k];
@@ -239,7 +239,7 @@ void LevelGenerator::generateSplashScreen(int room_type) {
                 u16 pos_y = tab_y + ROOM_TILE_HEIGHT_SPLASH_SCREEN * ((ROOMS_Y - b) - 1) - 4;
 
                 delete (mapTiles[pos_x][pos_y]);
-                map_tile *t = new map_tile();
+                MapTile *t = new MapTile();
                 matchTile(t, tab[tab_y][tab_x]);
                 t->map_index[0] = room_offset + (tab_x * 2) + (tab_y * LINE_WIDTH * 2);
                 t->map_index[1] = room_offset + (tab_x * 2) + (tab_y * LINE_WIDTH * 2) + 1;
@@ -301,7 +301,7 @@ void LevelGenerator::generateRooms() {
                         u16 pos_y = (OFFSET_X + tab_y * 2 + 2 * ROOM_TILE_HEIGHT_GAME * ((ROOMS_Y - b) - 1)) / 2;
 
                         delete (mapTiles[pos_x][pos_y]);
-                        map_tile *t = new map_tile();
+                        MapTile *t = new MapTile();
                         matchTile(t, tab[tab_y][tab_x]);
                         t->map_index[0] = room_offset + (tab_x * 2) + (tab_y * LINE_WIDTH * 2);
                         t->map_index[1] = room_offset + (tab_x * 2) + (tab_y * LINE_WIDTH * 2) + 1;
@@ -317,7 +317,7 @@ void LevelGenerator::generateRooms() {
     }
 }
 
-void LevelGenerator::matchTile(map_tile *t, int value) {
+void LevelGenerator::matchTile(MapTile *t, int value) {
 
     t->destroyable = true;
     t->collidable = true;
@@ -582,7 +582,7 @@ void LevelGenerator::matchTile(map_tile *t, int value) {
 
 }
 
-void LevelGenerator::getFirstTile(map_tile_type mapTileType, map_tile *&m) {
+void LevelGenerator::getFirstTile(map_tile_type mapTileType, MapTile *&m) {
 //    https://stackoverflow.com/questions/416162/assignment-inside-function-that-is-passed-as-pointer?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
     for (int a = 0; a < MAP_GAME_WIDTH_TILES; a++) {
         for (int b = 0; b < MAP_GAME_HEIGHT_TILES; b++) {

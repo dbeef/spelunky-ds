@@ -1,14 +1,6 @@
 #include <nds.h>
 #include "game_loop.h"
 #include "tiles/map_utils.h"
-#include "globals_declarations.h"
-#include "sprites/main_dude/main_dude.h"
-#include "hud/hud.h"
-#include "sprites/items/rock.h"
-#include "sprites/items/jar.h"
-#include "sprites/enemies/snake.h"
-#include "sprites/collectibles/moniez.h"
-#include "../build/soundbank.h"
 #include "sprites/non_interactive/spelunky_title.h"
 #include "sprites/non_interactive/copyrights.h"
 #include "sprites/non_interactive/title_menu_sign.h"
@@ -22,12 +14,8 @@
 #include "rooms/entrance_rooms.h"
 #include "rooms/exit_rooms.h"
 #include "rooms/closed_rooms.h"
-#include <vector>
-#include <time.h>
-#include <maxmod9.h>
-#include <nds/arm9/console.h>
-#include<algorithm>
-
+#include <algorithm>
+#include "time/time_utils.h"
 
 static const int BOUNDARY_VALUE = 64; /* This is the default boundary value (can be set in REG_DISPCNT) */
 static const int OFFSET_MULTIPLIER_MAIN = BOUNDARY_VALUE / sizeof(SPRITE_GFX[0]);
@@ -37,29 +25,15 @@ void gameloop::scroll() {
 
     int garbage_timer = 0;
 
-    double timer = 0;
-    int initTimer = 0;
-
     global::main_oam_manager->initOAMTable(SPRITE_GFX, SPRITE_PALETTE, OAM, OFFSET_MULTIPLIER_MAIN, oam_type::MAIN);
     global::sub_oam_manager->initOAMTable(SPRITE_GFX_SUB, SPRITE_PALETTE_SUB, OAM_SUB, OFFSET_MULTIPLIER_SUB,
                                           oam_type::SUB);
-    global::timer = &timer;
-
-    global::main_dude->timer = &timer;
     global::main_dude->init();
-
     global::camera->x = 0;
     global::camera->y = 127;
-
-
     global::main_dude->x = 224;
     global::main_dude->y = 300;
-
     global::sprites.push_back(global::main_dude);
-
-    //todo wycentrować bombe
-
-
 
     global::hud->init();
 
@@ -67,9 +41,8 @@ void gameloop::scroll() {
 
     while (true) {
 
-        timer = timerElapsed(0) / TICKS_PER_SECOND;
-        garbage_timer += timer;
-        //fixme
+        time::update_ms_since_last_frame();
+        garbage_timer += *global::timer;
 
         global::input_handler->updateInput();
 
@@ -104,17 +77,12 @@ void gameloop::scroll() {
         global::main_oam_manager->updateOAM();
         global::sub_oam_manager->updateOAM();
 
-        initTimer += timer;
-
         if (garbage_timer > 2500 && global::main_oam_manager->current_oam_id_tiles >= 108) {
 
             global::main_oam_manager->clearAllSprites();
             global::sub_oam_manager->clearAllSprites();
 
-
-
-//            global::Hud->ropes++;
-//            std::cout << "            "<< "MEM CLEAN";
+            //            std::cout << "            "<< "MEM CLEAN";
 
 
             for (int a = 0; a < global::sprites.size(); a++) {
@@ -207,7 +175,6 @@ void gameloop::populate_cave_moniez() {
 
                         moniez->init();
 
-                        moniez->timer = global::timer;
                         global::sprites.push_back(moniez);
 
                         moniez->x = pos_x * 16;
@@ -226,7 +193,6 @@ void gameloop::populate_cave_moniez() {
                         moniez->spriteType = MONIEZ_RUBY_BIG;
                         moniez->value = 1200;
                         moniez->init();
-                        moniez->timer = global::timer;
                         global::sprites.push_back(moniez);
                         moniez->x = pos_x * 16;
                         moniez->y = pos_y * 16;
@@ -237,7 +203,6 @@ void gameloop::populate_cave_moniez() {
                     if (loot_type == 3 && jars_left > 0 && r == 1) {
                         Jar *jar = new Jar();
                         jar->init();
-                        jar->timer = global::timer;
                         global::sprites.push_back(jar);
                         jar->x = pos_x * 16;
                         jar->y = pos_y * 16;
@@ -248,7 +213,6 @@ void gameloop::populate_cave_moniez() {
                     if (loot_type == 0 && rocks_left > 0 && r == 1) {
                         Rock *rock = new Rock();
                         rock->init();
-                        rock->timer = global::timer;
                         global::sprites.push_back(rock);
                         rock->x = pos_x * 16;
                         rock->y = pos_y * 16;
@@ -316,7 +280,6 @@ void gameloop::populate_cave_npcs() {
                     if (npc == 1 && snakes_left > 0 && r == 1) {
                         Snake *snake = new Snake();
                         snake->init();
-                        snake->timer = global::timer;
                         global::sprites.push_back(snake);
                         snake->x = pos_x * 16;
                         snake->y = pos_y * 16;
@@ -327,7 +290,6 @@ void gameloop::populate_cave_npcs() {
                     if (npc == 2 && bats_left > 0 && r == 1) {
                         Bat *bat = new Bat();
                         bat->init();
-                        bat->timer = global::timer;
                         global::sprites.push_back(bat);
                         bats_left--;
                         bat->x = pos_x * 16;
@@ -338,7 +300,6 @@ void gameloop::populate_cave_npcs() {
                     if (npc == 3 && spiders_left > 0 && r == 1) {
                         Spider *spider = new Spider();
                         spider->init();
-                        spider->timer = global::timer;
                         global::sprites.push_back(spider);
                         spider->x = pos_x * 16;
                         spider->y = pos_y * 16;
@@ -407,7 +368,6 @@ void gameloop::populate_main_menu() {
     global::sprites.push_back(quit);
 
     Rope *rope = new Rope();
-    rope->timer = global::timer;
     rope->init();
     rope->x = 227;
     rope->y = 260;

@@ -167,7 +167,7 @@ void Jar::updateSpeed() {
     if (ySpeed < -MAX_Y_SPEED_ROCK)
         ySpeed = -MAX_Y_SPEED_ROCK;
 
-    pos_inc_timer += *timer;
+    pos_inc_timer += *global::timer;
 
     bool change_pos = (pos_inc_timer > 15) && !hold_by_main_dude;
 
@@ -239,7 +239,7 @@ void Jar::updatePosition() {
 
 void Jar::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
 
-    map_tile *tiles[9];
+    MapTile *tiles[9];
     Collisions::getNeighboringTiles(global::level_generator->mapTiles, x_current_pos_in_tiles, y_current_pos_in_tiles,
                                     tiles);
 
