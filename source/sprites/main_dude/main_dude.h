@@ -5,13 +5,15 @@
 #ifndef SPELUNKYDS_MAINDUDE_H
 #define SPELUNKYDS_MAINDUDE_H
 
+#define MAIN_DUDE_PHYSICAL_WIDTH 16
+#define MAIN_DUDE_PHYSICAL_HEIGHT 16
+#define MAIN_DUDE_SPRITE_WIDTH 16
+#define MAIN_DUDE_SPRITE_HEIGHT 16
+
 #define MAIN_DUDE_MAX_X_SPEED 2
 #define MAIN_DUDE_MAX_X_SPEED_CRAWLING 1.5
 #define MAIN_DUDE_MAX_Y_SPEED 3.3
 #define MAIN_DUDE_JUMP_SPEED 2.55
-#define MAIN_DUDE_HEIGHT 16
-#define MAIN_DUDE_WIDTH 16
-
 #define MIN_HANGING_TIME 100
 #define STUN_TIME 2000
 #define STUN_FALLING_TIME 1200
@@ -28,10 +30,13 @@
 #include "../items/bomb.h"
 #include "../moving_object.h"
 #include "../../input/input_handler.h"
+#include "whip.h"
 
 class MainDude : public MovingObject {
 
 public:
+
+    MainDude();
 
     void updateOther() override;
 
@@ -55,10 +60,6 @@ public:
 
     void init() override;
 
-    SpriteInfo *main_whip = nullptr;
-    SpriteInfo *main_pre_whip = nullptr;
-    SpriteInfo *sub_whip = nullptr;
-    SpriteInfo *sub_pre_whip = nullptr;
     SpriteInfo *main_spelunker = nullptr;
     SpriteInfo *sub_spelunker = nullptr;
 
@@ -72,7 +73,6 @@ public:
     int stunned_timer;
     int jumping_timer;
     int pushing_timer;
-    int whip_timer;
     int time_since_last_jump;
     int time_since_last_damage;
 
@@ -82,7 +82,9 @@ public:
     bool crawling;
     bool pushing_left;
     bool pushing_right;
-    bool whip;
+
+    bool using_whip;
+
     bool can_climb_rope;
     bool can_climb_ladder;
     bool climbing;
@@ -94,6 +96,8 @@ public:
     SpriteState state;
     int animFrame;
     u8 *frameGfx = nullptr;
+
+    Whip *whip;
 
     void handle_key_input();
 

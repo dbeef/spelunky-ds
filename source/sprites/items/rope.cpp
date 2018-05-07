@@ -54,7 +54,7 @@ void Rope::draw() {
         global::main_dude->holding_item = false;
         hold_by_main_dude = false;
 
-        x = floor_div(global::main_dude->x + 0.5 * MAIN_DUDE_WIDTH, 16) * TILE_W + ROPE_SIZE * 0.5;
+        x = floor_div(global::main_dude->x + 0.5 * MAIN_DUDE_PHYSICAL_WIDTH, 16) * TILE_W + ROPE_SIZE * 0.5;
         y -= 16;
         ySpeed = -4;
     }
@@ -93,9 +93,9 @@ void Rope::draw() {
     for (int a = 0; a < ropeChain.size(); a++) {
 
         if (ropeChain.at(a)->x  + 5> global::main_dude->x &&
-            ropeChain.at(a)->x + 5 < global::main_dude->x + MAIN_DUDE_WIDTH &&
+            ropeChain.at(a)->x + 5 < global::main_dude->x + MAIN_DUDE_PHYSICAL_WIDTH &&
             ropeChain.at(a)->y + 5 > global::main_dude->y &&
-            ropeChain.at(a)->y - 5 < global::main_dude->y + MAIN_DUDE_HEIGHT
+            ropeChain.at(a)->y - 5 < global::main_dude->y + MAIN_DUDE_PHYSICAL_HEIGHT
             && !onTopOfClimbingSpace) {
 //            std::cout<< " CA NCLIMB " << '\n';
             if (!global::input_handler->r_bumper_down) {

@@ -295,16 +295,16 @@ bool Collisions::checkCollisionWithMainDude(int x, int y, int width, int height)
 
 bool Collisions::checkCollisionWithMainDudeWidthBoundary(int x, int y, int width, int height, int x_boundary) {
     return global::main_dude->x + 16 > x && global::main_dude->x <= x + width &&
-           y + height > global::main_dude->y && y <= global::main_dude->y + MAIN_DUDE_HEIGHT;
+           y + height > global::main_dude->y && y <= global::main_dude->y + MAIN_DUDE_PHYSICAL_HEIGHT;
 }
 
 bool Collisions::checkCollisionWithMainDudeWhip(int x, int y, int width, int height) {
     if (global::main_dude->state == SpriteState::W_LEFT) {
-        return x + width >= global::main_dude->x - 10 && x + width < global::main_dude->x + MAIN_DUDE_WIDTH &&
-               y + height > global::main_dude->y && y < global::main_dude->y + MAIN_DUDE_HEIGHT;
+        return x + width >= global::main_dude->x - 10 && x + width < global::main_dude->x + MAIN_DUDE_PHYSICAL_WIDTH &&
+               y + height > global::main_dude->y && y < global::main_dude->y + MAIN_DUDE_PHYSICAL_HEIGHT;
     } else if (global::main_dude->state == SpriteState::W_RIGHT) {
-        return x + width >= global::main_dude->x && x + width < global::main_dude->x + MAIN_DUDE_WIDTH + 20 &&
-               y + height > global::main_dude->y && y < global::main_dude->y + MAIN_DUDE_HEIGHT;
+        return x + width >= global::main_dude->x && x + width < global::main_dude->x + MAIN_DUDE_PHYSICAL_WIDTH + 20 &&
+               y + height > global::main_dude->y && y < global::main_dude->y + MAIN_DUDE_PHYSICAL_HEIGHT;
     } else return false;
 
 }

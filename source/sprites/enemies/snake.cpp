@@ -74,7 +74,7 @@ void Snake::draw() {
     }
 
 
-    if (global::main_dude->whip && !killed && global::main_dude->whip_timer > 120) {
+    if (global::main_dude->using_whip && !killed && global::main_dude->whip->whip_timer > 120) {
         if (Collisions::checkCollisionWithMainDudeWhip(x, y, 16, 16)) {
             kill();
         }
@@ -288,11 +288,11 @@ void Snake::initSprite() {
     subSpriteInfo->entry->isHidden = false;
     mainSpriteInfo->entry->isHidden = false;
 /*
-    subSpriteInfo->entry->vFlip = false;
-    subSpriteInfo->entry->hFlip= false;
+    sub_sprite_info->entry->vFlip = false;
+    sub_sprite_info->entry->hFlip= false;
 
-    mainSpriteInfo->entry->vFlip = false;
-    mainSpriteInfo->entry->hFlip= false;*/
+    main_sprite_info->entry->vFlip = false;
+    main_sprite_info->entry->hFlip= false;*/
 
     int main_x = x - global::camera->x;
     int main_y = y - global::camera->y;

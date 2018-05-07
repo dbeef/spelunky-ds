@@ -3,6 +3,7 @@
 //
 
 #include "moving_object.h"
+#include "../globals_declarations.h"
 
 void MovingObject::limit_speed(int max_x, int max_y) {
 
@@ -34,6 +35,25 @@ void MovingObject::apply_friction(int friction_delta_time_ms, int friction_delta
         }
     }
 
+}
+
+void MovingObject::get_x_y_viewported(int *out_main_x, int *out_main_y, int *out_sub_x, int *out_sub_y) {
+    *out_main_x = x - global::camera->x;
+    *out_main_y = y - global::camera->y;
+    *out_sub_x = x - global::camera->x;
+    *out_sub_y = y - global::camera->y - SCREEN_HEIGHT;
+
+    if (global::camera->y + SCREEN_HEIGHT > this->y + sprite_height ||
+        global::camera->y + SCREEN_HEIGHT + SCREEN_HEIGHT < this->y - sprite_height) {
+        //Just an arbitrary position value, so the sprite would not be rendered.
+        *out_sub_x = -SCREEN_WIDTH;
+        *out_sub_y = -SCREEN_WIDTH;
+    }
+    if (global::camera->y > this->y + sprite_height ||
+        global::camera->y + SCREEN_HEIGHT < this->y - sprite_height) {
+        *out_main_x = -SCREEN_WIDTH;
+        *out_main_y = -SCREEN_WIDTH;
+    }
 }
 
 //https://stackoverflow.com/questions/120876/what-are-the-rules-for-calling-the-superclass-constructor

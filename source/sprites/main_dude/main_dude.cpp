@@ -48,7 +48,7 @@ void MainDude::handle_key_input() {
             }
         }
         if (global::input_handler->l_bumper_down) {
-            if (!stunned && !whip) {
+            if (!stunned && !using_whip) {
                 if (holding_item) {
 
                     //throw holding item
@@ -100,7 +100,7 @@ void MainDude::handle_key_input() {
 
                     mmEffect(SFX_XWHIP);
 
-                    whip = true;
+                    using_whip = true;
                     animFrame = 0;
                 }
             }
@@ -162,8 +162,8 @@ void MainDude::handle_key_input() {
 
 //            std::cout<< *global::timer << '\n';
 
-            int xx = floor_div(this->x + 0.5 * MAIN_DUDE_WIDTH, 16);
-            int yy = floor_div(this->y + 0.5 * MAIN_DUDE_HEIGHT, 16);
+            int xx = floor_div(this->x + 0.5 * MAIN_DUDE_PHYSICAL_WIDTH, 16);
+            int yy = floor_div(this->y + 0.5 * MAIN_DUDE_PHYSICAL_HEIGHT, 16);
 
 //            std::cout<< *global::timer << '\n';
 
@@ -221,8 +221,8 @@ void MainDude::handle_key_input() {
 
         if (global::input_handler->down_key_held) {
 
-            int xx = floor_div(this->x + 0.5 * MAIN_DUDE_WIDTH, 16);
-            int yy = floor_div(this->y + 0.5 * MAIN_DUDE_HEIGHT, 16);
+            int xx = floor_div(this->x + 0.5 * MAIN_DUDE_PHYSICAL_WIDTH, 16);
+            int yy = floor_div(this->y + 0.5 * MAIN_DUDE_PHYSICAL_HEIGHT, 16);
 
             MapTile *neighboringTiles[9] = {};
 
@@ -266,23 +266,11 @@ void MainDude::updateTimers() {
     speed_inc_timer += *global::timer;
     hanging_timer += *global::timer;
 
-    if (whip) {
-        whip_timer += *global::timer;
-        if (whip_timer > 420 + 0 * 70) {
-            whip_timer = 0;
-            whip = false;
-            sub_whip->entry->isHidden = true;
-            main_whip->entry->isHidden = true;
-            sub_pre_whip->entry->isHidden = true;
-            main_pre_whip->entry->isHidden = true;
-        }
-    }
-
     if (animation_frame_timer > 65) {
 
         animation_frame_timer = 0;
 
-        if (!whip || (whip && animFrame < 5) || (climbing && animFrame < 12) || (exiting_level && animFrame < 16))
+        if (!using_whip || (using_whip && animFrame < 5) || (climbing && animFrame < 12) || (exiting_level && animFrame < 16))
             animFrame++;
 
     }
@@ -357,7 +345,7 @@ void MainDude::updateTimers() {
     }
 
 
-    if (xSpeed != 0 || stunned || whip || (pushing_left || pushing_right) || (climbing && ySpeed != 0) || exiting_level)
+    if (xSpeed != 0 || stunned || using_whip || (pushing_left || pushing_right) || (climbing && ySpeed != 0) || exiting_level)
         animation_frame_timer += *global::timer;
 
 
@@ -428,83 +416,30 @@ void MainDude::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos
 void MainDude::init() {
 
     initSprite();
-
     frameGfx = (u8 *) gfx_spelunkerTiles;
-    sub_whip->entry->isHidden = true;
-    main_whip->entry->isHidden = true;
-    sub_pre_whip->entry->isHidden = true;
-    main_pre_whip->entry->isHidden = true;
     time_since_last_damage = DAMAGE_PROTECTION_TIME + 1;
+
+    whip = new Whip();
+    whip->init();
+    global::sprites.push_back(whip);
 }
 
-//todo split
 void MainDude::draw() {
 
-    //apply function with moving_object->sprite_width
-    int main_x = x - global::camera->x;
-    int main_y = y - global::camera->y;
-    int sub_x = x - global::camera->x;
-    int sub_y = y - global::camera->y - 192;
+    //todo split this function into utils
+    //todo using_whip should be separate class so it could benefit from its own viewporting
+    //todo use get_x_y in every moving_object
+    //todo make class static_object for copyrights sign and other non-moving things
+    //todo make file input/output class for savegames
 
-    if (global::camera->y + 192 > this->y + 16 || global::camera->y + 192 + 192 < this->y - 16) {
-        sub_x = -128;
-        sub_y = -128;
-    }
-    if (global::camera->y > this->y + 16 || global::camera->y + 192 < this->y - 16) {
-        main_x = -128;
-        main_y = -128;
-    }
+    int main_x, main_y, sub_x, sub_y;
+    get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
 
     main_spelunker->entry->x = main_x;
     main_spelunker->entry->y = main_y;
 
     sub_spelunker->entry->x = sub_x;
     sub_spelunker->entry->y = sub_y;
-    //
-    if (whip) {
-
-        sub_pre_whip->entry->y = sub_y - 2;
-        main_pre_whip->entry->y = main_y - 2;
-        sub_whip->entry->y = sub_y;
-        main_whip->entry->y = main_y;
-
-        if (whip_timer > 100 && whip_timer < 180) {
-            main_pre_whip->entry->isHidden = false;
-            sub_pre_whip->entry->isHidden = false;
-        } else if (whip_timer >= 220) {
-            main_pre_whip->entry->isHidden = true;
-            sub_pre_whip->entry->isHidden = true;
-            main_whip->entry->isHidden = false;
-            sub_whip->entry->isHidden = false;
-        }
-
-        if (state == SpriteState::W_LEFT) {
-
-            main_whip->entry->hFlip = true;
-            sub_whip->entry->hFlip = true;
-            main_pre_whip->entry->hFlip = true;
-            sub_pre_whip->entry->hFlip = true;
-
-            sub_pre_whip->entry->x = sub_x + 8;
-            main_pre_whip->entry->x = main_x + 8;
-            sub_whip->entry->x = sub_x - 12;
-            main_whip->entry->x = main_x - 12;
-
-        } else {
-
-            main_whip->entry->hFlip = false;
-            sub_whip->entry->hFlip = false;
-            main_pre_whip->entry->hFlip = false;
-            sub_pre_whip->entry->hFlip = false;
-
-            sub_pre_whip->entry->x = sub_x - 8;
-            main_pre_whip->entry->x = main_x - 8;
-            main_whip->entry->x = main_x + 8;
-            sub_whip->entry->x = sub_x + 8;
-        }
-
-    }
-
 
     if (exiting_level || (dead && global::input_handler->l_bumper_down)) {
 
@@ -646,7 +581,7 @@ void MainDude::draw() {
         apply_stunned_sprite();
     } else if (pushing_left || pushing_right) {
         apply_pushing_sprite();
-    } else if (whip) {
+    } else if (using_whip) {
         apply_whip_sprite();
     } else if (hanging_on_tile_right || hanging_on_tile_left) {
         apply_hanging_on_tile_sprite();
@@ -752,8 +687,8 @@ void MainDude::updatePosition() {
 //            Collisions::getCenterTile(this->x, this->y, MAIN_DUDE_HEIGHT, MAIN_DUDE_WIDTH, xx, yy);
 //fixme
 
-        xx = floor_div(this->x + 0.5 * MAIN_DUDE_WIDTH, 16);
-        yy = floor_div(this->y + 0.5 * MAIN_DUDE_HEIGHT, 16);
+        xx = floor_div(this->x + 0.5 * MAIN_DUDE_PHYSICAL_WIDTH, 16);
+        yy = floor_div(this->y + 0.5 * MAIN_DUDE_PHYSICAL_HEIGHT, 16);
 
         if (old_xx != xx || old_yy != yy) {
             if (xx < 31 && yy < 31)
@@ -774,40 +709,10 @@ void MainDude::initSprite() {
     main_spelunker = global::main_oam_manager->initSprite(gfx_spelunkerPal, gfx_spelunkerPalLen, nullptr,
                                                           16 * 16, 16, MAIN_DUDE, true, false);
 
-    main_pre_whip = global::main_oam_manager->initSprite(gfx_whipPal, gfx_whipPalLen,
-                                                         nullptr, 16 * 16, 16, PRE_WHIP, true,
-                                                         false);
-
-    main_whip = global::main_oam_manager->initSprite(gfx_whipPal, gfx_whipPalLen,
-                                                     nullptr, 16 * 16, 16, WHIP, true, false);
 
     sub_spelunker = global::sub_oam_manager->initSprite(gfx_spelunkerPal, gfx_spelunkerPalLen, nullptr,
                                                         16 * 16, 16, MAIN_DUDE, true, false);
 
-    sub_pre_whip = global::sub_oam_manager->initSprite(gfx_whipPal, gfx_whipPalLen,
-                                                       nullptr, 16 * 16, 16, PRE_WHIP, true,
-                                                       false);
-
-    sub_whip = global::sub_oam_manager->initSprite(gfx_whipPal, gfx_whipPalLen,
-                                                   nullptr, 16 * 16, 16, WHIP, true, false);
-
-
-    u8 *frameGfx_whip = (u8 *) gfx_whipTiles;
-
-    u8 *gfx_pre_whip = (frameGfx_whip + (1 * 16 * 16 / 2));
-    u8 *gfx_whip = (frameGfx_whip + (0 * 16 * 16 / 2));
-
-    main_pre_whip->updateFrame(gfx_pre_whip, 16 * 16);
-    sub_pre_whip->updateFrame(gfx_pre_whip, 16 * 16);
-
-    main_whip->updateFrame(gfx_whip, 16 * 16);
-    sub_whip->updateFrame(gfx_whip, 16 * 16);
-
-
-    sub_whip->entry->isHidden = true;
-    main_whip->entry->isHidden = true;
-    sub_pre_whip->entry->isHidden = true;
-    main_pre_whip->entry->isHidden = true;
 
 
     int main_x = x - global::camera->x;
@@ -843,7 +748,7 @@ void MainDude::apply_crawling_sprite() {
     else
         frame = animFrame + (5) * SPRITESHEET_ROW_WIDTH + 3;
 
-    offset = frameGfx + frame * MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT / 2;
+    offset = frameGfx + frame * MAIN_DUDE_SPRITE_WIDTH * MAIN_DUDE_SPRITE_HEIGHT / 2;
     main_spelunker->updateFrame(offset, 16 * 16);
     sub_spelunker->updateFrame(offset, 16 * 16);
 }
@@ -855,10 +760,10 @@ void MainDude::apply_hanging_on_tile_sprite() {
 
     if (hanging_on_tile_right) {
         frame = (2 * SPRITESHEET_ROW_WIDTH) + 1;
-        offset = frameGfx + frame * MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT / 2;
+        offset = frameGfx + frame * MAIN_DUDE_SPRITE_WIDTH * MAIN_DUDE_SPRITE_HEIGHT / 2;
     } else if (hanging_on_tile_left) {
         frame = (2 * SPRITESHEET_ROW_WIDTH);
-        offset = frameGfx + frame * MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT / 2;
+        offset = frameGfx + frame * MAIN_DUDE_SPRITE_WIDTH * MAIN_DUDE_SPRITE_HEIGHT / 2;
     }
 
     main_spelunker->updateFrame(offset, 16 * 16);
@@ -872,10 +777,10 @@ void MainDude::apply_whip_sprite() {
 
     if (state == SpriteState::W_LEFT) {
         frame = (9 * SPRITESHEET_ROW_WIDTH) + 2 + animFrame;
-        offset = frameGfx + frame * MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT / 2;
+        offset = frameGfx + frame * MAIN_DUDE_SPRITE_WIDTH * MAIN_DUDE_SPRITE_HEIGHT / 2;
     } else if (state == 0) {
         frame = (10 * SPRITESHEET_ROW_WIDTH) + 2 + animFrame;
-        offset = frameGfx + frame * MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT / 2;
+        offset = frameGfx + frame * MAIN_DUDE_SPRITE_WIDTH * MAIN_DUDE_SPRITE_HEIGHT / 2;
     }
 
     main_spelunker->updateFrame(offset, 16 * 16);
@@ -894,7 +799,7 @@ void MainDude::apply_pushing_sprite() {
         frame = animFrame + (8) * SPRITESHEET_ROW_WIDTH + 1;
 
 
-    offset = frameGfx + frame * MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT / 2;
+    offset = frameGfx + frame * MAIN_DUDE_SPRITE_WIDTH * MAIN_DUDE_SPRITE_HEIGHT / 2;
     main_spelunker->updateFrame(offset, 16 * 16);
     sub_spelunker->updateFrame(offset, 16 * 16);
 
@@ -909,7 +814,7 @@ void MainDude::apply_stunned_sprite() {
         animFrame = 0;
 
     frame = (3 * SPRITESHEET_ROW_WIDTH) + animFrame;
-    offset = frameGfx + frame * MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT / 2;
+    offset = frameGfx + frame * MAIN_DUDE_SPRITE_WIDTH * MAIN_DUDE_SPRITE_HEIGHT / 2;
     main_spelunker->updateFrame(offset, 16 * 16);
     sub_spelunker->updateFrame(offset, 16 * 16);
 }
@@ -923,7 +828,7 @@ void MainDude::apply_climbing_sprite() {
         animFrame = 0;
 
     frame = ((12) * SPRITESHEET_ROW_WIDTH) + animFrame + 2;
-    offset = frameGfx + frame * MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT / 2;
+    offset = frameGfx + frame * MAIN_DUDE_SPRITE_WIDTH * MAIN_DUDE_SPRITE_HEIGHT / 2;
     main_spelunker->updateFrame(offset, 16 * 16);
     sub_spelunker->updateFrame(offset, 16 * 16);
 
@@ -939,7 +844,7 @@ void MainDude::apply_dead_sprite() {
     } else
         frame = ((2) * SPRITESHEET_ROW_WIDTH) + 4;
 
-    offset = frameGfx + frame * MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT / 2;
+    offset = frameGfx + frame * MAIN_DUDE_SPRITE_WIDTH * MAIN_DUDE_SPRITE_HEIGHT / 2;
     main_spelunker->updateFrame(offset, 16 * 16);
     sub_spelunker->updateFrame(offset, 16 * 16);
 }
@@ -951,10 +856,10 @@ void MainDude::apply_walking_sprite() {
 
     if (state == SpriteState::W_LEFT) {
         frame = state * FRAMES_PER_ANIMATION;
-        offset = frameGfx + frame * MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT / 2;
+        offset = frameGfx + frame * MAIN_DUDE_SPRITE_WIDTH * MAIN_DUDE_SPRITE_HEIGHT / 2;
     } else if (state == SpriteState::W_RIGHT) {
         frame = state * FRAMES_PER_ANIMATION;
-        offset = frameGfx + frame * MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT / 2;
+        offset = frameGfx + frame * MAIN_DUDE_SPRITE_WIDTH * MAIN_DUDE_SPRITE_HEIGHT / 2;
     }
     main_spelunker->updateFrame(offset, 16 * 16);
     sub_spelunker->updateFrame(offset, 16 * 16);
@@ -968,14 +873,14 @@ void MainDude::apply_falling_sprite() {
 
     if (abs(xSpeed) != 0) {
         frame = animFrame + state * FRAMES_PER_ANIMATION;
-        offset = frameGfx + frame * MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT / 2;
+        offset = frameGfx + frame * MAIN_DUDE_SPRITE_WIDTH * MAIN_DUDE_SPRITE_HEIGHT / 2;
     } else {
         if (state == SpriteState::W_LEFT) {
             frame = (2 * SPRITESHEET_ROW_WIDTH) + 2;
-            offset = frameGfx + frame * MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT / 2;
+            offset = frameGfx + frame * MAIN_DUDE_SPRITE_WIDTH * MAIN_DUDE_SPRITE_HEIGHT / 2;
         } else if (state == SpriteState::W_RIGHT) {
             frame = (2 * SPRITESHEET_ROW_WIDTH) + 3;
-            offset = frameGfx + frame * MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT / 2;
+            offset = frameGfx + frame * MAIN_DUDE_SPRITE_WIDTH * MAIN_DUDE_SPRITE_HEIGHT / 2;
         }
 
     }
@@ -989,7 +894,7 @@ void MainDude::apply_exiting_level_sprite() {
     u8 *offset;
 
     frame = ((13) * SPRITESHEET_ROW_WIDTH) + animFrame + 2;
-    offset = frameGfx + frame * MAIN_DUDE_WIDTH * MAIN_DUDE_HEIGHT / 2;
+    offset = frameGfx + frame * MAIN_DUDE_SPRITE_WIDTH * MAIN_DUDE_SPRITE_HEIGHT / 2;
     main_spelunker->updateFrame(offset, 16 * 16);
     sub_spelunker->updateFrame(offset, 16 * 16);
 
@@ -1018,3 +923,9 @@ void MainDude::reset_values_checked_every_frame(){
     can_climb_ladder = false;
 }
 
+MainDude::MainDude() {
+    physical_height = MAIN_DUDE_PHYSICAL_HEIGHT;
+    physical_width = MAIN_DUDE_PHYSICAL_WIDTH;
+    sprite_height = MAIN_DUDE_SPRITE_HEIGHT;
+    sprite_width = MAIN_DUDE_SPRITE_WIDTH;
+}

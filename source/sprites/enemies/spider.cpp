@@ -32,7 +32,7 @@ void Spider::draw() {
     subSpriteInfo->entry->isHidden = false;
 
     if (!hunting)
-        hunting = abs(y - global::main_dude->y) < 9 * 16 && global::main_dude->x + MAIN_DUDE_WIDTH > x &&
+        hunting = abs(y - global::main_dude->y) < 9 * 16 && global::main_dude->x + MAIN_DUDE_PHYSICAL_WIDTH > x &&
                   global::main_dude->x < x + 16 && global::main_dude->y > y;
     else {
         animFrameTimer += *global::timer;
@@ -65,7 +65,7 @@ void Spider::draw() {
     }
 
 
-    if (global::main_dude->whip && !killed && global::main_dude->whip_timer > 120) {
+    if (global::main_dude->using_whip && !killed && global::main_dude->whip->whip_timer > 120) {
         if (Collisions::checkCollisionWithMainDudeWhip(x, y, 16, 16)) {
             kill();
         }

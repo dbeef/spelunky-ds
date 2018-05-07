@@ -185,8 +185,8 @@ void Bomb::init() {
     explosionFrame = 0;
 
 //    frameGfx = (u8 *) explosionTiles + 3* 64 * 64 / 2;
-//    subSpriteInfo->updateFrame(frameGfx, 64 * 64);
-//    mainSpriteInfo->updateFrame(frameGfx, 64 * 64);
+//    sub_sprite_info->updateFrame(frameGfx, 64 * 64);
+//    main_sprite_info->updateFrame(frameGfx, 64 * 64);
 
 
 

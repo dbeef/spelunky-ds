@@ -90,8 +90,8 @@ void Jar::draw() {
             subSpriteInfo->entry->isHidden = true;
             ready_to_dispose = true;
 //            std::cout<<"HIDDEN";
-//            mainSpriteInfo = nullptr;
-//            subSpriteInfo = nullptr;
+//            main_sprite_info = nullptr;
+//            sub_sprite_info = nullptr;
         }
 
     }
@@ -131,7 +131,7 @@ void Jar::draw() {
     subSpriteInfo->entry->y = sub_y;
 
 
-    if (global::main_dude->whip && !killed && global::main_dude->whip_timer > 120) {
+    if (global::main_dude->using_whip && !killed && global::main_dude->whip->whip_timer > 120) {
         if (Collisions::checkCollisionWithMainDudeWhip(x, y, 8, 8)) {
             killed = true;
             mainSpriteInfo->entry->isHidden = true;
