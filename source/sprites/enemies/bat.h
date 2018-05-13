@@ -5,6 +5,11 @@
 #ifndef SPELUNKYDS_BAT_H
 #define SPELUNKYDS_BAT_H
 
+#define BAT_PHYSICAL_HEIGHT 16
+#define BAT_PHYSICAL_WIDTH 16
+#define BAT_SPRITE_HEIGHT 16
+#define BAT_SPRITE_WIDTH 16
+
 #include <nds/jtypes.h>
 #include "../moving_object.h"
 #include "../sprite_state.h"
@@ -14,6 +19,8 @@ class Bat : public MovingObject {
 
 public:
 
+    Bat();
+    
     void updateOther() override {};
 
     void init() override;
@@ -23,8 +30,6 @@ public:
     void kill() override ;
 
     void updateTimers() override {};
-
-    void updatePosition() override;
 
     void updateSpeed() override;
 
@@ -36,19 +41,19 @@ public:
 
     void initSprite() override;
 
-    double pos_inc_timer;
+    double pos_inc_timer{};
 
-    SpriteInfo *mainSpriteInfo = nullptr;
-    SpriteInfo *subSpriteInfo = nullptr;
-    u8 *frameGfx;
+    SpriteInfo *mainSpriteInfo {};
+    SpriteInfo *subSpriteInfo {};
+    u8 *frameGfx{};
 
-    SpriteState spriteState;
+    SpriteState spriteState{};
 
-    int animFrame;
-    int animFrameTimer;
+    int animFrame{};
+    int animFrameTimer{};
 
-    bool hanging;
-    bool hunting;
+    bool hanging{};
+    bool hunting{};
 
     void set_sprite_hanging();
 

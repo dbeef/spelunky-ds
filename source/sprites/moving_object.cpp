@@ -4,6 +4,7 @@
 
 #include "moving_object.h"
 #include "../globals_declarations.h"
+#include "../tiles/map_utils.h"
 
 void MovingObject::limit_speed(int max_x, int max_y) {
 
@@ -45,15 +46,74 @@ void MovingObject::get_x_y_viewported(int *out_main_x, int *out_main_y, int *out
 
     if (global::camera->y + SCREEN_HEIGHT > this->y + sprite_height ||
         global::camera->y + SCREEN_HEIGHT + SCREEN_HEIGHT < this->y - sprite_height) {
-        //Just an arbitrary position value, so the sprite would not be rendered.
-        *out_sub_x = -SCREEN_WIDTH;
-        *out_sub_y = -SCREEN_WIDTH;
+        *out_sub_x = -SCREEN_HEIGHT;
+        *out_sub_y = -SCREEN_HEIGHT;
     }
     if (global::camera->y > this->y + sprite_height ||
         global::camera->y + SCREEN_HEIGHT < this->y - sprite_height) {
-        *out_main_x = -SCREEN_WIDTH;
-        *out_main_y = -SCREEN_WIDTH;
+        *out_main_x = -SCREEN_HEIGHT;
+        *out_main_y = -SCREEN_HEIGHT;
     }
+
+    if (*out_sub_y + sprite_height < 0 || out_sub_x + sprite_width < 0) {
+        *out_sub_x = -SCREEN_HEIGHT;
+        *out_sub_y = -SCREEN_HEIGHT;
+    }
+
+    if (*out_main_y + sprite_height < 0 || *out_main_x + sprite_width< 0) {
+        *out_main_x = -SCREEN_HEIGHT;
+        *out_main_y = -SCREEN_HEIGHT;
+    }
+
+}
+
+void MovingObject::updatePosition() {
+
+    double tempXspeed = abs(xSpeed);
+    double tempYspeed = abs(ySpeed);
+
+    int old_xx = -1;
+    int old_yy = -1;
+    int xx;
+    int yy;
+
+    while (tempXspeed > 0 || tempYspeed > 0) {
+        if (tempXspeed > 0) {
+            if (xSpeed > 0) {
+                x += 1;
+            } else if (xSpeed < 0) {
+                x -= 1;
+            }
+        }
+        if (tempYspeed > 0) {
+            if (ySpeed > 0)
+                y += 1;
+            else if (ySpeed < 0)
+                y -= 1;
+        }
+
+        xx = floor_div(this->x + 0.5 * physical_width, 16);
+        yy = floor_div(this->y + 0.5 * physical_height, 16);
+
+        if (old_xx != xx || old_yy != yy) {
+            if (xx < 31 && yy < 31)
+                updateCollisionsMap(xx, yy);
+        }
+
+        old_xx = xx;
+        old_yy = yy;
+
+        tempXspeed--;
+        tempYspeed--;
+
+    }
+}
+
+MovingObject::MovingObject() {
+    hold_by_main_dude = false;
+    activated_by_main_dude = false;
+    killed = false;
+    ready_to_dispose = false;
 }
 
 //https://stackoverflow.com/questions/120876/what-are-the-rules-for-calling-the-superclass-constructor

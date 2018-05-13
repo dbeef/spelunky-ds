@@ -21,7 +21,8 @@ void Moniez::draw() {
     if (ready_to_dispose)
         return;
 
-    if (!collected && Collisions::checkCollisionWithMainDudeWidthBoundary(x, y, physics_width, physics_height, 8)) {
+
+    if (!collected && Collisions::checkCollisionWithMainDudeWidthBoundary(x, y, physical_width, physical_height, 8)) {
         global::hud->draw();
 
         if (spriteType == SpritesheetType::MONIEZ_RUBY_BIG) {
@@ -35,20 +36,17 @@ void Moniez::draw() {
         subSpriteInfo->entry->isHidden = true;
         mainSpriteInfo->entry->isHidden = true;
 
-        if(spriteType == SpritesheetType::MONIEZ_RUBY_BIG) {
+        if (spriteType == SpritesheetType::MONIEZ_RUBY_BIG) {
             if (ruby_type == 0) {
-                global::collected_loot.push_back(SpriteType ::S_MONIEZ_RUBY_BIG_RED);
+                global::collected_loot.push_back(SpriteType::S_MONIEZ_RUBY_BIG_RED);
             } else if (ruby_type == 1) {
-                global::collected_loot.push_back(SpriteType ::S_MONIEZ_RUBY_BIG_GREEN);
+                global::collected_loot.push_back(SpriteType::S_MONIEZ_RUBY_BIG_GREEN);
             } else if (ruby_type == 2) {
-                global::collected_loot.push_back(SpriteType ::S_MONIEZ_RUBY_BIG_BLUE);
+                global::collected_loot.push_back(SpriteType::S_MONIEZ_RUBY_BIG_BLUE);
             }
+        } else {
+            global::collected_loot.push_back(SpriteType::S_MONIEZ_TRIPLE_GOLD_BARS);
         }
-        else
-        {
-            global::collected_loot.push_back(SpriteType ::S_MONIEZ_TRIPLE_GOLD_BARS);
-        }
-
 
 
         subSpriteInfo->entry = nullptr;
@@ -89,69 +87,24 @@ void Moniez::updateSpeed() {
 
     if (change_pos) {
         updatePosition();
-    }
 
-}
-
-void Moniez::updatePosition() {
-
-    if (bottomCollision && xSpeed > 0) {
-        xSpeed -= 0.055;
-        if (xSpeed < 0)
-            xSpeed = 0;
-    }
-    if (bottomCollision && xSpeed < 0) {
-        xSpeed += 0.055;
-        if (xSpeed > 0)
-            xSpeed = 0;
-    }
-
-    double tempXspeed = abs(xSpeed);
-    double tempYspeed = abs(ySpeed);
-
-    int old_xx = -1;
-    int old_yy = -1;
-    int xx;
-    int yy;
-
-    while (tempXspeed > 0 || tempYspeed > 0) {
-        if (tempXspeed > 0) {
-            if (xSpeed > 0) {
-                x += 1;
-            } else if (xSpeed < 0) {
-                x -= 1;
-            }
+        if (bottomCollision && xSpeed > 0) {
+            xSpeed -= 0.055;
+            if (xSpeed < 0)
+                xSpeed = 0;
         }
-        if (tempYspeed > 0) {
-            if (ySpeed > 0)
-                y += 1;
-            else if (ySpeed < 0)
-                y -= 1;
+        if (bottomCollision && xSpeed < 0) {
+            xSpeed += 0.055;
+            if (xSpeed > 0)
+                xSpeed = 0;
         }
+        if (!bottomCollision)
+            ySpeed += GRAVITY_DELTA_SPEED;
 
-//            Collisions::getCenterTile(this->x, this->y, MAIN_DUDE_HEIGHT, MAIN_DUDE_WIDTH, xx, yy);
-//fixme
+        pos_inc_timer = 0;
 
-        xx = floor_div(this->x + 0.5 * BOMB_SIZE, 16);
-        yy = floor_div(this->y + 0.5 * BOMB_SIZE, 16);
-
-        if (old_xx != xx || old_yy != yy) {
-            if (xx < 31 && yy < 31)
-                updateCollisionsMap(xx, yy);
-        }
-
-        old_xx = xx;
-        old_yy = yy;
-
-        tempXspeed--;
-        tempYspeed--;
     }
 
-
-    if (!bottomCollision)
-        ySpeed += GRAVITY_DELTA_SPEED;
-
-    pos_inc_timer = 0;
 }
 
 void Moniez::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
@@ -160,20 +113,22 @@ void Moniez::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_i
     Collisions::getNeighboringTiles(global::level_generator->map_tiles, x_current_pos_in_tiles, y_current_pos_in_tiles,
                                     tiles);
 
-    bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, sprite_width, sprite_width, true);
-    leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, sprite_width, sprite_width, true);
-    rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, sprite_width, sprite_width, true);
+    bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, sprite_width, sprite_height, true);
+    leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, sprite_width, sprite_height, true);
+    rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, sprite_width, sprite_height, true);
     upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, sprite_width, true);
-
-    if (bottomCollision) {
-        //nothing
-    }
 
 }
 
 void Moniez::initSprite() {
 
     if (spriteType == SpritesheetType::MONIEZ_TRIPLE_GOLD_BARS) {
+
+        physical_height = TRIPLE_GOLDBAR_PHYSICAL_HEIGHT;
+        physical_width = TRIPLE_GOLDBAR_PHYSICAL_WIDTH;
+        sprite_height = TRIPLE_GOLDBAR_SPRITE_HEIGHT;
+        sprite_width = TRIPLE_GOLDBAR_SPRITE_WIDTH;
+
         subSpriteInfo = global::sub_oam_manager->initSprite(gfx_triple_goldbarPal, gfx_triple_goldbarPalLen,
                                                             nullptr, sprite_width * sprite_height, sprite_width,
                                                             spriteType, true, true);
@@ -182,6 +137,12 @@ void Moniez::initSprite() {
                                                               spriteType, true, true);
         frameGfx = (u8 *) gfx_triple_goldbarTiles;
     } else if (spriteType == SpritesheetType::MONIEZ_RUBY_BIG) {
+
+        physical_height = RUBY_PHYSICAL_HEIGHT;
+        physical_width = RUBY_PHYSICAL_WIDTH;
+        sprite_height = RUBY_SPRITE_HEIGHT;
+        sprite_width = RUBY_SPRITE_WIDTH;
+
         subSpriteInfo = global::sub_oam_manager->initSprite(gfx_rubies_bigPal, gfx_rubies_bigPalLen,
                                                             nullptr, sprite_width * sprite_height, sprite_width,
                                                             spriteType, true, true);
@@ -198,7 +159,6 @@ void Moniez::initSprite() {
         else if (ruby_type == 2)
             frameGfx = (u8 *) gfx_rubies_bigTiles + 8 * 8 * 2 / 2;
 
-
     }
 
 
@@ -208,31 +168,8 @@ void Moniez::initSprite() {
 
 void Moniez::set_position() {
 
-    int main_x = x - global::camera->x;
-    int main_y = y - global::camera->y;
-    int sub_x = x - global::camera->x;
-    int sub_y = y - global::camera->y - 192;
-
-    if (global::camera->y + 192 > this->y + sprite_height || global::camera->y + 192 + 192 < this->y - sprite_height) {
-        sub_x = -128;
-        sub_y = -128;
-    }
-    if (global::camera->y > this->y + sprite_height || global::camera->y + 192 < this->y - sprite_height) {
-        main_x = -128;
-        main_y = -128;
-
-    }
-
-    if (sub_y + sprite_height < 0 || sub_x + sprite_width < 0) {
-        sub_x = -128;
-        sub_y = -128;
-    }
-
-    if (main_y + sprite_height < 0 || main_x + sprite_width < 0) {
-        main_x = -128;
-        main_y = -128;
-    }
-
+    int main_x, main_y, sub_x, sub_y;
+    get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
 
     mainSpriteInfo->entry->x = main_x;
     mainSpriteInfo->entry->y = main_y;
@@ -245,6 +182,10 @@ void Moniez::set_position() {
 
     subSpriteInfo->entry->vFlip = false;
     subSpriteInfo->entry->hFlip = false;
+
+}
+
+Moniez::Moniez() {
 
 }
 

@@ -56,7 +56,7 @@ void gameloop::scroll() {
         global::camera->update_position();
 
         for (int a = 0; a < global::sprites.size(); a++) {
-            if (global::sprites.at(a) && !global::sprites.at(a)->ready_to_dispose && !global::sprites.at(a)->killed) {
+            if (global::sprites.at(a) /*&& !global::sprites.at(a)->ready_to_dispose *//*&& !global::sprites.at(a)->killed*/) {
                 (*global::sprites.at(a)).update();
                 (*global::sprites.at(a)).draw();
             }
@@ -140,11 +140,6 @@ void gameloop::populate_cave_moniez() {
 
                         Moniez *moniez = new Moniez();
 
-                        moniez->sprite_height = 16;
-                        moniez->sprite_width = 16;
-                        moniez->physics_height = 8;
-                        moniez->physics_width = 16;
-
                         moniez->spriteType = MONIEZ_TRIPLE_GOLD_BARS;
                         moniez->value = 1000;
 
@@ -161,10 +156,7 @@ void gameloop::populate_cave_moniez() {
 
                     if (loot_type == 2 && rubies_left > 0 && r == 1) {
                         Moniez *moniez = new Moniez();
-                        moniez->sprite_height = 8;
-                        moniez->sprite_width = 8;
-                        moniez->physics_height = 8;
-                        moniez->physics_width = 8;
+
                         moniez->spriteType = MONIEZ_RUBY_BIG;
                         moniez->value = 1200;
                         moniez->init();

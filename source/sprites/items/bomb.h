@@ -10,6 +10,11 @@
 #define ARMED_TIME_BLINK_SLOW 2000
 #define ARMED_TIME_BLINK_FAST 3500
 
+#define BOMB_PHYSICAL_HEIGHT 8
+#define BOMB_PHYSICAL_WIDTH 8
+#define BOMB_SPRITE_HEIGHT 64
+#define BOMB_SPRITE_WIDTH 64
+
 #define MAX_X_SPEED_BOMB 4
 #define MAX_Y_SPEED_BOMB 4
 
@@ -21,6 +26,8 @@
 class Bomb : public MovingObject {
 
 public:
+
+    Bomb();
 
     void updateOther() override {};
 
@@ -34,8 +41,6 @@ public:
 
     void updateTimers() override {};
 
-    void updatePosition() override ;
-
     void updateSpeed() override;
 
     void updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) override;
@@ -44,20 +49,20 @@ public:
 
     void onCollisionWithMainCharacter() override {};
 
-    double pos_inc_timer;
+    double pos_inc_timer{};
 
-    SpriteInfo *mainSpriteInfo = nullptr;
-    SpriteInfo *subSpriteInfo = nullptr;
-    u8 * frameGfx;
+    SpriteInfo *mainSpriteInfo {};
+    SpriteInfo *subSpriteInfo {};
+    u8 * frameGfx{};
 
     //fixme cloning carried_by_main_dude
 //    bool carried;
-    bool armed;
+    bool armed{};
 
-    int armedTimer;
-    int explosionTimer;
+    int armedTimer{};
+    int explosionTimer{};
 
-    int explosionFrame;
+    int explosionFrame{};
 
     void disarm();
 

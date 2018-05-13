@@ -7,10 +7,10 @@
 
 class Camera {
 public:
-    bool follow_main_dude;
-    int position_update_timer;
-    int x;
-    int y;
+    bool follow_main_dude{};
+    int position_update_timer{};
+    int x{};
+    int y{};
     void update_position();
     void set_scroll();
     void instant_focus();

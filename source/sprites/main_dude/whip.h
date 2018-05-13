@@ -38,10 +38,10 @@ public:
 
     void onCollisionWithMainCharacter() override {};
 
-    SpriteInfo *main_sprite_info = nullptr;
-    SpriteInfo *sub_sprite_info = nullptr;
+    SpriteInfo *main_sprite_info {};
+    SpriteInfo *sub_sprite_info {};
 
-    int whip_timer;
+    int whip_timer{};
 
     void assign_pre_whip_sprite();
 

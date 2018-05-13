@@ -1,6 +1,7 @@
 //
 // Created by xdbeef on 24.02.18.
 //
+//https://www.quora.com/Are-primitives-default-initialized-in-C++11
 
 #ifndef SPELUNKYDS_MAINDUDE_H
 #define SPELUNKYDS_MAINDUDE_H
@@ -48,8 +49,6 @@ public:
 
     void updateTimers() override;
 
-    void updatePosition() override;
-
     void updateSpeed() override;
 
     void updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) override;
@@ -60,49 +59,46 @@ public:
 
     void init() override;
 
-    SpriteInfo *main_spelunker = nullptr;
-    SpriteInfo *sub_spelunker = nullptr;
+    SpriteInfo *main_spelunker{};
+    SpriteInfo *sub_spelunker{};
 
-    int animation_frame_timer;
-    int speed_inc_timer;
-    int pos_inc_timer;
+    int animation_frame_timer{};
+    int speed_inc_timer{};
+    int pos_inc_timer{};
     //How much time was spent on hanging, since last flag hanging_on_tile_left/right occured.
-    int hanging_timer;
+    int hanging_timer{};
 
+    int stunned_timer{};
+    int jumping_timer{};
+    int pushing_timer{};
+    int time_since_last_jump{};
+    int time_since_last_damage{};
 
-    int stunned_timer;
-    int jumping_timer;
-    int pushing_timer;
-    int time_since_last_jump;
-    int time_since_last_damage;
+    bool hanging_on_tile_left{};
+    bool hanging_on_tile_right{};
+    bool stunned{};
+    bool crawling{};
+    bool pushing_left{};
+    bool pushing_right{};
 
-    bool hanging_on_tile_left;
-    bool hanging_on_tile_right;
-    bool stunned;
-    bool crawling;
-    bool pushing_left;
-    bool pushing_right;
+    bool using_whip{};
 
-    bool using_whip;
+    bool can_climb_rope{};
+    bool can_climb_ladder{};
+    bool climbing{};
+    bool on_top_of_climbing_space{};
+    bool exiting_level{};
+    bool holding_item{};
+    bool dead{};
 
-    bool can_climb_rope;
-    bool can_climb_ladder;
-    bool climbing;
-    bool on_top_of_climbing_space;
-    bool exiting_level;
-    bool holding_item;
-    bool dead;
-
-    SpriteState state;
-    int animFrame;
-    u8 *frameGfx = nullptr;
-
-    Whip *whip;
+    SpriteState state{};
+    int animFrame{};
+    u8 *frameGfx{};
+    Whip *whip{};
 
     void handle_key_input();
 
     void can_hang_on_tile(MapTile **neighboringTiles);
-
 
     void apply_crawling_sprite();
 

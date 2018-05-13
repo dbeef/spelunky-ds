@@ -11,6 +11,11 @@
 
 
 void Rock::draw() {
+
+//    if(ready_to_dispose){
+//        std::cout<<"ROCK TO DISPOSE";
+//    }
+
     if (hold_by_main_dude && global::input_handler->y_key_down && global::input_handler->down_key_held) {
         hold_by_main_dude = false;
         global::main_dude->holding_item = false;
@@ -23,7 +28,6 @@ void Rock::draw() {
         }
     }
 
-
     if (hold_by_main_dude) {
 
         y = global::main_dude->y + 6;
@@ -32,38 +36,11 @@ void Rock::draw() {
             x = global::main_dude->x - 2;
         } else
             x = global::main_dude->x + 10;
+
     }
-
-
-    int main_x = x - global::camera->x;
-    int main_y = y - global::camera->y;
-    int sub_x = x - global::camera->x;
-    int sub_y = y - global::camera->y - 192;
-
-    if (global::camera->y + 192 > this->y + 8 || global::camera->y + 192 + 192 < this->y - 8) {
-        sub_x = -128;
-        sub_y = -128;
-    }
-    if (global::camera->y > this->y + 8 || global::camera->y + 192 < this->y - 8) {
-        main_x = -128;
-        main_y = -128;
-    }
-
-
-    if (sub_y < 0 + 8 || sub_x + 8 < 0) {
-        sub_x = -128;
-        sub_y = -128;
-    }
-
-    if (main_y + 8 < 0 || main_x + 8 < 0) {
-        main_x = -128;
-        main_y = -128;
-    }
-
-
-    if (activated_by_main_dude) {
-        //nothing
-    }
+    
+    int main_x, main_y, sub_x, sub_y;
+    get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
 
     mainSpriteInfo->entry->x = main_x;
     mainSpriteInfo->entry->y = main_y;
@@ -71,10 +48,16 @@ void Rock::draw() {
     subSpriteInfo->entry->x = sub_x;
     subSpriteInfo->entry->y = sub_y;
 
+    mainSpriteInfo->entry->hFlip=false;
+    subSpriteInfo->entry->hFlip= false;
+
+    mainSpriteInfo->entry->vFlip=false;
+    subSpriteInfo->entry->vFlip= false;
+
     if (xSpeed > 0 || ySpeed > 0) {
         for (int a = 0; a < global::sprites.size(); a++) {
             if((global::sprites.at(a)->spriteType == SpritesheetType::SNAKE || global::sprites.at(a)->spriteType == SpritesheetType::BAT|| global::sprites.at(a)->spriteType == SpritesheetType::SPIDER)
-                    && !global::sprites.at(a)->killed){
+               && !global::sprites.at(a)->killed){
                 if(Collisions::checkCollisionBodies(x, y, 8, 8, global::sprites.at(a)->x, global::sprites.at(a)->y, 16, 16)){
                     global::sprites.at(a)->kill();
                 }
@@ -82,17 +65,10 @@ void Rock::draw() {
         }
     }
 
-
-    mainSpriteInfo->entry->hFlip=false;
-    subSpriteInfo->entry->hFlip= false;
-
-    mainSpriteInfo->entry->vFlip=false;
-    subSpriteInfo->entry->vFlip= false;
 }
 
 
 void Rock::init() {
-
     initSprite();
     activated_by_main_dude = true;
 }
@@ -114,70 +90,30 @@ void Rock::updateSpeed() {
     bool change_pos = (pos_inc_timer > 15) && !hold_by_main_dude;
 
     if (change_pos) {
+
+
+        if (bottomCollision && xSpeed > 0) {
+            xSpeed -= 0.2;
+            if (xSpeed < 0)
+                xSpeed = 0;
+        }
+        if (bottomCollision && xSpeed < 0) {
+            xSpeed += 0.2;
+            if (xSpeed > 0)
+                xSpeed = 0;
+        }
+
         updatePosition();
+
+
+        if (!bottomCollision)
+            ySpeed += GRAVITY_DELTA_SPEED * 0.8;
+
+        pos_inc_timer = 0;
     }
 
 }
 
-void Rock::updatePosition() {
-
-    if (bottomCollision && xSpeed > 0) {
-        xSpeed -= 0.2;
-        if (xSpeed < 0)
-            xSpeed = 0;
-    }
-    if (bottomCollision && xSpeed < 0) {
-        xSpeed += 0.2;
-        if (xSpeed > 0)
-            xSpeed = 0;
-    }
-
-    double tempXspeed = abs(xSpeed);
-    double tempYspeed = abs(ySpeed);
-
-    int old_xx = -1;
-    int old_yy = -1;
-    int xx;
-    int yy;
-
-    while (tempXspeed > 0 || tempYspeed > 0) {
-        if (tempXspeed > 0) {
-            if (xSpeed > 0) {
-                x += 1;
-            } else if (xSpeed < 0) {
-                x -= 1;
-            }
-        }
-        if (tempYspeed > 0) {
-            if (ySpeed > 0)
-                y += 1;
-            else if (ySpeed < 0)
-                y -= 1;
-        }
-
-//            Collisions::getCenterTile(this->x, this->y, MAIN_DUDE_HEIGHT, MAIN_DUDE_WIDTH, xx, yy);
-//fixme
-
-        xx = floor_div(this->x + 0.5 * BOMB_SIZE, 16);
-        yy = floor_div(this->y + 0.5 * BOMB_SIZE, 16);
-
-        if (old_xx != xx || old_yy != yy) {
-            updateCollisionsMap(xx, yy);
-        }
-
-        old_xx = xx;
-        old_yy = yy;
-
-        tempXspeed--;
-        tempYspeed--;
-    }
-
-
-    if (!bottomCollision)
-        ySpeed += GRAVITY_DELTA_SPEED * 0.8;
-
-    pos_inc_timer = 0;
-}
 
 void Rock::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
 
@@ -190,10 +126,6 @@ void Rock::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_
     rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, 8, 8, true);
     upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, 8, true);
 
-    if (bottomCollision) {
-        //nothing
-    }
-
 }
 
 void Rock::initSprite() {
@@ -203,11 +135,17 @@ void Rock::initSprite() {
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_rockPal, gfx_rockPalLen,
                                                           nullptr, 8 * 8, 8, ROCK, true, true);
 
-
     frameGfx = (u8 *) gfx_rockTiles;
     subSpriteInfo->updateFrame(frameGfx, 8 * 8);
     mainSpriteInfo->updateFrame(frameGfx, 8 * 8);
 
+}
+
+Rock::Rock() {
+    physical_height = ROCK_PHYSICAL_HEIGHT;
+    physical_width = ROCK_PHYSICAL_WIDTH;
+    sprite_height = ROCK_SPRITE_HEIGHT;
+    sprite_width = ROCK_SPRITE_WIDTH;
 }
 
 

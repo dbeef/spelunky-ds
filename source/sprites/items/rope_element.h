@@ -39,13 +39,13 @@ public:
     void onCollisionWithMainCharacter() override {};
 
 
-    SpriteInfo *mainSpriteInfo = nullptr;
-    SpriteInfo *subSpriteInfo = nullptr;
+    SpriteInfo *mainSpriteInfo {};
+    SpriteInfo *subSpriteInfo {};
 
-    SpriteInfo *mainSpriteInfo_2 = nullptr;
-    SpriteInfo *subSpriteInfo_2 = nullptr;
+    SpriteInfo *mainSpriteInfo_2 {};
+    SpriteInfo *subSpriteInfo_2 {};
 
-    u8 * frameGfx;
+    u8 * frameGfx{};
 
 };
 

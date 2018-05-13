@@ -5,11 +5,18 @@
 #ifndef SPELUNKYDS_JAR_H
 #define SPELUNKYDS_JAR_H
 
+#define JAR_PHYSICAL_HEIGHT 8
+#define JAR_PHYSICAL_WIDTH 8
+#define JAR_SPRITE_HEIGHT 8
+#define JAR_SPRITE_WIDTH 8
+
 #include "../moving_object.h"
 
 class Jar : public MovingObject {
 
 public:
+
+    Jar();
 
     void updateOther() override {};
 
@@ -20,8 +27,6 @@ public:
     void kill() override {};
 
     void updateTimers() override {};
-
-    void updatePosition() override ;
 
     void updateSpeed() override;
 
@@ -34,14 +39,14 @@ public:
     void onCollisionWithMainCharacter() override {};
 
 
-    double pos_inc_timer;
+    double pos_inc_timer{};
 
-    SpriteInfo *mainSpriteInfo = nullptr;
-    SpriteInfo *subSpriteInfo = nullptr;
-    u8 * frameGfx;
+    SpriteInfo *mainSpriteInfo {};
+    SpriteInfo *subSpriteInfo {};
+    u8 * frameGfx{};
 
-    int frame;
-    int frameTimer;
+    int frame{};
+    int frameTimer{};
 
 };
 

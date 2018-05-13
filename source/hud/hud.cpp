@@ -197,8 +197,6 @@ void Hud::draw_on_level_done() {
             Moniez *moniez = new Moniez();
             moniez->sprite_height = 16;
             moniez->sprite_width = 16;
-            moniez->physics_height = 8;
-            moniez->physics_width = 16;
             moniez->spriteType = MONIEZ_TRIPLE_GOLD_BARS;
             moniez->value = 1000;
             moniez->init();
@@ -214,8 +212,6 @@ void Hud::draw_on_level_done() {
             Moniez *moniez = new Moniez();
             moniez->sprite_height = 8;
             moniez->sprite_width = 8;
-            moniez->physics_height = 8;
-            moniez->physics_width = 8;
             moniez->spriteType = MONIEZ_RUBY_BIG;
             moniez->value = 1200;
             moniez->ruby_type = 0;
@@ -231,8 +227,6 @@ void Hud::draw_on_level_done() {
             Moniez *moniez = new Moniez();
             moniez->sprite_height = 8;
             moniez->sprite_width = 8;
-            moniez->physics_height = 8;
-            moniez->physics_width = 8;
             moniez->spriteType = MONIEZ_RUBY_BIG;
             moniez->value = 1200;
             moniez->ruby_type = 1;
@@ -249,8 +243,6 @@ void Hud::draw_on_level_done() {
             Moniez *moniez = new Moniez();
             moniez->sprite_height = 8;
             moniez->sprite_width = 8;
-            moniez->physics_height = 8;
-            moniez->physics_width = 8;
             moniez->spriteType = MONIEZ_RUBY_BIG;
             moniez->value = 1200;
             moniez->ruby_type = 2;
@@ -372,4 +364,8 @@ void Hud::set_position() {
     holdingItemSpriteInfo->entry->x = HOLDING_ITEM_FRAME_POSITION_X;
     holdingItemSpriteInfo->entry->y = HOLDING_ITEM_FRAME_POSITION_Y;
 
+}
+
+Hud::Hud() {
+    hearts = 4;
 }

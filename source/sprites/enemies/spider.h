@@ -5,6 +5,11 @@
 #ifndef SPELUNKYDS_SPIDER_H
 #define SPELUNKYDS_SPIDER_H
 
+#define SPIDER_PHYSICAL_HEIGHT 8
+#define SPIDER_PHYSICAL_WIDTH 16
+#define SPIDER_SPRITE_HEIGHT 16
+#define SPIDER_SPRITE_WIDTH 16
+
 #include <nds/jtypes.h>
 #include "../moving_object.h"
 #include "../sprite_state.h"
@@ -14,6 +19,8 @@ class Spider : public MovingObject {
 
 public:
 
+    Spider();
+
     void initSprite() override;
 
     void updateOther() override {};
@@ -22,11 +29,9 @@ public:
 
     void draw() override;
 
-    void kill() override ;
+    void kill() override;
 
     void updateTimers() override {};
-
-    void updatePosition() override;
 
     void updateSpeed() override;
 
@@ -36,22 +41,22 @@ public:
 
     void onCollisionWithMainCharacter() override {};
 
-    double pos_inc_timer;
+    double pos_inc_timer{};
 
-    SpriteInfo *mainSpriteInfo = nullptr;
-    SpriteInfo *subSpriteInfo = nullptr;
-    u8 *frameGfx;
+    SpriteInfo *mainSpriteInfo {};
+    SpriteInfo *subSpriteInfo {};
+    u8 *frameGfx{};
 
-    SpriteState spriteState;
+    SpriteState spriteState{};
 
-    int animFrame;
-    int animFrameTimer;
+    int animFrame{};
+    int animFrameTimer{};
 
-    double random_speed;
+    double random_speed{};
 
-    bool hanging;
-    bool hunting;
-    bool jumping;
+    bool hanging{};
+    bool hunting{};
+    bool jumping{};
 
     void set_sprite_hanging();
 
@@ -63,7 +68,6 @@ public:
 
     void set_position();
 };
-
 
 
 #endif //SPELUNKYDS_SPIDER_H

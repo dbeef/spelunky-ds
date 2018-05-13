@@ -49,17 +49,17 @@ public:
     void onCollisionWithMainCharacter() override;
 
 
-    double *timer = nullptr;
-    double pos_inc_timer;
+    double *timer {};
+    double pos_inc_timer{};
 
-    SpriteInfo *mainSpriteInfo = nullptr;
-    SpriteInfo *subSpriteInfo = nullptr;
+    SpriteInfo *mainSpriteInfo {};
+    SpriteInfo *subSpriteInfo {};
 
-    u8 *frameGfx;
+    u8 *frameGfx{};
 
-    bool finished;
-    int currentFrame;
-    int frameTimer;
+    bool finished{};
+    int currentFrame{};
+    int frameTimer{};
 
 
     std::vector<BloodElement *> bloodTrail;

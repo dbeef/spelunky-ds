@@ -5,6 +5,10 @@
 #ifndef SPELUNKYDS_SNAKE_H
 #define SPELUNKYDS_SNAKE_H
 
+#define SNAKE_PHYSICAL_HEIGHT 16
+#define SNAKE_PHYSICAL_WIDTH 16
+#define SNAKE_SPRITE_HEIGHT 16
+#define SNAKE_SPRITE_WIDTH 16
 
 #include "../moving_object.h"
 #include "../sprite_state.h"
@@ -13,6 +17,8 @@
 class Snake : public MovingObject {
 
 public:
+
+    Snake();
 
     void updateOther() override {};
 
@@ -24,8 +30,6 @@ public:
 
     void updateTimers() override {};
 
-    void updatePosition() override;
-
     void updateSpeed() override;
 
     void updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) override;
@@ -36,21 +40,21 @@ public:
 
     void initSprite() override;
 
-    double pos_inc_timer;
+    double pos_inc_timer{};
 
-    SpriteInfo *mainSpriteInfo = nullptr;
-    SpriteInfo *subSpriteInfo = nullptr;
-    u8 *frameGfx;
-    int sameDirectionInRow;
+    SpriteInfo *mainSpriteInfo {};
+    SpriteInfo *subSpriteInfo{};
+    u8 *frameGfx{};
+    int sameDirectionInRow{};
 
 
     //Snake goes for random amount of time on random direction, then waits random time and the cycle goes again
-    SpriteState spriteState;
-    int waitTimer;
-    int goTimer;
+    SpriteState spriteState{};
+    int waitTimer{};
+    int goTimer{};
 
-    int animFrame;
-    int animFrameTimer;
+    int animFrame{};
+    int animFrameTimer{};
 
     void randomizeMovement();
 

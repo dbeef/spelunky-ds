@@ -22,7 +22,7 @@ public:
 
     //todo virtual void for Oam init
 
-//    MovingObject(int p_physical_width, int p_physical_height, int p_sprite_width, int p_sprite_height);
+    MovingObject();
 
     void update() {
         updateOther();
@@ -44,7 +44,7 @@ public:
 
     virtual void updateTimers() = 0;
 
-    virtual void updatePosition() = 0;
+    virtual void updatePosition();
 
     virtual void updateSpeed() = 0;
 
@@ -57,36 +57,36 @@ public:
     virtual void onCollisionWithMainCharacter() = 0;
 
     //TODO Make x,y as float, cast (floor) to int when drawn.
-    int x;
-    int y;
+    int x{};
+    int y{};
 
     //for rendering
-    int sprite_width;
-    int sprite_height;
+    int sprite_width{};
+    int sprite_height{};
 
     //for collisions
-    int physical_width;
-    int physical_height;
+    int physical_width{};
+    int physical_height{};
 
-    double xSpeed;
-    double ySpeed;
+    double xSpeed{};
+    double ySpeed{};
 
-    bool standingOnLeftEdge;
-    bool standingOnRightEdge;
-    bool bottomCollision;
-    bool upperCollision;
-    bool leftCollision;
-    bool rightCollision;
+    bool standingOnLeftEdge{};
+    bool standingOnRightEdge{};
+    bool bottomCollision{};
+    bool upperCollision{};
+    bool leftCollision{};
+    bool rightCollision{};
 
-    bool hold_by_main_dude;
-    bool activated_by_main_dude; //ex. shooting shotgun, or arming bomb
+    bool hold_by_main_dude{};
+    bool activated_by_main_dude{}; //ex. shooting shotgun, or arming bomb
 
-    bool killed;
-    bool ready_to_dispose;
+    bool killed{};
+    bool ready_to_dispose{};
 
-    int friction_timer;
+    int friction_timer{};
 
-    SpritesheetType spriteType;
+    SpritesheetType spriteType{};
 
     void get_x_y_viewported(int *out_main_x, int *out_main_y, int *out_sub_x, int *out_sub_y);
 };

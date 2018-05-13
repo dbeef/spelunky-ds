@@ -13,7 +13,7 @@
 
 void Snake::draw() {
 
-    if(ready_to_dispose)
+    if (ready_to_dispose)
         return;
 
     set_position();
@@ -167,69 +167,13 @@ void Snake::updateSpeed() {
 
     pos_inc_timer += *global::timer;
 
-    bool change_pos = (pos_inc_timer > 35);
-
-    if (change_pos) {
+    if (pos_inc_timer > 35) {
         updatePosition();
+        if (!bottomCollision)
+            ySpeed += GRAVITY_DELTA_SPEED;
+        pos_inc_timer = 0;
     }
 
-}
-
-void Snake::updatePosition() {
-
-    if (bottomCollision && xSpeed > 0) {
-        xSpeed -= 0.055;
-        if (xSpeed < 0)
-            xSpeed = 0;
-    }
-    if (bottomCollision && xSpeed < 0) {
-        xSpeed += 0.055;
-        if (xSpeed > 0)
-            xSpeed = 0;
-    }
-
-    double tempXspeed = abs(xSpeed);
-    double tempYspeed = abs(ySpeed);
-
-    int old_xx = -1;
-    int old_yy = -1;
-    int xx;
-    int yy;
-
-    while (tempXspeed > 0 || tempYspeed > 0) {
-        if (tempXspeed > 0) {
-            if (xSpeed > 0) {
-                x += 1;
-            } else if (xSpeed < 0) {
-                x -= 1;
-            }
-        }
-        if (tempYspeed > 0) {
-            if (ySpeed > 0)
-                y += 1;
-            else if (ySpeed < 0)
-                y -= 1;
-        }
-
-        xx = floor_div(x + (0.5 * 16), 16);
-        yy = floor_div(y + (0.5 * 16), 16);
-
-        if (old_xx != xx || old_yy != yy) {
-            updateCollisionsMap(xx, yy);
-        }
-
-        old_xx = xx;
-        old_yy = yy;
-
-        tempXspeed--;
-        tempYspeed--;
-    }
-
-
-    if (!bottomCollision)
-        ySpeed += GRAVITY_DELTA_SPEED;
-
-    pos_inc_timer = 0;
 }
 
 void Snake::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
@@ -287,36 +231,9 @@ void Snake::initSprite() {
                                                           nullptr, 16 * 16, 16, SNAKE, true, false);
     subSpriteInfo->entry->isHidden = false;
     mainSpriteInfo->entry->isHidden = false;
-/*
-    sub_sprite_info->entry->vFlip = false;
-    sub_sprite_info->entry->hFlip= false;
 
-    main_sprite_info->entry->vFlip = false;
-    main_sprite_info->entry->hFlip= false;*/
-
-    int main_x = x - global::camera->x;
-    int main_y = y - global::camera->y;
-    int sub_x = x - global::camera->x;
-    int sub_y = y - global::camera->y - 192;
-
-    if (global::camera->y + 192 > this->y + 16 || global::camera->y + 192 + 192 < this->y - 16) {
-        sub_x = -128;
-        sub_y = -128;
-    }
-    if (global::camera->y > this->y + 16 || global::camera->y + 192 < this->y - 16) {
-        main_x = -128;
-        main_y = -128;
-    }
-
-    if (sub_y + 16 < 0 || sub_x + 16 < 0) {
-        sub_x = -128;
-        sub_y = -128;
-    }
-
-    if (main_y + 16 < 0 || main_x + 16 < 0) {
-        main_x = -128;
-        main_y = -128;
-    }
+    int main_x, main_y, sub_x, sub_y;
+    get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
 
     mainSpriteInfo->entry->x = main_x;
     mainSpriteInfo->entry->y = main_y;
@@ -329,30 +246,8 @@ void Snake::initSprite() {
 
 void Snake::set_position() {
 
-    int main_x = x - global::camera->x;
-    int main_y = y - global::camera->y;
-    int sub_x = x - global::camera->x;
-    int sub_y = y - global::camera->y - 192;
-
-    if (global::camera->y + 192 > this->y + 16 || global::camera->y + 192 + 192 < this->y - 16) {
-        sub_x = -128;
-        sub_y = -128;
-    }
-    if (global::camera->y > this->y + 16 || global::camera->y + 192 < this->y - 16) {
-        main_x = -128;
-        main_y = -128;
-    }
-
-    if (sub_y + 16 < 0 || sub_x + 16 < 0) {
-        sub_x = -128;
-        sub_y = -128;
-    }
-
-    if (main_y + 16 < 0 || main_x + 16 < 0) {
-        main_x = -128;
-        main_y = -128;
-    }
-
+    int main_x, main_y, sub_x, sub_y;
+    get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
 
     mainSpriteInfo->entry->x = main_x;
     mainSpriteInfo->entry->y = main_y;
@@ -382,3 +277,11 @@ void Snake::set_sprite_right() {
     mainSpriteInfo->entry->isHidden = false;
     subSpriteInfo->entry->isHidden = false;
 }
+
+Snake::Snake() {
+    physical_height = SNAKE_PHYSICAL_HEIGHT;
+    physical_width = SNAKE_PHYSICAL_WIDTH;
+    sprite_height = SNAKE_SPRITE_HEIGHT;
+    sprite_width = SNAKE_SPRITE_WIDTH;
+}
+

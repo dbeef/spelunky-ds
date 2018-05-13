@@ -11,6 +11,12 @@ https://stackoverflow.com/questions/1228161/why-use-prefixes-on-member-variables
 
 <*> GENERAL NOTES:
 
+Technical traps:
+
+https://devkitpro.org/viewtopic.php?f=2&t=1501 -> Remember, that the 2004 DS has only 4 MB of ram!
+Quite easy to overflow that number.
+
+Game mechanics:
 - Ladders are not destructable, neither are ropes.
 - Rope is up to 8 tiles height (8 x 16px)
 

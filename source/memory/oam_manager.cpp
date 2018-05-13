@@ -41,18 +41,11 @@ OAMManager::initOAMTable(u16 *sprite_address, u16 *paletteAddress, u16 *oam_addr
 
 void OAMManager::clearAllSprites() {
 
-//    delete(oam);
-//    oam = new OAMTable();
-
     current_oam_id_palette = 0;
     current_oam_id_tiles = 0;
     nextAvailableTileIdx = 0;
 
-//    for(int a =0;a<global::spriteInfos.size();a++)
-//        global::spriteInfos.at(a);
-
     global::spriteInfos.clear();
-//    global::sprites.clear();
 
     /*
      * For all 128 sprites on the DS, disable and clear any attributes they

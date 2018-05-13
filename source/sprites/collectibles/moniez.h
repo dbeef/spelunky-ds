@@ -5,7 +5,15 @@
 #ifndef SPELUNKYDS_MONIEZ_H
 #define SPELUNKYDS_MONIEZ_H
 
+#define RUBY_PHYSICAL_HEIGHT 8
+#define RUBY_PHYSICAL_WIDTH 8
+#define RUBY_SPRITE_HEIGHT 8
+#define RUBY_SPRITE_WIDTH 8
 
+#define TRIPLE_GOLDBAR_PHYSICAL_HEIGHT 12
+#define TRIPLE_GOLDBAR_PHYSICAL_WIDTH 16
+#define TRIPLE_GOLDBAR_SPRITE_HEIGHT 16
+#define TRIPLE_GOLDBAR_SPRITE_WIDTH 16
 
 #include "../moving_object.h"
 #include "../sprite_info.h"
@@ -14,6 +22,8 @@ class Moniez: public MovingObject {
 
 public:
 
+    Moniez();
+    
     void updateOther() override {};
 
     void init() override;
@@ -26,8 +36,6 @@ public:
 
     void updateTimers() override {};
 
-    void updatePosition() override ;
-
     void updateSpeed() override;
 
     void updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) override;
@@ -37,24 +45,17 @@ public:
     void onCollisionWithMainCharacter() override {};
 
 
-    double pos_inc_timer;
+    double pos_inc_timer{};
 
-    SpriteInfo *mainSpriteInfo = nullptr;
-    SpriteInfo *subSpriteInfo = nullptr;
-    u8 * frameGfx;
+    SpriteInfo *mainSpriteInfo {};
+    SpriteInfo *subSpriteInfo {};
+    u8 * frameGfx{};
 
-    int sprite_width;
-    int sprite_height;
+    int value{};
+    int ruby_type{};
 
-    int physics_width;
-    int physics_height;
-
-    int value;
-
-    int ruby_type;
-    bool collected;
-    SpritesheetType  spriteType;
-
+    bool collected{};
+    SpritesheetType  spriteType{};
     void set_position();
 };
 

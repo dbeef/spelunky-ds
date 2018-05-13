@@ -270,7 +270,8 @@ void MainDude::updateTimers() {
 
         animation_frame_timer = 0;
 
-        if (!using_whip || (using_whip && animFrame < 5) || (climbing && animFrame < 12) || (exiting_level && animFrame < 16))
+        if (!using_whip || (using_whip && animFrame < 5) || (climbing && animFrame < 12) ||
+            (exiting_level && animFrame < 16))
             animFrame++;
 
     }
@@ -345,7 +346,8 @@ void MainDude::updateTimers() {
     }
 
 
-    if (xSpeed != 0 || stunned || using_whip || (pushing_left || pushing_right) || (climbing && ySpeed != 0) || exiting_level)
+    if (xSpeed != 0 || stunned || using_whip || (pushing_left || pushing_right) || (climbing && ySpeed != 0) ||
+        exiting_level)
         animation_frame_timer += *global::timer;
 
 
@@ -427,9 +429,9 @@ void MainDude::init() {
 void MainDude::draw() {
 
     //todo split this function into utils
-    //todo using_whip should be separate class so it could benefit from its own viewporting
-    //todo use get_x_y in every moving_object
-    //todo make class static_object for copyrights sign and other non-moving things
+    //todo use moving_object->get_x_y in every moving_object
+    //todo use moving_object->update_position in every moving_object
+    //todo make class static_object for copyrights sign, whip and other non-moving things
     //todo make file input/output class for savegames
 
     int main_x, main_y, sub_x, sub_y;
@@ -465,7 +467,6 @@ void MainDude::draw() {
                     global::level_generator->generate_splash_screen(SplashScreenType::MAIN_MENU_UPPER);
                     global::level_generator->generate_splash_screen(SplashScreenType::MAIN_MENU_LOWER);
                 } else if (dead) {
-
                     global::level_generator->generate_splash_screen(SplashScreenType::SCORES_UPPER);
                     global::level_generator->generate_splash_screen(SplashScreenType::SCORES_LOWER);
                 } else {
@@ -482,7 +483,6 @@ void MainDude::draw() {
                              sizeof(global::current_map));
             global::main_dude->bottomCollision = false;
 
-
             MapTile *entrance;
             global::level_generator->get_first_tile(MapTileType::ENTRANCE, entrance);
 
@@ -494,13 +494,20 @@ void MainDude::draw() {
                 global::main_dude->y = entrance->y * 16;
             }
 
-
+            //
+            //possible memory leak?
             global::main_oam_manager->clearAllSprites();
             global::sub_oam_manager->clearAllSprites();
+
+            for (int a = 0; a < global::sprites.size(); a++) {
+                    delete (global::sprites.at(a));
+                    global::sprites.erase(global::sprites.begin() + a);
+            }
+
             global::sprites.clear();
+            //
 
             init();
-
             global::sprites.push_back(global::main_dude);
             consoleClear();
 
@@ -654,55 +661,6 @@ void MainDude::can_hang_on_tile(MapTile **neighboringTiles) {
 void MainDude::updateOther() {
 }
 
-void MainDude::updatePosition() {
-
-//    if (!can_climb_rope)
-//        climbing = false;
-
-    double tempXspeed = abs(xSpeed);
-    double tempYspeed = abs(ySpeed);
-
-    int old_xx = -1;
-    int old_yy = -1;
-    int xx;
-    int yy;
-
-    while (tempXspeed > 0 || tempYspeed > 0) {
-        if (tempXspeed > 0) {
-            if (xSpeed > 0) {
-                x += 1;
-            } else if (xSpeed < 0) {
-                x -= 1;
-            }
-        }
-        if (tempYspeed > 0) {
-            if (ySpeed > 0)
-                y += 1;
-            else if (ySpeed < 0)
-                y -= 1;
-        }
-
-
-
-//            Collisions::getCenterTile(this->x, this->y, MAIN_DUDE_HEIGHT, MAIN_DUDE_WIDTH, xx, yy);
-//fixme
-
-        xx = floor_div(this->x + 0.5 * MAIN_DUDE_PHYSICAL_WIDTH, 16);
-        yy = floor_div(this->y + 0.5 * MAIN_DUDE_PHYSICAL_HEIGHT, 16);
-
-        if (old_xx != xx || old_yy != yy) {
-            if (xx < 31 && yy < 31)
-                updateCollisionsMap(xx, yy);
-        }
-
-        old_xx = xx;
-        old_yy = yy;
-
-        tempXspeed--;
-        tempYspeed--;
-
-    }
-}
 
 void MainDude::initSprite() {
 
@@ -714,21 +672,10 @@ void MainDude::initSprite() {
                                                         16 * 16, 16, MAIN_DUDE, true, false);
 
 
-
     int main_x = x - global::camera->x;
     int main_y = y - global::camera->y;
     int sub_x = x - global::camera->x;
     int sub_y = y - global::camera->y - 192;
-
-    if (this->y <= 320 + 16 && this->y >= 320 - 16) {
-
-    } else if (this->y > 320) {
-        main_x = -16;
-        main_y = -16;
-    } else if (this->y < 320) {
-        sub_x = -16;
-        sub_y = -16;
-    }
 
     main_spelunker->entry->x = main_x;
     main_spelunker->entry->y = main_y;
@@ -918,14 +865,18 @@ void MainDude::apply_blinking_on_damage() {
     }
 }
 
-void MainDude::reset_values_checked_every_frame(){
+void MainDude::reset_values_checked_every_frame() {
     can_climb_rope = false;
     can_climb_ladder = false;
 }
 
 MainDude::MainDude() {
+    exiting_level = false;
+    holding_item = false;
+    dead = false;
     physical_height = MAIN_DUDE_PHYSICAL_HEIGHT;
     physical_width = MAIN_DUDE_PHYSICAL_WIDTH;
     sprite_height = MAIN_DUDE_SPRITE_HEIGHT;
     sprite_width = MAIN_DUDE_SPRITE_WIDTH;
+
 }
