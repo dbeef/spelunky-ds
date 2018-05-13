@@ -1,14 +1,10 @@
 Spelunky remake for the NintendoDS.
 
-https://www.youtube.com/watch?v=NiRGaGSLpsI
+<Playlist, look for the most recent video>
+https://www.youtube.com/watch?v=UECctDqN2mE&list=PLIwF3rOXShMpAoYEmrDT9kC52uOCl7MAT&index=last
 
 <here I should post a gif of spelunky on a real nds>
 
-<h3> State of progress </h3>
-
-* Simple procedural level generation, a map of 9 rooms (3x3 grid, 10x10 16px tiles each) (only caves)
-<p>
-  
 Check my blog for development diaries: http://dbeef.wordpress.com
 
 <h3> Tools I use </h3>
