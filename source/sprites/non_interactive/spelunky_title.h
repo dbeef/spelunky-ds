@@ -35,15 +35,15 @@ public:
 
     void onCollisionWithMainCharacter() override {};
 
-    SpriteInfo *mainSpriteInfo_1 = nullptr;
-    SpriteInfo *mainSpriteInfo_2 = nullptr;
-    SpriteInfo *mainSpriteInfo_3 = nullptr;
+    SpriteInfo *mainSpriteInfo_1 {};
+    SpriteInfo *mainSpriteInfo_2 {};
+    SpriteInfo *mainSpriteInfo_3 {};
 
-    SpriteInfo *subSpriteInfo_1 = nullptr;
-    SpriteInfo *subSpriteInfo_2 = nullptr;
-    SpriteInfo *subSpriteInfo_3 = nullptr;
+    SpriteInfo *subSpriteInfo_1 {};
+    SpriteInfo *subSpriteInfo_2 {};
+    SpriteInfo *subSpriteInfo_3 {};
 
-    OamType oamType;
+    OamType oamType{};
 };
 
 

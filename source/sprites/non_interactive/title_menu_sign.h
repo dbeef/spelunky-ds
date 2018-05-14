@@ -35,14 +35,14 @@ public:
 
     void onCollisionWithMainCharacter() override {};
 
-    SpriteInfo *mainSpriteInfo_1 = nullptr;
-    SpriteInfo *mainSpriteInfo_2 = nullptr;
+    SpriteInfo *mainSpriteInfo_1 {};
+    SpriteInfo *mainSpriteInfo_2 {};
 
-    SpriteInfo *subSpriteInfo_1 = nullptr;
-    SpriteInfo *subSpriteInfo_2 = nullptr;
+    SpriteInfo *subSpriteInfo_1 {};
+    SpriteInfo *subSpriteInfo_2 {};
 
-    OamType oamType;
-    MenuSignType menuSignType;
+    OamType oamType{};
+    MenuSignType menuSignType{};
 };
 
 

@@ -24,7 +24,7 @@ public:
 
     void updateTimers() override {};
 
-    void updatePosition() override ;
+    void updatePosition() override;
 
     void updateSpeed() override;
 
@@ -34,22 +34,20 @@ public:
 
     void onCollisionWithMainCharacter() override {};
 
-    SpriteInfo *mainSpriteInfo_1 = nullptr;
-    SpriteInfo *mainSpriteInfo_2 = nullptr;
-    SpriteInfo *mainSpriteInfo_3 = nullptr;
-    SpriteInfo *mainSpriteInfo_4 = nullptr;
-    SpriteInfo *mainSpriteInfo_5 = nullptr;
+    SpriteInfo *mainSpriteInfo_1{};
+    SpriteInfo *mainSpriteInfo_2{};
+    SpriteInfo *mainSpriteInfo_3{};
+    SpriteInfo *mainSpriteInfo_4{};
+    SpriteInfo *mainSpriteInfo_5{};
 
-    SpriteInfo *subSpriteInfo_1 = nullptr;
-    SpriteInfo *subSpriteInfo_2 = nullptr;
-    SpriteInfo *subSpriteInfo_3 = nullptr;
-    SpriteInfo *subSpriteInfo_4 = nullptr;
-    SpriteInfo *subSpriteInfo_5 = nullptr;
+    SpriteInfo *subSpriteInfo_1{};
+    SpriteInfo *subSpriteInfo_2{};
+    SpriteInfo *subSpriteInfo_3{};
+    SpriteInfo *subSpriteInfo_4{};
+    SpriteInfo *subSpriteInfo_5{};
 
-    OamType oamType;
+    OamType oamType{};
 };
-
-
 
 
 #endif //SPELUNKYDS_COPYRIGHTS_H

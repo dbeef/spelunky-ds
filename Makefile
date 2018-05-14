@@ -34,6 +34,10 @@ SPRITES	    :=	gfx/sprites/64x64 gfx/sprites/8x8 gfx/sprites/32x32 gfx/sprites/1
 TILEMAPS    :=  gfx/tilemaps
 SOUNDS      :=  sounds
 SOUNDBANK_NAME := soundbank
+GAME_ICON := ../gfx/icon/icon.bmp
+GAME_TITLE := SpelunkyDS
+GAME_SUBTITLE1 := github.com/dbeef/spelunky-ds
+GAME_SUBTITLE2 :=
 
 #---------------------------------------------------------------------------------
 # options for code generation
