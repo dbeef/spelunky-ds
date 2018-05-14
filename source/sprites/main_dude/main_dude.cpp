@@ -30,6 +30,8 @@ void MainDude::handle_key_input() {
             if (bottomCollision || climbing) {
                 ySpeed = -MAIN_DUDE_JUMP_SPEED;
                 climbing = false;
+                started_climbing_rope = false;
+                started_climbing_ladder = false;
                 can_climb_rope = false;
                 time_since_last_jump = 0;
 
@@ -207,6 +209,11 @@ void MainDude::handle_key_input() {
                 jumping_timer = 0;
                 xSpeed = 0;
                 ySpeed = -1;
+
+                if(can_climb_rope)
+                    started_climbing_rope = true;
+                else
+                    started_climbing_ladder = true;
             }
 
             if (!can_climb_rope && climbing && on_top_of_climbing_space && !can_climb_ladder) {
@@ -245,6 +252,8 @@ void MainDude::handle_key_input() {
             if ((!can_climb_rope && climbing && !on_top_of_climbing_space) || (!can_climb_ladder && climbing)) {
                 jumping_timer = 0;
                 climbing = false;
+                started_climbing_rope = false;
+                started_climbing_ladder = false;
             }
 
             hanging_on_tile_left = false;
@@ -270,8 +279,8 @@ void MainDude::updateTimers() {
 
         animation_frame_timer = 0;
 
-        if (!using_whip || (using_whip && animFrame < 5) || (climbing && animFrame < 12) ||
-            (exiting_level && animFrame < 16))
+        if (!using_whip || (using_whip && animFrame < 5) || (started_climbing_rope && animFrame < 12) ||
+            (exiting_level && animFrame < 16) || (started_climbing_ladder && animFrame < 6))
             animFrame++;
 
     }
@@ -500,8 +509,8 @@ void MainDude::draw() {
             global::sub_oam_manager->clearAllSprites();
 
             for (int a = 0; a < global::sprites.size(); a++) {
-                    delete (global::sprites.at(a));
-                    global::sprites.erase(global::sprites.begin() + a);
+                delete (global::sprites.at(a));
+                global::sprites.erase(global::sprites.begin() + a);
             }
 
             global::sprites.clear();
@@ -580,6 +589,8 @@ void MainDude::draw() {
         }
 
         apply_exiting_level_sprite();
+    } else if (using_whip) {
+        apply_whip_sprite();
     } else if (dead) {
         apply_dead_sprite();
     } else if (climbing) {
@@ -588,8 +599,6 @@ void MainDude::draw() {
         apply_stunned_sprite();
     } else if (pushing_left || pushing_right) {
         apply_pushing_sprite();
-    } else if (using_whip) {
-        apply_whip_sprite();
     } else if (hanging_on_tile_right || hanging_on_tile_left) {
         apply_hanging_on_tile_sprite();
     } else if (crawling) {
@@ -771,13 +780,26 @@ void MainDude::apply_climbing_sprite() {
     int frame;
     u8 *offset;
 
-    if (animFrame >= 12)
-        animFrame = 0;
+    if (started_climbing_rope) {
+        if (animFrame >= 12)
+            animFrame = 0;
 
-    frame = ((12) * SPRITESHEET_ROW_WIDTH) + animFrame + 2;
-    offset = frameGfx + frame * MAIN_DUDE_SPRITE_WIDTH * MAIN_DUDE_SPRITE_HEIGHT / 2;
-    main_spelunker->updateFrame(offset, 16 * 16);
-    sub_spelunker->updateFrame(offset, 16 * 16);
+        frame = ((12) * SPRITESHEET_ROW_WIDTH) + animFrame + 2;
+        offset = frameGfx + frame * MAIN_DUDE_SPRITE_WIDTH * MAIN_DUDE_SPRITE_HEIGHT / 2;
+        main_spelunker->updateFrame(offset, 16 * 16);
+        sub_spelunker->updateFrame(offset, 16 * 16);
+
+    } else if (started_climbing_ladder) {
+
+        if (animFrame >= 6)
+            animFrame = 0;
+
+        frame = ((16) * SPRITESHEET_ROW_WIDTH) + animFrame;
+        offset = frameGfx + frame * MAIN_DUDE_SPRITE_WIDTH * MAIN_DUDE_SPRITE_HEIGHT / 2;
+        main_spelunker->updateFrame(offset, 16 * 16);
+        sub_spelunker->updateFrame(offset, 16 * 16);
+    }
+
 
 }
 

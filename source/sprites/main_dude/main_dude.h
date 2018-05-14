@@ -96,6 +96,9 @@ public:
     u8 *frameGfx{};
     Whip *whip{};
 
+    bool started_climbing_rope{};
+    bool started_climbing_ladder{};
+
     void handle_key_input();
 
     void can_hang_on_tile(MapTile **neighboringTiles);
