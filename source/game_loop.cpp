@@ -17,6 +17,7 @@
 #include <algorithm>
 #include "time/time_utils.h"
 #include "memory/oam_utils.h"
+#include "sprites/traps/spikes.h"
 
 static const int BOUNDARY_VALUE = 64; /* This is the default boundary value (can be set in REG_DISPCNT) */
 static const int OFFSET_MULTIPLIER_MAIN = BOUNDARY_VALUE / sizeof(SPRITE_GFX[0]);
@@ -202,6 +203,7 @@ void gameloop::populate_cave_npcs() {
     int bats_left = 8;
     int spiders_left = 8;
     int snakes_left = 8;
+    int spikes_left = 4;
 
     std::cout << '\n' << '\n';
 
@@ -271,6 +273,16 @@ void gameloop::populate_cave_npcs() {
                         spider->x = pos_x * 16;
                         spider->y = pos_y * 16;
                         spiders_left--;
+                        last_placement = 0;
+                    }
+
+                    if (npc == 4 && spikes_left > 0 && r == 1) {
+                        Spikes *spikes= new Spikes();
+                        spikes->init();
+                        global::sprites.push_back(spikes);
+                        spikes->x = pos_x * 16;
+                        spikes->y = pos_y * 16;
+                        spikes_left--;
                         last_placement = 0;
                     }
                 }

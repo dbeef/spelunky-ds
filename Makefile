@@ -26,7 +26,7 @@ SOURCES		:=	source source/tiles source/console source/input  \
                 source/collisions source/sprites source/sprites/enemies  source/sprites/collectibles \
                 source/sprites/items source/sprites/non_interactive source/time \
                 source/hud source/rooms source/memory source/camera source/sprites/animations \
-                source/sprites/main_dude source/sound
+                source/sprites/main_dude source/sound source/sprites/traps
 DATA		:=	data
 INCLUDES	:=	include
 FONTS   	:=	gfx/fonts

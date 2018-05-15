@@ -23,6 +23,8 @@ void InputHandler::updateInput() {
         up_key_held = (keys_held & KEY_UP) != 0;
         b_key_held = (keys_held & KEY_B) != 0;
         y_key_held = (keys_held & KEY_Y) != 0;
+        l_bumper_held = (keys_held & KEY_L) != 0;
+        r_bumper_held = (keys_held & KEY_R) != 0;
 
 //        seed += right_key_held + left_key_held + down_key_held + up_key_held + b_key_held + y_key_held;
 
@@ -33,6 +35,8 @@ void InputHandler::updateInput() {
         b_key_held = false;
         y_key_held = false;
         up_key_held = false;
+        l_bumper_held= false;
+        r_bumper_held= false;
     }
 
     if (keys_down) {
@@ -41,7 +45,7 @@ void InputHandler::updateInput() {
         x_key_down = (keys_down & KEY_X) != 0;
         y_key_down = (keys_down & KEY_Y) != 0;
         a_key_down = (keys_down & KEY_A) != 0;
-
+        b_key_down = (keys_down & KEY_B) != 0;
 //        seed += r_bumper_down + l_bumper_down + x_key_down + y_key_down + a_key_down;
 
     } else {
@@ -50,6 +54,7 @@ void InputHandler::updateInput() {
         x_key_down = false;
         y_key_down = false;
         a_key_down = false;
+        b_key_down = false;
     }
 
 }

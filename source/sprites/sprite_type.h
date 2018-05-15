@@ -30,7 +30,8 @@ enum SpriteType {
     S_SPELUNKY_TITLE,             //17
     S_SPELUNKY_COPYRIGHTS,        //18
     S_BAT,                        //19
-    S_SPIDER                      //20
+    S_SPIDER,                     //20
+    S_SPIKES                      //21
 };
 
 #endif //SPELUNKYDS_SPRITETYPE_H

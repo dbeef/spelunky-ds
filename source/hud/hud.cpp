@@ -127,7 +127,7 @@ void Hud::draw() {
 
         if (game_over_timer > 3000) {
             std::cout << '\n' << "    " << "    " << "  " << "$" << dollars;
-            std::cout << '\n' << '\n' << '\n' << "    " << "" << "PRESS X FOR HIGH SCORES.";
+            std::cout << '\n' << '\n' << '\n' << "    " << "" << "PRESS Y FOR HIGH SCORES.";
         }
     }
 

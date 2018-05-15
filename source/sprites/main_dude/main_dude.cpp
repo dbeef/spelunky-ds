@@ -26,7 +26,7 @@
 void MainDude::handle_key_input() {
 
     if (!stunned && !exiting_level && !dead) {
-        if (global::input_handler->r_bumper_down && time_since_last_jump > 100) {
+        if (global::input_handler->b_key_down && time_since_last_jump > 100) {
             if (bottomCollision || climbing) {
                 ySpeed = -MAIN_DUDE_JUMP_SPEED;
                 climbing = false;
@@ -49,7 +49,7 @@ void MainDude::handle_key_input() {
                 time_since_last_jump = 0;
             }
         }
-        if (global::input_handler->l_bumper_down) {
+        if (global::input_handler->y_key_down) {
             if (!stunned && !using_whip) {
                 if (holding_item) {
 
@@ -107,10 +107,23 @@ void MainDude::handle_key_input() {
                 }
             }
         }
-        if (global::input_handler->x_key_down && !holding_item && global::hud->bombs > 0) {
+        if (global::input_handler->x_key_down && !holding_item && global::hud->ropes > 0) {
+            global::hud->ropes--;
+            global::hud->draw();
+
+            Rope *rope = new Rope();
+            rope->init();
+            rope->activated_by_main_dude = true;
+
+            rope->y = global::main_dude->y + 6;
+            rope->x = floor_div(global::main_dude->x + 0.5 * MAIN_DUDE_PHYSICAL_WIDTH, 16) * TILE_W + ROPE_SIZE * 0.5;
+//            rope->y -= 16;
+            rope->ySpeed = -4;
+
+            global::sprites.push_back(rope);
+
+        } else if (global::input_handler->a_key_down && !holding_item && global::hud->bombs > 0) {
             //make new bomb object
-
-
             global::hud->bombs--;
             global::hud->draw();
 
@@ -119,17 +132,6 @@ void MainDude::handle_key_input() {
             bomb->hold_by_main_dude = true;
 
             global::sprites.push_back(bomb);
-            holding_item = true;
-        } else if (global::input_handler->a_key_down && !holding_item && global::hud->ropes > 0) {
-            //make new bomb object
-            global::hud->ropes--;
-            global::hud->draw();
-
-            Rope *rope = new Rope();
-            rope->init();
-            rope->hold_by_main_dude = true;
-
-            global::sprites.push_back(rope);
             holding_item = true;
         }
 
@@ -142,7 +144,7 @@ void MainDude::handle_key_input() {
         if (global::input_handler->left_key_held) {
             state = W_LEFT;
             hanging_on_tile_left = false;
-            if (xSpeed > -MAIN_DUDE_MAX_X_SPEED && !(hanging_on_tile_right || hanging_on_tile_left) && !climbing)
+            if (!(hanging_on_tile_right || hanging_on_tile_left) && !climbing)
                 if (speed_inc_timer > X_SPEED_DELTA_TIME_MS) {
                     xSpeed -= X_SPEED_DELTA_VALUE;
                     speed_inc_timer = 0;
@@ -151,7 +153,7 @@ void MainDude::handle_key_input() {
         if (global::input_handler->right_key_held) {
             state = W_RIGHT;
             hanging_on_tile_right = false;
-            if (xSpeed < MAIN_DUDE_MAX_X_SPEED && !(hanging_on_tile_right || hanging_on_tile_left) && !climbing) {
+            if (!(hanging_on_tile_right || hanging_on_tile_left) && !climbing) {
                 if (speed_inc_timer > X_SPEED_DELTA_TIME_MS) {
                     xSpeed += X_SPEED_DELTA_VALUE;
                     speed_inc_timer = 0;
@@ -160,7 +162,7 @@ void MainDude::handle_key_input() {
         }
 
 
-        if (global::input_handler->up_key_held) {
+        if (global::input_handler->l_bumper_held || global::input_handler->up_key_held) {
 
 //            std::cout<< *global::timer << '\n';
 
@@ -177,8 +179,11 @@ void MainDude::handle_key_input() {
                                (neighboringTiles[CENTER]->mapTileType == MapTileType::LADDER ||
                                 neighboringTiles[CENTER]->mapTileType == MapTileType::LADDER_DECK);
 
+            can_climb_ladder = can_climb_ladder && global::input_handler->up_key_held;
+            can_climb_rope = can_climb_rope && global::input_handler->up_key_held;
+
             exiting_level = neighboringTiles[CENTER] != nullptr &&
-                            (neighboringTiles[CENTER]->mapTileType == MapTileType::EXIT);
+                            (neighboringTiles[CENTER]->mapTileType == MapTileType::EXIT) && global::input_handler->l_bumper_held;
 
             if (exiting_level) {
 
@@ -372,6 +377,8 @@ void MainDude::updateSpeed() {
 
     if (crawling)
         limit_speed(MAIN_DUDE_MAX_X_SPEED_CRAWLING, MAIN_DUDE_MAX_Y_SPEED);
+    else if(global::input_handler->r_bumper_held)
+        limit_speed(MAIN_DUDE_MAX_X_SPEED_RUNNING, MAIN_DUDE_MAX_Y_SPEED);
     else
         limit_speed(MAIN_DUDE_MAX_X_SPEED, MAIN_DUDE_MAX_Y_SPEED);
 
@@ -452,9 +459,9 @@ void MainDude::draw() {
     sub_spelunker->entry->x = sub_x;
     sub_spelunker->entry->y = sub_y;
 
-    if (exiting_level || (dead && global::input_handler->l_bumper_down)) {
+    if (exiting_level || (dead && global::input_handler->y_key_down)) {
 
-        if ((dead && global::input_handler->l_bumper_down) || (animFrame >= 16 && !global::splash_screen)) {
+        if ((dead && global::input_handler->y_key_down) || (animFrame >= 16 && !global::splash_screen)) {
             animFrame = 0;
 
             dmaCopyHalfWords(DMA_CHANNEL, global::base_map, global::current_map, sizeof(global::current_map));
@@ -567,8 +574,8 @@ void MainDude::draw() {
                     global::splash_screen = true;
 
                     global::input_handler->stop_handling = true;
+                    global::input_handler->l_bumper_held = true;
                     global::input_handler->right_key_held = true;
-                    global::input_handler->up_key_held = true;
                     global::camera->follow_main_dude = false;
                     global::hud->draw_on_level_done();
                 }
@@ -583,7 +590,7 @@ void MainDude::draw() {
             sub_spelunker->entry->isHidden = true;
             global::input_handler->stop_handling = false;
 
-            if (global::input_handler->l_bumper_down || global::input_handler->l_bumper_down) {
+            if (global::input_handler->y_key_down || global::input_handler->y_key_down) {
                 global::splash_screen = false;
             }
         }
