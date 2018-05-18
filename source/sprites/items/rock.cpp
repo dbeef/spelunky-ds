@@ -19,12 +19,14 @@ void Rock::draw() {
     if (hold_by_main_dude && global::input_handler->y_key_down && global::input_handler->down_key_held) {
         hold_by_main_dude = false;
         global::main_dude->holding_item = false;
-    } else if (global::input_handler->y_key_down && global::input_handler->down_key_held &&
+    } else if (global::input_handler->y_key_held && global::input_handler->down_key_held &&
                /*bottomCollision &&*/ !global::main_dude->holding_item) {
         if (Collisions::checkCollisionWithMainDude(x, y, 8, 8)) {
             hold_by_main_dude = true;
             global::main_dude->holding_item = true;
 //            std::cout << "TOOK ITEM";
+            global::input_handler->y_key_down = false;
+            global::input_handler->y_key_held = false;
         }
     }
 

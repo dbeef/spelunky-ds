@@ -2,6 +2,7 @@
 // Created by xdbeef on 03.05.18.
 //
 
+#include <maxmod9.h>
 #include "spider.h"
 #include "../../globals_declarations.h"
 #include "../animations/blood.h"
@@ -9,6 +10,7 @@
 #include "../items/rock.h"
 #include "../../collisions/collisions.h"
 #include "../../tiles/map_utils.h"
+#include "../../../build/soundbank.h"
 
 /*
  * If hunting;
@@ -91,7 +93,11 @@ void Spider::draw() {
             global::hud->hide();
             global::main_dude->ySpeed = -MAIN_DUDE_JUMP_SPEED * 0.25;
             global::main_dude->dead = true;
+            mmEffect(SFX_XDIE);
         }
+        else
+            mmEffect(SFX_XHIT);
+
 
     }
 /*

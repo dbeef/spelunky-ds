@@ -159,10 +159,10 @@ void BloodElement::updateCollisionsMap(int x_current_pos_in_tiles, int y_current
     Collisions::getNeighboringTiles(global::level_generator->map_tiles, x_current_pos_in_tiles, y_current_pos_in_tiles,
                                     tiles);
 
-    bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, 8, 8, true);
-    leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, 8, 8, true);
-    rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, 8, 8, true);
-    upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, 8, true);
+    bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, 5, 5, true);
+    leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, 5, 5, true);
+    rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, 5, 5, true);
+    upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, 5, true);
 
 
 }

@@ -162,7 +162,25 @@ void MainDude::handle_key_input() {
         }
 
 
-        if (global::input_handler->l_bumper_held || global::input_handler->up_key_held) {
+        if (global::input_handler->l_bumper_held || global::input_handler->up_key_held ||
+            global::input_handler->down_key_held) {
+
+
+            if (climbing) {
+                climbing_timer += *global::timer;
+                if (climbing_timer > 260) {
+                    climbing_timer = 0;
+                    climbing_sound++;
+                    if (climbing_sound % 2 == 0)
+                        mmEffect(SFX_XCLIMB1);
+                    else
+                        mmEffect(SFX_XCLIMB2);
+                }
+            }
+            else
+            {
+                climbing_timer = 200;
+            }
 
 //            std::cout<< *global::timer << '\n';
 
@@ -183,7 +201,8 @@ void MainDude::handle_key_input() {
             can_climb_rope = can_climb_rope && global::input_handler->up_key_held;
 
             exiting_level = neighboringTiles[CENTER] != nullptr &&
-                            (neighboringTiles[CENTER]->mapTileType == MapTileType::EXIT) && global::input_handler->l_bumper_held;
+                            (neighboringTiles[CENTER]->mapTileType == MapTileType::EXIT) &&
+                            global::input_handler->l_bumper_held;
 
             if (exiting_level) {
 
@@ -213,9 +232,11 @@ void MainDude::handle_key_input() {
                 climbing = true;
                 jumping_timer = 0;
                 xSpeed = 0;
-                ySpeed = -1;
 
-                if(can_climb_rope)
+                if (global::input_handler->up_key_held)
+                    ySpeed = -1;
+
+                if (can_climb_rope)
                     started_climbing_rope = true;
                 else
                     started_climbing_ladder = true;
@@ -267,8 +288,11 @@ void MainDude::handle_key_input() {
                 crawling = true;
         } else
             crawling = false;
+
+
     } else
         crawling = false;
+
 
 }
 
@@ -332,6 +356,8 @@ void MainDude::updateTimers() {
         jumping_timer += *global::timer;
 
     if (bottomCollision && jumping_timer > STUN_FALLING_TIME) {
+
+
         if (global::hud->hearts > 0) {
             global::hud->hearts--;
             global::hud->draw();
@@ -343,6 +369,7 @@ void MainDude::updateTimers() {
             global::hud->hide();
             global::main_dude->ySpeed = -MAIN_DUDE_JUMP_SPEED * 0.25;
             global::main_dude->dead = true;
+            mmEffect(SFX_XDIE);
         }
 
         mmEffect(SFX_XLAND);
@@ -377,7 +404,7 @@ void MainDude::updateSpeed() {
 
     if (crawling)
         limit_speed(MAIN_DUDE_MAX_X_SPEED_CRAWLING, MAIN_DUDE_MAX_Y_SPEED);
-    else if(global::input_handler->r_bumper_held)
+    else if (global::input_handler->r_bumper_held)
         limit_speed(MAIN_DUDE_MAX_X_SPEED_RUNNING, MAIN_DUDE_MAX_Y_SPEED);
     else
         limit_speed(MAIN_DUDE_MAX_X_SPEED, MAIN_DUDE_MAX_Y_SPEED);
@@ -471,7 +498,7 @@ void MainDude::draw() {
 
                 mmEffectCancel(global::menu_music_handler);
                 mmEffectCancel(global::cave_music_handler);
-                global::cave_music_handler = mmEffect(SFX_MCAVE);
+//                global::cave_music_handler = mmEffect(SFX_MCAVE);
 
                 global::level_generator->generate_frame();
                 global::level_generator->generate_rooms();
@@ -479,7 +506,7 @@ void MainDude::draw() {
                 if (global::scores_screen) {
 
                     mmEffectCancel(global::cave_music_handler);
-                    global::menu_music_handler = mmEffect(SFX_MTITLE);
+//                    global::menu_music_handler = mmEffect(SFX_MTITLE);
                     global::level_generator->generate_splash_screen(SplashScreenType::MAIN_MENU_UPPER);
                     global::level_generator->generate_splash_screen(SplashScreenType::MAIN_MENU_LOWER);
                 } else if (dead) {
@@ -582,7 +609,7 @@ void MainDude::draw() {
             }
 
             exiting_level = false;
-            mmEffectCancel(SFX_MCAVE);
+//            mmEffectCancel(SFX_MCAVE);
 
         } else if (animFrame >= 16 && global::splash_screen) {
 

@@ -29,7 +29,7 @@ enum SpritesheetType{
     SPELUNKY_COPYRIGHTS,        //16
     BAT,                        //17
     SPIDER,                     //18
-    SPIKES
+    SPIKES_COLLECTIBLES,        //19
 };
 
 #endif //SPELUNKYDS_SPRITETYPES_H

@@ -1,22 +1,27 @@
 //
-// Created by xdbeef on 23.04.18.
+// Created by xdbeef on 16.05.18.
 //
 
-#ifndef SPELUNKYDS_JAR_H
-#define SPELUNKYDS_JAR_H
+#ifndef SPELUNKYDS_CRATE_H
+#define SPELUNKYDS_CRATE_H
 
-#define JAR_PHYSICAL_HEIGHT 9
-#define JAR_PHYSICAL_WIDTH 10
-#define JAR_SPRITE_HEIGHT 16
-#define JAR_SPRITE_WIDTH 16
 
 #include "../moving_object.h"
 
-class Jar : public MovingObject {
+#define CRATE_PHYSICAL_HEIGHT 10
+#define CRATE_PHYSICAL_WIDTH 12
+#define CRATE_SPRITE_HEIGHT 16
+#define CRATE_SPRITE_WIDTH 16
+
+#define MAX_X_SPEED_CRATE 4
+#define MAX_Y_SPEED_CRATE 4
+
+
+class Crate: public MovingObject {
 
 public:
 
-    Jar();
+    Crate();
 
     void updateOther() override {};
 
@@ -24,13 +29,13 @@ public:
 
     void draw() override;
 
+    void initSprite() override;
+
     void kill() override {};
 
     void updateTimers() override {};
 
     void updateSpeed() override;
-
-    void initSprite() override;
 
     void updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) override;
 
@@ -38,18 +43,22 @@ public:
 
     void onCollisionWithMainCharacter() override {};
 
-
     double pos_inc_timer{};
 
     SpriteInfo *mainSpriteInfo {};
     SpriteInfo *subSpriteInfo {};
     u8 * frameGfx{};
 
-    int frame{};
-    int frameTimer{};
+    bool dropped_loot{};
+    int animFrame{};
+    double animFrameTimer{};
 
+    SpritesheetType  spriteType{};
+    void set_position();
 };
 
 
 
-#endif //SPELUNKYDS_JAR_H
+
+
+#endif //SPELUNKYDS_CRATE_H

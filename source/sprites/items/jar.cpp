@@ -6,7 +6,7 @@
 #include "../moving_object.h"
 #include "rock.h"
 #include "../../globals_declarations.h"
-#include "../../../build/gfx_jar.h"
+#include "../../../build/gfx_spike_collectibles.h"
 #include "../../collisions/collisions.h"
 #include "../../tiles/map_utils.h"
 
@@ -51,9 +51,9 @@ void Jar::draw() {
         if (frameTimer > 50) {
             frame++;
 
-            frameGfx = (u8 *) gfx_jarTiles + ((frame + 1) * 8 * 8 / 2);
-            subSpriteInfo->updateFrame(frameGfx, 8 * 8);
-            mainSpriteInfo->updateFrame(frameGfx, 8 * 8);
+            frameGfx = (u8 *) gfx_spike_collectiblesTiles + ((frame + 24 ) * sprite_height * sprite_width / 2);
+            subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
+            mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
 
             frameTimer = 0;
         }
@@ -63,7 +63,7 @@ void Jar::draw() {
     if (xSpeed > 0 || ySpeed > 0) {
         for (int a = 0; a < global::sprites.size(); a++) {
             if ((global::sprites.at(a)->spriteType == SpritesheetType::SNAKE ||
-                 global::sprites.at(a)->spriteType == SpritesheetType::BAT||
+                 global::sprites.at(a)->spriteType == SpritesheetType::BAT ||
                  global::sprites.at(a)->spriteType == SpritesheetType::SPIDER)
                 && !global::sprites.at(a)->killed) {
                 if (Collisions::checkCollisionBodies(x, y, 8, 8, global::sprites.at(a)->x, global::sprites.at(a)->y, 16,
@@ -91,18 +91,18 @@ void Jar::draw() {
     subSpriteInfo->entry->x = sub_x;
     subSpriteInfo->entry->y = sub_y;
 
-    mainSpriteInfo->entry->hFlip=false;
-    subSpriteInfo->entry->hFlip= false;
+    mainSpriteInfo->entry->hFlip = false;
+    subSpriteInfo->entry->hFlip = false;
 
-    mainSpriteInfo->entry->vFlip=false;
-    subSpriteInfo->entry->vFlip= false;
+    mainSpriteInfo->entry->vFlip = false;
+    subSpriteInfo->entry->vFlip = false;
 
     if (global::main_dude->using_whip && !killed && global::main_dude->whip->whip_timer > 120) {
         if (Collisions::checkCollisionWithMainDudeWhip(x, y, 8, 8)) {
             killed = true;
-            mainSpriteInfo->entry->isHidden = true;
-            subSpriteInfo->entry->isHidden = true;
-            ready_to_dispose = true;
+//            mainSpriteInfo->entry->isHidden = true;
+//            subSpriteInfo->entry->isHidden = true;
+//            ready_to_dispose = true;
 //            std::cout<<"HIDDEN";
         }
     }
@@ -120,7 +120,7 @@ void Jar::init() {
 
 void Jar::updateSpeed() {
 
-    if(killed)
+    if (killed)
         return;
 
     if (xSpeed > MAX_X_SPEED_ROCK)
@@ -167,12 +167,13 @@ void Jar::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_t
     Collisions::getNeighboringTiles(global::level_generator->map_tiles, x_current_pos_in_tiles, y_current_pos_in_tiles,
                                     tiles);
 
-    bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, 8, 8, true);
-    leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, 8, 8, true);
-    rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, 8, 8, true);
-    upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, 8, true);
+    bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, physical_width, physical_height, true);
+    leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true);
+    rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true);
+    upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, physical_width, true);
 
-    if ((abs(xSpeed) > 1 || abs(ySpeed) > 1) && (bottomCollision || leftCollision || rightCollision || upperCollision)) {
+    if ((abs(xSpeed) > 1 || abs(ySpeed) > 1) &&
+        (bottomCollision || leftCollision || rightCollision || upperCollision)) {
         killed = true;
         mainSpriteInfo->entry->isHidden = true;
         subSpriteInfo->entry->isHidden = true;
@@ -183,15 +184,15 @@ void Jar::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_t
 }
 
 void Jar::initSprite() {
-    subSpriteInfo = global::sub_oam_manager->initSprite(gfx_jarPal, gfx_jarPalLen,
-                                                        nullptr, 8 * 8, 8, JAR, true, false);
-    mainSpriteInfo = global::main_oam_manager->initSprite(gfx_jarPal, gfx_jarPalLen,
-                                                          nullptr, 8 * 8, 8, JAR, true, false);
+    subSpriteInfo = global::sub_oam_manager->initSprite(gfx_spike_collectiblesPal, gfx_spike_collectiblesPalLen,
+                                                        nullptr, sprite_width * sprite_height, 16, JAR, true, false);
+    mainSpriteInfo = global::main_oam_manager->initSprite(gfx_spike_collectiblesPal, gfx_spike_collectiblesPalLen,
+                                                          nullptr, sprite_width * sprite_height, 16, JAR, true, false);
 
 
-    frameGfx = (u8 *) gfx_jarTiles;
-    subSpriteInfo->updateFrame(frameGfx, 8 * 8);
-    mainSpriteInfo->updateFrame(frameGfx, 8 * 8);
+    frameGfx = (u8 *) gfx_spike_collectiblesTiles + ((24 * sprite_height * sprite_width) / 2);
+    subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
+    mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
 
 }
 

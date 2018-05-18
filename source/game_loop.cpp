@@ -18,6 +18,8 @@
 #include "time/time_utils.h"
 #include "memory/oam_utils.h"
 #include "sprites/traps/spikes.h"
+#include "sprites/collectibles/chest.h"
+#include "sprites/collectibles/crate.h"
 
 static const int BOUNDARY_VALUE = 64; /* This is the default boundary value (can be set in REG_DISPCNT) */
 static const int OFFSET_MULTIPLIER_MAIN = BOUNDARY_VALUE / sizeof(SPRITE_GFX[0]);
@@ -52,8 +54,6 @@ void gameloop::scroll() {
                 (*global::sprites.at(a)).bottomCollision = false;
         }
 
-        global::main_dude->handle_key_input();
-
         global::camera->update_position();
 
         for (int a = 0; a < global::sprites.size(); a++) {
@@ -62,6 +62,8 @@ void gameloop::scroll() {
                 (*global::sprites.at(a)).draw();
             }
         }
+
+        global::main_dude->handle_key_input();
 
         global::hud->update();
 
@@ -89,6 +91,8 @@ void gameloop::populate_cave_moniez() {
     int rubies_left = 8;
     int rocks_left = 8;
     int jars_left = 8;
+    int chests_left = 3;
+    int crates_left = 3;
 
     std::cout << '\n' << '\n';
 
@@ -131,7 +135,7 @@ void gameloop::populate_cave_moniez() {
                         continue;
 
                     int r = rand() % 3;
-                    int loot_type = rand() % 4;
+                    int loot_type = rand() % 6;
 
                     u16 pos_x = (OFFSET_X + tab_x * 2 + 2 * ROOM_TILE_WIDTH_GAME * a) / 2;
                     u16 pos_y = (OFFSET_X + tab_y * 2 + 2 * ROOM_TILE_HEIGHT_GAME * ((ROOMS_Y - b) - 1)) / 2;
@@ -166,6 +170,7 @@ void gameloop::populate_cave_moniez() {
                         moniez->y = pos_y * 16;
                         rubies_left--;
                         last_placement = 0;
+
                     }
 
                     if (loot_type == 3 && jars_left > 0 && r == 1) {
@@ -187,6 +192,29 @@ void gameloop::populate_cave_moniez() {
                         rocks_left--;
                         last_placement = 0;
                     }
+
+
+                    if (loot_type == 4 && rocks_left > 0 && r == 1) {
+                        Chest *chest = new Chest();
+                        chest->init();
+                        global::sprites.push_back(chest);
+                        chest->x = pos_x * 16;
+                        chest->y = pos_y * 16;
+                        chests_left--;
+                        last_placement = 0;
+                    }
+
+
+                    if (loot_type == 5 && rocks_left > 0 && r == 1) {
+                        Crate *crate = new Crate();
+                        crate->init();
+                        global::sprites.push_back(crate);
+                        crate->x = pos_x * 16;
+                        crate->y = pos_y * 16;
+                        crates_left--;
+                        last_placement = 0;
+                    }
+
                 }
             }
         }
@@ -281,7 +309,7 @@ void gameloop::populate_cave_npcs() {
                         spikes->init();
                         global::sprites.push_back(spikes);
                         spikes->x = pos_x * 16;
-                        spikes->y = pos_y * 16;
+                        spikes->y = (pos_y * 16) + 3;
                         spikes_left--;
                         last_placement = 0;
                     }

@@ -2,6 +2,7 @@
 // Created by xdbeef on 23.04.18.
 //
 
+#include <maxmod9.h>
 #include "snake.h"
 #include "../../globals_declarations.h"
 #include "../items/rock.h"
@@ -9,6 +10,7 @@
 #include "../animations/blood.h"
 #include "../../collisions/collisions.h"
 #include "../../tiles/map_utils.h"
+#include "../../../build/soundbank.h"
 
 
 void Snake::draw() {
@@ -99,7 +101,10 @@ void Snake::draw() {
             global::hud->hide();
             global::main_dude->ySpeed = -MAIN_DUDE_JUMP_SPEED * 0.25;
             global::main_dude->dead = true;
+            mmEffect(SFX_XDIE);
         }
+        else
+            mmEffect(SFX_XHIT);
 
     }
 

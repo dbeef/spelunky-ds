@@ -33,13 +33,13 @@ bool Collisions::checkUpperCollision(MapTile *neighboringTiles[9], int *xPos, in
             continue;
 
         if (!upperCollision) {
+
             w1 = (*yPos < (neighboringTiles[a]->y * TILE_H) + TILE_H && (*yPos > (neighboringTiles[a]->y * TILE_H)));
             w2 = (*xPos > (neighboringTiles[a]->x * TILE_W) - width &&
                   (*xPos < (neighboringTiles[a]->x * TILE_W) + TILE_W));
             upperCollision = w1 && w2;
 
             if (upperCollision) {
-
 
                 if (bounce) {
                     *ySpeed = (-1) * BOUNCING_FACTOR_Y * *ySpeed;
@@ -66,6 +66,8 @@ bool Collisions::checkBottomCollision(MapTile *neighboringTiles[9], int *xPos, i
     bool bottomCollision = false;
     bool w1;
     bool w2;
+//    bool w3;
+//    bool w4;
 
     for (int a = 0; a < 9; a++) {
 
@@ -77,13 +79,18 @@ bool Collisions::checkBottomCollision(MapTile *neighboringTiles[9], int *xPos, i
                 w1 = (*xPos > (neighboringTiles[a]->x * TILE_W) - (width * 0.75) &&
                       *xPos < (neighboringTiles[a]->x * TILE_W) + (width * 0.75));
                 w2 = (*yPos <= neighboringTiles[a]->y * TILE_H) && *yPos + height >= (neighboringTiles[a]->y * TILE_H);
+                bottomCollision = w1 && w2;
             } else {
                 w1 = (*xPos > (neighboringTiles[a]->x * TILE_W) - (width) &&
-                      *xPos < (neighboringTiles[a]->x * TILE_W) + (width));
+                      *xPos < (neighboringTiles[a]->x * TILE_W) + (TILE_W));
                 w2 = (*yPos <= neighboringTiles[a]->y * TILE_H) && *yPos + height >= (neighboringTiles[a]->y * TILE_H);
+//                w3 = *yPos >= neighboringTiles[a]->y * TILE_H && *yPos + height < neighboringTiles[a]->y * TILE_H;
+//                w4 = *xPos > (neighboringTiles[a]->x * TILE_W) && *xPos + width < neighboringTiles[a]->x + TILE_W;
+//                bottomCollision = (w1 || w4) && (w2 || w3);
+                bottomCollision = w1 && w2;
+
             }
 
-            bottomCollision = w1 && w2;
 
             if (bottomCollision) {
 
@@ -114,17 +121,17 @@ bool Collisions::checkLeftCollision(MapTile *neighboringTiles[9], int *xPos, int
 
     for (int a = 0; a < 9; a++) {
 
-        if (neighboringTiles[a] == 0 || !neighboringTiles[a]->collidable)
+        if (neighboringTiles[a] == nullptr || !neighboringTiles[a]->collidable)
             continue;
 
-        if (!leftCollision) {
+//        if (!leftCollision) {
 
             if (width == 16) {
                 w2 = (*xPos < (neighboringTiles[a]->x * TILE_W) - 0.75 * width &&
                       (*xPos > (neighboringTiles[a]->x * TILE_W) - width));
             } else {
-                w2 = (*xPos < (neighboringTiles[a]->x * TILE_W) - 0.1 * width &&
-                      (*xPos > (neighboringTiles[a]->x * TILE_W) - width));
+                w2 = (*xPos + width < (neighboringTiles[a]->x * TILE_W) + TILE_W *0.75&&
+                      (*xPos + width > (neighboringTiles[a]->x * TILE_W) ));
             }
 
             w1 = (*yPos > (neighboringTiles[a]->y * TILE_H) - height &&
@@ -146,9 +153,10 @@ bool Collisions::checkLeftCollision(MapTile *neighboringTiles[9], int *xPos, int
                 return true;
             }
 
-        } else {
+//        }
+        /* else {
             return true;
-        };
+        };*/
     }
 
     return leftCollision;
@@ -171,7 +179,7 @@ bool Collisions::checkRightCollision(MapTile *neighboringTiles[9], int *xPos, in
                 w2 = (*xPos < (neighboringTiles[a]->x * TILE_W) + width &&
                       (*xPos > (neighboringTiles[a]->x * TILE_W) + 0.75 * width));
             } else {
-                w2 = (*xPos < (neighboringTiles[a]->x * TILE_W) + 16 &&
+                w2 = (*xPos < (neighboringTiles[a]->x * TILE_W) + TILE_W &&
                       (*xPos > (neighboringTiles[a]->x * TILE_W) + 0.75 * width));
             }
 
@@ -309,6 +317,12 @@ bool Collisions::checkCollisionWithMainDudeWhip(int x, int y, int width, int hei
 
 }
 
+//x1,y1 is a left >upper< corner of the body, same for the x2,y2
 bool Collisions::checkCollisionBodies(int x1, int y1, int w1, int h1, int x2, int y2, int w2, int h2) {
-    return x1 + w1 >= x2 && x1 < x2 + w2 && y1 + h1 > y2 && y1 < y2 + h2;
+    return x1 + w1 > x2 && x1 < x2 + w2 && y1 + h1 > y2 && y1 < y2 + h2;
+}
+
+//x1,y1 is a left >lower< corner of the body, same for the x2,y2
+bool Collisions::checkCollisionBodiesLeftLowerCorner(int x1, int y1, int w1, int h1, int x2, int y2, int w2, int h2){
+    return x1 + w1 > x2 && x1 < x2 + w2 && y1  > y2 - h2 && y1 - h1 < y2;
 }

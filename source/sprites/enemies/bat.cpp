@@ -2,6 +2,7 @@
 // Created by xdbeef on 02.05.18.
 //
 
+#include <maxmod9.h>
 #include "bat.h"
 #include "../../globals_declarations.h"
 #include "../../../build/gfx_bat.h"
@@ -9,10 +10,11 @@
 #include "../animations/blood.h"
 #include "../../collisions/collisions.h"
 #include "../../tiles/map_utils.h"
+#include "../../../build/soundbank.h"
 
 void Bat::draw() {
 
-    if(ready_to_dispose)
+    if (ready_to_dispose)
         return;
 
     set_position();
@@ -22,12 +24,17 @@ void Bat::draw() {
     //idk why do i have to do that, if it is already flipped in image
     subSpriteInfo->entry->hFlip = true;
     mainSpriteInfo->entry->hFlip = true;
+    subSpriteInfo->entry->vFlip = false;
+    mainSpriteInfo->entry->vFlip = false;
 
 
-    if (!hunting)
+    if (!hunting) {
         hunting = abs(x - global::main_dude->x) < 7 * 16 && abs(y - global::main_dude->y) < 7 * 16 &&
                   global::main_dude->y > y;
-    else
+        if (hunting)
+            mmEffect(SFX_XBAT);
+
+    } else
         hunting = abs(x - global::main_dude->x) < 9 * 16 && abs(y - global::main_dude->y) < 9 * 16;
 
     animFrameTimer += *global::timer;
@@ -47,8 +54,7 @@ void Bat::draw() {
         }
 
         animFrameTimer = 0;
-        }
-
+    }
 
 
     if (global::main_dude->using_whip && !killed && global::main_dude->whip->whip_timer > 120) {
@@ -79,7 +85,10 @@ void Bat::draw() {
             global::hud->hide();
             global::main_dude->ySpeed = -MAIN_DUDE_JUMP_SPEED * 0.25;
             global::main_dude->dead = true;
-        }
+            mmEffect(SFX_XDIE);
+        } else
+            mmEffect(SFX_XHIT);
+
 
     }
 
@@ -111,7 +120,7 @@ void Bat::init() {
     subSpriteInfo->updateFrame(frameGfx, 16 * 16);
     mainSpriteInfo->updateFrame(frameGfx, 16 * 16);
 
-    spriteType = SpritesheetType ::BAT;
+    spriteType = SpritesheetType::BAT;
 }
 
 void Bat::updateSpeed() {
@@ -158,7 +167,7 @@ void Bat::kill() {
     mainSpriteInfo->entry->isHidden = true;
 
     subSpriteInfo = nullptr;
-    mainSpriteInfo= nullptr;
+    mainSpriteInfo = nullptr;
 
     for (int a = 0; a < 4; a++) {
         Blood *blood = new Blood();
@@ -197,13 +206,13 @@ void Bat::initSprite() {
     main_sprite_info->entry->hFlip= false;*/
 }
 
-void Bat::set_sprite_hanging(){
+void Bat::set_sprite_hanging() {
     frameGfx = (u8 *) gfx_batTiles + (16 * 16 * (0) / 2);
     subSpriteInfo->updateFrame(frameGfx, 16 * 16);
     mainSpriteInfo->updateFrame(frameGfx, 16 * 16);
 }
 
-void Bat::set_sprite_flying_right(){
+void Bat::set_sprite_flying_right() {
     frameGfx = (u8 *) gfx_batTiles + (16 * 16 * (animFrame + 1) / 2);
     subSpriteInfo->updateFrame(frameGfx, 16 * 16);
     mainSpriteInfo->updateFrame(frameGfx, 16 * 16);

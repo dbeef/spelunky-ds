@@ -98,6 +98,9 @@ public:
     u8 *frameGfx{};
     Whip *whip{};
 
+    int climbing_timer{};
+    int climbing_sound{};
+
     bool started_climbing_rope{};
     bool started_climbing_ladder{};
 

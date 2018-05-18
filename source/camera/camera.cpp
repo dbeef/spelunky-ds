@@ -33,24 +33,23 @@ void Camera::update_position() {
     int center_x = global::main_dude->x - 128;
     int center_y = global::main_dude->y - 96;
 
-    if (position_update_timer > 10) {
+    //todo smooth the camera movement
 
-        if (abs(center_x - this->x) > BOUNDARY_X) {
-            if (center_x > this->x)
-                this->x += 1;
-            else
-                this->x -= 1;
-        }
-
-        if (abs(center_y - this->y) > BOUNDARY_Y) {
-            if (center_y > this->y)
-                this->y += 1;
-            else
-                this->y -= 1;
-        }
-
-        position_update_timer = 0;
+    if (abs(center_x - this->x) > BOUNDARY_X) {
+        if (center_x > this->x)
+            this->x += 2;
+        else
+            this->x -= 2;
     }
+
+    if (abs(center_y - this->y) > BOUNDARY_Y) {
+        if (center_y > this->y)
+            this->y += 2;
+        else
+            this->y -= 2;
+    }
+
+    position_update_timer = 0;
 
     apply_map_boundaries();
 }

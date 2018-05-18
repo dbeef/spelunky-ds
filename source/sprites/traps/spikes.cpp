@@ -2,7 +2,7 @@
 // Created by xdbeef on 15.05.18.
 //
 
-#include "../../../build/gfx_spikes.h"
+#include "../../../build/gfx_spike_collectibles.h"
 #include <cstdlib>
 #include <maxmod9.h>
 #include "spikes.h"
@@ -16,10 +16,13 @@ void Spikes::draw() {
     if (ready_to_dispose)
         return;
 
-
-    if (!global::main_dude->dead && Collisions::checkCollisionWithMainDude(x, y, physical_width, physical_height) &&
+    if (!global::main_dude->dead
+        && Collisions::checkCollisionBodiesLeftLowerCorner
+                           (x , y + 16, physical_width, physical_height, global::main_dude->x, global::main_dude->y + 16, 16, 16) &&
         global::main_dude->time_since_last_damage > 1000 &&
         !global::main_dude->bottomCollision && global::main_dude->ySpeed > 0) {
+
+        mmEffect(SFX_XDIE);
 
         global::main_dude->time_since_last_damage = 0;
         global::hud->hearts = 0;
@@ -48,7 +51,7 @@ void Spikes::draw() {
 
         blood = true;
 
-        frameGfx = (u8 *) gfx_spikesTiles + (sprite_width * sprite_height * (1) / 2);
+        frameGfx = (u8 *) gfx_spike_collectiblesTiles + (sprite_width * sprite_height * (1) / 2);
         subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
         mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
     }
@@ -72,14 +75,14 @@ void Spikes::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_i
 void Spikes::initSprite() {
 
     if (blood)
-        frameGfx = (u8 *) gfx_spikesTiles + (sprite_width * sprite_height * (1) / 2);
+        frameGfx = (u8 *) gfx_spike_collectiblesTiles + (sprite_width * sprite_height * (1) / 2);
     else
-        frameGfx = (u8 *) gfx_spikesTiles;
+        frameGfx = (u8 *) gfx_spike_collectiblesTiles;
 
-    subSpriteInfo = global::sub_oam_manager->initSprite(gfx_spikesPal, gfx_spikesPalLen,
+    subSpriteInfo = global::sub_oam_manager->initSprite(gfx_spike_collectiblesPal, gfx_spike_collectiblesPalLen,
                                                         nullptr, sprite_width * sprite_height, sprite_width,
                                                         spriteType, true, false);
-    mainSpriteInfo = global::main_oam_manager->initSprite(gfx_spikesPal, gfx_spikesPalLen,
+    mainSpriteInfo = global::main_oam_manager->initSprite(gfx_spike_collectiblesPal, gfx_spike_collectiblesPalLen,
                                                           nullptr, sprite_width * sprite_height, sprite_width,
                                                           spriteType, true, false);
 
@@ -111,6 +114,6 @@ Spikes::Spikes() {
     this->sprite_width = SPIKES_SPRITE_WIDTH;
     this->physical_height = SPIKES_PHYSICAL_HEIGHT;
     this->physical_width = SPIKES_PHYSICAL_WIDTH;
-    spriteType = SpritesheetType::SPIKES;
+    spriteType = SpritesheetType::SPIKES_COLLECTIBLES;
 }
 
