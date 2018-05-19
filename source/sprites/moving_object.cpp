@@ -95,7 +95,7 @@ void MovingObject::updatePosition() {
         xx = floor_div(this->x + 0.5 * physical_width, 16);
         yy = floor_div(this->y + 0.5 * physical_height, 16);
 
-        if (old_xx != xx || old_yy != yy || physical_width < 8 || physical_height < 8) {
+        if (old_xx != xx || old_yy != yy || physical_width <= 8 || physical_height <= 8) {
             if (xx < 31 && yy < 31)
                 updateCollisionsMap(xx, yy);
         }

@@ -28,6 +28,9 @@ void MainDude::handle_key_input() {
     if (!stunned && !exiting_level && !dead) {
         if (global::input_handler->b_key_down && time_since_last_jump > 100) {
             if (bottomCollision || climbing) {
+                if(carrying_spring_shoes)
+                    ySpeed = -MAIN_DUDE_JUMP_SPEED*1.65;
+                else
                 ySpeed = -MAIN_DUDE_JUMP_SPEED;
                 climbing = false;
                 started_climbing_rope = false;
@@ -64,10 +67,19 @@ void MainDude::handle_key_input() {
 
                                     if (!global::input_handler->down_key_held) {
 
-                                        if (state == 1)
-                                            (*global::sprites.at(a)).xSpeed = -4 - abs(xSpeed);
+                                        if(carrying_mitt) {
+                                            if (state == 1)
+                                                (*global::sprites.at(a)).xSpeed = -6 - abs(xSpeed);
+                                            else
+                                                (*global::sprites.at(a)).xSpeed = 6 + abs(xSpeed);
+                                        }
                                         else
-                                            (*global::sprites.at(a)).xSpeed = 4 + abs(xSpeed);
+                                        {
+                                            if (state == 1)
+                                                (*global::sprites.at(a)).xSpeed = -4 - abs(xSpeed);
+                                            else
+                                                (*global::sprites.at(a)).xSpeed = 4 + abs(xSpeed);
+                                        }
 
                                     } else {
 
@@ -564,6 +576,8 @@ void MainDude::draw() {
                     global::hud->ropes = 4;
                     global::hud->bombs = 4;
                     global::hud->dollars = 0;
+                    global::hud->items_offset_x = 165;
+                    global::hud->items_offset_y = 7;
                 }
 
                 global::hud->init();
@@ -652,8 +666,8 @@ void MainDude::can_hang_on_tile(MapTile **neighboringTiles) {
     if (bottomCollision || (!leftCollision && !rightCollision))
         return;
 
-    if ((neighboringTiles[UP_MIDDLE] != 0 && neighboringTiles[UP_MIDDLE]->collidable) ||
-        (neighboringTiles[DOWN_MIDDLE] != 0 && neighboringTiles[DOWN_MIDDLE]->collidable))
+    if ((neighboringTiles[UP_MIDDLE] != nullptr && neighboringTiles[UP_MIDDLE]->collidable) ||
+        (neighboringTiles[DOWN_MIDDLE] != nullptr && neighboringTiles[DOWN_MIDDLE]->collidable))
         return;
 
     bool y_bound = false;
@@ -661,7 +675,7 @@ void MainDude::can_hang_on_tile(MapTile **neighboringTiles) {
 
     if (rightCollision && state == W_LEFT) {
 
-        if (neighboringTiles[LEFT_UP] != 0 && neighboringTiles[LEFT_UP]->collidable)
+        if (!carrying_glove && (neighboringTiles[LEFT_UP] != nullptr && neighboringTiles[LEFT_UP]->collidable))
             return;
 
         x_bound = (this->x <= (neighboringTiles[LEFT_MIDDLE]->x * 16) + 16 &&
@@ -670,7 +684,7 @@ void MainDude::can_hang_on_tile(MapTile **neighboringTiles) {
                   (this->y < (neighboringTiles[LEFT_MIDDLE]->y * 16) + 8);
     } else if (leftCollision && state == W_RIGHT) {
 
-        if (neighboringTiles[RIGHT_UP] != 0 && neighboringTiles[RIGHT_UP]->collidable)
+        if (!carrying_glove && (neighboringTiles[RIGHT_UP] != nullptr && neighboringTiles[RIGHT_UP]->collidable))
             return;
 
         y_bound = (this->y > (neighboringTiles[RIGHT_MIDDLE]->y * 16) - 2) &&

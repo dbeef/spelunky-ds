@@ -30,6 +30,7 @@ enum SpritesheetType{
     BAT,                        //17
     SPIDER,                     //18
     SPIKES_COLLECTIBLES,        //19
+    SALEABLE,                   //20
 };
 
 #endif //SPELUNKYDS_SPRITETYPES_H

@@ -1,26 +1,27 @@
 //
-// Created by xdbeef on 16.05.18.
+// Created by xdbeef on 18.05.18.
 //
 
-#ifndef SPELUNKYDS_CHEST_H
-#define SPELUNKYDS_CHEST_H
+#ifndef SPELUNKYDS_PISTOL_H
+#define SPELUNKYDS_PISTOL_H
 
 #include "../moving_object.h"
+#include "../sprite_state.h"
 
-#define CHEST_PHYSICAL_HEIGHT 8
-#define CHEST_PHYSICAL_WIDTH 12
-#define CHEST_SPRITE_HEIGHT 16
-#define CHEST_SPRITE_WIDTH 16
+#define PISTOL_PHYSICAL_HEIGHT 6
+#define PISTOL_PHYSICAL_WIDTH 9
+#define PISTOL_SPRITE_HEIGHT 16
+#define PISTOL_SPRITE_WIDTH 16
 
-#define MAX_X_SPEED_CHEST 6
-#define MAX_Y_SPEED_CHEST 4
+#define MAX_X_SPEED_PISTOL 4
+#define MAX_Y_SPEED_PISTOL 4
 
 
-class Chest: public MovingObject {
+class Pistol: public MovingObject {
 
 public:
 
-    Chest();
+    Pistol();
 
     void updateOther() override {};
 
@@ -41,18 +42,26 @@ public:
     void updateCollisionsOtherMoving() override {};
 
     void onCollisionWithMainCharacter() override {};
-    
+
     double pos_inc_timer{};
 
     SpriteInfo *mainSpriteInfo {};
     SpriteInfo *subSpriteInfo {};
+
+    SpriteInfo *blast_mainSpriteInfo {};
+    SpriteInfo *blast_subSpriteInfo {};
+
+    bool firing{};
+    int animFrame{};
+    int animFrameTimer{};
+
     u8 * frameGfx{};
+
+    SpriteState spriteState{};
 
     SpritesheetType  spriteType{};
     void set_position();
 };
 
 
-
-
-#endif //SPELUNKYDS_CHEST_H
+#endif //SPELUNKYDS_PISTOL_H

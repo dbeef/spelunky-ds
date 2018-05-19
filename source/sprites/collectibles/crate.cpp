@@ -10,6 +10,11 @@
 #include "../../../build/soundbank.h"
 #include "crate.h"
 #include "shotgun.h"
+#include "pistol.h"
+#include "spring_shoes.h"
+#include "mitt.h"
+#include "glove.h"
+#include "compass.h"
 
 
 void Crate::draw() {
@@ -21,7 +26,7 @@ void Crate::draw() {
     if (hold_by_main_dude && global::input_handler->y_key_down && global::input_handler->down_key_held) {
         hold_by_main_dude = false;
         global::main_dude->holding_item = false;
-    } else if (global::input_handler->y_key_held && global::input_handler->down_key_held &&
+    } else if (!activated_by_main_dude && global::input_handler->y_key_held && global::input_handler->down_key_held &&
                /*bottomCollision &&*/ !global::main_dude->holding_item) {
         if (Collisions::checkCollisionWithMainDude(x, y, 8, 8)) {
             hold_by_main_dude = true;
@@ -48,19 +53,71 @@ void Crate::draw() {
         activated_by_main_dude = true;
         global::input_handler->y_key_down = false;
         mmEffect(SFX_XPICKUP);
+        hold_by_main_dude = false;
+        global::main_dude->holding_item = false;
     }
 
     if (activated_by_main_dude) {
 
+
         if(!dropped_loot){
 
+            /*Pistol *pistol= new Pistol();
+            pistol->x = this->x;
+            pistol->y = this->y;
+            pistol->init();
+            global::sprites.push_back(pistol);
+
+            dropped_loot = true;
+            */
+/*
+
+            SpringShoes *springShoes= new SpringShoes();
+            springShoes->x = this->x;
+            springShoes->y = this->y;
+            springShoes->init();
+            global::sprites.push_back(springShoes);
+
+            dropped_loot = true;
+
+*/
+
+/*
+            Mitt *mitt= new Mitt();
+            mitt->x = this->x;
+            mitt->y = this->y;
+            mitt->init();
+            global::sprites.push_back(mitt);
+
+            dropped_loot = true;
+*/
+
+            Compass *compass= new Compass();
+            compass->x = this->x;
+            compass->y = this->y;
+            compass->init();
+            global::sprites.push_back(compass);
+
+            dropped_loot = true;
+/*
+
+            Glove *glove = new Glove();
+            glove ->x = this->x;
+            glove ->y = this->y;
+            glove ->init();
+            global::sprites.push_back(glove);
+
+            dropped_loot = true;
+*/
+
+            /*
             Shotgun *shotgun = new Shotgun();
             shotgun->x = this->x;
             shotgun->y = this->y;
             shotgun->init();
             global::sprites.push_back(shotgun);
 
-            dropped_loot = true;
+            dropped_loot = true;*/
         }
 
         frameGfx = (u8 *) gfx_spike_collectiblesTiles + (sprite_width * sprite_height * (5 + animFrame) / 2);

@@ -10,10 +10,12 @@
 
 void Bullet::draw() {
 
+    //kolizja z pociskiem działa tylko od lewej strony???
+
     if (ready_to_dispose)
         return;
 
-    if (xSpeed > 0 || ySpeed > 0) {
+    if (abs(xSpeed) > 0 || abs(ySpeed) > 0) {
         for (int a = 0; a < global::sprites.size(); a++) {
             if ((global::sprites.at(a)->spriteType == SpritesheetType::SNAKE ||
                  global::sprites.at(a)->spriteType == SpritesheetType::BAT ||
@@ -28,7 +30,6 @@ void Bullet::draw() {
 
     if(killed){
         animFrameTimer += *global::timer;
-
 
         if(animFrameTimer > 50){
             animFrame++;

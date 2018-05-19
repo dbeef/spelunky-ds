@@ -34,12 +34,15 @@ public:
 
     int game_over_timer{};
 
-
     SpriteInfo *heartSpriteInfo {};
     SpriteInfo *bombSpriteInfo {};
     SpriteInfo *dollarSpriteInfo {};
     SpriteInfo *ropeSpriteInfo {};
     SpriteInfo *holdingItemSpriteInfo {};
+
+    //changes every time a new item is added to hud
+    int items_offset_x{};
+    int items_offset_y{};
 
     void update();
     void collectedMoniez(int value);
@@ -54,6 +57,8 @@ public:
     void initSprites();
 
     void set_position();
+
+    void next_item();
 };
 
 

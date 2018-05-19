@@ -18,7 +18,6 @@ void Bat::draw() {
         return;
 
     set_position();
-
     mainSpriteInfo->entry->isHidden = false;
     subSpriteInfo->entry->isHidden = false;
     //idk why do i have to do that, if it is already flipped in image

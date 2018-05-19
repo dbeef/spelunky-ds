@@ -64,23 +64,23 @@ void Whip::updatePosition() {
         assign_whip_sprite();
 
         if (global::main_dude->state == SpriteState::W_LEFT) {
-            main_sprite_info->entry->x = main_x - 12;
-            sub_sprite_info->entry->x = sub_x - 12;
-            main_sprite_info->entry->hFlip = true;
-            sub_sprite_info->entry->hFlip = true;
-        } else {
-            main_sprite_info->entry->x = main_x + 8;
-            sub_sprite_info->entry->x = sub_x + 8;
+            main_sprite_info->entry->x = main_x - 16;
+            sub_sprite_info->entry->x = sub_x - 16;
             main_sprite_info->entry->hFlip = false;
             sub_sprite_info->entry->hFlip = false;
+        } else {
+            main_sprite_info->entry->x = main_x + 16;
+            sub_sprite_info->entry->x = sub_x + 16;
+            main_sprite_info->entry->hFlip = true;
+            sub_sprite_info->entry->hFlip = true;
         }
 
     } else {
         hide();
     }
 
-    main_sprite_info->entry->y = main_y;
-    sub_sprite_info->entry->y = sub_y;
+    main_sprite_info->entry->y = main_y -1;
+    sub_sprite_info->entry->y = sub_y - 1;
 
 }
 

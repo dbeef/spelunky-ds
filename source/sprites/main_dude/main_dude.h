@@ -104,6 +104,11 @@ public:
     bool started_climbing_rope{};
     bool started_climbing_ladder{};
 
+    bool carrying_spring_shoes{};
+    bool carrying_mitt{};
+    bool carrying_glove{};
+    bool carrying_compass{};
+
     void handle_key_input();
 
     void can_hang_on_tile(MapTile **neighboringTiles);
