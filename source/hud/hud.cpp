@@ -368,7 +368,7 @@ void Hud::set_position() {
 
 Hud::Hud() {
     hearts = 4;
-    items_offset_x = 165;
+    items_offset_x = 161;
     items_offset_y = 7;
 }
 
@@ -376,8 +376,8 @@ void Hud::next_item(){
 
     items_offset_x += 20;
 
-    if(items_offset_x > 220) {
-        items_offset_x = 20;
-        items_offset_y += 18;
+    if(items_offset_x > 250) {
+        items_offset_x = 28;
+        items_offset_y += 14;
     }
 }

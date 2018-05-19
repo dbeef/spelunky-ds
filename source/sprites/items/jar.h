@@ -24,7 +24,7 @@ public:
 
     void draw() override;
 
-    void kill() override {};
+    void kill() override;
 
     void updateTimers() override {};
 

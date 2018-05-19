@@ -9,6 +9,7 @@
 #include "../../globals_declarations.h"
 #include "../../collisions/collisions.h"
 #include "../../../build/gfx_saleable.h"
+#include "../animations/got_collectible.h"
 
 void Glove::draw() {
 
@@ -24,6 +25,13 @@ void Glove::draw() {
 
         if (Collisions::checkCollisionWithMainDude(x, y, sprite_width, sprite_height)) {
             collected = true;
+
+            GotCollectible *g = new GotCollectible();
+            g->x = x - 12;
+            g->y = y - 20;
+            g->collectible_type = 0;
+            g->init();
+            global::sprites.push_back(g);
 
             if(!global::main_dude->carrying_glove) {
                 global::main_dude->carrying_glove= true;
@@ -107,10 +115,10 @@ void Glove::initSprite() {
 
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_saleablePal, gfx_saleablePalLen,
                                                         nullptr, sprite_width * sprite_height, sprite_width,
-                                                        spriteType, true, true);
+                                                        spriteType, true, false);
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_saleablePal, gfx_saleablePalLen,
                                                           nullptr, sprite_width * sprite_height, sprite_width,
-                                                          spriteType, true, true);
+                                                          spriteType, true, false);
 
     frameGfx = (u8 *) gfx_saleableTiles + (sprite_width * sprite_height * (1) / 2);
 

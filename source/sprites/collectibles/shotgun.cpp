@@ -27,6 +27,8 @@ void Shotgun::draw() {
         if (Collisions::checkCollisionWithMainDude(x, y, 16, 8)) {
             hold_by_main_dude = true;
             global::main_dude->holding_item = true;
+            global::main_dude->carrying_shotgun = true;
+
 //            std::cout << "TOOK ITEM";
             global::input_handler->y_key_down = false;
             global::input_handler->y_key_held = false;
@@ -47,10 +49,11 @@ void Shotgun::draw() {
 
         subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
         mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
-    }
+    } else
+        global::main_dude->carrying_shotgun = false;
 
 
-    if (activated_by_main_dude && !firing) {
+    if (activated_by_main_dude && !firing && cooldown > 750) {
 
 
         if (!global::main_dude->climbing && !global::main_dude->hanging_on_tile_left &&
@@ -65,6 +68,7 @@ void Shotgun::draw() {
 
         mmEffect(SFX_XSHOTGUN);
         firing = true;
+        cooldown = 0;
         activated_by_main_dude = false;
 
         for (int a = 0; a < 4; a++) {
@@ -91,6 +95,8 @@ void Shotgun::draw() {
 
         }
 
+    } else {
+        activated_by_main_dude = false;
     }
 
     if (firing) {
@@ -125,6 +131,8 @@ void Shotgun::draw() {
         blast_mainSpriteInfo->entry->isHidden = false;
         blast_subSpriteInfo->entry->isHidden = false;
     } else {
+
+        cooldown += *global::timer;
 
         blast_mainSpriteInfo->entry->isHidden = true;
         blast_subSpriteInfo->entry->isHidden = true;

@@ -4,7 +4,7 @@
 
 #include "../../globals_declarations.h"
 #include "../main_dude/main_dude.h"
-#include "../../../build/gfx_rock.h"
+#include "../../../build/gfx_blood_rock_rope.h"
 #include "rock.h"
 #include "../../collisions/collisions.h"
 #include "../../tiles/map_utils.h"
@@ -21,7 +21,7 @@ void Rock::draw() {
         global::main_dude->holding_item = false;
     } else if (global::input_handler->y_key_held && global::input_handler->down_key_held &&
                /*bottomCollision &&*/ !global::main_dude->holding_item) {
-        if (Collisions::checkCollisionWithMainDude(x, y, 8, 8)) {
+        if (Collisions::checkCollisionWithMainDude(x, y, 7, 7)) {
             hold_by_main_dude = true;
             global::main_dude->holding_item = true;
 //            std::cout << "TOOK ITEM";
@@ -60,7 +60,7 @@ void Rock::draw() {
         for (int a = 0; a < global::sprites.size(); a++) {
             if((global::sprites.at(a)->spriteType == SpritesheetType::SNAKE || global::sprites.at(a)->spriteType == SpritesheetType::BAT|| global::sprites.at(a)->spriteType == SpritesheetType::SPIDER)
                && !global::sprites.at(a)->killed){
-                if(Collisions::checkCollisionBodies(x, y, 8, 8, global::sprites.at(a)->x, global::sprites.at(a)->y, 16, 16)){
+                if(Collisions::checkCollisionBodies(x, y, 7, 7, global::sprites.at(a)->x, global::sprites.at(a)->y, 16, 16)){
                     global::sprites.at(a)->kill();
                 }
             }
@@ -123,21 +123,21 @@ void Rock::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_
     Collisions::getNeighboringTiles(global::level_generator->map_tiles, x_current_pos_in_tiles, y_current_pos_in_tiles,
                                     tiles);
 
-    bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, 8, 8, true);
-    leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, 8, 8, true);
-    rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, 8, 8, true);
-    upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, 8, true);
+    bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, 7, 7, true);
+    leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, 7, 7, true);
+    rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, 7, 7, true);
+    upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, 7, true);
 
 }
 
 void Rock::initSprite() {
 
-    subSpriteInfo = global::sub_oam_manager->initSprite(gfx_rockPal, gfx_rockPalLen,
-                                                        nullptr, 8 * 8, 8, ROCK, true, true);
-    mainSpriteInfo = global::main_oam_manager->initSprite(gfx_rockPal, gfx_rockPalLen,
-                                                          nullptr, 8 * 8, 8, ROCK, true, true);
+    subSpriteInfo = global::sub_oam_manager->initSprite(gfx_blood_rock_ropePal, gfx_blood_rock_ropePalLen,
+                                                        nullptr, 8 * 8, 8, BLOOD_ROCK_ROPE, true, false);
+    mainSpriteInfo = global::main_oam_manager->initSprite(gfx_blood_rock_ropePal, gfx_blood_rock_ropePalLen,
+                                                          nullptr, 8 * 8, 8, BLOOD_ROCK_ROPE, true, false);
 
-    frameGfx = (u8 *) gfx_rockTiles;
+    frameGfx = (u8 *) gfx_blood_rock_ropeTiles + (sprite_height * sprite_width * 7 / 2);
     subSpriteInfo->updateFrame(frameGfx, 8 * 8);
     mainSpriteInfo->updateFrame(frameGfx, 8 * 8);
 
@@ -148,6 +148,7 @@ Rock::Rock() {
     physical_width = ROCK_PHYSICAL_WIDTH;
     sprite_height = ROCK_SPRITE_HEIGHT;
     sprite_width = ROCK_SPRITE_WIDTH;
+    spriteType = SpritesheetType::BLOOD_ROCK_ROPE;
 }
 
 

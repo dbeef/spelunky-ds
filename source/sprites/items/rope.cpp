@@ -4,7 +4,7 @@
 
 #include <maxmod9.h>
 #include "../../globals_declarations.h"
-#include "../../../build/gfx_ropes.h"
+#include "../../../build/gfx_blood_rock_rope.h"
 #include "rope.h";
 #include "../../../build/soundbank.h"
 #include "../../collisions/collisions.h"
@@ -136,13 +136,13 @@ void Rope::init() {
 }
 
 void Rope::notThrown() {
-    frameGfx = (u8 *) gfx_ropesTiles + 1 * 8 * 8 / 2;
+    frameGfx = (u8 *) gfx_blood_rock_ropeTiles + 9 * 8 * 8 / 2;
     subSpriteInfo->updateFrame(frameGfx, 8 * 8);
     mainSpriteInfo->updateFrame(frameGfx, 8 * 8);
 }
 
 void Rope::throwingFinished() {
-    frameGfx = (u8 *) gfx_ropesTiles + (2 * 8 * 8 / 2);
+    frameGfx = (u8 *) gfx_blood_rock_ropeTiles + (10 * 8 * 8 / 2);
     subSpriteInfo->updateFrame(frameGfx, 8 * 8);
     mainSpriteInfo->updateFrame(frameGfx, 8 * 8);
 }
@@ -265,10 +265,10 @@ bool Rope::isThereChainForThisTile(int rope_y) {
 void Rope::initSprite() {
 
 
-    subSpriteInfo = global::sub_oam_manager->initSprite(gfx_ropesPal, gfx_ropesPalLen,
-                                                        nullptr, 8 * 8, 8, ROPES, true, false);
-    mainSpriteInfo = global::main_oam_manager->initSprite(gfx_ropesPal, gfx_ropesPalLen,
-                                                          nullptr, 8 * 8, 8, ROPES, true, false);
+    subSpriteInfo = global::sub_oam_manager->initSprite(gfx_blood_rock_ropePal, gfx_blood_rock_ropePalLen,
+                                                        nullptr, 8 * 8, 8, BLOOD_ROCK_ROPE, true, false);
+    mainSpriteInfo = global::main_oam_manager->initSprite(gfx_blood_rock_ropePal, gfx_blood_rock_ropePalLen,
+                                                          nullptr, 8 * 8, 8, BLOOD_ROCK_ROPE, true, false);
 
     mainSpriteInfo->entry->isHidden = false;
     subSpriteInfo->entry->isHidden = false;

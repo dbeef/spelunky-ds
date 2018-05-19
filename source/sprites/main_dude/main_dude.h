@@ -108,6 +108,8 @@ public:
     bool carrying_mitt{};
     bool carrying_glove{};
     bool carrying_compass{};
+    bool carrying_pistol{};
+    bool carrying_shotgun{};
 
     void handle_key_input();
 

@@ -9,6 +9,7 @@
 #include "../../globals_declarations.h"
 #include "../../collisions/collisions.h"
 #include "../../../build/gfx_saleable.h"
+#include "../animations/got_collectible.h"
 
 void SpringShoes::draw() {
 
@@ -23,13 +24,30 @@ void SpringShoes::draw() {
     if (global::input_handler->y_key_down && global::input_handler->down_key_held && !global::main_dude->holding_item) {
 
         if (Collisions::checkCollisionWithMainDude(x, y, sprite_width, sprite_height)) {
-            global::main_dude->carrying_spring_shoes = true;
-            global::hud->next_item();
-            set_position();
-            collected = true;
-            x = global::hud->items_offset_x;
-            y = global::hud->items_offset_y;
+
+            GotCollectible *g = new GotCollectible();
+            g->x = x - 12;
+            g->y = y - 20;
+            g->collectible_type = 0;
+            g->init();
+            global::sprites.push_back(g);
+
+            if(!global::main_dude->carrying_spring_shoes) {
+                global::main_dude->carrying_spring_shoes = true;
+                global::hud->next_item();
+                set_position();
+                collected = true;
+                x = global::hud->items_offset_x;
+                y = global::hud->items_offset_y;
+            }
+            else
+            {
+                mainSpriteInfo->entry->isHidden = true;
+                subSpriteInfo->entry->isHidden = true;
+                ready_to_dispose = true;
+            }
         }
+
 
     }
 }
@@ -100,10 +118,10 @@ void SpringShoes::initSprite() {
 
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_saleablePal, gfx_saleablePalLen,
                                                         nullptr, sprite_width * sprite_height, sprite_width,
-                                                        spriteType, true, true);
+                                                        spriteType, true, false);
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_saleablePal, gfx_saleablePalLen,
                                                           nullptr, sprite_width * sprite_height, sprite_width,
-                                                          spriteType, true, true);
+                                                          spriteType, true, false);
 
     frameGfx = (u8 *) gfx_saleableTiles + (sprite_width * sprite_height * (3) / 2);
 

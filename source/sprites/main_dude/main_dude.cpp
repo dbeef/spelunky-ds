@@ -22,6 +22,12 @@
 #include "../../game_loop.h"
 #include "../../tiles/tile_orientation.h"
 #include "../../tiles/splash_screen_type.h"
+#include "../collectibles/spring_shoes.h"
+#include "../collectibles/compass.h"
+#include "../collectibles/glove.h"
+#include "../collectibles/mitt.h"
+#include "../collectibles/shotgun.h"
+#include "../collectibles/pistol.h"
 
 void MainDude::handle_key_input() {
 
@@ -572,12 +578,74 @@ void MainDude::draw() {
             if (global::in_main_menu || global::levels_transition_screen) {
 
                 if (global::in_main_menu) {
+
+                    global::main_dude->carrying_spring_shoes = false;
+                    global::main_dude->carrying_compass= false;
+                    global::main_dude->carrying_glove= false;
+                    global::main_dude->carrying_mitt= false;
+
                     global::hud->hearts = 4;
                     global::hud->ropes = 4;
                     global::hud->bombs = 4;
                     global::hud->dollars = 0;
-                    global::hud->items_offset_x = 165;
+                    global::hud->items_offset_x = 161;
                     global::hud->items_offset_y = 7;
+                }
+
+                global::hud->items_offset_x = 161;
+                global::hud->items_offset_y = 7;
+                global::hud->next_item();
+                this->holding_item = false;
+
+                if(global::main_dude->carrying_spring_shoes){
+                    SpringShoes *springShoes = new SpringShoes();
+                    springShoes->x = global::hud->items_offset_x;
+                    springShoes->y = global::hud->items_offset_y;
+                    springShoes->collected = true;
+                    springShoes->init();
+                    global::sprites.push_back(springShoes);
+                    global::hud->next_item();
+                }
+                if(global::main_dude->carrying_compass){
+                    Compass *compass = new Compass();
+                    compass->x = global::hud->items_offset_x;
+                    compass->y = global::hud->items_offset_y;
+                    compass->collected = true;
+                    compass->init();
+                    global::sprites.push_back(compass);
+                    global::hud->next_item();
+                }
+                if(global::main_dude->carrying_glove){
+                    Glove *glove= new Glove();
+                    glove->x = global::hud->items_offset_x;
+                    glove->y = global::hud->items_offset_y;
+                    glove->collected = true;
+                    glove->init();
+                    global::sprites.push_back(glove);
+                    global::hud->next_item();
+                }
+                if(global::main_dude->carrying_mitt){
+                    Mitt *mitt= new Mitt();
+                    mitt->x = global::hud->items_offset_x;
+                    mitt->y = global::hud->items_offset_y;
+                    mitt->collected = true;
+                    mitt->init();
+                    global::sprites.push_back(mitt);
+                    global::hud->next_item();
+                }
+                if(global::main_dude->carrying_shotgun){
+                    Shotgun *shotgun = new Shotgun();
+                    shotgun->hold_by_main_dude = true;
+                    shotgun->init();
+                    global::sprites.push_back(shotgun);
+                    holding_item = true;
+                }
+                if(global::main_dude->carrying_pistol){
+                    Pistol *pistol= new Pistol();
+                    pistol->hold_by_main_dude = true;
+                    pistol->init();
+                    global::sprites.push_back(pistol);
+                    holding_item = true;
                 }
 
                 global::hud->init();
@@ -589,7 +657,6 @@ void MainDude::draw() {
                 global::collected_loot.clear();
                 global::hud->money_on_this_level = 0;
 
-                this->holding_item = false;
 
 
             } else {

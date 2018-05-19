@@ -19,9 +19,12 @@ void Bullet::draw() {
         for (int a = 0; a < global::sprites.size(); a++) {
             if ((global::sprites.at(a)->spriteType == SpritesheetType::SNAKE ||
                  global::sprites.at(a)->spriteType == SpritesheetType::BAT ||
-                 global::sprites.at(a)->spriteType == SpritesheetType::SPIDER)
+                 global::sprites.at(a)->spriteType == SpritesheetType::SPIDER ||
+                 global::sprites.at(a)->spriteType == SpritesheetType::JAR)
                 && !global::sprites.at(a)->killed) {
-                if (Collisions::checkCollisionBodies(x, y, 4, 4, global::sprites.at(a)->x, global::sprites.at(a)->y, 16, 16)) {
+
+                if (Collisions::checkCollisionBodies(x, y, physical_width, physical_height, global::sprites.at(a)->x, global::sprites.at(a)->y,
+                                                     global::sprites.at(a)->physical_width, global::sprites.at(a)->physical_height)) {
                     global::sprites.at(a)->kill();
                 }
             }

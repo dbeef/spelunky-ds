@@ -3,7 +3,7 @@
 //
 
 #include "blood_element.h"
-#include "../../../build/gfx_blood.h"
+#include "../../../build/gfx_blood_rock_rope.h"
 #include "../../globals_declarations.h"
 #include "blood.h"
 #include "../../collisions/collisions.h"
@@ -43,7 +43,7 @@ void BloodElement::draw() {
                 mainSpriteInfo->entry->isHidden = true;
                 subSpriteInfo->entry->isHidden = true;
             } else {
-                frameGfx = (u8 *) gfx_bloodTiles + currentFrame * 8 * 8 / 2;
+                frameGfx = (u8 *) gfx_blood_rock_ropeTiles + currentFrame * 8 * 8 / 2;
                 subSpriteInfo->updateFrame(frameGfx, 8 * 8);
                 mainSpriteInfo->updateFrame(frameGfx, 8 * 8);
             }
@@ -62,7 +62,7 @@ void BloodElement::draw() {
 void BloodElement::init() {
     initSprite();
 
-    frameGfx = (u8 *) gfx_bloodTiles + currentFrame * 8 * 8 / 2;
+    frameGfx = (u8 *) gfx_blood_rock_ropeTiles + currentFrame * 8 * 8 / 2;
     subSpriteInfo->updateFrame(frameGfx, 8 * 8);
     mainSpriteInfo->updateFrame(frameGfx, 8 * 8);
 
@@ -168,9 +168,9 @@ void BloodElement::updateCollisionsMap(int x_current_pos_in_tiles, int y_current
 }
 
 void BloodElement::initSprite() {
-    subSpriteInfo = global::sub_oam_manager->initSprite(gfx_bloodPal, gfx_bloodPalLen,
-                                                        nullptr, 8 * 8, 8, BLOOD, true, true);
-    mainSpriteInfo = global::main_oam_manager->initSprite(gfx_bloodPal, gfx_bloodPalLen,
-                                                          nullptr, 8 * 8, 8, BLOOD, true, true);
+    subSpriteInfo = global::sub_oam_manager->initSprite(gfx_blood_rock_ropePal, gfx_blood_rock_ropePalLen,
+                                                        nullptr, 8 * 8, 8, BLOOD_ROCK_ROPE, true, false);
+    mainSpriteInfo = global::main_oam_manager->initSprite(gfx_blood_rock_ropePal, gfx_blood_rock_ropePalLen,
+                                                          nullptr, 8 * 8, 8, BLOOD_ROCK_ROPE, true, false);
 
 }

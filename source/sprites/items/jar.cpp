@@ -201,4 +201,9 @@ Jar::Jar() {
     physical_width = JAR_PHYSICAL_WIDTH;
     sprite_height = JAR_SPRITE_HEIGHT;
     sprite_width = JAR_SPRITE_WIDTH;
+    spriteType = SpritesheetType::JAR;
+}
+
+void Jar::kill(){
+    killed = true;
 }

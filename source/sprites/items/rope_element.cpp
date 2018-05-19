@@ -3,7 +3,7 @@
 //
 
 #include "../../globals_declarations.h"
-#include "../../../build/gfx_ropes.h"
+#include "../../../build/gfx_blood_rock_rope.h"
 #include "rope_element.h";
 
 
@@ -63,17 +63,17 @@ void RopeElement::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_
 
 void RopeElement::initSprite() {
 
-    subSpriteInfo = global::sub_oam_manager->initSprite(gfx_ropesPal, gfx_ropesPalLen,
-                                                        nullptr, 8 * 8, 8, ROPE_ELEMENT, true, true);
-    mainSpriteInfo = global::main_oam_manager->initSprite(gfx_ropesPal, gfx_ropesPalLen,
-                                                          nullptr, 8 * 8, 8, ROPE_ELEMENT, true, true);
+    subSpriteInfo = global::sub_oam_manager->initSprite(gfx_blood_rock_ropePal, gfx_blood_rock_ropePalLen,
+                                                        nullptr, 8 * 8, 8, BLOOD_ROCK_ROPE, true, false);
+    mainSpriteInfo = global::main_oam_manager->initSprite(gfx_blood_rock_ropePal, gfx_blood_rock_ropePalLen,
+                                                          nullptr, 8 * 8, 8, BLOOD_ROCK_ROPE, true, false);
 
-    subSpriteInfo_2 = global::sub_oam_manager->initSprite(gfx_ropesPal, gfx_ropesPalLen,
-                                                          nullptr, 8 * 8, 8, ROPE_ELEMENT, true, true);
-    mainSpriteInfo_2 = global::main_oam_manager->initSprite(gfx_ropesPal, gfx_ropesPalLen,
-                                                            nullptr, 8 * 8, 8, ROPE_ELEMENT, true, true);
+    subSpriteInfo_2 = global::sub_oam_manager->initSprite(gfx_blood_rock_ropePal, gfx_blood_rock_ropePalLen,
+                                                          nullptr, 8 * 8, 8, BLOOD_ROCK_ROPE, true, false);
+    mainSpriteInfo_2 = global::main_oam_manager->initSprite(gfx_blood_rock_ropePal, gfx_blood_rock_ropePalLen,
+                                                            nullptr, 8 * 8, 8, BLOOD_ROCK_ROPE, true, false);
 
-    frameGfx = (u8 *) gfx_ropesTiles + 0 * 8 * 8 / 2;
+    frameGfx = (u8 *) gfx_blood_rock_ropeTiles + 8 * 8 * 8 / 2;
 
     subSpriteInfo->updateFrame(frameGfx, 8 * 8);
     mainSpriteInfo->updateFrame(frameGfx, 8 * 8);

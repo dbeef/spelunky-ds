@@ -15,6 +15,7 @@
 #include "mitt.h"
 #include "glove.h"
 #include "compass.h"
+#include "../animations/got_collectible.h"
 
 
 void Crate::draw() {
@@ -54,70 +55,98 @@ void Crate::draw() {
         global::input_handler->y_key_down = false;
         mmEffect(SFX_XPICKUP);
         hold_by_main_dude = false;
-        global::main_dude->holding_item = false;
+//        global::main_dude->holding_item = false;
     }
 
     if (activated_by_main_dude) {
 
+        int r = rand() % 8;
 
-        if(!dropped_loot){
+        if (!dropped_loot) {
 
-            /*Pistol *pistol= new Pistol();
-            pistol->x = this->x;
-            pistol->y = this->y;
-            pistol->init();
-            global::sprites.push_back(pistol);
+            if (r == 0 || r == 1) {
+                GotCollectible *g = new GotCollectible();
+                g->x = x - 12;
+                g->y = y - 20;
 
-            dropped_loot = true;
-            */
-/*
 
-            SpringShoes *springShoes= new SpringShoes();
-            springShoes->x = this->x;
-            springShoes->y = this->y;
-            springShoes->init();
-            global::sprites.push_back(springShoes);
+                if (r == 0) {
+                    global::hud->ropes += 4;
+                    g->collectible_type = 2;
+                } else {
+                    global::hud->bombs += 4;
+                    g->collectible_type = 1;
+                }
 
-            dropped_loot = true;
+                g->init();
+                global::sprites.push_back(g);
 
-*/
+                dropped_loot = true;
 
-/*
-            Mitt *mitt= new Mitt();
-            mitt->x = this->x;
-            mitt->y = this->y;
-            mitt->init();
-            global::sprites.push_back(mitt);
+                global::hud->draw();
+            }
 
-            dropped_loot = true;
-*/
+            if(r == 2) {
+                Pistol *pistol = new Pistol();
+                pistol->x = this->x;
+                pistol->y = this->y;
+                pistol->init();
+                global::sprites.push_back(pistol);
 
-            Compass *compass= new Compass();
-            compass->x = this->x;
-            compass->y = this->y;
-            compass->init();
-            global::sprites.push_back(compass);
+                dropped_loot = true;
+            }
 
-            dropped_loot = true;
-/*
+            if(r == 3) {
+                SpringShoes *springShoes = new SpringShoes();
+                springShoes->x = this->x;
+                springShoes->y = this->y;
+                springShoes->init();
+                global::sprites.push_back(springShoes);
 
-            Glove *glove = new Glove();
-            glove ->x = this->x;
-            glove ->y = this->y;
-            glove ->init();
-            global::sprites.push_back(glove);
+                dropped_loot = true;
+            }
 
-            dropped_loot = true;
-*/
+            if(r == 4) {
+                Mitt *mitt = new Mitt();
+                mitt->x = this->x;
+                mitt->y = this->y;
+                mitt->init();
+                global::sprites.push_back(mitt);
 
-            /*
-            Shotgun *shotgun = new Shotgun();
-            shotgun->x = this->x;
-            shotgun->y = this->y;
-            shotgun->init();
-            global::sprites.push_back(shotgun);
+                dropped_loot = true;
+            }
 
-            dropped_loot = true;*/
+            if(r == 5) {
+                Compass *compass = new Compass();
+                compass->x = this->x;
+                compass->y = this->y;
+                compass->init();
+                global::sprites.push_back(compass);
+
+                dropped_loot = true;
+            }
+
+
+            if(r == 6) {
+                Glove *glove = new Glove();
+                glove->x = this->x;
+                glove->y = this->y;
+                glove->init();
+                global::sprites.push_back(glove);
+
+                dropped_loot = true;
+            }
+
+            if(r == 7) {
+                Shotgun *shotgun = new Shotgun();
+                shotgun->x = this->x;
+                shotgun->y = this->y;
+                shotgun->init();
+                global::sprites.push_back(shotgun);
+
+                dropped_loot = true;
+            }
+
         }
 
         frameGfx = (u8 *) gfx_spike_collectiblesTiles + (sprite_width * sprite_height * (5 + animFrame) / 2);
@@ -126,7 +155,7 @@ void Crate::draw() {
 
         animFrameTimer += *global::timer;
 
-        if (animFrameTimer > 75){
+        if (animFrameTimer > 75) {
             animFrame++;
             animFrameTimer = 0;
         }
@@ -145,12 +174,14 @@ void Crate::draw() {
     }
 
 
-
     if (xSpeed > 0 || ySpeed > 0) {
         for (int a = 0; a < global::sprites.size(); a++) {
-            if((global::sprites.at(a)->spriteType == SpritesheetType::SNAKE || global::sprites.at(a)->spriteType == SpritesheetType::BAT|| global::sprites.at(a)->spriteType == SpritesheetType::SPIDER)
-               && !global::sprites.at(a)->killed){
-                if(Collisions::checkCollisionBodies(x, y, 8, 8, global::sprites.at(a)->x, global::sprites.at(a)->y, 16, 16)){
+            if ((global::sprites.at(a)->spriteType == SpritesheetType::SNAKE ||
+                 global::sprites.at(a)->spriteType == SpritesheetType::BAT ||
+                 global::sprites.at(a)->spriteType == SpritesheetType::SPIDER)
+                && !global::sprites.at(a)->killed) {
+                if (Collisions::checkCollisionBodies(x, y, 8, 8, global::sprites.at(a)->x, global::sprites.at(a)->y, 16,
+                                                     16)) {
                     global::sprites.at(a)->kill();
                 }
             }

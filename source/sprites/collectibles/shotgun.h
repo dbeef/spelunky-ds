@@ -51,6 +51,7 @@ public:
     SpriteInfo *blast_mainSpriteInfo {};
     SpriteInfo *blast_subSpriteInfo {};
 
+    int cooldown{};
     bool firing{};
     int animFrame{};
     int animFrameTimer{};
