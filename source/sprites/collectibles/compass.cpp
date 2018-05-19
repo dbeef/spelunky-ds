@@ -7,6 +7,7 @@
 #include "../../globals_declarations.h"
 #include "../../collisions/collisions.h"
 #include "../../../build/gfx_saleable.h"
+#include "../animations/got_collectible.h"
 
 void Compass::draw() {
 
@@ -21,6 +22,13 @@ void Compass::draw() {
 
             if (Collisions::checkCollisionWithMainDude(x, y, sprite_width, sprite_height)) {
                 collected = true;
+
+                GotCollectible *g = new GotCollectible();
+                g->x = x - 12;
+                g->y = y - 20;
+                g->collectible_type = 0;
+                g->init();
+                global::sprites.push_back(g);
 
                 if (!global::main_dude->carrying_compass) {
                     global::main_dude->carrying_compass = true;
@@ -62,7 +70,7 @@ void Compass::draw() {
                 subSpriteInfo->entry->y = SCREEN_HEIGHT - 10 - 16;
                 apply_down_arrow();
 
-            } else if (diff_y < 2 * TILE_H) {
+            } else if (diff_y < 3 * TILE_H) {
 
                 if (global::main_dude->x > tile_x) {
                     //left_arrow
