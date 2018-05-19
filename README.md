@@ -22,8 +22,7 @@ Check my blog for development diaries: http://dbeef.wordpress.com
 </ul>
 
 <h3> License </h3>
-I grant permission for every non-commercial use, modification and redistribution of <b>my</b> code without contacting me, with respect for related 3rd party licences.
-"Nintendo" is a registered trademark of Nintendo.
+https://github.com/dbeef/spelunky-ds/blob/master/LICENSE
 
 <h3> Links </h3>
 I found following materials very helpful:
