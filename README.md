@@ -1,13 +1,12 @@
 
-<h1  align="center"> Spelunky remake for the NintendoDS. </h1>
+<h1 align="center"> Spelunky remake for the NintendoDS. </h1>
 
-<p align="center">
+
+<p align="center"></p>
 
 <img src="https://github.com/dbeef/spelunky-ds/blob/master/readme/gameplay.gif" alt="Works on real NDS!"
  width="240" height="340">
- </p>
-
-
+ 
 <h3> Tools I use </h3>
 <ul>
   <li> C++ </li>
