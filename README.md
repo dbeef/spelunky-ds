@@ -1,14 +1,30 @@
 
 <h1 align="center"> Spelunky remake for the NintendoDS. </h1><p align="center">(a.k.a SpelunkyDS)</p>
 
-
-
-
-
 <p align="center"><img src="https://github.com/dbeef/spelunky-ds/blob/master/readme/gameplay.gif" alt="Works on real NDS!"
  width="240" height="340">
  
 </p>
+
+<h1 align="center">Contributing</h1>
+
+<h2 align="center">To-do list as for now</h2>
+<ul>
+ 
+<li> 🗙	Implement shopkeeper logics and randomly spawned shops  </li>
+<li> 🗙 Implement damsel </li>
+<li> 🗙 Implement caveman </li>
+<li> 🗙 Implement skeleton </li>
+<li> 🗙 Implement arrow trap </li>
+<li> 🗙 Implement cape and jetpack </li>
+<li> 🗙 Tune-up the level generator; make it more random; add random events like snake well </li>
+<li> 🗙 Implement music using streaming from filesystem - I elaborated a bit on this on my blog: https://dbeef.wordpress.com/2018/05/24/some-words-on-developing-spelunkyds/ </li> 
+ 
+</ul>
+ 
+ Obviously I omit things like implement Olmec or implement lava city - let's finish cave level first.
+
+
 
 <h3> Tools I use </h3>
 <ul>
