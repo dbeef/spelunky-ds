@@ -6,8 +6,6 @@
  
 </p>
 
-<h1 align="center">Contributing</h1>
-
 <h2 align="center">To-do list as for now</h2>
 <ul>
  
@@ -46,6 +44,12 @@ https://github.com/dbeef/spelunky-ds/blob/master/LICENSE
 <p>
 Briefly, as for my code, I distribute it under GNU GENERAL PUBLIC LICENSE, as for Spelunky game assets, I use them under Spelunky® User License v1.1b, also, for building I use devkitPro which is under GNU General Public License (GPL).
 </p>
+
+
+<h2 align="center">Contributing</h2>
+
+I will accept every help with running this project, feel free to catch one or more of the todo's.
+
 <h2 align="center"> Links </h2>
 I found following materials very helpful:
 
