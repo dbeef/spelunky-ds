@@ -318,7 +318,6 @@ void MainDude::handle_key_input() {
 void MainDude::updateTimers() {
 
     pos_inc_timer += *global::timer;
-    friction_timer += *global::timer;
     speed_inc_timer += *global::timer;
     hanging_timer += *global::timer;
 
@@ -427,13 +426,12 @@ void MainDude::updateSpeed() {
     else
         limit_speed(MAIN_DUDE_MAX_X_SPEED, MAIN_DUDE_MAX_Y_SPEED);
 
-    apply_friction(FRICTION_DELTA_TIME_MS, FRICTION_DELTA_SPEED);
-
     bool change_pos = (crawling && pos_inc_timer > 20) || (!crawling && pos_inc_timer > 1);
 
-
     if (change_pos) {
-        updatePosition();
+
+        apply_friction(FRICTION_DELTA_SPEED*0.9f);
+        update_position();
         pos_inc_timer = 0;
 
         if (!bottomCollision && !(hanging_on_tile_left || hanging_on_tile_right) && !climbing)
@@ -789,11 +787,11 @@ void MainDude::updateOther() {
 void MainDude::initSprite() {
 
     main_spelunker = global::main_oam_manager->initSprite(gfx_spelunkerPal, gfx_spelunkerPalLen, nullptr,
-                                                          16 * 16, 16, MAIN_DUDE, true, false);
+                                                          16 * 16, 16, MAIN_DUDE, true, false,LAYER_LEVEL::MIDDLE_TOP);
 
 
     sub_spelunker = global::sub_oam_manager->initSprite(gfx_spelunkerPal, gfx_spelunkerPalLen, nullptr,
-                                                        16 * 16, 16, MAIN_DUDE, true, false);
+                                                        16 * 16, 16, MAIN_DUDE, true, false,LAYER_LEVEL::MIDDLE_TOP);
 
 
     int main_x = x - global::camera->x;

@@ -38,6 +38,7 @@ GAME_ICON := ../gfx/icon/icon.bmp
 GAME_TITLE := SpelunkyDS
 GAME_SUBTITLE1 := github.com/dbeef/spelunky-ds
 GAME_SUBTITLE2 :=
+NITRODATA := nitrofiles
 
 #---------------------------------------------------------------------------------
 # options for code generation
@@ -58,7 +59,7 @@ LDFLAGS	=	-specs=ds_arm9.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)
 #---------------------------------------------------------------------------------
 # any extra libraries we wish to link with the project
 #---------------------------------------------------------------------------------
-LIBS	:= -lnds9 -lmm9
+LIBS	:=  -lfilesystem -lfat -lnds9 -lmm9
 
 
 #---------------------------------------------------------------------------------
@@ -86,6 +87,10 @@ export VPATH	:=	$(foreach dir,$(SOURCES),$(CURDIR)/$(dir)) \
 					$(foreach dir,$(SOUNDS),$(CURDIR)/$(dir)) \
 
 export DEPSDIR	:=	$(CURDIR)/$(BUILD)
+
+ifneq ($(strip $(NITRODATA)),)
+        export NITRO_FILES := $(CURDIR)/$(NITRODATA)
+endif
 
 CFILES		:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.c)))
 CPPFILES	:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.cpp)))
@@ -149,6 +154,7 @@ DEPENDS	:=	$(OFILES:.o=.d)
 # main targets
 #---------------------------------------------------------------------------------
 $(OUTPUT).nds	: 	$(OUTPUT).elf
+$(OUTPUT).nds   :   $(shell find $(TOPDIR)/$(NITRODATA))
 $(OUTPUT).elf	:	$(OFILES)
 %.s %.h : ../gfx/fonts/%.png
 		grit $< -ff../gfx/fonts/font.grit -o$*

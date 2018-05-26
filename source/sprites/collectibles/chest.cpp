@@ -8,61 +8,30 @@
 #include "../../collisions/collisions.h"
 #include "../../globals_declarations.h"
 #include "../../../build/soundbank.h"
+#include "moniez.h"
 
+#define CHEST_PICKUP_OFFSET_X 8
+#define CHECK_PICKUP_OFFSET_Y 2
+#define CHEST_POS_INC_DELTA 15
+#define CHEST_FRICTION 0.055
 
 void Chest::draw() {
 
+    check_if_can_be_pickuped();
+    set_pickuped_position(CHEST_PICKUP_OFFSET_X, CHECK_PICKUP_OFFSET_Y);
 
-    if (hold_by_main_dude && global::input_handler->y_key_down && global::input_handler->down_key_held) {
-        hold_by_main_dude = false;
-        global::main_dude->holding_item = false;
-    } else if (global::input_handler->y_key_held && global::input_handler->down_key_held &&
-               /*bottomCollision &&*/ !global::main_dude->holding_item) {
-        if (Collisions::checkCollisionWithMainDude(x, y, 8, 8)) {
-            hold_by_main_dude = true;
-            global::main_dude->holding_item = true;
-//            std::cout << "TOOK ITEM";
-            global::input_handler->y_key_down = false;
-            global::input_handler->y_key_held = false;
-        }
-    }
+    if (check_if_can_be_opened()) {
 
-    if (hold_by_main_dude) {
-
-        y = global::main_dude->y - 2;
-
-        if (global::main_dude->state == 1) {
-            x = global::main_dude->x - 8;
-        } else
-            x = global::main_dude->x + 8;
-
-    }
-
-    if (!activated_by_main_dude &&
-        Collisions::checkCollisionWithMainDudeWidthBoundary(x, y, physical_width, physical_height, 8)
-        && global::input_handler->up_key_held && global::input_handler->y_key_down) {
-        global::hud->draw();
-        activated_by_main_dude = true;
         frameGfx = (u8 *) gfx_spike_collectiblesTiles + (sprite_width * sprite_height * (3) / 2);
         subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
         mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
-        global::input_handler->y_key_down = false;
         mmEffect(SFX_XCHESTOPEN);
+        spawn_treasure();
+        global::hud->draw();
+
     }
 
-
-    if (xSpeed > 0 || ySpeed > 0) {
-        for (int a = 0; a < global::sprites.size(); a++) {
-            if((global::sprites.at(a)->spriteType == SpritesheetType::SNAKE || global::sprites.at(a)->spriteType == SpritesheetType::BAT|| global::sprites.at(a)->spriteType == SpritesheetType::SPIDER)
-               && !global::sprites.at(a)->killed){
-                if(Collisions::checkCollisionBodies(x, y, 8, 8, global::sprites.at(a)->x, global::sprites.at(a)->y, 16, 16)){
-                    global::sprites.at(a)->kill();
-                }
-            }
-        }
-    }
-
-
+    kill_mobs_if_thrown();
     set_position();
 }
 
@@ -73,40 +42,18 @@ void Chest::init() {
 
 void Chest::updateSpeed() {
 
-    if (xSpeed > MAX_X_SPEED_CHEST)
-        xSpeed = MAX_X_SPEED_CHEST;
-    if (xSpeed < -MAX_X_SPEED_CHEST)
-        xSpeed = -MAX_X_SPEED_CHEST;
-
-    if (ySpeed > MAX_Y_SPEED_CHEST)
-        ySpeed = MAX_Y_SPEED_CHEST;
-    if (ySpeed < -MAX_Y_SPEED_CHEST)
-        ySpeed = -MAX_Y_SPEED_CHEST;
+    limit_speed(MAX_X_SPEED_CHEST, MAX_Y_SPEED_CHEST);
 
     pos_inc_timer += *global::timer;
 
-    bool change_pos = (pos_inc_timer > 15) && !hold_by_main_dude;
+    bool change_pos = (pos_inc_timer > CHEST_POS_INC_DELTA) && !hold_by_main_dude;
 
     if (change_pos) {
-        updatePosition();
-
-        if (bottomCollision && xSpeed > 0) {
-            xSpeed -= 0.055;
-            if (xSpeed < 0)
-                xSpeed = 0;
-        }
-        if (bottomCollision && xSpeed < 0) {
-            xSpeed += 0.055;
-            if (xSpeed > 0)
-                xSpeed = 0;
-        }
-        if (!bottomCollision)
-            ySpeed += GRAVITY_DELTA_SPEED;
-
+        update_position();
+        apply_friction(CHEST_FRICTION);
+        apply_gravity(GRAVITY_DELTA_SPEED);
         pos_inc_timer = 0;
-
     }
-
 }
 
 void Chest::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
@@ -123,13 +70,12 @@ void Chest::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in
 
 void Chest::initSprite() {
 
-
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_spike_collectiblesPal, gfx_spike_collectiblesPalLen,
                                                         nullptr, sprite_width * sprite_height, sprite_width,
-                                                        spriteType, true, false);
+                                                        spriteType, true, false, LAYER_LEVEL::MIDDLE_TOP);
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_spike_collectiblesPal, gfx_spike_collectiblesPalLen,
                                                           nullptr, sprite_width * sprite_height, sprite_width,
-                                                          spriteType, true, false);
+                                                          spriteType, true, false, LAYER_LEVEL::MIDDLE_TOP);
     if (activated_by_main_dude)
         frameGfx = (u8 *) gfx_spike_collectiblesTiles + (sprite_width * sprite_height * (3) / 2);
     else
@@ -137,6 +83,7 @@ void Chest::initSprite() {
 
     subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
     mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
+
 }
 
 void Chest::set_position() {
@@ -164,5 +111,27 @@ Chest::Chest() {
     sprite_height = CHEST_SPRITE_HEIGHT;
     sprite_width = CHEST_SPRITE_WIDTH;
     spriteType = SpritesheetType::SPIKES_COLLECTIBLES;
+}
+
+void Chest::spawn_treasure() {
+
+    for (int a = 0; a < 4; a++) {
+        Moniez *moniez = new Moniez();
+
+        moniez->spriteType = MONIEZ_RUBY;
+        moniez->value = 1200;
+        moniez->init();
+        global::sprites.push_back(moniez);
+        moniez->x = x + CHEST_PHYSICAL_WIDTH * 0.5;
+        moniez->y = y + CHEST_PHYSICAL_HEIGHT * 0.5;
+        moniez->ySpeed = -1.7;
+
+        moniez->collectible_timer = 0;
+
+        if (rand() % 2 == 0)
+            moniez->xSpeed = -0.8;
+        else
+            moniez->xSpeed = 0.8;
+    }
 }
 

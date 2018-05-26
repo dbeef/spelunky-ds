@@ -14,6 +14,8 @@ class BloodElement : public MovingObject {
 
 public:
 
+    BloodElement();
+
     void updateOther() override {};
 
     void init() override;
@@ -25,8 +27,6 @@ public:
     void initSprite() override;
 
     void updateTimers() override {};
-
-    void updatePosition() override ;
 
     void updateSpeed() override;
 

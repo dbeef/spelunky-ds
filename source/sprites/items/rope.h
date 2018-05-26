@@ -29,7 +29,7 @@ public:
 
     void updateTimers() override {};
 
-    void updatePosition() override ;
+    void update_position() override ;
 
     void updateSpeed() override;
 

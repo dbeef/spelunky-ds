@@ -308,10 +308,10 @@ bool Collisions::checkCollisionWithMainDudeWidthBoundary(int x, int y, int width
 
 bool Collisions::checkCollisionWithMainDudeWhip(int x, int y, int width, int height) {
     if (global::main_dude->state == SpriteState::W_LEFT) {
-        return x + width >= global::main_dude->x - 10 && x + width < global::main_dude->x + MAIN_DUDE_PHYSICAL_WIDTH &&
+        return x + width >= global::main_dude->x - WHIP_WIDTH && x + width < global::main_dude->x + MAIN_DUDE_PHYSICAL_WIDTH &&
                y + height > global::main_dude->y && y < global::main_dude->y + MAIN_DUDE_PHYSICAL_HEIGHT;
     } else if (global::main_dude->state == SpriteState::W_RIGHT) {
-        return x + width >= global::main_dude->x && x + width < global::main_dude->x + MAIN_DUDE_PHYSICAL_WIDTH + 20 &&
+        return x + width >= global::main_dude->x && x + width < global::main_dude->x + MAIN_DUDE_PHYSICAL_WIDTH + WHIP_WIDTH*2 &&
                y + height > global::main_dude->y && y < global::main_dude->y + MAIN_DUDE_PHYSICAL_HEIGHT;
     } else return false;
 

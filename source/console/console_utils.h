@@ -8,6 +8,7 @@
 #include <nds/arm9/console.h>
 #include "../../build/font.h"
 #include "../globals_definitions.h"
+#include "../camera/layer_level.h"
 
 namespace console {
 
@@ -17,7 +18,7 @@ namespace console {
 
         //The default instance utilizes the sub display, approximatly 15KiB of vram C starting
         //at tile base 0 and 2KiB of map at map base 30.
-        consoleInit(global::printConsole, 0, BgType_Text4bpp, BgSize_T_256x256, map_base, tile_base, true, false);
+        consoleInit(global::printConsole, OBJPRIORITY_0, BgType_Text4bpp, BgSize_T_256x256, map_base, tile_base, true, false);
 
         ConsoleFont font;
 

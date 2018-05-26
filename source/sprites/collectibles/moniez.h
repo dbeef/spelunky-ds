@@ -5,15 +5,23 @@
 #ifndef SPELUNKYDS_MONIEZ_H
 #define SPELUNKYDS_MONIEZ_H
 
-#define RUBY_PHYSICAL_HEIGHT 8
-#define RUBY_PHYSICAL_WIDTH 8
-#define RUBY_SPRITE_HEIGHT 8
-#define RUBY_SPRITE_WIDTH 8
+#define RUBY_BIG_PHYSICAL_HEIGHT 8
+#define RUBY_BIG_PHYSICAL_WIDTH 8
+#define RUBY_BIG_SPRITE_HEIGHT 8
+#define RUBY_BIG_SPRITE_WIDTH 8
+
+#define RUBY_SMALL_PHYSICAL_HEIGHT 4
+#define RUBY_SMALL_PHYSICAL_WIDTH 4
+#define RUBY_SMALL_SPRITE_HEIGHT 8
+#define RUBY_SMALL_SPRITE_WIDTH 8
 
 #define TRIPLE_GOLDBAR_PHYSICAL_HEIGHT 12
 #define TRIPLE_GOLDBAR_PHYSICAL_WIDTH 16
 #define TRIPLE_GOLDBAR_SPRITE_HEIGHT 16
 #define TRIPLE_GOLDBAR_SPRITE_WIDTH 16
+
+#define MAX_X_SPEED_MONIEZ 4
+#define MAX_Y_SPEED_MONIEZ 4
 
 #include "../moving_object.h"
 #include "../sprite_info.h"
@@ -44,7 +52,7 @@ public:
 
     void onCollisionWithMainCharacter() override {};
 
-
+    //rename to vectors_update_timer?
     double pos_inc_timer{};
 
     SpriteInfo *mainSpriteInfo {};
@@ -53,6 +61,8 @@ public:
 
     int value{};
     int ruby_type{};
+
+    int collectible_timer{};
 
     bool collected{};
     SpritesheetType  spriteType{};

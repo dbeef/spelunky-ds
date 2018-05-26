@@ -31,9 +31,9 @@ public:
 
     void updateTimers() override {};
 
-    void updateSpeed() override;
+    void updateSpeed() override {};
 
-    void updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) override;
+    void updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) override {};
 
     void updateCollisionsOtherMoving() override {};
 

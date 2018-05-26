@@ -13,9 +13,9 @@ void RopeElement::draw() {
     int main_y = y - global::camera->y;
     int sub_x = x - global::camera->x;
     int sub_y = y - global::camera->y - 192;
-    
 
-    if (global::camera->y + 192 > this->y + 8 || global::camera->y + 192 + 192  < this->y - 8) {
+
+    if (global::camera->y + 192 > this->y + 8 || global::camera->y + 192 + 192 < this->y - 8) {
         sub_x = -128;
         sub_y = -128;
     }
@@ -43,7 +43,6 @@ void RopeElement::draw() {
     subSpriteInfo_2->entry->isHidden = false;
 
 
-
 }
 
 
@@ -55,7 +54,7 @@ void RopeElement::init() {
 void RopeElement::updateSpeed() {
 }
 
-void RopeElement::updatePosition() {
+void RopeElement::update_position() {
 }
 
 void RopeElement::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
@@ -64,14 +63,18 @@ void RopeElement::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_
 void RopeElement::initSprite() {
 
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_blood_rock_ropePal, gfx_blood_rock_ropePalLen,
-                                                        nullptr, 8 * 8, 8, BLOOD_ROCK_ROPE, true, false);
+                                                        nullptr, 8 * 8, 8, BLOOD_ROCK_ROPE, true, false,
+                                                        LAYER_LEVEL::MIDDLE_TOP);
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_blood_rock_ropePal, gfx_blood_rock_ropePalLen,
-                                                          nullptr, 8 * 8, 8, BLOOD_ROCK_ROPE, true, false);
+                                                          nullptr, 8 * 8, 8, BLOOD_ROCK_ROPE, true, false,
+                                                          LAYER_LEVEL::MIDDLE_TOP);
 
     subSpriteInfo_2 = global::sub_oam_manager->initSprite(gfx_blood_rock_ropePal, gfx_blood_rock_ropePalLen,
-                                                          nullptr, 8 * 8, 8, BLOOD_ROCK_ROPE, true, false);
+                                                          nullptr, 8 * 8, 8, BLOOD_ROCK_ROPE, true, false,
+                                                          LAYER_LEVEL::MIDDLE_TOP);
     mainSpriteInfo_2 = global::main_oam_manager->initSprite(gfx_blood_rock_ropePal, gfx_blood_rock_ropePalLen,
-                                                            nullptr, 8 * 8, 8, BLOOD_ROCK_ROPE, true, false);
+                                                            nullptr, 8 * 8, 8, BLOOD_ROCK_ROPE, true, false,
+                                                            LAYER_LEVEL::MIDDLE_TOP);
 
     frameGfx = (u8 *) gfx_blood_rock_ropeTiles + 8 * 8 * 8 / 2;
 
@@ -79,7 +82,6 @@ void RopeElement::initSprite() {
     mainSpriteInfo->updateFrame(frameGfx, 8 * 8);
     subSpriteInfo_2->updateFrame(frameGfx, 8 * 8);
     mainSpriteInfo_2->updateFrame(frameGfx, 8 * 8);
-
 
 
 }

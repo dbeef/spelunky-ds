@@ -1,18 +1,17 @@
 //
-// Created by xdbeef on 02.05.18.
+// Created by xdbeef on 25.05.18.
 //
 
-#include <maxmod9.h>
-#include "bat.h"
-#include "../../globals_declarations.h"
-#include "../../../build/gfx_bat.h"
-#include "../items/rock.h"
-#include "../animations/blood.h"
-#include "../../collisions/collisions.h"
-#include "../../tiles/map_utils.h"
-#include "../../../build/soundbank.h"
 
-void Bat::draw() {
+#include <maxmod9.h>
+#include "shopkeeper.h"
+#include "../../../build/gfx_shopkeeper.h"
+#include "../../globals_declarations.h"
+#include "../../../build/soundbank.h"
+#include "../../collisions/collisions.h"
+#include "../animations/blood.h"
+
+void Shopkeeper::draw() {
 
     if (ready_to_dispose)
         return;
@@ -26,6 +25,7 @@ void Bat::draw() {
     subSpriteInfo->entry->vFlip = false;
     mainSpriteInfo->entry->vFlip = false;
 
+/*
 
     if (!hunting) {
         hunting = abs(x - global::main_dude->x) < 7 * 16 && abs(y - global::main_dude->y) < 7 * 16 &&
@@ -55,6 +55,7 @@ void Bat::draw() {
         animFrameTimer = 0;
     }
 
+*/
 
     if (global::main_dude->using_whip && !killed && global::main_dude->whip->whip_timer > 120) {
 
@@ -90,7 +91,7 @@ void Bat::draw() {
 
 
     }
-
+/*
     if (hunting) {
         if (global::main_dude->x > x)
             xSpeed = 1;
@@ -108,31 +109,32 @@ void Bat::draw() {
         xSpeed = 0;
         ySpeed = -1;
     }
+    */
 }
 
 
-void Bat::init() {
+void Shopkeeper::init() {
 
     initSprite();
 
-    frameGfx = (u8 *) gfx_batTiles;
+    frameGfx = (u8 *) gfx_shopkeeperTiles;
     subSpriteInfo->updateFrame(frameGfx, 16 * 16);
     mainSpriteInfo->updateFrame(frameGfx, 16 * 16);
 
-    spriteType = SpritesheetType::BAT;
+    spriteType = SpritesheetType::SHOPKEEPER;
 }
 
-void Bat::updateSpeed() {
+void Shopkeeper::updateSpeed() {
 
-    if (xSpeed > MAX_X_SPEED_ROCK)
-        xSpeed = MAX_X_SPEED_ROCK;
-    if (xSpeed < -MAX_X_SPEED_ROCK)
-        xSpeed = -MAX_X_SPEED_ROCK;
+    if (xSpeed > MAX_X_SPEED_SHOPKEEPER)
+        xSpeed = MAX_X_SPEED_SHOPKEEPER;
+    if (xSpeed < -MAX_X_SPEED_SHOPKEEPER)
+        xSpeed = -MAX_X_SPEED_SHOPKEEPER;
 
-    if (ySpeed > MAX_Y_SPEED_ROCK)
-        ySpeed = MAX_Y_SPEED_ROCK;
-    if (ySpeed < -MAX_Y_SPEED_ROCK)
-        ySpeed = -MAX_Y_SPEED_ROCK;
+    if (ySpeed > MAX_Y_SPEED_SHOPKEEPER)
+        ySpeed = MAX_Y_SPEED_SHOPKEEPER;
+    if (ySpeed < -MAX_Y_SPEED_SHOPKEEPER)
+        ySpeed = -MAX_Y_SPEED_SHOPKEEPER;
 
     pos_inc_timer += *global::timer;
 
@@ -144,7 +146,7 @@ void Bat::updateSpeed() {
 }
 
 
-void Bat::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
+void Shopkeeper::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
 
     MapTile *tiles[9] = {};
     Collisions::getNeighboringTiles(global::level_generator->map_tiles, x_current_pos_in_tiles,
@@ -157,11 +159,11 @@ void Bat::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_t
     rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, 16, 16, false);
     upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, 16, false);
 
-    hanging = upperCollision && !hunting;
+//    hanging = upperCollision && !hunting;
 
 }
 
-void Bat::kill() {
+void Shopkeeper::kill() {
     subSpriteInfo->entry->isHidden = true;
     mainSpriteInfo->entry->isHidden = true;
 
@@ -190,10 +192,10 @@ void Bat::kill() {
 
 }
 
-void Bat::initSprite() {
-    subSpriteInfo = global::sub_oam_manager->initSprite(gfx_batPal, gfx_batPalLen,
+void Shopkeeper::initSprite() {
+    subSpriteInfo = global::sub_oam_manager->initSprite(gfx_shopkeeperPal, gfx_shopkeeperPalLen,
                                                         nullptr, 16 * 16, 16, BAT, true, false,LAYER_LEVEL::MIDDLE_TOP);
-    mainSpriteInfo = global::main_oam_manager->initSprite(gfx_batPal, gfx_batPalLen,
+    mainSpriteInfo = global::main_oam_manager->initSprite(gfx_shopkeeperPal, gfx_shopkeeperPalLen,
                                                           nullptr, 16 * 16, 16, BAT, true, false,LAYER_LEVEL::MIDDLE_TOP);
     subSpriteInfo->entry->isHidden = false;
     mainSpriteInfo->entry->isHidden = false;
@@ -205,39 +207,7 @@ void Bat::initSprite() {
     main_sprite_info->entry->hFlip= false;*/
 }
 
-void Bat::set_sprite_hanging() {
-    frameGfx = (u8 *) gfx_batTiles + (16 * 16 * (0) / 2);
-    subSpriteInfo->updateFrame(frameGfx, 16 * 16);
-    mainSpriteInfo->updateFrame(frameGfx, 16 * 16);
-}
-
-void Bat::set_sprite_flying_right() {
-    frameGfx = (u8 *) gfx_batTiles + (16 * 16 * (animFrame + 1) / 2);
-    subSpriteInfo->updateFrame(frameGfx, 16 * 16);
-    mainSpriteInfo->updateFrame(frameGfx, 16 * 16);
-
-    //idk why do i have to do that, if it is already flipped in image
-    subSpriteInfo->entry->hFlip = true;
-    mainSpriteInfo->entry->hFlip = true;
-
-    mainSpriteInfo->entry->isHidden = false;
-    subSpriteInfo->entry->isHidden = false;
-}
-
-void Bat::set_sprite_flying_left() {
-    frameGfx = (u8 *) gfx_batTiles + (16 * 16 * (animFrame + 4) / 2);
-    subSpriteInfo->updateFrame(frameGfx, 16 * 16);
-    mainSpriteInfo->updateFrame(frameGfx, 16 * 16);
-
-    //idk why do i have to do that, if it is already flipped in image
-    subSpriteInfo->entry->hFlip = true;
-    mainSpriteInfo->entry->hFlip = true;
-
-    mainSpriteInfo->entry->isHidden = false;
-    subSpriteInfo->entry->isHidden = false;
-}
-
-void Bat::set_position() {
+void Shopkeeper::set_position() {
 
     int main_x, main_y, sub_x, sub_y;
     get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
@@ -250,9 +220,9 @@ void Bat::set_position() {
 
 }
 
-Bat::Bat() {
-    physical_height = BAT_PHYSICAL_HEIGHT;
-    physical_width = BAT_PHYSICAL_WIDTH;
-    sprite_height = BAT_SPRITE_HEIGHT;
-    sprite_width = BAT_SPRITE_WIDTH;
+Shopkeeper::Shopkeeper() {
+    physical_height = SHOPKEEPER_PHYSICAL_HEIGHT;
+    physical_width = SHOPKEEPER_PHYSICAL_WIDTH;
+    sprite_height = SHOPKEEPER_SPRITE_HEIGHT;
+    sprite_width = SHOPKEEPER_SPRITE_WIDTH;
 }

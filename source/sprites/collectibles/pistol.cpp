@@ -164,7 +164,7 @@ void Pistol::updateSpeed() {
     bool change_pos = (pos_inc_timer > 15) && !hold_by_main_dude;
 
     if (change_pos) {
-        updatePosition();
+        update_position();
 
         if (bottomCollision && xSpeed > 0) {
             xSpeed -= 0.055;
@@ -205,17 +205,17 @@ void Pistol::initSprite() {
 
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_spike_collectiblesPal, gfx_spike_collectiblesPalLen,
                                                         nullptr, sprite_width * sprite_height, sprite_width,
-                                                        spriteType, true, false);
+                                                        spriteType, true, false,LAYER_LEVEL::MIDDLE_TOP);
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_spike_collectiblesPal, gfx_spike_collectiblesPalLen,
                                                           nullptr, sprite_width * sprite_height, sprite_width,
-                                                          spriteType, true, false);
+                                                          spriteType, true, false,LAYER_LEVEL::MIDDLE_TOP);
 
     blast_subSpriteInfo = global::sub_oam_manager->initSprite(gfx_spike_collectiblesPal, gfx_spike_collectiblesPalLen,
                                                               nullptr, sprite_width * sprite_height, sprite_width,
-                                                              spriteType, true, false);
+                                                              spriteType, true, false,LAYER_LEVEL::MIDDLE_TOP);
     blast_mainSpriteInfo = global::main_oam_manager->initSprite(gfx_spike_collectiblesPal, gfx_spike_collectiblesPalLen,
                                                                 nullptr, sprite_width * sprite_height, sprite_width,
-                                                                spriteType, true, false);
+                                                                spriteType, true, false,LAYER_LEVEL::MIDDLE_TOP);
 
     if (spriteState == SpriteState::W_LEFT)
         frameGfx = (u8 *) gfx_spike_collectiblesTiles + (sprite_width * sprite_height * (32) / 2);

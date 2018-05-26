@@ -50,6 +50,8 @@ public:
 
     SpritesheetType  spriteType{};
     void set_position();
+
+    void spawn_treasure();
 };
 
 

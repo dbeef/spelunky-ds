@@ -17,7 +17,7 @@ enum SpritesheetType{
     BLOOD_ROCK_ROPE,            //4
     JAR,                        //5
     MONIEZ_TRIPLE_GOLD_BARS,    //6
-    MONIEZ_RUBY_BIG,            //7
+    MONIEZ_RUBY,                //7
     SNAKE,                      //8
     PRE_WHIP,                   //11
     WHIP,                       //12
@@ -25,6 +25,7 @@ enum SpritesheetType{
     SPELUNKY_TITLE,             //15
     SPELUNKY_COPYRIGHTS,        //16
     BAT,                        //17
+    SHOPKEEPER,                  //17
     SPIDER,                     //18
     SPIKES_COLLECTIBLES,        //19
     SALEABLE,                   //20

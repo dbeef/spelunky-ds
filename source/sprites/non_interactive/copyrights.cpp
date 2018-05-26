@@ -83,7 +83,7 @@ void Copyrights::updateSpeed() {
 
 }
 
-void Copyrights::updatePosition() {
+void Copyrights::update_position() {
 }
 
 void Copyrights::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
@@ -94,37 +94,37 @@ void Copyrights::initSprite() {
     if(oamType == OamType::MAIN) {
         mainSpriteInfo_1 = global::main_oam_manager->initSprite(gfx_copyrightsPal, gfx_copyrightsPalLen,
                                                                 nullptr, 32 * 32, 32, SpritesheetType::SPELUNKY_COPYRIGHTS, true,
-                                                                false);
+                                                                false,LAYER_LEVEL::MIDDLE_TOP);
         mainSpriteInfo_2 = global::main_oam_manager->initSprite(gfx_copyrightsPal, gfx_copyrightsPalLen,
                                                                 nullptr, 32 * 32, 32, SpritesheetType::SPELUNKY_COPYRIGHTS, true,
-                                                                false);
+                                                                false,LAYER_LEVEL::MIDDLE_TOP);
         mainSpriteInfo_3 = global::main_oam_manager->initSprite(gfx_copyrightsPal, gfx_copyrightsPalLen,
                                                                 nullptr, 32 * 32, 32, SpritesheetType::SPELUNKY_COPYRIGHTS, true,
-                                                                false);
+                                                                false,LAYER_LEVEL::MIDDLE_TOP);
         mainSpriteInfo_4 = global::main_oam_manager->initSprite(gfx_copyrightsPal, gfx_copyrightsPalLen,
                                                                 nullptr, 32 * 32, 32, SpritesheetType::SPELUNKY_COPYRIGHTS, true,
-                                                                false);
+                                                                false,LAYER_LEVEL::MIDDLE_TOP);
         mainSpriteInfo_4 = global::main_oam_manager->initSprite(gfx_copyrightsPal, gfx_copyrightsPalLen,
                                                                 nullptr, 32 * 32, 32, SpritesheetType::SPELUNKY_COPYRIGHTS, true,
-                                                                false);
+                                                                false,LAYER_LEVEL::MIDDLE_TOP);
     }
 
     if(oamType == OamType::SUB) {
         subSpriteInfo_1 = global::sub_oam_manager->initSprite(gfx_copyrightsPal, gfx_copyrightsPalLen,
                                                               nullptr, 32 * 32, 32, SpritesheetType::SPELUNKY_COPYRIGHTS, true,
-                                                              false);
+                                                              false,LAYER_LEVEL::MIDDLE_TOP);
         subSpriteInfo_2 = global::sub_oam_manager->initSprite(gfx_copyrightsPal, gfx_copyrightsPalLen,
                                                               nullptr, 32 * 32, 32, SpritesheetType::SPELUNKY_COPYRIGHTS, true,
-                                                              false);
+                                                              false,LAYER_LEVEL::MIDDLE_TOP);
         subSpriteInfo_3 = global::sub_oam_manager->initSprite(gfx_copyrightsPal, gfx_copyrightsPalLen,
                                                               nullptr, 32 * 32, 32, SpritesheetType::SPELUNKY_COPYRIGHTS, true,
-                                                              false);
+                                                              false,LAYER_LEVEL::MIDDLE_TOP);
         subSpriteInfo_4 = global::sub_oam_manager->initSprite(gfx_copyrightsPal, gfx_copyrightsPalLen,
                                                               nullptr, 32 * 32, 32, SpritesheetType::SPELUNKY_COPYRIGHTS, true,
-                                                              false);
+                                                              false,LAYER_LEVEL::MIDDLE_TOP);
         subSpriteInfo_5 = global::sub_oam_manager->initSprite(gfx_copyrightsPal, gfx_copyrightsPalLen,
                                                               nullptr, 32 * 32, 32, SpritesheetType::SPELUNKY_COPYRIGHTS, true,
-                                                              false);
+                                                              false,LAYER_LEVEL::MIDDLE_TOP);
     }
 
     u8 *frameGfx1 = (u8 *) gfx_copyrightsTiles + 0 * 32 * 32 / 2;

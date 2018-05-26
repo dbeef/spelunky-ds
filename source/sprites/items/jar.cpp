@@ -51,7 +51,7 @@ void Jar::draw() {
         if (frameTimer > 50) {
             frame++;
 
-            frameGfx = (u8 *) gfx_spike_collectiblesTiles + ((frame + 24 ) * sprite_height * sprite_width / 2);
+            frameGfx = (u8 *) gfx_spike_collectiblesTiles + ((frame + 24) * sprite_height * sprite_width / 2);
             subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
             mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
 
@@ -111,11 +111,8 @@ void Jar::draw() {
 
 
 void Jar::init() {
-
     initSprite();
-
     activated_by_main_dude = true;
-
 }
 
 void Jar::updateSpeed() {
@@ -123,41 +120,19 @@ void Jar::updateSpeed() {
     if (killed)
         return;
 
-    if (xSpeed > MAX_X_SPEED_ROCK)
-        xSpeed = MAX_X_SPEED_ROCK;
-    if (xSpeed < -MAX_X_SPEED_ROCK)
-        xSpeed = -MAX_X_SPEED_ROCK;
-
-    if (ySpeed > MAX_Y_SPEED_ROCK)
-        ySpeed = MAX_Y_SPEED_ROCK;
-    if (ySpeed < -MAX_Y_SPEED_ROCK)
-        ySpeed = -MAX_Y_SPEED_ROCK;
+    limit_speed(MAX_X_SPEED_JAR, MAX_Y_SPEED_JAR);
 
     pos_inc_timer += *global::timer;
 
     bool change_pos = (pos_inc_timer > 15) && !hold_by_main_dude;
 
     if (change_pos) {
-        updatePosition();
-
-        if (bottomCollision && xSpeed > 0) {
-            xSpeed -= 0.2;
-            if (xSpeed < 0)
-                xSpeed = 0;
-        }
-        if (bottomCollision && xSpeed < 0) {
-            xSpeed += 0.2;
-            if (xSpeed > 0)
-                xSpeed = 0;
-        }
-
-        if (!bottomCollision)
-            ySpeed += GRAVITY_DELTA_SPEED * 0.8;
-
+        apply_friction(0.2);
+        update_position();
+        apply_gravity(GRAVITY_DELTA_SPEED * 0.8);
         pos_inc_timer = 0;
 
     }
-
 }
 
 
@@ -178,16 +153,17 @@ void Jar::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_t
         mainSpriteInfo->entry->isHidden = true;
         subSpriteInfo->entry->isHidden = true;
         ready_to_dispose = true;
-//        std::cout<<"HIDDEN";
     }
 
 }
 
 void Jar::initSprite() {
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_spike_collectiblesPal, gfx_spike_collectiblesPalLen,
-                                                        nullptr, sprite_width * sprite_height, 16, JAR, true, false);
+                                                        nullptr, sprite_width * sprite_height, 16, JAR, true, false,
+                                                        LAYER_LEVEL::MIDDLE_TOP);
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_spike_collectiblesPal, gfx_spike_collectiblesPalLen,
-                                                          nullptr, sprite_width * sprite_height, 16, JAR, true, false);
+                                                          nullptr, sprite_width * sprite_height, 16, JAR, true, false,
+                                                          LAYER_LEVEL::MIDDLE_TOP);
 
 
     frameGfx = (u8 *) gfx_spike_collectiblesTiles + ((24 * sprite_height * sprite_width) / 2);
@@ -204,6 +180,6 @@ Jar::Jar() {
     spriteType = SpritesheetType::JAR;
 }
 
-void Jar::kill(){
+void Jar::kill() {
     killed = true;
 }

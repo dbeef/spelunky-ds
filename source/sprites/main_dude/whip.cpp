@@ -10,7 +10,7 @@ void Whip::draw() {
 
     if (global::main_dude->using_whip) {
 
-        updatePosition();
+        update_position();
 
         whip_timer += *global::timer;
         if (whip_timer > 420 + 0 * 70) {
@@ -34,7 +34,7 @@ void Whip::updateSpeed() {
     //Whip has no speed
 }
 
-void Whip::updatePosition() {
+void Whip::update_position() {
 
     x = global::main_dude->x;
     y = global::main_dude->y;
@@ -90,10 +90,10 @@ void Whip::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_
 
 void Whip::initSprite() {
     main_sprite_info = global::main_oam_manager->initSprite(gfx_whipPal, gfx_whipPalLen,
-                                                            nullptr, 16 * 16, 16, WHIP, true, false);
+                                                            nullptr, 16 * 16, 16, WHIP, true, false,LAYER_LEVEL::MIDDLE_TOP);
 
     sub_sprite_info = global::sub_oam_manager->initSprite(gfx_whipPal, gfx_whipPalLen,
-                                                          nullptr, 16 * 16, 16, WHIP, true, false);
+                                                          nullptr, 16 * 16, 16, WHIP, true, false,LAYER_LEVEL::MIDDLE_TOP);
     hide();
 }
 

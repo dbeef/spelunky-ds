@@ -2,22 +2,25 @@
 // Created by xdbeef on 19.05.18.
 //
 
-
 #include "got_collectible.h"
 #include "../../globals_declarations.h"
 #include "../../../build/gfx_got_collectible.h"
+
+#define GOT_COLLECTIBLE_CYCLES_TO_HIDE 10
+#define GOT_COLLECTIBLE_ANIM_FRAME_DELTA 125
 
 void GotCollectible::draw() {
 
     if (ready_to_dispose){
         mainSpriteInfo->entry->isHidden = true;
-        mainSpriteInfo->entry->isHidden = true;
+        subSpriteInfo->entry->isHidden = true;
         return;
     }
 
     animFrameTimer += *global::timer;
 
-    if (animFrameTimer > 125) {
+    if (animFrameTimer > GOT_COLLECTIBLE_ANIM_FRAME_DELTA) {
+
         animFrameTimer = 0;
         animFrame++;
         cycle_counter++;
@@ -25,16 +28,14 @@ void GotCollectible::draw() {
         if (animFrame == 2)
             animFrame = 0;
 
-        if (cycle_counter > 10) {
+        if (cycle_counter > GOT_COLLECTIBLE_CYCLES_TO_HIDE)
             ready_to_dispose = true;
-            mainSpriteInfo->entry->isHidden = true;
-            mainSpriteInfo->entry->isHidden = true;
-        }
 
         frameGfx = (u8 *) gfx_got_collectibleTiles +
                    (sprite_width * sprite_height * ((collectible_type * 2) + animFrame) / 2);
         subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
         mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
+
     }
 
     set_position();
@@ -45,22 +46,14 @@ void GotCollectible::init() {
     initSprite();
 }
 
-void GotCollectible::updateSpeed() {
-
-}
-
-void GotCollectible::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
-}
-
 void GotCollectible::initSprite() {
-
 
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_got_collectiblePal, gfx_got_collectiblePalLen,
                                                         nullptr, sprite_width * sprite_height, sprite_width,
-                                                        spriteType, true, false);
+                                                        spriteType, true, false,LAYER_LEVEL::MIDDLE_TOP);
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_got_collectiblePal, gfx_got_collectiblePalLen,
                                                           nullptr, sprite_width * sprite_height, sprite_width,
-                                                          spriteType, true, false);
+                                                          spriteType, true, false,LAYER_LEVEL::MIDDLE_TOP);
 
     if (collectible_type == 0) {
         frameGfx = (u8 *) gfx_got_collectibleTiles + (sprite_width * sprite_height * (0) / 2);
@@ -69,9 +62,6 @@ void GotCollectible::initSprite() {
     } else if (collectible_type == 2) {
         frameGfx = (u8 *) gfx_got_collectibleTiles + (sprite_width * sprite_height * (4) / 2);
     }
-
-    mainSpriteInfo->entry->x = x;
-    subSpriteInfo->entry->y = y;
 
     subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
     mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);

@@ -40,7 +40,7 @@ void Rock::draw() {
             x = global::main_dude->x + 10;
 
     }
-    
+
     int main_x, main_y, sub_x, sub_y;
     get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
 
@@ -50,17 +50,20 @@ void Rock::draw() {
     subSpriteInfo->entry->x = sub_x;
     subSpriteInfo->entry->y = sub_y;
 
-    mainSpriteInfo->entry->hFlip=false;
-    subSpriteInfo->entry->hFlip= false;
+    mainSpriteInfo->entry->hFlip = false;
+    subSpriteInfo->entry->hFlip = false;
 
-    mainSpriteInfo->entry->vFlip=false;
-    subSpriteInfo->entry->vFlip= false;
+    mainSpriteInfo->entry->vFlip = false;
+    subSpriteInfo->entry->vFlip = false;
 
     if (xSpeed > 0 || ySpeed > 0) {
         for (int a = 0; a < global::sprites.size(); a++) {
-            if((global::sprites.at(a)->spriteType == SpritesheetType::SNAKE || global::sprites.at(a)->spriteType == SpritesheetType::BAT|| global::sprites.at(a)->spriteType == SpritesheetType::SPIDER)
-               && !global::sprites.at(a)->killed){
-                if(Collisions::checkCollisionBodies(x, y, 7, 7, global::sprites.at(a)->x, global::sprites.at(a)->y, 16, 16)){
+            if ((global::sprites.at(a)->spriteType == SpritesheetType::SNAKE ||
+                 global::sprites.at(a)->spriteType == SpritesheetType::BAT ||
+                 global::sprites.at(a)->spriteType == SpritesheetType::SPIDER)
+                && !global::sprites.at(a)->killed) {
+                if (Collisions::checkCollisionBodies(x, y, 7, 7, global::sprites.at(a)->x, global::sprites.at(a)->y, 16,
+                                                     16)) {
                     global::sprites.at(a)->kill();
                 }
             }
@@ -105,7 +108,7 @@ void Rock::updateSpeed() {
                 xSpeed = 0;
         }
 
-        updatePosition();
+        update_position();
 
 
         if (!bottomCollision)
@@ -133,9 +136,11 @@ void Rock::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_
 void Rock::initSprite() {
 
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_blood_rock_ropePal, gfx_blood_rock_ropePalLen,
-                                                        nullptr, 8 * 8, 8, BLOOD_ROCK_ROPE, true, false);
+                                                        nullptr, 8 * 8, 8, BLOOD_ROCK_ROPE, true, false,
+                                                        LAYER_LEVEL::MIDDLE_TOP);
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_blood_rock_ropePal, gfx_blood_rock_ropePalLen,
-                                                          nullptr, 8 * 8, 8, BLOOD_ROCK_ROPE, true, false);
+                                                          nullptr, 8 * 8, 8, BLOOD_ROCK_ROPE, true, false,
+                                                          LAYER_LEVEL::MIDDLE_TOP);
 
     frameGfx = (u8 *) gfx_blood_rock_ropeTiles + (sprite_height * sprite_width * 7 / 2);
     subSpriteInfo->updateFrame(frameGfx, 8 * 8);

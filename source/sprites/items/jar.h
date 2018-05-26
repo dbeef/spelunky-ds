@@ -10,6 +10,9 @@
 #define JAR_SPRITE_HEIGHT 16
 #define JAR_SPRITE_WIDTH 16
 
+#define MAX_X_SPEED_JAR 4
+#define MAX_Y_SPEED_JAR 4
+
 #include "../moving_object.h"
 
 class Jar : public MovingObject {

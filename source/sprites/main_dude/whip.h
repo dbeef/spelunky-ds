@@ -7,6 +7,7 @@
 
 #define WHIP_SPRITE_WIDTH 16
 #define WHIP_SPRITE_HEIGHT 16
+#define WHIP_WIDTH 12
 
 #include "../moving_object.h"
 
@@ -28,7 +29,7 @@ public:
 
     void updateTimers() override {};
 
-    void updatePosition() override ;
+    void update_position() override ;
 
     void updateSpeed() override;
 

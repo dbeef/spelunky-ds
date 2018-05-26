@@ -173,7 +173,7 @@ void Snake::updateSpeed() {
     pos_inc_timer += *global::timer;
 
     if (pos_inc_timer > 35) {
-        updatePosition();
+        update_position();
         if (!bottomCollision)
             ySpeed += GRAVITY_DELTA_SPEED;
         pos_inc_timer = 0;
@@ -231,9 +231,9 @@ void Snake::kill() {
 
 void Snake::initSprite() {
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_snakePal, gfx_snakePalLen,
-                                                        nullptr, 16 * 16, 16, SNAKE, true, false);
+                                                        nullptr, 16 * 16, 16, SNAKE, true, false, LAYER_LEVEL::MIDDLE_TOP);
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_snakePal, gfx_snakePalLen,
-                                                          nullptr, 16 * 16, 16, SNAKE, true, false);
+                                                          nullptr, 16 * 16, 16, SNAKE, true, false,LAYER_LEVEL::MIDDLE_TOP);
     subSpriteInfo->entry->isHidden = false;
     mainSpriteInfo->entry->isHidden = false;
 

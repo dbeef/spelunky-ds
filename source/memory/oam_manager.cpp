@@ -7,6 +7,7 @@
 #include <assert.h>
 #include "oam_manager.h"
 #include "../globals_declarations.h"
+#include "../camera/layer_level.h"
 
 /**
  * "Another advantage of using 16-color sprites is the ability to use 16 different palettes."
@@ -83,7 +84,7 @@ void OAMManager::updateOAM() {
 
 SpriteInfo *
 OAMManager::initSprite(const unsigned short pallette[], int palLen, const unsigned int tiles[], int tilesLen,
-                       int size, SpritesheetType type, bool reuse_palette, bool reuse_tiles) {
+                       int size, SpritesheetType type, bool reuse_palette, bool reuse_tiles, LAYER_LEVEL l) {
 
 
 //    std::cout << "\n";
@@ -126,6 +127,25 @@ OAMManager::initSprite(const unsigned short pallette[], int palLen, const unsign
     spriteEntry->isMosaic = false;
     spriteEntry->colorMode = OBJCOLOR_16;
     spriteEntry->shape = OBJSHAPE_SQUARE;
+    spriteEntry->priority = OBJPRIORITY_0;
+
+    switch (l) {
+        case (LAYER_LEVEL::BOTTOM):
+            spriteEntry->priority = OBJPRIORITY_0;
+            break;
+        case (LAYER_LEVEL::MIDDLE_BOT):
+            spriteEntry->priority = OBJPRIORITY_0;
+            break;
+        case (LAYER_LEVEL::MIDDLE_TOP):
+            spriteEntry->priority = OBJPRIORITY_0;
+            break;
+        case (LAYER_LEVEL::TOP):
+            spriteEntry->priority = OBJPRIORITY_0;
+            break;
+        default:
+            spriteEntry->priority = OBJPRIORITY_0;
+            break;
+    }
 
     /*
      *  Configure attribute 1.
@@ -192,7 +212,6 @@ OAMManager::initSprite(const unsigned short pallette[], int palLen, const unsign
         dmaCopyHalfWords(3, tiles, &sprite_address[spriteEntry->gfxIndex * this->offset_multiplier], tilesLen);
 //        std::cout << "NEW TILES " << current_oam_id_tiles << " ON " << oam_address << "\n";
     }
-    spriteEntry->priority = OBJPRIORITY_0;
 
 
     if (!spriteEntry->palette) {
@@ -222,7 +241,6 @@ OAMManager::initSprite(const unsigned short pallette[], int palLen, const unsign
     current_oam_id_tiles++;
 
 //    std::cout << " SIZE " << global::spriteInfos.size() << " COUNTER " << countBombsOnThisOAMAddr(*oam_address) << "\n";
-
 //    global::Hud->draw();
 
     return spriteInfo;

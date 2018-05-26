@@ -23,150 +23,21 @@ void Crate::draw() {
     if (ready_to_dispose)
         return;
 
+    check_if_can_be_pickuped();
+    set_pickuped_position(8, 2);
 
-    if (hold_by_main_dude && global::input_handler->y_key_down && global::input_handler->down_key_held) {
-        hold_by_main_dude = false;
-        global::main_dude->holding_item = false;
-    } else if (!activated_by_main_dude && global::input_handler->y_key_held && global::input_handler->down_key_held &&
-               /*bottomCollision &&*/ !global::main_dude->holding_item) {
-        if (Collisions::checkCollisionWithMainDude(x, y, 8, 8)) {
-            hold_by_main_dude = true;
-            global::main_dude->holding_item = true;
-//            std::cout << "TOOK ITEM";
-            global::input_handler->y_key_down = false;
-            global::input_handler->y_key_held = false;
-        }
-    }
-
-    if (hold_by_main_dude) {
-        y = global::main_dude->y - 2;
-
-        if (global::main_dude->state == 1) {
-            x = global::main_dude->x - 8;
-        } else
-            x = global::main_dude->x + 8;
-    }
-
-    if (!activated_by_main_dude &&
-        Collisions::checkCollisionWithMainDudeWidthBoundary(x, y, physical_width, physical_height, 8)
-        && global::input_handler->up_key_held && global::input_handler->y_key_down) {
+    if (check_if_can_be_opened()) {
         global::hud->draw();
-        activated_by_main_dude = true;
-        global::input_handler->y_key_down = false;
         mmEffect(SFX_XPICKUP);
         hold_by_main_dude = false;
-//        global::main_dude->holding_item = false;
     }
 
     if (activated_by_main_dude) {
 
-        int r = rand() % 8;
+        if (!dropped_loot)
+            drop_loot();
 
-        if (!dropped_loot) {
-
-            if (r == 0 || r == 1) {
-                GotCollectible *g = new GotCollectible();
-                g->x = x - 12;
-                g->y = y - 20;
-
-
-                if (r == 0) {
-                    global::hud->ropes += 4;
-                    g->collectible_type = 2;
-                } else {
-                    global::hud->bombs += 4;
-                    g->collectible_type = 1;
-                }
-
-                g->init();
-                global::sprites.push_back(g);
-
-                dropped_loot = true;
-
-                global::hud->draw();
-            }
-
-            if(r == 2) {
-                Pistol *pistol = new Pistol();
-                pistol->x = this->x;
-                pistol->y = this->y;
-                pistol->init();
-                global::sprites.push_back(pistol);
-
-                dropped_loot = true;
-            }
-
-            if(r == 3) {
-                SpringShoes *springShoes = new SpringShoes();
-                springShoes->x = this->x;
-                springShoes->y = this->y;
-                springShoes->init();
-                global::sprites.push_back(springShoes);
-
-                dropped_loot = true;
-            }
-
-            if(r == 4) {
-                Mitt *mitt = new Mitt();
-                mitt->x = this->x;
-                mitt->y = this->y;
-                mitt->init();
-                global::sprites.push_back(mitt);
-
-                dropped_loot = true;
-            }
-
-            if(r == 5) {
-                Compass *compass = new Compass();
-                compass->x = this->x;
-                compass->y = this->y;
-                compass->init();
-                global::sprites.push_back(compass);
-
-                dropped_loot = true;
-            }
-
-
-            if(r == 6) {
-                Glove *glove = new Glove();
-                glove->x = this->x;
-                glove->y = this->y;
-                glove->init();
-                global::sprites.push_back(glove);
-
-                dropped_loot = true;
-            }
-
-            if(r == 7) {
-                Shotgun *shotgun = new Shotgun();
-                shotgun->x = this->x;
-                shotgun->y = this->y;
-                shotgun->init();
-                global::sprites.push_back(shotgun);
-
-                dropped_loot = true;
-            }
-
-        }
-
-        frameGfx = (u8 *) gfx_spike_collectiblesTiles + (sprite_width * sprite_height * (5 + animFrame) / 2);
-        subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
-        mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
-
-        animFrameTimer += *global::timer;
-
-        if (animFrameTimer > 75) {
-            animFrame++;
-            animFrameTimer = 0;
-        }
-
-        if (animFrame >= 6) {
-
-            ready_to_dispose = true;
-            mainSpriteInfo->entry->isHidden = true;
-            subSpriteInfo->entry->isHidden = true;
-        }
-
+        play_collectible_animation();
 
     } else {
         mainSpriteInfo->entry->isHidden = false;
@@ -174,20 +45,7 @@ void Crate::draw() {
     }
 
 
-    if (xSpeed > 0 || ySpeed > 0) {
-        for (int a = 0; a < global::sprites.size(); a++) {
-            if ((global::sprites.at(a)->spriteType == SpritesheetType::SNAKE ||
-                 global::sprites.at(a)->spriteType == SpritesheetType::BAT ||
-                 global::sprites.at(a)->spriteType == SpritesheetType::SPIDER)
-                && !global::sprites.at(a)->killed) {
-                if (Collisions::checkCollisionBodies(x, y, 8, 8, global::sprites.at(a)->x, global::sprites.at(a)->y, 16,
-                                                     16)) {
-                    global::sprites.at(a)->kill();
-                }
-            }
-        }
-    }
-
+    kill_mobs_if_thrown();
 
     set_position();
 }
@@ -199,38 +57,17 @@ void Crate::init() {
 
 void Crate::updateSpeed() {
 
-    if (xSpeed > MAX_X_SPEED_CRATE)
-        xSpeed = MAX_X_SPEED_CRATE;
-    if (xSpeed < -MAX_X_SPEED_CRATE)
-        xSpeed = -MAX_X_SPEED_CRATE;
-
-    if (ySpeed > MAX_Y_SPEED_CRATE)
-        ySpeed = MAX_Y_SPEED_CRATE;
-    if (ySpeed < -MAX_Y_SPEED_CRATE)
-        ySpeed = -MAX_Y_SPEED_CRATE;
+    limit_speed(MAX_X_SPEED_CRATE, MAX_Y_SPEED_CRATE);
 
     pos_inc_timer += *global::timer;
 
     bool change_pos = (pos_inc_timer > 15) && !hold_by_main_dude;
 
     if (change_pos) {
-        updatePosition();
-
-        if (bottomCollision && xSpeed > 0) {
-            xSpeed -= 0.055;
-            if (xSpeed < 0)
-                xSpeed = 0;
-        }
-        if (bottomCollision && xSpeed < 0) {
-            xSpeed += 0.055;
-            if (xSpeed > 0)
-                xSpeed = 0;
-        }
-        if (!bottomCollision)
-            ySpeed += GRAVITY_DELTA_SPEED;
-
+        update_position();
+        apply_friction(0.055);
+        apply_gravity(GRAVITY_DELTA_SPEED);
         pos_inc_timer = 0;
-
     }
 
 }
@@ -252,10 +89,10 @@ void Crate::initSprite() {
 
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_spike_collectiblesPal, gfx_spike_collectiblesPalLen,
                                                         nullptr, sprite_width * sprite_height, sprite_width,
-                                                        spriteType, true, false);
+                                                        spriteType, true, false, LAYER_LEVEL::MIDDLE_TOP);
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_spike_collectiblesPal, gfx_spike_collectiblesPalLen,
                                                           nullptr, sprite_width * sprite_height, sprite_width,
-                                                          spriteType, true, false);
+                                                          spriteType, true, false, LAYER_LEVEL::MIDDLE_TOP);
     if (activated_by_main_dude)
         frameGfx = nullptr;
     else
@@ -263,6 +100,7 @@ void Crate::initSprite() {
 
     subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
     mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
+
 }
 
 void Crate::set_position() {
@@ -290,5 +128,87 @@ Crate::Crate() {
     sprite_height = CRATE_SPRITE_HEIGHT;
     sprite_width = CRATE_SPRITE_WIDTH;
     spriteType = SpritesheetType::SPIKES_COLLECTIBLES;
+}
+
+void Crate::drop_loot() {
+
+    int r = rand() % 8;
+
+    //drop rope or bomb
+    if (r == 0 || r == 1) {
+        auto *g = new GotCollectible();
+        g->x = x - 12;
+        g->y = y - 20;
+
+
+        if (r == 0) {
+            global::hud->ropes += 4;
+            g->collectible_type = 2;
+        } else {
+            global::hud->bombs += 4;
+            g->collectible_type = 1;
+        }
+
+        g->init();
+        global::sprites.push_back(g);
+        global::hud->draw();
+    } else {
+
+        //drop an item
+
+        MovingObject *m = nullptr;
+
+        switch (r) {
+            case 2:
+                m = new Pistol();
+                break;
+            case 3:
+                m = new SpringShoes();
+                break;
+            case 4:
+                m = new Mitt();
+                break;
+            case 5:
+                m = new Compass();
+                break;
+            case 6:
+                m = new Glove();
+                break;
+            case 7:
+                m = new Shotgun();
+                break;
+
+            default:
+                break;
+        }
+
+        m->x = this->x;
+        m->y = this->y;
+        m->init();
+        global::sprites.push_back(m);
+    }
+
+    dropped_loot = true;
+
+}
+
+void Crate::play_collectible_animation() {
+    frameGfx = (u8 *) gfx_spike_collectiblesTiles + (sprite_width * sprite_height * (5 + animFrame) / 2);
+    subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
+    mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
+
+    animFrameTimer += *global::timer;
+
+    if (animFrameTimer > 75) {
+        animFrame++;
+        animFrameTimer = 0;
+    }
+
+    if (animFrame >= 6) {
+
+        ready_to_dispose = true;
+        mainSpriteInfo->entry->isHidden = true;
+        subSpriteInfo->entry->isHidden = true;
+    }
 }
 

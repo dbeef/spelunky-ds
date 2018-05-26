@@ -28,7 +28,7 @@ public:
 
     void initSprite() override;
 
-    void updatePosition() override ;
+    void update_position() override ;
 
     void updateSpeed() override;
 

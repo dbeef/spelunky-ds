@@ -10,6 +10,7 @@
 #include "../sprites/spritesheet_type.h"
 #include "oam_type.h"
 #include "../sprites/sprite_info.h"
+#include "../camera/layer_level.h"
 
 
 class OAMManager {
@@ -33,7 +34,7 @@ public:
     void updateOAM();
 
     SpriteInfo *initSprite(const unsigned short pallette[], int palLen, const unsigned int tiles[], int tilesLen,
-                           int size, SpritesheetType spriteType, bool reuse_palette, bool reuse_tiles);
+                           int size, SpritesheetType spriteType, bool reuse_palette, bool reuse_tiles, LAYER_LEVEL l);
 
     void clearAllSprites();
 };

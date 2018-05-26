@@ -191,7 +191,7 @@ void Bomb::updateSpeed() {
     bool change_pos = (pos_inc_timer > 15) && !hold_by_main_dude && explosionFrame == 0;
 
     if (change_pos) {
-        updatePosition();
+        update_position();
 
 
         if (bottomCollision && xSpeed > 0) {
@@ -232,9 +232,9 @@ void Bomb::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_
 
 void Bomb::initSprite() {
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_explosionPal, gfx_explosionPalLen,
-                                                        nullptr, 64 * 64, 64, BOMB, true, false);
+                                                        nullptr, 64 * 64, 64, BOMB, true, false,LAYER_LEVEL::MIDDLE_TOP);
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_explosionPal, gfx_explosionPalLen,
-                                                          nullptr, 64 * 64, 64, BOMB, true, false);
+                                                          nullptr, 64 * 64, 64, BOMB, true, false,LAYER_LEVEL::MIDDLE_TOP);
 }
 
 Bomb::Bomb() {

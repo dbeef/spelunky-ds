@@ -164,12 +164,12 @@ void Rope::updateSpeed() {
     bool change_pos = (pos_inc_timer > 15) && !hold_by_main_dude && !finished;
 
     if (change_pos) {
-        updatePosition();
+        update_position();
     }
 
 }
 
-void Rope::updatePosition() {
+void Rope::update_position() {
 
     if (bottomCollision && xSpeed > 0) {
         xSpeed -= 0.055;
@@ -266,9 +266,9 @@ void Rope::initSprite() {
 
 
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_blood_rock_ropePal, gfx_blood_rock_ropePalLen,
-                                                        nullptr, 8 * 8, 8, BLOOD_ROCK_ROPE, true, false);
+                                                        nullptr, 8 * 8, 8, BLOOD_ROCK_ROPE, true, false,LAYER_LEVEL::MIDDLE_TOP);
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_blood_rock_ropePal, gfx_blood_rock_ropePalLen,
-                                                          nullptr, 8 * 8, 8, BLOOD_ROCK_ROPE, true, false);
+                                                          nullptr, 8 * 8, 8, BLOOD_ROCK_ROPE, true, false,LAYER_LEVEL::MIDDLE_TOP);
 
     mainSpriteInfo->entry->isHidden = false;
     subSpriteInfo->entry->isHidden = false;

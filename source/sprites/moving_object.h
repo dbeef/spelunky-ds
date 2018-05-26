@@ -20,10 +20,6 @@
 class MovingObject {
 public:
 
-    //todo virtual void for Oam init
-
-    MovingObject();
-
     void update() {
         updateOther();
         updateSpeed();
@@ -32,7 +28,7 @@ public:
 
     void limit_speed(int max_x, int max_y);
 
-    void apply_friction(int friction_delta_time_ms, int friction_delta_speed);
+    void apply_friction(float friction_delta_speed);
 
     virtual void initSprite() = 0;
 
@@ -44,7 +40,7 @@ public:
 
     virtual void updateTimers() = 0;
 
-    virtual void updatePosition();
+    virtual void update_position();
 
     virtual void updateSpeed() = 0;
 
@@ -84,11 +80,21 @@ public:
     bool killed{};
     bool ready_to_dispose{};
 
-    int friction_timer{};
-
     SpritesheetType spriteType{};
 
     void get_x_y_viewported(int *out_main_x, int *out_main_y, int *out_sub_x, int *out_sub_y);
+
+    void apply_gravity(double acceleration);
+
+    void kill_mobs_if_thrown();
+
+    void check_if_can_be_pickuped();
+
+    void set_pickuped_position(int pickup_offset_x, int pickup_offset_y);
+
+    bool check_if_can_be_opened();
+
+    void kill_mobs_items_if_thrown();
 };
 
 

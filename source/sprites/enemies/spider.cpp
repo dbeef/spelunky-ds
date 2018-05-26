@@ -161,7 +161,7 @@ void Spider::updateSpeed() {
     pos_inc_timer += *global::timer;
 
     if (pos_inc_timer > 30) {
-        updatePosition();
+        update_position();
         if (!bottomCollision && hunting)
             ySpeed += GRAVITY_DELTA_SPEED * 0.8;
 
@@ -218,9 +218,9 @@ void Spider::kill() {
 void Spider::initSprite() {
 
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_spiderPal, gfx_spiderPalLen,
-                                                        nullptr, 16 * 16, 16, SPIDER, true, false);
+                                                        nullptr, 16 * 16, 16, SPIDER, true, false,LAYER_LEVEL::MIDDLE_TOP);
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_spiderPal, gfx_spiderPalLen,
-                                                          nullptr, 16 * 16, 16, SPIDER, true, false);
+                                                          nullptr, 16 * 16, 16, SPIDER, true, false,LAYER_LEVEL::MIDDLE_TOP);
 
     frameGfx = (u8 *) gfx_spiderTiles + 16*16*4/2;
     subSpriteInfo->updateFrame(frameGfx, 16 * 16);

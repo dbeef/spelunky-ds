@@ -72,7 +72,7 @@ void TitleMenuSign::updateSpeed() {
 
 }
 
-void TitleMenuSign::updatePosition() {
+void TitleMenuSign::update_position() {
 }
 
 void TitleMenuSign::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
@@ -94,34 +94,34 @@ void TitleMenuSign::initSprite() {
 
         case MenuSignType::QUIT:
             mainSpriteInfo_1 = used_oam_manager->initSprite(gfx_menu_signs_tutorial_quitPal, gfx_menu_signs_tutorial_quitPalLen,
-                                                            nullptr, 16 * 16, 16, SpritesheetType::MENU_SIGNS_TUTORIAL_QUIT, true, false);
+                                                            nullptr, 16 * 16, 16, SpritesheetType::MENU_SIGNS_TUTORIAL_QUIT, true, false,LAYER_LEVEL::MIDDLE_TOP);
             mainSpriteInfo_2 = used_oam_manager->initSprite(gfx_menu_signs_tutorial_quitPal, gfx_menu_signs_tutorial_quitPalLen,
-                                                            nullptr, 16 * 16, 16, SpritesheetType::MENU_SIGNS_TUTORIAL_QUIT, true, false);
+                                                            nullptr, 16 * 16, 16, SpritesheetType::MENU_SIGNS_TUTORIAL_QUIT, true, false,LAYER_LEVEL::MIDDLE_TOP);
             frameGfx1 = (u8 *) gfx_menu_signs_tutorial_quitTiles + 2 * 16 * 16 / 2;
             frameGfx2 = (u8 *) gfx_menu_signs_tutorial_quitTiles + 3 * 16 * 16 / 2;
 
             break;
         case MenuSignType::SCORES:
             mainSpriteInfo_1 = used_oam_manager->initSprite(gfx_menu_signs_start_scoresPal, gfx_menu_signs_start_scoresPalLen,
-                                                            nullptr, 32 * 32, 32, SpritesheetType::MENU_SIGNS_START_SCORES, true, false);
+                                                            nullptr, 32 * 32, 32, SpritesheetType::MENU_SIGNS_START_SCORES, true, false,LAYER_LEVEL::MIDDLE_TOP);
             mainSpriteInfo_2 = used_oam_manager->initSprite(gfx_menu_signs_start_scoresPal, gfx_menu_signs_start_scoresPalLen,
-                                                            nullptr, 32 * 32, 32, SpritesheetType::MENU_SIGNS_START_SCORES, true, false);
+                                                            nullptr, 32 * 32, 32, SpritesheetType::MENU_SIGNS_START_SCORES, true, false,LAYER_LEVEL::MIDDLE_TOP);
             frameGfx1 = (u8 *) gfx_menu_signs_start_scoresTiles + 2 * 32 * 32 / 2;
             frameGfx2 = (u8 *) gfx_menu_signs_start_scoresTiles + 3 * 32 * 32 / 2;
             break;
         case MenuSignType::START:
             mainSpriteInfo_1 = used_oam_manager->initSprite(gfx_menu_signs_start_scoresPal, gfx_menu_signs_start_scoresPalLen,
-                                                            nullptr, 32 * 32, 32, SpritesheetType::MENU_SIGNS_START_SCORES, true, false);
+                                                            nullptr, 32 * 32, 32, SpritesheetType::MENU_SIGNS_START_SCORES, true, false,LAYER_LEVEL::MIDDLE_TOP);
             mainSpriteInfo_2 = used_oam_manager->initSprite(gfx_menu_signs_start_scoresPal, gfx_menu_signs_start_scoresPalLen,
-                                                            nullptr, 32 * 32, 32, SpritesheetType::MENU_SIGNS_START_SCORES, true, false);
+                                                            nullptr, 32 * 32, 32, SpritesheetType::MENU_SIGNS_START_SCORES, true, false,LAYER_LEVEL::MIDDLE_TOP);
             frameGfx1 = (u8 *) gfx_menu_signs_start_scoresTiles + 0 * 32 * 32 / 2;
             frameGfx2 = (u8 *) gfx_menu_signs_start_scoresTiles + 1 * 32 * 32 / 2;
             break;
         case MenuSignType::TUTORIAL:
             mainSpriteInfo_1 = used_oam_manager->initSprite(gfx_menu_signs_tutorial_quitPal, gfx_menu_signs_tutorial_quitPalLen,
-                                                            nullptr, 16 * 16, 16, SpritesheetType::MENU_SIGNS_TUTORIAL_QUIT, true, false);
+                                                            nullptr, 16 * 16, 16, SpritesheetType::MENU_SIGNS_TUTORIAL_QUIT, true, false,LAYER_LEVEL::MIDDLE_TOP);
             mainSpriteInfo_2 = used_oam_manager->initSprite(gfx_menu_signs_tutorial_quitPal, gfx_menu_signs_tutorial_quitPalLen,
-                                                            nullptr, 16 * 16, 16, SpritesheetType::MENU_SIGNS_TUTORIAL_QUIT, true, false);
+                                                            nullptr, 16 * 16, 16, SpritesheetType::MENU_SIGNS_TUTORIAL_QUIT, true, false,LAYER_LEVEL::MIDDLE_TOP);
             frameGfx1 = (u8 *) gfx_menu_signs_tutorial_quitTiles + 0 * 16 * 16 / 2;
             frameGfx2 = (u8 *) gfx_menu_signs_tutorial_quitTiles + 1 * 16 * 16 / 2;
             break;

@@ -5,10 +5,16 @@
 #ifndef SPELUNKYDS_BLOOD_H
 #define SPELUNKYDS_BLOOD_H
 
-#define BLOOD_SIZE 8
 #define MAX_X_SPEED_BLOOD 2
 #define MAX_Y_SPEED_BLOOD 2
 
+#define BLOOD_PHYSICAL_HEIGHT 4
+#define BLOOD_PHYSICAL_WIDTH 4
+#define BLOOD_SPRITE_HEIGHT 16
+#define BLOOD_SPRITE_WIDTH 16
+
+#define BLOOD_CHANGE_POS_DELTA 20
+#define BLOOD_ANIM_FRAME_DELTA 150
 
 #include <vector>
 #include <nds/jtypes.h>
@@ -26,6 +32,8 @@ class Blood : public MovingObject {
 
 public:
 
+    Blood();
+
     void updateOther() override {};
 
     void init() override;
@@ -38,15 +46,13 @@ public:
 
     void updateTimers() override {};
 
-    void updatePosition() override ;
-
     void updateSpeed() override;
 
     void updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) override;
 
     void updateCollisionsOtherMoving() override {};
 
-    void onCollisionWithMainCharacter() override;
+    void onCollisionWithMainCharacter() override {};
 
 
     double *timer {};
@@ -59,11 +65,11 @@ public:
 
     bool finished{};
     int currentFrame{};
-    int frameTimer{};
-
+    int animFrameTimer{};
 
     std::vector<BloodElement *> bloodTrail;
 
+    void spawn_blood();
 };
 
 

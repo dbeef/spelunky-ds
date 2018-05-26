@@ -8,51 +8,21 @@
 #include "../moving_object.h"
 #include "bullet.h"
 
-void Bullet::draw() {
+#define BULLET_POSITION_INC_DELTA 15
+#define BULLET_ANIM_X_OFFSET 5
+#define BULLET_ANIM_Y_OFFSET 5
+#define BULLET_ANIM_FRAME_DELTA 50
 
-    //kolizja z pociskiem działa tylko od lewej strony???
+void Bullet::draw() {
 
     if (ready_to_dispose)
         return;
 
-    if (abs(xSpeed) > 0 || abs(ySpeed) > 0) {
-        for (int a = 0; a < global::sprites.size(); a++) {
-            if ((global::sprites.at(a)->spriteType == SpritesheetType::SNAKE ||
-                 global::sprites.at(a)->spriteType == SpritesheetType::BAT ||
-                 global::sprites.at(a)->spriteType == SpritesheetType::SPIDER ||
-                 global::sprites.at(a)->spriteType == SpritesheetType::JAR)
-                && !global::sprites.at(a)->killed) {
-
-                if (Collisions::checkCollisionBodies(x, y, physical_width, physical_height, global::sprites.at(a)->x, global::sprites.at(a)->y,
-                                                     global::sprites.at(a)->physical_width, global::sprites.at(a)->physical_height)) {
-                    global::sprites.at(a)->kill();
-                }
-            }
-        }
-    }
-
-    if(killed){
-        animFrameTimer += *global::timer;
-
-        if(animFrameTimer > 50){
-            animFrame++;
-            animFrameTimer = 0;
-
-            frameGfx = (u8 *) gfx_spike_collectiblesTiles + (sprite_width * sprite_height * (25 + animFrame) / 2);
-            subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
-            mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
-        }
-
-
-
-        if(animFrame >= 6){
-            ready_to_dispose = true;
-            mainSpriteInfo->entry->isHidden = true;
-            subSpriteInfo->entry->isHidden = true;
-        }
-    }
+    if (killed)
+        apply_bullet_dispose_animation();
 
     set_position();
+    kill_mobs_items_if_thrown();
 }
 
 
@@ -62,39 +32,18 @@ void Bullet::init() {
 
 void Bullet::updateSpeed() {
 
-    if(killed)
+    if (killed)
         return;
 
-    if (xSpeed > MAX_X_SPEED_BULLET)
-        xSpeed = MAX_X_SPEED_BULLET;
-    if (xSpeed < -MAX_X_SPEED_BULLET)
-        xSpeed = -MAX_X_SPEED_BULLET;
-
-    if (ySpeed > MAX_Y_SPEED_BULLET)
-        ySpeed = MAX_Y_SPEED_BULLET;
-    if (ySpeed < -MAX_Y_SPEED_BULLET)
-        ySpeed = -MAX_Y_SPEED_BULLET;
+    limit_speed(MAX_X_SPEED_BULLET, MAX_Y_SPEED_BULLET);
 
     pos_inc_timer += *global::timer;
 
-    bool change_pos = (pos_inc_timer > 15) && !hold_by_main_dude;
+    bool change_pos = (pos_inc_timer > BULLET_POSITION_INC_DELTA) && !hold_by_main_dude;
 
     if (change_pos) {
-        updatePosition();
-
-        if (bottomCollision && xSpeed > 0) {
-            xSpeed -= 0.055;
-            if (xSpeed < 0)
-                xSpeed = 0;
-        }
-        if (bottomCollision && xSpeed < 0) {
-            xSpeed += 0.055;
-            if (xSpeed > 0)
-                xSpeed = 0;
-        }
-
+        update_position();
         pos_inc_timer = 0;
-
     }
 
 }
@@ -110,7 +59,7 @@ void Bullet::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_i
     upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, physical_width, false);
     bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, physical_width, physical_height, false);
 
-    if(leftCollision || rightCollision || upperCollision || bottomCollision){
+    if (leftCollision || rightCollision || upperCollision || bottomCollision) {
         killed = true;
     }
 
@@ -121,10 +70,10 @@ void Bullet::initSprite() {
 
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_spike_collectiblesPal, gfx_spike_collectiblesPalLen,
                                                         nullptr, sprite_width * sprite_height, sprite_width,
-                                                        spriteType, true, false);
+                                                        spriteType, true, false, LAYER_LEVEL::MIDDLE_TOP);
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_spike_collectiblesPal, gfx_spike_collectiblesPalLen,
                                                           nullptr, sprite_width * sprite_height, sprite_width,
-                                                          spriteType, true, false);
+                                                          spriteType, true, false, LAYER_LEVEL::MIDDLE_TOP);
 
     frameGfx = (u8 *) gfx_spike_collectiblesTiles + (sprite_width * sprite_height * (25) / 2);
 
@@ -137,19 +86,16 @@ void Bullet::set_position() {
     int main_x, main_y, sub_x, sub_y;
     get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
 
-    if(!killed) {
+    if (!killed) {
         mainSpriteInfo->entry->x = main_x;
         mainSpriteInfo->entry->y = main_y;
         subSpriteInfo->entry->x = sub_x;
         subSpriteInfo->entry->y = sub_y;
-    }
-    else
-    {
-        mainSpriteInfo->entry->x = main_x - 5;
-        mainSpriteInfo->entry->y = main_y - 5;
-        subSpriteInfo->entry->x = sub_x - 5;
-        subSpriteInfo->entry->y = sub_y - 5;
-
+    } else {
+        mainSpriteInfo->entry->x = main_x - BULLET_ANIM_X_OFFSET;
+        mainSpriteInfo->entry->y = main_y - BULLET_ANIM_Y_OFFSET;
+        subSpriteInfo->entry->x = sub_x - BULLET_ANIM_X_OFFSET;
+        subSpriteInfo->entry->y = sub_y - BULLET_ANIM_Y_OFFSET;
     }
 
     mainSpriteInfo->entry->vFlip = false;
@@ -166,5 +112,24 @@ Bullet::Bullet() {
     sprite_height = BULLET_SPRITE_HEIGHT;
     sprite_width = BULLET_SPRITE_WIDTH;
     spriteType = SpritesheetType::SPIKES_COLLECTIBLES;
+}
+
+void Bullet::apply_bullet_dispose_animation() {
+    animFrameTimer += *global::timer;
+
+    if (animFrameTimer > BULLET_ANIM_FRAME_DELTA) {
+        animFrame++;
+        animFrameTimer = 0;
+
+        frameGfx = (u8 *) gfx_spike_collectiblesTiles + (sprite_width * sprite_height * (25 + animFrame) / 2);
+        subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
+        mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
+    }
+
+    if (animFrame >= 6) {
+        ready_to_dispose = true;
+        mainSpriteInfo->entry->isHidden = true;
+        subSpriteInfo->entry->isHidden = true;
+    }
 }
 

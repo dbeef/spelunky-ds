@@ -52,12 +52,12 @@ void Hud::show() {
 
 void Hud::initSprites() {
 
-    heartSpriteInfo = global::main_oam_manager->initSprite(gfx_hudPal, gfx_hudPalLen, nullptr, 16 * 16, 16, HUD, true, false);
-    dollarSpriteInfo = global::main_oam_manager->initSprite(gfx_hudPal, gfx_hudPalLen, nullptr, 16 * 16, 16, HUD, true, false);
-    bombSpriteInfo = global::main_oam_manager->initSprite(gfx_hudPal, gfx_hudPalLen, nullptr, 16 * 16, 16, HUD, true, false);
-    ropeSpriteInfo = global::main_oam_manager->initSprite(gfx_hudPal, gfx_hudPalLen, nullptr, 16 * 16, 16, HUD, true, false);
+    heartSpriteInfo = global::main_oam_manager->initSprite(gfx_hudPal, gfx_hudPalLen, nullptr, 16 * 16, 16, HUD, true, false,LAYER_LEVEL::TOP);
+    dollarSpriteInfo = global::main_oam_manager->initSprite(gfx_hudPal, gfx_hudPalLen, nullptr, 16 * 16, 16, HUD, true, false,LAYER_LEVEL::TOP);
+    bombSpriteInfo = global::main_oam_manager->initSprite(gfx_hudPal, gfx_hudPalLen, nullptr, 16 * 16, 16, HUD, true, false,LAYER_LEVEL::TOP);
+    ropeSpriteInfo = global::main_oam_manager->initSprite(gfx_hudPal, gfx_hudPalLen, nullptr, 16 * 16, 16, HUD, true, false,LAYER_LEVEL::TOP);
     holdingItemSpriteInfo = global::main_oam_manager->initSprite(gfx_hudPal, gfx_hudPalLen, nullptr, 16 * 16, 16, HUD, true,
-                                                                 false);
+                                                                 false,LAYER_LEVEL::TOP);
 
     u8 *frameGfxHeart = (u8 *) gfx_hudTiles + 0 * 16 * 16 / 2;
     heartSpriteInfo->updateFrame(frameGfxHeart, 16 * 16);
@@ -212,7 +212,7 @@ void Hud::draw_on_level_done() {
             Moniez *moniez = new Moniez();
             moniez->sprite_height = 8;
             moniez->sprite_width = 8;
-            moniez->spriteType = MONIEZ_RUBY_BIG;
+            moniez->spriteType = MONIEZ_RUBY;
             moniez->value = 1200;
             moniez->ruby_type = 0;
             moniez->initSprite();
@@ -227,7 +227,7 @@ void Hud::draw_on_level_done() {
             Moniez *moniez = new Moniez();
             moniez->sprite_height = 8;
             moniez->sprite_width = 8;
-            moniez->spriteType = MONIEZ_RUBY_BIG;
+            moniez->spriteType = MONIEZ_RUBY;
             moniez->value = 1200;
             moniez->ruby_type = 1;
             moniez->initSprite();
@@ -243,7 +243,7 @@ void Hud::draw_on_level_done() {
             Moniez *moniez = new Moniez();
             moniez->sprite_height = 8;
             moniez->sprite_width = 8;
-            moniez->spriteType = MONIEZ_RUBY_BIG;
+            moniez->spriteType = MONIEZ_RUBY;
             moniez->value = 1200;
             moniez->ruby_type = 2;
             moniez->initSprite();

@@ -55,6 +55,10 @@ public:
 
     SpritesheetType  spriteType{};
     void set_position();
+
+    void drop_loot();
+
+    void play_collectible_animation();
 };
 
 

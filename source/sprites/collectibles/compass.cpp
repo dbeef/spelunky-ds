@@ -135,7 +135,7 @@ void Compass::updateSpeed() {
     bool change_pos = (pos_inc_timer > 15) && !hold_by_main_dude;
 
     if (change_pos) {
-        updatePosition();
+        update_position();
 
         if (bottomCollision && xSpeed > 0) {
             xSpeed -= 0.055;
@@ -176,10 +176,10 @@ void Compass::initSprite() {
 
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_saleablePal, gfx_saleablePalLen,
                                                         nullptr, sprite_width * sprite_height, sprite_width,
-                                                        spriteType, true, false);
+                                                        spriteType, true, false,LAYER_LEVEL::MIDDLE_TOP);
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_saleablePal, gfx_saleablePalLen,
                                                           nullptr, sprite_width * sprite_height, sprite_width,
-                                                          spriteType, true, false);
+                                                          spriteType, true, false,LAYER_LEVEL::MIDDLE_TOP);
 
     frameGfx = (u8 *) gfx_saleableTiles + (sprite_width * sprite_height * (2) / 2);
 

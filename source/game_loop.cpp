@@ -162,7 +162,7 @@ void gameloop::populate_cave_moniez() {
                     if (loot_type == 2 && rubies_left > 0 && r == 1) {
                         Moniez *moniez = new Moniez();
 
-                        moniez->spriteType = MONIEZ_RUBY_BIG;
+                        moniez->spriteType = MONIEZ_RUBY;
                         moniez->value = 1200;
                         moniez->init();
                         global::sprites.push_back(moniez);

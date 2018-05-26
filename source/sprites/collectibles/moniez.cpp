@@ -8,7 +8,7 @@
 #include "moniez.h"
 #include "../../globals_declarations.h"
 #include "../../../build/gfx_triple_goldbar.h"
-#include "../../../build/gfx_rubies_big.h"
+#include "../../../build/gfx_rubies.h"
 #include "../items/rock.h"
 #include "../../../build/soundbank.h"
 #include "../sprite_type.h"
@@ -22,10 +22,11 @@ void Moniez::draw() {
         return;
 
 
-    if (!collected && Collisions::checkCollisionWithMainDudeWidthBoundary(x, y, physical_width, physical_height, 8)) {
+    if (!collected && collectible_timer >= 500 &&
+        Collisions::checkCollisionWithMainDudeWidthBoundary(x, y, physical_width, physical_height, 8)) {
         global::hud->draw();
 
-        if (spriteType == SpritesheetType::MONIEZ_RUBY_BIG) {
+        if (spriteType == SpritesheetType::MONIEZ_RUBY) {
             mmEffect(SFX_XGEM);
         } else if (spriteType == SpritesheetType::MONIEZ_TRIPLE_GOLD_BARS) {
             mmEffect(SFX_XCOIN);
@@ -36,7 +37,7 @@ void Moniez::draw() {
         subSpriteInfo->entry->isHidden = true;
         mainSpriteInfo->entry->isHidden = true;
 
-        if (spriteType == SpritesheetType::MONIEZ_RUBY_BIG) {
+        if (spriteType == SpritesheetType::MONIEZ_RUBY) {
             if (ruby_type == 0) {
                 global::collected_loot.push_back(SpriteType::S_MONIEZ_RUBY_BIG_RED);
             } else if (ruby_type == 1) {
@@ -56,11 +57,15 @@ void Moniez::draw() {
 
 
     set_position();
+
+    if (collectible_timer < 500)
+        collectible_timer += *global::timer;
+
 }
 
 
 void Moniez::init() {
-    ruby_type = rand() % 3;
+    ruby_type = rand() % 6;
 
     initSprite();
 
@@ -71,36 +76,16 @@ void Moniez::init() {
 
 void Moniez::updateSpeed() {
 
-    if (xSpeed > MAX_X_SPEED_ROCK)
-        xSpeed = MAX_X_SPEED_ROCK;
-    if (xSpeed < -MAX_X_SPEED_ROCK)
-        xSpeed = -MAX_X_SPEED_ROCK;
-
-    if (ySpeed > MAX_Y_SPEED_ROCK)
-        ySpeed = MAX_Y_SPEED_ROCK;
-    if (ySpeed < -MAX_Y_SPEED_ROCK)
-        ySpeed = -MAX_Y_SPEED_ROCK;
+    limit_speed(MAX_X_SPEED_MONIEZ, MAX_Y_SPEED_MONIEZ);
 
     pos_inc_timer += *global::timer;
 
     bool change_pos = (pos_inc_timer > 15) && !hold_by_main_dude;
 
     if (change_pos) {
-        updatePosition();
-
-        if (bottomCollision && xSpeed > 0) {
-            xSpeed -= 0.055;
-            if (xSpeed < 0)
-                xSpeed = 0;
-        }
-        if (bottomCollision && xSpeed < 0) {
-            xSpeed += 0.055;
-            if (xSpeed > 0)
-                xSpeed = 0;
-        }
-        if (!bottomCollision)
-            ySpeed += GRAVITY_DELTA_SPEED;
-
+        update_position();
+        apply_friction(0.055);
+        apply_gravity(GRAVITY_DELTA_SPEED);
         pos_inc_timer = 0;
 
     }
@@ -113,10 +98,10 @@ void Moniez::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_i
     Collisions::getNeighboringTiles(global::level_generator->map_tiles, x_current_pos_in_tiles, y_current_pos_in_tiles,
                                     tiles);
 
-    bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, sprite_width, sprite_height, true);
-    leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, sprite_width, sprite_height, true);
-    rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, sprite_width, sprite_height, true);
-    upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, sprite_width, true);
+    bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, physical_width, physical_height, true);
+    leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true);
+    rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true);
+    upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, physical_width, true);
 
 }
 
@@ -131,39 +116,36 @@ void Moniez::initSprite() {
 
         subSpriteInfo = global::sub_oam_manager->initSprite(gfx_triple_goldbarPal, gfx_triple_goldbarPalLen,
                                                             nullptr, sprite_width * sprite_height, sprite_width,
-                                                            spriteType, true, true);
+                                                            spriteType, true, false, LAYER_LEVEL::MIDDLE_TOP);
         mainSpriteInfo = global::main_oam_manager->initSprite(gfx_triple_goldbarPal, gfx_triple_goldbarPalLen,
                                                               nullptr, sprite_width * sprite_height, sprite_width,
-                                                              spriteType, true, true);
+                                                              spriteType, true, false, LAYER_LEVEL::MIDDLE_TOP);
         frameGfx = (u8 *) gfx_triple_goldbarTiles;
-    } else if (spriteType == SpritesheetType::MONIEZ_RUBY_BIG) {
+    } else if (spriteType == SpritesheetType::MONIEZ_RUBY) {
 
-        physical_height = RUBY_PHYSICAL_HEIGHT;
-        physical_width = RUBY_PHYSICAL_WIDTH;
-        sprite_height = RUBY_SPRITE_HEIGHT;
-        sprite_width = RUBY_SPRITE_WIDTH;
+        if (ruby_type >= 3) {
+            physical_height = RUBY_SMALL_PHYSICAL_HEIGHT;
+            physical_width = RUBY_SMALL_PHYSICAL_WIDTH;
+            sprite_height = RUBY_SMALL_SPRITE_HEIGHT;
+            sprite_width = RUBY_SMALL_SPRITE_WIDTH;
+        } else {
+            physical_height = RUBY_BIG_PHYSICAL_HEIGHT;
+            physical_width = RUBY_BIG_PHYSICAL_WIDTH;
+            sprite_height = RUBY_BIG_SPRITE_HEIGHT;
+            sprite_width = RUBY_BIG_SPRITE_WIDTH;
+        }
 
-        subSpriteInfo = global::sub_oam_manager->initSprite(gfx_rubies_bigPal, gfx_rubies_bigPalLen,
+        subSpriteInfo = global::sub_oam_manager->initSprite(gfx_rubiesPal, gfx_rubiesPalLen,
                                                             nullptr, sprite_width * sprite_height, sprite_width,
-                                                            spriteType, true, true);
-        mainSpriteInfo = global::main_oam_manager->initSprite(gfx_rubies_bigPal, gfx_rubies_bigPalLen,
+                                                            spriteType, true, false, LAYER_LEVEL::MIDDLE_TOP);
+        mainSpriteInfo = global::main_oam_manager->initSprite(gfx_rubiesPal, gfx_rubiesPalLen,
                                                               nullptr, sprite_width * sprite_height, sprite_width,
-                                                              spriteType, true, true);
+                                                              spriteType, true, false, LAYER_LEVEL::MIDDLE_TOP);
 
-
-        //r g b
-        if (ruby_type == 0)
-            frameGfx = (u8 *) gfx_rubies_bigTiles;
-        else if (ruby_type == 1)
-            frameGfx = (u8 *) gfx_rubies_bigTiles + 8 * 8 * 1 / 2;
-        else if (ruby_type == 2)
-            frameGfx = (u8 *) gfx_rubies_bigTiles + 8 * 8 * 2 / 2;
-
+        frameGfx = (u8 *) gfx_rubiesTiles + 8 * 8 * (ruby_type) / 2;
+        subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
+        mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
     }
-
-
-    subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
-    mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
 }
 
 void Moniez::set_position() {
@@ -186,6 +168,6 @@ void Moniez::set_position() {
 }
 
 Moniez::Moniez() {
-
+    collectible_timer = 500;
 }
 

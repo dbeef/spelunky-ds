@@ -38,7 +38,10 @@ namespace global {
     extern Hud *hud;
     extern int bg_main_address;
     extern int bg_sub_address;
+
     extern std::vector<MovingObject *> sprites;
+    //make sprites_layer_1, sprites_layer2, etc
+
     extern std::vector<SpriteInfo *> spriteInfos;
     extern bool bombed;
     extern double *timer;

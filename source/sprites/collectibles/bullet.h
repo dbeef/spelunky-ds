@@ -56,6 +56,7 @@ public:
 
     SpritesheetType spriteType{};
 
+    void apply_bullet_dispose_animation();
 };
 
 
