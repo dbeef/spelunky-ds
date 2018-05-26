@@ -42,7 +42,7 @@
 <p> Full license text can be accessed under this link: </p>
 https://github.com/dbeef/spelunky-ds/blob/master/LICENSE
 <p>
-Briefly, as for my code, I distribute it under GNU GENERAL PUBLIC LICENSE, as for Spelunky game assets, I use them under Spelunky® User License v1.1b, also, for building I use devkitPro which is under GNU General Public License (GPL).
+Briefly, as for my code, I distribute it under GNU General Public License, as for Spelunky game assets, I use them under Spelunky® User License v1.1b, also, for building I use devkitPro which is under GNU General Public License (GPL).
 </p>
 
 
