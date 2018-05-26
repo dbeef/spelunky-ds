@@ -27,7 +27,7 @@ void BloodElement::draw() {
                 mainSpriteInfo->entry->isHidden = true;
                 subSpriteInfo->entry->isHidden = true;
             } else {
-                frameGfx = (u8 *) gfx_blood_rock_ropeTiles + currentFrame * sprite_width * sprite_height / 2;
+                frameGfx = (u8 *) gfx_blood_rock_ropeTiles + (currentFrame * sprite_width * sprite_height / 2);
                 subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
                 mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
             }
@@ -90,7 +90,7 @@ void BloodElement::initSprite() {
                                                           nullptr, sprite_width * sprite_height, 8, BLOOD_ROCK_ROPE,
                                                           true, false, LAYER_LEVEL::MIDDLE_TOP);
 
-    frameGfx = (u8 *) gfx_blood_rock_ropeTiles + currentFrame * sprite_width * sprite_height / 2;
+    frameGfx = (u8 *) gfx_blood_rock_ropeTiles + (currentFrame * sprite_width * sprite_height / 2);
     subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
     mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
 

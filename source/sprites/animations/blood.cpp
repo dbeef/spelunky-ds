@@ -74,12 +74,7 @@ void Blood::draw() {
 
 
 void Blood::init() {
-
     initSprite();
-
-    hold_by_main_dude = false;
-    activated_by_main_dude = false;
-
 }
 
 void Blood::updateSpeed() {
@@ -122,7 +117,7 @@ void Blood::initSprite() {
                                                           true, false,
                                                           LAYER_LEVEL::MIDDLE_TOP);
 
-    frameGfx = (u8 *) gfx_blood_rock_ropeTiles + 0 * sprite_width * sprite_height / 2;
+    frameGfx = (u8 *) gfx_blood_rock_ropeTiles + (0 * sprite_width * sprite_height / 2);
     subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
     mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
 }
