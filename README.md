@@ -1,5 +1,6 @@
 
-<h1 align="center"> Spelunky remake for the NintendoDS. </h1>
+<h1 align="center"> Spelunky remake for the NintendoDS. </h1><p align="center">(a.k.a SpelunkyDS)</p>
+
 
 
 
