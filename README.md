@@ -24,9 +24,7 @@
  
  Obviously I omit things like implement Olmec or implement lava city - let's finish cave level first.
 
-
-
-<h3> Tools I use </h3>
+<h2 align="center"> Tools I use </h2>
 <ul>
   <li> C++ </li>
   <li> GNU Make </li>
@@ -40,10 +38,10 @@
   <li> CLion for editing </li>
 </ul>
 
-<h3> License </h3>
+<h2 align="center"> License </h2>
 https://github.com/dbeef/spelunky-ds/blob/master/LICENSE
 
-<h3> Links </h3>
+<h2 align="center"> Links </h2>
 I found following materials very helpful:
 
 <ul> 
@@ -59,7 +57,3 @@ I found following materials very helpful:
   <li> this post: https://gamedev.stackexchange.com/questions/61065/using-ndslib-how-to-configure-video-modes-to-both-print-text-and-draw-bitmaps-o </li>
  
 </ul>
-
-
-<p>
-Thanks to every person who contributed to NDS homebrew!
