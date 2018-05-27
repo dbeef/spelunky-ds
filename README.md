@@ -14,6 +14,7 @@
 <li> 🗙 Implement caveman </li>
 <li> 🗙 Implement skeleton </li>
 <li> 🗙 Implement arrow trap </li>
+<li> 🗙 Fix rope logics - when trhwon, when it attaches bottom of some tile or it reaches its maximum height of 8 tiles, then it should expand to the bottom. Now it's the opposite - it expands as it travels upwards. </li>
 <li> 🗙 Implement cape and jetpack </li>
 <li> 🗙 Putting project on Travis </li>
 <li> ✔ Implement 4 layers system - top one for the console and HUD, bottom one for tilemap and the rest for other sprites </li>
