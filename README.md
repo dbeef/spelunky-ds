@@ -1,15 +1,30 @@
-Spelunky remake for the NintendoDS.
 
-<a href="http://www.youtube.com/watch?feature=player_embedded&v=UECctDqN2mE
-" target="_blank"><img src="http://img.youtube.com/vi/UECctDqN2mE/0.jpg" 
-alt="Gameplay" width="240" height="180" border="10" /></a>
+<h1 align="center"> Spelunky® remake for the NintendoDS. </h1><p align="center">(a.k.a SpelunkyDS)</p>
 
+<p align="center"><img src="https://github.com/dbeef/spelunky-ds/blob/master/readme/gameplay.gif" alt="Works on real NDS!"
+ width="240" height="340">
+ 
+</p>
 
-<here I should post a gif of spelunky on a real nds>
+<h2 align="center">To-do list as for now</h2>
+<ul>
+ 
+<li> 🗙	Implement shopkeeper logics and randomly spawned shops  </li>
+<li> 🗙 Implement damsel </li>
+<li> 🗙 Implement caveman </li>
+<li> 🗙 Implement skeleton </li>
+<li> 🗙 Implement arrow trap </li>
+<li> 🗙 Implement cape and jetpack </li>
+<li> 🗙 Putting project on Travis </li>
+<li> 🗙 Implement 4 layers system - top one for the console and HUD, bottom one for tilemap and the rest for other sprites </li>
+<li> 🗙 Tune-up the level generator; make it more random; add random events like snake well </li>
+<li> 🗙 Implement music using streaming from filesystem - I elaborated a bit on this on my blog: https://dbeef.wordpress.com/2018/05/24/some-words-on-developing-spelunkyds/ </li> 
+ 
+</ul>
+ 
+ Obviously I omit things like implement Olmec or implement lava city - let's finish cave level first.
 
-Check my blog for development diaries: http://dbeef.wordpress.com
-
-<h3> Tools I use </h3>
+<h2 align="center"> Tools I use </h2>
 <ul>
   <li> C++ </li>
   <li> GNU Make </li>
@@ -23,10 +38,20 @@ Check my blog for development diaries: http://dbeef.wordpress.com
   <li> CLion for editing </li>
 </ul>
 
-<h3> License </h3>
-https://github.com/dbeef/spelunky-ds/blob/master/LICENSE
+<h2 align="center"> License </h2>
 
-<h3> Links </h3>
+<p> Full license text can be accessed under this link: </p>
+https://github.com/dbeef/spelunky-ds/blob/master/LICENSE
+<p>
+Briefly, as for my code, I distribute it under GNU General Public License, as for Spelunky game assets, I use them under Spelunky® User License v1.1b, also, libnds and tools for building .nds files are provided by devkitPro which is under GNU General Public License (GPL).
+</p>
+
+
+<h2 align="center">Contributing</h2>
+
+I will accept every help with running this project, feel free to catch one or more of the todo's.
+
+<h2 align="center"> Links </h2>
 I found following materials very helpful:
 
 <ul> 
@@ -42,7 +67,3 @@ I found following materials very helpful:
   <li> this post: https://gamedev.stackexchange.com/questions/61065/using-ndslib-how-to-configure-video-modes-to-both-print-text-and-draw-bitmaps-o </li>
  
 </ul>
-
-
-<p>
-Thanks to every person who contributed to NDS homebrew!
