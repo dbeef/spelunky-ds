@@ -15,7 +15,7 @@
 #define RUBY_SMALL_SPRITE_HEIGHT 8
 #define RUBY_SMALL_SPRITE_WIDTH 8
 
-#define TRIPLE_GOLDBAR_PHYSICAL_HEIGHT 12
+#define TRIPLE_GOLDBAR_PHYSICAL_HEIGHT 10
 #define TRIPLE_GOLDBAR_PHYSICAL_WIDTH 16
 #define TRIPLE_GOLDBAR_SPRITE_HEIGHT 16
 #define TRIPLE_GOLDBAR_SPRITE_WIDTH 16
@@ -26,12 +26,12 @@
 #include "../moving_object.h"
 #include "../sprite_info.h"
 
-class Moniez: public MovingObject {
+class Moniez : public MovingObject {
 
 public:
 
     Moniez();
-    
+
     void updateOther() override {};
 
     void init() override;
@@ -55,9 +55,9 @@ public:
     //rename to vectors_update_timer?
     double pos_inc_timer{};
 
-    SpriteInfo *mainSpriteInfo {};
-    SpriteInfo *subSpriteInfo {};
-    u8 * frameGfx{};
+    SpriteInfo *mainSpriteInfo{};
+    SpriteInfo *subSpriteInfo{};
+    u8 *frameGfx{};
 
     int value{};
     int ruby_type{};
@@ -65,10 +65,10 @@ public:
     int collectible_timer{};
 
     bool collected{};
-    SpritesheetType  spriteType{};
+    SpritesheetType spriteType{};
+
     void set_position();
 };
-
 
 
 #endif //SPELUNKYDS_MONIEZ_H

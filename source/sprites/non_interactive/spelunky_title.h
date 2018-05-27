@@ -5,6 +5,11 @@
 #ifndef SPELUNKYDS_STATICSPRITE_H
 #define SPELUNKYDS_STATICSPRITE_H
 
+#define SPELUNKY_TITLE_SPRITE_HEIGHT 64
+#define SPELUNKY_TITLE_SPRITE_WIDTH 64
+
+#define SPELUNKY_TITLE_PHYSICAL_HEIGHT 64
+#define SPELUNKY_TITLE_PHYSICAL_WIDTH 64
 
 #include "../moving_object.h"
 #include "../sprite_info.h"
@@ -12,6 +17,8 @@
 class SpelunkyTitle : public MovingObject {
 
 public:
+
+    SpelunkyTitle();
 
     void updateOther() override {};
 
@@ -25,11 +32,11 @@ public:
 
     void updateTimers() override {};
 
-    void update_position() override ;
+    void update_position() override {};
 
-    void updateSpeed() override;
+    void updateSpeed() override {};
 
-    void updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) override;
+    void updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) override {};
 
     void updateCollisionsOtherMoving() override {};
 

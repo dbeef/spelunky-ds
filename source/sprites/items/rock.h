@@ -14,6 +14,7 @@
 #define ROCK_SPRITE_WIDTH 8
 
 #include <nds/arm9/sprite.h>
+#include "../moving_object.h"
 
 class Rock : public MovingObject {
 

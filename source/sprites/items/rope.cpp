@@ -10,39 +10,15 @@
 #include "../../collisions/collisions.h"
 #include "../../tiles/map_utils.h"
 
+#define ROPE_POS_INC_DELTA 15
+#define MAX_ROPE_CHAIN_SIZE 8
 
 void Rope::draw() {
-
-
-    if (hold_by_main_dude) {
-
-        y = global::main_dude->y + 6;
-
-        if (global::main_dude->state == 1) {
-            x = global::main_dude->x - 2;
-        } else
-            x = global::main_dude->x + 10;
-    }
-
-    int main_x = x - global::camera->x;
-    int main_y = y - global::camera->y;
-    int sub_x = x - global::camera->x;
-    int sub_y = y - global::camera->y - 192;
 
     for (int a = 0; a < ropeChain.size(); a++) {
         ropeChain.at(a)->draw();
         ropeChain.at(a)->update();
     }
-
-    if (global::camera->y + 192 > this->y + 8 || global::camera->y + 192 + 192  < this->y - 8) {
-        sub_x = -128;
-        sub_y = -128;
-    }
-    if (global::camera->y > this->y + 8 || global::camera->y + 192 < this->y - 8) {
-        main_x = -128;
-        main_y = -128;
-    }
-
 
     if (activated_by_main_dude && !thrown && !finished) {
         mmEffect(SFX_XTHROW);
@@ -50,17 +26,14 @@ void Rope::draw() {
         thrown = true;
         throwingTimer = 0;
 
-//        global::main_dude->holding_item = false;
-//        hold_by_main_dude = false;
-
-        x = floor_div(global::main_dude->x + 0.5 * MAIN_DUDE_PHYSICAL_WIDTH, 16) * TILE_W + ROPE_SIZE * 0.5;
+        x = floor_div(global::main_dude->x + 0.5 * MAIN_DUDE_PHYSICAL_WIDTH, TILE_W) * TILE_W + physical_width * 0.5;
         y -= 16;
         ySpeed = -4;
     }
     if (thrown && !finished) {
         throwingTimer += *global::timer;
 
-        int temp_y = floor_div(this->y + (0.5 * ROPE_SIZE), 16);
+        int temp_y = floor_div(this->y + (0.5 * physical_height), TILE_H);
 
         if (!isThereChainForThisTile(temp_y * TILE_H)) {
 
@@ -76,7 +49,7 @@ void Rope::draw() {
                 element->draw();
 
                 ropeChain.push_back(element);
-                if (ropeChain.size() == 8) {
+                if (ropeChain.size() == MAX_ROPE_CHAIN_SIZE) {
                     throwingFinished();
                     finished = true;
                 }
@@ -91,24 +64,28 @@ void Rope::draw() {
 
     for (int a = 0; a < ropeChain.size(); a++) {
 
-        if (ropeChain.at(a)->x  + 5> global::main_dude->x &&
+        if (ropeChain.at(a)->x + 5 > global::main_dude->x &&
             ropeChain.at(a)->x + 5 < global::main_dude->x + MAIN_DUDE_PHYSICAL_WIDTH &&
             ropeChain.at(a)->y + 5 > global::main_dude->y &&
             ropeChain.at(a)->y - 5 < global::main_dude->y + MAIN_DUDE_PHYSICAL_HEIGHT
             && !onTopOfClimbingSpace) {
-//            std::cout<< " CA NCLIMB " << '\n';
             if (!global::input_handler->r_bumper_down) {
                 global::main_dude->can_climb_rope = true;
-                if(global::input_handler->up_key_held){
+                if (global::input_handler->up_key_held) {
                     global::main_dude->x = ropeChain.at(a)->x - 4;
                 }
             }
 
             break;
-        } else {
-//            std::cout<< " NOT" << '\n';
         }
     }
+
+    if (!finished) {
+        kill_mobs_if_thrown();
+    }
+
+    int main_x, main_y, sub_x, sub_y;
+    get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
 
     mainSpriteInfo->entry->x = main_x;
     mainSpriteInfo->entry->y = main_y;
@@ -116,16 +93,6 @@ void Rope::draw() {
     subSpriteInfo->entry->x = sub_x;
     subSpriteInfo->entry->y = sub_y;
 
-    if (!finished) {
-        for (int a = 0; a < global::sprites.size(); a++) {
-            if((global::sprites.at(a)->spriteType == SpritesheetType::SNAKE || global::sprites.at(a)->spriteType == SpritesheetType::BAT|| global::sprites.at(a)->spriteType == SpritesheetType::SPIDER)
-               && !global::sprites.at(a)->killed){
-                if(Collisions::checkCollisionBodies(x, y, 8, 8, global::sprites.at(a)->x, global::sprites.at(a)->y, 16, 16)){
-                    global::sprites.at(a)->kill();
-                }
-            }
-        }
-    }
 }
 
 
@@ -135,102 +102,31 @@ void Rope::init() {
 }
 
 void Rope::notThrown() {
-    frameGfx = (u8 *) gfx_blood_rock_ropeTiles + 9 * 8 * 8 / 2;
-    subSpriteInfo->updateFrame(frameGfx, 8 * 8);
-    mainSpriteInfo->updateFrame(frameGfx, 8 * 8);
+    frameGfx = (u8 *) gfx_blood_rock_ropeTiles + 9 * sprite_width * sprite_height / 2;
+    subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
+    mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
 }
 
 void Rope::throwingFinished() {
-    frameGfx = (u8 *) gfx_blood_rock_ropeTiles + (10 * 8 * 8 / 2);
-    subSpriteInfo->updateFrame(frameGfx, 8 * 8);
-    mainSpriteInfo->updateFrame(frameGfx, 8 * 8);
+    frameGfx = (u8 *) gfx_blood_rock_ropeTiles + (10 * sprite_width * sprite_height / 2);
+    subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
+    mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
 }
 
 void Rope::updateSpeed() {
 
-    if (xSpeed > MAX_X_SPEED_ROPE)
-        xSpeed = MAX_X_SPEED_ROPE;
-    if (xSpeed < -MAX_X_SPEED_ROPE)
-        xSpeed = -MAX_X_SPEED_ROPE;
-
-    if (ySpeed > MAX_Y_SPEED_ROPE)
-        ySpeed = MAX_Y_SPEED_ROPE;
-    if (ySpeed < -MAX_Y_SPEED_ROPE)
-        ySpeed = -MAX_Y_SPEED_ROPE;
+    limit_speed(MAX_X_SPEED_ROPE, MAX_Y_SPEED_ROPE);
 
     pos_inc_timer += *global::timer;
 
-    bool change_pos = (pos_inc_timer > 15) && !hold_by_main_dude && !finished;
+    bool change_pos = (pos_inc_timer > ROPE_POS_INC_DELTA) && !hold_by_main_dude && !finished;
 
     if (change_pos) {
         update_position();
+        apply_friction(0.055);
+        pos_inc_timer = 0;
     }
 
-}
-
-void Rope::update_position() {
-
-    if (bottomCollision && xSpeed > 0) {
-        xSpeed -= 0.055;
-        if (xSpeed < 0)
-            xSpeed = 0;
-    }
-    if (bottomCollision && xSpeed < 0) {
-        xSpeed += 0.055;
-        if (xSpeed > 0)
-            xSpeed = 0;
-    }
-
-    double tempXspeed = abs(xSpeed);
-    double tempYspeed = abs(ySpeed);
-
-    int old_xx = -1;
-    int old_yy = -1;
-    int xx;
-    int yy;
-
-    while (tempXspeed > 0 || tempYspeed > 0) {
-        if (tempXspeed > 0) {
-            if (xSpeed > 0) {
-                x += 1;
-            } else if (xSpeed < 0) {
-                x -= 1;
-            }
-        }
-        if (tempYspeed > 0) {
-            if (ySpeed > 0)
-                y += 1;
-            else if (ySpeed < 0)
-                y -= 1;
-        }
-
-//            Collisions::getCenterTile(this->x, this->y, MAIN_DUDE_HEIGHT, MAIN_DUDE_WIDTH, xx, yy);
-//fixme
-
-        xx = floor_div(this->x + 0.5 * ROPE_SIZE, 16);
-        yy = floor_div(this->y + 0.5 * ROPE_SIZE, 16);
-
-        if (old_xx != xx || old_yy != yy) {
-            updateCollisionsMap(xx, yy);
-        }
-
-        old_xx = xx;
-        old_yy = yy;
-
-        tempXspeed--;
-        tempYspeed--;
-    }
-
-
-
-
-//    if (!bottomCollision)
-//        ySpeed += GRAVITY_DELTA_SPEED;
-
-    pos_inc_timer = 0;
-}
-
-void Rope::onCollisionWithMainCharacter() {
 }
 
 void Rope::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
@@ -239,10 +135,10 @@ void Rope::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_
     Collisions::getNeighboringTiles(global::level_generator->map_tiles, x_current_pos_in_tiles, y_current_pos_in_tiles,
                                     tiles);
 
-    bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, 8, 8, true);
-    leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, 8, 8, true);
-    rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, 8, 8, true);
-    upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, 8, false);
+    bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, physical_width, physical_height, true);
+    leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true);
+    rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true);
+    upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, physical_width, false);
 
     if (upperCollision) {
         if (!finished) {
@@ -265,9 +161,13 @@ void Rope::initSprite() {
 
 
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_blood_rock_ropePal, gfx_blood_rock_ropePalLen,
-                                                        nullptr, 8 * 8, 8, BLOOD_ROCK_ROPE, true, false,LAYER_LEVEL::MIDDLE_TOP);
+                                                        nullptr, sprite_width * sprite_height, 8, BLOOD_ROCK_ROPE, true,
+                                                        false,
+                                                        LAYER_LEVEL::MIDDLE_TOP);
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_blood_rock_ropePal, gfx_blood_rock_ropePalLen,
-                                                          nullptr, 8 * 8, 8, BLOOD_ROCK_ROPE, true, false,LAYER_LEVEL::MIDDLE_TOP);
+                                                          nullptr, sprite_width * sprite_height, 8, BLOOD_ROCK_ROPE,
+                                                          true, false,
+                                                          LAYER_LEVEL::MIDDLE_TOP);
 
     mainSpriteInfo->entry->isHidden = false;
     subSpriteInfo->entry->isHidden = false;
@@ -277,5 +177,12 @@ void Rope::initSprite() {
     for (int a = 0; a < ropeChain.size(); a++) {
         ropeChain.at(a)->initSprite();
     }
+}
+
+Rope::Rope() {
+    physical_height = ROPE_PHYSICAL_HEIGHT;
+    physical_width = ROPE_PHYSICAL_WIDTH;
+    sprite_height = ROPE_SPRITE_HEIGHT;
+    sprite_width = ROPE_SPRITE_WIDTH;
 }
 

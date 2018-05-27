@@ -5,12 +5,19 @@
 #ifndef SPELUNKYDS_COPYRIGHTS_H
 #define SPELUNKYDS_COPYRIGHTS_H
 
+#define COPYRIGHTS_SPRITE_HEIGHT 32
+#define COPYRIGHTS_SPRITE_WIDTH 32
+
+#define COPYRIGHTS_PHYSICAL_HEIGHT 32
+#define COPYRIGHTS_PHYSICAL_WIDTH 32
 
 #include "../moving_object.h"
 
 class Copyrights : public MovingObject {
 
 public:
+
+    Copyrights();
 
     void initSprite() override;
 
@@ -24,11 +31,11 @@ public:
 
     void updateTimers() override {};
 
-    void update_position() override;
+    void update_position() override {};
 
-    void updateSpeed() override;
+    void updateSpeed() override {};
 
-    void updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) override;
+    void updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) override {};
 
     void updateCollisionsOtherMoving() override {};
 

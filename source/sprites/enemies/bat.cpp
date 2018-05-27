@@ -11,6 +11,8 @@
 #include "../../collisions/collisions.h"
 #include "../../tiles/map_utils.h"
 #include "../../../build/soundbank.h"
+#define BAT_ANIM_FRAME_DELTA 100
+#define BAT_POS_INC_DELTA 30
 
 void Bat::draw() {
 
@@ -25,19 +27,18 @@ void Bat::draw() {
     subSpriteInfo->entry->vFlip = false;
     mainSpriteInfo->entry->vFlip = false;
 
-
     if (!hunting) {
         hunting = abs(x - global::main_dude->x) < 7 * 16 && abs(y - global::main_dude->y) < 7 * 16 &&
                   global::main_dude->y > y;
         if (hunting)
             mmEffect(SFX_XBAT);
-
     } else
         hunting = abs(x - global::main_dude->x) < 9 * 16 && abs(y - global::main_dude->y) < 9 * 16;
 
     animFrameTimer += *global::timer;
 
-    if (animFrameTimer > 100) {
+    if (animFrameTimer > BAT_ANIM_FRAME_DELTA) {
+
         animFrame++;
 
         if (animFrame >= 3)
@@ -54,57 +55,17 @@ void Bat::draw() {
         animFrameTimer = 0;
     }
 
-
-    if (global::main_dude->using_whip && !killed && global::main_dude->whip->whip_timer > 120) {
-        if (Collisions::checkCollisionWithMainDudeWhip(x, y, 16, 16)) {
-            kill();
-        }
-    }
-
-
-    if (!killed && Collisions::checkCollisionWithMainDude(x, y, 16, 16) && global::main_dude->ySpeed > 0 &&
-        global::main_dude->y - 4 < y) {
-        kill();
-        global::main_dude->ySpeed = -2;
-        global::main_dude->jumping_timer = 0;
-    }
-
-
-    if (!killed && !global::main_dude->dead && Collisions::checkCollisionWithMainDude(x, y, 16, 16) &&
-        global::main_dude->time_since_last_damage > 1000) {
-
-        global::main_dude->time_since_last_damage = 0;
-        global::hud->hearts--;
-        global::hud->draw();
-
-        if (global::hud->hearts == 0) {
-            global::hud->hide();
-            global::main_dude->ySpeed = -MAIN_DUDE_JUMP_SPEED * 0.25;
-            global::main_dude->dead = true;
-            mmEffect(SFX_XDIE);
-        } else
-            mmEffect(SFX_XHIT);
-
-
-    }
+    kill_if_whip();
+    kill_if_main_dude_jumped_on_you();
+    deal_damage_main_dude_on_collision();
 
     if (hunting) {
-        if (global::main_dude->x > x)
-            xSpeed = 1;
-        else
-            xSpeed = -1;
-
-
-        if (global::main_dude->y == y)
-            ySpeed = 0;
-        else if (global::main_dude->y > y)
-            ySpeed = 1;
-        else
-            ySpeed = -1;
+        follow_main_dude();
     } else {
         xSpeed = 0;
         ySpeed = -1;
     }
+
 }
 
 
@@ -125,7 +86,7 @@ void Bat::updateSpeed() {
 
     pos_inc_timer += *global::timer;
 
-    if (pos_inc_timer > 30) {
+    if (pos_inc_timer > BAT_POS_INC_DELTA) {
         update_position();
         pos_inc_timer = 0;
     }
@@ -151,31 +112,16 @@ void Bat::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_t
 }
 
 void Bat::kill() {
+
     subSpriteInfo->entry->isHidden = true;
     mainSpriteInfo->entry->isHidden = true;
 
-    subSpriteInfo = nullptr;
-    mainSpriteInfo = nullptr;
+    spawn_blood();
 
-    for (int a = 0; a < 4; a++) {
-        Blood *blood = new Blood();
-        blood->init();
-        blood->x = x;
-        blood->y = y;
-
-        if (a % 2 == 0)
-            blood->xSpeed = (1.3 / a);
-        else
-            blood->xSpeed = (-1.3 / a);
-
-        blood->ySpeed = -2 / a;
-        global::sprites.push_back(blood);
-    }
     killed = true;
     ready_to_dispose = true;
     global::hud->draw();
     global::killed_npcs.push_back(spriteType);
-
 
 }
 
@@ -201,7 +147,6 @@ void Bat::set_sprite_flying_right() {
     subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
     mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
 
-    //idk why do i have to do that, if it is already flipped in image
     subSpriteInfo->entry->hFlip = true;
     mainSpriteInfo->entry->hFlip = true;
 
@@ -239,4 +184,19 @@ Bat::Bat() {
     physical_width = BAT_PHYSICAL_WIDTH;
     sprite_height = BAT_SPRITE_HEIGHT;
     sprite_width = BAT_SPRITE_WIDTH;
+}
+
+void Bat::follow_main_dude() {
+    if (global::main_dude->x > x)
+        xSpeed = 1;
+    else
+        xSpeed = -1;
+
+
+    if (global::main_dude->y == y)
+        ySpeed = 0;
+    else if (global::main_dude->y > y)
+        ySpeed = 1;
+    else
+        ySpeed = -1;
 }

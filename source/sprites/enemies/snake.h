@@ -10,6 +10,9 @@
 #define SNAKE_SPRITE_HEIGHT 16
 #define SNAKE_SPRITE_WIDTH 16
 
+#define MAX_X_SPEED_SNAKE 4
+#define MAX_Y_SPEED_SNAKE 4
+
 #include "../moving_object.h"
 #include "../sprite_state.h"
 #include "../sprite_info.h"

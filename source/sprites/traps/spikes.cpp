@@ -32,22 +32,7 @@ void Spikes::draw() {
         global::main_dude->ySpeed = -MAIN_DUDE_JUMP_SPEED * 0.25;
         global::main_dude->dead = true;
 
-
-        for (int a = 0; a < 4; a++) {
-            Blood *blood = new Blood();
-            blood->init();
-            blood->x = x;
-            blood->y = y;
-
-            if (a % 2 == 0)
-                blood->xSpeed = (1.3 / a);
-            else
-                blood->xSpeed = (-1.3 / a);
-
-            blood->ySpeed = -2 / a;
-            global::sprites.push_back(blood);
-        }
-
+        spawn_blood();
 
         blood = true;
 
@@ -63,13 +48,6 @@ void Spikes::draw() {
 void Spikes::init() {
     initSprite();
     activated_by_main_dude = true;
-}
-
-void Spikes::updateSpeed() {
-}
-
-void Spikes::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
-
 }
 
 void Spikes::initSprite() {

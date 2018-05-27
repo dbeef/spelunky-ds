@@ -17,6 +17,7 @@
 #include "compass.h"
 #include "../animations/got_collectible.h"
 
+#define CRATE_POS_INC_DELTA 15
 
 void Crate::draw() {
 
@@ -34,8 +35,10 @@ void Crate::draw() {
 
     if (activated_by_main_dude) {
 
-        hold_by_main_dude = false;
-        global::main_dude->holding_item = false;
+        if (hold_by_main_dude) {
+            hold_by_main_dude = false;
+            global::main_dude->holding_item = false;
+        }
 
         if (!dropped_loot)
             drop_loot();
@@ -64,7 +67,7 @@ void Crate::updateSpeed() {
 
     pos_inc_timer += *global::timer;
 
-    bool change_pos = (pos_inc_timer > 15) && !hold_by_main_dude;
+    bool change_pos = (pos_inc_timer > CRATE_POS_INC_DELTA) && !hold_by_main_dude;
 
     if (change_pos) {
         update_position();
@@ -133,6 +136,7 @@ Crate::Crate() {
     spriteType = SpritesheetType::SPIKES_COLLECTIBLES;
 }
 
+//TODO lower chances for good items
 void Crate::drop_loot() {
 
     int r = rand() % 8;

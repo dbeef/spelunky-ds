@@ -137,7 +137,7 @@ void MainDude::handle_key_input() {
             rope->activated_by_main_dude = true;
 
             rope->y = global::main_dude->y + 6;
-            rope->x = floor_div(global::main_dude->x + 0.5 * MAIN_DUDE_PHYSICAL_WIDTH, 16) * TILE_W + ROPE_SIZE * 0.5;
+            rope->x = floor_div(global::main_dude->x + 0.5 * MAIN_DUDE_PHYSICAL_WIDTH, TILE_W) * TILE_W + ROPE_PHYSICAL_WIDTH * 0.5;
             rope->ySpeed = -4;
 
             global::sprites.push_back(rope);
@@ -154,12 +154,6 @@ void MainDude::handle_key_input() {
             global::sprites.push_back(bomb);
             holding_item = true;
         }
-
-//        if (global::InputHandler->y_key_down && !holding_item && global::InputHandler->down_key_held) {
-//            take item from the ground
-//            holding_item = true;
-//        }
-
 
         if (global::input_handler->left_key_held) {
             state = W_LEFT;
@@ -204,8 +198,8 @@ void MainDude::handle_key_input() {
 
 //            std::cout<< *global::timer << '\n';
 
-            int xx = floor_div(this->x + 0.5 * MAIN_DUDE_PHYSICAL_WIDTH, 16);
-            int yy = floor_div(this->y + 0.5 * MAIN_DUDE_PHYSICAL_HEIGHT, 16);
+            int xx = floor_div(this->x + 0.5 * MAIN_DUDE_PHYSICAL_WIDTH, TILE_W);
+            int yy = floor_div(this->y + 0.5 * MAIN_DUDE_PHYSICAL_HEIGHT, TILE_H);
 
 //            std::cout<< *global::timer << '\n';
 
@@ -274,8 +268,8 @@ void MainDude::handle_key_input() {
 
         if (global::input_handler->down_key_held) {
 
-            int xx = floor_div(this->x + 0.5 * MAIN_DUDE_PHYSICAL_WIDTH, 16);
-            int yy = floor_div(this->y + 0.5 * MAIN_DUDE_PHYSICAL_HEIGHT, 16);
+            int xx = floor_div(this->x + 0.5 * MAIN_DUDE_PHYSICAL_WIDTH, TILE_W);
+            int yy = floor_div(this->y + 0.5 * MAIN_DUDE_PHYSICAL_HEIGHT, TILE_H);
 
             MapTile *neighboringTiles[9] = {};
 

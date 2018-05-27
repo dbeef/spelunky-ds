@@ -11,11 +11,18 @@
 
 #define MAX_Y_SPEED_ROPE 4
 #define MAX_X_SPEED_ROPE 4
-#define ROPE_SIZE 8
+
+#define ROPE_PHYSICAL_HEIGHT 8
+#define ROPE_PHYSICAL_WIDTH 8
+#define ROPE_SPRITE_HEIGHT 8
+#define ROPE_SPRITE_WIDTH 8
+
 
 class Rope : public MovingObject {
 
 public:
+
+    Rope();
 
     void updateOther() override {};
 
@@ -29,15 +36,13 @@ public:
 
     void updateTimers() override {};
 
-    void update_position() override ;
-
     void updateSpeed() override;
 
     void updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) override;
 
     void updateCollisionsOtherMoving() override {};
 
-    void onCollisionWithMainCharacter() override;
+    void onCollisionWithMainCharacter() override {};
 
 
     double pos_inc_timer{};

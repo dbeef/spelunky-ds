@@ -5,7 +5,6 @@
 #ifndef SPELUNKYDS_BOMB_H
 #define SPELUNKYDS_BOMB_H
 
-#define BOUNCE_VELOCITY_LOSS 0.65
 #define BOMB_SIZE 8
 #define ARMED_TIME_BLINK_SLOW 2000
 #define ARMED_TIME_BLINK_FAST 3500
@@ -55,8 +54,6 @@ public:
     SpriteInfo *subSpriteInfo {};
     u8 * frameGfx{};
 
-    //fixme cloning carried_by_main_dude
-//    bool carried;
     bool armed{};
 
     int armedTimer{};

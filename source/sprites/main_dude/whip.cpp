@@ -30,10 +30,6 @@ void Whip::init() {
     initSprite();
 }
 
-void Whip::updateSpeed() {
-    //Whip has no speed
-}
-
 void Whip::update_position() {
 
     x = global::main_dude->x;
@@ -82,10 +78,6 @@ void Whip::update_position() {
     main_sprite_info->entry->y = main_y -1;
     sub_sprite_info->entry->y = sub_y - 1;
 
-}
-
-void Whip::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
-    //Whip can't get into collision with map
 }
 
 void Whip::initSprite() {

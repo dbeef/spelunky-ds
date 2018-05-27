@@ -12,6 +12,8 @@
 #include "../../tiles/map_utils.h"
 #include "../../../build/soundbank.h"
 
+#define SNAKE_POS_INC_DELTA 35
+#define ANIM_FRAME_DELTA 125
 
 void Snake::draw() {
 
@@ -20,8 +22,6 @@ void Snake::draw() {
 
     set_position();
 
-
-    //idk why do i have to do that, if it is already flipped in image
     mainSpriteInfo->entry->hFlip = true;
     subSpriteInfo->entry->hFlip = true;
 
@@ -33,8 +33,8 @@ void Snake::draw() {
 
     animFrameTimer += *global::timer;
 
-    if (animFrameTimer > 125) {
-//        std::cout<< animFrame << '\n';
+    if (animFrameTimer > ANIM_FRAME_DELTA) {
+
         animFrame++;
         if (animFrame >= 4)
             animFrame = 0;
@@ -58,8 +58,6 @@ void Snake::draw() {
 
                 goTimer -= *global::timer;
 
-//            std::cout << goTimer << '\n';
-
             if (standingOnLeftEdge && spriteState == 1 || standingOnRightEdge && spriteState == 0) {
                 xSpeed = 0;
             } else if (spriteState == 0)
@@ -68,7 +66,6 @@ void Snake::draw() {
                 xSpeed = -0.5;
 
             if (goTimer <= 0) {
-//                std::cout << "RAND" << '\n';
                 randomizeMovement();
                 xSpeed = 0;
             }
@@ -77,20 +74,20 @@ void Snake::draw() {
 
 
     if (global::main_dude->using_whip && !killed && global::main_dude->whip->whip_timer > 120) {
-        if (Collisions::checkCollisionWithMainDudeWhip(x, y, 16, 16)) {
+        if (Collisions::checkCollisionWithMainDudeWhip(x, y, physical_width, physical_height)) {
             kill();
         }
     }
 
 
-    if (!killed && Collisions::checkCollisionWithMainDude(x, y, 16, 16) && global::main_dude->ySpeed > 0 &&
+    if (!killed && Collisions::checkCollisionWithMainDude(x, y, physical_width, physical_height) && global::main_dude->ySpeed > 0 &&
         global::main_dude->y - 4 < y) {
         kill();
         global::main_dude->ySpeed = -2;
         global::main_dude->jumping_timer = 0;
     }
 
-    if (!killed && !global::main_dude->dead && Collisions::checkCollisionWithMainDude(x, y, 16, 16) &&
+    if (!killed && !global::main_dude->dead && Collisions::checkCollisionWithMainDude(x, y, physical_width, physical_height) &&
         global::main_dude->time_since_last_damage > 1000) {
 
         global::main_dude->time_since_last_damage = 0;
@@ -118,8 +115,8 @@ void Snake::init() {
 
     sameDirectionInRow = 0;
     frameGfx = (u8 *) gfx_snakeTiles;
-    subSpriteInfo->updateFrame(frameGfx, 16 * 16);
-    mainSpriteInfo->updateFrame(frameGfx, 16 * 16);
+    subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
+    mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
 
     spriteType = SpritesheetType::SNAKE;
 
@@ -127,7 +124,6 @@ void Snake::init() {
 }
 
 void Snake::randomizeMovement() {
-//    srand(*global::timer + x + y + global::main_dude->x + +global::main_dude->y);
 
     int r = rand() % 2;
 
@@ -160,22 +156,13 @@ void Snake::randomizeMovement() {
 
 void Snake::updateSpeed() {
 
-    if (xSpeed > MAX_X_SPEED_ROCK)
-        xSpeed = MAX_X_SPEED_ROCK;
-    if (xSpeed < -MAX_X_SPEED_ROCK)
-        xSpeed = -MAX_X_SPEED_ROCK;
-
-    if (ySpeed > MAX_Y_SPEED_ROCK)
-        ySpeed = MAX_Y_SPEED_ROCK;
-    if (ySpeed < -MAX_Y_SPEED_ROCK)
-        ySpeed = -MAX_Y_SPEED_ROCK;
+    limit_speed(MAX_X_SPEED_SNAKE, MAX_Y_SPEED_SNAKE);
 
     pos_inc_timer += *global::timer;
 
-    if (pos_inc_timer > 35) {
+    if (pos_inc_timer > SNAKE_POS_INC_DELTA) {
         update_position();
-        if (!bottomCollision)
-            ySpeed += GRAVITY_DELTA_SPEED;
+        apply_gravity(GRAVITY_DELTA_SPEED);
         pos_inc_timer = 0;
     }
 
@@ -187,17 +174,12 @@ void Snake::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in
     Collisions::getNeighboringTiles(global::level_generator->map_tiles, x_current_pos_in_tiles,
                                     y_current_pos_in_tiles, tiles);
 
-    standingOnLeftEdge = Collisions::isStandingOnLeftEdge(tiles, x, 16, x_current_pos_in_tiles);
-    standingOnRightEdge = Collisions::isStandingOnRightEdge(tiles, x, 16, x_current_pos_in_tiles);
-    bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, 16, 16, false);
-    leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, 16, 16, false);
-    rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, 16, 16, false);
-    upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, 16, false);
-
-    if (bottomCollision) {
-        //nothing
-    }
-
+    standingOnLeftEdge = Collisions::isStandingOnLeftEdge(tiles, x, physical_width, x_current_pos_in_tiles);
+    standingOnRightEdge = Collisions::isStandingOnRightEdge(tiles, x, physical_width, x_current_pos_in_tiles);
+    bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, physical_width, physical_height, false);
+    leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, false);
+    rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, false);
+    upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, physical_width, false);
 
 }
 
@@ -231,9 +213,9 @@ void Snake::kill() {
 
 void Snake::initSprite() {
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_snakePal, gfx_snakePalLen,
-                                                        nullptr, 16 * 16, 16, SNAKE, true, false, LAYER_LEVEL::MIDDLE_TOP);
+                                                        nullptr, sprite_width * sprite_height, 16, SNAKE, true, false, LAYER_LEVEL::MIDDLE_TOP);
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_snakePal, gfx_snakePalLen,
-                                                          nullptr, 16 * 16, 16, SNAKE, true, false,LAYER_LEVEL::MIDDLE_TOP);
+                                                          nullptr, sprite_width * sprite_height, 16, SNAKE, true, false,LAYER_LEVEL::MIDDLE_TOP);
     subSpriteInfo->entry->isHidden = false;
     mainSpriteInfo->entry->isHidden = false;
 
@@ -262,9 +244,9 @@ void Snake::set_position() {
 }
 
 void Snake::set_sprite_left() {
-    frameGfx = (u8 *) gfx_snakeTiles + ((16 * 16 * (animFrame + 4)) / 2);
-    subSpriteInfo->updateFrame(frameGfx, 16 * 16);
-    mainSpriteInfo->updateFrame(frameGfx, 16 * 16);
+    frameGfx = (u8 *) gfx_snakeTiles + ((sprite_width * sprite_height* (animFrame + 4)) / 2);
+    subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
+    mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
     mainSpriteInfo->entry->hFlip = true;
     subSpriteInfo->entry->hFlip = true;
 
@@ -273,9 +255,9 @@ void Snake::set_sprite_left() {
 }
 
 void Snake::set_sprite_right() {
-    frameGfx = (u8 *) gfx_snakeTiles + ((16 * 16 * animFrame) / 2);
-    subSpriteInfo->updateFrame(frameGfx, 16 * 16);
-    mainSpriteInfo->updateFrame(frameGfx, 16 * 16);
+    frameGfx = (u8 *) gfx_snakeTiles + ((sprite_width * sprite_height * animFrame) / 2);
+    subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
+    mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
     mainSpriteInfo->entry->hFlip = true;
     subSpriteInfo->entry->hFlip = true;
 

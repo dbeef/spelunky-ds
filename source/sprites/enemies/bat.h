@@ -65,6 +65,8 @@ public:
     void set_sprite_flying_left();
 
     void set_position();
+
+    void follow_main_dude();
 };
 
 

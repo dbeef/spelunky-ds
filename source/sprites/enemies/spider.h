@@ -5,6 +5,9 @@
 #ifndef SPELUNKYDS_SPIDER_H
 #define SPELUNKYDS_SPIDER_H
 
+#define MAX_X_SPEED_SPIDER 4
+#define MAX_Y_SPEED_SPIDER 4
+
 #define SPIDER_PHYSICAL_HEIGHT 8
 #define SPIDER_PHYSICAL_WIDTH 16
 #define SPIDER_SPRITE_HEIGHT 16
@@ -67,6 +70,8 @@ public:
     void set_sprite_falling();
 
     void set_position();
+
+    void jump_to_main_dude();
 };
 
 

@@ -10,11 +10,11 @@
 #include "../../camera/camera.h"
 #include "../moving_object.h"
 
-#define ROPE_ELEMENT_SIZE 8
-
 class RopeElement : public MovingObject {
 
 public:
+
+    RopeElement();
 
     void updateOther() override {};
 
@@ -28,11 +28,11 @@ public:
 
     void initSprite() override;
 
-    void update_position() override ;
+    void update_position() override {};
 
-    void updateSpeed() override;
+    void updateSpeed() override {};
 
-    void updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) override;
+    void updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) override {};
 
     void updateCollisionsOtherMoving() override {};
 

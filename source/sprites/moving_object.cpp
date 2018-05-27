@@ -3,10 +3,68 @@
 // https://stackoverflow.com/questions/120876/what-are-the-rules-for-calling-the-superclass-constructor
 //
 
+#include <maxmod9.h>
 #include "moving_object.h"
 #include "../globals_declarations.h"
 #include "../tiles/map_utils.h"
 #include "../collisions/collisions.h"
+#include "../../build/soundbank.h"
+#include "animations/blood.h"
+
+void MovingObject::spawn_blood() {
+    for (int a = 0; a < 4; a++) {
+        Blood *blood = new Blood();
+        blood->init();
+        blood->x = x;
+        blood->y = y;
+
+        if (a % 2 == 0)
+            blood->xSpeed = (1.3 / a);
+        else
+            blood->xSpeed = (-1.3 / a);
+
+        blood->ySpeed = -2 / a;
+        global::sprites.push_back(blood);
+    }
+}
+
+void MovingObject::deal_damage_main_dude_on_collision() {
+    if (!killed && !global::main_dude->dead && Collisions::checkCollisionWithMainDude(x, y, 16, 16) &&
+        global::main_dude->time_since_last_damage > 1000) {
+
+        global::main_dude->time_since_last_damage = 0;
+        global::hud->hearts--;
+        global::hud->draw();
+
+        if (global::hud->hearts == 0) {
+            global::hud->hide();
+            global::main_dude->ySpeed = -MAIN_DUDE_JUMP_SPEED * 0.25;
+            global::main_dude->dead = true;
+            mmEffect(SFX_XDIE);
+        } else
+            mmEffect(SFX_XHIT);
+    }
+}
+
+void MovingObject::kill_if_whip() {
+    if (global::main_dude->using_whip && !killed && global::main_dude->whip->whip_timer > 120) {
+        if (Collisions::checkCollisionWithMainDudeWhip(x, y, sprite_width, sprite_height)) {
+            kill();
+        }
+    }
+}
+
+void MovingObject::kill_if_main_dude_jumped_on_you() {
+    if (!killed && Collisions::checkCollisionWithMainDude(x, y, sprite_width, sprite_height) &&
+        global::main_dude->ySpeed > 0 &&
+        global::main_dude->y - 4 < y) {
+
+        kill();
+        global::main_dude->ySpeed = -2;
+        global::main_dude->jumping_timer = 0;
+
+    }
+}
 
 //for opening chests and crates
 bool MovingObject::check_if_can_be_opened() {
@@ -80,7 +138,10 @@ void MovingObject::set_pickuped_position(int pickup_offset_x, int pickup_offset_
 }
 
 //when applied, item kills mobs if it boths travels and collides them
-void MovingObject::kill_mobs_if_thrown() {
+bool MovingObject::kill_mobs_if_thrown() {
+
+    bool killed = false;
+
     if (abs(xSpeed) > 0 || abs(ySpeed) > 0) {
         for (int a = 0; a < global::sprites.size(); a++) {
 
@@ -91,10 +152,14 @@ void MovingObject::kill_mobs_if_thrown() {
                 if (Collisions::checkCollisionBodies(x, y, 16, 16, global::sprites.at(a)->x,
                                                      global::sprites.at(a)->y, physical_width, physical_height)) {
                     global::sprites.at(a)->kill();
+                    killed = true;
                 }
             }
         }
     }
+
+    return killed;
+
 }
 
 //when applied, item kills mobs and destroys items (like jars), if it both travels and collides them
@@ -211,8 +276,8 @@ void MovingObject::update_position() {
                 y -= 1;
         }
 
-        xx = floor_div(this->x + 0.5 * physical_width, 16);
-        yy = floor_div(this->y + 0.5 * physical_height, 16);
+        xx = floor_div(this->x + 0.5 * physical_width, TILE_W);
+        yy = floor_div(this->y + 0.5 * physical_height, TILE_H);
 
         if (old_xx != xx || old_yy != yy || physical_width <= 8 || physical_height <= 8) {
             if (xx < 31 && yy < 31)
