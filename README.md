@@ -16,7 +16,7 @@
 <li> 🗙 Implement arrow trap </li>
 <li> 🗙 Implement cape and jetpack </li>
 <li> 🗙 Putting project on Travis </li>
-<li> 🗙 Implement 4 layers system - top one for the console and HUD, bottom one for tilemap and the rest for other sprites </li>
+<li> ✔ Implement 4 layers system - top one for the console and HUD, bottom one for tilemap and the rest for other sprites </li>
 <li> 🗙 Tune-up the level generator; make it more random; add random events like snake well </li>
 <li> 🗙 Implement music using streaming from filesystem - I elaborated a bit on this on my blog: https://dbeef.wordpress.com/2018/05/24/some-words-on-developing-spelunkyds/ </li> 
  
