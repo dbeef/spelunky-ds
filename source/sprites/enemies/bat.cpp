@@ -20,7 +20,6 @@ void Bat::draw() {
     set_position();
     mainSpriteInfo->entry->isHidden = false;
     subSpriteInfo->entry->isHidden = false;
-    //idk why do i have to do that, if it is already flipped in image
     subSpriteInfo->entry->hFlip = true;
     mainSpriteInfo->entry->hFlip = true;
     subSpriteInfo->entry->vFlip = false;
@@ -57,8 +56,6 @@ void Bat::draw() {
 
 
     if (global::main_dude->using_whip && !killed && global::main_dude->whip->whip_timer > 120) {
-
-
         if (Collisions::checkCollisionWithMainDudeWhip(x, y, 16, 16)) {
             kill();
         }
@@ -116,23 +113,15 @@ void Bat::init() {
     initSprite();
 
     frameGfx = (u8 *) gfx_batTiles;
-    subSpriteInfo->updateFrame(frameGfx, 16 * 16);
-    mainSpriteInfo->updateFrame(frameGfx, 16 * 16);
+    subSpriteInfo->updateFrame(frameGfx, sprite_height * sprite_width);
+    mainSpriteInfo->updateFrame(frameGfx, sprite_height * sprite_width);
 
     spriteType = SpritesheetType::BAT;
 }
 
 void Bat::updateSpeed() {
 
-    if (xSpeed > MAX_X_SPEED_ROCK)
-        xSpeed = MAX_X_SPEED_ROCK;
-    if (xSpeed < -MAX_X_SPEED_ROCK)
-        xSpeed = -MAX_X_SPEED_ROCK;
-
-    if (ySpeed > MAX_Y_SPEED_ROCK)
-        ySpeed = MAX_Y_SPEED_ROCK;
-    if (ySpeed < -MAX_Y_SPEED_ROCK)
-        ySpeed = -MAX_Y_SPEED_ROCK;
+    limit_speed(MAX_X_SPEED_BAT, MAX_Y_SPEED_BAT);
 
     pos_inc_timer += *global::timer;
 
@@ -150,12 +139,12 @@ void Bat::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_t
     Collisions::getNeighboringTiles(global::level_generator->map_tiles, x_current_pos_in_tiles,
                                     y_current_pos_in_tiles, tiles);
 
-    standingOnLeftEdge = Collisions::isStandingOnLeftEdge(tiles, x, 16, x_current_pos_in_tiles);
+    standingOnLeftEdge = Collisions::isStandingOnLeftEdge(tiles, x, physical_width, x_current_pos_in_tiles);
     standingOnRightEdge = Collisions::isStandingOnRightEdge(tiles, x, 16, x_current_pos_in_tiles);
-    bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, 16, 16, false);
-    leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, 16, 16, false);
-    rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, 16, 16, false);
-    upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, 16, false);
+    bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, physical_width, physical_height, false);
+    leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, false);
+    rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, false);
+    upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, physical_width, false);
 
     hanging = upperCollision && !hunting;
 
@@ -192,29 +181,25 @@ void Bat::kill() {
 
 void Bat::initSprite() {
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_batPal, gfx_batPalLen,
-                                                        nullptr, 16 * 16, 16, BAT, true, false,LAYER_LEVEL::MIDDLE_TOP);
+                                                        nullptr, sprite_width * sprite_height, 16, BAT, true, false,
+                                                        LAYER_LEVEL::MIDDLE_TOP);
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_batPal, gfx_batPalLen,
-                                                          nullptr, 16 * 16, 16, BAT, true, false,LAYER_LEVEL::MIDDLE_TOP);
+                                                          nullptr, sprite_width * sprite_height, 16, BAT, true, false,
+                                                          LAYER_LEVEL::MIDDLE_TOP);
     subSpriteInfo->entry->isHidden = false;
     mainSpriteInfo->entry->isHidden = false;
-/*
-    sub_sprite_info->entry->vFlip = false;
-    sub_sprite_info->entry->hFlip= false;
-
-    main_sprite_info->entry->vFlip = false;
-    main_sprite_info->entry->hFlip= false;*/
 }
 
 void Bat::set_sprite_hanging() {
-    frameGfx = (u8 *) gfx_batTiles + (16 * 16 * (0) / 2);
-    subSpriteInfo->updateFrame(frameGfx, 16 * 16);
-    mainSpriteInfo->updateFrame(frameGfx, 16 * 16);
+    frameGfx = (u8 *) gfx_batTiles + (sprite_width * sprite_height * (0) / 2);
+    subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
+    mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
 }
 
 void Bat::set_sprite_flying_right() {
-    frameGfx = (u8 *) gfx_batTiles + (16 * 16 * (animFrame + 1) / 2);
-    subSpriteInfo->updateFrame(frameGfx, 16 * 16);
-    mainSpriteInfo->updateFrame(frameGfx, 16 * 16);
+    frameGfx = (u8 *) gfx_batTiles + (sprite_width * sprite_height * (animFrame + 1) / 2);
+    subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
+    mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
 
     //idk why do i have to do that, if it is already flipped in image
     subSpriteInfo->entry->hFlip = true;
@@ -225,11 +210,10 @@ void Bat::set_sprite_flying_right() {
 }
 
 void Bat::set_sprite_flying_left() {
-    frameGfx = (u8 *) gfx_batTiles + (16 * 16 * (animFrame + 4) / 2);
-    subSpriteInfo->updateFrame(frameGfx, 16 * 16);
-    mainSpriteInfo->updateFrame(frameGfx, 16 * 16);
+    frameGfx = (u8 *) gfx_batTiles + (sprite_width * sprite_height * (animFrame + 4) / 2);
+    subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
+    mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
 
-    //idk why do i have to do that, if it is already flipped in image
     subSpriteInfo->entry->hFlip = true;
     mainSpriteInfo->entry->hFlip = true;
 

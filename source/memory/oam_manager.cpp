@@ -22,8 +22,6 @@
 static const int BYTES_PER_16_COLOR_TILE = 32;
 static const int COLORS_PER_PALETTE = 16;
 
-static bool nullptrs();
-
 void
 OAMManager::initOAMTable(u16 *sprite_address, u16 *paletteAddress, u16 *oam_address, int offset_multiplier, OamType o) {
     oam = new OAMTable();
@@ -87,12 +85,7 @@ OAMManager::initSprite(const unsigned short pallette[], int palLen, const unsign
                        int size, SpritesheetType type, bool reuse_palette, bool reuse_tiles, LAYER_LEVEL l) {
 
 
-//    std::cout << "\n";
-
     /* Keep track of the available tiles */
-
-//    std::cout << " MAKING " << current_oam_id << " " << type << '\n' ;
-
     assert(current_oam_id_palette < SPRITE_COUNT && current_oam_id_tiles < SPRITE_COUNT);
     SpriteInfo *spriteInfo = new SpriteInfo();/*&spriteInfo[current_oam_id];*/
     SpriteEntry *spriteEntry = &oam->oamBuffer[current_oam_id_tiles];
@@ -123,7 +116,6 @@ OAMManager::initSprite(const unsigned short pallette[], int palLen, const unsign
      * assert can be helpful. */
     assert(!spriteEntry->isRotateScale || (spriteInfo->oamId_tiles < MATRIX_COUNT));
     spriteEntry->isSizeDouble = false;
-//    spriteEntry->objMode = OBJMODE_NORMAL;
     spriteEntry->isMosaic = false;
     spriteEntry->colorMode = OBJCOLOR_16;
     spriteEntry->shape = OBJSHAPE_SQUARE;
@@ -131,13 +123,13 @@ OAMManager::initSprite(const unsigned short pallette[], int palLen, const unsign
 
     switch (l) {
         case (LAYER_LEVEL::BOTTOM):
-            spriteEntry->priority = OBJPRIORITY_0;
+            spriteEntry->priority = OBJPRIORITY_3;
             break;
         case (LAYER_LEVEL::MIDDLE_BOT):
-            spriteEntry->priority = OBJPRIORITY_0;
+            spriteEntry->priority = OBJPRIORITY_2;
             break;
         case (LAYER_LEVEL::MIDDLE_TOP):
-            spriteEntry->priority = OBJPRIORITY_0;
+            spriteEntry->priority = OBJPRIORITY_1;
             break;
         case (LAYER_LEVEL::TOP):
             spriteEntry->priority = OBJPRIORITY_0;
@@ -154,6 +146,7 @@ OAMManager::initSprite(const unsigned short pallette[], int palLen, const unsign
      *  set it to a location computed with a macro. OBJSIZE_64, in our case
      *  since we are making a square sprite, creates a 64x64 sprite.
      */
+
     spriteEntry->x = 50;
     spriteEntry->rotationIndex = spriteInfo->oamId_tiles;
 
@@ -179,15 +172,8 @@ OAMManager::initSprite(const unsigned short pallette[], int palLen, const unsign
         for (int a = 0; a < global::spriteInfos.size(); a++) {
             if (global::spriteInfos.at(a)) {
 
-
                 if ((*global::spriteInfos.at(a)).spriteType == type &&
                     (*global::spriteInfos.at(a)).oamType == oamType) {
-
-//                std::cout <<. '\n';
-//                std::cout << "FOUND PROPER PALETTE" << (*global::spriteInfos.at(a)).spriteType << '\n'; /*<< type  <<  " "*/
-//                          << (*global::spriteInfos.at(a)).oamId << '\n';
-//
-//                    std::cout << "RE USING " << " ID " << (*global::spriteInfos.at(a)).oamId_palette << "\n";
 
                     if (reuse_palette) {
                         spriteInfo->oamId_palette = (*global::spriteInfos.at(a)).oamId_palette;
@@ -200,23 +186,18 @@ OAMManager::initSprite(const unsigned short pallette[], int palLen, const unsign
                 }
             }
         }
+
     }
 
     if (!spriteEntry->gfxIndex) {
         spriteEntry->gfxIndex = nextAvailableTileIdx;
 
-        //problem w tym, że przekazuję cały tilesheet, dlatego ten licznik zbyt szybko rośnie
-        //przekazywać tylko pierwszą klatkę!!!
-
         nextAvailableTileIdx += tilesLen / BYTES_PER_16_COLOR_TILE;
         dmaCopyHalfWords(3, tiles, &sprite_address[spriteEntry->gfxIndex * this->offset_multiplier], tilesLen);
-//        std::cout << "NEW TILES " << current_oam_id_tiles << " ON " << oam_address << "\n";
     }
 
 
     if (!spriteEntry->palette) {
-
-//        std::cout << "!PROPER PALETTE" << type << '\n';
 
         spriteEntry->palette = spriteInfo->oamId_palette;
         spriteInfo->oamId_palette = current_oam_id_palette;
@@ -226,8 +207,6 @@ OAMManager::initSprite(const unsigned short pallette[], int palLen, const unsign
                          &palette_address[spriteInfo->oamId_palette *
                                           COLORS_PER_PALETTE],
                          palLen);
-
-//        std::cout << "NEW OAM ID PALETTE " << current_oam_id_palette << " ON " << oam_address << "\n";
 
         current_oam_id_palette++;
 
@@ -240,17 +219,6 @@ OAMManager::initSprite(const unsigned short pallette[], int palLen, const unsign
 
     current_oam_id_tiles++;
 
-//    std::cout << " SIZE " << global::spriteInfos.size() << " COUNTER " << countBombsOnThisOAMAddr(*oam_address) << "\n";
-//    global::Hud->draw();
-
     return spriteInfo;
 }
 
-
-static bool nullptrs() {
-    for (int a = 0; a < global::spriteInfos.size(); a++) {
-        if (global::spriteInfos.at(a) == nullptr)
-            return true;
-    }
-    return false;
-}

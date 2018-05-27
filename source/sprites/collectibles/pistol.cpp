@@ -11,29 +11,22 @@
 #include "../../../build/soundbank.h"
 #include "bullet.h"
 
+#define PISTOL_POS_INC_DELTA 15
+#define PISTOL_FIRING_OFFSET_X 14
+#define PISTOL_FIRING_OFFSET_Y 6
+#define PISTOL_COOLDOWN 750
+
 void Pistol::draw() {
 
     if (ready_to_dispose)
         return;
 
-    //todo fixme picking up other items, like here
-    if (hold_by_main_dude && global::input_handler->y_key_down && global::input_handler->down_key_held) {
-        hold_by_main_dude = false;
-        global::main_dude->holding_item = false;
-        global::input_handler->y_key_down = false;
-    } else if (global::input_handler->y_key_down && global::input_handler->down_key_held &&
-               !global::main_dude->holding_item) {
-        if (Collisions::checkCollisionWithMainDude(x, y, 16, 8)) {
-            hold_by_main_dude = true;
-            global::main_dude->holding_item = true;
-            global::main_dude->carrying_pistol = true;
-//            std::cout << "TOOK ITEM";
-            global::input_handler->y_key_down = false;
-            global::input_handler->y_key_held = false;
-        }
-    }
+    check_if_can_be_pickuped();
 
     if (hold_by_main_dude) {
+
+        global::main_dude->carrying_pistol = true;
+
         y = global::main_dude->y + 7;
 
         if (global::main_dude->state == 1) {
@@ -44,14 +37,13 @@ void Pistol::draw() {
             x = global::main_dude->x + 5;
         }
 
-
         subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
         mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
     } else
         global::main_dude->carrying_pistol = false;
 
 
-    if (activated_by_main_dude && !firing && cooldown > 750) {
+    if (activated_by_main_dude && !firing && cooldown > PISTOL_COOLDOWN) {
 
 
         if (!global::main_dude->climbing && !global::main_dude->hanging_on_tile_left &&
@@ -62,7 +54,6 @@ void Pistol::draw() {
                 global::main_dude->xSpeed = -MAIN_DUDE_MAX_X_SPEED_RUNNING;
             }
         }
-
 
         mmEffect(SFX_XSHOTGUN);
         firing = true;
@@ -149,38 +140,17 @@ void Pistol::init() {
 
 void Pistol::updateSpeed() {
 
-    if (xSpeed > MAX_X_SPEED_PISTOL)
-        xSpeed = MAX_X_SPEED_PISTOL;
-    if (xSpeed < -MAX_X_SPEED_PISTOL)
-        xSpeed = -MAX_X_SPEED_PISTOL;
-
-    if (ySpeed > MAX_Y_SPEED_PISTOL)
-        ySpeed = MAX_Y_SPEED_PISTOL;
-    if (ySpeed < -MAX_Y_SPEED_PISTOL)
-        ySpeed = -MAX_Y_SPEED_PISTOL;
+    limit_speed(MAX_X_SPEED_PISTOL, MAX_Y_SPEED_PISTOL);
 
     pos_inc_timer += *global::timer;
 
-    bool change_pos = (pos_inc_timer > 15) && !hold_by_main_dude;
+    bool change_pos = (pos_inc_timer > PISTOL_POS_INC_DELTA) && !hold_by_main_dude;
 
     if (change_pos) {
         update_position();
-
-        if (bottomCollision && xSpeed > 0) {
-            xSpeed -= 0.055;
-            if (xSpeed < 0)
-                xSpeed = 0;
-        }
-        if (bottomCollision && xSpeed < 0) {
-            xSpeed += 0.055;
-            if (xSpeed > 0)
-                xSpeed = 0;
-        }
-        if (!bottomCollision)
-            ySpeed += GRAVITY_DELTA_SPEED;
-
+        apply_friction(0.055);
+        apply_gravity(GRAVITY_DELTA_SPEED);
         pos_inc_timer = 0;
-
     }
 
 }
@@ -195,9 +165,6 @@ void Pistol::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_i
     rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true);
     upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, physical_width, true);
 
-    if (leftCollision || rightCollision || upperCollision || bottomCollision) {
-    }
-
 }
 
 void Pistol::initSprite() {
@@ -205,17 +172,17 @@ void Pistol::initSprite() {
 
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_spike_collectiblesPal, gfx_spike_collectiblesPalLen,
                                                         nullptr, sprite_width * sprite_height, sprite_width,
-                                                        spriteType, true, false,LAYER_LEVEL::MIDDLE_TOP);
+                                                        spriteType, true, false, LAYER_LEVEL::MIDDLE_TOP);
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_spike_collectiblesPal, gfx_spike_collectiblesPalLen,
                                                           nullptr, sprite_width * sprite_height, sprite_width,
-                                                          spriteType, true, false,LAYER_LEVEL::MIDDLE_TOP);
+                                                          spriteType, true, false, LAYER_LEVEL::MIDDLE_TOP);
 
     blast_subSpriteInfo = global::sub_oam_manager->initSprite(gfx_spike_collectiblesPal, gfx_spike_collectiblesPalLen,
                                                               nullptr, sprite_width * sprite_height, sprite_width,
-                                                              spriteType, true, false,LAYER_LEVEL::MIDDLE_TOP);
+                                                              spriteType, true, false, LAYER_LEVEL::MIDDLE_TOP);
     blast_mainSpriteInfo = global::main_oam_manager->initSprite(gfx_spike_collectiblesPal, gfx_spike_collectiblesPalLen,
                                                                 nullptr, sprite_width * sprite_height, sprite_width,
-                                                                spriteType, true, false,LAYER_LEVEL::MIDDLE_TOP);
+                                                                spriteType, true, false, LAYER_LEVEL::MIDDLE_TOP);
 
     if (spriteState == SpriteState::W_LEFT)
         frameGfx = (u8 *) gfx_spike_collectiblesTiles + (sprite_width * sprite_height * (32) / 2);
@@ -231,25 +198,25 @@ void Pistol::set_position() {
     int main_x, main_y, sub_x, sub_y;
     get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
 
+
     mainSpriteInfo->entry->x = main_x;
     mainSpriteInfo->entry->y = main_y;
-
     subSpriteInfo->entry->x = sub_x;
     subSpriteInfo->entry->y = sub_y;
 
     if (firing) {
-        int offset;
-        if (global::main_dude->state == SpriteState::W_LEFT)
-            offset = -14;
-        else
-            offset = 14;
 
+        blast_mainSpriteInfo->entry->y = main_y - PISTOL_FIRING_OFFSET_Y;
+        blast_subSpriteInfo->entry->y = sub_y - PISTOL_FIRING_OFFSET_Y;
 
-        blast_mainSpriteInfo->entry->x = main_x + offset;
-        blast_mainSpriteInfo->entry->y = main_y - 6;
+        if (global::main_dude->state == SpriteState::W_LEFT) {
+            blast_mainSpriteInfo->entry->x = main_x - PISTOL_FIRING_OFFSET_X;
+            blast_subSpriteInfo->entry->x = sub_x - PISTOL_FIRING_OFFSET_X;
+        } else {
+            blast_mainSpriteInfo->entry->x = main_x + PISTOL_FIRING_OFFSET_X;
+            blast_subSpriteInfo->entry->x = sub_x + PISTOL_FIRING_OFFSET_X;
+        }
 
-        blast_subSpriteInfo->entry->x = sub_x + offset;
-        blast_subSpriteInfo->entry->y = sub_y - 6;
     }
 
     mainSpriteInfo->entry->vFlip = false;

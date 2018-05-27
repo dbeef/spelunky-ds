@@ -22,7 +22,7 @@ bool MovingObject::check_if_can_be_opened() {
         return false;
 }
 
-//check, if main dude can pickup this item
+//check, if main dude can pickup this item (to hands, not to inventory)
 void MovingObject::check_if_can_be_pickuped() {
 
     if (hold_by_main_dude &&
@@ -30,24 +30,38 @@ void MovingObject::check_if_can_be_pickuped() {
         global::input_handler->down_key_held &&
         global::main_dude->bottomCollision) {
 
+        //leave item on ground
+
         hold_by_main_dude = false;
         global::main_dude->holding_item = false;
+        global::input_handler->y_key_down = false;
         bottomCollision = false;
 
-    } else if (global::input_handler->y_key_held &&
+    } else if (global::input_handler->y_key_down &&
                global::input_handler->down_key_held &&
-               !global::main_dude->holding_item) {
-        if (Collisions::checkCollisionWithMainDude(x, y, physical_width, physical_height)) {
+               !global::main_dude->holding_item &&
+               Collisions::checkCollisionWithMainDude(x, y, physical_width, physical_height)) {
 
-            hold_by_main_dude = true;
-            global::main_dude->holding_item = true;
-            global::input_handler->y_key_down = false;
-            global::input_handler->y_key_held = false;
+        //pickup item from the ground
 
-        }
+        global::main_dude->holding_item = true;
+        hold_by_main_dude = true;
+        global::main_dude->holding_item = true;
+        global::input_handler->y_key_down = false;
+
     }
 
 };
+
+//check, if main dude can pickup to the inventory (not to the hands)
+bool MovingObject::check_if_can_be_equipped() {
+
+    return (global::input_handler->y_key_down && global::input_handler->down_key_held &&
+            !global::main_dude->holding_item) &&
+           Collisions::checkCollisionWithMainDude(x, y, sprite_width, sprite_height);
+
+};
+
 
 //this should be applied, when item is being carried by main dude
 void MovingObject::set_pickuped_position(int pickup_offset_x, int pickup_offset_y) {
@@ -84,7 +98,7 @@ void MovingObject::kill_mobs_if_thrown() {
 }
 
 //when applied, item kills mobs and destroys items (like jars), if it both travels and collides them
-void MovingObject::kill_mobs_items_if_thrown(){
+void MovingObject::kill_mobs_items_if_thrown() {
 
     if (abs(xSpeed) > 0 || abs(ySpeed) > 0) {
         for (int a = 0; a < global::sprites.size(); a++) {
@@ -94,8 +108,10 @@ void MovingObject::kill_mobs_items_if_thrown(){
                  global::sprites.at(a)->spriteType == SpritesheetType::JAR)
                 && !global::sprites.at(a)->killed) {
 
-                if (Collisions::checkCollisionBodies(x, y, physical_width, physical_height, global::sprites.at(a)->x, global::sprites.at(a)->y,
-                                                     global::sprites.at(a)->physical_width, global::sprites.at(a)->physical_height)) {
+                if (Collisions::checkCollisionBodies(x, y, physical_width, physical_height, global::sprites.at(a)->x,
+                                                     global::sprites.at(a)->y,
+                                                     global::sprites.at(a)->physical_width,
+                                                     global::sprites.at(a)->physical_height)) {
                     global::sprites.at(a)->kill();
                 }
             }

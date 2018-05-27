@@ -34,6 +34,9 @@ void Crate::draw() {
 
     if (activated_by_main_dude) {
 
+        hold_by_main_dude = false;
+        global::main_dude->holding_item = false;
+
         if (!dropped_loot)
             drop_loot();
 

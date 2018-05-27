@@ -95,6 +95,8 @@ public:
     bool check_if_can_be_opened();
 
     void kill_mobs_items_if_thrown();
+
+    bool check_if_can_be_equipped();
 };
 
 

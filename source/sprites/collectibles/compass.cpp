@@ -9,6 +9,8 @@
 #include "../../../build/gfx_saleable.h"
 #include "../animations/got_collectible.h"
 
+#define COMPASS_POS_INC_DELTA 15
+
 void Compass::draw() {
 
     if (ready_to_dispose)
@@ -16,98 +18,35 @@ void Compass::draw() {
 
     set_position();
 
-    if (!collected) {
-        if (global::input_handler->y_key_down && global::input_handler->down_key_held &&
-            !global::main_dude->holding_item) {
-
-            if (Collisions::checkCollisionWithMainDude(x, y, sprite_width, sprite_height)) {
-                collected = true;
-
-                GotCollectible *g = new GotCollectible();
-                g->x = x - 12;
-                g->y = y - 20;
-                g->collectible_type = 0;
-                g->init();
-                global::sprites.push_back(g);
-
-                if (!global::main_dude->carrying_compass) {
-                    global::main_dude->carrying_compass = true;
-                    global::hud->next_item();
-                    set_position();
-                    x = global::hud->items_offset_x;
-                    y = global::hud->items_offset_y;
-                } else {
-                    mainSpriteInfo->entry->isHidden = true;
-                    subSpriteInfo->entry->isHidden = true;
-                    ready_to_dispose = true;
-                }
-            }
-        }
+    if (collected) {
+        draw_arrow_to_exit();
     } else {
 
-        MapTile *exit = nullptr;
-        global::level_generator->get_first_tile(MapTileType::EXIT, exit);
+        if (check_if_can_be_equipped()) {
+            collected = true;
 
-        if (exit != nullptr) {
+            GotCollectible *g = new GotCollectible();
+            g->x = x - 12;
+            g->y = y - 20;
+            g->collectible_type = 0;
+            g->init();
+            global::sprites.push_back(g);
 
-            int tile_x = exit->x * TILE_W;
-            int tile_y = exit->y * TILE_H;
-
-            //camera is centered on main dude
-            int diff_x = abs((global::camera->x + 0.5*SCREEN_WIDTH) - tile_x);
-            int diff_y = abs((global::camera->y + 1.5*SCREEN_HEIGHT) - tile_y);
-
-
-            subSpriteInfo->entry->isHidden = false;
-
-            if (diff_y <= SCREEN_HEIGHT * 0.5 && diff_x <= SCREEN_WIDTH * 0.5) {
-
-                subSpriteInfo->entry->isHidden = true;
-
-            } else if (diff_x < 6 * TILE_W) {
-                //down arrow
-                subSpriteInfo->entry->x = (SCREEN_WIDTH *0.5) - 8;
-                subSpriteInfo->entry->y = SCREEN_HEIGHT - 10 - 16;
-                apply_down_arrow();
-
-            } else if (diff_y < 3 * TILE_H) {
-
-                if (global::main_dude->x > tile_x) {
-                    //left_arrow
-                    apply_left_arrow();
-
-                    subSpriteInfo->entry->x = 10;
-                    subSpriteInfo->entry->y = SCREEN_HEIGHT*0.5;
-
-                } else {
-                    //right arrow
-                    apply_right_arrow();
-
-                    subSpriteInfo->entry->x = SCREEN_WIDTH - 10 - 16;
-                    subSpriteInfo->entry->y = SCREEN_HEIGHT*0.5;
-                }
-
+            if (!global::main_dude->carrying_compass) {
+                global::main_dude->carrying_compass = true;
+                global::hud->next_item();
+                set_position();
+                x = global::hud->items_offset_x;
+                y = global::hud->items_offset_y;
             } else {
-
-                if (global::main_dude->x > tile_x) {
-                    //down-left arrow
-                    apply_down_left_arrow();
-
-                    subSpriteInfo->entry->x = 10;
-                    subSpriteInfo->entry->y = SCREEN_HEIGHT - 10 - 16;
-
-                } else {
-                    //down-right arrow
-                    subSpriteInfo->entry->x = SCREEN_WIDTH - 10 - 16;
-                    subSpriteInfo->entry->y = SCREEN_HEIGHT - 10 - 16;
-
-                    apply_down_right_arrow();
-                }
-
+                mainSpriteInfo->entry->isHidden = true;
+                subSpriteInfo->entry->isHidden = true;
+                ready_to_dispose = true;
             }
-        }
 
+        }
     }
+
 }
 
 
@@ -120,38 +59,17 @@ void Compass::updateSpeed() {
     if (collected)
         return;
 
-    if (xSpeed > MAX_X_SPEED_COMPASS)
-        xSpeed = MAX_X_SPEED_COMPASS;
-    if (xSpeed < -MAX_X_SPEED_COMPASS)
-        xSpeed = -MAX_X_SPEED_COMPASS;
-
-    if (ySpeed > MAX_Y_SPEED_COMPASS)
-        ySpeed = MAX_Y_SPEED_COMPASS;
-    if (ySpeed < -MAX_Y_SPEED_COMPASS)
-        ySpeed = -MAX_Y_SPEED_COMPASS;
+    limit_speed(MAX_X_SPEED_COMPASS, MAX_Y_SPEED_COMPASS);
 
     pos_inc_timer += *global::timer;
 
-    bool change_pos = (pos_inc_timer > 15) && !hold_by_main_dude;
+    bool change_pos = (pos_inc_timer > COMPASS_POS_INC_DELTA) && !hold_by_main_dude;
 
     if (change_pos) {
         update_position();
-
-        if (bottomCollision && xSpeed > 0) {
-            xSpeed -= 0.055;
-            if (xSpeed < 0)
-                xSpeed = 0;
-        }
-        if (bottomCollision && xSpeed < 0) {
-            xSpeed += 0.055;
-            if (xSpeed > 0)
-                xSpeed = 0;
-        }
-        if (!bottomCollision)
-            ySpeed += GRAVITY_DELTA_SPEED;
-
+        apply_friction(0.055);
+        apply_gravity(GRAVITY_DELTA_SPEED);
         pos_inc_timer = 0;
-
     }
 
 }
@@ -176,10 +94,10 @@ void Compass::initSprite() {
 
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_saleablePal, gfx_saleablePalLen,
                                                         nullptr, sprite_width * sprite_height, sprite_width,
-                                                        spriteType, true, false,LAYER_LEVEL::MIDDLE_TOP);
+                                                        spriteType, true, false, LAYER_LEVEL::MIDDLE_TOP);
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_saleablePal, gfx_saleablePalLen,
                                                           nullptr, sprite_width * sprite_height, sprite_width,
-                                                          spriteType, true, false,LAYER_LEVEL::MIDDLE_TOP);
+                                                          spriteType, true, false, LAYER_LEVEL::MIDDLE_TOP);
 
     frameGfx = (u8 *) gfx_saleableTiles + (sprite_width * sprite_height * (2) / 2);
 
@@ -199,10 +117,12 @@ void Compass::set_position() {
 
     if (collected) {
 
+        //hud
         mainSpriteInfo->entry->x = x;
         mainSpriteInfo->entry->y = y;
 
     } else {
+
         int main_x, main_y, sub_x, sub_y;
         get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
 
@@ -252,4 +172,69 @@ void Compass::apply_down_right_arrow() {
 void Compass::apply_down_left_arrow() {
     frameGfx = (u8 *) gfx_saleableTiles + (sprite_width * sprite_height * (8) / 2);
     subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
+}
+
+void Compass::draw_arrow_to_exit() {
+
+    MapTile *exit = nullptr;
+    global::level_generator->get_first_tile(MapTileType::EXIT, exit);
+
+    if (exit != nullptr) {
+
+        int tile_x = exit->x * TILE_W;
+        int tile_y = exit->y * TILE_H;
+
+        //camera is centered on main dude
+        int diff_x = abs((global::camera->x + 0.5 * SCREEN_WIDTH) - tile_x);
+        int diff_y = abs((global::camera->y + 1.5 * SCREEN_HEIGHT) - tile_y);
+
+        subSpriteInfo->entry->isHidden = false;
+
+        if (diff_y <= SCREEN_HEIGHT * 0.5 && diff_x <= SCREEN_WIDTH * 0.5) {
+
+            subSpriteInfo->entry->isHidden = true;
+
+        } else if (diff_x < 6 * TILE_W) {
+            //down arrow
+            subSpriteInfo->entry->x = (SCREEN_WIDTH * 0.5) - 8;
+            subSpriteInfo->entry->y = SCREEN_HEIGHT - 10 - sprite_height;
+            apply_down_arrow();
+
+        } else if (diff_y < 3 * TILE_H) {
+
+            if (global::main_dude->x > tile_x) {
+                //left_arrow
+                apply_left_arrow();
+
+                subSpriteInfo->entry->x = 10;
+                subSpriteInfo->entry->y = SCREEN_HEIGHT * 0.5;
+
+            } else {
+                //right arrow
+                apply_right_arrow();
+
+                subSpriteInfo->entry->x = SCREEN_WIDTH - 10 - sprite_width;
+                subSpriteInfo->entry->y = SCREEN_HEIGHT * 0.5;
+            }
+
+        } else {
+
+            if (global::main_dude->x > tile_x) {
+                //down-left arrow
+                apply_down_left_arrow();
+
+                subSpriteInfo->entry->x = 10;
+                subSpriteInfo->entry->y = SCREEN_HEIGHT - 10 - sprite_height;
+
+            } else {
+                //down-right arrow
+                subSpriteInfo->entry->x = SCREEN_WIDTH - 10 - sprite_width;
+                subSpriteInfo->entry->y = SCREEN_HEIGHT - 10 - sprite_height;
+
+                apply_down_right_arrow();
+            }
+
+        }
+    }
+
 }

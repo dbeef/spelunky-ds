@@ -5,10 +5,15 @@
 #ifndef SPELUNKYDS_INPUTHANDLER_H
 #define SPELUNKYDS_INPUTHANDLER_H
 
+/**
+ * keysDown - recently pressed keys
+ * keysHeld - keys that are currently hold
+ */
 
 class InputHandler {
 public:
     void updateInput();
+
     int keys_held{};
     int keys_down{};
 

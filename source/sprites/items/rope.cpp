@@ -50,9 +50,8 @@ void Rope::draw() {
         thrown = true;
         throwingTimer = 0;
 
-        //todo apply this pattern to the bomb class
-        global::main_dude->holding_item = false;
-        hold_by_main_dude = false;
+//        global::main_dude->holding_item = false;
+//        hold_by_main_dude = false;
 
         x = floor_div(global::main_dude->x + 0.5 * MAIN_DUDE_PHYSICAL_WIDTH, 16) * TILE_W + ROPE_SIZE * 0.5;
         y -= 16;

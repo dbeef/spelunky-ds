@@ -7,7 +7,7 @@
 #include "../../../build/gfx_got_collectible.h"
 
 #define GOT_COLLECTIBLE_CYCLES_TO_HIDE 10
-#define GOT_COLLECTIBLE_ANIM_FRAME_DELTA 125
+#define GOT_COLLECTIBLE_ANIM_FRAME_DELTA 90
 
 void GotCollectible::draw() {
 

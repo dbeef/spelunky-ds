@@ -11,6 +11,8 @@
 #include "../../../build/gfx_saleable.h"
 #include "../animations/got_collectible.h"
 
+#define SPRING_SHOES_POS_INC_DELTA 15
+
 void SpringShoes::draw() {
 
     if (ready_to_dispose)
@@ -21,35 +23,29 @@ void SpringShoes::draw() {
     if (collected)
         return;
 
-    if (global::input_handler->y_key_down && global::input_handler->down_key_held && !global::main_dude->holding_item) {
+    if (check_if_can_be_equipped()) {
 
-        if (Collisions::checkCollisionWithMainDude(x, y, sprite_width, sprite_height)) {
+        GotCollectible *g = new GotCollectible();
+        g->x = x - 12;
+        g->y = y - 20;
+        g->collectible_type = 0;
+        g->init();
+        global::sprites.push_back(g);
 
-            GotCollectible *g = new GotCollectible();
-            g->x = x - 12;
-            g->y = y - 20;
-            g->collectible_type = 0;
-            g->init();
-            global::sprites.push_back(g);
-
-            if(!global::main_dude->carrying_spring_shoes) {
-                global::main_dude->carrying_spring_shoes = true;
-                global::hud->next_item();
-                set_position();
-                collected = true;
-                x = global::hud->items_offset_x;
-                y = global::hud->items_offset_y;
-            }
-            else
-            {
-                mainSpriteInfo->entry->isHidden = true;
-                subSpriteInfo->entry->isHidden = true;
-                ready_to_dispose = true;
-            }
+        if (!global::main_dude->carrying_spring_shoes) {
+            global::main_dude->carrying_spring_shoes = true;
+            global::hud->next_item();
+            set_position();
+            collected = true;
+            x = global::hud->items_offset_x;
+            y = global::hud->items_offset_y;
+        } else {
+            mainSpriteInfo->entry->isHidden = true;
+            subSpriteInfo->entry->isHidden = true;
+            ready_to_dispose = true;
         }
-
-
     }
+
 }
 
 
@@ -59,58 +55,38 @@ void SpringShoes::init() {
 
 void SpringShoes::updateSpeed() {
 
-    if(collected)
+    if (collected)
         return;
 
-    if (xSpeed > MAX_X_SPEED_SPRING_SHOES)
-        xSpeed = MAX_X_SPEED_SPRING_SHOES;
-    if (xSpeed < -MAX_X_SPEED_SPRING_SHOES)
-        xSpeed = -MAX_X_SPEED_SPRING_SHOES;
-
-    if (ySpeed > MAX_Y_SPEED_SPRING_SHOES)
-        ySpeed = MAX_Y_SPEED_SPRING_SHOES;
-    if (ySpeed < -MAX_Y_SPEED_SPRING_SHOES)
-        ySpeed = -MAX_Y_SPEED_SPRING_SHOES;
+    limit_speed(MAX_X_SPEED_SPRING_SHOES, MAX_Y_SPEED_SPRING_SHOES);
 
     pos_inc_timer += *global::timer;
 
-    bool change_pos = (pos_inc_timer > 15) && !hold_by_main_dude;
+    bool change_pos = (pos_inc_timer > SPRING_SHOES_POS_INC_DELTA) && !hold_by_main_dude;
 
     if (change_pos) {
         update_position();
-
-        if (bottomCollision && xSpeed > 0) {
-            xSpeed -= 0.055;
-            if (xSpeed < 0)
-                xSpeed = 0;
-        }
-        if (bottomCollision && xSpeed < 0) {
-            xSpeed += 0.055;
-            if (xSpeed > 0)
-                xSpeed = 0;
-        }
-        if (!bottomCollision)
-            ySpeed += GRAVITY_DELTA_SPEED;
-
+        apply_friction(0.055);
+        apply_gravity(GRAVITY_DELTA_SPEED);
         pos_inc_timer = 0;
-
     }
 
 }
 
 void SpringShoes::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
-    if(!collected) {
-        MapTile *tiles[9];
-        Collisions::getNeighboringTiles(global::level_generator->map_tiles, x_current_pos_in_tiles,
-                                        y_current_pos_in_tiles,
-                                        tiles);
 
-        bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, physical_width, physical_height,
-                                                           true);
-        leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true);
-        rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true);
-        upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, physical_width, true);
-    }
+    if (collected)
+        return;
+
+    MapTile *tiles[9];
+    Collisions::getNeighboringTiles(global::level_generator->map_tiles, x_current_pos_in_tiles,
+                                    y_current_pos_in_tiles,
+                                    tiles);
+
+    bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, physical_width, physical_height, true);
+    leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true);
+    rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true);
+    upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, physical_width, true);
 }
 
 void SpringShoes::initSprite() {
@@ -118,19 +94,15 @@ void SpringShoes::initSprite() {
 
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_saleablePal, gfx_saleablePalLen,
                                                         nullptr, sprite_width * sprite_height, sprite_width,
-                                                        spriteType, true, false,LAYER_LEVEL::MIDDLE_TOP);
+                                                        spriteType, true, false, LAYER_LEVEL::MIDDLE_TOP);
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_saleablePal, gfx_saleablePalLen,
                                                           nullptr, sprite_width * sprite_height, sprite_width,
-                                                          spriteType, true, false,LAYER_LEVEL::MIDDLE_TOP);
+                                                          spriteType, true, false, LAYER_LEVEL::MIDDLE_TOP);
 
     frameGfx = (u8 *) gfx_saleableTiles + (sprite_width * sprite_height * (3) / 2);
 
-    mainSpriteInfo->entry->x = x;
-    subSpriteInfo->entry->y = y;
-
     subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
     mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
-
 
 }
 

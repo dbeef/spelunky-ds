@@ -12,6 +12,8 @@
 #include "mitt.h"
 #include "../animations/got_collectible.h"
 
+#define MITT_POS_INC_DELTA 15
+
 void Mitt::draw() {
 
     if (ready_to_dispose)
@@ -22,32 +24,31 @@ void Mitt::draw() {
     if (collected)
         return;
 
-    if (global::input_handler->y_key_down && global::input_handler->down_key_held && !global::main_dude->holding_item) {
+    if (check_if_can_be_equipped()) {
 
-        if (Collisions::checkCollisionWithMainDude(x, y, sprite_width, sprite_height)) {
-            collected = true;
+        collected = true;
 
+        GotCollectible *g = new GotCollectible();
+        g->x = x - 12;
+        g->y = y - 20;
+        g->collectible_type = 0;
+        g->init();
+        global::sprites.push_back(g);
 
-            GotCollectible *g = new GotCollectible();
-            g->x = x - 12;
-            g->y = y - 20;
-            g->collectible_type = 0;
-            g->init();
-            global::sprites.push_back(g);
-            if(!global::main_dude->carrying_mitt) {
-                global::main_dude->carrying_mitt = true;
-                global::hud->next_item();
-                set_position();
-                x = global::hud->items_offset_x;
-                y = global::hud->items_offset_y;
-            } else {
-                mainSpriteInfo->entry->isHidden = true;
-                subSpriteInfo->entry->isHidden = true;
-                ready_to_dispose = true;
-            }
+        if (!global::main_dude->carrying_mitt) {
+            global::main_dude->carrying_mitt = true;
+            global::hud->next_item();
+            set_position();
+            x = global::hud->items_offset_x;
+            y = global::hud->items_offset_y;
+        } else {
+            mainSpriteInfo->entry->isHidden = true;
+            subSpriteInfo->entry->isHidden = true;
+            ready_to_dispose = true;
         }
 
     }
+
 }
 
 
@@ -57,58 +58,39 @@ void Mitt::init() {
 
 void Mitt::updateSpeed() {
 
-    if(collected)
+    if (collected)
         return;
 
-    if (xSpeed > MAX_X_SPEED_MITT)
-        xSpeed = MAX_X_SPEED_MITT;
-    if (xSpeed < -MAX_X_SPEED_MITT)
-        xSpeed = -MAX_X_SPEED_MITT;
-
-    if (ySpeed > MAX_Y_SPEED_MITT)
-        ySpeed = MAX_Y_SPEED_MITT;
-    if (ySpeed < -MAX_Y_SPEED_MITT)
-        ySpeed = -MAX_Y_SPEED_MITT;
+    limit_speed(MAX_X_SPEED_MITT, MAX_Y_SPEED_MITT);
 
     pos_inc_timer += *global::timer;
 
-    bool change_pos = (pos_inc_timer > 15) && !hold_by_main_dude;
+    bool change_pos = (pos_inc_timer > MITT_POS_INC_DELTA) && !hold_by_main_dude;
 
     if (change_pos) {
         update_position();
-
-        if (bottomCollision && xSpeed > 0) {
-            xSpeed -= 0.055;
-            if (xSpeed < 0)
-                xSpeed = 0;
-        }
-        if (bottomCollision && xSpeed < 0) {
-            xSpeed += 0.055;
-            if (xSpeed > 0)
-                xSpeed = 0;
-        }
-        if (!bottomCollision)
-            ySpeed += GRAVITY_DELTA_SPEED;
-
+        apply_friction(0.055);
+        apply_gravity(GRAVITY_DELTA_SPEED);
         pos_inc_timer = 0;
-
     }
 
 }
 
 void Mitt::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
-    if(!collected) {
-        MapTile *tiles[9];
-        Collisions::getNeighboringTiles(global::level_generator->map_tiles, x_current_pos_in_tiles,
-                                        y_current_pos_in_tiles,
-                                        tiles);
 
-        bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, physical_width, physical_height,
-                                                           true);
-        leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true);
-        rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true);
-        upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, physical_width, true);
-    }
+    if (collected)
+        return;
+
+    MapTile *tiles[9];
+    Collisions::getNeighboringTiles(global::level_generator->map_tiles, x_current_pos_in_tiles,
+                                    y_current_pos_in_tiles,
+                                    tiles);
+
+    bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, physical_width, physical_height, true);
+    leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true);
+    rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true);
+    upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, physical_width, true);
+
 }
 
 void Mitt::initSprite() {
@@ -116,10 +98,10 @@ void Mitt::initSprite() {
 
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_saleablePal, gfx_saleablePalLen,
                                                         nullptr, sprite_width * sprite_height, sprite_width,
-                                                        spriteType, true, false,LAYER_LEVEL::MIDDLE_TOP);
+                                                        spriteType, true, false, LAYER_LEVEL::MIDDLE_TOP);
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_saleablePal, gfx_saleablePalLen,
                                                           nullptr, sprite_width * sprite_height, sprite_width,
-                                                          spriteType, true, false,LAYER_LEVEL::MIDDLE_TOP);
+                                                          spriteType, true, false, LAYER_LEVEL::MIDDLE_TOP);
 
     frameGfx = (u8 *) gfx_saleableTiles + (sprite_width * sprite_height * (0) / 2);
 

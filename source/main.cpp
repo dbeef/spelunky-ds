@@ -90,21 +90,8 @@ int main() {
 
     time::start();
 
-    /*  Set the video mode on the main screen. */
-    videoSetMode(MODE_0_2D | // Set the graphics mode to Mode 5
-                 DISPLAY_BG0_ACTIVE | // Enable BG2 for display
-                 DISPLAY_BG1_ACTIVE | // Enable BG2 for display
-                 DISPLAY_BG2_ACTIVE | // Enable BG2 for display
-                 DISPLAY_BG3_ACTIVE); //Enable BG3 for display
-    /*  Set the video mode on the main screen. */
-    videoSetModeSub(MODE_0_2D | // Set the graphics mode to Mode 5
-                 DISPLAY_BG0_ACTIVE | // Enable BG2 for display
-                 DISPLAY_BG1_ACTIVE | // Enable BG2 for display
-                 DISPLAY_BG2_ACTIVE | // Enable BG2 for display
-                 DISPLAY_BG3_ACTIVE); //Enable BG3 for display
-
-//    videoSetMode(MODE_0_2D);
-//    videoSetModeSub(MODE_0_2D);
+    videoSetMode(MODE_0_2D);
+    videoSetModeSub(MODE_0_2D);
 
     vramSetBankA(VRAM_A_MAIN_BG_0x06000000);
     //vram c is used by the console (by default):
@@ -116,8 +103,13 @@ int main() {
     oamInit(&oamMain, SpriteMapping_1D_64, false);
     oamInit(&oamSub, SpriteMapping_1D_64, false);
 
-    global::bg_main_address = bgInit(OBJPRIORITY_3, BgType_Text8bpp, BgSize_B8_512x512, 22, 4);
-    global::bg_sub_address = bgInitSub(OBJPRIORITY_3, BgType_Text8bpp, BgSize_B8_512x512, 18, 4);
+    //https://devkitpro.org/viewtopic.php?f=38&t=8720
+    //OBJPRIORITY_0 -> BG_PRIORITY_0 -> OBJPRIORITY_1 -> BG_PRIORITY_1 -> OBJPRIORITY_2 -> BG_PRIORITY_2 -> OBJPRIORITY_3 -> BG_PRIORITY_3.
+    global::bg_main_address = bgInit(BG_PRIORITY_3, BgType_Text8bpp, BgSize_B8_512x512, 22, 4);
+    global::bg_sub_address = bgInitSub(BG_PRIORITY_3, BgType_Text8bpp, BgSize_B8_512x512, 18, 4);
+
+    bgSetPriority(global::bg_main_address, BG_PRIORITY_3);
+    bgSetPriority(global::bg_sub_address, BG_PRIORITY_3);
 
     dmaCopy(gfx_cavebgTiles, bgGetGfxPtr(global::bg_main_address), sizeof(gfx_cavebgTiles));
     dmaCopy(gfx_cavebgTiles, bgGetGfxPtr(global::bg_sub_address), sizeof(gfx_cavebgTiles));

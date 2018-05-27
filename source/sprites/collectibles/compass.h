@@ -65,6 +65,8 @@ public:
     void apply_down_right_arrow();
 
     void apply_down_left_arrow();
+
+    void draw_arrow_to_exit();
 };
 
 

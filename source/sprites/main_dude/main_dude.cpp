@@ -125,7 +125,10 @@ void MainDude::handle_key_input() {
                 }
             }
         }
-        if (global::input_handler->x_key_down && !holding_item && global::hud->ropes > 0) {
+        if (global::input_handler->x_key_down && global::hud->ropes > 0) {
+
+            //throw rope
+
             global::hud->ropes--;
             global::hud->draw();
 
@@ -135,7 +138,6 @@ void MainDude::handle_key_input() {
 
             rope->y = global::main_dude->y + 6;
             rope->x = floor_div(global::main_dude->x + 0.5 * MAIN_DUDE_PHYSICAL_WIDTH, 16) * TILE_W + ROPE_SIZE * 0.5;
-//            rope->y -= 16;
             rope->ySpeed = -4;
 
             global::sprites.push_back(rope);
