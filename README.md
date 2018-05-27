@@ -14,9 +14,10 @@
 <li> 🗙 Implement caveman </li>
 <li> 🗙 Implement skeleton </li>
 <li> 🗙 Implement arrow trap </li>
+<li> 🗙 Fix rope logics - if thrown, when it touches bottom of some tile above it or it reaches its maximum travel distance of 8 tiles up, then it should expand to the bottom. Now it's the opposite - it expands as it travels upwards. </li>
 <li> 🗙 Implement cape and jetpack </li>
 <li> 🗙 Putting project on Travis </li>
-<li> 🗙 Implement 4 layers system - top one for the console and HUD, bottom one for tilemap and the rest for other sprites </li>
+<li> ✔ Implement 4 layers system - top one for the console and HUD, bottom one for tilemap and the rest for other sprites </li>
 <li> 🗙 Tune-up the level generator; make it more random; add random events like snake well </li>
 <li> 🗙 Implement music using streaming from filesystem - I elaborated a bit on this on my blog: https://dbeef.wordpress.com/2018/05/24/some-words-on-developing-spelunkyds/ </li> 
  
