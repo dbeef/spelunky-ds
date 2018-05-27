@@ -23,16 +23,12 @@ namespace global {
     OAMManager *main_oam_manager = new OAMManager();
     OAMManager *sub_oam_manager = new OAMManager();
     Hud *hud = new Hud();
+    GameState *game_state = new GameState();
     std::vector<MovingObject *> sprites(0, nullptr);
     std::vector<SpriteInfo *> spriteInfos(0, nullptr);
     int bg_main_address = 0;
     int bg_sub_address = 0;
-    bool bombed = false;
     double *timer = nullptr;
-    bool splash_screen = false;
-    bool scores_screen = false;
-    bool in_main_menu = true;
-    bool levels_transition_screen = false;
     int clean_unused_oam_timer = 0;
     mm_sfxhand menu_music_handler = 0;
     mm_sfxhand cave_music_handler = 0;

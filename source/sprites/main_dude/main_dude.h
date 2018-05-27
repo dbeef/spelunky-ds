@@ -41,7 +41,7 @@ public:
 
     MainDude();
 
-    void updateOther() override;
+    void updateOther() override {};
 
     void kill() override {};
 
@@ -138,6 +138,14 @@ public:
     void apply_blinking_on_damage();
 
     void reset_values_checked_every_frame();
+
+    void throw_item();
+
+    void take_out_bomb();
+
+    void throw_rope();
+
+    void spawn_carried_items();
 };
 
 

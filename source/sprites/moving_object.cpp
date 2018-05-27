@@ -30,7 +30,7 @@ void MovingObject::spawn_blood() {
 
 void MovingObject::deal_damage_main_dude_on_collision() {
     if (!killed && !global::main_dude->dead && Collisions::checkCollisionWithMainDude(x, y, 16, 16) &&
-        global::main_dude->time_since_last_damage > 1000) {
+        global::main_dude->time_since_last_damage > 1000 && !global::main_dude->exiting_level) {
 
         global::main_dude->time_since_last_damage = 0;
         global::hud->hearts--;

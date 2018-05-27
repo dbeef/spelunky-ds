@@ -36,7 +36,7 @@ void LevelGenerator::newLayout(int seed) {
 
     for (int x = 0; x < MAP_GAME_WIDTH_TILES; x++) {
         for (int y = 0; y < MAP_GAME_HEIGHT_TILES; y++) {
-            map_tiles[x][y] = 0;
+            map_tiles[x][y] = nullptr;
         }
     }
     for (int a = 0; a < ROOMS_X; a++) {
@@ -597,7 +597,7 @@ void LevelGenerator::get_first_tile(MapTileType mapTileType, MapTile *&m) {
 //    https://stackoverflow.com/questions/416162/assignment-inside-function-that-is-passed-as-pointer?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
     for (int a = 0; a < MAP_GAME_WIDTH_TILES; a++) {
         for (int b = 0; b < MAP_GAME_HEIGHT_TILES; b++) {
-            if (map_tiles[a][b] != 0 && map_tiles[a][b]->mapTileType == mapTileType) {
+            if (map_tiles[a][b] != nullptr && map_tiles[a][b]->mapTileType == mapTileType) {
                 m = map_tiles[a][b];
                 break;
             }

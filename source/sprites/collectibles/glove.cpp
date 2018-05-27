@@ -33,10 +33,10 @@ void Glove::draw() {
 
         if (!global::main_dude->carrying_glove) {
             global::main_dude->carrying_glove = true;
-            global::hud->next_item();
             set_position();
-            x = global::hud->items_offset_x;
+            x = HUD_ITEMS_ROW_X;
             y = global::hud->items_offset_y;
+            global::hud->next_item();
         } else {
             mainSpriteInfo->entry->isHidden = true;
             subSpriteInfo->entry->isHidden = true;
@@ -113,6 +113,7 @@ void Glove::set_position() {
 
     if (collected) {
 
+        mainSpriteInfo->entry->priority = OBJPRIORITY_0;
         mainSpriteInfo->entry->x = x;
         mainSpriteInfo->entry->y = y;
 

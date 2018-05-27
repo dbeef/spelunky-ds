@@ -8,6 +8,7 @@
 namespace oam_utils {
 
     void clean_unused_oam();
+    void delete_all_sprites();
 
 }
 

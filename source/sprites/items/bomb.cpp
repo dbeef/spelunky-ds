@@ -70,7 +70,7 @@ void Bomb::draw() {
                     int yy = floor_div(this->y + 0.5 * BOMB_SIZE, TILE_H);
 
                     Collisions::bombNeighboringTiles(global::level_generator->map_tiles, xx, yy);
-                    global::bombed = true;
+                    global::game_state->bombed = true;
                 }
 
                 explosionTimer = 0;

@@ -6,6 +6,7 @@
 #define SPELUNKYDS_HUD_H
 
 #include "../memory/oam_manager.h"
+#define HUD_ITEMS_ROW_X 236
 
 class Hud {
 
@@ -41,7 +42,6 @@ public:
     SpriteInfo *holdingItemSpriteInfo {};
 
     //changes every time a new item is added to hud
-    int items_offset_x{};
     int items_offset_y{};
 
     void update();

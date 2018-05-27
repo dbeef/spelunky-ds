@@ -14,6 +14,7 @@
 #include "sprites/sprite_type.h"
 #include "tiles/level_generator.h"
 #include "sprites/sprite_info.h"
+#include "sprites/main_dude/game_state.h"
 
 #define FRAMES_PER_ANIMATION 6
 #define TICKS_PER_SECOND 30.5554503
@@ -21,9 +22,7 @@
 #define SPRITESHEET_ROW_WIDTH 6
 #define X_SPEED_DELTA_TIME_MS 2
 #define X_SPEED_DELTA_VALUE 2
-#define FRICTION_DELTA_TIME_MS 30
 #define FRICTION_DELTA_SPEED 1
-#define Y_SPEED_DELTA_TIME_MS 2
 #define GRAVITY_DELTA_SPEED 0.22
 
 //https://stackoverflow.com/questions/21505021/extern-and-global-same-variable-in-same-file
@@ -38,20 +37,13 @@ namespace global {
     extern Hud *hud;
     extern int bg_main_address;
     extern int bg_sub_address;
-
     extern std::vector<MovingObject *> sprites;
-    //make sprites_layer_1, sprites_layer2, etc
-
     extern std::vector<SpriteInfo *> spriteInfos;
-    extern bool bombed;
     extern double *timer;
-    extern bool splash_screen;
-    extern bool levels_transition_screen;
-    extern bool scores_screen;
+    extern GameState *game_state;
     extern int clean_unused_oam_timer;
     extern u16 current_map[4096];
     extern u16 base_map[4096];
-    extern bool in_main_menu;
     extern mm_sfxhand menu_music_handler;
     extern mm_sfxhand cave_music_handler;
     extern std::vector<SpritesheetType> killed_npcs;

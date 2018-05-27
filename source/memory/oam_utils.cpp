@@ -15,7 +15,7 @@ namespace oam_utils {
 
         if (global::clean_unused_oam_timer > 2500 && global::main_oam_manager->current_oam_id_tiles >= 108) {
 
-            for(int a =0;a<global::sprites.size();a++){
+            for (int a = 0; a < global::sprites.size(); a++) {
                 if (global::sprites.at(a)->ready_to_dispose) {
                     delete (global::sprites.at(a));
                     global::sprites.erase(global::sprites.begin() + a);
@@ -24,8 +24,6 @@ namespace oam_utils {
 
             global::main_oam_manager->clearAllSprites();
             global::sub_oam_manager->clearAllSprites();
-
-            //            std::cout << "            "<< "MEM CLEAN";
 
             for (int a = 0; a < global::sprites.size(); a++) {
                 //fixme - being killed not always means it's ready for disposing!
@@ -42,4 +40,18 @@ namespace oam_utils {
         }
 
     };
+
+
+    void delete_all_sprites() {
+        //possible memory leak?
+        global::main_oam_manager->clearAllSprites();
+        global::sub_oam_manager->clearAllSprites();
+
+        for (int a = 0; a < global::sprites.size(); a++) {
+            delete (global::sprites.at(a));
+            global::sprites.erase(global::sprites.begin() + a);
+        }
+
+        global::sprites.clear();
+    }
 }

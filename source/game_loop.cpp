@@ -47,9 +47,9 @@ void gameloop::scroll() {
 
         global::input_handler->updateInput();
 
-        if (global::bombed) {
+        if (global::game_state->bombed) {
             global::level_generator->render_tiles_on_base_map();
-            global::bombed = false;
+            global::game_state->bombed = false;
             for (int a = 0; a < global::sprites.size(); a++)
                 (*global::sprites.at(a)).bottomCollision = false;
         }

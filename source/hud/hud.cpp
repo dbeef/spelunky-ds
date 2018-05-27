@@ -52,12 +52,17 @@ void Hud::show() {
 
 void Hud::initSprites() {
 
-    heartSpriteInfo = global::main_oam_manager->initSprite(gfx_hudPal, gfx_hudPalLen, nullptr, 16 * 16, 16, HUD, true, false,LAYER_LEVEL::TOP);
-    dollarSpriteInfo = global::main_oam_manager->initSprite(gfx_hudPal, gfx_hudPalLen, nullptr, 16 * 16, 16, HUD, true, false,LAYER_LEVEL::TOP);
-    bombSpriteInfo = global::main_oam_manager->initSprite(gfx_hudPal, gfx_hudPalLen, nullptr, 16 * 16, 16, HUD, true, false,LAYER_LEVEL::TOP);
-    ropeSpriteInfo = global::main_oam_manager->initSprite(gfx_hudPal, gfx_hudPalLen, nullptr, 16 * 16, 16, HUD, true, false,LAYER_LEVEL::TOP);
-    holdingItemSpriteInfo = global::main_oam_manager->initSprite(gfx_hudPal, gfx_hudPalLen, nullptr, 16 * 16, 16, HUD, true,
-                                                                 false,LAYER_LEVEL::TOP);
+    heartSpriteInfo = global::main_oam_manager->initSprite(gfx_hudPal, gfx_hudPalLen, nullptr, 16 * 16, 16, HUD, true,
+                                                           false, LAYER_LEVEL::TOP);
+    dollarSpriteInfo = global::main_oam_manager->initSprite(gfx_hudPal, gfx_hudPalLen, nullptr, 16 * 16, 16, HUD, true,
+                                                            false, LAYER_LEVEL::TOP);
+    bombSpriteInfo = global::main_oam_manager->initSprite(gfx_hudPal, gfx_hudPalLen, nullptr, 16 * 16, 16, HUD, true,
+                                                          false, LAYER_LEVEL::TOP);
+    ropeSpriteInfo = global::main_oam_manager->initSprite(gfx_hudPal, gfx_hudPalLen, nullptr, 16 * 16, 16, HUD, true,
+                                                          false, LAYER_LEVEL::TOP);
+    holdingItemSpriteInfo = global::main_oam_manager->initSprite(gfx_hudPal, gfx_hudPalLen, nullptr, 16 * 16, 16, HUD,
+                                                                 true,
+                                                                 false, LAYER_LEVEL::TOP);
 
     u8 *frameGfxHeart = (u8 *) gfx_hudTiles + 0 * 16 * 16 / 2;
     heartSpriteInfo->updateFrame(frameGfxHeart, 16 * 16);
@@ -158,8 +163,8 @@ void Hud::draw_on_level_done() {
     std::cout << "   " << "  " << "KILLS : " << '\n' << '\n';
     std::cout << "   " << "  " << "MONEY : " << money_on_this_level << " - " << dollars << '\n' << '\n';
 
-    std::sort (global::killed_npcs.begin(), global::killed_npcs.end());
-    std::sort (global::collected_loot.begin(), global::collected_loot.end());
+    std::sort(global::killed_npcs.begin(), global::killed_npcs.end());
+    std::sort(global::collected_loot.begin(), global::collected_loot.end());
 
     for (int a = 0; a < global::killed_npcs.size(); a++) {
         if (global::killed_npcs.at(a) == SpritesheetType::SNAKE) {
@@ -175,7 +180,7 @@ void Hud::draw_on_level_done() {
             Bat *bat = new Bat();
             bat->init();
             global::sprites.push_back(bat);
-            bat->x = 95+ (a * 8);
+            bat->x = 95 + (a * 8);
             bat->y = 208;
             bat->ready_to_dispose = true;
             bat->set_sprite_flying_left();
@@ -184,7 +189,7 @@ void Hud::draw_on_level_done() {
             Spider *spider = new Spider();
             spider->init();
             global::sprites.push_back(spider);
-            spider->x = 95+ (a * 8);
+            spider->x = 95 + (a * 8);
             spider->y = 208;
             spider->ready_to_dispose = true;
             spider->set_sprite_falling();
@@ -193,7 +198,7 @@ void Hud::draw_on_level_done() {
     }
 
     for (int a = 0; a < global::collected_loot.size(); a++) {
-        if (global::collected_loot.at(a) == SpriteType ::S_MONIEZ_TRIPLE_GOLD_BARS) {
+        if (global::collected_loot.at(a) == SpriteType::S_MONIEZ_TRIPLE_GOLD_BARS) {
             Moniez *moniez = new Moniez();
             moniez->sprite_height = 16;
             moniez->sprite_width = 16;
@@ -201,13 +206,12 @@ void Hud::draw_on_level_done() {
             moniez->value = 1000;
             moniez->init();
             global::sprites.push_back(moniez);
-            moniez->x = 90+ (a * 8);
+            moniez->x = 90 + (a * 8);
             moniez->y = 190;
             moniez->ready_to_dispose = true;
             moniez->set_position();
 
-        }
-        else if (global::collected_loot.at(a) == SpriteType  ::S_MONIEZ_RUBY_BIG_RED) {
+        } else if (global::collected_loot.at(a) == SpriteType::S_MONIEZ_RUBY_BIG_RED) {
 
             Moniez *moniez = new Moniez();
             moniez->sprite_height = 8;
@@ -217,12 +221,12 @@ void Hud::draw_on_level_done() {
             moniez->ruby_type = 0;
             moniez->initSprite();
             global::sprites.push_back(moniez);
-            moniez->x = 96+ (a * 8);
+            moniez->x = 96 + (a * 8);
             moniez->y = 198;
             moniez->ready_to_dispose = true;
             moniez->set_position();
 
-        } else if (global::collected_loot.at(a) == SpriteType  ::S_MONIEZ_RUBY_BIG_GREEN) {
+        } else if (global::collected_loot.at(a) == SpriteType::S_MONIEZ_RUBY_BIG_GREEN) {
 
             Moniez *moniez = new Moniez();
             moniez->sprite_height = 8;
@@ -232,13 +236,12 @@ void Hud::draw_on_level_done() {
             moniez->ruby_type = 1;
             moniez->initSprite();
             global::sprites.push_back(moniez);
-            moniez->x = 96+ (a * 8);
+            moniez->x = 96 + (a * 8);
             moniez->y = 198;
             moniez->ready_to_dispose = true;
             moniez->set_position();
 
-        }
-         else if (global::collected_loot.at(a) == SpriteType  ::S_MONIEZ_RUBY_BIG_BLUE) {
+        } else if (global::collected_loot.at(a) == SpriteType::S_MONIEZ_RUBY_BIG_BLUE) {
 
             Moniez *moniez = new Moniez();
             moniez->sprite_height = 8;
@@ -248,7 +251,7 @@ void Hud::draw_on_level_done() {
             moniez->ruby_type = 2;
             moniez->initSprite();
             global::sprites.push_back(moniez);
-            moniez->x = 96+ (a * 8);
+            moniez->x = 96 + (a * 8);
             moniez->y = 198;
             moniez->ready_to_dispose = true;
             moniez->set_position();
@@ -256,7 +259,6 @@ void Hud::draw_on_level_done() {
 
 
     }
-
 
 
 }
@@ -277,7 +279,8 @@ void Hud::draw_scores() {
 
 void Hud::update() {
 
-    if (!global::in_main_menu && !global::scores_screen && !global::levels_transition_screen) {
+    if (!global::game_state->in_main_menu && !global::game_state->scores_screen &&
+        !global::game_state->levels_transition_screen) {
         set_position();
     }
 
@@ -309,7 +312,7 @@ void Hud::update() {
     }
 
 
-    if (!global::splash_screen)
+    if (!global::game_state->splash_screen)
         time_spent_on_level += *global::timer;
     if (global::main_dude->dead && global::main_dude->time_since_last_damage > DAMAGE_PROTECTION_TIME) {
         draw();
@@ -368,16 +371,9 @@ void Hud::set_position() {
 
 Hud::Hud() {
     hearts = 4;
-    items_offset_x = 161;
-    items_offset_y = 7;
+    items_offset_y = 0;
 }
 
-void Hud::next_item(){
-
-    items_offset_x += 20;
-
-    if(items_offset_x > 250) {
-        items_offset_x = 28;
-        items_offset_y += 14;
-    }
+void Hud::next_item() {
+    items_offset_y += 18;
 }

@@ -34,10 +34,10 @@ void Compass::draw() {
 
             if (!global::main_dude->carrying_compass) {
                 global::main_dude->carrying_compass = true;
-                global::hud->next_item();
                 set_position();
-                x = global::hud->items_offset_x;
+                x = HUD_ITEMS_ROW_X;
                 y = global::hud->items_offset_y;
+                global::hud->next_item();
             } else {
                 mainSpriteInfo->entry->isHidden = true;
                 subSpriteInfo->entry->isHidden = true;
@@ -120,6 +120,8 @@ void Compass::set_position() {
         //hud
         mainSpriteInfo->entry->x = x;
         mainSpriteInfo->entry->y = y;
+        mainSpriteInfo->entry->priority = OBJPRIORITY_0;
+        subSpriteInfo->entry->priority = OBJPRIORITY_0;
 
     } else {
 
@@ -197,7 +199,7 @@ void Compass::draw_arrow_to_exit() {
         } else if (diff_x < 6 * TILE_W) {
             //down arrow
             subSpriteInfo->entry->x = (SCREEN_WIDTH * 0.5) - 8;
-            subSpriteInfo->entry->y = SCREEN_HEIGHT - 10 - sprite_height;
+            subSpriteInfo->entry->y = SCREEN_HEIGHT - 2 - sprite_height;
             apply_down_arrow();
 
         } else if (diff_y < 3 * TILE_H) {
@@ -206,14 +208,14 @@ void Compass::draw_arrow_to_exit() {
                 //left_arrow
                 apply_left_arrow();
 
-                subSpriteInfo->entry->x = 10;
+                subSpriteInfo->entry->x = 4;
                 subSpriteInfo->entry->y = SCREEN_HEIGHT * 0.5;
 
             } else {
                 //right arrow
                 apply_right_arrow();
 
-                subSpriteInfo->entry->x = SCREEN_WIDTH - 10 - sprite_width;
+                subSpriteInfo->entry->x = SCREEN_WIDTH - 4 - sprite_width;
                 subSpriteInfo->entry->y = SCREEN_HEIGHT * 0.5;
             }
 
@@ -223,13 +225,13 @@ void Compass::draw_arrow_to_exit() {
                 //down-left arrow
                 apply_down_left_arrow();
 
-                subSpriteInfo->entry->x = 10;
-                subSpriteInfo->entry->y = SCREEN_HEIGHT - 10 - sprite_height;
+                subSpriteInfo->entry->x = 4;
+                subSpriteInfo->entry->y = SCREEN_HEIGHT - 4 - sprite_height;
 
             } else {
                 //down-right arrow
-                subSpriteInfo->entry->x = SCREEN_WIDTH - 10 - sprite_width;
-                subSpriteInfo->entry->y = SCREEN_HEIGHT - 10 - sprite_height;
+                subSpriteInfo->entry->x = SCREEN_WIDTH - 4 - sprite_width;
+                subSpriteInfo->entry->y = SCREEN_HEIGHT - 4 - sprite_height;
 
                 apply_down_right_arrow();
             }

@@ -30,7 +30,10 @@ void Crate::draw() {
     if (check_if_can_be_opened()) {
         global::hud->draw();
         mmEffect(SFX_XPICKUP);
-        hold_by_main_dude = false;
+        if (hold_by_main_dude) {
+            hold_by_main_dude = false;
+            global::main_dude->holding_item = false;
+        }
     }
 
     if (activated_by_main_dude) {
