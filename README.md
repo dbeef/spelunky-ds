@@ -25,6 +25,12 @@
  
  Obviously I omit things like implement Olmec or implement lava city - let's finish cave level first.
 
+<h2 align="center"> Building </h2>
+
+<p> 1) Download devkitPro for your platform from their official website: https://devkitpro.org/wiki/Getting_Started </p>
+<p> 2) Set up a few environment variables, as shown in their tutorial  </p>
+<p> 3) cd to the spelunky-ds directory and type 'make'  </p>
+
 <h2 align="center"> Tools I use </h2>
 <ul>
   <li> C++ </li>
