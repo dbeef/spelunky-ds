@@ -13,6 +13,7 @@
 #include "../../../build/soundbank.h"
 #define BAT_ANIM_FRAME_DELTA 100
 #define BAT_POS_INC_DELTA 30
+#define BAT_HITPOINTS 1
 
 void Bat::draw() {
 
@@ -55,9 +56,9 @@ void Bat::draw() {
         animFrameTimer = 0;
     }
 
-    kill_if_whip();
-    kill_if_main_dude_jumped_on_you();
-    deal_damage_main_dude_on_collision();
+    kill_if_whip(1);
+    kill_if_main_dude_jumped_on_you(1);
+    deal_damage_main_dude_on_collision(1);
 
     if (hunting) {
         follow_main_dude();
@@ -102,16 +103,18 @@ void Bat::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_t
 
     standingOnLeftEdge = Collisions::isStandingOnLeftEdge(tiles, x, physical_width, x_current_pos_in_tiles);
     standingOnRightEdge = Collisions::isStandingOnRightEdge(tiles, x, 16, x_current_pos_in_tiles);
-    bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, physical_width, physical_height, false);
-    leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, false);
-    rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, false);
-    upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, physical_width, false);
+    bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, physical_width, physical_height, false, 0);
+    leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, false, 0);
+    rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, false, 0);
+    upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, physical_width, false, 0);
 
     hanging = upperCollision && !hunting;
 
 }
 
-void Bat::kill() {
+void Bat::apply_dmg(int dmg_to_apply) {
+
+    //bat has only 1 dmg point, always kill if any dmg_apply
 
     subSpriteInfo->entry->isHidden = true;
     mainSpriteInfo->entry->isHidden = true;
@@ -184,6 +187,7 @@ Bat::Bat() {
     physical_width = BAT_PHYSICAL_WIDTH;
     sprite_height = BAT_SPRITE_HEIGHT;
     sprite_width = BAT_SPRITE_WIDTH;
+    hitpoints = BAT_HITPOINTS;
 }
 
 void Bat::follow_main_dude() {

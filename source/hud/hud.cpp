@@ -370,7 +370,7 @@ void Hud::set_position() {
 }
 
 Hud::Hud() {
-    hearts = 4;
+    hearts = MAIN_DUDE_HITPOINTS;
     items_offset_y = 0;
 }
 

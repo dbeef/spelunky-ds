@@ -34,7 +34,7 @@ public:
 
     virtual void draw() = 0;
 
-    virtual void kill() = 0;
+    virtual void apply_dmg(int dmg_to_apply) = 0;
 
     virtual void init() = 0;
 
@@ -55,6 +55,8 @@ public:
     //TODO Make x,y as float, cast (floor) to int when drawn.
     int x{};
     int y{};
+
+    int hitpoints{};
 
     //for rendering
     int sprite_width{};
@@ -86,7 +88,7 @@ public:
 
     void apply_gravity(double acceleration);
 
-    bool kill_mobs_if_thrown();
+    bool kill_mobs_if_thrown(int dmg_to_apply);
 
     void check_if_can_be_pickuped();
 
@@ -94,15 +96,15 @@ public:
 
     bool check_if_can_be_opened();
 
-    void kill_mobs_items_if_thrown();
+    bool kill_mobs_items_if_thrown(int dmg_to_apply);
 
     bool check_if_can_be_equipped();
 
-    void kill_if_main_dude_jumped_on_you();
+    void kill_if_main_dude_jumped_on_you(int dmg_to_apply);
 
-    void kill_if_whip();
+    void kill_if_whip(int dmg_to_apply);
 
-    void deal_damage_main_dude_on_collision();
+    void deal_damage_main_dude_on_collision(int dmg_to_apply);
 
     void spawn_blood();
 };

@@ -20,7 +20,8 @@ public:
 
     void init() override;
 
-    void kill() override {};
+    void apply_dmg(int dmg_to_apply) override {};
+
 
     void draw() override;
 
@@ -42,9 +43,11 @@ public:
 
     u8 * frameGfx{};
 
+    int living_timer{};
     int currentFrame{};
     int frameTimer{};
     int pos_inc_timer{};
+    int inactive_delay{};
     bool finished{};
 };
 

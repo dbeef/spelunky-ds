@@ -19,9 +19,11 @@
 #define MAIN_DUDE_JUMP_SPEED 2.55
 #define MIN_HANGING_TIME 100
 #define STUN_TIME 2000
-#define STUN_FALLING_TIME 1200
+#define STUN_FALLING_TIME 900
 #define PUSHING_TIME 500
 #define DAMAGE_PROTECTION_TIME 1500
+
+#define MAIN_DUDE_HITPOINTS 4
 
 #include <nds.h>
 #include <vector>
@@ -43,7 +45,7 @@ public:
 
     void updateOther() override {};
 
-    void kill() override {};
+    void apply_dmg(int dmg_to_apply) override {};
 
     void draw() override;
 

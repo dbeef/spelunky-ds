@@ -4,14 +4,12 @@
 
 #include <cmath>
 #include "jar.h"
-#include "../moving_object.h"
-#include "rock.h"
 #include "../../globals_declarations.h"
 #include "../../../build/gfx_spike_collectibles.h"
 #include "../../collisions/collisions.h"
-#include "../../tiles/map_utils.h"
 
 #define JAR_POS_INC_DELTA 15
+#define JAR_HITPOINTS 1
 
 void Jar::draw() {
 
@@ -51,8 +49,8 @@ void Jar::draw() {
 
     }
 
-    if (kill_mobs_if_thrown()) {
-        kill();
+    if (kill_mobs_if_thrown(1)) {
+        apply_dmg(1);
         global::killed_npcs.push_back(spriteType);
     }
 
@@ -71,7 +69,7 @@ void Jar::draw() {
     mainSpriteInfo->entry->vFlip = false;
     subSpriteInfo->entry->vFlip = false;
 
-    kill_if_whip();
+    kill_if_whip(1);
 
 }
 
@@ -108,14 +106,14 @@ void Jar::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_t
     Collisions::getNeighboringTiles(global::level_generator->map_tiles, x_current_pos_in_tiles, y_current_pos_in_tiles,
                                     tiles);
 
-    bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, physical_width, physical_height, true);
-    leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true);
-    rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true);
-    upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, physical_width, true);
+    bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, physical_width, physical_height, true, BOUNCING_FACTOR_Y);
+    leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true,BOUNCING_FACTOR_X);
+    rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true, BOUNCING_FACTOR_X);
+    upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, physical_width, true, BOUNCING_FACTOR_Y);
 
     if ((fabs(xSpeed) > 0.5|| fabs(ySpeed) > 0.5) &&
         (bottomCollision || leftCollision || rightCollision || upperCollision)) {
-        kill();
+        apply_dmg(1);
     }
 
 }
@@ -141,8 +139,10 @@ Jar::Jar() {
     sprite_height = JAR_SPRITE_HEIGHT;
     sprite_width = JAR_SPRITE_WIDTH;
     spriteType = SpritesheetType::JAR;
+    hitpoints = JAR_HITPOINTS;
 }
 
-void Jar::kill() {
+void Jar::apply_dmg(int dmg_to_apply) {
+    //jar has only 1 dmg point, always kill if any dmg_apply
     killed = true;
 }

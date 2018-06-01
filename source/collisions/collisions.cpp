@@ -9,8 +9,6 @@
 #include "../globals_declarations.h"
 #include "../tiles/tile_orientation.h"
 
-#define BOUNCING_FACTOR_X 0.15
-#define BOUNCING_FACTOR_Y 0.45
 #define BOUNCING_STOP_SPEED 0.05
 
 
@@ -21,7 +19,7 @@
 
 //Collision from upper side of the tile, with rectangle given by x,y, and width.
 bool Collisions::checkUpperCollision(MapTile *neighboringTiles[9], int *xPos, int *yPos, double *ySpeed, int width,
-                                     bool bounce) {
+                                     bool bounce, float bouncing_factor) {
 
     bool upperCollision = false;
     bool w1;
@@ -42,7 +40,7 @@ bool Collisions::checkUpperCollision(MapTile *neighboringTiles[9], int *xPos, in
             if (upperCollision) {
 
                 if (bounce) {
-                    *ySpeed = (-1) * BOUNCING_FACTOR_Y * *ySpeed;
+                    *ySpeed = (-1) * bouncing_factor * *ySpeed;
 //                    if (*ySpeed < BOUNCING_STOP_SPEED)
 //                        *ySpeed = 0;
                 } else
@@ -61,7 +59,7 @@ bool Collisions::checkUpperCollision(MapTile *neighboringTiles[9], int *xPos, in
 
 //Collision from bottom side of the tile, with rectangle given by x,y, width and height.
 bool Collisions::checkBottomCollision(MapTile *neighboringTiles[9], int *xPos, int *yPos, double *ySpeed, int width,
-                                      int height, bool bounce) {
+                                      int height, bool bounce, float bouncing_factor) {
 
     bool bottomCollision = false;
     bool w1;
@@ -95,8 +93,8 @@ bool Collisions::checkBottomCollision(MapTile *neighboringTiles[9], int *xPos, i
             if (bottomCollision) {
 
                 if (bounce) {
-                    *ySpeed = (-1) * BOUNCING_FACTOR_Y * *ySpeed;
-                    if (*ySpeed < BOUNCING_STOP_SPEED)
+                    *ySpeed = (-1) * bouncing_factor * *ySpeed;
+                    if (abs(*ySpeed) < 0.15f)
                         *ySpeed = 0;
                 } else
                     *ySpeed = 0;
@@ -113,7 +111,7 @@ bool Collisions::checkBottomCollision(MapTile *neighboringTiles[9], int *xPos, i
 
 //Collision from left side of the tile, with rectangle given by x,y, width and height.
 bool Collisions::checkLeftCollision(MapTile *neighboringTiles[9], int *xPos, int *yPos, double *xSpeed, int width,
-                                    int height, bool bounce) {
+                                    int height, bool bounce, float bouncing_factor) {
 
     bool leftCollision = false;
     bool w1;
@@ -126,32 +124,32 @@ bool Collisions::checkLeftCollision(MapTile *neighboringTiles[9], int *xPos, int
 
 //        if (!leftCollision) {
 
-            if (width == 16) {
-                w2 = (*xPos < (neighboringTiles[a]->x * TILE_W) - 0.75 * width &&
-                      (*xPos > (neighboringTiles[a]->x * TILE_W) - width));
-            } else {
-                w2 = (*xPos + width < (neighboringTiles[a]->x * TILE_W) + TILE_W *0.75&&
-                      (*xPos + width > (neighboringTiles[a]->x * TILE_W) ));
-            }
+        if (width == 16) {
+            w2 = (*xPos < (neighboringTiles[a]->x * TILE_W) - 0.75 * width &&
+                  (*xPos > (neighboringTiles[a]->x * TILE_W) - width));
+        } else {
+            w2 = (*xPos + width < (neighboringTiles[a]->x * TILE_W) + TILE_W * 0.75 &&
+                  (*xPos + width > (neighboringTiles[a]->x * TILE_W)));
+        }
 
-            w1 = (*yPos > (neighboringTiles[a]->y * TILE_H) - height &&
-                  (*yPos < (neighboringTiles[a]->y * TILE_H) + TILE_H));
+        w1 = (*yPos > (neighboringTiles[a]->y * TILE_H) - height &&
+              (*yPos < (neighboringTiles[a]->y * TILE_H) + TILE_H));
 
-            leftCollision = w1 && w2;
+        leftCollision = w1 && w2;
 
-            if (leftCollision) {
+        if (leftCollision) {
 
-                if (bounce) {
-                    *xSpeed = (-1) * BOUNCING_FACTOR_X * *xSpeed;
+            if (bounce) {
+                *xSpeed = (-1) * bouncing_factor * *xSpeed;
 //                    if (*xSpeed < BOUNCING_STOP_SPEED)
 //                        *xSpeed = 0;
-                } else
-                    *xSpeed = 0;
+            } else
+                *xSpeed = 0;
 
 
-                *xPos = (neighboringTiles[a]->x * TILE_W) - width;
-                return true;
-            }
+            *xPos = (neighboringTiles[a]->x * TILE_W) - width;
+            return true;
+        }
 
 //        }
         /* else {
@@ -164,7 +162,7 @@ bool Collisions::checkLeftCollision(MapTile *neighboringTiles[9], int *xPos, int
 
 //Collision from right side of the tile, with rectangle given by x,y, width and height.
 bool Collisions::checkRightCollision(MapTile *neighboringTiles[9], int *xPos, int *yPos, double *xSpeed, int width,
-                                     int height, bool bounce) {
+                                     int height, bool bounce, float bouncing_factor) {
     bool rightCollision = false;
     bool w1;
     bool w2;
@@ -192,7 +190,7 @@ bool Collisions::checkRightCollision(MapTile *neighboringTiles[9], int *xPos, in
             if (rightCollision) {
 
                 if (bounce) {
-                    *xSpeed = (-1) * BOUNCING_FACTOR_X * *xSpeed;
+                    *xSpeed = (-1) * bouncing_factor * *xSpeed;
 //                    if (*xSpeed < BOUNCING_STOP_SPEED)
 //                        *xSpeed = 0;
                 } else
@@ -308,10 +306,12 @@ bool Collisions::checkCollisionWithMainDudeWidthBoundary(int x, int y, int width
 
 bool Collisions::checkCollisionWithMainDudeWhip(int x, int y, int width, int height) {
     if (global::main_dude->state == SpriteState::W_LEFT) {
-        return x + width >= global::main_dude->x - WHIP_WIDTH && x + width < global::main_dude->x + MAIN_DUDE_PHYSICAL_WIDTH &&
+        return x + width >= global::main_dude->x - WHIP_WIDTH &&
+               x + width < global::main_dude->x + MAIN_DUDE_PHYSICAL_WIDTH &&
                y + height > global::main_dude->y && y < global::main_dude->y + MAIN_DUDE_PHYSICAL_HEIGHT;
     } else if (global::main_dude->state == SpriteState::W_RIGHT) {
-        return x + width >= global::main_dude->x && x + width < global::main_dude->x + MAIN_DUDE_PHYSICAL_WIDTH + WHIP_WIDTH*2 &&
+        return x + width >= global::main_dude->x &&
+               x + width < global::main_dude->x + MAIN_DUDE_PHYSICAL_WIDTH + WHIP_WIDTH * 2 &&
                y + height > global::main_dude->y && y < global::main_dude->y + MAIN_DUDE_PHYSICAL_HEIGHT;
     } else return false;
 
@@ -323,6 +323,26 @@ bool Collisions::checkCollisionBodies(int x1, int y1, int w1, int h1, int x2, in
 }
 
 //x1,y1 is a left >lower< corner of the body, same for the x2,y2
-bool Collisions::checkCollisionBodiesLeftLowerCorner(int x1, int y1, int w1, int h1, int x2, int y2, int w2, int h2){
-    return x1 + w1 > x2 && x1 < x2 + w2 && y1  > y2 - h2 && y1 - h1 < y2;
+bool Collisions::checkCollisionBodiesLeftLowerCorner(int x1, int y1, int w1, int h1, int x2, int y2, int w2, int h2) {
+    return x1 + w1 > x2 && x1 < x2 + w2 && y1 > y2 - h2 && y1 - h1 < y2;
+}
+
+//returns 9 tiles from given tile x/y
+void Collisions::getTilesOnRightFromXY(MapTile *(*mapTiles)[32], int xx, int yy, MapTile **out_neighboringTiles) {
+    for (int a = 0; a < 9; a++) {
+        if (a + xx <= 31)
+            out_neighboringTiles[a] = mapTiles[a + xx][yy];
+        else
+            out_neighboringTiles[a] = nullptr;
+    }
+}
+
+//returns 9 tiles from given tile x/y
+void Collisions::getTilesOnLeftFromXY(MapTile *(*mapTiles)[32], int xx, int yy, MapTile **out_neighboringTiles) {
+    for (int a = 0; a < 9; a++) {
+        if (xx - a >= 0)
+            out_neighboringTiles[a] = mapTiles[xx - a][yy];
+        else
+            out_neighboringTiles[a] = nullptr;
+    }
 }

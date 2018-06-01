@@ -10,8 +10,27 @@
 
 void Blood::draw() {
 
-    if (ready_to_dispose)
+
+    for (int a = 0; a < bloodTrail.size(); a++) {
+        bloodTrail.at(a)->draw();
+        bloodTrail.at(a)->update();
+        if(bloodTrail.at(a)->finished) {
+            bloodTrail.erase(bloodTrail.begin() + a);
+        }
+    }
+
+    if (ready_to_dispose) {
+        mainSpriteInfo->entry->isHidden = true;
+        subSpriteInfo->entry->isHidden = true;
         return;
+    }
+
+    time_since_last_spawn += *global::timer;
+
+    if (bottomCollision)
+        living_timer += 4 * *global::timer;
+    else
+        living_timer += *global::timer;
 
     if (finished) {
 
@@ -21,12 +40,12 @@ void Blood::draw() {
             if (!bloodTrail.at(a)->finished) {
                 chain_finished = false;
                 break;
-            } else
-                bloodTrail.at(a)->ready_to_dispose = true;
+            }
         }
 
-        if (chain_finished)
+        if (chain_finished) {
             ready_to_dispose = true;
+        }
 
 
     } else {
@@ -35,38 +54,46 @@ void Blood::draw() {
         if (animFrameTimer > BLOOD_ANIM_FRAME_DELTA) {
             animFrameTimer = 0;
             currentFrame++;
-            if (currentFrame >= 7) {
-                currentFrame = 0;
-                finished = true;
-                mainSpriteInfo->entry->isHidden = true;
-                subSpriteInfo->entry->isHidden = true;
-            } else {
-                frameGfx = (u8 *) gfx_blood_rock_ropeTiles + (currentFrame * sprite_width * sprite_height / 2);
-                subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
-                mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
-            }
+
+            if (living_timer <= 1200) {
+
+                if (currentFrame >= 3)
+                    currentFrame = 0;
 
 
-            if (currentFrame % 2 == 0 && !finished && bloodTrail.size() < 3) {
-                spawn_blood();
+                frameGfx = (u8 *) gfx_blood_rock_ropeTiles + ((11 + currentFrame) * sprite_width * sprite_height / 2);
+
+            } else if (living_timer > 1200) {
+
+                if (currentFrame >= 6) {
+                    finished = true;
+                    mainSpriteInfo->entry->isHidden = true;
+                    subSpriteInfo->entry->isHidden = true;
+                } else
+                    frameGfx = (u8 *) gfx_blood_rock_ropeTiles + ((currentFrame) * sprite_width * sprite_height / 2);
+
             }
+
+            subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
+            mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
 
         }
 
+
+        if (!finished && bloodTrail.size() <= 2 && time_since_last_spawn > 120) {
+            time_since_last_spawn = 0;
+            spawn_blood();
+        }
 
         int main_x, main_y, sub_x, sub_y;
         get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
-
-        for (int a = 0; a < bloodTrail.size(); a++) {
-            bloodTrail.at(a)->draw();
-            bloodTrail.at(a)->update();
-        }
 
         mainSpriteInfo->entry->x = main_x;
         mainSpriteInfo->entry->y = main_y;
 
         subSpriteInfo->entry->x = sub_x;
         subSpriteInfo->entry->y = sub_y;
+
 
     }
 
@@ -86,8 +113,9 @@ void Blood::updateSpeed() {
     bool change_pos = (pos_inc_timer > BLOOD_CHANGE_POS_DELTA) && !finished;
 
     if (change_pos) {
-        apply_friction(0.055);
-        apply_gravity(GRAVITY_DELTA_SPEED);
+//        apply_friction(0.01);
+
+        apply_gravity(GRAVITY_DELTA_SPEED * 0.2f);
         pos_inc_timer = 0;
         update_position();
     }
@@ -100,10 +128,12 @@ void Blood::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in
     Collisions::getNeighboringTiles(global::level_generator->map_tiles, x_current_pos_in_tiles, y_current_pos_in_tiles,
                                     tiles);
 
-    bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, physical_width, physical_height, true);
-    leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true);
-    rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true);
-    upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, physical_width, true);
+    bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, physical_width, physical_height, true,
+                                                       0.7f);
+    leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true, 0.5f);
+    rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true,
+                                                     0.5f);
+    upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, physical_width, true, 0.5f);
 
 }
 
@@ -131,12 +161,27 @@ Blood::Blood() {
 
 void Blood::spawn_blood() {
     BloodElement *element = new BloodElement();
+
+//    if (xSpeed < 0)
+//        element->x = x + 8;
+//    else
+//        element->x = x - 8;
+//
+//    if (ySpeed > 0)
+//        element->y = y - 8;
+//    else
+//        element->y = y + 8;
+
     element->x = x;
-    element->y = y - 4;
-    element->xSpeed = xSpeed * 0.9;
-    element->ySpeed = ySpeed * 0.9;
+    element->y = y;
+
+
+    element->xSpeed = xSpeed /** 0.95f*/;
+    element->ySpeed = ySpeed /** 0.95f*/;
     element->currentFrame = currentFrame;
     element->init();
     element->draw();
     bloodTrail.push_back(element);
+/*
+    element->living_timer += 400 * bloodTrail.size();*/
 }

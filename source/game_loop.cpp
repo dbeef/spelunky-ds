@@ -20,6 +20,7 @@
 #include "sprites/traps/spikes.h"
 #include "sprites/collectibles/chest.h"
 #include "sprites/collectibles/crate.h"
+#include "sprites/enemies/caveman.h"
 
 static const int BOUNDARY_VALUE = 64; /* This is the default boundary value (can be set in REG_DISPCNT) */
 static const int OFFSET_MULTIPLIER_MAIN = BOUNDARY_VALUE / sizeof(SPRITE_GFX[0]);
@@ -275,13 +276,20 @@ void gameloop::populate_cave_npcs() {
 
 
                     if (npc == 1 && snakes_left > 0 && r == 1) {
-                        Snake *snake = new Snake();
+                        Caveman *caveman = new Caveman();
+                        caveman ->init();
+                        global::sprites.push_back(caveman );
+                        caveman ->x = pos_x * 16;
+                        caveman ->y = pos_y * 16;
+                        snakes_left--;
+                        last_placement = 0;
+                        /*                        Snake *snake = new Snake();
                         snake->init();
                         global::sprites.push_back(snake);
                         snake->x = pos_x * 16;
                         snake->y = pos_y * 16;
                         snakes_left--;
-                        last_placement = 0;
+                        last_placement = 0;*/
                     }
 
                     if (npc == 2 && bats_left > 0 && r == 1) {

@@ -27,14 +27,13 @@ namespace oam_utils {
 
             for (int a = 0; a < global::sprites.size(); a++) {
                 //fixme - being killed not always means it's ready for disposing!
-                if (!global::sprites.at(a)->ready_to_dispose && !global::sprites.at(a)->killed)
+                if (!global::sprites.at(a)->ready_to_dispose /*&& !global::sprites.at(a)->killed*/)
                     global::sprites.at(a)->initSprite();
                 else {
                 }
             }
 
             global::hud->initSprites();
-
 
             global::clean_unused_oam_timer = 0;
         }

@@ -12,6 +12,7 @@
 #include "../../tiles/map_utils.h"
 #include "../../../build/soundbank.h"
 
+#define SPIDER_HITPOINTS 1
 #define SPIDER_POS_INC_DELTA 30
 #define SPIDER_HANGING_OFFSET 8
 #define SPIDER_ANIM_FRAME_DELTA 75
@@ -69,9 +70,9 @@ void Spider::draw() {
     }
 
 
-    kill_if_whip();
-    kill_if_main_dude_jumped_on_you();
-    deal_damage_main_dude_on_collision();
+    kill_if_whip(1);
+    kill_if_main_dude_jumped_on_you(1);
+    deal_damage_main_dude_on_collision(1);
 
     if (hunting && bottomCollision && !hanging) {
         jump_to_main_dude();
@@ -112,14 +113,17 @@ void Spider::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_i
 
     standingOnLeftEdge = Collisions::isStandingOnLeftEdge(tiles, x, physical_width, x_current_pos_in_tiles);
     standingOnRightEdge = Collisions::isStandingOnRightEdge(tiles, x, physical_width, x_current_pos_in_tiles);
-    bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, physical_width, physical_height, false);
-    leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, false);
-    rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, false);
-    upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, physical_width, false);
+    bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, physical_width, physical_height, false, 0);
+    leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, false, 0);
+    rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, false, 0);
+    upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, physical_width, false, 0);
 
 }
 
-void Spider::kill() {
+void Spider::apply_dmg(int dmg_to_apply) {
+
+    //spider has only 1 dmg point, always kill if any dmg_apply
+
     subSpriteInfo->entry->isHidden = true;
     mainSpriteInfo->entry->isHidden = true;
 
@@ -203,6 +207,7 @@ Spider::Spider() {
     physical_width = SPIDER_PHYSICAL_WIDTH;
     sprite_height = SPIDER_SPRITE_HEIGHT;
     sprite_width = SPIDER_SPRITE_WIDTH;
+    hitpoints = SPIDER_HITPOINTS;
 }
 
 void Spider::jump_to_main_dude() {

@@ -16,7 +16,7 @@
 #include "../../../build/soundbank.h"
 #include "../../tiles/tile_orientation.h"
 
-void MainDude::throw_item(){
+void MainDude::throw_item() {
 
     //throw holding item
     //if holding bomb, arm it only
@@ -29,14 +29,12 @@ void MainDude::throw_item(){
 
                     if (!global::input_handler->down_key_held) {
 
-                        if(carrying_mitt) {
+                        if (carrying_mitt) {
                             if (state == SpriteState::W_LEFT)
                                 (*global::sprites.at(a)).xSpeed = -6 - abs(xSpeed);
                             else
                                 (*global::sprites.at(a)).xSpeed = 6 + abs(xSpeed);
-                        }
-                        else
-                        {
+                        } else {
                             if (state == SpriteState::W_LEFT)
                                 (*global::sprites.at(a)).xSpeed = -4 - abs(xSpeed);
                             else
@@ -57,6 +55,15 @@ void MainDude::throw_item(){
                     else
                         (*global::sprites.at(a)).ySpeed = -1;
 
+
+                    if (global::sprites.at(a)->sprite_width >= 8) {
+
+                        int xx = floor_div(global::sprites.at(a)->x + 0.5 * global::sprites.at(a)->physical_width, TILE_W);
+                        int yy = floor_div(global::sprites.at(a)->y + 0.5 * global::sprites.at(a)->physical_height, TILE_H);
+
+                        global::sprites.at(a)->x = xx * TILE_W;
+                        global::sprites.at(a)->y = yy * TILE_H;
+                    }
 
                     (*global::sprites.at(a)).hold_by_main_dude = false;
                     holding_item = false;
@@ -103,7 +110,7 @@ void MainDude::throw_rope() {
 
 void MainDude::spawn_carried_items() {
 
-    if(carrying_spring_shoes){
+    if (carrying_spring_shoes) {
         SpringShoes *springShoes = new SpringShoes();
         springShoes->x = HUD_ITEMS_ROW_X;
         springShoes->y = global::hud->items_offset_y;
@@ -112,7 +119,7 @@ void MainDude::spawn_carried_items() {
         global::sprites.push_back(springShoes);
         global::hud->next_item();
     }
-    if(carrying_compass){
+    if (carrying_compass) {
         Compass *compass = new Compass();
         compass->x = HUD_ITEMS_ROW_X;
         compass->y = global::hud->items_offset_y;
@@ -121,8 +128,8 @@ void MainDude::spawn_carried_items() {
         global::sprites.push_back(compass);
         global::hud->next_item();
     }
-    if(carrying_glove){
-        Glove *glove= new Glove();
+    if (carrying_glove) {
+        Glove *glove = new Glove();
         glove->x = HUD_ITEMS_ROW_X;
         glove->y = global::hud->items_offset_y;
         glove->collected = true;
@@ -130,8 +137,8 @@ void MainDude::spawn_carried_items() {
         global::sprites.push_back(glove);
         global::hud->next_item();
     }
-    if(carrying_mitt){
-        Mitt *mitt= new Mitt();
+    if (carrying_mitt) {
+        Mitt *mitt = new Mitt();
         mitt->x = HUD_ITEMS_ROW_X;
         mitt->y = global::hud->items_offset_y;
         mitt->collected = true;
@@ -139,19 +146,19 @@ void MainDude::spawn_carried_items() {
         global::sprites.push_back(mitt);
         global::hud->next_item();
     }
-    if(carrying_shotgun){
+    if (carrying_shotgun) {
         Shotgun *shotgun = new Shotgun();
         shotgun->hold_by_main_dude = true;
         shotgun->init();
         global::sprites.push_back(shotgun);
         holding_item = true;
     }
-    if(carrying_pistol){
-        Pistol *pistol= new Pistol();
+    if (carrying_pistol) {
+        Pistol *pistol = new Pistol();
         pistol->hold_by_main_dude = true;
         pistol->init();
         global::sprites.push_back(pistol);
-        holding_item= true;
+        holding_item = true;
     }
 }
 

@@ -11,8 +11,18 @@
 
 void BloodElement::draw() {
 
-    if (ready_to_dispose)
+    if (ready_to_dispose || finished) {
         return;
+    }
+
+
+    inactive_delay += *global::timer;
+
+//    if (bottomCollision)
+//        living_timer += 4 * *global::timer;
+//    else
+//        living_timer += *global::timer;
+
 
     if (!finished) {
         frameTimer += *global::timer;
@@ -24,12 +34,22 @@ void BloodElement::draw() {
             if (currentFrame >= 7) {
                 currentFrame = 0;
                 finished = true;
+                ready_to_dispose = true;
                 mainSpriteInfo->entry->isHidden = true;
                 subSpriteInfo->entry->isHidden = true;
+//                if(living_timer > 1000) {
+//                }
+
             } else {
+
+
+//                if(living_timer < 1000 && currentFrame >= 5)
+//                    currentFrame = 0;
+
                 frameGfx = (u8 *) gfx_blood_rock_ropeTiles + (currentFrame * sprite_width * sprite_height / 2);
                 subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
                 mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
+
             }
         }
 
@@ -55,14 +75,17 @@ void BloodElement::updateSpeed() {
 
     limit_speed(MAX_X_SPEED_BLOOD, MAX_Y_SPEED_BLOOD);
 
+    if (inactive_delay < 90)
+        return;
+
     pos_inc_timer += *global::timer;
 
     bool change_pos = (pos_inc_timer > BLOOD_CHANGE_POS_DELTA) && !finished;
 
     if (change_pos) {
+//        apply_friction(0.01);
         update_position();
-        apply_friction(0.055);
-        apply_gravity(GRAVITY_DELTA_SPEED);
+        apply_gravity(GRAVITY_DELTA_SPEED * 0.2f);
         pos_inc_timer = 0;
     }
 
@@ -74,10 +97,12 @@ void BloodElement::updateCollisionsMap(int x_current_pos_in_tiles, int y_current
     Collisions::getNeighboringTiles(global::level_generator->map_tiles, x_current_pos_in_tiles, y_current_pos_in_tiles,
                                     tiles);
 
-    bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, physical_width, physical_height, true);
-    leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true);
-    rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true);
-    upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, physical_width, true);
+    bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, physical_width, physical_height, true,
+                                                       0.7f);
+    leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true, 0.7f);
+    rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true,
+                                                     0.7f);
+    upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, physical_width, true, 0.7f);
 
 
 }

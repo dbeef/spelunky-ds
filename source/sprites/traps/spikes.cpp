@@ -18,28 +18,44 @@ void Spikes::draw() {
 
     if (!global::main_dude->dead
         && Collisions::checkCollisionBodiesLeftLowerCorner
-                           (x , y + 16, physical_width, physical_height, global::main_dude->x, global::main_dude->y + 16, 16, 16) &&
-        global::main_dude->time_since_last_damage > 1000 &&
+                (x, y + 16, physical_width, physical_height, global::main_dude->x, global::main_dude->y + 16, 16, 16) &&
+        /*global::main_dude->time_since_last_damage > 1000 &&*/
         !global::main_dude->bottomCollision && global::main_dude->ySpeed > 0) {
 
-        mmEffect(SFX_XDIE);
-
-        global::main_dude->time_since_last_damage = 0;
-        global::hud->hearts = 0;
-        global::hud->draw();
-
-        global::hud->hide();
-        global::main_dude->ySpeed = -MAIN_DUDE_JUMP_SPEED * 0.25;
-        global::main_dude->dead = true;
-
+        kill_main_dude();
         spawn_blood();
-
         blood = true;
-
         frameGfx = (u8 *) gfx_spike_collectiblesTiles + (sprite_width * sprite_height * (1) / 2);
         subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
         mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
     }
+
+    for (int a = 0; a < global::sprites.size(); a++) {
+        if ((global::sprites.at(a)->spriteType == SpritesheetType::SPIDER ||
+             global::sprites.at(a)->spriteType == SpritesheetType::CAVEMAN)
+            && !global::sprites.at(a)->ready_to_dispose && !global::sprites.at(a)->killed) {
+
+            if (Collisions::checkCollisionBodies(x, y, physical_width, physical_height,
+                                                 global::sprites.at(a)->x,
+                                                 global::sprites.at(a)->y,
+                                                 global::sprites.at(a)->physical_width,
+                                                 global::sprites.at(a)->physical_height)) {
+
+                if (!global::sprites.at(a)->bottomCollision && global::sprites.at(a)->ySpeed > 0) {
+                    global::sprites.at(a)->apply_dmg(8);
+                    global::sprites.at(a)->xSpeed = 0;
+
+
+                    blood = true;
+                    frameGfx = (u8 *) gfx_spike_collectiblesTiles + (sprite_width * sprite_height * (1) / 2);
+                    subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
+                    mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
+                }
+            }
+
+        }
+    }
+
 
     set_position();
 }
@@ -59,10 +75,10 @@ void Spikes::initSprite() {
 
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_spike_collectiblesPal, gfx_spike_collectiblesPalLen,
                                                         nullptr, sprite_width * sprite_height, sprite_width,
-                                                        spriteType, true, false,LAYER_LEVEL::MIDDLE_TOP);
+                                                        spriteType, true, false, LAYER_LEVEL::MIDDLE_TOP);
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_spike_collectiblesPal, gfx_spike_collectiblesPalLen,
                                                           nullptr, sprite_width * sprite_height, sprite_width,
-                                                          spriteType, true, false,LAYER_LEVEL::MIDDLE_TOP);
+                                                          spriteType, true, false, LAYER_LEVEL::MIDDLE_TOP);
 
     subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
     mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
@@ -93,5 +109,18 @@ Spikes::Spikes() {
     this->physical_height = SPIKES_PHYSICAL_HEIGHT;
     this->physical_width = SPIKES_PHYSICAL_WIDTH;
     spriteType = SpritesheetType::SPIKES_COLLECTIBLES;
+}
+
+void Spikes::kill_main_dude() {
+
+    mmEffect(SFX_XDIE);
+
+    global::main_dude->time_since_last_damage = 0;
+    global::hud->hearts = 0;
+    global::hud->draw();
+
+    global::hud->hide();
+    global::main_dude->ySpeed = -MAIN_DUDE_JUMP_SPEED * 0.25;
+    global::main_dude->dead = true;
 }
 

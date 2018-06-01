@@ -62,14 +62,14 @@ void Shopkeeper::draw() {
 
 
         if (Collisions::checkCollisionWithMainDudeWhip(x, y, 16, 16)) {
-            kill();
+            apply_dmg(1);
         }
     }
 
 
     if (!killed && Collisions::checkCollisionWithMainDude(x, y, 16, 16) && global::main_dude->ySpeed > 0 &&
         global::main_dude->y - 4 < y) {
-        kill();
+        apply_dmg(1);
         global::main_dude->ySpeed = -2;
         global::main_dude->jumping_timer = 0;
     }
@@ -155,16 +155,16 @@ void Shopkeeper::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_p
 
     standingOnLeftEdge = Collisions::isStandingOnLeftEdge(tiles, x, 16, x_current_pos_in_tiles);
     standingOnRightEdge = Collisions::isStandingOnRightEdge(tiles, x, 16, x_current_pos_in_tiles);
-    bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, 16, 16, false);
-    leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, 16, 16, false);
-    rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, 16, 16, false);
-    upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, 16, false);
+    bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, 16, 16, false, 0);
+    leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, 16, 16, false, 0);
+    rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, 16, 16, false, 0);
+    upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, 16, false, 0);
 
 //    hanging = upperCollision && !hunting;
 
 }
 
-void Shopkeeper::kill() {
+void Shopkeeper::apply_dmg(int dmg_to_apply) {
     subSpriteInfo->entry->isHidden = true;
     mainSpriteInfo->entry->isHidden = true;
 

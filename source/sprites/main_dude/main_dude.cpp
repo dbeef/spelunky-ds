@@ -369,10 +369,10 @@ void MainDude::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos
     Collisions::getNeighboringTiles(global::level_generator->map_tiles, x_current_pos_in_tiles, y_current_pos_in_tiles,
                                     tiles);
 
-    bottomCollision = Collisions::checkBottomCollision(tiles, &this->x, &this->y, &ySpeed, 16, 16, dead);
-    leftCollision = Collisions::checkLeftCollision(tiles, &this->x, &this->y, &xSpeed, 16, 16, dead);
-    rightCollision = Collisions::checkRightCollision(tiles, &this->x, &this->y, &xSpeed, 16, 16, dead);
-    upperCollision = Collisions::checkUpperCollision(tiles, &this->x, &this->y, &ySpeed, 16, dead);
+    bottomCollision = Collisions::checkBottomCollision(tiles, &this->x, &this->y, &ySpeed, 16, 16, dead, BOUNCING_FACTOR_Y);
+    leftCollision = Collisions::checkLeftCollision(tiles, &this->x, &this->y, &xSpeed, 16, 16, dead, BOUNCING_FACTOR_X);
+    rightCollision = Collisions::checkRightCollision(tiles, &this->x, &this->y, &xSpeed, 16, 16, dead, BOUNCING_FACTOR_X);
+    upperCollision = Collisions::checkUpperCollision(tiles, &this->x, &this->y, &ySpeed, 16, dead, BOUNCING_FACTOR_Y);
 
     can_hang_on_tile(tiles);
 
@@ -483,5 +483,5 @@ MainDude::MainDude() {
     physical_width = MAIN_DUDE_PHYSICAL_WIDTH;
     sprite_height = MAIN_DUDE_SPRITE_HEIGHT;
     sprite_width = MAIN_DUDE_SPRITE_WIDTH;
-
+    hitpoints = MAIN_DUDE_HITPOINTS;
 }

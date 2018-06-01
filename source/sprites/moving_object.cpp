@@ -18,25 +18,25 @@ void MovingObject::spawn_blood() {
         blood->x = x;
         blood->y = y;
 
-        if (a % 2 == 0)
-            blood->xSpeed = (1.3 / a);
+        if (rand() % 2 == 0)
+            blood->xSpeed = (-0.8 - ((float) (rand() % 20) / 10)) / a;
         else
-            blood->xSpeed = (-1.3 / a);
+            blood->xSpeed = (0.8 + ((float) (rand() % 20) / 10)) / a;
 
-        blood->ySpeed = -2 / a;
+        blood->ySpeed = (-1.5 - (((float) (rand() % 20) / 5))) / a;
         global::sprites.push_back(blood);
     }
 }
 
-void MovingObject::deal_damage_main_dude_on_collision() {
+void MovingObject::deal_damage_main_dude_on_collision(int dmg_to_apply) {
     if (!killed && !global::main_dude->dead && Collisions::checkCollisionWithMainDude(x, y, 16, 16) &&
         global::main_dude->time_since_last_damage > 1000 && !global::main_dude->exiting_level) {
 
         global::main_dude->time_since_last_damage = 0;
-        global::hud->hearts--;
+        global::hud->hearts -= dmg_to_apply;
         global::hud->draw();
 
-        if (global::hud->hearts == 0) {
+        if (global::hud->hearts <= 0) {
             global::hud->hide();
             global::main_dude->ySpeed = -MAIN_DUDE_JUMP_SPEED * 0.25;
             global::main_dude->dead = true;
@@ -46,20 +46,20 @@ void MovingObject::deal_damage_main_dude_on_collision() {
     }
 }
 
-void MovingObject::kill_if_whip() {
+void MovingObject::kill_if_whip(int dmg_to_apply) {
     if (global::main_dude->using_whip && !killed && global::main_dude->whip->whip_timer > 120) {
         if (Collisions::checkCollisionWithMainDudeWhip(x, y, sprite_width, sprite_height)) {
-            kill();
+            apply_dmg(dmg_to_apply);
         }
     }
 }
 
-void MovingObject::kill_if_main_dude_jumped_on_you() {
+void MovingObject::kill_if_main_dude_jumped_on_you(int dmg_to_apply) {
     if (!killed && Collisions::checkCollisionWithMainDude(x, y, sprite_width, sprite_height) &&
         global::main_dude->ySpeed > 0 &&
         global::main_dude->y - 4 < y) {
 
-        kill();
+        apply_dmg(dmg_to_apply);
         global::main_dude->ySpeed = -2;
         global::main_dude->jumping_timer = 0;
 
@@ -114,9 +114,15 @@ void MovingObject::check_if_can_be_pickuped() {
 //check, if main dude can pickup to the inventory (not to the hands)
 bool MovingObject::check_if_can_be_equipped() {
 
-    return (global::input_handler->y_key_down && global::input_handler->down_key_held &&
-            !global::main_dude->holding_item) &&
-           Collisions::checkCollisionWithMainDude(x, y, sprite_width, sprite_height);
+    bool q = (global::input_handler->y_key_down && global::input_handler->down_key_held &&
+              !global::main_dude->holding_item) &&
+             Collisions::checkCollisionWithMainDude(x, y, sprite_width, sprite_height);
+
+    if (q) {
+        global::input_handler->y_key_down = false;
+    }
+
+    return q;
 
 };
 
@@ -138,7 +144,7 @@ void MovingObject::set_pickuped_position(int pickup_offset_x, int pickup_offset_
 }
 
 //when applied, item kills mobs if it boths travels and collides them
-bool MovingObject::kill_mobs_if_thrown() {
+bool MovingObject::kill_mobs_if_thrown(int dmg_to_apply) {
 
     bool killed = false;
 
@@ -147,11 +153,12 @@ bool MovingObject::kill_mobs_if_thrown() {
 
             if ((global::sprites.at(a)->spriteType == SpritesheetType::SNAKE ||
                  global::sprites.at(a)->spriteType == SpritesheetType::BAT ||
+                 global::sprites.at(a)->spriteType == SpritesheetType::CAVEMAN ||
                  global::sprites.at(a)->spriteType == SpritesheetType::SPIDER)
                 && !global::sprites.at(a)->killed) {
                 if (Collisions::checkCollisionBodies(x, y, 16, 16, global::sprites.at(a)->x,
                                                      global::sprites.at(a)->y, physical_width, physical_height)) {
-                    global::sprites.at(a)->kill();
+                    global::sprites.at(a)->apply_dmg(dmg_to_apply);
                     killed = true;
                 }
             }
@@ -163,26 +170,33 @@ bool MovingObject::kill_mobs_if_thrown() {
 }
 
 //when applied, item kills mobs and destroys items (like jars), if it both travels and collides them
-void MovingObject::kill_mobs_items_if_thrown() {
+bool MovingObject::kill_mobs_items_if_thrown(int dmg_to_apply) {
+
+    bool killed = false;
 
     if (abs(xSpeed) > 0 || abs(ySpeed) > 0) {
         for (int a = 0; a < global::sprites.size(); a++) {
             if ((global::sprites.at(a)->spriteType == SpritesheetType::SNAKE ||
                  global::sprites.at(a)->spriteType == SpritesheetType::BAT ||
                  global::sprites.at(a)->spriteType == SpritesheetType::SPIDER ||
+                 global::sprites.at(a)->spriteType == SpritesheetType::CAVEMAN ||
                  global::sprites.at(a)->spriteType == SpritesheetType::JAR)
-                && !global::sprites.at(a)->killed) {
+                && !global::sprites.at(a)->ready_to_dispose) {
 
                 if (Collisions::checkCollisionBodies(x, y, physical_width, physical_height, global::sprites.at(a)->x,
                                                      global::sprites.at(a)->y,
                                                      global::sprites.at(a)->physical_width,
                                                      global::sprites.at(a)->physical_height)) {
-                    global::sprites.at(a)->kill();
+                    global::sprites.at(a)->xSpeed += this->xSpeed * 0.3f;
+
+                    global::sprites.at(a)->apply_dmg(dmg_to_apply);
+                    killed = true;
                 }
             }
         }
     }
 
+    return killed;
 }
 
 void MovingObject::apply_gravity(double acceleration) {
@@ -279,7 +293,7 @@ void MovingObject::update_position() {
         xx = floor_div(this->x + 0.5 * physical_width, TILE_W);
         yy = floor_div(this->y + 0.5 * physical_height, TILE_H);
 
-        if (old_xx != xx || old_yy != yy || physical_width <= 8 || physical_height <= 8) {
+        if (old_xx != xx || old_yy != yy || physical_width <= 8 || physical_height <= 8 || killed) {
             if (xx < 31 && yy < 31)
                 updateCollisionsMap(xx, yy);
         }

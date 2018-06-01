@@ -32,7 +32,7 @@ public:
 
     void initSprite() override;
 
-    void kill() override {};
+    void apply_dmg(int dmg_to_apply) override {};
 
     void updateTimers() override {};
 

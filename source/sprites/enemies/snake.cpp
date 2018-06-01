@@ -13,7 +13,8 @@
 #include "../../../build/soundbank.h"
 
 #define SNAKE_POS_INC_DELTA 35
-#define ANIM_FRAME_DELTA 125
+#define SNAKE_ANIM_FRAME_DELTA 125
+#define SNAKE_HITPOINTS 1
 
 void Snake::draw() {
 
@@ -33,7 +34,7 @@ void Snake::draw() {
 
     animFrameTimer += *global::timer;
 
-    if (animFrameTimer > ANIM_FRAME_DELTA) {
+    if (animFrameTimer > SNAKE_POS_INC_DELTA) {
 
         animFrame++;
         if (animFrame >= 4)
@@ -73,39 +74,9 @@ void Snake::draw() {
     }
 
 
-    if (global::main_dude->using_whip && !killed && global::main_dude->whip->whip_timer > 120) {
-        if (Collisions::checkCollisionWithMainDudeWhip(x, y, physical_width, physical_height)) {
-            kill();
-        }
-    }
-
-
-    if (!killed && Collisions::checkCollisionWithMainDude(x, y, physical_width, physical_height) && global::main_dude->ySpeed > 0 &&
-        global::main_dude->y - 4 < y) {
-        kill();
-        global::main_dude->ySpeed = -2;
-        global::main_dude->jumping_timer = 0;
-    }
-
-    if (!killed && !global::main_dude->dead && Collisions::checkCollisionWithMainDude(x, y, physical_width, physical_height) &&
-        global::main_dude->time_since_last_damage > 1000) {
-
-        global::main_dude->time_since_last_damage = 0;
-        global::hud->hearts--;
-        global::hud->draw();
-
-        if (global::hud->hearts == 0) {
-            global::hud->hide();
-            global::main_dude->ySpeed = -MAIN_DUDE_JUMP_SPEED * 0.25;
-            global::main_dude->dead = true;
-            mmEffect(SFX_XDIE);
-        }
-        else
-            mmEffect(SFX_XHIT);
-
-    }
-
-
+    kill_if_whip(1);
+    kill_if_main_dude_jumped_on_you(1);
+    deal_damage_main_dude_on_collision(1);
 }
 
 
@@ -113,7 +84,6 @@ void Snake::init() {
 
     initSprite();
 
-    sameDirectionInRow = 0;
     frameGfx = (u8 *) gfx_snakeTiles;
     subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
     mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
@@ -176,34 +146,24 @@ void Snake::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in
 
     standingOnLeftEdge = Collisions::isStandingOnLeftEdge(tiles, x, physical_width, x_current_pos_in_tiles);
     standingOnRightEdge = Collisions::isStandingOnRightEdge(tiles, x, physical_width, x_current_pos_in_tiles);
-    bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, physical_width, physical_height, false);
-    leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, false);
-    rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, false);
-    upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, physical_width, false);
+    bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, physical_width, physical_height, false, 0);
+    leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, false, 0);
+    rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, false, 0);
+    upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, physical_width, false, 0);
 
 }
 
-void Snake::kill() {
+void Snake::apply_dmg(int dmg_to_apply) {
+
+    //snake has only 1 dmg point, always kill if any dmg_apply
+
     subSpriteInfo->entry->isHidden = true;
     mainSpriteInfo->entry->isHidden = true;
 
     subSpriteInfo = nullptr;
     mainSpriteInfo = nullptr;
 
-    for (int a = 0; a < 4; a++) {
-        Blood *blood = new Blood();
-        blood->init();
-        blood->x = x;
-        blood->y = y;
-
-        if (a % 2 == 0)
-            blood->xSpeed = (1.3 / a);
-        else
-            blood->xSpeed = (-1.3 / a);
-
-        blood->ySpeed = -2 / a;
-        global::sprites.push_back(blood);
-    }
+    spawn_blood();
     killed = true;
     ready_to_dispose = true;
     global::hud->draw();
@@ -213,9 +173,11 @@ void Snake::kill() {
 
 void Snake::initSprite() {
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_snakePal, gfx_snakePalLen,
-                                                        nullptr, sprite_width * sprite_height, 16, SNAKE, true, false, LAYER_LEVEL::MIDDLE_TOP);
+                                                        nullptr, sprite_width * sprite_height, 16, SNAKE, true, false,
+                                                        LAYER_LEVEL::MIDDLE_TOP);
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_snakePal, gfx_snakePalLen,
-                                                          nullptr, sprite_width * sprite_height, 16, SNAKE, true, false,LAYER_LEVEL::MIDDLE_TOP);
+                                                          nullptr, sprite_width * sprite_height, 16, SNAKE, true, false,
+                                                          LAYER_LEVEL::MIDDLE_TOP);
     subSpriteInfo->entry->isHidden = false;
     mainSpriteInfo->entry->isHidden = false;
 
@@ -244,7 +206,7 @@ void Snake::set_position() {
 }
 
 void Snake::set_sprite_left() {
-    frameGfx = (u8 *) gfx_snakeTiles + ((sprite_width * sprite_height* (animFrame + 4)) / 2);
+    frameGfx = (u8 *) gfx_snakeTiles + ((sprite_width * sprite_height * (animFrame + 4)) / 2);
     subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
     mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
     mainSpriteInfo->entry->hFlip = true;
@@ -270,5 +232,6 @@ Snake::Snake() {
     physical_width = SNAKE_PHYSICAL_WIDTH;
     sprite_height = SNAKE_SPRITE_HEIGHT;
     sprite_width = SNAKE_SPRITE_WIDTH;
+    hitpoints = SNAKE_HITPOINTS;
 }
 

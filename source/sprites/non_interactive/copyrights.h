@@ -23,7 +23,7 @@ public:
 
     void updateOther() override {};
 
-    void kill() override {};
+    void apply_dmg(int dmg_to_apply) override {};
 
     void init() override;
 

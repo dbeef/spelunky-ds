@@ -5,16 +5,16 @@
 #ifndef SPELUNKYDS_BLOOD_H
 #define SPELUNKYDS_BLOOD_H
 
-#define MAX_X_SPEED_BLOOD 2
-#define MAX_Y_SPEED_BLOOD 2
+#define MAX_X_SPEED_BLOOD 1.5
+#define MAX_Y_SPEED_BLOOD 1.5
 
 #define BLOOD_PHYSICAL_HEIGHT 4
 #define BLOOD_PHYSICAL_WIDTH 4
 #define BLOOD_SPRITE_HEIGHT 8
 #define BLOOD_SPRITE_WIDTH 8
 
-#define BLOOD_CHANGE_POS_DELTA 20
-#define BLOOD_ANIM_FRAME_DELTA 150
+#define BLOOD_CHANGE_POS_DELTA 17
+#define BLOOD_ANIM_FRAME_DELTA 90
 
 #include <vector>
 #include <nds/jtypes.h>
@@ -38,7 +38,7 @@ public:
 
     void init() override;
 
-    void kill() override {};
+    void apply_dmg(int dmg_to_apply) override {};
 
     void initSprite() override;
 
@@ -68,6 +68,9 @@ public:
     int animFrameTimer{};
 
     std::vector<BloodElement *> bloodTrail;
+
+    int living_timer{};
+    int time_since_last_spawn{};
 
     void spawn_blood();
 };
