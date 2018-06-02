@@ -15,6 +15,7 @@
 #include "../../tiles/map_utils.h"
 #include "../../../build/soundbank.h"
 #include "../../tiles/tile_orientation.h"
+#include "../items/spike_shoes.h"
 
 void MainDude::throw_item() {
 
@@ -119,6 +120,17 @@ void MainDude::spawn_carried_items() {
         global::sprites.push_back(springShoes);
         global::hud->next_item();
     }
+
+    if (carrying_spike_shoes) {
+        SpikeShoes *spikeShoes= new SpikeShoes();
+        spikeShoes->x = HUD_ITEMS_ROW_X;
+        spikeShoes->y = global::hud->items_offset_y;
+        spikeShoes->collected = true;
+        spikeShoes->init();
+        global::sprites.push_back(spikeShoes);
+        global::hud->next_item();
+    }
+
     if (carrying_compass) {
         Compass *compass = new Compass();
         compass->x = HUD_ITEMS_ROW_X;

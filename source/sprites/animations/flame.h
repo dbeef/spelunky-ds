@@ -1,38 +1,34 @@
 //
-// Created by xdbeef on 28.04.18.
+// Created by xdbeef on 02.06.18.
 //
 
-#ifndef SPELUNKYDS_BLOOD_H
-#define SPELUNKYDS_BLOOD_H
+#ifndef SPELUNKYDS_FLAME_H
+#define SPELUNKYDS_FLAME_H
 
-#define MAX_X_SPEED_BLOOD 1.5
-#define MAX_Y_SPEED_BLOOD 1.5
+#define MAX_X_SPEED_FLAME 1.5
+#define MAX_Y_SPEED_FLAME 1.5
 
-#define BLOOD_PHYSICAL_HEIGHT 5
-#define BLOOD_PHYSICAL_WIDTH 5
-#define BLOOD_SPRITE_HEIGHT 8
-#define BLOOD_SPRITE_WIDTH 8
+#define FLAME_PHYSICAL_HEIGHT 6
+#define FLAME_PHYSICAL_WIDTH 6
+#define FLAME_SPRITE_HEIGHT 16
+#define FLAME_SPRITE_WIDTH 16
 
-#define BLOOD_CHANGE_POS_DELTA 17
-#define BLOOD_ANIM_FRAME_DELTA 90
+#define FLAME_CHANGE_POS_DELTA 16
+#define FLAME_ANIM_FRAME_DELTA 90
 
 #include <vector>
 #include <nds/jtypes.h>
 #include "../moving_object.h"
-#include "blood_element.h"
 #include "../sprite_info.h"
+#include "flame_element.h"
 
+//almost same as blood animation
 
-//blood trail animation:
-//spawn 3-4 sprites with sBlood animation (3 frames)
-//every of them spawn every .5 second animation sBloodTrail, every one of them should be one frame in forward, comprared to the latter
-//if spawned 6 of them, then the sBlood animation sprites should finish with sBloodTrail animation
-
-class Blood : public MovingObject {
+class Flame : public MovingObject {
 
 public:
 
-    Blood();
+    Flame();
 
     void updateOther() override {};
 
@@ -67,14 +63,16 @@ public:
     int currentFrame{};
     int animFrameTimer{};
 
-    std::vector<BloodElement *> bloodTrail;
+    std::vector<FlameElement *> flame_trail;
 
     int living_timer{};
     int time_since_last_spawn{};
 
-    void spawn_blood();
+    int change_pos_delta_offset{};
+
+    void spawn_flame();
 };
 
 
 
-#endif //SPELUNKYDS_BLOOD_H
+#endif //SPELUNKYDS_FLAME_H

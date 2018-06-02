@@ -3,7 +3,7 @@
 //
 
 #include <maxmod9.h>
-#include "../../../build/gfx_spike_collectibles.h"
+#include "../../../build/gfx_spike_collectibles_flame.h"
 #include "chest.h"
 #include "../../collisions/collisions.h"
 #include "../../globals_declarations.h"
@@ -16,6 +16,7 @@
 #include "glove.h"
 #include "compass.h"
 #include "../animations/got_collectible.h"
+#include "../items/spike_shoes.h"
 
 #define CRATE_POS_INC_DELTA 15
 
@@ -24,8 +25,10 @@ void Crate::draw() {
     if (ready_to_dispose)
         return;
 
-    check_if_can_be_pickuped();
-    set_pickuped_position(8, 2);
+    if(!dropped_loot) {
+        check_if_can_be_pickuped();
+        set_pickuped_position(8, 2);
+    }
 
     if (check_if_can_be_opened()) {
         global::hud->draw();
@@ -96,16 +99,16 @@ void Crate::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in
 void Crate::initSprite() {
 
 
-    subSpriteInfo = global::sub_oam_manager->initSprite(gfx_spike_collectiblesPal, gfx_spike_collectiblesPalLen,
+    subSpriteInfo = global::sub_oam_manager->initSprite(gfx_spike_collectibles_flamePal, gfx_spike_collectibles_flamePalLen,
                                                         nullptr, sprite_width * sprite_height, sprite_width,
                                                         spriteType, true, false, LAYER_LEVEL::MIDDLE_TOP);
-    mainSpriteInfo = global::main_oam_manager->initSprite(gfx_spike_collectiblesPal, gfx_spike_collectiblesPalLen,
+    mainSpriteInfo = global::main_oam_manager->initSprite(gfx_spike_collectibles_flamePal, gfx_spike_collectibles_flamePalLen,
                                                           nullptr, sprite_width * sprite_height, sprite_width,
                                                           spriteType, true, false, LAYER_LEVEL::MIDDLE_TOP);
     if (activated_by_main_dude)
         frameGfx = nullptr;
     else
-        frameGfx = (u8 *) gfx_spike_collectiblesTiles + (sprite_width * sprite_height * (4) / 2);
+        frameGfx = (u8 *) gfx_spike_collectibles_flameTiles + (sprite_width * sprite_height * (4) / 2);
 
     subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
     mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
@@ -142,7 +145,7 @@ Crate::Crate() {
 //TODO lower chances for good items
 void Crate::drop_loot() {
 
-    int r = rand() % 8;
+    int r = rand() % 9;
 
     //drop rope or bomb
     if (r == 0 || r == 1) {
@@ -187,6 +190,9 @@ void Crate::drop_loot() {
             case 7:
                 m = new Shotgun();
                 break;
+            case 8:
+                m = new SpikeShoes();
+                break;
 
             default:
                 break;
@@ -203,7 +209,7 @@ void Crate::drop_loot() {
 }
 
 void Crate::play_collectible_animation() {
-    frameGfx = (u8 *) gfx_spike_collectiblesTiles + (sprite_width * sprite_height * (5 + animFrame) / 2);
+    frameGfx = (u8 *) gfx_spike_collectibles_flameTiles + (sprite_width * sprite_height * (5 + animFrame) / 2);
     subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
     mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
 

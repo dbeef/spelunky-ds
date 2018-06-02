@@ -3,7 +3,7 @@
 //
 
 #include <maxmod9.h>
-#include "../../../build/gfx_spike_collectibles.h"
+#include "../../../build/gfx_spike_collectibles_flame.h"
 #include "chest.h"
 #include "../../collisions/collisions.h"
 #include "../../globals_declarations.h"
@@ -22,7 +22,7 @@ void Chest::draw() {
 
     if (check_if_can_be_opened()) {
 
-        frameGfx = (u8 *) gfx_spike_collectiblesTiles + (sprite_width * sprite_height * (3) / 2);
+        frameGfx = (u8 *) gfx_spike_collectibles_flameTiles + (sprite_width * sprite_height * (3) / 2);
         subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
         mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
         mmEffect(SFX_XCHESTOPEN);
@@ -70,16 +70,16 @@ void Chest::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in
 
 void Chest::initSprite() {
 
-    subSpriteInfo = global::sub_oam_manager->initSprite(gfx_spike_collectiblesPal, gfx_spike_collectiblesPalLen,
+    subSpriteInfo = global::sub_oam_manager->initSprite(gfx_spike_collectibles_flamePal, gfx_spike_collectibles_flamePalLen,
                                                         nullptr, sprite_width * sprite_height, sprite_width,
                                                         spriteType, true, false, LAYER_LEVEL::MIDDLE_TOP);
-    mainSpriteInfo = global::main_oam_manager->initSprite(gfx_spike_collectiblesPal, gfx_spike_collectiblesPalLen,
+    mainSpriteInfo = global::main_oam_manager->initSprite(gfx_spike_collectibles_flamePal, gfx_spike_collectibles_flamePalLen,
                                                           nullptr, sprite_width * sprite_height, sprite_width,
                                                           spriteType, true, false, LAYER_LEVEL::MIDDLE_TOP);
     if (activated_by_main_dude)
-        frameGfx = (u8 *) gfx_spike_collectiblesTiles + (sprite_width * sprite_height * (3) / 2);
+        frameGfx = (u8 *) gfx_spike_collectibles_flameTiles + (sprite_width * sprite_height * (3) / 2);
     else
-        frameGfx = (u8 *) gfx_spike_collectiblesTiles + (sprite_width * sprite_height * (2) / 2);
+        frameGfx = (u8 *) gfx_spike_collectibles_flameTiles + (sprite_width * sprite_height * (2) / 2);
 
     subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
     mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
@@ -118,7 +118,7 @@ void Chest::spawn_treasure() {
     for (int a = 0; a < 4; a++) {
         Moniez *moniez = new Moniez();
 
-        moniez->spriteType = MONIEZ_RUBY;
+        moniez->spritesheet_type = MONIEZ_RUBY;
         moniez->value = 1200;
         moniez->init();
         global::sprites.push_back(moniez);

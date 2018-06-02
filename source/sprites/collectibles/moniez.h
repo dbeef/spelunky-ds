@@ -20,11 +20,17 @@
 #define TRIPLE_GOLDBAR_SPRITE_HEIGHT 16
 #define TRIPLE_GOLDBAR_SPRITE_WIDTH 16
 
+#define ONE_GOLDBAR_PHYSICAL_HEIGHT 5
+#define ONE_GOLDBAR_PHYSICAL_WIDTH 8
+#define ONE_GOLDBAR_SPRITE_HEIGHT 16
+#define ONE_GOLDBAR_SPRITE_WIDTH 16
+
 #define MAX_X_SPEED_MONIEZ 4
 #define MAX_Y_SPEED_MONIEZ 4
 
 #include "../moving_object.h"
 #include "../sprite_info.h"
+#include "../sprite_type.h"
 
 class Moniez : public MovingObject {
 
@@ -60,12 +66,12 @@ public:
     u8 *frameGfx{};
 
     int value{};
-    int ruby_type{};
+    SpriteType sprite_type{};
 
     int collectible_timer{};
 
     bool collected{};
-    SpritesheetType spriteType{};
+    SpritesheetType spritesheet_type{};
 
     void set_position();
 };

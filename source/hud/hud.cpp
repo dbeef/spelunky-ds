@@ -196,11 +196,11 @@ void Hud::draw_on_level_done() {
     }
 
     for (int a = 0; a < global::collected_loot.size(); a++) {
-        if (global::collected_loot.at(a) == SpriteType::S_MONIEZ_TRIPLE_GOLD_BARS) {
+        if (global::collected_loot.at(a) == SpriteType::S_MONIEZ_TRIPLE_GOLDBARS) {
             Moniez *moniez = new Moniez();
             moniez->sprite_height = 16;
             moniez->sprite_width = 16;
-            moniez->spriteType = MONIEZ_TRIPLE_GOLD_BARS;
+            moniez->spritesheet_type = MONIEZ_GOLDBARS;
             moniez->value = 1000;
             moniez->init();
             global::sprites.push_back(moniez);
@@ -214,9 +214,8 @@ void Hud::draw_on_level_done() {
             Moniez *moniez = new Moniez();
             moniez->sprite_height = 8;
             moniez->sprite_width = 8;
-            moniez->spriteType = MONIEZ_RUBY;
+            moniez->spritesheet_type = MONIEZ_RUBY;
             moniez->value = 1200;
-            moniez->ruby_type = 0;
             moniez->initSprite();
             global::sprites.push_back(moniez);
             moniez->x = 96 + (a * 8);
@@ -229,9 +228,8 @@ void Hud::draw_on_level_done() {
             Moniez *moniez = new Moniez();
             moniez->sprite_height = 8;
             moniez->sprite_width = 8;
-            moniez->spriteType = MONIEZ_RUBY;
+            moniez->spritesheet_type = MONIEZ_RUBY;
             moniez->value = 1200;
-            moniez->ruby_type = 1;
             moniez->initSprite();
             global::sprites.push_back(moniez);
             moniez->x = 96 + (a * 8);
@@ -244,9 +242,8 @@ void Hud::draw_on_level_done() {
             Moniez *moniez = new Moniez();
             moniez->sprite_height = 8;
             moniez->sprite_width = 8;
-            moniez->spriteType = MONIEZ_RUBY;
+            moniez->spritesheet_type = MONIEZ_RUBY;
             moniez->value = 1200;
-            moniez->ruby_type = 2;
             moniez->initSprite();
             global::sprites.push_back(moniez);
             moniez->x = 96 + (a * 8);

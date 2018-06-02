@@ -11,6 +11,7 @@
 #include "../../../build/soundbank.h"
 #include "../../tiles/map_utils.h"
 #include "../../collisions/collisions.h"
+#include "../animations/flame.h"
 #include <math.h>       /* floor */
 #include <maxmod9.h>
 
@@ -63,6 +64,21 @@ void Bomb::draw() {
             if (explosionTimer > BOMB_ANIM_FRAME_DELTA && explosionFrame < 10) {
 
                 if (explosionFrame == 0) {
+
+                    for (int a = 0; a < 4; a++) {
+                        Flame *flame = new Flame();
+                        flame->init();
+                        flame->x = x;
+                        flame->y = y;
+
+                        if (a % 2 == 0)
+                            flame->xSpeed = (1.3 / a);
+                        else
+                            flame->xSpeed = (-1.3 / a);
+
+                        flame->ySpeed = -2 / a;
+                        global::sprites.push_back(flame);
+                    }
 
                     mmEffect(SFX_XEXPLOSION);
 
@@ -162,10 +178,13 @@ void Bomb::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_
     Collisions::getNeighboringTiles(global::level_generator->map_tiles, x_current_pos_in_tiles, y_current_pos_in_tiles,
                                     tiles);
 
-    bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, physical_width, physical_height, true, BOUNCING_FACTOR_Y);
-    leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true, BOUNCING_FACTOR_X);
-    rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true,BOUNCING_FACTOR_X);
-    upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, physical_width, true,BOUNCING_FACTOR_Y);
+    bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, physical_width, physical_height, true,
+                                                       BOUNCING_FACTOR_Y);
+    leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true,
+                                                   BOUNCING_FACTOR_X);
+    rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true,
+                                                     BOUNCING_FACTOR_X);
+    upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, physical_width, true, BOUNCING_FACTOR_Y);
 
 }
 

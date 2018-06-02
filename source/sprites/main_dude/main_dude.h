@@ -107,6 +107,7 @@ public:
     bool started_climbing_ladder{};
 
     bool carrying_spring_shoes{};
+    bool carrying_spike_shoes{};
     bool carrying_mitt{};
     bool carrying_glove{};
     bool carrying_compass{};

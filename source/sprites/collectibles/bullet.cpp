@@ -4,7 +4,7 @@
 
 #include "../../globals_declarations.h"
 #include "../../collisions/collisions.h"
-#include "../../../build/gfx_spike_collectibles.h"
+#include "../../../build/gfx_spike_collectibles_flame.h"
 #include "../moving_object.h"
 #include "bullet.h"
 
@@ -71,14 +71,14 @@ void Bullet::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_i
 void Bullet::initSprite() {
 
 
-    subSpriteInfo = global::sub_oam_manager->initSprite(gfx_spike_collectiblesPal, gfx_spike_collectiblesPalLen,
+    subSpriteInfo = global::sub_oam_manager->initSprite(gfx_spike_collectibles_flamePal, gfx_spike_collectibles_flamePalLen,
                                                         nullptr, sprite_width * sprite_height, sprite_width,
                                                         spriteType, true, false, LAYER_LEVEL::MIDDLE_TOP);
-    mainSpriteInfo = global::main_oam_manager->initSprite(gfx_spike_collectiblesPal, gfx_spike_collectiblesPalLen,
+    mainSpriteInfo = global::main_oam_manager->initSprite(gfx_spike_collectibles_flamePal, gfx_spike_collectibles_flamePalLen,
                                                           nullptr, sprite_width * sprite_height, sprite_width,
                                                           spriteType, true, false, LAYER_LEVEL::MIDDLE_TOP);
 
-    frameGfx = (u8 *) gfx_spike_collectiblesTiles + (sprite_width * sprite_height * (25) / 2);
+    frameGfx = (u8 *) gfx_spike_collectibles_flameTiles + (sprite_width * sprite_height * (25) / 2);
 
     subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
     mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
@@ -124,7 +124,7 @@ void Bullet::apply_bullet_dispose_animation() {
         animFrame++;
         animFrameTimer = 0;
 
-        frameGfx = (u8 *) gfx_spike_collectiblesTiles + (sprite_width * sprite_height * (25 + animFrame) / 2);
+        frameGfx = (u8 *) gfx_spike_collectibles_flameTiles + (sprite_width * sprite_height * (25 + animFrame) / 2);
         subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
         mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
     }

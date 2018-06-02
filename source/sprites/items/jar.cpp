@@ -5,7 +5,7 @@
 #include <cmath>
 #include "jar.h"
 #include "../../globals_declarations.h"
-#include "../../../build/gfx_spike_collectibles.h"
+#include "../../../build/gfx_spike_collectibles_flame.h"
 #include "../../collisions/collisions.h"
 
 #define JAR_POS_INC_DELTA 15
@@ -40,7 +40,7 @@ void Jar::draw() {
         if (frameTimer > 50) {
             frame++;
 
-            frameGfx = (u8 *) gfx_spike_collectiblesTiles + ((frame + 24) * sprite_height * sprite_width / 2);
+            frameGfx = (u8 *) gfx_spike_collectibles_flameTiles + ((frame + 24) * sprite_height * sprite_width / 2);
             subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
             mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
 
@@ -119,15 +119,15 @@ void Jar::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_t
 }
 
 void Jar::initSprite() {
-    subSpriteInfo = global::sub_oam_manager->initSprite(gfx_spike_collectiblesPal, gfx_spike_collectiblesPalLen,
+    subSpriteInfo = global::sub_oam_manager->initSprite(gfx_spike_collectibles_flamePal, gfx_spike_collectibles_flamePalLen,
                                                         nullptr, sprite_width * sprite_height, 16, JAR, true, false,
                                                         LAYER_LEVEL::MIDDLE_TOP);
-    mainSpriteInfo = global::main_oam_manager->initSprite(gfx_spike_collectiblesPal, gfx_spike_collectiblesPalLen,
+    mainSpriteInfo = global::main_oam_manager->initSprite(gfx_spike_collectibles_flamePal, gfx_spike_collectibles_flamePalLen,
                                                           nullptr, sprite_width * sprite_height, 16, JAR, true, false,
                                                           LAYER_LEVEL::MIDDLE_TOP);
 
 
-    frameGfx = (u8 *) gfx_spike_collectiblesTiles + ((24 * sprite_height * sprite_width) / 2);
+    frameGfx = (u8 *) gfx_spike_collectibles_flameTiles + ((24 * sprite_height * sprite_width) / 2);
     subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
     mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
 

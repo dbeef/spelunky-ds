@@ -16,10 +16,14 @@ enum SpriteType {
     S_BOMB,                       //3
     S_ROCK,                       //4
     S_JAR,                        //5
-    S_MONIEZ_TRIPLE_GOLD_BARS,    //6
+    S_MONIEZ_TRIPLE_GOLDBARS,     //6
+    S_MONIEZ_ONE_GOLDBAR,         //6
     S_MONIEZ_RUBY_BIG_RED,        //7
     S_MONIEZ_RUBY_BIG_BLUE,       //8
     S_MONIEZ_RUBY_BIG_GREEN,      //9
+    S_MONIEZ_RUBY_SMALL_RED,        //7
+    S_MONIEZ_RUBY_SMALL_BLUE,       //8
+    S_MONIEZ_RUBY_SMALL_GREEN,      //9
     S_SNAKE,                      //10
     S_ROPES,                      //11
     S_ROPE_ELEMENT,               //12

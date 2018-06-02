@@ -16,7 +16,7 @@ enum SpritesheetType{
     BOMB,                       //3
     BLOOD_ROCK_ROPE_POOF,       //4
     JAR,                        //5
-    MONIEZ_TRIPLE_GOLD_BARS,    //6
+    MONIEZ_GOLDBARS,            //6
     MONIEZ_RUBY,                //7
     SNAKE,                      //8
     PRE_WHIP,                   //11

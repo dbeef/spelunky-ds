@@ -2,7 +2,7 @@
 // Created by xdbeef on 15.05.18.
 //
 
-#include "../../../build/gfx_spike_collectibles.h"
+#include "../../../build/gfx_spike_collectibles_flame.h"
 #include <cstdlib>
 #include <maxmod9.h>
 #include "spikes.h"
@@ -25,7 +25,7 @@ void Spikes::draw() {
         kill_main_dude();
         spawn_blood();
         blood = true;
-        frameGfx = (u8 *) gfx_spike_collectiblesTiles + (sprite_width * sprite_height * (1) / 2);
+        frameGfx = (u8 *) gfx_spike_collectibles_flameTiles + (sprite_width * sprite_height * (1) / 2);
         subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
         mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
     }
@@ -47,7 +47,7 @@ void Spikes::draw() {
 
 
                     blood = true;
-                    frameGfx = (u8 *) gfx_spike_collectiblesTiles + (sprite_width * sprite_height * (1) / 2);
+                    frameGfx = (u8 *) gfx_spike_collectibles_flameTiles + (sprite_width * sprite_height * (1) / 2);
                     subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
                     mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
                 }
@@ -69,14 +69,14 @@ void Spikes::init() {
 void Spikes::initSprite() {
 
     if (blood)
-        frameGfx = (u8 *) gfx_spike_collectiblesTiles + (sprite_width * sprite_height * (1) / 2);
+        frameGfx = (u8 *) gfx_spike_collectibles_flameTiles + (sprite_width * sprite_height * (1) / 2);
     else
-        frameGfx = (u8 *) gfx_spike_collectiblesTiles;
+        frameGfx = (u8 *) gfx_spike_collectibles_flameTiles;
 
-    subSpriteInfo = global::sub_oam_manager->initSprite(gfx_spike_collectiblesPal, gfx_spike_collectiblesPalLen,
+    subSpriteInfo = global::sub_oam_manager->initSprite(gfx_spike_collectibles_flamePal, gfx_spike_collectibles_flamePalLen,
                                                         nullptr, sprite_width * sprite_height, sprite_width,
                                                         spriteType, true, false, LAYER_LEVEL::MIDDLE_TOP);
-    mainSpriteInfo = global::main_oam_manager->initSprite(gfx_spike_collectiblesPal, gfx_spike_collectiblesPalLen,
+    mainSpriteInfo = global::main_oam_manager->initSprite(gfx_spike_collectibles_flamePal, gfx_spike_collectibles_flamePalLen,
                                                           nullptr, sprite_width * sprite_height, sprite_width,
                                                           spriteType, true, false, LAYER_LEVEL::MIDDLE_TOP);
 

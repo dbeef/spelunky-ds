@@ -30,24 +30,11 @@ void Camera::update_position() {
 
     position_update_timer += *global::timer;
 
-    int center_x = global::main_dude->x - 128;
-    int center_y = global::main_dude->y - 96;
-
-    //todo smooth the camera movement
-
-    if (abs(center_x - this->x) > BOUNDARY_X) {
-        if (center_x > this->x)
-            this->x += 2;
-        else
-            this->x -= 2;
-    }
-
-    if (abs(center_y - this->y) > BOUNDARY_Y) {
-        if (center_y > this->y)
-            this->y += 2;
-        else
-            this->y -= 2;
-    }
+    //main dude's spriting, scroll faster
+    if (global::input_handler->r_bumper_held)
+        center_camera(3);
+    else
+        center_camera(2);
 
     position_update_timer = 0;
 
@@ -65,4 +52,25 @@ void Camera::set_scroll() {
     bgSetScroll(global::bg_main_address, this->x, this->y);
     bgSetScroll(global::bg_sub_address, this->x, this->y + 192);
     bgUpdate();
+}
+
+void Camera::center_camera(int camera_speed) {
+
+    int center_x = global::main_dude->x - 128;
+    int center_y = global::main_dude->y - 96;
+
+
+    if (abs(center_x - this->x) > BOUNDARY_X) {
+        if (center_x > this->x)
+            this->x += camera_speed;
+        else
+            this->x -= camera_speed;
+    }
+
+    if (abs(center_y - this->y) > BOUNDARY_Y) {
+        if (center_y > this->y)
+            this->y += camera_speed;
+        else
+            this->y -= camera_speed;
+    }
 }

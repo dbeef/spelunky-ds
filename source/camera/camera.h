@@ -15,6 +15,7 @@ public:
     void set_scroll();
     void instant_focus();
     void apply_map_boundaries();
+    void center_camera(int camera_speed);
 };
 
 #endif //SPELUNKYDS_CAMERA_H

@@ -47,8 +47,7 @@ void Caveman::draw() {
             mainSpriteInfo->entry->priority = OBJPRIORITY_0;
             subSpriteInfo->entry->priority = OBJPRIORITY_0;
 
-        }
-        else {
+        } else {
             mainSpriteInfo->entry->priority = OBJPRIORITY_2;
             subSpriteInfo->entry->priority = OBJPRIORITY_2;
         }
@@ -101,8 +100,12 @@ void Caveman::draw() {
 
     if (!stunned && !killed)
         kill_if_whip(1);
-    if (!stunned && !killed)
-        kill_if_main_dude_jumped_on_you(1);
+    if (!stunned && !killed) {
+        if (global::main_dude->carrying_spike_shoes)
+            kill_if_main_dude_jumped_on_you(3);
+        else
+            kill_if_main_dude_jumped_on_you(1);
+    }
     if (!stunned && !killed)
         deal_damage_main_dude_on_collision(1);
 
