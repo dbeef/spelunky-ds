@@ -58,7 +58,8 @@ void gameloop::scroll() {
         global::camera->update_position();
 
         for (int a = 0; a < global::sprites.size(); a++) {
-            if (global::sprites.at(a) /*&& !global::sprites.at(a)->ready_to_dispose *//*&& !global::sprites.at(a)->killed*/) {
+            if (global::sprites.at(
+                    a) /*&& !global::sprites.at(a)->ready_to_dispose *//*&& !global::sprites.at(a)->killed*/) {
                 (*global::sprites.at(a)).update();
                 (*global::sprites.at(a)).draw();
             }
@@ -229,10 +230,11 @@ void gameloop::populate_cave_npcs() {
 
     int last_placement = 3;
 
-    int bats_left = 8;
-    int spiders_left = 8;
-    int snakes_left = 8;
+    int bats_left = 5;
+    int spiders_left = 5;
+    int snakes_left = 5;
     int spikes_left = 4;
+    int cavemen_left = 3;
 
     std::cout << '\n' << '\n';
 
@@ -276,20 +278,13 @@ void gameloop::populate_cave_npcs() {
 
 
                     if (npc == 1 && snakes_left > 0 && r == 1) {
-                        Caveman *caveman = new Caveman();
-                        caveman ->init();
-                        global::sprites.push_back(caveman );
-                        caveman ->x = pos_x * 16;
-                        caveman ->y = pos_y * 16;
-                        snakes_left--;
-                        last_placement = 0;
-                        /*                        Snake *snake = new Snake();
+                        Snake *snake = new Snake();
                         snake->init();
                         global::sprites.push_back(snake);
                         snake->x = pos_x * 16;
                         snake->y = pos_y * 16;
                         snakes_left--;
-                        last_placement = 0;*/
+                        last_placement = 0;
                     }
 
                     if (npc == 2 && bats_left > 0 && r == 1) {
@@ -313,7 +308,7 @@ void gameloop::populate_cave_npcs() {
                     }
 
                     if (npc == 4 && spikes_left > 0 && r == 1) {
-                        Spikes *spikes= new Spikes();
+                        Spikes *spikes = new Spikes();
                         spikes->init();
                         global::sprites.push_back(spikes);
                         spikes->x = pos_x * 16;
@@ -321,6 +316,18 @@ void gameloop::populate_cave_npcs() {
                         spikes_left--;
                         last_placement = 0;
                     }
+
+
+                    if (npc == 5 && cavemen_left > 0 && r == 1) {
+                        Caveman *caveman = new Caveman();
+                        caveman ->init();
+                        global::sprites.push_back(caveman );
+                        caveman ->x = pos_x * 16;
+                        caveman ->y = pos_y * 16;
+                        cavemen_left--;
+                        last_placement = 0;
+                    }
+
                 }
             }
         }

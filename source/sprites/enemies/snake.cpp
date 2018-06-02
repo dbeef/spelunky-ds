@@ -34,7 +34,7 @@ void Snake::draw() {
 
     animFrameTimer += *global::timer;
 
-    if (animFrameTimer > SNAKE_POS_INC_DELTA) {
+    if (animFrameTimer > SNAKE_ANIM_FRAME_DELTA) {
 
         animFrame++;
         if (animFrame >= 4)
