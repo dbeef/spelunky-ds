@@ -3,7 +3,6 @@
 //
 
 
-
 #include "../spritesheet_type.h"
 #include "../../globals_declarations.h"
 #include "../../collisions/collisions.h"
@@ -12,7 +11,7 @@
 #include "../moving_object.h"
 #include "spike_shoes.h"
 
-#define spike_SHOES_POS_INC_DELTA 15
+#define SPIKE_SHOES_POS_INC_DELTA 15
 
 void SpikeShoes::draw() {
 
@@ -63,7 +62,7 @@ void SpikeShoes::updateSpeed() {
 
     pos_inc_timer += *global::timer;
 
-    bool change_pos = (pos_inc_timer > spike_SHOES_POS_INC_DELTA) && !hold_by_main_dude;
+    bool change_pos = (pos_inc_timer > SPIKE_SHOES_POS_INC_DELTA) && !hold_by_main_dude;
 
     if (change_pos) {
         update_position();

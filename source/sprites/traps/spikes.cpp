@@ -16,7 +16,7 @@ void Spikes::draw() {
     if (ready_to_dispose)
         return;
 
-    if (!global::main_dude->dead
+    if (!global::main_dude->dead && !global::main_dude->using_cape
         && Collisions::checkCollisionBodiesLeftLowerCorner
                 (x, y + 16, physical_width, physical_height, global::main_dude->x, global::main_dude->y + 16, 16, 16) &&
         /*global::main_dude->time_since_last_damage > 1000 &&*/

@@ -47,7 +47,9 @@ void MainDude::handle_key_input() {
                 time_since_last_jump = 0;
 
                 mmEffect(SFX_XJUMP);
-
+            } else if (ySpeed > 0) {
+                if (carrying_cape)
+                    using_cape = true;
             }
 
             if ((hanging_on_tile_left || hanging_on_tile_right) && hanging_timer > MIN_HANGING_TIME &&
@@ -67,7 +69,7 @@ void MainDude::handle_key_input() {
         if (global::input_handler->y_key_down) {
 
             if (!stunned && !using_whip) {
-                if (holding_item) {
+                if (holding_item ) {
                     throw_item();
                 } else {
                     mmEffect(SFX_XWHIP);
@@ -323,6 +325,10 @@ void MainDude::updateTimers() {
             global::main_dude->ySpeed = -MAIN_DUDE_JUMP_SPEED * 0.25;
             global::main_dude->dead = true;
             mmEffect(SFX_XDIE);
+
+            global::hud->ropes = 0;
+            global::hud->bombs = 0;
+
         }
 
         mmEffect(SFX_XLAND);
@@ -359,7 +365,9 @@ void MainDude::updateSpeed() {
         limit_speed(MAIN_DUDE_MAX_X_SPEED_CRAWLING, MAIN_DUDE_MAX_Y_SPEED);
     else if (global::input_handler->r_bumper_held)
         limit_speed(MAIN_DUDE_MAX_X_SPEED_RUNNING, MAIN_DUDE_MAX_Y_SPEED);
-    else
+    else if(using_cape)
+        limit_speed(MAIN_DUDE_MAX_X_SPEED, MAIN_DUDE_MAX_Y_SPEED_USING_CAPE);
+        else
         limit_speed(MAIN_DUDE_MAX_X_SPEED, MAIN_DUDE_MAX_Y_SPEED);
 
     bool change_pos = (crawling && pos_inc_timer > 20) || (!crawling && pos_inc_timer > 1);
@@ -370,8 +378,9 @@ void MainDude::updateSpeed() {
         update_position();
         pos_inc_timer = 0;
 
-        if (!bottomCollision && !(hanging_on_tile_left || hanging_on_tile_right) && !climbing)
-            ySpeed += GRAVITY_DELTA_SPEED;
+        if (!bottomCollision && !(hanging_on_tile_left || hanging_on_tile_right) && !climbing) {
+                ySpeed += GRAVITY_DELTA_SPEED;
+        }
     }
 
 
@@ -384,18 +393,25 @@ void MainDude::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos
     Collisions::getNeighboringTiles(global::level_generator->map_tiles, x_current_pos_in_tiles, y_current_pos_in_tiles,
                                     tiles);
 
-    bottomCollision = Collisions::checkBottomCollision(tiles, &this->x, &this->y, &ySpeed, 16, 16, dead, BOUNCING_FACTOR_Y);
+    bottomCollision = Collisions::checkBottomCollision(tiles, &this->x, &this->y, &ySpeed, 16, 16, dead,
+                                                       BOUNCING_FACTOR_Y);
     leftCollision = Collisions::checkLeftCollision(tiles, &this->x, &this->y, &xSpeed, 16, 16, dead, BOUNCING_FACTOR_X);
-    rightCollision = Collisions::checkRightCollision(tiles, &this->x, &this->y, &xSpeed, 16, 16, dead, BOUNCING_FACTOR_X);
+    rightCollision = Collisions::checkRightCollision(tiles, &this->x, &this->y, &xSpeed, 16, 16, dead,
+                                                     BOUNCING_FACTOR_X);
     upperCollision = Collisions::checkUpperCollision(tiles, &this->x, &this->y, &ySpeed, 16, dead, BOUNCING_FACTOR_Y);
 
     can_hang_on_tile(tiles);
 
+    if(hanging_on_tile_right || hanging_on_tile_left){
+        using_cape = false;
+    }
+
     if (upperCollision || bottomCollision) {
         hanging_on_tile_left = false;
         hanging_on_tile_right = false;
+        if(using_cape)
+            jumping_timer = 0;
     }
-
 
     if (!bottomCollision) {
         if (((tiles[1] == nullptr || !tiles[1]->collidable) && (tiles[6] != nullptr && tiles[8] != nullptr))) {
@@ -468,11 +484,13 @@ void MainDude::draw() {
 void MainDude::initSprite() {
 
     main_spelunker = global::main_oam_manager->initSprite(gfx_spelunkerPal, gfx_spelunkerPalLen, nullptr,
-                                                          sprite_width * sprite_height, 16, MAIN_DUDE, true, false, LAYER_LEVEL::MIDDLE_TOP);
+                                                          sprite_width * sprite_height, 16, MAIN_DUDE, true, false,
+                                                          LAYER_LEVEL::MIDDLE_TOP);
 
 
     sub_spelunker = global::sub_oam_manager->initSprite(gfx_spelunkerPal, gfx_spelunkerPalLen, nullptr,
-                                                        sprite_width * sprite_height, 16, MAIN_DUDE, true, false, LAYER_LEVEL::MIDDLE_TOP);
+                                                        sprite_width * sprite_height, 16, MAIN_DUDE, true, false,
+                                                        LAYER_LEVEL::MIDDLE_TOP);
 
     int main_x = x - global::camera->x;
     int main_y = y - global::camera->y;

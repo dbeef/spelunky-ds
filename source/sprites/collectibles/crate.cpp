@@ -17,6 +17,7 @@
 #include "compass.h"
 #include "../animations/got_collectible.h"
 #include "../items/spike_shoes.h"
+#include "../items/cape.h"
 
 #define CRATE_POS_INC_DELTA 15
 
@@ -145,7 +146,7 @@ Crate::Crate() {
 //TODO lower chances for good items
 void Crate::drop_loot() {
 
-    int r = rand() % 9;
+    int r = rand() % 10;
 
     //drop rope or bomb
     if (r == 0 || r == 1) {
@@ -179,7 +180,7 @@ void Crate::drop_loot() {
                 m = new SpringShoes();
                 break;
             case 4:
-                m = new Mitt();
+                m = new Cape();
                 break;
             case 5:
                 m = new Compass();
@@ -192,6 +193,9 @@ void Crate::drop_loot() {
                 break;
             case 8:
                 m = new SpikeShoes();
+                break;
+            case 9:
+                m = new Mitt();
                 break;
 
             default:

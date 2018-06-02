@@ -15,6 +15,10 @@ void GameState::start_new_game() {
     global::main_dude->carrying_compass = false;
     global::main_dude->carrying_glove = false;
     global::main_dude->carrying_mitt = false;
+    global::main_dude->carrying_spike_shoes = false;
+    global::main_dude->carrying_cape = false;
+    global::main_dude->carrying_shotgun = false;
+    global::main_dude->carrying_pistol = false;
 
     global::hud->hearts = 4;
     global::hud->ropes = 4;
@@ -184,10 +188,10 @@ void GameState::set_position_to(MapTileType t) {
     MapTile *entrance;
     global::level_generator->get_first_tile(t, entrance);
 
-    if(entrance != nullptr) {
+    if (entrance != nullptr) {
         global::main_dude->x = entrance->x * 16;
         global::main_dude->y = entrance->y * 16;
-    } else{
+    } else {
         global::main_dude->x = 113;
         global::main_dude->y = 288;
     }

@@ -16,6 +16,7 @@
 #define MAIN_DUDE_MAX_X_SPEED_RUNNING 3
 
 #define MAIN_DUDE_MAX_Y_SPEED 3.3
+#define MAIN_DUDE_MAX_Y_SPEED_USING_CAPE 1.7
 #define MAIN_DUDE_JUMP_SPEED 2.55
 #define MIN_HANGING_TIME 100
 #define STUN_TIME 2000
@@ -113,6 +114,9 @@ public:
     bool carrying_compass{};
     bool carrying_pistol{};
     bool carrying_shotgun{};
+
+    bool carrying_cape{};
+    bool using_cape{};
 
     void handle_key_input();
 

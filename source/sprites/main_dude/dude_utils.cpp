@@ -16,6 +16,7 @@
 #include "../../../build/soundbank.h"
 #include "../../tiles/tile_orientation.h"
 #include "../items/spike_shoes.h"
+#include "../items/cape.h"
 
 void MainDude::throw_item() {
 
@@ -26,7 +27,7 @@ void MainDude::throw_item() {
         if (global::sprites.at(a)) {
             if ((*global::sprites.at(a)).hold_by_main_dude) {
 
-                if ((*global::sprites.at(a)).activated_by_main_dude) {
+                if ((*global::sprites.at(a)).activated_by_main_dude && !carrying_pistol && !carrying_shotgun) {
 
                     if (!global::input_handler->down_key_held) {
 
@@ -147,6 +148,15 @@ void MainDude::spawn_carried_items() {
         glove->collected = true;
         glove->init();
         global::sprites.push_back(glove);
+        global::hud->next_item();
+    }
+    if (carrying_cape) {
+        Cape *cape = new Cape();
+        cape->x = HUD_ITEMS_ROW_X;
+        cape->y = global::hud->items_offset_y;
+        cape->collected = true;
+        cape->init();
+        global::sprites.push_back(cape);
         global::hud->next_item();
     }
     if (carrying_mitt) {
