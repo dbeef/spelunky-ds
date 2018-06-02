@@ -4,7 +4,7 @@
 
 #include "../../globals_declarations.h"
 #include "../main_dude/main_dude.h"
-#include "../../../build/gfx_blood_rock_rope.h"
+#include "../../../build/gfx_blood_rock_rope_poof.h"
 #include "rock.h"
 #include "../../collisions/collisions.h"
 #include "../../tiles/map_utils.h"
@@ -84,14 +84,14 @@ void Rock::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_
 
 void Rock::initSprite() {
 
-    subSpriteInfo = global::sub_oam_manager->initSprite(gfx_blood_rock_ropePal, gfx_blood_rock_ropePalLen,
-                                                        nullptr, sprite_width * sprite_height, 8, BLOOD_ROCK_ROPE, true, false,
+    subSpriteInfo = global::sub_oam_manager->initSprite(gfx_blood_rock_rope_poofPal, gfx_blood_rock_rope_poofPalLen,
+                                                        nullptr, sprite_width * sprite_height, 8, BLOOD_ROCK_ROPE_POOF, true, false,
                                                         LAYER_LEVEL::MIDDLE_TOP);
-    mainSpriteInfo = global::main_oam_manager->initSprite(gfx_blood_rock_ropePal, gfx_blood_rock_ropePalLen,
-                                                          nullptr, sprite_width * sprite_height, 8, BLOOD_ROCK_ROPE, true, false,
+    mainSpriteInfo = global::main_oam_manager->initSprite(gfx_blood_rock_rope_poofPal, gfx_blood_rock_rope_poofPalLen,
+                                                          nullptr, sprite_width * sprite_height, 8, BLOOD_ROCK_ROPE_POOF, true, false,
                                                           LAYER_LEVEL::MIDDLE_TOP);
 
-    frameGfx = (u8 *) gfx_blood_rock_ropeTiles + (sprite_height * sprite_width * 7 / 2);
+    frameGfx = (u8 *) gfx_blood_rock_rope_poofTiles + (sprite_height * sprite_width * 7 / 2);
     subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
     mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
 
@@ -102,6 +102,6 @@ Rock::Rock() {
     physical_width = ROCK_PHYSICAL_WIDTH;
     sprite_height = ROCK_SPRITE_HEIGHT;
     sprite_width = ROCK_SPRITE_WIDTH;
-    spriteType = SpritesheetType::BLOOD_ROCK_ROPE;
+    spriteType = SpritesheetType::BLOOD_ROCK_ROPE_POOF;
 }
 

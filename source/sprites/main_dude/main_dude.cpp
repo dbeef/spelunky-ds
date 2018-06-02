@@ -28,6 +28,7 @@
 #include "../collectibles/mitt.h"
 #include "../collectibles/shotgun.h"
 #include "../collectibles/pistol.h"
+#include "../animations/fall_poof.h"
 
 void MainDude::handle_key_input() {
 
@@ -302,6 +303,20 @@ void MainDude::updateTimers() {
         }
         stunned = true;
 
+        FallPoof *f_left = new FallPoof();
+        FallPoof *f_right = new FallPoof();
+
+        f_left->x = x - 4;
+        f_right->x = x + MAIN_DUDE_PHYSICAL_WIDTH - 6;
+
+        f_left->y = y + 8;
+        f_right->y = y + 8;
+
+        f_left->init();
+        f_right->init();
+
+        global::sprites.push_back(f_left);
+        global::sprites.push_back(f_right);
 
         if (global::hud->hearts == 0) {
             global::hud->hide();

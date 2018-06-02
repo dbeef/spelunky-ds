@@ -13,7 +13,7 @@ namespace oam_utils {
 
         global::clean_unused_oam_timer += *global::timer;
 
-        if (global::clean_unused_oam_timer > 2500 && global::main_oam_manager->current_oam_id_tiles >= 108) {
+        if (global::clean_unused_oam_timer > 250 && global::main_oam_manager->current_oam_id_tiles >= 120) {
 
             for (int a = 0; a < global::sprites.size(); a++) {
                 if (global::sprites.at(a)->ready_to_dispose) {

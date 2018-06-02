@@ -38,6 +38,8 @@ public:
 
     void onCollisionWithMainCharacter() override {};
 
+    int active_timer{};
+    bool active{};
 
     SpriteInfo *mainSpriteInfo {};
     SpriteInfo *subSpriteInfo {};

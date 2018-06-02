@@ -14,7 +14,7 @@ enum SpritesheetType{
     MENU_SIGNS_TUTORIAL_QUIT,   //1
     MENU_SIGNS_START_SCORES,    //2
     BOMB,                       //3
-    BLOOD_ROCK_ROPE,            //4
+    BLOOD_ROCK_ROPE_POOF,       //4
     JAR,                        //5
     MONIEZ_TRIPLE_GOLD_BARS,    //6
     MONIEZ_RUBY,                //7

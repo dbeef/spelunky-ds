@@ -54,6 +54,7 @@ public:
 
     bool thrown{};
     bool finished{};
+    int expand_timer{};
 
     int throwingTimer{};
     std::vector<RopeElement *> ropeChain{};
@@ -63,6 +64,8 @@ public:
 
 
     bool isThereChainForThisTile(int rope_y_tiles);
+
+    void add_rope_if_needed();
 };
 
 

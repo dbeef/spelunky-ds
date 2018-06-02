@@ -4,7 +4,7 @@
 
 #include "blood.h"
 #include "../../globals_declarations.h"
-#include "../../../build/gfx_blood_rock_rope.h"
+#include "../../../build/gfx_blood_rock_rope_poof.h"
 #include "../../collisions/collisions.h"
 #include "../../tiles/map_utils.h"
 
@@ -15,6 +15,7 @@ void Blood::draw() {
         bloodTrail.at(a)->draw();
         bloodTrail.at(a)->update();
         if(bloodTrail.at(a)->finished) {
+            delete(bloodTrail.at(a));
             bloodTrail.erase(bloodTrail.begin() + a);
         }
     }
@@ -61,7 +62,7 @@ void Blood::draw() {
                     currentFrame = 0;
 
 
-                frameGfx = (u8 *) gfx_blood_rock_ropeTiles + ((11 + currentFrame) * sprite_width * sprite_height / 2);
+                frameGfx = (u8 *) gfx_blood_rock_rope_poofTiles + ((11 + currentFrame) * sprite_width * sprite_height / 2);
 
             } else if (living_timer > 1200) {
 
@@ -70,7 +71,7 @@ void Blood::draw() {
                     mainSpriteInfo->entry->isHidden = true;
                     subSpriteInfo->entry->isHidden = true;
                 } else
-                    frameGfx = (u8 *) gfx_blood_rock_ropeTiles + ((currentFrame) * sprite_width * sprite_height / 2);
+                    frameGfx = (u8 *) gfx_blood_rock_rope_poofTiles + ((currentFrame) * sprite_width * sprite_height / 2);
 
             }
 
@@ -138,16 +139,16 @@ void Blood::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in
 }
 
 void Blood::initSprite() {
-    subSpriteInfo = global::sub_oam_manager->initSprite(gfx_blood_rock_ropePal, gfx_blood_rock_ropePalLen,
-                                                        nullptr, sprite_width * sprite_height, 8, BLOOD_ROCK_ROPE, true,
+    subSpriteInfo = global::sub_oam_manager->initSprite(gfx_blood_rock_rope_poofPal, gfx_blood_rock_rope_poofPalLen,
+                                                        nullptr, sprite_width * sprite_height, 8, BLOOD_ROCK_ROPE_POOF, true,
                                                         false,
                                                         LAYER_LEVEL::MIDDLE_TOP);
-    mainSpriteInfo = global::main_oam_manager->initSprite(gfx_blood_rock_ropePal, gfx_blood_rock_ropePalLen,
-                                                          nullptr, sprite_width * sprite_height, 8, BLOOD_ROCK_ROPE,
+    mainSpriteInfo = global::main_oam_manager->initSprite(gfx_blood_rock_rope_poofPal, gfx_blood_rock_rope_poofPalLen,
+                                                          nullptr, sprite_width * sprite_height, 8, BLOOD_ROCK_ROPE_POOF,
                                                           true, false,
                                                           LAYER_LEVEL::MIDDLE_TOP);
 
-    frameGfx = (u8 *) gfx_blood_rock_ropeTiles + (0 * sprite_width * sprite_height / 2);
+    frameGfx = (u8 *) gfx_blood_rock_rope_poofTiles + (0 * sprite_width * sprite_height / 2);
     subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
     mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
 }
