@@ -11,10 +11,10 @@
  
 <li> 🗙	Implement shopkeeper logics and randomly spawned shops  </li>
 <li> 🗙 Implement damsel </li>
-<li> 🗙 Implement caveman </li>
+<li> ✔ Implement caveman </li>
 <li> 🗙 Implement skeleton </li>
 <li> 🗙 Implement arrow trap </li>
-<li> 🗙 Fix rope logics - if thrown, when it touches bottom of some tile above it or it reaches its maximum travel distance of 8 tiles up, then it should expand to the bottom. Now it's the opposite - it expands as it travels upwards. </li>
+<li> ✔ Fix rope logics - if thrown, when it touches bottom of some tile above it or it reaches its maximum travel distance of 8 tiles up, then it should expand to the bottom. Now it's the opposite - it expands as it travels upwards. </li>
 <li> 🗙 Implement cape and jetpack </li>
 <li> 🗙 Putting project on Travis </li>
 <li> ✔ Implement 4 layers system - top one for the console and HUD, bottom one for tilemap and the rest for other sprites </li>
@@ -30,6 +30,10 @@
 <p> 1) Download devkitPro for your platform from their official website: https://devkitpro.org/wiki/Getting_Started </p>
 <p> 2) Set up a few environment variables, as shown in their tutorial  </p>
 <p> 3) cd to the spelunky-ds directory and type 'make'  </p>
+
+<h2 align="center"> Running </h2>
+<p> For running on a PC I preffer an emulator called Desmume. type 'desmume spelunky.nds' for running. </p>
+<p> For running on an NDS I use 'R4i-3DS-RTS-WiFi' (oh boy) card, but it's probably going to work on any other card. Just make sure, you have NDS program called 'moonshell', which helps running homebrew.
 
 <h2 align="center"> Tools I use </h2>
 <ul>
