@@ -13,6 +13,16 @@
 
 void Jar::draw() {
 
+
+    if (ready_to_dispose) {
+        mainSpriteInfo->entry->isHidden = true;
+        subSpriteInfo->entry->isHidden = true;
+        return;
+    } else {
+        mainSpriteInfo->entry->isHidden = false;
+        subSpriteInfo->entry->isHidden = false;
+    }
+
     if (frame >= 7) {
         mainSpriteInfo->entry->isHidden = true;
         subSpriteInfo->entry->isHidden = true;

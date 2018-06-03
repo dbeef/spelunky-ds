@@ -18,6 +18,16 @@ void RopeElement::draw() {
         return;
     }
 
+
+    if (ready_to_dispose) {
+        mainSpriteInfo->entry->isHidden = true;
+        subSpriteInfo->entry->isHidden = true;
+        return;
+    } else {
+        mainSpriteInfo->entry->isHidden = false;
+        subSpriteInfo->entry->isHidden = false;
+    }
+
     if (active_timer < 50)
         active_timer += *global::timer;
 

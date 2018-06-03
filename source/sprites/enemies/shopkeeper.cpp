@@ -195,9 +195,9 @@ void Shopkeeper::apply_dmg(int dmg_to_apply) {
 
 void Shopkeeper::initSprite() {
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_shopkeeperPal, gfx_shopkeeperPalLen,
-                                                        nullptr, 16 * 16, 16, BAT, true, false,LAYER_LEVEL::MIDDLE_TOP);
+                                                        nullptr, 16 * 16, 16, BAT_JETPACK, true, false,LAYER_LEVEL::MIDDLE_TOP);
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_shopkeeperPal, gfx_shopkeeperPalLen,
-                                                          nullptr, 16 * 16, 16, BAT, true, false,LAYER_LEVEL::MIDDLE_TOP);
+                                                          nullptr, 16 * 16, 16, BAT_JETPACK, true, false,LAYER_LEVEL::MIDDLE_TOP);
     subSpriteInfo->entry->isHidden = false;
     mainSpriteInfo->entry->isHidden = false;
 /*

@@ -47,11 +47,9 @@ void MainDude::handle_key_input() {
                 time_since_last_jump = 0;
 
                 mmEffect(SFX_XJUMP);
-            } else if (ySpeed > 0) {
-                if (carrying_cape)
-                    using_cape = true;
+            } else if (ySpeed > 0 && carrying_cape) {
+                using_cape = true;
             }
-
             if ((hanging_on_tile_left || hanging_on_tile_right) && hanging_timer > MIN_HANGING_TIME &&
                 time_since_last_jump > 100) {
 
@@ -66,10 +64,25 @@ void MainDude::handle_key_input() {
             }
         }
 
+        if (global::input_handler->b_key_down && time_since_last_jump > 100) {
+
+            if (!climbing && carrying_jetpack && jetpack_fuel_counter > 0) {
+                jumping_timer = 0;
+                using_jetpack = true;
+                ySpeed -= MAIN_DUDE_JUMP_SPEED;
+                jetpack_fuel_counter--;
+                mmEffect(SFX_XJETPACK);
+                time_since_last_jump = 0;
+            }
+            else
+                using_jetpack = false;
+
+        }
+
         if (global::input_handler->y_key_down) {
 
             if (!stunned && !using_whip) {
-                if (holding_item ) {
+                if (holding_item) {
                     throw_item();
                 } else {
                     mmEffect(SFX_XWHIP);
@@ -365,9 +378,9 @@ void MainDude::updateSpeed() {
         limit_speed(MAIN_DUDE_MAX_X_SPEED_CRAWLING, MAIN_DUDE_MAX_Y_SPEED);
     else if (global::input_handler->r_bumper_held)
         limit_speed(MAIN_DUDE_MAX_X_SPEED_RUNNING, MAIN_DUDE_MAX_Y_SPEED);
-    else if(using_cape)
+    else if (using_cape)
         limit_speed(MAIN_DUDE_MAX_X_SPEED, MAIN_DUDE_MAX_Y_SPEED_USING_CAPE);
-        else
+    else
         limit_speed(MAIN_DUDE_MAX_X_SPEED, MAIN_DUDE_MAX_Y_SPEED);
 
     bool change_pos = (crawling && pos_inc_timer > 20) || (!crawling && pos_inc_timer > 1);
@@ -379,7 +392,7 @@ void MainDude::updateSpeed() {
         pos_inc_timer = 0;
 
         if (!bottomCollision && !(hanging_on_tile_left || hanging_on_tile_right) && !climbing) {
-                ySpeed += GRAVITY_DELTA_SPEED;
+            ySpeed += GRAVITY_DELTA_SPEED;
         }
     }
 
@@ -402,14 +415,15 @@ void MainDude::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos
 
     can_hang_on_tile(tiles);
 
-    if(hanging_on_tile_right || hanging_on_tile_left){
+    if (hanging_on_tile_right || hanging_on_tile_left) {
         using_cape = false;
+        using_jetpack = false;
     }
 
     if (upperCollision || bottomCollision) {
         hanging_on_tile_left = false;
         hanging_on_tile_right = false;
-        if(using_cape)
+        if (using_cape)
             jumping_timer = 0;
     }
 

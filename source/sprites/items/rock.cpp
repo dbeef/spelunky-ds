@@ -13,6 +13,17 @@
 
 void Rock::draw() {
 
+
+    if (ready_to_dispose) {
+        mainSpriteInfo->entry->isHidden = true;
+        subSpriteInfo->entry->isHidden = true;
+        return;
+    } else {
+        mainSpriteInfo->entry->isHidden = false;
+        subSpriteInfo->entry->isHidden = false;
+    }
+
+
     check_if_can_be_pickuped();
 
     if (hold_by_main_dude) {

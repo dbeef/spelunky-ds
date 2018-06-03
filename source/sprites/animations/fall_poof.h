@@ -13,6 +13,13 @@
 #define FALL_POOF_SPRITE_HEIGHT 8
 #define FALL_POOF_SPRITE_WIDTH 8
 
+
+#define FALL_POOF_PHYSICAL_HEIGHT 8
+#define FALL_POOF_PHYSICAL_WIDTH 8
+
+#define MAX_X_SPEED_FALL_POOF 4
+#define MAX_Y_SPEED_FALL_POOF 4
+
 class FallPoof : public MovingObject {
 
 public:
@@ -31,9 +38,9 @@ public:
 
     void updateTimers() override {};
 
-    void updateSpeed() override {};
+    void updateSpeed() override;
 
-    void updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) override {};
+    void updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) override;
 
     void updateCollisionsOtherMoving() override {};
 
@@ -41,6 +48,7 @@ public:
 
     int animFrameTimer{};
     int animFrame{};
+    int pos_inc_timer{};
 
     SpriteInfo *mainSpriteInfo{};
     SpriteInfo *subSpriteInfo{};
@@ -49,6 +57,8 @@ public:
 
     SpritesheetType spriteType{};
 
+    bool gravity{};
+    
     void set_position();
 
 };

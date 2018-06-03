@@ -107,6 +107,8 @@ public:
     void deal_damage_main_dude_on_collision(int dmg_to_apply);
 
     void spawn_blood();
+
+    void set_pickuped_position_not_checking(int pickup_offset_x, int pickup_offset_y);
 };
 
 

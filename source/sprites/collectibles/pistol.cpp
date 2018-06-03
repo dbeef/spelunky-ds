@@ -18,8 +18,15 @@
 
 void Pistol::draw() {
 
-    if (ready_to_dispose)
+
+    if (ready_to_dispose) {
+        mainSpriteInfo->entry->isHidden = true;
+        subSpriteInfo->entry->isHidden = true;
         return;
+    } else {
+        mainSpriteInfo->entry->isHidden = false;
+        subSpriteInfo->entry->isHidden = false;
+    }
 
     check_if_can_be_pickuped();
 
@@ -119,7 +126,7 @@ void Pistol::draw() {
     if (xSpeed > 0 || ySpeed > 0) {
         for (int a = 0; a < global::sprites.size(); a++) {
             if ((global::sprites.at(a)->spriteType == SpritesheetType::SNAKE ||
-                 global::sprites.at(a)->spriteType == SpritesheetType::BAT ||
+                 global::sprites.at(a)->spriteType == SpritesheetType::BAT_JETPACK ||
                  global::sprites.at(a)->spriteType == SpritesheetType::SPIDER)
                 && !global::sprites.at(a)->killed) {
                 if (Collisions::checkCollisionBodies(x, y, 8, 8, global::sprites.at(a)->x, global::sprites.at(a)->y, 16,

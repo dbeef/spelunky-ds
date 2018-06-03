@@ -15,8 +15,16 @@
 
 void Bullet::draw() {
 
-    if (ready_to_dispose)
+
+    if (ready_to_dispose) {
+        mainSpriteInfo->entry->isHidden = true;
+        subSpriteInfo->entry->isHidden = true;
         return;
+    } else {
+        mainSpriteInfo->entry->isHidden = false;
+        subSpriteInfo->entry->isHidden = false;
+    }
+
 
     if (killed)
         apply_bullet_dispose_animation();

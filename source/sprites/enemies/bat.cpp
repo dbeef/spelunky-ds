@@ -5,7 +5,7 @@
 #include <maxmod9.h>
 #include "bat.h"
 #include "../../globals_declarations.h"
-#include "../../../build/gfx_bat.h"
+#include "../../../build/gfx_bat_jetpack.h"
 #include "../items/rock.h"
 #include "../animations/blood.h"
 #include "../../collisions/collisions.h"
@@ -74,11 +74,11 @@ void Bat::init() {
 
     initSprite();
 
-    frameGfx = (u8 *) gfx_batTiles;
+    frameGfx = (u8 *) gfx_bat_jetpackTiles;
     subSpriteInfo->updateFrame(frameGfx, sprite_height * sprite_width);
     mainSpriteInfo->updateFrame(frameGfx, sprite_height * sprite_width);
 
-    spriteType = SpritesheetType::BAT;
+    spriteType = SpritesheetType::BAT_JETPACK;
 }
 
 void Bat::updateSpeed() {
@@ -129,24 +129,24 @@ void Bat::apply_dmg(int dmg_to_apply) {
 }
 
 void Bat::initSprite() {
-    subSpriteInfo = global::sub_oam_manager->initSprite(gfx_batPal, gfx_batPalLen,
-                                                        nullptr, sprite_width * sprite_height, 16, BAT, true, false,
+    subSpriteInfo = global::sub_oam_manager->initSprite(gfx_bat_jetpackPal, gfx_bat_jetpackPalLen,
+                                                        nullptr, sprite_width * sprite_height, 16, BAT_JETPACK, true, false,
                                                         LAYER_LEVEL::MIDDLE_TOP);
-    mainSpriteInfo = global::main_oam_manager->initSprite(gfx_batPal, gfx_batPalLen,
-                                                          nullptr, sprite_width * sprite_height, 16, BAT, true, false,
+    mainSpriteInfo = global::main_oam_manager->initSprite(gfx_bat_jetpackPal, gfx_bat_jetpackPalLen,
+                                                          nullptr, sprite_width * sprite_height, 16, BAT_JETPACK, true, false,
                                                           LAYER_LEVEL::MIDDLE_TOP);
     subSpriteInfo->entry->isHidden = false;
     mainSpriteInfo->entry->isHidden = false;
 }
 
 void Bat::set_sprite_hanging() {
-    frameGfx = (u8 *) gfx_batTiles + (sprite_width * sprite_height * (0) / 2);
+    frameGfx = (u8 *) gfx_bat_jetpackTiles + (sprite_width * sprite_height * (0) / 2);
     subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
     mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
 }
 
 void Bat::set_sprite_flying_right() {
-    frameGfx = (u8 *) gfx_batTiles + (sprite_width * sprite_height * (animFrame + 1) / 2);
+    frameGfx = (u8 *) gfx_bat_jetpackTiles + (sprite_width * sprite_height * (animFrame + 1) / 2);
     subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
     mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
 
@@ -158,7 +158,7 @@ void Bat::set_sprite_flying_right() {
 }
 
 void Bat::set_sprite_flying_left() {
-    frameGfx = (u8 *) gfx_batTiles + (sprite_width * sprite_height * (animFrame + 4) / 2);
+    frameGfx = (u8 *) gfx_bat_jetpackTiles + (sprite_width * sprite_height * (animFrame + 4) / 2);
     subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
     mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
 

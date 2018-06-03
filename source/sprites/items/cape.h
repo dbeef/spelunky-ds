@@ -59,6 +59,8 @@ public:
     SpritesheetType spriteType{};
 
     void set_position();
+
+    void set_frame_gfx();
 };
 
 

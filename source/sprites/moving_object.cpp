@@ -143,6 +143,21 @@ void MovingObject::set_pickuped_position(int pickup_offset_x, int pickup_offset_
 
 }
 
+
+//this should be applied, when item is being carried by main dude
+void MovingObject::set_pickuped_position_not_checking(int pickup_offset_x, int pickup_offset_y) {
+
+        y = global::main_dude->y + pickup_offset_y;
+
+        if (global::main_dude->state == SpriteState::W_LEFT) {
+            x = global::main_dude->x - pickup_offset_x;
+        } else
+            x = global::main_dude->x + pickup_offset_x;
+
+}
+
+
+
 //when applied, item kills mobs if it boths travels and collides them
 bool MovingObject::kill_mobs_if_thrown(int dmg_to_apply) {
 
@@ -152,7 +167,7 @@ bool MovingObject::kill_mobs_if_thrown(int dmg_to_apply) {
         for (int a = 0; a < global::sprites.size(); a++) {
 
             if ((global::sprites.at(a)->spriteType == SpritesheetType::SNAKE ||
-                 global::sprites.at(a)->spriteType == SpritesheetType::BAT ||
+                 global::sprites.at(a)->spriteType == SpritesheetType::BAT_JETPACK ||
                  global::sprites.at(a)->spriteType == SpritesheetType::CAVEMAN ||
                  global::sprites.at(a)->spriteType == SpritesheetType::SPIDER)
                 && !global::sprites.at(a)->killed) {
@@ -177,7 +192,7 @@ bool MovingObject::kill_mobs_items_if_thrown(int dmg_to_apply) {
     if (abs(xSpeed) > 0 || abs(ySpeed) > 0) {
         for (int a = 0; a < global::sprites.size(); a++) {
             if ((global::sprites.at(a)->spriteType == SpritesheetType::SNAKE ||
-                 global::sprites.at(a)->spriteType == SpritesheetType::BAT ||
+                 global::sprites.at(a)->spriteType == SpritesheetType::BAT_JETPACK ||
                  global::sprites.at(a)->spriteType == SpritesheetType::SPIDER ||
                  global::sprites.at(a)->spriteType == SpritesheetType::CAVEMAN ||
                  global::sprites.at(a)->spriteType == SpritesheetType::JAR)

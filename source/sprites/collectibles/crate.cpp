@@ -18,15 +18,22 @@
 #include "../animations/got_collectible.h"
 #include "../items/spike_shoes.h"
 #include "../items/cape.h"
+#include "../items/jetpack.h"
 
 #define CRATE_POS_INC_DELTA 15
 
 void Crate::draw() {
 
-    if (ready_to_dispose)
+    if (ready_to_dispose) {
+        mainSpriteInfo->entry->isHidden = true;
+        subSpriteInfo->entry->isHidden = true;
         return;
+    } else {
+        mainSpriteInfo->entry->isHidden = false;
+        subSpriteInfo->entry->isHidden = false;
+    }
 
-    if(!dropped_loot) {
+    if (!dropped_loot) {
         check_if_can_be_pickuped();
         set_pickuped_position(8, 2);
     }
@@ -90,9 +97,12 @@ void Crate::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in
     Collisions::getNeighboringTiles(global::level_generator->map_tiles, x_current_pos_in_tiles, y_current_pos_in_tiles,
                                     tiles);
 
-    bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, physical_width, physical_height, true, BOUNCING_FACTOR_Y);
-    leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true, BOUNCING_FACTOR_X);
-    rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true, BOUNCING_FACTOR_X);
+    bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, physical_width, physical_height, true,
+                                                       BOUNCING_FACTOR_Y);
+    leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true,
+                                                   BOUNCING_FACTOR_X);
+    rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true,
+                                                     BOUNCING_FACTOR_X);
     upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, physical_width, true, BOUNCING_FACTOR_Y);
 
 }
@@ -100,10 +110,12 @@ void Crate::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in
 void Crate::initSprite() {
 
 
-    subSpriteInfo = global::sub_oam_manager->initSprite(gfx_spike_collectibles_flamePal, gfx_spike_collectibles_flamePalLen,
+    subSpriteInfo = global::sub_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
+                                                        gfx_spike_collectibles_flamePalLen,
                                                         nullptr, sprite_width * sprite_height, sprite_width,
                                                         spriteType, true, false, LAYER_LEVEL::MIDDLE_TOP);
-    mainSpriteInfo = global::main_oam_manager->initSprite(gfx_spike_collectibles_flamePal, gfx_spike_collectibles_flamePalLen,
+    mainSpriteInfo = global::main_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
+                                                          gfx_spike_collectibles_flamePalLen,
                                                           nullptr, sprite_width * sprite_height, sprite_width,
                                                           spriteType, true, false, LAYER_LEVEL::MIDDLE_TOP);
     if (activated_by_main_dude)
@@ -146,7 +158,7 @@ Crate::Crate() {
 //TODO lower chances for good items
 void Crate::drop_loot() {
 
-    int r = rand() % 10;
+    int r = rand() % 11;
 
     //drop rope or bomb
     if (r == 0 || r == 1) {
@@ -196,6 +208,9 @@ void Crate::drop_loot() {
                 break;
             case 9:
                 m = new Mitt();
+                break;
+            case 10:
+                m = new Jetpack();
                 break;
 
             default:

@@ -14,14 +14,20 @@
 
 void Cape::draw() {
 
+
+    if (global::main_dude->carrying_jetpack && collected) {
+        global::main_dude->carrying_cape = false;
+        ready_to_dispose = true;
+    }
+
     if (ready_to_dispose) {
         mainSpriteInfo->entry->isHidden = true;
         subSpriteInfo->entry->isHidden = true;
         return;
+    } else{
+        mainSpriteInfo->entry->isHidden = false;
+        subSpriteInfo->entry->isHidden = false;
     }
-
-    if (collected)
-        hold_by_main_dude = true;
 
     set_position();
 
@@ -33,6 +39,10 @@ void Cape::draw() {
         g->collectible_type = 0;
         g->init();
         global::sprites.push_back(g);
+
+        if (global::main_dude->carrying_jetpack) {
+            global::main_dude->carrying_jetpack = false;
+        }
 
         if (!global::main_dude->carrying_cape) {
             global::main_dude->carrying_cape = true;
@@ -49,18 +59,18 @@ void Cape::draw() {
 
         anim_frame_timer += *global::timer;
 
-        if (global::main_dude->climbing) {
-            set_pickuped_position(0, 4);
+        if (global::main_dude->climbing || global::main_dude->exiting_level) {
+            set_pickuped_position_not_checking(0, 4);
             mainSpriteInfo->entry->priority = OBJPRIORITY_0;
             subSpriteInfo->entry->priority = OBJPRIORITY_0;
         } else if (global::input_handler->down_key_held || global::main_dude->dead || global::main_dude->stunned) {
-            set_pickuped_position(0, 4);
+            set_pickuped_position_not_checking(0, 4);
             mainSpriteInfo->entry->priority = OBJPRIORITY_1;
             subSpriteInfo->entry->priority = OBJPRIORITY_1;
         } else {
             mainSpriteInfo->entry->priority = OBJPRIORITY_1;
             subSpriteInfo->entry->priority = OBJPRIORITY_1;
-            set_pickuped_position(-3, -1);
+            set_pickuped_position_not_checking(-3, -1);
         }
 
         if (anim_frame_timer > CAPE_ANIM_FRAME_DELTA) {
@@ -69,37 +79,7 @@ void Cape::draw() {
                 anim_frame++;
             anim_frame_timer = 0;
 
-
-            if (global::main_dude->climbing) {
-                //climbing
-                frameGfx = (u8 *) gfx_goldbarsTiles + (sprite_width * sprite_height * (3) / 2);
-
-            } else if (global::input_handler->down_key_held || global::main_dude->dead || global::main_dude->stunned) {
-
-                if (anim_frame >= 5)
-                    anim_frame = 0;
-
-                frameGfx = (u8 *) gfx_goldbarsTiles + (sprite_width * sprite_height * (5 + anim_frame) / 2);
-            } else if (!global::main_dude->using_cape && !global::main_dude->stunned &&
-                       (global::main_dude->xSpeed != 0 || global::main_dude->ySpeed != 0)) {
-
-                //falling, using cape
-                if (anim_frame >= 5)
-                    anim_frame = 0;
-                frameGfx = (u8 *) gfx_goldbarsTiles + (sprite_width * sprite_height * (5 + anim_frame) / 2);
-
-            } else if (global::main_dude->xSpeed == 0 && global::main_dude->ySpeed == 0) {
-                //staying still
-                frameGfx = (u8 *) gfx_goldbarsTiles + (sprite_width * sprite_height * (4) / 2);
-            } else {
-
-                //falling
-                if (anim_frame >= 2)
-                    anim_frame = 0;
-
-                frameGfx = (u8 *) gfx_goldbarsTiles + (sprite_width * sprite_height * (10 + anim_frame) / 2);
-
-            }
+            set_frame_gfx();
 
             subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
             mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
@@ -121,7 +101,7 @@ void Cape::draw() {
         subSpriteInfo->entry->vFlip = false;
 
 
-        if(global::main_dude->bottomCollision)
+        if (global::main_dude->bottomCollision)
             global::main_dude->using_cape = false;
 
     }
@@ -139,7 +119,7 @@ void Cape::updateSpeed() {
 
     pos_inc_timer += *global::timer;
 
-    bool change_pos = (pos_inc_timer > CAPE_POS_INC_DELTA) && !hold_by_main_dude;
+    bool change_pos = (pos_inc_timer > CAPE_POS_INC_DELTA) && !collected;
 
     if (change_pos) {
         update_position();
@@ -178,7 +158,7 @@ void Cape::initSprite() {
                                                           nullptr, sprite_width * sprite_height, sprite_width,
                                                           spriteType, true, false, LAYER_LEVEL::MIDDLE_TOP);
 
-    frameGfx = (u8 *) gfx_goldbarsTiles + (sprite_width * sprite_height * (2) / 2);
+    set_frame_gfx();
 
     subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
     mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
@@ -209,5 +189,45 @@ Cape::Cape() {
     sprite_height = CAPE_SPRITE_HEIGHT;
     sprite_width = CAPE_SPRITE_WIDTH;
     spriteType = SpritesheetType::MONIEZ_GOLDBARS;
+}
+
+void Cape::set_frame_gfx() {
+
+
+    if (!collected) {
+        frameGfx = (u8 *) gfx_goldbarsTiles + (sprite_width * sprite_height * (2) / 2);
+
+    }
+    else if (global::main_dude->climbing) {
+        //climbing
+        frameGfx = (u8 *) gfx_goldbarsTiles + (sprite_width * sprite_height * (3) / 2);
+
+    } else if (global::input_handler->down_key_held || global::main_dude->dead || global::main_dude->stunned) {
+
+        if (anim_frame >= 5)
+            anim_frame = 0;
+
+        frameGfx = (u8 *) gfx_goldbarsTiles + (sprite_width * sprite_height * (5 + anim_frame) / 2);
+    } else if (!global::main_dude->using_cape && !global::main_dude->stunned &&
+               (global::main_dude->xSpeed != 0 || global::main_dude->ySpeed != 0)) {
+
+        //falling, using cape
+        if (anim_frame >= 5)
+            anim_frame = 0;
+        frameGfx = (u8 *) gfx_goldbarsTiles + (sprite_width * sprite_height * (5 + anim_frame) / 2);
+
+    } else if (global::main_dude->xSpeed == 0 && global::main_dude->ySpeed == 0) {
+        //staying still
+        frameGfx = (u8 *) gfx_goldbarsTiles + (sprite_width * sprite_height * (4) / 2);
+    } else {
+
+        //falling
+        if (anim_frame >= 2)
+            anim_frame = 0;
+
+        frameGfx = (u8 *) gfx_goldbarsTiles + (sprite_width * sprite_height * (10 + anim_frame) / 2);
+
+    }
+
 }
 

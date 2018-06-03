@@ -20,7 +20,7 @@ void Spikes::draw() {
         && Collisions::checkCollisionBodiesLeftLowerCorner
                 (x, y + 16, physical_width, physical_height, global::main_dude->x, global::main_dude->y + 16, 16, 16) &&
         /*global::main_dude->time_since_last_damage > 1000 &&*/
-        !global::main_dude->bottomCollision && global::main_dude->ySpeed > 0) {
+        !global::main_dude->bottomCollision && global::main_dude->ySpeed > 1) {
 
         kill_main_dude();
         spawn_blood();

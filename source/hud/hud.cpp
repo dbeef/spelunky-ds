@@ -174,7 +174,7 @@ void Hud::draw_on_level_done() {
             snake->ready_to_dispose = true;
             snake->set_position();
             snake->set_sprite_left();
-        } else if (global::killed_npcs.at(a) == SpritesheetType::BAT) {
+        } else if (global::killed_npcs.at(a) == SpritesheetType::BAT_JETPACK) {
             Bat *bat = new Bat();
             bat->init();
             global::sprites.push_back(bat);

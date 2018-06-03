@@ -117,6 +117,9 @@ public:
 
     bool carrying_cape{};
     bool using_cape{};
+    bool carrying_jetpack{};
+    bool using_jetpack{};
+    int jetpack_fuel_counter{};
 
     void handle_key_input();
 

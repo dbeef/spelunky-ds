@@ -7,7 +7,10 @@
 #include "../../../build/gfx_blood_rock_rope_poof.h"
 #include "../moving_object.h"
 #include "fall_poof.h"
+#include "../../collisions/collisions.h"
 
+
+#define FALL_POOF_POS_INC_DELTA 35
 #define FALL_POOF_ANIM_FRAME_DELTA  50
 #define FALL_POOF_FRAMES 6
 
@@ -91,5 +94,45 @@ void FallPoof::set_position() {
 FallPoof::FallPoof() {
     sprite_height = FALL_POOF_SPRITE_HEIGHT;
     sprite_width = FALL_POOF_SPRITE_WIDTH;
+    physical_height = FALL_POOF_PHYSICAL_HEIGHT;
+    physical_width = FALL_POOF_PHYSICAL_WIDTH;
     spriteType = SpritesheetType::BLOOD_ROCK_ROPE_POOF;
+}
+
+void FallPoof::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
+    if(!gravity)
+        return;
+    
+    MapTile *tiles[9];
+    Collisions::getNeighboringTiles(global::level_generator->map_tiles, x_current_pos_in_tiles, y_current_pos_in_tiles,
+                                    tiles);
+
+    bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, physical_width, physical_height, true,
+                                                       BOUNCING_FACTOR_Y);
+    leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true,
+                                                   BOUNCING_FACTOR_X);
+    rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true,
+                                                     BOUNCING_FACTOR_X);
+    upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, physical_width, true, BOUNCING_FACTOR_Y);
+    
+}
+
+void FallPoof::updateSpeed() {
+
+    if(!gravity)
+        return;
+
+    limit_speed(MAX_X_SPEED_FALL_POOF, MAX_Y_SPEED_FALL_POOF);
+
+    pos_inc_timer += *global::timer;
+
+    bool change_pos = (pos_inc_timer > FALL_POOF_POS_INC_DELTA) && !hold_by_main_dude;
+
+    if (change_pos) {
+        update_position();
+        apply_friction(0.055);
+        apply_gravity(GRAVITY_DELTA_SPEED);
+        pos_inc_timer = 0;
+    }
+
 }

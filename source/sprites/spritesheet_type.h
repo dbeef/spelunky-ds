@@ -24,8 +24,8 @@ enum SpritesheetType{
     HUD,                        //13
     SPELUNKY_TITLE,             //15
     SPELUNKY_COPYRIGHTS,        //16
-    BAT,                        //17
-    SHOPKEEPER,                  //17
+    BAT_JETPACK,                //17
+    SHOPKEEPER,                 //17
     SPIDER,                     //18
     SPIKES_COLLECTIBLES,        //19
     SALEABLE,                   //20

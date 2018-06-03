@@ -15,6 +15,16 @@
 
 void Rope::draw() {
 
+
+    if (ready_to_dispose) {
+        mainSpriteInfo->entry->isHidden = true;
+        subSpriteInfo->entry->isHidden = true;
+        return;
+    } else {
+        mainSpriteInfo->entry->isHidden = false;
+        subSpriteInfo->entry->isHidden = false;
+    }
+
     expand_timer += *global::timer;
 
     for (int a = ropeChain.size() - 1; a >= 0; a--) {
