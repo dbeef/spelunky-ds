@@ -10,7 +10,7 @@
 <ul>
  
 <li> 🗙	Implement shopkeeper logics and randomly spawned shops  </li>
-<li> 🗙 Implement damsel </li>
+<li> ✔ Implement damsel </li>
 <li> ✔ Implement caveman </li>
 <li> 🗙 Implement skeleton </li>
 <li> 🗙 Implement arrow trap </li>
