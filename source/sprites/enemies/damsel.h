@@ -51,6 +51,10 @@ public:
 
     SpriteInfo *mainSpriteInfo{};
     SpriteInfo *subSpriteInfo{};
+
+    SpriteInfo *yell_mainSpriteInfo{};
+    SpriteInfo *yell_subSpriteInfo{};
+
     u8 *frameGfx{};
 
     SpriteState spriteState{};
@@ -61,7 +65,8 @@ public:
     int animFrameTimer{};
 
     int invert_speed_timer{};
-
+    int yell_timer{};
+    bool yelling{};
     int blood_spawn_timer{};
 
     bool landlocked{};
@@ -69,6 +74,7 @@ public:
     bool stunned{};
     bool exiting_level{};
     bool rescued{};
+    bool call_for_help{};
 
     int stunned_timer{};
 
@@ -91,6 +97,12 @@ public:
     void apply_dead_sprites();
 
     void apply_exiting_level_sprites();
+
+    void apply_yelling_sprites();
+
+    void update_animation();
+
+    void apply_smooching_sprites();
 };
 
 

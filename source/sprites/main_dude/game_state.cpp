@@ -6,6 +6,8 @@
 #include "../../tiles/splash_screen_type.h"
 #include "../../memory/oam_utils.h"
 #include "../../../build/soundbank.h"
+#include "../enemies/damsel.h"
+#include "../animations/smooch.h"
 
 //
 // Created by xdbeef on 27.05.18.
@@ -19,7 +21,7 @@ void GameState::start_new_game() {
     global::main_dude->carrying_cape = false;
     global::main_dude->carrying_shotgun = false;
     global::main_dude->carrying_pistol = false;
-    global::main_dude->carrying_jetpack= false;
+    global::main_dude->carrying_jetpack = false;
 
     global::hud->hearts = 4;
     global::hud->ropes = 4;
@@ -51,7 +53,6 @@ void GameState::start_level_transition_screen() {
     global::hud->level++;
 
     global::game_state->levels_transition_screen = true;
-
     global::game_state->splash_screen = true;
 
     global::input_handler->stop_handling = true;
@@ -59,6 +60,29 @@ void GameState::start_level_transition_screen() {
     global::input_handler->right_key_held = true;
     global::camera->follow_main_dude = false;
     global::hud->draw_on_level_done();
+
+
+    if (global::game_state->damsels_rescued_this_level > 0) {
+        global::hud->hearts += global::game_state->damsels_rescued_this_level;
+        global::game_state->damsels_rescued_this_level = 0;
+        global::game_state->smooching = true;
+
+        Damsel *damsel = new Damsel();
+        damsel->init();
+        damsel->call_for_help = false;
+        global::sprites.push_back(damsel);
+
+
+        MapTile *entrance;
+        global::level_generator->get_first_tile(MapTileType::ENTRANCE, entrance);
+        if (entrance != nullptr) {
+            damsel->x = (entrance->x * 16) + 7 * 16;
+            damsel->y = entrance->y * 16;
+            //144
+            //448
+        }
+
+    }
 
 }
 
@@ -118,6 +142,7 @@ void GameState::handle_changing_screens() {
                 global::main_dude->y = 288;
                 global::camera->follow_main_dude = true;
                 global::camera->instant_focus();
+
             } else if (global::main_dude->dead) {
                 global::level_generator->generate_splash_screen(SplashScreenType::SCORES_UPPER);
                 global::level_generator->generate_splash_screen(SplashScreenType::SCORES_LOWER);
@@ -200,4 +225,23 @@ void GameState::set_position_to(MapTileType t) {
     global::camera->follow_main_dude = true;
     global::camera->instant_focus();
 
+}
+
+void GameState::handle_transition_screen_smooch() {
+    if (smooching) {
+        if(144 - global::main_dude->x <= 16){
+            smooch_timer += *global::timer;
+            global::input_handler->right_key_held = false;
+            if(!spawned_smooch) {
+                spawned_smooch = true;
+                Smooch *s = new Smooch();
+                s->x =144;
+                s->y =436;
+                s->init();
+                global::sprites.push_back(s);
+            }
+        }
+        //144
+        //448
+    }
 }

@@ -66,8 +66,9 @@ void gameloop::scroll() {
             }
         }
 
-        global::main_dude->handle_key_input();
+        global::game_state->handle_transition_screen_smooch();
 
+        global::main_dude->handle_key_input();
         global::hud->update();
 
 
