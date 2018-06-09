@@ -124,6 +124,13 @@ void MainDude::handle_key_input() {
 
         }
 
+
+        int xx = floor_div(this->x + 0.5 * MAIN_DUDE_PHYSICAL_WIDTH, TILE_W);
+        int yy = floor_div(this->y + 0.5 * MAIN_DUDE_PHYSICAL_HEIGHT, TILE_H);
+
+        current_x_in_tiles = xx;
+        current_y_in_tiles = yy;
+
         if (global::input_handler->l_bumper_held || global::input_handler->up_key_held ||
             global::input_handler->down_key_held) {
 
@@ -140,9 +147,6 @@ void MainDude::handle_key_input() {
             } else {
                 climbing_timer = 200;
             }
-
-            int xx = floor_div(this->x + 0.5 * MAIN_DUDE_PHYSICAL_WIDTH, TILE_W);
-            int yy = floor_div(this->y + 0.5 * MAIN_DUDE_PHYSICAL_HEIGHT, TILE_H);
 
             MapTile *neighboringTiles[9] = {};
             Collisions::getNeighboringTiles(global::level_generator->map_tiles, xx, yy, neighboringTiles);
@@ -208,9 +212,6 @@ void MainDude::handle_key_input() {
         }
 
         if (global::input_handler->down_key_held) {
-
-            int xx = floor_div(this->x + 0.5 * MAIN_DUDE_PHYSICAL_WIDTH, TILE_W);
-            int yy = floor_div(this->y + 0.5 * MAIN_DUDE_PHYSICAL_HEIGHT, TILE_H);
 
             MapTile *neighboringTiles[9] = {};
 

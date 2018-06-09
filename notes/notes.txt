@@ -1,15 +1,13 @@
-<*> GUIDELINES FOR FURTHER DEVELOPMENT
+**** GUIDELINES FOR FURTHER DEVELOPMENT
 
 Please, do this:
 
-https://google.github.io/styleguide/cppguide.html
+* Just do not use hungarian notation please.
+* Code with regards to this:
+    * http://www.open-std.org/jtc1/sc22/wg21/docs/TR18015.pdf
+    * https://lemire.me/blog/2012/06/20/do-not-waste-time-with-stl-vectors/
 
-Please, do not:
-https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md
-https://stackoverflow.com/questions/3706379/what-is-a-good-naming-convention-for-vars-methods-etc-in-c
-https://stackoverflow.com/questions/1228161/why-use-prefixes-on-member-variables-in-c-classes/1229360#1229360
-
-<*> GENERAL NOTES:
+**** GENERAL NOTES:
 
 Technical traps:
 
@@ -19,9 +17,3 @@ Quite easy to overflow that number.
 Game mechanics:
 - Ladders are not destructable, neither are ropes.
 - Rope is up to 8 tiles height (8 x 16px)
-
-**********************************************************************
-
-<*> TODO LIST:
-
-- todo update this list

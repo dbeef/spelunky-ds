@@ -19,6 +19,7 @@ void GameState::start_new_game() {
     global::main_dude->carrying_cape = false;
     global::main_dude->carrying_shotgun = false;
     global::main_dude->carrying_pistol = false;
+    global::main_dude->carrying_jetpack= false;
 
     global::hud->hearts = 4;
     global::hud->ropes = 4;

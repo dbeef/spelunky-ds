@@ -67,6 +67,9 @@ public:
     SpriteInfo *main_spelunker{};
     SpriteInfo *sub_spelunker{};
 
+    int current_x_in_tiles{};
+    int current_y_in_tiles{};
+
     int animation_frame_timer{};
     int speed_inc_timer{};
     int pos_inc_timer{};
@@ -120,6 +123,8 @@ public:
     bool carrying_jetpack{};
     bool using_jetpack{};
     int jetpack_fuel_counter{};
+
+    bool carrying_damsel{};
 
     void handle_key_input();
 

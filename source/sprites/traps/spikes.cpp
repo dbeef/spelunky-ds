@@ -32,7 +32,7 @@ void Spikes::draw() {
 
     for (int a = 0; a < global::sprites.size(); a++) {
         if ((global::sprites.at(a)->spriteType == SpritesheetType::SPIDER ||
-             global::sprites.at(a)->spriteType == SpritesheetType::CAVEMAN)
+             global::sprites.at(a)->spriteType == SpritesheetType::CAVEMAN_DAMSEL)
             && !global::sprites.at(a)->ready_to_dispose && !global::sprites.at(a)->killed) {
 
             if (Collisions::checkCollisionBodies(x, y, physical_width, physical_height,
@@ -75,10 +75,10 @@ void Spikes::initSprite() {
 
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_spike_collectibles_flamePal, gfx_spike_collectibles_flamePalLen,
                                                         nullptr, sprite_width * sprite_height, sprite_width,
-                                                        spriteType, true, false, LAYER_LEVEL::MIDDLE_TOP);
+                                                        spriteType, true, false, LAYER_LEVEL::MIDDLE_BOT);
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_spike_collectibles_flamePal, gfx_spike_collectibles_flamePalLen,
                                                           nullptr, sprite_width * sprite_height, sprite_width,
-                                                          spriteType, true, false, LAYER_LEVEL::MIDDLE_TOP);
+                                                          spriteType, true, false, LAYER_LEVEL::MIDDLE_BOT);
 
     subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
     mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);

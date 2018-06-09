@@ -21,6 +21,7 @@
 #include "sprites/collectibles/chest.h"
 #include "sprites/collectibles/crate.h"
 #include "sprites/enemies/caveman.h"
+#include "sprites/enemies/damsel.h"
 
 static const int BOUNDARY_VALUE = 64; /* This is the default boundary value (can be set in REG_DISPCNT) */
 static const int OFFSET_MULTIPLIER_MAIN = BOUNDARY_VALUE / sizeof(SPRITE_GFX[0]);
@@ -231,6 +232,7 @@ void gameloop::populate_cave_npcs() {
     int last_placement = 3;
 
     int bats_left = 5;
+    int damsels_left = 1;
     int spiders_left = 5;
     int snakes_left = 5;
     int spikes_left = 4;
@@ -325,6 +327,16 @@ void gameloop::populate_cave_npcs() {
                         caveman ->x = pos_x * 16;
                         caveman ->y = pos_y * 16;
                         cavemen_left--;
+                        last_placement = 0;
+                    }
+
+                    if (npc == 6 && damsels_left> 0) {
+                        Damsel *damsel = new Damsel();
+                        damsel ->init();
+                        global::sprites.push_back(damsel );
+                        damsel ->x = pos_x * 16;
+                        damsel ->y = pos_y * 16;
+                        damsels_left--;
                         last_placement = 0;
                     }
 
