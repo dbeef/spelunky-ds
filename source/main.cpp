@@ -2,6 +2,7 @@
 #include <nds/arm9/video.h>
 #include <nds/arm9/sprite.h>
 #include <nds/arm9/console.h>
+#include <iostream>
 #include "../build/gfx_cavebg.h"
 #include "globals_declarations.h"
 #include "globals_definitions.h"
@@ -10,7 +11,6 @@
 #include "sound/sound_utils.h"
 #include "time/time_utils.h"
 #include "console/console_utils.h"
-#include "camera/layer_level.h"
 
 /*
 
@@ -116,12 +116,12 @@ int main() {
     dmaCopy(gfx_cavebgTiles, bgGetGfxPtr(global::bg_main_address), sizeof(gfx_cavebgTiles));
     dmaCopy(gfx_cavebgTiles, bgGetGfxPtr(global::bg_sub_address), sizeof(gfx_cavebgTiles));
 
-    global::level_generator->newLayout(timerElapsed(0));
+    console::init();
+
     global::level_generator->generate_splash_screen(SplashScreenType::MAIN_MENU_UPPER);
     global::level_generator->generate_splash_screen(SplashScreenType::MAIN_MENU_LOWER);
     global::level_generator->render_tiles_on_base_map();
 
-    console::init();
 
 /*
     if (nitroFSInit(NULL)) {

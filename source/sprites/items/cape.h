@@ -9,6 +9,7 @@
 #include "../sprite_info.h"
 #include "../sprite_state.h"
 #include "../moving_object.h"
+#include "../shopping_object.h"
 
 #define CAPE_PHYSICAL_HEIGHT 15
 #define CAPE_PHYSICAL_WIDTH 14
@@ -18,7 +19,7 @@
 #define MAX_X_SPEED_CAPE 4
 #define MAX_Y_SPEED_CAPE 4
 
-class Cape : public MovingObject {
+class Cape : public MovingObject , public ShoppingObject {
 
 public:
 

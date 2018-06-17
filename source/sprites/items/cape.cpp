@@ -111,6 +111,8 @@ void Cape::draw() {
 
 void Cape::init() {
     initSprite();
+    init_anim_icon();
+
 }
 
 void Cape::updateSpeed() {
@@ -181,9 +183,14 @@ void Cape::set_position() {
     subSpriteInfo->entry->vFlip = false;
     subSpriteInfo->entry->hFlip = false;
 
+    update_anim_icon(x, y, physical_width);
+
+
 }
 
 Cape::Cape() {
+    cost = 13000;
+    name = "CAPE";
     physical_height = CAPE_PHYSICAL_HEIGHT;
     physical_width = CAPE_PHYSICAL_WIDTH;
     sprite_height = CAPE_SPRITE_HEIGHT;

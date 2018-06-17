@@ -7,6 +7,7 @@
 
 #include "../moving_object.h"
 #include "../sprite_state.h"
+#include "../shopping_object.h"
 
 #define PISTOL_PHYSICAL_HEIGHT 6
 #define PISTOL_PHYSICAL_WIDTH 9
@@ -17,7 +18,7 @@
 #define MAX_Y_SPEED_PISTOL 4
 
 
-class Pistol: public MovingObject {
+class Pistol : public MovingObject, public ShoppingObject {
 
 public:
 
@@ -45,22 +46,23 @@ public:
 
     double pos_inc_timer{};
 
-    SpriteInfo *mainSpriteInfo {};
-    SpriteInfo *subSpriteInfo {};
+    SpriteInfo *mainSpriteInfo{};
+    SpriteInfo *subSpriteInfo{};
 
-    SpriteInfo *blast_mainSpriteInfo {};
-    SpriteInfo *blast_subSpriteInfo {};
+    SpriteInfo *blast_mainSpriteInfo{};
+    SpriteInfo *blast_subSpriteInfo{};
 
     int cooldown{};
     bool firing{};
     int animFrame{};
     int animFrameTimer{};
 
-    u8 * frameGfx{};
+    u8 *frameGfx{};
 
     SpriteState spriteState{};
 
-    SpritesheetType  spriteType{};
+    SpritesheetType spriteType{};
+
     void set_position();
 };
 

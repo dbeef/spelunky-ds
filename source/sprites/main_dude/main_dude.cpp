@@ -4,30 +4,14 @@
 
 #include <nds.h>
 #include <nds/arm9/sprite.h>
-#include <iostream>
 #include <maxmod9.h>
-#include <nds/arm9/console.h>
-#include <algorithm>
 #include "main_dude.h"
 #include "../../globals_declarations.h"
 #include "../../collisions/collisions.h"
 #include "../../tiles/map_utils.h"
 #include "../../../build/gfx_spelunker.h"
-#include "../../../build/gfx_whip.h"
-#include "../items/rope.h"
-
-#include "../../../build/soundbank_bin.h"
 #include "../../../build/soundbank.h"
-#include "../animations/blood.h"
-#include "../../game_loop.h"
 #include "../../tiles/tile_orientation.h"
-#include "../../tiles/splash_screen_type.h"
-#include "../collectibles/spring_shoes.h"
-#include "../collectibles/compass.h"
-#include "../collectibles/glove.h"
-#include "../collectibles/mitt.h"
-#include "../collectibles/shotgun.h"
-#include "../collectibles/pistol.h"
 #include "../animations/fall_poof.h"
 
 void MainDude::handle_key_input() {

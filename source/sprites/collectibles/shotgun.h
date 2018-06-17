@@ -7,6 +7,7 @@
 
 
 #include "../moving_object.h"
+#include "../shopping_object.h"
 
 #define SHOTGUN_PHYSICAL_HEIGHT 7
 #define SHOTGUN_PHYSICAL_WIDTH 13
@@ -17,7 +18,7 @@
 #define MAX_Y_SPEED_SHOTGUN 4
 
 
-class Shotgun: public MovingObject {
+class Shotgun: public MovingObject, public ShoppingObject {
 
 public:
 

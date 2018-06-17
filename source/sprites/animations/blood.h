@@ -17,7 +17,6 @@
 #define BLOOD_ANIM_FRAME_DELTA 90
 
 #include <vector>
-#include <nds/jtypes.h>
 #include "../moving_object.h"
 #include "blood_element.h"
 #include "../sprite_info.h"

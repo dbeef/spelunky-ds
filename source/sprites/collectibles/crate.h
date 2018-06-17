@@ -7,6 +7,7 @@
 
 
 #include "../moving_object.h"
+#include "../shopping_object.h"
 
 #define CRATE_PHYSICAL_HEIGHT 10
 #define CRATE_PHYSICAL_WIDTH 12

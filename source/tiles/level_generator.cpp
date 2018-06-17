@@ -2,7 +2,9 @@
 // Created by xdbeef on 04.03.18.
 //
 
-#include <tgmath.h>
+#include <cstdlib>
+#include <iostream>
+#include <cstring>
 #include "level_generator.h"
 #include "../globals_declarations.h"
 #include "splash_screen_type.h"
@@ -15,9 +17,11 @@
 #include "../rooms/splash_screens.h"
 #include "../rooms/room_type.h"
 #include "map_utils.h"
+#include "../rooms/shops.h"
+#include "direction.h"
 
 
-void LevelGenerator::render_tiles_on_base_map(){
+void LevelGenerator::render_tiles_on_base_map() {
     dmaCopyHalfWords(DMA_CHANNEL, global::base_map, global::current_map, sizeof(global::current_map));
     tiles_to_map();
     sectorize_map();
@@ -28,7 +32,7 @@ void LevelGenerator::render_tiles_on_base_map(){
 }
 
 /**
- * http:www.cplusplus.com/reference/cstdlib/rand/, liczba z przedziału 0-3
+ * http:www.cplusplus.com/reference/cstdlib/rand
  * 0,0 is upper-left corner of the map
  * @param seed
  */
@@ -41,87 +45,100 @@ void LevelGenerator::newLayout(int seed) {
     }
     for (int a = 0; a < ROOMS_X; a++) {
         for (int b = 0; b < ROOMS_Y; b++) {
-            layout_room_types[a][b] = 0;
+            layout_room_types[a][b] = room_type::R_CLOSED;
         }
     }
 
     srand(timerElapsed(1));
 
     int curr_x = rand() % 3;
-    //    std::cout << " " << curr_x << '\n';
-
     int curr_y = ROOMS_Y - 1;
-    int direction = 0;
 
-    layout_room_types[curr_x][curr_y] = 4;
+    int direction;
+
+    bool exit_placed = false;
+
+    layout_room_types[curr_x][curr_y] = room_type::R_ENTRANCE;
+
+    if (curr_x == 0) {
+        direction = Direction::RIGHT;
+    } else if (curr_x == 2) {
+        direction = Direction::LEFT;
+    } else {
+        direction = rand() % 2; //left or right
+    }
 
     while (curr_y >= 0) {
 
+        if (direction == Direction::UNDEFINED) {
+            layout_room_types[curr_x][curr_y] = room_type::R_LEFT_RIGHT_UP;
 
-        if (direction == 0) {
-            if (curr_y == 0)
-                direction = rand() % 2 + 1;
-            else {
-
-                int l_chances = 4;
-                int r_chances = 4;
-
-                if (curr_x == ROOMS_X - 1) {
-                    l_chances = 25;
-                }
-                if (curr_x == 0) {
-                    r_chances = 25;
-                }
-
-                int r = (rand() % (r_chances + l_chances)) + 1;
-
-                if (r < l_chances)
-                    direction = 1;
-                else if (r >= l_chances && r <= l_chances + r_chances)
-                    direction = 2;
-                else {
-                    direction = 3;
-                }
-
+            if (curr_y == 0 && !exit_placed && rand() % 2 == 0) {
+                exit_placed = true;
+                layout_room_types[curr_x][curr_y] = room_type::R_EXIT;
             }
+
+            if (curr_x == 0)
+                direction = Direction::RIGHT;
+            else if (curr_x == 2)
+                direction = Direction::LEFT;
+            else
+                direction = rand() % 2;
+
         }
 
-        if (direction == 1) {
+        if (direction == Direction::LEFT) {
 
             if (curr_x == 0) {
-                direction = 3;
+                direction = Direction::DOWN;
             } else {
                 curr_x--;
-                layout_room_types[curr_x][curr_y] = 1;
-            }
-        } else if (direction == 2) {
 
-            if (curr_x == ROOMS_X - 1) {
-                direction = 3;
+                if (curr_y == 0 && !exit_placed && rand() % 2 == 0) {
+                    exit_placed = true;
+                    layout_room_types[curr_x][curr_y] = room_type::R_EXIT;
+                } else {
+                    layout_room_types[curr_x][curr_y] = room_type::R_LEFT_RIGHT;
+                }
+
+                if(rand() % 3 == 2)
+                    direction = Direction::DOWN;
+
+            }
+
+        } else if (direction == Direction::RIGHT) {
+
+            if (curr_x == ROOMS_X - 1 ) {
+                direction = Direction::DOWN;
             } else {
                 curr_x++;
-                layout_room_types[curr_x][curr_y] = 1;
+
+                if (curr_y == 0 && !exit_placed && rand() % 2 == 0) {
+                    exit_placed = true;
+                    layout_room_types[curr_x][curr_y] = room_type::R_EXIT;
+                } else {
+                    layout_room_types[curr_x][curr_y] = room_type::R_LEFT_RIGHT;
+                }
+
+                if(rand() % 3 == 2)
+                    direction = Direction::DOWN;
+
             }
 
-        } else if (direction == 3) {
+        } else if (direction == Direction::DOWN) {
 
             if (curr_y > 0) {
 
-                layout_room_types[curr_x][curr_y] = 2;
-
-                if (curr_y >= 1) {
-                    layout_room_types[curr_x][curr_y - 1] = 3;
-                }
-
-
-                direction = 0;
+                layout_room_types[curr_x][curr_y] = room_type::R_LEFT_RIGHT_DOWN;
+                direction = Direction::UNDEFINED;
                 curr_y--;
 
-                if (curr_y == 0)
-                    layout_room_types[curr_x][curr_y] = 5;
-
             } else {
-                break;
+
+                if (!exit_placed ) {
+                    layout_room_types[curr_x][curr_y] = room_type::R_EXIT;
+                }
+                    break;
             }
         }
     }
@@ -129,6 +146,44 @@ void LevelGenerator::newLayout(int seed) {
     //todo post-generation things, like founding patterns, i.e if there's a well of '0' type rooms, then make
     //a special, long room
 
+    bool ex = false;
+    for (int a = 0; a < ROOMS_X; a++) {
+        for (int b = 0; b < ROOMS_Y; b++) {
+
+            if (layout_room_types[a][b] == room_type::R_CLOSED) {
+
+                if (a == 0) {
+                    if (layout_room_types[a + 1][b] != room_type::R_CLOSED) {
+                        layout_room_types[a][b] = room_type::R_SHOP_RIGHT;
+                        ex = true;
+                    }
+                } else if (a == 2) {
+                    if (layout_room_types[a - 1][b] != room_type::R_CLOSED) {
+                        layout_room_types[a][b] = room_type::R_SHOP_LEFT;
+                        ex = true;
+                    }
+                } else if (a == 1) {
+                    if (layout_room_types[a - 1][b] != room_type::R_CLOSED &&
+                        layout_room_types[a + 1][b] != room_type::R_CLOSED) {
+
+                        if (rand() % 2 == 0)
+                            layout_room_types[a][b] = room_type::R_SHOP_LEFT;
+                        else
+                            layout_room_types[a][b] = room_type::R_SHOP_RIGHT;
+
+                        ex = true;
+                    }
+                }
+
+                if (ex)
+                    break;
+            }
+
+
+        }
+        if (ex)
+            break;
+    }
 }
 
 void LevelGenerator::generate_frame() {
@@ -278,23 +333,29 @@ void LevelGenerator::generate_rooms() {
             //-1 if no NPC's
 
             switch (room_type) {
-                case room_type::ROOM_CLOSED:
+                case room_type::R_CLOSED:
                     memcpy(tab, closed_rooms[r], sizeof(closed_rooms[r]));
                     break;
-                case room_type::ROOM_LEFT_RIGHT:
+                case room_type::R_LEFT_RIGHT:
                     memcpy(tab, left_right_rooms[r], sizeof(left_right_rooms[r]));
                     break;
-                case room_type::ROOM_LEFT_RIGHT_DOWN:
+                case room_type::R_LEFT_RIGHT_DOWN:
                     memcpy(tab, left_right_down_rooms[r], sizeof(left_right_down_rooms[r]));
                     break;
-                case room_type::ROOM_LEFT_RIGHT_UP:
+                case room_type::R_LEFT_RIGHT_UP:
                     memcpy(tab, left_right_up_rooms[r], sizeof(left_right_up_rooms[r]));
                     break;
-                case room_type::ROOM_ENTRANCE:
+                case room_type::R_ENTRANCE:
                     memcpy(tab, entrance_room[r], sizeof(entrance_room[r]));
                     break;
-                case room_type::ROOM_EXIT:
+                case room_type::R_EXIT:
                     memcpy(tab, exit_room[r], sizeof(exit_room[r]));
+                    break;
+                case room_type::R_SHOP_LEFT:
+                    memcpy(tab, shops[0], sizeof(shops[0]));
+                    break;
+                case room_type::R_SHOP_RIGHT:
+                    memcpy(tab, shops[1], sizeof(shops[1]));
                     break;
                 default:
                     break;
@@ -585,6 +646,69 @@ void LevelGenerator::match_tile(MapTile *t, int value) {
             t->collidable = false;
             t->destroyable = false;
             t->mapTileType = MapTileType::SCORES_CHANGING_DOOR;
+            break;
+        case MapTileType::SHOP_SIGN_RARE:
+            t->values[0] = 128;
+            t->values[1] = 129;
+            t->values[2] = 130;
+            t->values[3] = 131;
+            t->collidable = true;
+            t->destroyable = true;
+            t->mapTileType = MapTileType::SHOP_SIGN_RARE;
+            break;
+        case MapTileType::SHOP_SIGN_WEAPON:
+            t->values[0] = 132;
+            t->values[1] = 133;
+            t->values[2] = 134;
+            t->values[3] = 135;
+            t->collidable = true;
+            t->destroyable = true;
+            t->mapTileType = MapTileType::SHOP_SIGN_WEAPON;
+            break;
+        case MapTileType::SHOP_SIGN_BOMBS:
+            t->values[0] = 136;
+            t->values[1] = 137;
+            t->values[2] = 138;
+            t->values[3] = 139;
+            t->collidable = true;
+            t->destroyable = true;
+            t->mapTileType = MapTileType::SHOP_SIGN_BOMBS;
+            break;
+        case MapTileType::SHOP_SIGN_CLOTHING:
+            t->values[0] = 140;
+            t->values[1] = 141;
+            t->values[2] = 142;
+            t->values[3] = 143;
+            t->collidable = true;
+            t->destroyable = true;
+            t->mapTileType = MapTileType::SHOP_SIGN_CLOTHING;
+            break;
+        case MapTileType::SHOP_SIGN_CRAPS:
+            t->values[0] = 144;
+            t->values[1] = 145;
+            t->values[2] = 146;
+            t->values[3] = 147;
+            t->collidable = true;
+            t->destroyable = true;
+            t->mapTileType = MapTileType::SHOP_SIGN_CRAPS;
+            break;
+        case MapTileType::SHOP_SIGN_GENERAL:
+            t->values[0] = 148;
+            t->values[1] = 149;
+            t->values[2] = 150;
+            t->values[3] = 151;
+            t->collidable = true;
+            t->destroyable = true;
+            t->mapTileType = MapTileType::SHOP_SIGN_GENERAL;
+            break;
+        case MapTileType::SHOP_SIGN_KISSING:
+            t->values[0] = 152;
+            t->values[1] = 153;
+            t->values[2] = 154;
+            t->values[3] = 155;
+            t->collidable = true;
+            t->destroyable = true;
+            t->mapTileType = MapTileType::SHOP_SIGN_KISSING;
             break;
         default:
             break;

@@ -14,6 +14,10 @@ public:
 
     Hud();
 
+    bool holding_item_shopping{};
+    const char *holding_item_name;
+    int *holding_item_cost;
+
     void draw();
 
     void init();
@@ -59,6 +63,10 @@ public:
     void set_position();
 
     void next_item();
+
+    void draw_item_shop(char *item_name, int i);
+
+    void debug_oam();
 };
 
 

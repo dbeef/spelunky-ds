@@ -5,7 +5,6 @@
 #ifndef SPELUNKYDS_GLOBALS_DEFINITIONS_H
 #define SPELUNKYDS_GLOBALS_DEFINITIONS_H
 
-#include <nds/jtypes.h>
 #include <mm_types.h>
 #include "sprites/spritesheet_type.h"
 #include "sprites/sprite_type.h"

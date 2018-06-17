@@ -9,6 +9,7 @@
 #include "../sprite_info.h"
 #include "../sprite_state.h"
 #include "../moving_object.h"
+#include "../shopping_object.h"
 
 #define GLOVE_PHYSICAL_HEIGHT 15
 #define GLOVE_PHYSICAL_WIDTH 16
@@ -18,7 +19,7 @@
 #define MAX_X_SPEED_GLOVE 4
 #define MAX_Y_SPEED_GLOVE 4
 
-class Glove : public MovingObject {
+class Glove : public MovingObject , public ShoppingObject {
 
 public:
 

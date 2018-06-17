@@ -1,4 +1,4 @@
-When making an icon in gimp, remember it to be specifically:
+When making an shopping_icon in gimp, remember it to be specifically:
 
 > 32 px x 32 px
 > 72ppi x 72ppi ( Image -> Print Size )

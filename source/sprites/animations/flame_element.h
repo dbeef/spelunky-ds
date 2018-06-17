@@ -5,7 +5,6 @@
 #ifndef SPELUNKYDS_FLAME_ELEMENT_H
 #define SPELUNKYDS_FLAME_ELEMENT_H
 
-#include <nds/jtypes.h>
 #include "../moving_object.h"
 #include "../sprite_info.h"
 

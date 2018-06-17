@@ -23,7 +23,6 @@ void Compass::draw() {
         subSpriteInfo->entry->isHidden = false;
     }
 
-
     set_position();
 
     if (collected) {
@@ -60,6 +59,7 @@ void Compass::draw() {
 
 void Compass::init() {
     initSprite();
+    init_anim_icon();
 }
 
 void Compass::updateSpeed() {
@@ -91,9 +91,12 @@ void Compass::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_
 
         bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, physical_width, physical_height,
                                                            true, BOUNCING_FACTOR_Y);
-        leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true, BOUNCING_FACTOR_X);
-        rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true, BOUNCING_FACTOR_X);
-        upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, physical_width, true, BOUNCING_FACTOR_Y);
+        leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true,
+                                                       BOUNCING_FACTOR_X);
+        rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true,
+                                                         BOUNCING_FACTOR_X);
+        upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, physical_width, true,
+                                                         BOUNCING_FACTOR_Y);
     }
 }
 
@@ -124,7 +127,6 @@ void Compass::initSprite() {
 void Compass::set_position() {
 
     if (collected) {
-
         //hud
         mainSpriteInfo->entry->x = x;
         mainSpriteInfo->entry->y = y;
@@ -143,6 +145,8 @@ void Compass::set_position() {
         subSpriteInfo->entry->y = sub_y;
     }
 
+    update_anim_icon(x, y, physical_width);
+
     mainSpriteInfo->entry->vFlip = false;
     mainSpriteInfo->entry->hFlip = false;
 
@@ -152,6 +156,8 @@ void Compass::set_position() {
 }
 
 Compass::Compass() {
+    cost = 3 * 1000;
+    name = "COMPASS";
     physical_height = COMPASS_PHYSICAL_HEIGHT;
     physical_width = COMPASS_PHYSICAL_WIDTH;
     sprite_height = COMPASS_SPRITE_HEIGHT;

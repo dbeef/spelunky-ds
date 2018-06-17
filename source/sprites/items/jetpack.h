@@ -9,6 +9,7 @@
 #include "../sprite_info.h"
 #include "../sprite_state.h"
 #include "../moving_object.h"
+#include "../shopping_object.h"
 
 #define JETPACK_PHYSICAL_HEIGHT 12
 #define JETPACK_PHYSICAL_WIDTH 14
@@ -18,7 +19,7 @@
 #define MAX_X_SPEED_JETPACK 4
 #define MAX_Y_SPEED_JETPACK 4
 
-class Jetpack : public MovingObject {
+class Jetpack : public MovingObject, public ShoppingObject  {
 
 public:
 

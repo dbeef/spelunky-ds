@@ -4,6 +4,8 @@
 //
 
 #include <maxmod9.h>
+#include <cstdlib>
+#include <iostream>
 #include "moving_object.h"
 #include "../globals_declarations.h"
 #include "../tiles/map_utils.h"
@@ -193,6 +195,7 @@ bool MovingObject::kill_mobs_items_if_thrown(int dmg_to_apply) {
         for (int a = 0; a < global::sprites.size(); a++) {
             if ((global::sprites.at(a)->spriteType == SpritesheetType::SNAKE ||
                  global::sprites.at(a)->spriteType == SpritesheetType::BAT_JETPACK ||
+                 global::sprites.at(a)->spriteType == SpritesheetType::SHOPKEEPER||
                  global::sprites.at(a)->spriteType == SpritesheetType::SPIDER ||
                  global::sprites.at(a)->spriteType == SpritesheetType::CAVEMAN_DAMSEL ||
                  global::sprites.at(a)->spriteType == SpritesheetType::JAR)

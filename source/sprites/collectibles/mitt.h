@@ -9,6 +9,7 @@
 #include "../sprite_info.h"
 #include "../sprite_state.h"
 #include "../moving_object.h"
+#include "../shopping_object.h"
 
 #define MITT_PHYSICAL_HEIGHT 14
 #define MITT_PHYSICAL_WIDTH 14
@@ -18,7 +19,7 @@
 #define MAX_X_SPEED_MITT 4
 #define MAX_Y_SPEED_MITT 4
 
-class Mitt : public MovingObject {
+class Mitt : public MovingObject, public ShoppingObject  {
 
 public:
 

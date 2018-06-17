@@ -5,12 +5,6 @@
 #ifndef SPELUNKYDS_LEVELGENERATOR_H
 #define SPELUNKYDS_LEVELGENERATOR_H
 
-
-#include <cstdlib>
-#include <iostream>
-#include <nds.h>
-#include <nds/arm9/background.h>
-#include <cstring>
 #include "map_tile.h"
 
 #define ROOMS_X 3
@@ -35,7 +29,7 @@
 #define OFFSET_Y 128
 
 
-class LevelGenerator {
+class  LevelGenerator {
 
 public:
 

@@ -3,6 +3,7 @@
 //
 
 #include <maxmod9.h>
+#include <cstdlib>
 #include "../../../build/gfx_spike_collectibles_flame.h"
 #include "chest.h"
 #include "../../collisions/collisions.h"
@@ -19,6 +20,7 @@
 #include "../items/spike_shoes.h"
 #include "../items/cape.h"
 #include "../items/jetpack.h"
+#include "collectibles_utils.h"
 
 #define CRATE_POS_INC_DELTA 15
 
@@ -158,7 +160,7 @@ Crate::Crate() {
 //TODO lower chances for good items
 void Crate::drop_loot() {
 
-    int r = rand() % 11;
+    int r = rand() % 3;
 
     //drop rope or bomb
     if (r == 0 || r == 1) {
@@ -179,52 +181,10 @@ void Crate::drop_loot() {
         global::sprites.push_back(g);
         global::hud->draw();
     } else {
-
-        //drop an item
-
-        MovingObject *m = nullptr;
-
-        switch (r) {
-            case 2:
-                m = new Pistol();
-                break;
-            case 3:
-                m = new SpringShoes();
-                break;
-            case 4:
-                m = new Cape();
-                break;
-            case 5:
-                m = new Compass();
-                break;
-            case 6:
-                m = new Glove();
-                break;
-            case 7:
-                m = new Shotgun();
-                break;
-            case 8:
-                m = new SpikeShoes();
-                break;
-            case 9:
-                m = new Mitt();
-                break;
-            case 10:
-                m = new Jetpack();
-                break;
-
-            default:
-                break;
-        }
-
-        m->x = this->x;
-        m->y = this->y;
-        m->init();
-        global::sprites.push_back(m);
+        collectibles_utils::spawn_random_item(this->x, this->y);
     }
 
     dropped_loot = true;
-
 }
 
 void Crate::play_collectible_animation() {

@@ -32,6 +32,10 @@
 #define HOLDING_ITEM_FRAME_POSITION_X 5
 #define HOLDING_ITEM_FRAME_POSITION_Y 20
 
+void Hud::draw_item_shop(char *item_name, int cost){
+    //todo
+}
+
 void Hud::hide() {
     heartSpriteInfo->entry->isHidden = true;
     dollarSpriteInfo->entry->isHidden = true;
@@ -98,23 +102,13 @@ void Hud::draw() {
         std::cout << '\n' << "   " << hearts << "    " << bombs << "    " << ropes << "    " << dollars;
         if (dollars_buffer != 0) {
             std::cout << '\n' << "   " << "    " << "    " << "    " << "   " << "+" << dollars_buffer;
-/*
+        }
 
-
-        std::cout << "\n \n \n " << "IPM: " << global::main_oam_manager->current_oam_id_palette << " "
-                  << "IPS: " << global::sub_oam_manager->current_oam_id_palette << " "
-                  << "ITM: " << global::main_oam_manager->current_oam_id_tiles << " "
-                  << "ITS: " << global::sub_oam_manager->current_oam_id_tiles
-                  << "N: " << global::sub_oam_manager->nextAvailableTileIdx;
-
-        } else {
-        std::cout << "\n \n \n " << "IPM: " << global::main_oam_manager->current_oam_id_palette << " "
-                  << "IPS: " << global::sub_oam_manager->current_oam_id_palette << " "
-                  << "ITM: " << global::main_oam_manager->current_oam_id_tiles << " "
-                  << "ITS: " << global::sub_oam_manager->current_oam_id_tiles
-                  << "N: " << global::sub_oam_manager->nextAvailableTileIdx;
-*/
-
+//        debug_oam();
+        if(holding_item_shopping){
+            std::cout<< "\n\n";
+            printf("    %s FOR $%d.\n", holding_item_name, *holding_item_cost);
+            printf("    PRESS L TO PURCHASE.");
         }
     }
 
@@ -371,4 +365,12 @@ Hud::Hud() {
 
 void Hud::next_item() {
     items_offset_y += 18;
+}
+
+void Hud::debug_oam() {
+    std::cout << "\n \n \n " << "IPM: " << global::main_oam_manager->current_oam_id_palette << " "
+              << "IPS: " << global::sub_oam_manager->current_oam_id_palette << " "
+              << "ITM: " << global::main_oam_manager->current_oam_id_tiles << " "
+              << "ITS: " << global::sub_oam_manager->current_oam_id_tiles
+              << "N: " << global::sub_oam_manager->nextAvailableTileIdx;
 }

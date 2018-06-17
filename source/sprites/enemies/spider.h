@@ -13,7 +13,6 @@
 #define SPIDER_SPRITE_HEIGHT 16
 #define SPIDER_SPRITE_WIDTH 16
 
-#include <nds/jtypes.h>
 #include "../moving_object.h"
 #include "../sprite_state.h"
 #include "../sprite_info.h"

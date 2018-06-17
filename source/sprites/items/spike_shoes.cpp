@@ -59,6 +59,7 @@ void SpikeShoes::draw() {
 
 void SpikeShoes::init() {
     initSprite();
+    init_anim_icon();
 }
 
 void SpikeShoes::updateSpeed() {
@@ -141,6 +142,8 @@ void SpikeShoes::set_position() {
 
     subSpriteInfo->entry->vFlip = false;
     subSpriteInfo->entry->hFlip = false;
+
+    update_anim_icon(x, y, physical_width);
 
 }
 

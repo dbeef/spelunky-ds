@@ -32,7 +32,8 @@ void Spikes::draw() {
 
     for (int a = 0; a < global::sprites.size(); a++) {
         if ((global::sprites.at(a)->spriteType == SpritesheetType::SPIDER ||
-             global::sprites.at(a)->spriteType == SpritesheetType::CAVEMAN_DAMSEL)
+             global::sprites.at(a)->spriteType == SpritesheetType::CAVEMAN_DAMSEL ||
+             global::sprites.at(a)->spriteType == SpritesheetType::SHOPKEEPER)
             && !global::sprites.at(a)->ready_to_dispose && !global::sprites.at(a)->killed) {
 
             if (Collisions::checkCollisionBodies(x, y, physical_width, physical_height,

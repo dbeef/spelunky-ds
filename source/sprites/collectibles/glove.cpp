@@ -3,6 +3,7 @@
 //
 
 
+#include <iostream>
 #include "../spritesheet_type.h"
 #include "mitt.h"
 #include "glove.h"
@@ -28,7 +29,7 @@ void Glove::draw() {
     if (collected)
         return;
 
-    if (check_if_can_be_equipped()) {
+    if (bought && check_if_can_be_equipped()) {
         collected = true;
 
         GotCollectible *g = new GotCollectible();
@@ -49,13 +50,28 @@ void Glove::draw() {
             subSpriteInfo->entry->isHidden = true;
             ready_to_dispose = true;
         }
+    } else if (!bought && !hold_by_main_dude) {
+        check_if_can_be_pickuped();
     }
 
+    if (hold_by_main_dude) {
+        set_pickuped_position(4, -4);
+        if (!global::hud->holding_item_shopping) {
+            global::hud->holding_item_shopping = true;
+            global::hud->holding_item_cost = &cost;
+            global::hud->holding_item_name = name;
+            global::hud->draw();
+        }
+    } else {
+        global::hud->holding_item_shopping = false;
+        global::hud->draw();
+    }
 }
 
 
 void Glove::init() {
     initSprite();
+    init_anim_icon();
 }
 
 void Glove::updateSpeed() {
@@ -88,9 +104,12 @@ void Glove::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in
                                     y_current_pos_in_tiles,
                                     tiles);
 
-    bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, physical_width, physical_height, true, BOUNCING_FACTOR_Y);
-    leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true, BOUNCING_FACTOR_X);
-    rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true, BOUNCING_FACTOR_X);
+    bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, physical_width, physical_height, true,
+                                                       BOUNCING_FACTOR_Y);
+    leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true,
+                                                   BOUNCING_FACTOR_X);
+    rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true,
+                                                     BOUNCING_FACTOR_X);
     upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, physical_width, true, BOUNCING_FACTOR_Y);
 
 }
@@ -144,9 +163,13 @@ void Glove::set_position() {
     subSpriteInfo->entry->vFlip = false;
     subSpriteInfo->entry->hFlip = false;
 
+    update_anim_icon(x, y, physical_width);
+
 }
 
 Glove::Glove() {
+    cost = 9 * 1000;
+    name = "GLOVE";
     physical_height = GLOVE_PHYSICAL_HEIGHT;
     physical_width = GLOVE_PHYSICAL_WIDTH;
     sprite_height = GLOVE_SPRITE_HEIGHT;

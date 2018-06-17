@@ -61,6 +61,8 @@ void Mitt::draw() {
 
 void Mitt::init() {
     initSprite();
+    init_anim_icon();
+
 }
 
 void Mitt::updateSpeed() {
@@ -150,9 +152,14 @@ void Mitt::set_position() {
     subSpriteInfo->entry->vFlip = false;
     subSpriteInfo->entry->hFlip = false;
 
+    update_anim_icon(x, y, physical_width);
+
+
 }
 
 Mitt::Mitt() {
+    cost = 4 * 1000;
+    name = "MITT";
     physical_height = MITT_PHYSICAL_HEIGHT;
     physical_width = MITT_PHYSICAL_WIDTH;
     sprite_height = MITT_SPRITE_HEIGHT;

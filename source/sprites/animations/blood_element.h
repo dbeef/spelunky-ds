@@ -5,8 +5,6 @@
 #ifndef SPELUNKYDS_BLOODELEMENT_H
 #define SPELUNKYDS_BLOODELEMENT_H
 
-
-#include <nds/jtypes.h>
 #include "../moving_object.h"
 #include "../sprite_info.h"
 

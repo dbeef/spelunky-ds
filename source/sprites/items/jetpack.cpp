@@ -126,6 +126,8 @@ void Jetpack::draw() {
 
 void Jetpack::init() {
     initSprite();
+    init_anim_icon();
+
 }
 
 void Jetpack::updateSpeed() {
@@ -201,9 +203,13 @@ void Jetpack::set_position() {
     subSpriteInfo->entry->vFlip = false;
     subSpriteInfo->entry->hFlip = false;
 
+    update_anim_icon(x, y, physical_width);
+
 }
 
 Jetpack::Jetpack() {
+    cost = 16000;
+    name = "JETPACK";
     physical_height = JETPACK_PHYSICAL_HEIGHT;
     physical_width = JETPACK_PHYSICAL_WIDTH;
     sprite_height = JETPACK_SPRITE_HEIGHT;

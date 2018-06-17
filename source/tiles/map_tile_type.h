@@ -37,6 +37,13 @@ enum MapTileType {
     SCORES_SUN_DOOR,                //26
     SCORES_MOON_DOOR,               //27
     SCORES_CHANGING_DOOR,           //28
+    SHOP_SIGN_RARE,                 //29
+    SHOP_SIGN_WEAPON,               //30
+    SHOP_SIGN_BOMBS,                //31
+    SHOP_SIGN_CLOTHING,             //32
+    SHOP_SIGN_CRAPS,                //33
+    SHOP_SIGN_GENERAL,              //34
+    SHOP_SIGN_KISSING,              //35
 };
 
 #endif //SPELUNKYDS_MAPTILETYPES_H

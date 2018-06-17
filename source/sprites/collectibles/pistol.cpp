@@ -143,6 +143,7 @@ void Pistol::draw() {
 
 void Pistol::init() {
     initSprite();
+    init_anim_icon();
 }
 
 void Pistol::updateSpeed() {
@@ -232,9 +233,13 @@ void Pistol::set_position() {
     subSpriteInfo->entry->vFlip = false;
     subSpriteInfo->entry->hFlip = false;
 
+    update_anim_icon(x, y, physical_width);
+
 }
 
 Pistol::Pistol() {
+    cost = 10 * 1000;
+    name = "PISTOL";
     physical_height = PISTOL_PHYSICAL_HEIGHT;
     physical_width = PISTOL_PHYSICAL_WIDTH;
     sprite_height = PISTOL_SPRITE_HEIGHT;

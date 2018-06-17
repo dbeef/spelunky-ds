@@ -8,7 +8,7 @@
 
 void InputHandler::updateInput() {
 
-    if(stop_handling)
+    if (stop_handling)
         return;
 
     scanKeys();
@@ -35,8 +35,8 @@ void InputHandler::updateInput() {
         b_key_held = false;
         y_key_held = false;
         up_key_held = false;
-        l_bumper_held= false;
-        r_bumper_held= false;
+        l_bumper_held = false;
+        r_bumper_held = false;
     }
 
     if (keys_down) {
@@ -46,6 +46,8 @@ void InputHandler::updateInput() {
         y_key_down = (keys_down & KEY_Y) != 0;
         a_key_down = (keys_down & KEY_A) != 0;
         b_key_down = (keys_down & KEY_B) != 0;
+
+
 //        seed += r_bumper_down + l_bumper_down + x_key_down + y_key_down + a_key_down;
 
     } else {

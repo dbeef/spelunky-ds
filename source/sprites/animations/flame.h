@@ -17,7 +17,6 @@
 #define FLAME_ANIM_FRAME_DELTA 90
 
 #include <vector>
-#include <nds/jtypes.h>
 #include "../moving_object.h"
 #include "../sprite_info.h"
 #include "flame_element.h"

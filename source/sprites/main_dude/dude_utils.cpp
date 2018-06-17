@@ -118,6 +118,7 @@ void MainDude::spawn_carried_items() {
         springShoes->x = HUD_ITEMS_ROW_X;
         springShoes->y = global::hud->items_offset_y;
         springShoes->collected = true;
+        springShoes->bought = true;
         springShoes->init();
         global::sprites.push_back(springShoes);
         global::hud->next_item();
@@ -128,6 +129,7 @@ void MainDude::spawn_carried_items() {
         spikeShoes->x = HUD_ITEMS_ROW_X;
         spikeShoes->y = global::hud->items_offset_y;
         spikeShoes->collected = true;
+        spikeShoes->bought= true;
         spikeShoes->init();
         global::sprites.push_back(spikeShoes);
         global::hud->next_item();
@@ -138,6 +140,7 @@ void MainDude::spawn_carried_items() {
         compass->x = HUD_ITEMS_ROW_X;
         compass->y = global::hud->items_offset_y;
         compass->collected = true;
+        compass->bought = true;
         compass->init();
         global::sprites.push_back(compass);
         global::hud->next_item();
@@ -147,6 +150,7 @@ void MainDude::spawn_carried_items() {
         glove->x = HUD_ITEMS_ROW_X;
         glove->y = global::hud->items_offset_y;
         glove->collected = true;
+        glove->bought = true;
         glove->init();
         global::sprites.push_back(glove);
         global::hud->next_item();
@@ -156,6 +160,7 @@ void MainDude::spawn_carried_items() {
         cape->x = HUD_ITEMS_ROW_X;
         cape->y = global::hud->items_offset_y;
         cape->collected = true;
+        cape->bought= true;
         cape->init();
         global::sprites.push_back(cape);
         global::hud->next_item();
@@ -165,6 +170,7 @@ void MainDude::spawn_carried_items() {
         jetpack->x = HUD_ITEMS_ROW_X;
         jetpack->y = global::hud->items_offset_y;
         jetpack->collected = true;
+        jetpack->bought = true;
         jetpack->init();
         global::sprites.push_back(jetpack);
         global::hud->next_item();
@@ -174,6 +180,7 @@ void MainDude::spawn_carried_items() {
         mitt->x = HUD_ITEMS_ROW_X;
         mitt->y = global::hud->items_offset_y;
         mitt->collected = true;
+        mitt->bought = true;
         mitt->init();
         global::sprites.push_back(mitt);
         global::hud->next_item();

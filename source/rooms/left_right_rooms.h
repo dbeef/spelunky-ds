@@ -52,6 +52,8 @@ static int left_right_rooms[3][10][10] = {
 //4 spikes
 //5 caveman
 //6 damsel
+//7 lamp
+//8 shopkeeper [TODO Enum for NPCType]
 
 static int left_right_npcs[3][10][10] = {
         {

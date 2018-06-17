@@ -8,6 +8,7 @@
 #include "../sprite_info.h"
 #include "../sprite_state.h"
 #include "../moving_object.h"
+#include "../shopping_object.h"
 
 #define COMPASS_PHYSICAL_HEIGHT 12
 #define COMPASS_PHYSICAL_WIDTH 12
@@ -17,7 +18,7 @@
 #define MAX_X_SPEED_COMPASS 4
 #define MAX_Y_SPEED_COMPASS 4
 
-class Compass : public MovingObject {
+class Compass : public MovingObject , public ShoppingObject {
 
 public:
 

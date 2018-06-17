@@ -3,6 +3,7 @@
 //
 
 #include <maxmod9.h>
+#include <cstdlib>
 #include "../../../build/gfx_spike_collectibles_flame.h"
 #include "chest.h"
 #include "../../collisions/collisions.h"
@@ -124,6 +125,8 @@ void Shotgun::draw() {
 
 void Shotgun::init() {
     initSprite();
+    init_anim_icon();
+
 }
 
 void Shotgun::updateSpeed() {
@@ -220,9 +223,14 @@ void Shotgun::set_position() {
     subSpriteInfo->entry->vFlip = false;
     subSpriteInfo->entry->hFlip = false;
 
+    update_anim_icon(x, y, physical_width);
+
+
 }
 
 Shotgun::Shotgun() {
+    cost = 13500;
+    name = "SHOTGUN";
     physical_height = SHOTGUN_PHYSICAL_HEIGHT;
     physical_width = SHOTGUN_PHYSICAL_WIDTH;
     sprite_height = SHOTGUN_SPRITE_HEIGHT;

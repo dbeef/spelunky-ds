@@ -2,7 +2,6 @@
 // Created by xdbeef on 31.05.18.
 //
 
-
 #include "caveman.h"
 #include "../../globals_declarations.h"
 #include "../../collisions/collisions.h"

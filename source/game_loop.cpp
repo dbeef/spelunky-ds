@@ -1,6 +1,5 @@
 #include <nds.h>
 #include "game_loop.h"
-#include "tiles/map_utils.h"
 #include "sprites/non_interactive/spelunky_title.h"
 #include "sprites/non_interactive/copyrights.h"
 #include "sprites/non_interactive/title_menu_sign.h"
@@ -15,6 +14,7 @@
 #include "rooms/exit_rooms.h"
 #include "rooms/closed_rooms.h"
 #include <algorithm>
+#include <iostream>
 #include "time/time_utils.h"
 #include "memory/oam_utils.h"
 #include "sprites/traps/spikes.h"
@@ -22,6 +22,10 @@
 #include "sprites/collectibles/crate.h"
 #include "sprites/enemies/caveman.h"
 #include "sprites/enemies/damsel.h"
+#include "sprites/non_interactive/lamp.h"
+#include "rooms/shops.h"
+#include "sprites/enemies/shopkeeper.h"
+#include "sprites/collectibles/collectibles_utils.h"
 
 static const int BOUNDARY_VALUE = 64; /* This is the default boundary value (can be set in REG_DISPCNT) */
 static const int OFFSET_MULTIPLIER_MAIN = BOUNDARY_VALUE / sizeof(SPRITE_GFX[0]);
@@ -71,14 +75,11 @@ void gameloop::scroll() {
         global::main_dude->handle_key_input();
         global::hud->update();
 
-
         swiWaitForVBlank();
         global::camera->set_scroll();
 
-
         global::main_oam_manager->updateOAM();
         global::sub_oam_manager->updateOAM();
-
 
         oam_utils::clean_unused_oam();
 
@@ -120,17 +121,17 @@ void gameloop::populate_cave_moniez() {
 
                     int npc;
 
-                    if (room_type == room_type::ROOM_LEFT_RIGHT)
+                    if (room_type == room_type::R_LEFT_RIGHT)
                         npc = left_right_loot[room_id][tab_y][tab_x];
-                    else if (room_type == room_type::ROOM_LEFT_RIGHT_UP)
+                    else if (room_type == room_type::R_LEFT_RIGHT_UP)
                         npc = left_right_up_loot[room_id][tab_y][tab_x];
-                    else if (room_type == room_type::ROOM_LEFT_RIGHT_DOWN)
+                    else if (room_type == room_type::R_LEFT_RIGHT_DOWN)
                         npc = left_right_down_loot[room_id][tab_y][tab_x];
-                    else if (room_type == room_type::ROOM_ENTRANCE)
+                    else if (room_type == room_type::R_ENTRANCE)
                         npc = entrance_room_loot[room_id][tab_y][tab_x];
-                    else if (room_type == room_type::ROOM_EXIT)
+                    else if (room_type == room_type::R_EXIT)
                         npc = exit_room_loot[room_id][tab_y][tab_x];
-                    else if (room_type == room_type::ROOM_CLOSED)
+                    else if (room_type == room_type::R_CLOSED)
                         npc = closed_rooms_loot[room_id][tab_y][tab_x];
                     else
                         continue;
@@ -143,7 +144,6 @@ void gameloop::populate_cave_moniez() {
 
                     u16 pos_x = (OFFSET_X + tab_x * 2 + 2 * ROOM_TILE_WIDTH_GAME * a) / 2;
                     u16 pos_y = (OFFSET_X + tab_y * 2 + 2 * ROOM_TILE_HEIGHT_GAME * ((ROOMS_Y - b) - 1)) / 2;
-
 
                     if (loot_type == 1 && gold_bars_left > 0 && r == 1) {
 
@@ -227,7 +227,7 @@ void gameloop::populate_cave_moniez() {
 
 }
 
-
+//TODO Utils file for this
 void gameloop::populate_cave_npcs() {
 
     int last_placement = 3;
@@ -251,28 +251,39 @@ void gameloop::populate_cave_npcs() {
             if (room_id == -1)
                 continue;
 
+            int shop_starting_item{};
 
             for (int tab_y = 0; tab_y < ROOM_TILE_HEIGHT_GAME; tab_y++) {
                 for (int tab_x = 0; tab_x < ROOM_TILE_WIDTH_GAME; tab_x++) {
+
 
                     last_placement++;
                     if (last_placement < 4)
                         continue;
 
                     int npc;
-                    if (room_type == room_type::ROOM_LEFT_RIGHT)
+                    if (room_type == room_type::R_LEFT_RIGHT)
                         npc = left_right_npcs[room_id][tab_y][tab_x];
-                    else if (room_type == room_type::ROOM_LEFT_RIGHT_DOWN)
+                    else if (room_type == room_type::R_LEFT_RIGHT_DOWN)
                         npc = left_right_down_npcs[room_id][tab_y][tab_x];
-                    else if (room_type == room_type::ROOM_LEFT_RIGHT_UP)
+                    else if (room_type == room_type::R_LEFT_RIGHT_UP)
                         npc = left_right_up_npcs[room_id][tab_y][tab_x];
-                    else if (room_type == room_type::ROOM_EXIT)
+                    else if (room_type == room_type::R_EXIT)
                         npc = exit_room_npcs[room_id][tab_y][tab_x];
-                    else if (room_type == room_type::ROOM_CLOSED)
+                    else if (room_type == room_type::R_CLOSED)
                         npc = closed_rooms_npcs[room_id][tab_y][tab_x];
+                    else if (room_type == room_type::R_SHOP_LEFT) {
+                        npc = shops_npcs[0][tab_y][tab_x];
+                        if(shop_starting_item == 0)
+                        shop_starting_item = abs((rand() % 9) - 4);
+                    }
+                    else if (room_type == room_type::R_SHOP_RIGHT) {
+                        npc = shops_npcs[1][tab_y][tab_x];
+                        if(shop_starting_item == 0)
+                        shop_starting_item = abs((rand() % 9) - 4);
+                    }
                     else
                         continue;
-
 
                     int r = rand() % 3;
 
@@ -323,22 +334,44 @@ void gameloop::populate_cave_npcs() {
 
                     if (npc == 5 && cavemen_left > 0 && r == 1) {
                         Caveman *caveman = new Caveman();
-                        caveman ->init();
-                        global::sprites.push_back(caveman );
-                        caveman ->x = pos_x * 16;
-                        caveman ->y = pos_y * 16;
+                        caveman->init();
+                        global::sprites.push_back(caveman);
+                        caveman->x = pos_x * 16;
+                        caveman->y = pos_y * 16;
                         cavemen_left--;
                         last_placement = 0;
                     }
 
-                    if (npc == 6 && damsels_left> 0) {
+                    if (npc == 6 && damsels_left > 0) {
                         Damsel *damsel = new Damsel();
-                        damsel ->init();
-                        global::sprites.push_back(damsel );
-                        damsel ->x = pos_x * 16;
-                        damsel ->y = pos_y * 16;
+                        damsel->init();
+                        global::sprites.push_back(damsel);
+                        damsel->x = pos_x * 16;
+                        damsel->y = pos_y * 16;
                         damsels_left--;
                         last_placement = 0;
+                    }
+
+                    if (npc == 7) {
+                        Lamp *lamp = new Lamp();
+                        lamp->init();
+                        global::sprites.push_back(lamp);
+                        lamp->x = pos_x * 16;
+                        lamp->y = pos_y * 16;
+                    }
+
+                    if (npc == 8) {
+                        Shopkeeper *shopkeeper = new Shopkeeper();
+                        shopkeeper->init();
+                        global::sprites.push_back(shopkeeper);
+                        shopkeeper->x = pos_x * 16;
+                        shopkeeper->y = pos_y * 16;
+                        shopkeeper->set_shop_bounds();
+                    }
+
+                    if (npc == 9) {
+                        collectibles_utils::spawn_item(pos_x * 16, pos_y * 16, shop_starting_item, false);
+                        shop_starting_item++;
                     }
 
                 }

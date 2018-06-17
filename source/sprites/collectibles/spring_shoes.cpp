@@ -59,6 +59,8 @@ void SpringShoes::draw() {
 
 void SpringShoes::init() {
     initSprite();
+    init_anim_icon();
+
 }
 
 void SpringShoes::updateSpeed() {
@@ -142,9 +144,14 @@ void SpringShoes::set_position() {
     subSpriteInfo->entry->vFlip = false;
     subSpriteInfo->entry->hFlip = false;
 
+    update_anim_icon(x, y, physical_width);
+
+
 }
 
 SpringShoes::SpringShoes() {
+    cost = 5000;
+    name = "SPRING SHOES";
     physical_height = SPRING_SHOES_PHYSICAL_HEIGHT;
     physical_width = SPRING_SHOES_PHYSICAL_WIDTH;
     sprite_height = SPRING_SHOES_SPRITE_HEIGHT;

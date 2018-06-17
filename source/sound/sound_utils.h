@@ -35,7 +35,6 @@ namespace sound{
         mmLoadEffect(SFX_XDIE);
         mmLoadEffect(SFX_XCHESTOPEN);
         mmLoadEffect(SFX_XSHOTGUN);
-
     }
 
     void start_menu_music(){

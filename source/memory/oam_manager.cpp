@@ -191,7 +191,6 @@ OAMManager::initSprite(const unsigned short pallette[], int palLen, const unsign
 
     if (!spriteEntry->gfxIndex) {
         spriteEntry->gfxIndex = nextAvailableTileIdx;
-
         nextAvailableTileIdx += tilesLen / BYTES_PER_16_COLOR_TILE;
         dmaCopyHalfWords(3, tiles, &sprite_address[spriteEntry->gfxIndex * this->offset_multiplier], tilesLen);
     }

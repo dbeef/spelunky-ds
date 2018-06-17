@@ -9,6 +9,7 @@
 #include "../sprite_info.h"
 #include "../sprite_state.h"
 #include "../moving_object.h"
+#include "../shopping_object.h"
 
 #define SPRING_SHOES_PHYSICAL_HEIGHT 12
 #define SPRING_SHOES_PHYSICAL_WIDTH 14
@@ -18,7 +19,7 @@
 #define MAX_X_SPEED_SPRING_SHOES 4
 #define MAX_Y_SPEED_SPRING_SHOES 4
 
-class SpringShoes : public MovingObject {
+class SpringShoes : public MovingObject , public ShoppingObject {
 
 public:
 
