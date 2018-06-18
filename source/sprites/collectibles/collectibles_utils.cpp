@@ -15,7 +15,7 @@
 #include "spring_shoes.h"
 #include "pistol.h"
 
-void collectibles_utils::spawn_item(int x, int y, int r, bool bought) {
+ShoppingObject * collectibles_utils::spawn_item(int x, int y, int r, bool bought) {
     //drop an item
     Pistol *pistol = nullptr;
     SpringShoes *springShoes = nullptr;
@@ -26,6 +26,7 @@ void collectibles_utils::spawn_item(int x, int y, int r, bool bought) {
     SpikeShoes *spikeShoes = nullptr;
     Mitt *mitt = nullptr;
     Jetpack *jetpack = nullptr;
+
 
     switch (r) {
         case 0:
@@ -77,6 +78,13 @@ void collectibles_utils::spawn_item(int x, int y, int r, bool bought) {
             break;
     }
 
+    ShoppingObject *c[9] = {pistol, springShoes, cape, compass, shotgun, spikeShoes, mitt, jetpack};
+
+    for (int a = 0; a < 9; a++)
+        if (c[a] != nullptr)
+            return c[a];
+
+    return nullptr;
 }
 
 void collectibles_utils::spawn_set_up(int x, int y, MovingObject *m) {

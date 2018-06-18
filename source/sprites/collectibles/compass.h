@@ -68,6 +68,8 @@ public:
     void apply_down_left_arrow();
 
     void draw_arrow_to_exit();
+
+    void equip();
 };
 
 

@@ -60,6 +60,8 @@ public:
     int poof_spawn_timer{};
 
     void set_position();
+
+    void equip();
 };
 
 

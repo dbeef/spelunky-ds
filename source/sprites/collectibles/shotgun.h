@@ -65,6 +65,8 @@ public:
     void set_position();
 
     void spawn_bullets();
+
+    void equip();
 };
 
 

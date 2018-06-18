@@ -26,8 +26,8 @@ public:
     int not_enough_money_timer{};
 
     bool holding_item_shopping{};
-    const char *holding_item_name;
-    int *holding_item_cost;
+    const char *holding_item_name{};
+    int *holding_item_cost{};
 
     void disable_all_prompts();
 

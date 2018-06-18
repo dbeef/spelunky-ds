@@ -64,6 +64,8 @@ public:
     SpritesheetType spriteType{};
 
     void set_position();
+
+    void equip();
 };
 
 

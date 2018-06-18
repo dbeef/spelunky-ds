@@ -10,6 +10,7 @@
 #include "../../../build/gfx_spike_collectibles_flame.h"
 #include "../../../build/soundbank.h"
 #include "bullet.h"
+#include "../animations/got_collectible.h"
 
 #define PISTOL_POS_INC_DELTA 15
 #define PISTOL_FIRING_OFFSET_X 14
@@ -32,6 +33,10 @@ void Pistol::draw() {
 
     if (hold_by_main_dude) {
 
+        if (shopping_transaction(this)) {
+            equip();
+        }
+
         global::main_dude->carrying_pistol = true;
 
         set_pickuped_position(-8, 7);
@@ -49,7 +54,6 @@ void Pistol::draw() {
 
 
     if (activated_by_main_dude && !firing && cooldown > PISTOL_COOLDOWN) {
-
 
         if (!global::main_dude->climbing && !global::main_dude->hanging_on_tile_left &&
             !global::main_dude->hanging_on_tile_right) {
@@ -69,10 +73,14 @@ void Pistol::draw() {
         b->x = x;
         b->y = y;
 
-        if (global::main_dude->state == SpriteState::W_LEFT)
+        if (global::main_dude->state == SpriteState::W_LEFT) {
             b->xSpeed = -5.0;
-        else if (global::main_dude->state == SpriteState::W_RIGHT)
+            b->x -= 6;
+        }
+        else if (global::main_dude->state == SpriteState::W_RIGHT) {
             b->xSpeed = 5.0;
+            b->x += 6;
+        }
 
         b->init();
         global::sprites.push_back(b);
@@ -121,19 +129,7 @@ void Pistol::draw() {
 
     }
 
-    if (xSpeed > 0 || ySpeed > 0) {
-        for (int a = 0; a < global::sprites.size(); a++) {
-            if ((global::sprites.at(a)->spriteType == SpritesheetType::SNAKE ||
-                 global::sprites.at(a)->spriteType == SpritesheetType::BAT_JETPACK ||
-                 global::sprites.at(a)->spriteType == SpritesheetType::SPIDER)
-                && !global::sprites.at(a)->killed) {
-                if (Collisions::checkCollisionBodies(x, y, 8, 8, global::sprites.at(a)->x, global::sprites.at(a)->y, 16,
-                                                     16)) {
-                    global::sprites.at(a)->apply_dmg(1);
-                }
-            }
-        }
-    }
+    kill_mobs_if_thrown(1);
 
     set_position();
 }
@@ -250,5 +246,14 @@ Pistol::Pistol() {
     sprite_height = PISTOL_SPRITE_HEIGHT;
     sprite_width = PISTOL_SPRITE_WIDTH;
     spriteType = SpritesheetType::SPIKES_COLLECTIBLES;
+}
+
+void Pistol::equip() {
+    GotCollectible *g = new GotCollectible();
+    g->x = x - 12;
+    g->y = y - 20;
+    g->collectible_type = 0;
+    g->init();
+    global::sprites.push_back(g);
 }
 

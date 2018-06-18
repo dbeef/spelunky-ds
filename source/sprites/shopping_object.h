@@ -12,7 +12,6 @@ class ShoppingObject {
 
 public:
 
-    bool buy_attempt();
     bool shopping_transaction(MovingObject *m);
     void console_display_name_cost();
     void init_anim_icon();

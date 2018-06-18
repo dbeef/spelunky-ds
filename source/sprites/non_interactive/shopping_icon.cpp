@@ -2,6 +2,7 @@
 // Created by xdbeef on 17.06.18.
 //
 
+#include <cstdlib>
 #include "../../globals_declarations.h"
 #include "../../../build/gfx_goldbars.h"
 #include "shopping_icon.h"
@@ -24,7 +25,6 @@ void ShoppingIcon::draw() {
     mainSpriteInfo->entry->vFlip = false;
     subSpriteInfo->entry->vFlip = false;
 
-
     int main_x, main_y, sub_x, sub_y;
     get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
 
@@ -36,7 +36,7 @@ void ShoppingIcon::draw() {
 
     trigger_timer += *global::timer;
 
-    if (trigger_timer > 1500)
+    if (trigger_timer > 200)
         anim_frame_timer += *global::timer;
 
     if (anim_frame_timer > ANIM_FRAME_DELTA) {
@@ -61,6 +61,7 @@ void ShoppingIcon::init() {
     initSprite();
     mainSpriteInfo->entry->hFlip = false;
     subSpriteInfo->entry->hFlip = false;
+    trigger_timer = rand() % 300;
 }
 
 void ShoppingIcon::initSprite() {

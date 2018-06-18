@@ -19,6 +19,7 @@
 #include "../moving_object.h"
 #include "../sprite_state.h"
 #include "../sprite_info.h"
+#include "../shopping_object.h"
 
 class Shopkeeper : public MovingObject {
 
@@ -49,6 +50,8 @@ public:
     void initSprite() override;
 
     double pos_inc_timer{};
+
+    ShoppingObject *shop_items[4]{};
 
     SpriteInfo *mainSpriteInfo{};
     SpriteInfo *subSpriteInfo{};
@@ -100,6 +103,8 @@ public:
     void set_shop_bounds();
 
     void check_if_dude_in_shop_bounds();
+
+    void de_shopify_all_items();
 };
 
 

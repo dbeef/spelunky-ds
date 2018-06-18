@@ -5,6 +5,7 @@
 #include <nds/arm9/input.h>
 #include <iostream>
 #include "input_handler.h"
+#include "../globals_declarations.h"
 
 void InputHandler::updateInput() {
 
@@ -58,5 +59,4 @@ void InputHandler::updateInput() {
         a_key_down = false;
         b_key_down = false;
     }
-
 }

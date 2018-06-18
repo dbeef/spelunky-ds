@@ -31,29 +31,20 @@ void SpikeShoes::draw() {
     if (collected)
         return;
 
-    if (check_if_can_be_equipped()) {
 
-        GotCollectible *g = new GotCollectible();
-        g->x = x - 12;
-        g->y = y - 20;
-        g->collectible_type = 0;
-        g->init();
-        global::sprites.push_back(g);
-
-        if (!global::main_dude->carrying_spike_shoes) {
-            global::main_dude->carrying_spike_shoes = true;
-            set_position();
-            collected = true;
-            x = HUD_ITEMS_ROW_X;
-            y = global::hud->items_offset_y;
-            global::hud->next_item();
-        } else {
-            mainSpriteInfo->entry->isHidden = true;
-            subSpriteInfo->entry->isHidden = true;
-            ready_to_dispose = true;
-        }
+    if (bought && check_if_can_be_equipped()) {
+        equip();
+    } else if (!bought && !hold_by_main_dude) {
+        check_if_can_be_pickuped();
     }
 
+    if (hold_by_main_dude) {
+        set_pickuped_position(4, -4);
+        if (shopping_transaction(this)) {
+            collected = true;
+            equip();
+        }
+    }
 }
 
 
@@ -153,5 +144,29 @@ SpikeShoes::SpikeShoes() {
     sprite_height = SPIKE_SHOES_SPRITE_HEIGHT;
     sprite_width = SPIKE_SHOES_SPRITE_WIDTH;
     spriteType = SpritesheetType::SALEABLE;
+}
+
+void SpikeShoes::equip() {
+
+    GotCollectible *g = new GotCollectible();
+    g->x = x - 12;
+    g->y = y - 20;
+    g->collectible_type = 0;
+    g->init();
+    global::sprites.push_back(g);
+
+    if (!global::main_dude->carrying_spike_shoes) {
+        global::main_dude->carrying_spike_shoes = true;
+        set_position();
+        collected = true;
+        x = HUD_ITEMS_ROW_X;
+        y = global::hud->items_offset_y;
+        global::hud->next_item();
+    } else {
+        mainSpriteInfo->entry->isHidden = true;
+        subSpriteInfo->entry->isHidden = true;
+        ready_to_dispose = true;
+    }
+
 }
 

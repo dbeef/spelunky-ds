@@ -11,6 +11,7 @@
 #include "../../../build/soundbank.h"
 #include "shotgun.h"
 #include "bullet.h"
+#include "../animations/got_collectible.h"
 
 #define SHOTGUN_POS_INC_DELTA 15
 #define SHOTGUN_FIRING_OFFSET_X 14
@@ -32,6 +33,10 @@ void Shotgun::draw() {
     check_if_can_be_pickuped();
 
     if (hold_by_main_dude) {
+
+        if (shopping_transaction(this)) {
+            equip();
+        }
 
         mainSpriteInfo->entry->priority = OBJPRIORITY_0;
 
@@ -245,10 +250,14 @@ void Shotgun::spawn_bullets() {
         b->x = x;
         b->y = y;
 
-        if (global::main_dude->state == SpriteState::W_LEFT)
+        if (global::main_dude->state == SpriteState::W_LEFT) {
             b->xSpeed = -4.0 - ((rand() % 20) / 10.0);
-        else
+            b->x -= 6;
+        }
+        else {
             b->xSpeed = 4.0 + ((rand() % 20) / 10.0);
+            b->x += 6;
+        }
 
         b->init();
         global::sprites.push_back(b);
@@ -263,5 +272,15 @@ void Shotgun::spawn_bullets() {
             b->ySpeed = 2;
 
     }
+}
+
+void Shotgun::equip() {
+    GotCollectible *g = new GotCollectible();
+    g->x = x - 12;
+    g->y = y - 20;
+    g->collectible_type = 0;
+    g->init();
+    global::sprites.push_back(g);
+
 }
 

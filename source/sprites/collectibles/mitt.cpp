@@ -25,36 +25,25 @@ void Mitt::draw() {
         subSpriteInfo->entry->isHidden = false;
     }
 
-
     set_position();
 
     if (collected)
         return;
 
-    if (check_if_can_be_equipped()) {
-
-        collected = true;
-
-        GotCollectible *g = new GotCollectible();
-        g->x = x - 12;
-        g->y = y - 20;
-        g->collectible_type = 0;
-        g->init();
-        global::sprites.push_back(g);
-
-        if (!global::main_dude->carrying_mitt) {
-            global::main_dude->carrying_mitt = true;
-            set_position();
-            x = HUD_ITEMS_ROW_X;
-            y = global::hud->items_offset_y;
-            global::hud->next_item();
-        } else {
-            mainSpriteInfo->entry->isHidden = true;
-            subSpriteInfo->entry->isHidden = true;
-            ready_to_dispose = true;
-        }
-
+    if (bought && check_if_can_be_equipped()) {
+        equip();
+    } else if (!bought && !hold_by_main_dude) {
+        check_if_can_be_pickuped();
     }
+
+    if (hold_by_main_dude) {
+        set_pickuped_position(4, -4);
+        if (shopping_transaction(this)) {
+            collected = true;
+            equip();
+        }
+    }
+
 
 }
 
@@ -95,9 +84,12 @@ void Mitt::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_
                                     y_current_pos_in_tiles,
                                     tiles);
 
-    bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, physical_width, physical_height, true, BOUNCING_FACTOR_Y);
-    leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true, BOUNCING_FACTOR_X);
-    rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true, BOUNCING_FACTOR_X);
+    bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, physical_width, physical_height, true,
+                                                       BOUNCING_FACTOR_Y);
+    leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true,
+                                                   BOUNCING_FACTOR_X);
+    rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true,
+                                                     BOUNCING_FACTOR_X);
     upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, physical_width, true, BOUNCING_FACTOR_Y);
 
 }
@@ -165,5 +157,29 @@ Mitt::Mitt() {
     sprite_height = MITT_SPRITE_HEIGHT;
     sprite_width = MITT_SPRITE_WIDTH;
     spriteType = SpritesheetType::SALEABLE;
+}
+
+void Mitt::equip() {
+    collected = true;
+
+    GotCollectible *g = new GotCollectible();
+    g->x = x - 12;
+    g->y = y - 20;
+    g->collectible_type = 0;
+    g->init();
+    global::sprites.push_back(g);
+
+    if (!global::main_dude->carrying_mitt) {
+        global::main_dude->carrying_mitt = true;
+        set_position();
+        x = HUD_ITEMS_ROW_X;
+        y = global::hud->items_offset_y;
+        global::hud->next_item();
+    } else {
+        mainSpriteInfo->entry->isHidden = true;
+        subSpriteInfo->entry->isHidden = true;
+        ready_to_dispose = true;
+    }
+
 }
 

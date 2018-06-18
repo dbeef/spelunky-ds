@@ -3,6 +3,7 @@
 //
 
 
+#include <iostream>
 #include "shopping_object.h"
 #include "../globals_declarations.h"
 
@@ -24,29 +25,6 @@ void ShoppingObject::update_anim_icon(int x, int y, int carrier_width) {
 
 }
 
-bool ShoppingObject::buy_attempt() {
-
-    if (global::input_handler->l_bumper_down) {
-        if (global::hud->dollars >= cost) {
-            bought = true;
-            global::hud->disable_all_prompts();
-            global::hud->recently_bough_item = true;
-            global::hud->recently_bought_item_name = name;
-            global::hud->draw();
-        } else {
-            global::hud->disable_all_prompts();
-            global::hud->not_enough_money = true;
-            global::main_dude->holding_item = false;
-            global::hud->draw();
-        }
-
-        return true;
-    }
-
-    return false;
-
-}
-
 void ShoppingObject::console_display_name_cost() {
     //if, so the text wouldn't blink because of constant clearing/drawing
     if (!global::hud->holding_item_shopping) {
@@ -62,16 +40,26 @@ bool ShoppingObject::shopping_transaction(MovingObject *m) {
 
     if (!bought) {
         console_display_name_cost();
-        if (buy_attempt()) {
-            if (bought) {
+        if (global::input_handler->l_bumper_down) {
+            if (global::hud->dollars >= cost) {
+                bought = true;
+                global::hud->disable_all_prompts();
+                global::hud->recently_bough_item = true;
+                global::hud->recently_bought_item_name = name;
+                global::hud->draw();
                 return true;
             } else {
+                global::hud->disable_all_prompts();
+                global::hud->not_enough_money = true;
+                global::main_dude->holding_item = false;
+                global::hud->draw();
                 m->bottomCollision = false;
                 m->hold_by_main_dude = false;
                 return false;
             }
         }
     }
+    return false;
 
 }
 

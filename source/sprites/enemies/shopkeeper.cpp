@@ -11,16 +11,18 @@
 
 #define SHOPKEEPER_SPRITESHEET_OFFSET 0
 #define SHOPKEEPER_POS_INC_DELTA 18
-#define SHOPKEEPER_TRIGGERED_SPEED 1.2
+#define SHOPKEEPER_TRIGGERED_SPEED 3
 #define SHOPKEEPER_ANIM_FRAME_DELTA 65
-#define SHOPKEEPER_INVERT_SPEED_DELTA 400
+#define SHOPKEEPER_INVERT_SPEED_DELTA 100
 
-//todo odwracanie w zależności od tego czy in_bounds + od której strony jest main_dude
+//todo odwracanie w zależności od tego czy in_bounds + od której strony jest main_dude + podbieganie
 //todo triggerowanie w zależności od tego czy !in_bounds + czy trzyma niesprzedany przedmiot
 //todo spawnowanie shotguna i logika strzelania sobie + jeśli shotgun wypadnie z rąk to podniesienie w kontakcie
 //todo dodać do bulletów żeby dawały dmg do main_dude <- przetestować
 //todo logika biegania lewo-prawo przy triggerowaniu
-//todo dodać do każdego itemu to samo co przy glove
+
+//todo dodać do każdego itemu to samo co przy glove <- dodane, spróbować ubrać to jakoś w klasę abstrakcyjną
+//żeby nie powtarzać kodu
 
 void Shopkeeper::draw() {
 
@@ -71,18 +73,11 @@ void Shopkeeper::draw() {
     if (!hold_by_main_dude)
         kill_mobs_if_thrown(1);
 
-    if (bottomCollision && (stunned || killed)) {
+    if (bottomCollision && (stunned || killed) && !triggered) {
         apply_friction(0.5f);
     }
 
     set_position();
-
-    if (!hold_by_main_dude && global::main_dude->carrying_damsel) {
-        global::main_dude->carrying_damsel = false;
-        stunned = true;
-        stunned_timer = 0;
-        triggered = true;
-    }
 
     anim_frame_timer += *global::timer;
 
@@ -104,6 +99,7 @@ void Shopkeeper::draw() {
 
 
 void Shopkeeper::init() {
+
 
     sprite_state = SpriteState::W_LEFT;
     activated_by_main_dude = true;
@@ -434,10 +430,24 @@ void Shopkeeper::set_shop_bounds() {
     //left: X - 7*TILE_W
     //up: y - 8*TILE_H
     //down: y + 2*TILE_H
-    shop_bounds_right_x_px = x + (3 * TILE_W);
-    shop_bounds_left_x_px = x - (7 * TILE_W);
+
+
+    MapTile *shop_sign = nullptr;
+    global::level_generator->get_first_tile(MapTileType::SHOP_SIGN_RARE, shop_sign);
+
+    int tile_x = shop_sign->x * TILE_W;
+
     shop_bounds_up_y_px = y - (8 * TILE_H);
     shop_bounds_down_y_px = y + (2 * TILE_H);
+
+    if (x - tile_x > 0) {
+        //left oriented shop
+        shop_bounds_right_x_px = x + (3 * TILE_W);
+        shop_bounds_left_x_px = x - (6 * TILE_W);
+    } else {
+        shop_bounds_left_x_px = x - (3 * TILE_W);
+        shop_bounds_right_x_px = x + (6 * TILE_W);
+    }
 
 }
 
@@ -445,18 +455,27 @@ void Shopkeeper::set_shop_bounds() {
 //done
 void Shopkeeper::check_if_dude_in_shop_bounds() {
 
-    if (!introduced_shop_name) {
 
-        if (global::main_dude->x < shop_bounds_right_x_px && global::main_dude->x > shop_bounds_left_x_px &&
-            global::main_dude->y > shop_bounds_up_y_px && global::main_dude->y < shop_bounds_down_y_px) {
+    if (global::main_dude->x < shop_bounds_right_x_px && global::main_dude->x > shop_bounds_left_x_px &&
+        global::main_dude->y > shop_bounds_up_y_px && global::main_dude->y < shop_bounds_down_y_px) {
+
+        if (!introduced_shop_name) {
             global::hud->disable_all_prompts();
             global::hud->introduce_shop = true;
             global::hud->shop_name = "\n\n\n\nWELCOME TO SMITHY'S SUPPLY SHOP!";
             global::hud->draw();
             introduced_shop_name = true;
-
-        } else {
         }
 
+    } else if (global::hud->holding_item_shopping) {
+        triggered = true;
+        de_shopify_all_items();
+    }
+}
+
+void Shopkeeper::de_shopify_all_items() {
+    for (int a = 0; a < 4; a++) {
+        if (shop_items[a] != nullptr)
+            shop_items[a]->bought = true;
     }
 }

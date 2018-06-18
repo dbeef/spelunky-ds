@@ -230,6 +230,10 @@ void gameloop::populate_cave_moniez() {
 //TODO Utils file for this
 void gameloop::populate_cave_npcs() {
 
+    Shopkeeper *shopkeeper = nullptr;
+    ShoppingObject *shop_items[4]{};
+    int shop_items_index = 0;
+
     int last_placement = 3;
 
     int bats_left = 5;
@@ -274,15 +278,13 @@ void gameloop::populate_cave_npcs() {
                         npc = closed_rooms_npcs[room_id][tab_y][tab_x];
                     else if (room_type == room_type::R_SHOP_LEFT) {
                         npc = shops_npcs[0][tab_y][tab_x];
-                        if(shop_starting_item == -1)
-                        shop_starting_item = rand() % 9;
-                    }
-                    else if (room_type == room_type::R_SHOP_RIGHT) {
+                        if (shop_starting_item == -1)
+                            shop_starting_item = rand() % 9;
+                    } else if (room_type == room_type::R_SHOP_RIGHT) {
                         npc = shops_npcs[1][tab_y][tab_x];
-                        if(shop_starting_item == -1)
-                        shop_starting_item = rand() % 9;
-                    }
-                    else
+                        if (shop_starting_item == -1)
+                            shop_starting_item = rand() % 9;
+                    } else
                         continue;
 
                     int r = rand() % 3;
@@ -361,7 +363,7 @@ void gameloop::populate_cave_npcs() {
                     }
 
                     if (npc == 8) {
-                        Shopkeeper *shopkeeper = new Shopkeeper();
+                        shopkeeper = new Shopkeeper();
                         shopkeeper->init();
                         global::sprites.push_back(shopkeeper);
                         shopkeeper->x = pos_x * 16;
@@ -370,9 +372,15 @@ void gameloop::populate_cave_npcs() {
                     }
 
                     if (npc == 9) {
-                        if(shop_starting_item >= 9)
+                        if (shop_starting_item >= 9)
                             shop_starting_item = 0;
-                        collectibles_utils::spawn_item(pos_x * 16, pos_y * 16, shop_starting_item, false);
+
+                        ShoppingObject *m = collectibles_utils::spawn_item(pos_x * 16, pos_y * 16, shop_starting_item,
+                                                                         false);
+
+                        shop_items[shop_items_index] = m;
+                        shop_items_index++;
+
                         shop_starting_item++;
                     }
 
@@ -380,6 +388,10 @@ void gameloop::populate_cave_npcs() {
             }
         }
     }
+
+    if (shopkeeper != nullptr)
+        for (int a = 0; a < 4; a++)
+            shopkeeper->shop_items[a] = shop_items[a];
 
 }
 

@@ -31,26 +31,17 @@ void Cape::draw() {
 
     set_position();
 
-    if (!collected && check_if_can_be_equipped()) {
+    if (bought && check_if_can_be_equipped()) {
+        equip();
+    } else if (!bought && !hold_by_main_dude) {
+        check_if_can_be_pickuped();
+    }
 
-        GotCollectible *g = new GotCollectible();
-        g->x = x - 12;
-        g->y = y - 20;
-        g->collectible_type = 0;
-        g->init();
-        global::sprites.push_back(g);
-
-        if (global::main_dude->carrying_jetpack) {
-            global::main_dude->carrying_jetpack = false;
-        }
-
-        if (!global::main_dude->carrying_cape) {
-            global::main_dude->carrying_cape = true;
-            set_position();
+    if (hold_by_main_dude) {
+        set_pickuped_position(4, -4);
+        if (shopping_transaction(this)) {
             collected = true;
-        } else {
-            //we've collected an item that is already in inventory, dispose
-            ready_to_dispose = true;
+            equip();
         }
     }
 
@@ -236,5 +227,28 @@ void Cape::set_frame_gfx() {
 
     }
 
+}
+
+void Cape::equip() {
+
+    GotCollectible *g = new GotCollectible();
+    g->x = x - 12;
+    g->y = y - 20;
+    g->collectible_type = 0;
+    g->init();
+    global::sprites.push_back(g);
+
+    if (global::main_dude->carrying_jetpack) {
+        global::main_dude->carrying_jetpack = false;
+    }
+
+    if (!global::main_dude->carrying_cape) {
+        global::main_dude->carrying_cape = true;
+        set_position();
+        collected = true;
+    } else {
+        //we've collected an item that is already in inventory, dispose
+        ready_to_dispose = true;
+    }
 }
 
