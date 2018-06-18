@@ -73,7 +73,7 @@ void Shopkeeper::draw() {
     if (!hold_by_main_dude)
         kill_mobs_if_thrown(1);
 
-    if (bottomCollision && (stunned || killed) && !triggered) {
+    if (bottomCollision &&/* (stunned || killed) && */!triggered) {
         apply_friction(0.5f);
     }
 
@@ -101,7 +101,6 @@ void Shopkeeper::draw() {
 void Shopkeeper::init() {
 
 
-    sprite_state = SpriteState::W_LEFT;
     activated_by_main_dude = true;
     initSprite();
 
@@ -441,10 +440,12 @@ void Shopkeeper::set_shop_bounds() {
     shop_bounds_down_y_px = y + (2 * TILE_H);
 
     if (x - tile_x > 0) {
-        //left oriented shop
+        //left oriented shop (exit/entrance is on the left side)
+        sprite_state = SpriteState::W_LEFT;
         shop_bounds_right_x_px = x + (3 * TILE_W);
         shop_bounds_left_x_px = x - (6 * TILE_W);
     } else {
+        sprite_state = SpriteState::W_RIGHT;
         shop_bounds_left_x_px = x - (3 * TILE_W);
         shop_bounds_right_x_px = x + (6 * TILE_W);
     }
@@ -465,6 +466,28 @@ void Shopkeeper::check_if_dude_in_shop_bounds() {
             global::hud->shop_name = "\n\n\n\nWELCOME TO SMITHY'S SUPPLY SHOP!";
             global::hud->draw();
             introduced_shop_name = true;
+        }
+
+        int diff = x - global::main_dude->x;
+
+        if (diff > 0)
+            sprite_state = SpriteState::W_LEFT;
+        else
+            sprite_state = SpriteState::W_RIGHT;
+
+        if (global::hud->holding_item_shopping && !triggered) {
+
+            int abs_diff = abs(diff);
+
+            if (abs_diff > 1.5 * TILE_W) {
+
+                if (diff > 0)
+                    xSpeed = -2.5f;
+                else
+                    xSpeed = 2.5f;
+
+            }
+
         }
 
     } else if (global::hud->holding_item_shopping) {

@@ -139,6 +139,8 @@ void SpikeShoes::set_position() {
 }
 
 SpikeShoes::SpikeShoes() {
+    cost = 4 * 1000;
+    name = "SPIKE SHOES";
     physical_height = SPIKE_SHOES_PHYSICAL_HEIGHT;
     physical_width = SPIKE_SHOES_PHYSICAL_WIDTH;
     sprite_height = SPIKE_SHOES_SPRITE_HEIGHT;

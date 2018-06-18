@@ -78,7 +78,7 @@ ShoppingObject * collectibles_utils::spawn_item(int x, int y, int r, bool bought
             break;
     }
 
-    ShoppingObject *c[9] = {pistol, springShoes, cape, compass, shotgun, spikeShoes, mitt, jetpack};
+    ShoppingObject *c[9] = {pistol, springShoes, cape, compass, shotgun, spikeShoes, mitt, jetpack, glove};
 
     for (int a = 0; a < 9; a++)
         if (c[a] != nullptr)

@@ -151,12 +151,14 @@ Glove::Glove() {
     sprite_height = GLOVE_SPRITE_HEIGHT;
     sprite_width = GLOVE_SPRITE_WIDTH;
     spriteType = SpritesheetType::SALEABLE;
+    //todo set it everywhere
+    activated_by_main_dude = true;
 }
 
 void Glove::equip() {
     collected = true;
 
-    GotCollectible *g = new GotCollectible();
+    auto *g = new GotCollectible();
     g->x = x - 12;
     g->y = y - 20;
     g->collectible_type = 0;

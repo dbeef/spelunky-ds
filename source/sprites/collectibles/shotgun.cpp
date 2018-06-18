@@ -246,7 +246,7 @@ Shotgun::Shotgun() {
 void Shotgun::spawn_bullets() {
 
     for (int a = 0; a < 4; a++) {
-        Bullet *b = new Bullet();
+        auto *b = new Bullet();
         b->x = x;
         b->y = y;
 
@@ -275,7 +275,7 @@ void Shotgun::spawn_bullets() {
 }
 
 void Shotgun::equip() {
-    GotCollectible *g = new GotCollectible();
+    auto *g = new GotCollectible();
     g->x = x - 12;
     g->y = y - 20;
     g->collectible_type = 0;

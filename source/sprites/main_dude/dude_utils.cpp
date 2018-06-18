@@ -71,7 +71,7 @@ void MainDude::throw_item() {
                     (*global::sprites.at(a)).hold_by_main_dude = false;
                     holding_item = false;
 
-                    global::hud->holding_item_shopping = false;
+                    global::hud->disable_all_prompts();
                     global::hud->draw();
 
                     mmEffect(SFX_XTHROW);
