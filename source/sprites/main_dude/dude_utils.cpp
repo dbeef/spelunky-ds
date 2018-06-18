@@ -71,6 +71,9 @@ void MainDude::throw_item() {
                     (*global::sprites.at(a)).hold_by_main_dude = false;
                     holding_item = false;
 
+                    global::hud->holding_item_shopping = false;
+                    global::hud->draw();
+
                     mmEffect(SFX_XTHROW);
 
                 } else {
@@ -189,11 +192,13 @@ void MainDude::spawn_carried_items() {
         Shotgun *shotgun = new Shotgun();
         shotgun->hold_by_main_dude = true;
         shotgun->init();
+        shotgun->bought = true;
         global::sprites.push_back(shotgun);
         holding_item = true;
     }
     if (carrying_pistol) {
         Pistol *pistol = new Pistol();
+        pistol->bought = true;
         pistol->hold_by_main_dude = true;
         pistol->init();
         global::sprites.push_back(pistol);
@@ -446,4 +451,17 @@ void MainDude::can_hang_on_tile(MapTile **neighboringTiles) {
         }
     }
 
+}
+
+void MainDude::apply_dmg(int dmg_to_apply) {
+    if(dmg_to_apply == 4){
+
+        //fixme some enum that would indicate 'instant death, no matter for hp quantity' or a function kill_instantly
+        //to differentiate
+
+        global::hud->hide();
+        global::main_dude->ySpeed = -MAIN_DUDE_JUMP_SPEED * 0.25;
+        global::main_dude->dead = true;
+        mmEffect(SFX_XDIE);
+    }
 }

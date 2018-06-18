@@ -31,7 +31,7 @@ void Bullet::draw() {
 
     set_position();
 
-    if(kill_mobs_items_if_thrown(4))
+    if(kill_mobs_items_if_thrown(4) || kill_main_dude_if_thrown(4))
         killed = true;
 
 }

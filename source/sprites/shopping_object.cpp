@@ -17,9 +17,61 @@ void ShoppingObject::init_anim_icon() {
 void ShoppingObject::update_anim_icon(int x, int y, int carrier_width) {
 
     if (!bought) {
-        shopping_icon->x = (int)(x + ((0.5 * carrier_width)) - (0.5 *shopping_icon->physical_width));
+        shopping_icon->x = (int) (x + ((0.5 * carrier_width)) - (0.5 * shopping_icon->physical_width));
         shopping_icon->y = y - 12;
     } else
         shopping_icon->ready_to_dispose = true;
 
 }
+
+bool ShoppingObject::buy_attempt() {
+
+    if (global::input_handler->l_bumper_down) {
+        if (global::hud->dollars >= cost) {
+            bought = true;
+            global::hud->disable_all_prompts();
+            global::hud->recently_bough_item = true;
+            global::hud->recently_bought_item_name = name;
+            global::hud->draw();
+        } else {
+            global::hud->disable_all_prompts();
+            global::hud->not_enough_money = true;
+            global::main_dude->holding_item = false;
+            global::hud->draw();
+        }
+
+        return true;
+    }
+
+    return false;
+
+}
+
+void ShoppingObject::console_display_name_cost() {
+    //if, so the text wouldn't blink because of constant clearing/drawing
+    if (!global::hud->holding_item_shopping) {
+        global::hud->disable_all_prompts();
+        global::hud->holding_item_shopping = true;
+        global::hud->holding_item_cost = &cost;
+        global::hud->holding_item_name = name;
+        global::hud->draw();
+    }
+}
+
+bool ShoppingObject::shopping_transaction(MovingObject *m) {
+
+    if (!bought) {
+        console_display_name_cost();
+        if (buy_attempt()) {
+            if (bought) {
+                return true;
+            } else {
+                m->bottomCollision = false;
+                m->hold_by_main_dude = false;
+                return false;
+            }
+        }
+    }
+
+}
+

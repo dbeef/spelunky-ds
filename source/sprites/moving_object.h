@@ -109,6 +109,8 @@ public:
     void spawn_blood();
 
     void set_pickuped_position_not_checking(int pickup_offset_x, int pickup_offset_y);
+
+    bool kill_main_dude_if_thrown(int dmg_to_apply);
 };
 
 

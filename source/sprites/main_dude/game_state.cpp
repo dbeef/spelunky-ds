@@ -233,6 +233,7 @@ void GameState::handle_transition_screen_smooch() {
             smooch_timer += *global::timer;
             global::input_handler->right_key_held = false;
             if(!spawned_smooch) {
+                mmEffect(SFX_XKISS);
                 spawned_smooch = true;
                 Smooch *s = new Smooch();
                 s->x =144;

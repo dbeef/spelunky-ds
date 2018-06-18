@@ -32,7 +32,7 @@
 #define HOLDING_ITEM_FRAME_POSITION_X 5
 #define HOLDING_ITEM_FRAME_POSITION_Y 20
 
-void Hud::draw_item_shop(char *item_name, int cost){
+void Hud::draw_item_shop(char *item_name, int cost) {
     //todo
 }
 
@@ -104,12 +104,17 @@ void Hud::draw() {
             std::cout << '\n' << "   " << "    " << "    " << "    " << "   " << "+" << dollars_buffer;
         }
 
-//        debug_oam();
-        if(holding_item_shopping){
-            std::cout<< "\n\n";
-            printf("    %s FOR $%d.\n", holding_item_name, *holding_item_cost);
-            printf("    PRESS L TO PURCHASE.");
+        if (introduce_shop) {
+            printf(shop_name);
+        } else if (recently_bough_item) {
+            printf("\n\n      YOU GOT A %s!", recently_bought_item_name);
+        } else if (not_enough_money) {
+            printf("\n\n   YOU HAVEN'T GOT ENOUGH MONEY!");
+        } else if (holding_item_shopping) {
+            printf("\n\n    %s FOR $%d.\n    PRESS L TO PURCHASE.\n", holding_item_name, *holding_item_cost);
         }
+
+//        debug_oam();
     }
 
     if (global::main_dude->dead && global::main_dude->time_since_last_damage > DAMAGE_PROTECTION_TIME) {
@@ -268,6 +273,38 @@ void Hud::draw_scores() {
 
 void Hud::update() {
 
+    if (not_enough_money) {
+        not_enough_money_timer += *global::timer;
+
+        if (not_enough_money_timer > 4000) {
+            not_enough_money_timer = 0;
+            not_enough_money = false;
+            draw();
+        }
+    }
+
+    if (introduce_shop) {
+        introduce_shop_timer += *global::timer;
+
+        if (introduce_shop_timer > 4000) {
+            introduce_shop_timer = 0;
+            introduce_shop = false;
+            draw();
+        }
+    }
+
+    if (recently_bough_item) {
+
+        recently_bough_item_timer += *global::timer;
+
+        if (recently_bough_item_timer > 4000) {
+            recently_bough_item = false;
+            recently_bough_item_timer = 0;
+            draw();
+        }
+
+    }
+
     if (!global::game_state->in_main_menu && !global::game_state->scores_screen &&
         !global::game_state->levels_transition_screen) {
         set_position();
@@ -373,4 +410,17 @@ void Hud::debug_oam() {
               << "ITM: " << global::main_oam_manager->current_oam_id_tiles << " "
               << "ITS: " << global::sub_oam_manager->current_oam_id_tiles
               << "N: " << global::sub_oam_manager->nextAvailableTileIdx;
+}
+
+void Hud::disable_all_prompts() {
+    introduce_shop = false;
+    introduce_shop_timer = 0;
+
+    recently_bough_item = false;
+    recently_bough_item_timer = 0;
+
+    not_enough_money = false;
+    not_enough_money_timer = 0;
+
+    holding_item_shopping = false;
 }

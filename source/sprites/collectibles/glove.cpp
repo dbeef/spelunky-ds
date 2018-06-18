@@ -14,7 +14,6 @@
 
 void Glove::draw() {
 
-
     if (ready_to_dispose) {
         mainSpriteInfo->entry->isHidden = true;
         subSpriteInfo->entry->isHidden = true;
@@ -30,42 +29,21 @@ void Glove::draw() {
         return;
 
     if (bought && check_if_can_be_equipped()) {
-        collected = true;
+        equip();
 
-        GotCollectible *g = new GotCollectible();
-        g->x = x - 12;
-        g->y = y - 20;
-        g->collectible_type = 0;
-        g->init();
-        global::sprites.push_back(g);
-
-        if (!global::main_dude->carrying_glove) {
-            global::main_dude->carrying_glove = true;
-            set_position();
-            x = HUD_ITEMS_ROW_X;
-            y = global::hud->items_offset_y;
-            global::hud->next_item();
-        } else {
-            mainSpriteInfo->entry->isHidden = true;
-            subSpriteInfo->entry->isHidden = true;
-            ready_to_dispose = true;
-        }
     } else if (!bought && !hold_by_main_dude) {
         check_if_can_be_pickuped();
     }
 
     if (hold_by_main_dude) {
         set_pickuped_position(4, -4);
-        if (!global::hud->holding_item_shopping) {
-            global::hud->holding_item_shopping = true;
-            global::hud->holding_item_cost = &cost;
-            global::hud->holding_item_name = name;
-            global::hud->draw();
+        if (shopping_transaction(this)) {
+            collected = true;
+            equip();
         }
-    } else {
-        global::hud->holding_item_shopping = false;
-        global::hud->draw();
     }
+
+
 }
 
 
@@ -175,5 +153,28 @@ Glove::Glove() {
     sprite_height = GLOVE_SPRITE_HEIGHT;
     sprite_width = GLOVE_SPRITE_WIDTH;
     spriteType = SpritesheetType::SALEABLE;
+}
+
+void Glove::equip() {
+    collected = true;
+
+    GotCollectible *g = new GotCollectible();
+    g->x = x - 12;
+    g->y = y - 20;
+    g->collectible_type = 0;
+    g->init();
+    global::sprites.push_back(g);
+
+    if (!global::main_dude->carrying_glove) {
+        global::main_dude->carrying_glove = true;
+        set_position();
+        x = HUD_ITEMS_ROW_X;
+        y = global::hud->items_offset_y;
+        global::hud->next_item();
+    } else {
+        mainSpriteInfo->entry->isHidden = true;
+        subSpriteInfo->entry->isHidden = true;
+        ready_to_dispose = true;
+    }
 }
 

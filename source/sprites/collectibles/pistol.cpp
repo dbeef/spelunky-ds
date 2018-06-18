@@ -34,14 +34,12 @@ void Pistol::draw() {
 
         global::main_dude->carrying_pistol = true;
 
-        y = global::main_dude->y + 7;
+        set_pickuped_position(-8, 7);
 
         if (global::main_dude->state == 1) {
             frameGfx = (u8 *) gfx_spike_collectibles_flameTiles + (sprite_width * sprite_height * (32) / 2);
-            x = global::main_dude->x - 4;
         } else {
             frameGfx = (u8 *) gfx_spike_collectibles_flameTiles + (sprite_width * sprite_height * (33) / 2);
-            x = global::main_dude->x + 5;
         }
 
         subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
@@ -168,9 +166,12 @@ void Pistol::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_i
     Collisions::getNeighboringTiles(global::level_generator->map_tiles, x_current_pos_in_tiles, y_current_pos_in_tiles,
                                     tiles);
 
-    bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, physical_width, physical_height, true, BOUNCING_FACTOR_Y);
-    leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true, BOUNCING_FACTOR_X);
-    rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true, BOUNCING_FACTOR_X);
+    bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, physical_width, physical_height, true,
+                                                       BOUNCING_FACTOR_Y);
+    leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true,
+                                                   BOUNCING_FACTOR_X);
+    rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true,
+                                                     BOUNCING_FACTOR_X);
     upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, physical_width, true, BOUNCING_FACTOR_Y);
 
 }
@@ -178,17 +179,21 @@ void Pistol::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_i
 void Pistol::initSprite() {
 
 
-    subSpriteInfo = global::sub_oam_manager->initSprite(gfx_spike_collectibles_flamePal, gfx_spike_collectibles_flamePalLen,
+    subSpriteInfo = global::sub_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
+                                                        gfx_spike_collectibles_flamePalLen,
                                                         nullptr, sprite_width * sprite_height, sprite_width,
                                                         spriteType, true, false, LAYER_LEVEL::MIDDLE_TOP);
-    mainSpriteInfo = global::main_oam_manager->initSprite(gfx_spike_collectibles_flamePal, gfx_spike_collectibles_flamePalLen,
+    mainSpriteInfo = global::main_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
+                                                          gfx_spike_collectibles_flamePalLen,
                                                           nullptr, sprite_width * sprite_height, sprite_width,
                                                           spriteType, true, false, LAYER_LEVEL::MIDDLE_TOP);
 
-    blast_subSpriteInfo = global::sub_oam_manager->initSprite(gfx_spike_collectibles_flamePal, gfx_spike_collectibles_flamePalLen,
+    blast_subSpriteInfo = global::sub_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
+                                                              gfx_spike_collectibles_flamePalLen,
                                                               nullptr, sprite_width * sprite_height, sprite_width,
                                                               spriteType, true, false, LAYER_LEVEL::MIDDLE_TOP);
-    blast_mainSpriteInfo = global::main_oam_manager->initSprite(gfx_spike_collectibles_flamePal, gfx_spike_collectibles_flamePalLen,
+    blast_mainSpriteInfo = global::main_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
+                                                                gfx_spike_collectibles_flamePalLen,
                                                                 nullptr, sprite_width * sprite_height, sprite_width,
                                                                 spriteType, true, false, LAYER_LEVEL::MIDDLE_TOP);
 

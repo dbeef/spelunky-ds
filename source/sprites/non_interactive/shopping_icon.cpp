@@ -36,8 +36,8 @@ void ShoppingIcon::draw() {
 
     trigger_timer += *global::timer;
 
-    if(trigger_timer > 2000)
-    anim_frame_timer += *global::timer;
+    if (trigger_timer > 1500)
+        anim_frame_timer += *global::timer;
 
     if (anim_frame_timer > ANIM_FRAME_DELTA) {
         anim_frame_timer = 0;

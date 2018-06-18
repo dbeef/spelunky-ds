@@ -2,12 +2,15 @@
 // Created by xdbeef on 31.05.18.
 //
 
+#include <maxmod9.h>
+#include <cstdlib>
 #include "caveman.h"
 #include "../../globals_declarations.h"
 #include "../../collisions/collisions.h"
 #include "../../../build/gfx_caveman_damsel.h"
 #include "../../tiles/tile_orientation.h"
 #include "damsel.h"
+#include "../../../build/soundbank.h"
 
 #define DAMSEL_SPRITESHEET_OFFSET 25
 #define DAMSEL_POS_INC_DELTA 18
@@ -135,7 +138,7 @@ void Damsel::draw() {
     }
 
 
-    if (hold_by_main_dude && !killed && !stunned) {
+    if (hold_by_main_dude && !killed && !stunned && !exiting_level) {
         MapTile *tiles[9] = {};
         Collisions::getNeighboringTiles(global::level_generator->map_tiles, global::main_dude->current_x_in_tiles,
                                         global::main_dude->current_y_in_tiles, tiles);
@@ -147,6 +150,7 @@ void Damsel::draw() {
             x = tiles[CENTER]->x * 16;
             y = tiles[CENTER]->y * 16;
             hold_by_main_dude = false;
+            mmEffect(SFX_XSTEPS);
             if (global::main_dude->carrying_damsel) {
                 global::main_dude->holding_item = false;
                 global::main_dude->carrying_damsel = false;

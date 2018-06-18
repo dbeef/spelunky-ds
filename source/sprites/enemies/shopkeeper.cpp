@@ -15,6 +15,13 @@
 #define SHOPKEEPER_ANIM_FRAME_DELTA 65
 #define SHOPKEEPER_INVERT_SPEED_DELTA 400
 
+//todo odwracanie w zależności od tego czy in_bounds + od której strony jest main_dude
+//todo triggerowanie w zależności od tego czy !in_bounds + czy trzyma niesprzedany przedmiot
+//todo spawnowanie shotguna i logika strzelania sobie + jeśli shotgun wypadnie z rąk to podniesienie w kontakcie
+//todo dodać do bulletów żeby dawały dmg do main_dude <- przetestować
+//todo logika biegania lewo-prawo przy triggerowaniu
+//todo dodać do każdego itemu to samo co przy glove
+
 void Shopkeeper::draw() {
 
     check_if_dude_in_shop_bounds();
@@ -35,7 +42,9 @@ void Shopkeeper::draw() {
     mainSpriteInfo->entry->vFlip = false;
     subSpriteInfo->entry->vFlip = false;
 
-    check_if_can_be_pickuped();
+    if (stunned || killed)
+        check_if_can_be_pickuped();
+
     set_pickuped_position(6, -2);
 
     if (hold_by_main_dude) {
@@ -435,10 +444,19 @@ void Shopkeeper::set_shop_bounds() {
 
 //done
 void Shopkeeper::check_if_dude_in_shop_bounds() {
-//    if (global::main_dude->x < shop_bounds_right_x_px && global::main_dude->x > shop_bounds_left_x_px &&
-//        global::main_dude->y > shop_bounds_up_y_px && global::main_dude->y < shop_bounds_down_y_px) {
-//        std::cout << "IN BOUNDS\n";
-//    } else {
-//        std::cout << "NOT IN BOUNDS\n";
-//    }
+
+    if (!introduced_shop_name) {
+
+        if (global::main_dude->x < shop_bounds_right_x_px && global::main_dude->x > shop_bounds_left_x_px &&
+            global::main_dude->y > shop_bounds_up_y_px && global::main_dude->y < shop_bounds_down_y_px) {
+            global::hud->disable_all_prompts();
+            global::hud->introduce_shop = true;
+            global::hud->shop_name = "\n\n\n\nWELCOME TO SMITHY'S SUPPLY SHOP!";
+            global::hud->draw();
+            introduced_shop_name = true;
+
+        } else {
+        }
+
+    }
 }

@@ -24,6 +24,8 @@ class Shopkeeper : public MovingObject {
 
 public:
 
+    //todo shopkeeper's name
+
     Shopkeeper();
 
     void updateOther() override {};
@@ -72,6 +74,8 @@ public:
     int shop_bounds_right_x_px{};
     int shop_bounds_up_y_px{};
     int shop_bounds_down_y_px{};
+
+    bool introduced_shop_name{};
 
     void randomizeMovement();
 

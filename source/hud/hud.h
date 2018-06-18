@@ -14,9 +14,22 @@ public:
 
     Hud();
 
+    bool introduce_shop{};
+    int introduce_shop_timer{};
+    const char *shop_name{};
+
+    bool recently_bough_item{};
+    int recently_bough_item_timer{};
+    const char *recently_bought_item_name{};
+
+    bool not_enough_money{};
+    int not_enough_money_timer{};
+
     bool holding_item_shopping{};
     const char *holding_item_name;
     int *holding_item_cost;
+
+    void disable_all_prompts();
 
     void draw();
 
