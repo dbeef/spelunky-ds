@@ -43,6 +43,7 @@ bool ShoppingObject::shopping_transaction(MovingObject *m) {
         if (global::input_handler->l_bumper_down) {
             if (global::hud->dollars >= cost) {
                 bought = true;
+                global::hud->dollars -= cost;
                 global::hud->disable_all_prompts();
                 global::hud->recently_bough_item = true;
                 global::hud->recently_bought_item_name = name;
