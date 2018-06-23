@@ -54,6 +54,8 @@ static int left_right_rooms[3][10][10] = {
 //6 damsel
 //7 lamp
 //8 shopkeeper [TODO Enum for NPCType]
+//9 arrow trap left oriented (12 tile type)
+//10 arrow trap right oriented (13 tile type)
 
 static int left_right_npcs[3][10][10] = {
         {
@@ -88,7 +90,7 @@ static int left_right_npcs[3][10][10] = {
                 {0, 0, 0, 0, 0, 3, 0, 0, 0, 0,},
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0,},
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0,},
-                {0, 4, 5, 4, 0, 0, 0, 0, 0, 0,},
+                {0, 4, 5, 4, 9, 0, 0, 0, 0, 0,},
                 {4, 0, 0, 0, 0, 0, 0, 4, 6, 4,},
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0,},
         },

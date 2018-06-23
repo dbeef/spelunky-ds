@@ -48,6 +48,8 @@ static int left_right_down_rooms[3][10][10] = {
 //1 snake
 //2 bat
 //3 spider
+//9 arrow trap left oriented (12 tile type)
+//10 arrow trap right oriented (13 tile type)
 
 static int left_right_down_npcs[3][10][10] = {
         {
@@ -68,7 +70,7 @@ static int left_right_down_npcs[3][10][10] = {
                 {5, 0, 0, 0, 0, 0, 0, 0, 0, 0,},
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0,},
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0,},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0,},
+                {0, 0, 0, 10, 0, 0, 0, 0, 0, 0,},
                 {0, 0, 0, 3, 0, 0, 0, 0, 0, 0,},
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0,},
                 {0, 0, 0, 0, 0, 3, 0, 0, 0, 0,},

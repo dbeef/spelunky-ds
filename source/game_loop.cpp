@@ -27,6 +27,7 @@
 #include "sprites/enemies/shopkeeper.h"
 #include "sprites/collectibles/collectibles_utils.h"
 #include "sprites/items/arrow.h"
+#include "sprites/traps/arrow_trap.h"
 
 static const int BOUNDARY_VALUE = 64; /* This is the default boundary value (can be set in REG_DISPCNT) */
 static const int OFFSET_MULTIPLIER_MAIN = BOUNDARY_VALUE / sizeof(SPRITE_GFX[0]);
@@ -230,6 +231,7 @@ void gameloop::populate_cave_moniez() {
                         last_placement = 0;
                     }
 
+
                 }
             }
         }
@@ -303,6 +305,17 @@ void gameloop::populate_cave_npcs() {
                     u16 pos_x = (OFFSET_X + tab_x * 2 + 2 * ROOM_TILE_WIDTH_GAME * a) / 2;
                     u16 pos_y = (OFFSET_X + tab_y * 2 + 2 * ROOM_TILE_HEIGHT_GAME * ((ROOMS_Y - b) - 1)) / 2;
 
+                    if(npc == 9 || npc == 10){
+                        ArrowTrap *arrowTrap = new ArrowTrap();
+                        arrowTrap->init();
+                        arrowTrap->x = pos_x * 16;
+                        arrowTrap->y = pos_y * 16;
+                        if(npc == 9)
+                            arrowTrap->sprite_state = SpriteState::W_LEFT;
+                        else if(npc == 10)
+                            arrowTrap->sprite_state = SpriteState::W_RIGHT;
+                        global::sprites.push_back(arrowTrap);
+                    }
 
                     if (npc == 1 && snakes_left > 0 && r == 1) {
                         Snake *snake = new Snake();

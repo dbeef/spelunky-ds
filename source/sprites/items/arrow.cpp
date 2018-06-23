@@ -66,7 +66,7 @@ void Arrow::draw() {
     subSpriteInfo->entry->vFlip = false;
 
     if(kill_mobs_if_thrown(1)){
-        ready_to_dispose = true;
+//        ready_to_dispose = true;
     }
 
 }
