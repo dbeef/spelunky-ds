@@ -1,4 +1,5 @@
 #include <maxmod9.h>
+#include <iostream>
 #include "game_state.h"
 #include "../../globals_declarations.h"
 #include "../../game_loop.h"
@@ -14,7 +15,6 @@
 //
 
 void GameState::reset_main_dude() {
-
     global::main_dude->carrying_spring_shoes = false;
     global::main_dude->carrying_compass = false;
     global::main_dude->carrying_glove = false;
@@ -28,7 +28,6 @@ void GameState::reset_main_dude() {
     global::main_dude->stunned = false;
     global::main_dude->hanging_on_tile_right = false;
     global::main_dude->hanging_on_tile_left = false;
-
 }
 
 void GameState::start_new_game() {
@@ -143,15 +142,13 @@ void GameState::handle_changing_screens() {
             global::level_generator->generate_rooms();
             set_position_to(MapTileType::ENTRANCE);
 
-
-            if (global::game_state->in_main_menu)
-                global::game_state->robbed_killed_shopkeeper = false;
-
         } else {
 
             //splash screen; scores or level transition
 
             if (global::game_state->scores_screen) {
+
+                global::game_state->robbed_killed_shopkeeper = false;
 
                 mmEffectCancel(global::cave_music_handler);
                 //global::menu_music_handler = mmEffect(SFX_MTITLE);

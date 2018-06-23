@@ -31,7 +31,7 @@ void Cape::draw() {
 
     set_position();
 
-    if (bought && check_if_can_be_equipped()) {
+    if (bought && !collected && check_if_can_be_equipped()) {
         equip();
     } else if (!bought && !hold_by_main_dude) {
         check_if_can_be_pickuped();

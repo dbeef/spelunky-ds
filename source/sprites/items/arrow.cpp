@@ -89,7 +89,6 @@ void Arrow::draw() {
         global::main_dude->hanging_on_tile_left = false;
         global::main_dude->hanging_on_tile_right = false;
         global::main_dude->using_whip = false;
-
         global::main_dude->stunned_timer = 0;
         global::main_dude->stunned = true;
 

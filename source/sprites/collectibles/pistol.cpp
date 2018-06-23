@@ -40,11 +40,21 @@ void Pistol::draw() {
 
         global::main_dude->carrying_pistol = true;
 
-        set_pickuped_position(-8, 7);
 
-        if (global::main_dude->sprite_state == 1) {
+        y = global::main_dude->y + 7;
+
+        if (global::main_dude->sprite_state == SpriteState::W_LEFT) {
+            x = global::main_dude->x - 4;
+        } else
+            x = global::main_dude->x + 10;
+
+        sprite_state = global::main_dude->sprite_state;
+
+        if (global::main_dude->sprite_state == SpriteState::W_LEFT) {
+            sprite_state = SpriteState::W_LEFT;
             frameGfx = (u8 *) gfx_spike_collectibles_flameTiles + (sprite_width * sprite_height * (32) / 2);
         } else {
+            sprite_state = SpriteState::W_RIGHT;
             frameGfx = (u8 *) gfx_spike_collectibles_flameTiles + (sprite_width * sprite_height * (33) / 2);
         }
 
