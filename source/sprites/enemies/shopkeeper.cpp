@@ -13,7 +13,18 @@
 #define SHOPKEEPER_POS_INC_DELTA 18
 #define SHOPKEEPER_TRIGGERED_SPEED 3
 #define SHOPKEEPER_ANIM_FRAME_DELTA 65
-#define SHOPKEEPER_INVERT_SPEED_DELTA 100
+#define SHOPKEEPER_INVERT_SPEED_DELTA 500
+
+//todo tryb standby z shotgunem
+
+//todo wywalenie spritesheetu bomby 64x64 i zrobienie dwóch 8x8 i 64x64 (wtedy największe obciążenie będzie jedynie przy wybuchach)
+
+//nie strzela dopóki nie ma main dude w pobliżu
+//bardzo wysoko skacze
+//jak jest na tej samej wysokości ot nie skacze w ogóle
+//strzela tylko na +- tej samej wysokości
+
+//todo w main dude zmienić dead na killed
 
 //todo odwracanie w zależności od tego czy in_bounds + od której strony jest main_dude + podbieganie
 //todo triggerowanie w zależności od tego czy !in_bounds + czy trzyma niesprzedany przedmiot
@@ -25,6 +36,11 @@
 //żeby nie powtarzać kodu
 
 void Shopkeeper::draw() {
+
+    kill_if_whip(1);
+
+    if (!global::main_dude->dead)
+        kill_if_main_dude_jumped_on_you(1);
 
     check_if_dude_in_shop_bounds();
 
@@ -47,7 +63,46 @@ void Shopkeeper::draw() {
     if (stunned || killed)
         check_if_can_be_pickuped();
 
-    set_pickuped_position(6, -2);
+    set_pickuped_position(9, -4);
+
+    //TODO Odszukiwanie shotguna
+
+    if (stunned || killed) {
+        holding_shotgun = false;
+        shotgun->hold_by_anyone = false;
+        shotgun = nullptr;
+    } else if (triggered && !holding_shotgun) {
+        for (int a = 0; a < global::sprites.size(); a++) {
+            if (global::sprites.at(a)->sprite_type == SpriteType::S_SHOTGUN) {
+                Shotgun *sh = (Shotgun *) global::sprites.at(a);
+
+                if (Collisions::checkCollisionBodies(x, y, physical_width, physical_height,
+                                                     sh->x, sh->y, sh->physical_width, sh->physical_height)) {
+                    holding_shotgun = true;
+                    shotgun = sh;
+                    break;
+                }
+
+            }
+        }
+    }
+
+    if (shotgun != nullptr && holding_shotgun) {
+
+        shotgun->hold_by_anyone = true;
+
+        set_pickuped_position_on_another_moving_obj(5, 3, shotgun);
+
+        if (xSpeed > 0) {
+            shotgun->sprite_state = SpriteState::W_RIGHT;
+        } else if (xSpeed < 0) {
+            shotgun->sprite_state = SpriteState::W_LEFT;
+        }
+
+        if (!global::main_dude->dead) {
+            shotgun->activated = true;
+        }
+    }
 
     if (hold_by_main_dude) {
 
@@ -61,7 +116,7 @@ void Shopkeeper::draw() {
         } else
             stunned = false;
 
-        sprite_state = global::main_dude->state;
+        sprite_state = global::main_dude->sprite_state;
         mainSpriteInfo->entry->priority = OBJPRIORITY_0;
         subSpriteInfo->entry->priority = OBJPRIORITY_0;
 
@@ -73,8 +128,10 @@ void Shopkeeper::draw() {
     if (!hold_by_main_dude)
         kill_mobs_if_thrown(1);
 
-    if (bottomCollision &&/* (stunned || killed) && */!triggered) {
-        apply_friction(0.5f);
+    if (bottomCollision) {
+        if (!triggered || killed || stunned) {
+            apply_friction(0.5f);
+        }
     }
 
     set_position();
@@ -95,20 +152,23 @@ void Shopkeeper::draw() {
         }
     }
 
+    jumping_timer += *global::timer;
+
+
 }
 
 
 void Shopkeeper::init() {
 
 
-    activated_by_main_dude = true;
+    activated = true;
     initSprite();
 
     frameGfx = (u8 *) gfx_shopkeeperTiles;
     subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
     mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
 
-    spriteType = SpritesheetType::SHOPKEEPER;
+    spritesheet_type = SpritesheetType::SHOPKEEPER;
 
     randomizeMovement();
 }
@@ -170,7 +230,7 @@ void Shopkeeper::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_p
     if (bottomCollision && tiles[TileOrientation::RIGHT_MIDDLE] != nullptr &&
         tiles[TileOrientation::RIGHT_MIDDLE]->collidable &&
         tiles[TileOrientation::LEFT_MIDDLE] != nullptr && tiles[TileOrientation::LEFT_MIDDLE]->collidable) {
-        ySpeed = -2.6 - ((rand() % 10) / 5);
+        ySpeed = -5 - ((rand() % 10) / 5);
         landlocked = true;
     } else
         landlocked = false;
@@ -193,12 +253,11 @@ void Shopkeeper::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_p
 
 void Shopkeeper::apply_dmg(int dmg_to_apply) {
 
-    if (dmg_to_apply == 0 || dmg_to_apply == 1) {
+    if (dmg_to_apply == 0) {
         return;
     }
 
     hitpoints -= dmg_to_apply;
-
     if (blood_spawn_timer > 1000) {
         if (!killed)
             spawn_blood();
@@ -212,10 +271,12 @@ void Shopkeeper::apply_dmg(int dmg_to_apply) {
     if (hitpoints <= 0) {
         killed = true;
         stunned = false;
-        global::killed_npcs.push_back(spriteType);
-    } else {
-        stunned = true;
+        global::killed_npcs.push_back(spritesheet_type);
     }
+
+    /*else {
+        stunned = true;
+    }*/
 
 }
 
@@ -374,14 +435,13 @@ void Shopkeeper::apply_walking_sprites() {
     if (xSpeed == 0 && ySpeed == 0)
         frameGfx = (u8 *) gfx_shopkeeperTiles +
                    ((sprite_width * sprite_height * (SHOPKEEPER_SPRITESHEET_OFFSET + 24)) / 2);
-    else if (xSpeed != 0 && ySpeed == 0) {
+    else if (xSpeed != 0 || ySpeed != 0) {
         frameGfx = (u8 *) gfx_shopkeeperTiles +
                    ((sprite_width * sprite_height * (SHOPKEEPER_SPRITESHEET_OFFSET + anim_frame + 12)) / 2);
-    } else {
+    } /*else {
         frameGfx = (u8 *) gfx_shopkeeperTiles +
                    ((sprite_width * sprite_height * (SHOPKEEPER_SPRITESHEET_OFFSET + 3)) / 2);
-
-    }
+    }*/
 
 }
 
@@ -470,29 +530,55 @@ void Shopkeeper::check_if_dude_in_shop_bounds() {
 
         int diff = x - global::main_dude->x;
 
-        if (diff > 0)
-            sprite_state = SpriteState::W_LEFT;
-        else
-            sprite_state = SpriteState::W_RIGHT;
+        if (!triggered) {
 
-        if (global::hud->holding_item_shopping && !triggered) {
+            if (diff > 0)
+                sprite_state = SpriteState::W_LEFT;
+            else
+                sprite_state = SpriteState::W_RIGHT;
 
-            int abs_diff = abs(diff);
+            if (global::hud->holding_item_shopping) {
 
-            if (abs_diff > 1.5 * TILE_W) {
+                int abs_diff = abs(diff);
 
-                if (diff > 0)
-                    xSpeed = -2.5f;
-                else
-                    xSpeed = 2.5f;
+                if (abs_diff > 1.5 * TILE_W) {
+
+                    if (diff > 0)
+                        xSpeed = -2.5f;
+                    else
+                        xSpeed = 2.5f;
+
+                }
 
             }
 
         }
 
-    } else if (global::hud->holding_item_shopping) {
+
+    } else if (global::hud->holding_item_shopping && !triggered) {
+        global::hud->disable_all_prompts();
         triggered = true;
+        global::hud->thief = true;
+        global::hud->draw();
         de_shopify_all_items();
+        shotgun = new Shotgun();
+        shotgun->hold_by_main_dude = false;
+        shotgun->init();
+        shotgun->bought = true;
+        shotgun->cooldown = 250;
+        global::sprites.push_back(shotgun);
+        holding_shotgun = true;
+    } else {
+
+        bool shopkeeper_in_shop = x < shop_bounds_right_x_px && x > shop_bounds_left_x_px &&
+                                  y > shop_bounds_up_y_px && y < shop_bounds_down_y_px;
+
+        if ((bottomCollision && (leftCollision || rightCollision)) ||
+            !shopkeeper_in_shop && jumping_timer > staying_on_ground && bottomCollision && !(killed || stunned)) {
+            ySpeed = -5 - ((rand() % 10) / 5);
+            jumping_timer = 0;
+            staying_on_ground = 250 + (rand() % 1250);
+        }
     }
 }
 

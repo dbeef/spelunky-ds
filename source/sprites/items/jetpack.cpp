@@ -52,13 +52,13 @@ void Jetpack::draw() {
             set_pickuped_position_not_checking(-3, 2);
             mainSpriteInfo->entry->hFlip = false;
             subSpriteInfo->entry->hFlip = false;
-        } else if (global::main_dude->state == SpriteState::W_LEFT) {
+        } else if (global::main_dude->sprite_state == SpriteState::W_LEFT) {
             mainSpriteInfo->entry->priority = OBJPRIORITY_1;
             subSpriteInfo->entry->priority = OBJPRIORITY_1;
             set_pickuped_position_not_checking(-6, 0);
             mainSpriteInfo->entry->hFlip = false;
             subSpriteInfo->entry->hFlip = false;
-        } else if (global::main_dude->state == SpriteState::W_RIGHT) {
+        } else if (global::main_dude->sprite_state == SpriteState::W_RIGHT) {
             mainSpriteInfo->entry->priority = OBJPRIORITY_1;
             subSpriteInfo->entry->priority = OBJPRIORITY_1;
             set_pickuped_position_not_checking(-3, 0);
@@ -162,11 +162,10 @@ void Jetpack::initSprite() {
 
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_bat_jetpackPal, gfx_bat_jetpackPalLen,
                                                         nullptr, sprite_width * sprite_height, sprite_width,
-                                                        spriteType, true, false, LAYER_LEVEL::MIDDLE_TOP);
+                                                        spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_bat_jetpackPal, gfx_bat_jetpackPalLen,
                                                           nullptr, sprite_width * sprite_height, sprite_width,
-                                                          spriteType, true, false, LAYER_LEVEL::MIDDLE_TOP);
-
+                                                          spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
 
     if (collected) {
         frameGfx = (u8 *) gfx_bat_jetpackTiles + (sprite_width * sprite_height * (8) / 2);
@@ -206,7 +205,7 @@ Jetpack::Jetpack() {
     physical_width = JETPACK_PHYSICAL_WIDTH;
     sprite_height = JETPACK_SPRITE_HEIGHT;
     sprite_width = JETPACK_SPRITE_WIDTH;
-    spriteType = SpritesheetType::BAT_JETPACK;
+    spritesheet_type = SpritesheetType::BAT_JETPACK;
 }
 
 void Jetpack::equip() {

@@ -66,12 +66,10 @@ public:
     u8 *frameGfx{};
 
     int value{};
-    SpriteType sprite_type{};
 
     int collectible_timer{};
 
     bool collected{};
-    SpritesheetType spritesheet_type{};
 
     void set_position();
 };

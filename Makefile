@@ -154,7 +154,7 @@ DEPENDS	:=	$(OFILES:.o=.d)
 # main targets
 #---------------------------------------------------------------------------------
 $(OUTPUT).nds	: 	$(OUTPUT).elf
-$(OUTPUT).nds   :   $(shell find $(TOPDIR)/$(NITRODATA))
+#$(OUTPUT).nds   :   $(shell find $(TOPDIR)/$(NITRODATA))
 $(OUTPUT).elf	:	$(OFILES)
 %.s %.h : ../gfx/fonts/%.png
 		grit $< -ff../gfx/fonts/font.grit -o$*

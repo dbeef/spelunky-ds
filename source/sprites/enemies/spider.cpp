@@ -132,7 +132,7 @@ void Spider::apply_dmg(int dmg_to_apply) {
     killed = true;
     ready_to_dispose = true;
     global::hud->draw();
-    global::killed_npcs.push_back(spriteType);
+    global::killed_npcs.push_back(spritesheet_type);
 
 }
 
@@ -150,7 +150,7 @@ void Spider::initSprite() {
     subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
     mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
 
-    spriteType = SpritesheetType::SPIDER;
+    spritesheet_type = SpritesheetType::SPIDER;
 
 
     subSpriteInfo->entry->isHidden = false;

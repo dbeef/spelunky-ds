@@ -57,7 +57,6 @@ public:
 
     u8 *frameGfx{};
 
-    SpriteState spriteState{};
     int waitTimer{};
     int goTimer{};
 

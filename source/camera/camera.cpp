@@ -22,7 +22,7 @@ void Camera::instant_focus() {
     apply_map_boundaries();
 }
 
-//Camera focus with main dude in center, applied as the time progresses.
+//Camera focus with main dude in center, applied as the time_utils progresses.
 void Camera::update_position() {
 
     if (!follow_main_dude)

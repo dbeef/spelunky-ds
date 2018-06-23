@@ -51,10 +51,10 @@ void FallPoof::initSprite() {
 
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_blood_rock_rope_poofPal, gfx_blood_rock_rope_poofPalLen,
                                                         nullptr, sprite_width * sprite_height, sprite_width,
-                                                        spriteType, true, false, LAYER_LEVEL::MIDDLE_TOP);
+                                                        spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_blood_rock_rope_poofPal, gfx_blood_rock_rope_poofPalLen,
                                                           nullptr, sprite_width * sprite_height, sprite_width,
-                                                          spriteType, true, false, LAYER_LEVEL::MIDDLE_TOP);
+                                                          spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
 
 
     frameGfx = (u8 *) gfx_blood_rock_rope_poofTiles +
@@ -96,7 +96,7 @@ FallPoof::FallPoof() {
     sprite_width = FALL_POOF_SPRITE_WIDTH;
     physical_height = FALL_POOF_PHYSICAL_HEIGHT;
     physical_width = FALL_POOF_PHYSICAL_WIDTH;
-    spriteType = SpritesheetType::BLOOD_ROCK_ROPE_POOF;
+    spritesheet_type = SpritesheetType::BLOOD_ROCK_ROPE_POOF;
 }
 
 void FallPoof::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {

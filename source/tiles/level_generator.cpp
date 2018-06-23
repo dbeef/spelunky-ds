@@ -710,6 +710,51 @@ void LevelGenerator::match_tile(MapTile *t, int value) {
             t->destroyable = true;
             t->mapTileType = MapTileType::SHOP_SIGN_KISSING;
             break;
+        case MapTileType::NA:
+            t->values[0] = 156;
+            t->values[1] = 157;
+            t->values[2] = 158;
+            t->values[3] = 159;
+            t->collidable = false;
+            t->destroyable = false;
+            t->mapTileType = MapTileType::NA;
+            break;
+        case MapTileType::SHOP_MUGSHOT_1:
+            t->values[0] = 160;
+            t->values[1] = 161;
+            t->values[2] = 162;
+            t->values[3] = 163;
+            t->collidable = false;
+            t->destroyable = false;
+            t->mapTileType = MapTileType::SHOP_MUGSHOT_1;
+            break;
+        case MapTileType::SHOP_MUGSHOT_2:
+            t->values[0] = 164;
+            t->values[1] = 165;
+            t->values[2] = 166;
+            t->values[3] = 167;
+            t->collidable = false;
+            t->destroyable = false;
+            t->mapTileType = MapTileType::SHOP_MUGSHOT_2;
+            break;
+        case MapTileType::SHOP_MUGSHOT_3:
+            t->values[0] = 168;
+            t->values[1] = 169;
+            t->values[2] = 170;
+            t->values[3] = 171;
+            t->collidable = false;
+            t->destroyable = false;
+            t->mapTileType = MapTileType::SHOP_MUGSHOT_3;
+            break;
+        case MapTileType::SHOP_MUGSHOT_4:
+            t->values[0] = 172;
+            t->values[1] = 173;
+            t->values[2] = 174;
+            t->values[3] = 175;
+            t->collidable = false;
+            t->destroyable = false;
+            t->mapTileType = MapTileType::SHOP_MUGSHOT_4;
+            break;
         default:
             break;
     }

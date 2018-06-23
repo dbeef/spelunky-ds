@@ -23,11 +23,11 @@ void SpriteInfo::init() {
     SpriteInfo *s = nullptr;
 
     if (oamType == oam_type::MAIN)
-        s = global::main_oam_manager->initSprite(pal_pointer, pal_len, nullptr, size * size, size, spriteType,
+        s = global::main_oam_manager->initSprite(pal_pointer, pal_len, nullptr, size * size, size, spritesheet_type,
                                                  reuse_pal,
                                                  reuse_tiles);
     else
-        s = global::sub_oam_manager->initSprite(pal_pointer, pal_len, nullptr, size * size, size, spriteType, reuse_pal,
+        s = global::sub_oam_manager->initSprite(pal_pointer, pal_len, nullptr, size * size, size, spritesheet_type, reuse_pal,
                                                 reuse_tiles);
 
     this->entry = s->entry;
@@ -49,7 +49,7 @@ SpriteInfo::assignValues(oam_type o, bool reuse_tiles, bool reuse_pal, int size,
     this->size = size;
     this->pal_len = pal_len;
     this->pal_pointer = pal_pointer;
-    this->spriteType = s;
+    this->spritesheet_type = s;
 }
 
 */

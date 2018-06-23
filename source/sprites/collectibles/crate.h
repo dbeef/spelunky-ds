@@ -54,7 +54,6 @@ public:
     int animFrame{};
     double animFrameTimer{};
 
-    SpritesheetType  spriteType{};
     void set_position();
 
     void drop_loot();

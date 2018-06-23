@@ -55,10 +55,10 @@ void GotCollectible::initSprite() {
 
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_got_collectiblePal, gfx_got_collectiblePalLen,
                                                         nullptr, sprite_width * sprite_height, sprite_width,
-                                                        spriteType, true, false,LAYER_LEVEL::MIDDLE_TOP);
+                                                        spritesheet_type, true, false,LAYER_LEVEL::MIDDLE_TOP);
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_got_collectiblePal, gfx_got_collectiblePalLen,
                                                           nullptr, sprite_width * sprite_height, sprite_width,
-                                                          spriteType, true, false,LAYER_LEVEL::MIDDLE_TOP);
+                                                          spritesheet_type, true, false,LAYER_LEVEL::MIDDLE_TOP);
 
     if (collectible_type == 0) {
         frameGfx = (u8 *) gfx_got_collectibleTiles + (sprite_width * sprite_height * (0) / 2);
@@ -99,6 +99,6 @@ void GotCollectible::set_position() {
 GotCollectible::GotCollectible() {
     sprite_height = GOT_COLLECTIBLE_SPRITE_HEIGHT;
     sprite_width = GOT_COLLECTIBLE_SPRITE_WIDTH;
-    spriteType = SpritesheetType::GOT_COLLECTIBLE;
+    spritesheet_type= SpritesheetType::GOT_COLLECTIBLE;
 }
 

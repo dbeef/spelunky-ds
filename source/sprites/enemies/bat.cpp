@@ -78,7 +78,7 @@ void Bat::init() {
     subSpriteInfo->updateFrame(frameGfx, sprite_height * sprite_width);
     mainSpriteInfo->updateFrame(frameGfx, sprite_height * sprite_width);
 
-    spriteType = SpritesheetType::BAT_JETPACK;
+    spritesheet_type = SpritesheetType::BAT_JETPACK;
 }
 
 void Bat::updateSpeed() {
@@ -124,7 +124,7 @@ void Bat::apply_dmg(int dmg_to_apply) {
     killed = true;
     ready_to_dispose = true;
     global::hud->draw();
-    global::killed_npcs.push_back(spriteType);
+    global::killed_npcs.push_back(spritesheet_type);
 
 }
 

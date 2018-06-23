@@ -85,7 +85,7 @@ void MainDude::handle_key_input() {
 
         if (global::input_handler->left_key_held) {
 
-            state = W_LEFT;
+            sprite_state= W_LEFT;
             hanging_on_tile_left = false;
             if (!(hanging_on_tile_right || hanging_on_tile_left) && !climbing)
                 if (speed_inc_timer > X_SPEED_DELTA_TIME_MS) {
@@ -97,7 +97,7 @@ void MainDude::handle_key_input() {
 
         if (global::input_handler->right_key_held) {
 
-            state = W_RIGHT;
+            sprite_state = W_RIGHT;
             hanging_on_tile_right = false;
             if (!(hanging_on_tile_right || hanging_on_tile_left) && !climbing) {
                 if (speed_inc_timer > X_SPEED_DELTA_TIME_MS) {

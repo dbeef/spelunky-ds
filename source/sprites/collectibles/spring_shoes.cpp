@@ -96,10 +96,10 @@ void SpringShoes::initSprite() {
 
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_saleablePal, gfx_saleablePalLen,
                                                         nullptr, sprite_width * sprite_height, sprite_width,
-                                                        spriteType, true, false, LAYER_LEVEL::MIDDLE_TOP);
+                                                        spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_saleablePal, gfx_saleablePalLen,
                                                           nullptr, sprite_width * sprite_height, sprite_width,
-                                                          spriteType, true, false, LAYER_LEVEL::MIDDLE_TOP);
+                                                          spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
 
     frameGfx = (u8 *) gfx_saleableTiles + (sprite_width * sprite_height * (3) / 2);
 
@@ -148,7 +148,7 @@ SpringShoes::SpringShoes() {
     physical_width = SPRING_SHOES_PHYSICAL_WIDTH;
     sprite_height = SPRING_SHOES_SPRITE_HEIGHT;
     sprite_width = SPRING_SHOES_SPRITE_WIDTH;
-    spriteType = SpritesheetType::SALEABLE;
+    spritesheet_type = SpritesheetType::SALEABLE;
 }
 
 void SpringShoes::equip() {

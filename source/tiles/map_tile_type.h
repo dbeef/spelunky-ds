@@ -44,6 +44,11 @@ enum MapTileType {
     SHOP_SIGN_CRAPS,                //33
     SHOP_SIGN_GENERAL,              //34
     SHOP_SIGN_KISSING,              //35
+    NA,                             //36
+    SHOP_MUGSHOT_1,                 //37
+    SHOP_MUGSHOT_2,                 //38
+    SHOP_MUGSHOT_3,                 //39
+    SHOP_MUGSHOT_4,                 //40
 };
 
 #endif //SPELUNKYDS_MAPTILETYPES_H

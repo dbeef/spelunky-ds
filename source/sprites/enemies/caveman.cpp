@@ -4,6 +4,7 @@
 
 
 #include <maxmod9.h>
+#include <cstdlib>
 #include "caveman.h"
 #include "../../globals_declarations.h"
 #include "../../collisions/collisions.h"
@@ -24,10 +25,10 @@ void Caveman::draw() {
     invert_speed_timer += *global::timer;
     blood_spawn_timer += *global::timer;
 
-    if (spriteState == SpriteState::W_LEFT) {
+    if (sprite_state == SpriteState::W_LEFT) {
         mainSpriteInfo->entry->hFlip = false;
         subSpriteInfo->entry->hFlip = false;
-    } else if (spriteState == SpriteState::W_RIGHT) {
+    } else if (sprite_state == SpriteState::W_RIGHT) {
         mainSpriteInfo->entry->hFlip = true;
         subSpriteInfo->entry->hFlip = true;
     }
@@ -43,7 +44,7 @@ void Caveman::draw() {
         set_pickuped_position(6, -4);
 
         if (hold_by_main_dude) {
-            spriteState = global::main_dude->state;
+            sprite_state = global::main_dude->sprite_state;
             mainSpriteInfo->entry->priority = OBJPRIORITY_0;
             subSpriteInfo->entry->priority = OBJPRIORITY_0;
 
@@ -122,14 +123,14 @@ void Caveman::draw() {
 
 void Caveman::init() {
 
-    activated_by_main_dude = true;
+    activated = true;
     initSprite();
 
     frameGfx = (u8 *) gfx_caveman_damselTiles;
     subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
     mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
 
-    spriteType = SpritesheetType::CAVEMAN_DAMSEL;
+    spritesheet_type = SpritesheetType::CAVEMAN_DAMSEL;
 
     randomizeMovement();
 }
@@ -139,11 +140,11 @@ void Caveman::randomizeMovement() {
     int r = rand() % 2;
 
     if (r == 0) {
-        spriteState = SpriteState::W_LEFT;
+        sprite_state = SpriteState::W_LEFT;
 
     } else if (r == 1) {
-        if (spriteState == SpriteState::W_RIGHT)
-            spriteState = SpriteState::W_RIGHT;
+        if (sprite_state == SpriteState::W_RIGHT)
+            sprite_state = SpriteState::W_RIGHT;
     }
 
     goTimer = (rand() % (1 * 2000)) + 1000;
@@ -232,7 +233,7 @@ void Caveman::apply_dmg(int dmg_to_apply) {
     if (hitpoints <= 0) {
         killed = true;
         stunned = false;
-        global::killed_npcs.push_back(spriteType);
+        global::killed_npcs.push_back(spritesheet_type);
     } else {
         stunned = true;
     }
@@ -255,9 +256,9 @@ void Caveman::initSprite() {
 
     set_position();
 
-    if (spriteState == SpriteState::W_LEFT) {
+    if (sprite_state == SpriteState::W_LEFT) {
         mainSpriteInfo->entry->vFlip = false;
-    } else if (spriteState == SpriteState::W_RIGHT) {
+    } else if (sprite_state == SpriteState::W_RIGHT) {
         mainSpriteInfo->entry->vFlip = true;
     }
 
@@ -299,12 +300,12 @@ void Caveman::make_some_movement() {
             goTimer -= *global::timer;
 
         if (triggered) {
-            if (spriteState == SpriteState::W_RIGHT)
+            if (sprite_state == SpriteState::W_RIGHT)
                 xSpeed = CAVEMAN_TRIGGERED_SPEED;
             else
                 xSpeed = -CAVEMAN_TRIGGERED_SPEED;
         } else {
-            if (spriteState == SpriteState::W_RIGHT)
+            if (sprite_state == SpriteState::W_RIGHT)
                 xSpeed = CAVEMAN_NORMAL_SPEED;
             else
                 xSpeed = -CAVEMAN_NORMAL_SPEED;
@@ -331,10 +332,10 @@ void Caveman::make_some_movement() {
 
         if ((leftCollision || rightCollision) && !landlocked) {
 
-            if (spriteState == SpriteState::W_LEFT)
-                spriteState = SpriteState::W_RIGHT;
+            if (sprite_state == SpriteState::W_LEFT)
+                sprite_state = SpriteState::W_RIGHT;
             else
-                spriteState = SpriteState::W_LEFT;
+                sprite_state = SpriteState::W_LEFT;
 
             xSpeed *= -1;
             rightCollision = false;
@@ -360,9 +361,9 @@ void Caveman::check_if_can_be_triggered() {
         triggered = true;
 
         MapTile *tiles[9] = {};
-        if (spriteState == SpriteState::W_RIGHT && diff < 0)
+        if (sprite_state == SpriteState::W_RIGHT && diff < 0)
             Collisions::getTilesOnRightFromXY(global::level_generator->map_tiles, xx, yy, tiles);
-        else if (spriteState == SpriteState::W_LEFT && diff > 0)
+        else if (sprite_state == SpriteState::W_LEFT && diff > 0)
             Collisions::getTilesOnLeftFromXY(global::level_generator->map_tiles, xx, yy, tiles);
         else triggered = false;
 

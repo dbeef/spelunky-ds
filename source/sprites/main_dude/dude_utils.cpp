@@ -3,6 +3,7 @@
 //
 
 #include <maxmod9.h>
+#include <cstdlib>
 #include "../../globals_declarations.h"
 #include "../collectibles/pistol.h"
 #include "../collectibles/shotgun.h"
@@ -28,17 +29,17 @@ void MainDude::throw_item() {
         if (global::sprites.at(a)) {
             if ((*global::sprites.at(a)).hold_by_main_dude) {
 
-                if ((*global::sprites.at(a)).activated_by_main_dude /*&& !carrying_pistol && !carrying_shotgun*/) {
+                if ((*global::sprites.at(a)).activated /*&& !carrying_pistol && !carrying_shotgun*/) {
 
                     if (!global::input_handler->down_key_held) {
 
                         if (carrying_mitt) {
-                            if (state == SpriteState::W_LEFT)
+                            if (sprite_state == SpriteState::W_LEFT)
                                 (*global::sprites.at(a)).xSpeed = -6 - abs(xSpeed);
                             else
                                 (*global::sprites.at(a)).xSpeed = 6 + abs(xSpeed);
                         } else {
-                            if (state == SpriteState::W_LEFT)
+                            if (sprite_state == SpriteState::W_LEFT)
                                 (*global::sprites.at(a)).xSpeed = -4 - abs(xSpeed);
                             else
                                 (*global::sprites.at(a)).xSpeed = 4 + abs(xSpeed);
@@ -46,7 +47,7 @@ void MainDude::throw_item() {
 
                     } else {
 
-                        if (state == SpriteState::W_LEFT)
+                        if (sprite_state == SpriteState::W_LEFT)
                             (*global::sprites.at(a)).xSpeed = -0.04;
                         else
                             (*global::sprites.at(a)).xSpeed = 0.04;
@@ -77,7 +78,7 @@ void MainDude::throw_item() {
                     mmEffect(SFX_XTHROW);
 
                 } else {
-                    (*global::sprites.at(a)).activated_by_main_dude = true;
+                    (*global::sprites.at(a)).activated = true;
                 }
 
             }
@@ -104,7 +105,7 @@ void MainDude::throw_rope() {
 
     Rope *rope = new Rope();
     rope->init();
-    rope->activated_by_main_dude = true;
+    rope->activated = true;
 
     rope->y = y + 6;
     rope->x = floor_div(x + 0.5 * MAIN_DUDE_PHYSICAL_WIDTH, TILE_W) * TILE_W + ROPE_PHYSICAL_WIDTH * 0.5;
@@ -212,7 +213,7 @@ void MainDude::apply_crawling_sprite() {
     int frame;
     u8 *offset;
 
-    if (state == SpriteState::W_LEFT)
+    if (sprite_state == SpriteState::W_LEFT)
         frame = animFrame + (4) * SPRITESHEET_ROW_WIDTH;
     else
         frame = animFrame + (5) * SPRITESHEET_ROW_WIDTH + 3;
@@ -244,10 +245,10 @@ void MainDude::apply_whip_sprite() {
     int frame;
     u8 *offset;
 
-    if (state == SpriteState::W_LEFT) {
+    if (sprite_state == SpriteState::W_LEFT) {
         frame = (9 * SPRITESHEET_ROW_WIDTH) + 2 + animFrame;
         offset = frameGfx + frame * MAIN_DUDE_SPRITE_WIDTH * MAIN_DUDE_SPRITE_HEIGHT / 2;
-    } else if (state == 0) {
+    } else if (sprite_state == 0) {
         frame = (10 * SPRITESHEET_ROW_WIDTH) + 2 + animFrame;
         offset = frameGfx + frame * MAIN_DUDE_SPRITE_WIDTH * MAIN_DUDE_SPRITE_HEIGHT / 2;
     }
@@ -336,11 +337,11 @@ void MainDude::apply_walking_sprite() {
     int frame;
     u8 *offset;
 
-    if (state == SpriteState::W_LEFT) {
-        frame = state * FRAMES_PER_ANIMATION;
+    if (sprite_state == SpriteState::W_LEFT) {
+        frame = sprite_state * FRAMES_PER_ANIMATION;
         offset = frameGfx + frame * MAIN_DUDE_SPRITE_WIDTH * MAIN_DUDE_SPRITE_HEIGHT / 2;
-    } else if (state == SpriteState::W_RIGHT) {
-        frame = state * FRAMES_PER_ANIMATION;
+    } else if (sprite_state == SpriteState::W_RIGHT) {
+        frame = sprite_state * FRAMES_PER_ANIMATION;
         offset = frameGfx + frame * MAIN_DUDE_SPRITE_WIDTH * MAIN_DUDE_SPRITE_HEIGHT / 2;
     }
     main_spelunker->updateFrame(offset, sprite_width * sprite_height);
@@ -354,13 +355,13 @@ void MainDude::apply_falling_sprite() {
     u8 *offset;
 
     if (abs(xSpeed) != 0) {
-        frame = animFrame + state * FRAMES_PER_ANIMATION;
+        frame = animFrame + sprite_state * FRAMES_PER_ANIMATION;
         offset = frameGfx + frame * MAIN_DUDE_SPRITE_WIDTH * MAIN_DUDE_SPRITE_HEIGHT / 2;
     } else {
-        if (state == SpriteState::W_LEFT) {
+        if (sprite_state== SpriteState::W_LEFT) {
             frame = (2 * SPRITESHEET_ROW_WIDTH) + 2;
             offset = frameGfx + frame * MAIN_DUDE_SPRITE_WIDTH * MAIN_DUDE_SPRITE_HEIGHT / 2;
-        } else if (state == SpriteState::W_RIGHT) {
+        } else if (sprite_state == SpriteState::W_RIGHT) {
             frame = (2 * SPRITESHEET_ROW_WIDTH) + 3;
             offset = frameGfx + frame * MAIN_DUDE_SPRITE_WIDTH * MAIN_DUDE_SPRITE_HEIGHT / 2;
         }
@@ -413,7 +414,7 @@ void MainDude::can_hang_on_tile(MapTile **neighboringTiles) {
     bool y_bound = false;
     bool x_bound = false;
 
-    if (rightCollision && state == W_LEFT) {
+    if (rightCollision && sprite_state == W_LEFT) {
 
         if (!carrying_glove && (neighboringTiles[LEFT_UP] != nullptr && neighboringTiles[LEFT_UP]->collidable))
             return;
@@ -422,7 +423,7 @@ void MainDude::can_hang_on_tile(MapTile **neighboringTiles) {
                    (this->x >= (neighboringTiles[LEFT_MIDDLE]->x * 16) + 12));
         y_bound = (this->y > (neighboringTiles[LEFT_MIDDLE]->y * 16) - 2) &&
                   (this->y < (neighboringTiles[LEFT_MIDDLE]->y * 16) + 8);
-    } else if (leftCollision && state == W_RIGHT) {
+    } else if (leftCollision && sprite_state == W_RIGHT) {
 
         if (!carrying_glove && (neighboringTiles[RIGHT_UP] != nullptr && neighboringTiles[RIGHT_UP]->collidable))
             return;
@@ -462,6 +463,14 @@ void MainDude::apply_dmg(int dmg_to_apply) {
         global::hud->hide();
         global::main_dude->ySpeed = -MAIN_DUDE_JUMP_SPEED * 0.25;
         global::main_dude->dead = true;
+        global::main_dude->climbing = false;
+        global::main_dude->can_climb_rope= false;
+        global::main_dude->can_climb_ladder= false;
+        global::main_dude->hanging_on_tile_left= false;
+        global::main_dude->hanging_on_tile_right= false;
+        global::main_dude->pushing_left= false;
+        global::main_dude->pushing_right= false;
+
         mmEffect(SFX_XDIE);
     }
 }

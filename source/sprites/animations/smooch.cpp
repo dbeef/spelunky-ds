@@ -59,10 +59,10 @@ void Smooch::initSprite() {
 
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_caveman_damselPal, gfx_caveman_damselPalLen,
                                                         nullptr, sprite_width * sprite_height, sprite_width,
-                                                        spriteType, true, false, LAYER_LEVEL::MIDDLE_TOP);
+                                                        spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_caveman_damselPal, gfx_caveman_damselPalLen,
                                                           nullptr, sprite_width * sprite_height, sprite_width,
-                                                          spriteType, true, false, LAYER_LEVEL::MIDDLE_TOP);
+                                                          spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
 
 
     frameGfx = (u8 *) gfx_caveman_damselTiles + (sprite_width * sprite_height * (67) / 2);
@@ -97,6 +97,6 @@ void Smooch::set_position() {
 Smooch::Smooch() {
     sprite_height = SMOOCH_SPRITE_HEIGHT;
     sprite_width = SMOOCH_SPRITE_WIDTH;
-    spriteType = SpritesheetType::CAVEMAN_DAMSEL;
+    spritesheet_type = SpritesheetType::CAVEMAN_DAMSEL;
 }
 

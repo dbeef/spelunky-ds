@@ -14,6 +14,9 @@ public:
 
     Hud();
 
+    bool thief{};
+    int thief_timer{};
+
     bool introduce_shop{};
     int introduce_shop_timer{};
     const char *shop_name{};
@@ -58,7 +61,7 @@ public:
     SpriteInfo *ropeSpriteInfo {};
     SpriteInfo *holdingItemSpriteInfo {};
 
-    //changes every time a new item is added to hud
+    //changes every time_utils a new item is added to hud
     int items_offset_y{};
 
     void update();

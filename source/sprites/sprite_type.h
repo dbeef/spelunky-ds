@@ -21,9 +21,9 @@ enum SpriteType {
     S_MONIEZ_RUBY_BIG_RED,        //7
     S_MONIEZ_RUBY_BIG_BLUE,       //8
     S_MONIEZ_RUBY_BIG_GREEN,      //9
-    S_MONIEZ_RUBY_SMALL_RED,        //7
-    S_MONIEZ_RUBY_SMALL_BLUE,       //8
-    S_MONIEZ_RUBY_SMALL_GREEN,      //9
+    S_MONIEZ_RUBY_SMALL_RED,      //7
+    S_MONIEZ_RUBY_SMALL_BLUE,     //8
+    S_MONIEZ_RUBY_SMALL_GREEN,    //9
     S_SNAKE,                      //10
     S_ROPES,                      //11
     S_ROPE_ELEMENT,               //12
@@ -35,7 +35,8 @@ enum SpriteType {
     S_SPELUNKY_COPYRIGHTS,        //18
     S_BAT,                        //19
     S_SPIDER,                     //20
-    S_SPIKES                      //21
+    S_SPIKES,                     //21
+    S_SHOTGUN                     //21
 };
 
 #endif //SPELUNKYDS_SPRITETYPE_H

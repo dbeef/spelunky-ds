@@ -73,7 +73,7 @@ public:
     int animation_frame_timer{};
     int speed_inc_timer{};
     int pos_inc_timer{};
-    //How much time was spent on hanging, since last flag hanging_on_tile_left/right occured.
+    //How much time_utils was spent on hanging, since last flag hanging_on_tile_left/right occured.
     int hanging_timer{};
 
     int stunned_timer{};
@@ -99,7 +99,6 @@ public:
     bool holding_item{};
     bool dead{};
 
-    SpriteState state{};
     int animFrame{};
     u8 *frameGfx{};
     Whip *whip{};

@@ -48,8 +48,6 @@ public:
 
     u8 *frameGfx{};
 
-    SpritesheetType spriteType{};
-
     void set_position();
 
     int collectible_type{};

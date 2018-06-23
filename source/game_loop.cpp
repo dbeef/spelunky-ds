@@ -26,6 +26,7 @@
 #include "rooms/shops.h"
 #include "sprites/enemies/shopkeeper.h"
 #include "sprites/collectibles/collectibles_utils.h"
+#include "sprites/items/arrow.h"
 
 static const int BOUNDARY_VALUE = 64; /* This is the default boundary value (can be set in REG_DISPCNT) */
 static const int OFFSET_MULTIPLIER_MAIN = BOUNDARY_VALUE / sizeof(SPRITE_GFX[0]);
@@ -49,7 +50,7 @@ void gameloop::scroll() {
 
     while (true) {
 
-        time::update_ms_since_last_frame();
+        time_utils::update_ms_since_last_frame();
 
         global::input_handler->updateInput();
 
@@ -186,6 +187,16 @@ void gameloop::populate_cave_moniez() {
                         jars_left--;
                         last_placement = 0;
                     }
+
+/*                    if (loot_type == 0 && rocks_left > 0 && r == 1) {
+                        Arrow *arrow = new Arrow();
+                        arrow->init();
+                        global::sprites.push_back(arrow);
+                        arrow->x = pos_x * 16;
+                        arrow->y = pos_y * 16;
+                        rocks_left--;
+                        last_placement = 0;
+                    }*/
 
                     if (loot_type == 0 && rocks_left > 0 && r == 1) {
                         Rock *rock = new Rock();
@@ -456,7 +467,7 @@ void gameloop::populate_main_menu() {
     rope->ySpeed = -4;
 
     rope->hold_by_main_dude = false;
-    rope->activated_by_main_dude = false;
+    rope->activated = false;
     rope->thrown = true;
 
     global::sprites.push_back(rope);

@@ -6,7 +6,7 @@
 #define SPELUNKYDS_SHOPKEEPER_H
 
 #define MAX_X_SPEED_SHOPKEEPER 4
-#define MAX_Y_SPEED_SHOPKEEPER 4
+#define MAX_Y_SPEED_SHOPKEEPER 5
 
 #define SHOPKEEPER_PHYSICAL_HEIGHT 16
 #define SHOPKEEPER_PHYSICAL_WIDTH 16
@@ -20,12 +20,16 @@
 #include "../sprite_state.h"
 #include "../sprite_info.h"
 #include "../shopping_object.h"
+#include "../collectibles/shotgun.h"
 
 class Shopkeeper : public MovingObject {
 
 public:
 
     //todo shopkeeper's name
+
+    Shotgun *shotgun{};
+    bool holding_shotgun{};
 
     Shopkeeper();
 
@@ -58,7 +62,6 @@ public:
 
     u8 *frameGfx{};
 
-    SpriteState sprite_state{};
     int waitTimer{};
     int go_timer{};
 
@@ -77,6 +80,9 @@ public:
     int shop_bounds_right_x_px{};
     int shop_bounds_up_y_px{};
     int shop_bounds_down_y_px{};
+    int jumping_timer{};
+
+    int staying_on_ground{};
 
     bool introduced_shop_name{};
 

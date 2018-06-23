@@ -31,9 +31,9 @@ void Spikes::draw() {
     }
 
     for (int a = 0; a < global::sprites.size(); a++) {
-        if ((global::sprites.at(a)->spriteType == SpritesheetType::SPIDER ||
-             global::sprites.at(a)->spriteType == SpritesheetType::CAVEMAN_DAMSEL ||
-             global::sprites.at(a)->spriteType == SpritesheetType::SHOPKEEPER)
+        if ((global::sprites.at(a)->spritesheet_type == SpritesheetType::SPIDER ||
+             global::sprites.at(a)->spritesheet_type == SpritesheetType::CAVEMAN_DAMSEL ||
+             global::sprites.at(a)->spritesheet_type == SpritesheetType::SHOPKEEPER)
             && !global::sprites.at(a)->ready_to_dispose && !global::sprites.at(a)->killed) {
 
             if (Collisions::checkCollisionBodies(x, y, physical_width, physical_height,
@@ -64,7 +64,7 @@ void Spikes::draw() {
 
 void Spikes::init() {
     initSprite();
-    activated_by_main_dude = true;
+    activated = true;
 }
 
 void Spikes::initSprite() {

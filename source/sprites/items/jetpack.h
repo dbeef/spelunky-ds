@@ -54,8 +54,6 @@ public:
 
     u8 *frameGfx{};
 
-    SpritesheetType spriteType{};
-
     int poof_spawn_counter{};
     int poof_spawn_timer{};
 

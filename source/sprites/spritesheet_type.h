@@ -30,7 +30,8 @@ enum SpritesheetType{
     SPIKES_COLLECTIBLES,        //19
     SALEABLE,                   //20
     GOT_COLLECTIBLE,            //21
-    CAVEMAN_DAMSEL,             //21
+    CAVEMAN_DAMSEL,             //22
+    ARROW,             //23
 };
 
 #endif //SPELUNKYDS_SPRITETYPES_H

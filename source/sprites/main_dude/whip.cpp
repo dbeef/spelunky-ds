@@ -44,7 +44,7 @@ void Whip::update_position() {
     if (whip_timer > 100 && whip_timer < 180) {
         assign_pre_whip_sprite();
 
-        if (global::main_dude->state == SpriteState::W_LEFT) {
+        if (global::main_dude->sprite_state== SpriteState::W_LEFT) {
             main_sprite_info->entry->x = main_x + 8;
             sub_sprite_info->entry->x = sub_x + 8;
             main_sprite_info->entry->hFlip = true;
@@ -59,7 +59,7 @@ void Whip::update_position() {
     } else if (whip_timer >= 220) {
         assign_whip_sprite();
 
-        if (global::main_dude->state == SpriteState::W_LEFT) {
+        if (global::main_dude->sprite_state== SpriteState::W_LEFT) {
             main_sprite_info->entry->x = main_x - 16;
             sub_sprite_info->entry->x = sub_x - 16;
             main_sprite_info->entry->hFlip = false;

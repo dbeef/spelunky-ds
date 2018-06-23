@@ -44,6 +44,8 @@ public:
 
     void onCollisionWithMainCharacter() override {};
 
+    bool hold_by_anyone{};
+
     double pos_inc_timer{};
 
     SpriteInfo *mainSpriteInfo {};
@@ -59,9 +61,6 @@ public:
 
     u8 * frameGfx{};
 
-    SpriteState spriteState{};
-
-    SpritesheetType  spriteType{};
     void set_position();
 
     void spawn_bullets();

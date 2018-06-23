@@ -51,7 +51,7 @@ public:
     int sameDirectionInRow{};
 
 
-    //Snake goes for random amount of time on random direction, then waits random time and the cycle goes again
+    //Snake goes for random amount of time_utils on random direction, then waits random time_utils and the cycle goes again
     SpriteState spriteState{};
     int waitTimer{};
     int goTimer{};

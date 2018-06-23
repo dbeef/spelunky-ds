@@ -12,7 +12,10 @@
 #include "shotgun.h"
 #include "bullet.h"
 #include "../animations/got_collectible.h"
+#include "../../tiles/map_utils.h"
 
+#define BLAST_SPRITE_SIZE_X 16
+#define BLAST_SPRITE_SIZE_Y 16
 #define SHOTGUN_POS_INC_DELTA 15
 #define SHOTGUN_FIRING_OFFSET_X 14
 #define SHOTGUN_FIRING_OFFSET_Y 6
@@ -34,6 +37,15 @@ void Shotgun::draw() {
 
     if (hold_by_main_dude) {
 
+        if (global::main_dude->xSpeed > 0)
+            sprite_state = SpriteState::W_RIGHT;
+        else if (global::main_dude->xSpeed < 0)
+            sprite_state = SpriteState::W_LEFT;
+        else if(global::main_dude->hanging_on_tile_left)
+            sprite_state = SpriteState::W_RIGHT;
+        else if(global::main_dude->hanging_on_tile_right)
+            sprite_state = SpriteState::W_LEFT;
+
         if (shopping_transaction(this)) {
             equip();
         }
@@ -44,43 +56,68 @@ void Shotgun::draw() {
 
         y = global::main_dude->y + 7;
 
-        if (global::main_dude->state == SpriteState::W_LEFT) {
-            frameGfx = (u8 *) gfx_spike_collectibles_flameTiles + (sprite_width * sprite_height * (12) / 2);
+        if (sprite_state == SpriteState::W_LEFT) {
             x = global::main_dude->x - 4;
         } else {
-            frameGfx = (u8 *) gfx_spike_collectibles_flameTiles + (sprite_width * sprite_height * (11) / 2);
             x = global::main_dude->x + 7;
         }
 
 
-        subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
-        mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
     } else {
         mainSpriteInfo->entry->priority = OBJPRIORITY_1;
         global::main_dude->carrying_shotgun = false;
     }
 
-    if (activated_by_main_dude && !firing && cooldown > SHOTGUN_COOLDOWN) {
+
+    if (sprite_state == SpriteState::W_LEFT) {
+        frameGfx = (u8 *) gfx_spike_collectibles_flameTiles + (sprite_width * sprite_height * (12) / 2);
+    } else {
+        frameGfx = (u8 *) gfx_spike_collectibles_flameTiles + (sprite_width * sprite_height * (11) / 2);
+    }
+
+    subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
+    mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
+
+
+    if (activated && !firing && cooldown > SHOTGUN_COOLDOWN) {
 
         if (!global::main_dude->climbing && !global::main_dude->hanging_on_tile_left &&
             !global::main_dude->hanging_on_tile_right) {
-            if (global::main_dude->state == SpriteState::W_LEFT) {
-                global::main_dude->xSpeed = MAIN_DUDE_MAX_X_SPEED_RUNNING;
-            } else if (global::main_dude->state == SpriteState::W_RIGHT) {
-                global::main_dude->xSpeed = -MAIN_DUDE_MAX_X_SPEED_RUNNING;
-            }
+
+            //FIXME Wkleić wszędzie gdzie activated = true
+//            if (global::main_dude->sprite_state == SpriteState::W_LEFT) {
+//                global::main_dude->xSpeed = MAIN_DUDE_MAX_X_SPEED_RUNNING;
+//            } else if (global::main_dude->sprite_state == SpriteState::W_RIGHT) {
+//                global::main_dude->xSpeed = -MAIN_DUDE_MAX_X_SPEED_RUNNING;
+//            }
+
         }
 
 
         mmEffect(SFX_XSHOTGUN);
         firing = true;
         cooldown = 0;
-        activated_by_main_dude = false;
+        activated = false;
+
+        int main_x, main_y, sub_x, sub_y;
+        get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
+
+        blast_mainSpriteInfo->entry->y = main_y - SHOTGUN_FIRING_OFFSET_Y;
+        blast_subSpriteInfo->entry->y = sub_y - SHOTGUN_FIRING_OFFSET_Y;
+
+        if (sprite_state == SpriteState::W_LEFT) {
+            blast_mainSpriteInfo->entry->x = main_x - SHOTGUN_FIRING_OFFSET_X;
+            blast_subSpriteInfo->entry->x = sub_x - SHOTGUN_FIRING_OFFSET_X;
+        } else {
+            blast_mainSpriteInfo->entry->x = main_x + SHOTGUN_FIRING_OFFSET_X;
+            blast_subSpriteInfo->entry->x = sub_x + SHOTGUN_FIRING_OFFSET_X;
+        }
+
 
         spawn_bullets();
 
     } else {
-        activated_by_main_dude = false;
+        activated = false;
     }
 
     if (firing) {
@@ -96,12 +133,12 @@ void Shotgun::draw() {
         blast_subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
         blast_mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
 
-        if (global::main_dude->state == SpriteState::W_LEFT) {
+        if (sprite_state == SpriteState::W_LEFT) {
             blast_mainSpriteInfo->entry->hFlip = true;
             blast_subSpriteInfo->entry->hFlip = true;
         } else {
             blast_mainSpriteInfo->entry->hFlip = false;
-            blast_subSpriteInfo->entry->hFlip = true;
+            blast_subSpriteInfo->entry->hFlip = false;
         }
 
         blast_mainSpriteInfo->entry->vFlip = false;
@@ -152,6 +189,10 @@ void Shotgun::updateSpeed() {
 }
 
 void Shotgun::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
+
+    if (hold_by_anyone)
+        return;
+
     MapTile *tiles[9];
     Collisions::getNeighboringTiles(global::level_generator->map_tiles, x_current_pos_in_tiles, y_current_pos_in_tiles,
                                     tiles);
@@ -172,22 +213,22 @@ void Shotgun::initSprite() {
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
                                                         gfx_spike_collectibles_flamePalLen,
                                                         nullptr, sprite_width * sprite_height, sprite_width,
-                                                        spriteType, true, false, LAYER_LEVEL::MIDDLE_TOP);
+                                                        spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
                                                           gfx_spike_collectibles_flamePalLen,
                                                           nullptr, sprite_width * sprite_height, sprite_width,
-                                                          spriteType, true, false, LAYER_LEVEL::MIDDLE_TOP);
+                                                          spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
 
     blast_subSpriteInfo = global::sub_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
                                                               gfx_spike_collectibles_flamePalLen,
                                                               nullptr, sprite_width * sprite_height, sprite_width,
-                                                              spriteType, true, false, LAYER_LEVEL::MIDDLE_TOP);
+                                                              spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
     blast_mainSpriteInfo = global::main_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
                                                                 gfx_spike_collectibles_flamePalLen,
                                                                 nullptr, sprite_width * sprite_height, sprite_width,
-                                                                spriteType, true, false, LAYER_LEVEL::MIDDLE_TOP);
+                                                                spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
 
-    if (spriteState == SpriteState::W_LEFT)
+    if (sprite_state == SpriteState::W_LEFT)
         frameGfx = (u8 *) gfx_spike_collectibles_flameTiles + (sprite_width * sprite_height * (12) / 2);
     else
         frameGfx = (u8 *) gfx_spike_collectibles_flameTiles + (sprite_width * sprite_height * (11) / 2);
@@ -198,6 +239,8 @@ void Shotgun::initSprite() {
 
 void Shotgun::set_position() {
 
+    //TODO BLAST MUST HAVE ITS SEPARATE CLASS FOR VIEWPORTING
+
     int main_x, main_y, sub_x, sub_y;
     get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
 
@@ -206,21 +249,6 @@ void Shotgun::set_position() {
 
     subSpriteInfo->entry->x = sub_x;
     subSpriteInfo->entry->y = sub_y;
-
-    if (firing) {
-
-        blast_mainSpriteInfo->entry->y = main_y - SHOTGUN_FIRING_OFFSET_Y;
-        blast_subSpriteInfo->entry->y = sub_y - SHOTGUN_FIRING_OFFSET_Y;
-
-        if (global::main_dude->state == SpriteState::W_LEFT) {
-            blast_mainSpriteInfo->entry->x = main_x - SHOTGUN_FIRING_OFFSET_X;
-            blast_subSpriteInfo->entry->x = sub_x - SHOTGUN_FIRING_OFFSET_X;
-        } else {
-            blast_mainSpriteInfo->entry->x = main_x + SHOTGUN_FIRING_OFFSET_X;
-            blast_subSpriteInfo->entry->x = sub_x + SHOTGUN_FIRING_OFFSET_X;
-        }
-
-    }
 
     mainSpriteInfo->entry->vFlip = false;
     mainSpriteInfo->entry->hFlip = false;
@@ -240,7 +268,9 @@ Shotgun::Shotgun() {
     physical_width = SHOTGUN_PHYSICAL_WIDTH;
     sprite_height = SHOTGUN_SPRITE_HEIGHT;
     sprite_width = SHOTGUN_SPRITE_WIDTH;
-    spriteType = SpritesheetType::SPIKES_COLLECTIBLES;
+    //FIXME Ustawiać to wszędzie
+    spritesheet_type = SpritesheetType::SPIKES_COLLECTIBLES;
+    sprite_type = SpriteType::S_SHOTGUN;
 }
 
 void Shotgun::spawn_bullets() {
@@ -250,13 +280,12 @@ void Shotgun::spawn_bullets() {
         b->x = x;
         b->y = y;
 
-        if (global::main_dude->state == SpriteState::W_LEFT) {
-            b->xSpeed = -4.0 - ((rand() % 20) / 10.0);
-            b->x -= 6;
-        }
-        else {
-            b->xSpeed = 4.0 + ((rand() % 20) / 10.0);
-            b->x += 6;
+        if (sprite_state == SpriteState::W_LEFT) {
+            b->xSpeed = -4.3 - ((rand() % 20) / 10.0);
+            b->x-=5;
+        } else {
+            b->xSpeed = 4.3 + ((rand() % 20) / 10.0);
+            b->x+=5 + physical_width;
         }
 
         b->init();

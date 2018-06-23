@@ -8,6 +8,8 @@
 #include "../memory/oam_manager.h"
 #include "../camera/camera.h"
 #include "spritesheet_type.h"
+#include "sprite_state.h"
+#include "sprite_type.h"
 
 /**
  *  https://en.wikibooks.org/wiki/C%2B%2B_Programming/Classes/Abstract_Classes
@@ -25,6 +27,8 @@ public:
         updateSpeed();
         updateTimers();
     };
+
+    void set_sprite_state_basing_on_speed();
 
     void limit_speed(int max_x, int max_y);
 
@@ -77,12 +81,16 @@ public:
     bool rightCollision{};
 
     bool hold_by_main_dude{};
-    bool activated_by_main_dude{}; //ex. shooting shotgun, or arming bomb
+    bool activated{}; //ex. shooting shotgun, or arming bomb
 
     bool killed{};
     bool ready_to_dispose{};
 
-    SpritesheetType spriteType{};
+    SpriteState sprite_state;
+
+    SpritesheetType spritesheet_type{};
+
+    SpriteType sprite_type{};
 
     void get_x_y_viewported(int *out_main_x, int *out_main_y, int *out_sub_x, int *out_sub_y);
 
@@ -111,6 +119,9 @@ public:
     void set_pickuped_position_not_checking(int pickup_offset_x, int pickup_offset_y);
 
     bool kill_main_dude_if_thrown(int dmg_to_apply);
+
+
+    void set_pickuped_position_on_another_moving_obj(int pickup_offset_x, int pickup_offset_y, MovingObject *m);
 };
 
 

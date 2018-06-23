@@ -21,6 +21,7 @@ add_executable(spelunkyds
         source/sprites/main_dude/main_dude.h
         source/sprites/items/bomb.cpp
         source/sprites/items/rock.cpp
+        source/sprites/items/arrow.cpp
         source/sprites/items/bomb.h
         source/sprites/items/rope.h
         source/sprites/non_interactive/copyrights.cpp

@@ -49,7 +49,7 @@ void Crate::draw() {
         }
     }
 
-    if (activated_by_main_dude) {
+    if (activated) {
 
         if (hold_by_main_dude) {
             hold_by_main_dude = false;
@@ -115,12 +115,12 @@ void Crate::initSprite() {
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
                                                         gfx_spike_collectibles_flamePalLen,
                                                         nullptr, sprite_width * sprite_height, sprite_width,
-                                                        spriteType, true, false, LAYER_LEVEL::MIDDLE_TOP);
+                                                        spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
                                                           gfx_spike_collectibles_flamePalLen,
                                                           nullptr, sprite_width * sprite_height, sprite_width,
-                                                          spriteType, true, false, LAYER_LEVEL::MIDDLE_TOP);
-    if (activated_by_main_dude)
+                                                          spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
+    if (activated)
         frameGfx = nullptr;
     else
         frameGfx = (u8 *) gfx_spike_collectibles_flameTiles + (sprite_width * sprite_height * (4) / 2);
@@ -154,7 +154,7 @@ Crate::Crate() {
     physical_width = CRATE_PHYSICAL_WIDTH;
     sprite_height = CRATE_SPRITE_HEIGHT;
     sprite_width = CRATE_SPRITE_WIDTH;
-    spriteType = SpritesheetType::SPIKES_COLLECTIBLES;
+    spritesheet_type = SpritesheetType::SPIKES_COLLECTIBLES;
 }
 
 //TODO lower chances for good items

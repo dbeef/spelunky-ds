@@ -36,14 +36,14 @@ void Bomb::draw() {
 
         y = global::main_dude->y + 6;
 
-        if (global::main_dude->state == 1) {
+        if (global::main_dude->sprite_state == SpriteState::W_LEFT) {
             x = global::main_dude->x - 2;
         } else
             x = global::main_dude->x + 10;
     }
 
 
-    if (activated_by_main_dude && !armed) {
+    if (activated && !armed) {
         arm();
         armed = true;
         armedTimer = 0;

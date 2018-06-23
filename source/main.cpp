@@ -3,16 +3,19 @@
 #include <nds/arm9/sprite.h>
 #include <nds/arm9/console.h>
 #include <iostream>
+#include <cstring>
+#include <dirent.h>
+#include <filesystem.h>
 #include "../build/gfx_cavebg.h"
 #include "globals_declarations.h"
 #include "globals_definitions.h"
 #include "tiles/splash_screen_type.h"
 #include "game_loop.h"
 #include "sound/sound_utils.h"
-#include "time/time_utils.h"
 #include "console/console_utils.h"
-
+#include "time/time_utils.h"
 /*
+
 
 bool done = false;
 FILE *pFile;
@@ -80,8 +83,8 @@ mm_word stream(mm_word length, mm_addr dest, mm_stream_formats format) {
 
     return length; //Return the number of samples read
 }
-*/
 
+*/
 
 int main() {
 
@@ -90,7 +93,7 @@ int main() {
     sound::load_sounds();
     sound::start_menu_music();
 
-    time::start();
+    time_utils::start();
 
     videoSetMode(MODE_0_2D);
     videoSetModeSub(MODE_0_2D);
@@ -121,7 +124,6 @@ int main() {
     global::level_generator->generate_splash_screen(SplashScreenType::MAIN_MENU_UPPER);
     global::level_generator->generate_splash_screen(SplashScreenType::MAIN_MENU_LOWER);
     global::level_generator->render_tiles_on_base_map();
-
 
 /*
     if (nitroFSInit(NULL)) {
@@ -158,13 +160,14 @@ int main() {
 
     } else {
         printf("NITROFSINIT FAILIURE: TERMINATIONG\n");
-    }
+    }*/
 
+/*
 
     timerStart(0, ClockDivider_1024, 1000, 0);
 
     mm_stream mystream;
-    mystream.buffer_length = 4096 * 4; //16kb
+    mystream.buffer_length = 1024; //16kb
     mystream.callback = stream;
     mystream.timer = MM_TIMER1;
     mystream.manual = false;
@@ -191,15 +194,15 @@ int main() {
 //        }
 
     }
-
-
 */
+
+
     dmaCopy(gfx_cavebgPal, BG_PALETTE, gfx_cavebgPalLen);
     dmaCopy(gfx_cavebgPal, BG_PALETTE_SUB, gfx_cavebgPalLen);
 
     gameloop::scroll();
 
-    time::stop();
+    time_utils::stop();
 
     return 0;
 }

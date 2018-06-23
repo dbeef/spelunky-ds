@@ -95,10 +95,10 @@ void Glove::initSprite() {
 
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_saleablePal, gfx_saleablePalLen,
                                                         nullptr, sprite_width * sprite_height, sprite_width,
-                                                        spriteType, true, false, LAYER_LEVEL::MIDDLE_TOP);
+                                                        spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_saleablePal, gfx_saleablePalLen,
                                                           nullptr, sprite_width * sprite_height, sprite_width,
-                                                          spriteType, true, false, LAYER_LEVEL::MIDDLE_TOP);
+                                                          spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
 
     frameGfx = (u8 *) gfx_saleableTiles + (sprite_width * sprite_height * (1) / 2);
 
@@ -150,9 +150,9 @@ Glove::Glove() {
     physical_width = GLOVE_PHYSICAL_WIDTH;
     sprite_height = GLOVE_SPRITE_HEIGHT;
     sprite_width = GLOVE_SPRITE_WIDTH;
-    spriteType = SpritesheetType::SALEABLE;
+    spritesheet_type = SpritesheetType::SALEABLE;
     //todo set it everywhere
-    activated_by_main_dude = true;
+    activated = true;
 }
 
 void Glove::equip() {

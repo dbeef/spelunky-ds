@@ -55,8 +55,6 @@ public:
 
     u8 *frameGfx{};
 
-    SpritesheetType spriteType{};
-
     bool gravity{};
     
     void set_position();

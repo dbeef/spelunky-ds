@@ -53,8 +53,7 @@ public:
 
     int animFrame{};
     int animFrameTimer{};
-
-    SpritesheetType spriteType{};
+    int lifetime{};
 
     void apply_bullet_dispose_animation();
 };

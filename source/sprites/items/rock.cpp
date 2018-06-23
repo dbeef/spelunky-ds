@@ -30,7 +30,7 @@ void Rock::draw() {
 
         y = global::main_dude->y + 6;
 
-        if (global::main_dude->state == 1) {
+        if (global::main_dude->sprite_state == 1) {
             x = global::main_dude->x - 2;
         } else
             x = global::main_dude->x + 10;
@@ -59,7 +59,7 @@ void Rock::draw() {
 
 void Rock::init() {
     initSprite();
-    activated_by_main_dude = true;
+    activated = true;
 }
 
 void Rock::updateSpeed() {
@@ -113,6 +113,6 @@ Rock::Rock() {
     physical_width = ROCK_PHYSICAL_WIDTH;
     sprite_height = ROCK_SPRITE_HEIGHT;
     sprite_width = ROCK_SPRITE_WIDTH;
-    spriteType = SpritesheetType::BLOOD_ROCK_ROPE_POOF;
+    spritesheet_type = SpritesheetType::BLOOD_ROCK_ROPE_POOF;
 }
 

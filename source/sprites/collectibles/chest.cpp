@@ -3,6 +3,7 @@
 //
 
 #include <maxmod9.h>
+#include <cstdlib>
 #include "../../../build/gfx_spike_collectibles_flame.h"
 #include "chest.h"
 #include "../../collisions/collisions.h"
@@ -83,11 +84,11 @@ void Chest::initSprite() {
 
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_spike_collectibles_flamePal, gfx_spike_collectibles_flamePalLen,
                                                         nullptr, sprite_width * sprite_height, sprite_width,
-                                                        spriteType, true, false, LAYER_LEVEL::MIDDLE_TOP);
+                                                        spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_spike_collectibles_flamePal, gfx_spike_collectibles_flamePalLen,
                                                           nullptr, sprite_width * sprite_height, sprite_width,
-                                                          spriteType, true, false, LAYER_LEVEL::MIDDLE_TOP);
-    if (activated_by_main_dude)
+                                                          spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
+    if (activated)
         frameGfx = (u8 *) gfx_spike_collectibles_flameTiles + (sprite_width * sprite_height * (3) / 2);
     else
         frameGfx = (u8 *) gfx_spike_collectibles_flameTiles + (sprite_width * sprite_height * (2) / 2);
@@ -121,7 +122,7 @@ Chest::Chest() {
     physical_width = CHEST_PHYSICAL_WIDTH;
     sprite_height = CHEST_SPRITE_HEIGHT;
     sprite_width = CHEST_SPRITE_WIDTH;
-    spriteType = SpritesheetType::SPIKES_COLLECTIBLES;
+    spritesheet_type = SpritesheetType::SPIKES_COLLECTIBLES;
 }
 
 void Chest::spawn_treasure() {

@@ -78,10 +78,10 @@ void Cape::draw() {
         }
 
 
-        if (global::main_dude->state == SpriteState::W_LEFT) {
+        if (global::main_dude->sprite_type == SpriteState::W_LEFT) {
             mainSpriteInfo->entry->hFlip = false;
             subSpriteInfo->entry->hFlip = false;
-        } else if (global::main_dude->state == SpriteState::W_RIGHT) {
+        } else if (global::main_dude->sprite_type == SpriteState::W_RIGHT) {
             mainSpriteInfo->entry->hFlip = true;
             subSpriteInfo->entry->hFlip = true;
         }
@@ -146,10 +146,10 @@ void Cape::initSprite() {
 
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_goldbarsPal, gfx_goldbarsPalLen,
                                                         nullptr, sprite_width * sprite_height, sprite_width,
-                                                        spriteType, true, false, LAYER_LEVEL::MIDDLE_TOP);
+                                                        spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_goldbarsPal, gfx_goldbarsPalLen,
                                                           nullptr, sprite_width * sprite_height, sprite_width,
-                                                          spriteType, true, false, LAYER_LEVEL::MIDDLE_TOP);
+                                                          spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
 
     set_frame_gfx();
 
@@ -186,7 +186,7 @@ Cape::Cape() {
     physical_width = CAPE_PHYSICAL_WIDTH;
     sprite_height = CAPE_SPRITE_HEIGHT;
     sprite_width = CAPE_SPRITE_WIDTH;
-    spriteType = SpritesheetType::MONIEZ_GOLDBARS;
+    spritesheet_type = SpritesheetType::MONIEZ_GOLDBARS;
 }
 
 void Cape::set_frame_gfx() {

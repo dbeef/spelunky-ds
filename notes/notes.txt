@@ -5,7 +5,7 @@ Please, do this:
 * Just do not use hungarian notation please.
 * Code with regards to this:
     * http://www.open-std.org/jtc1/sc22/wg21/docs/TR18015.pdf
-    * https://lemire.me/blog/2012/06/20/do-not-waste-time-with-stl-vectors/
+    * https://lemire.me/blog/2012/06/20/do-not-waste-time_utils-with-stl-vectors/
 
 **** GENERAL NOTES:
 

@@ -88,7 +88,7 @@ void Snake::init() {
     subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
     mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
 
-    spriteType = SpritesheetType::SNAKE;
+    spritesheet_type = SpritesheetType::SNAKE;
 
     randomizeMovement();
 }
@@ -167,7 +167,7 @@ void Snake::apply_dmg(int dmg_to_apply) {
     killed = true;
     ready_to_dispose = true;
     global::hud->draw();
-    global::killed_npcs.push_back(spriteType);
+    global::killed_npcs.push_back(spritesheet_type);
 
 }
 

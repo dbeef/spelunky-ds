@@ -10,7 +10,7 @@
 //32.7284 ticks must be counted every millisecond
 //1 / 32.7284 = 0,030554503, so every ~0.03 millisecond gives 1 tick
 
-namespace time {
+namespace time_utils {
     void update_ms_since_last_frame();
     void stop();
     void start();

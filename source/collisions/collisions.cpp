@@ -27,7 +27,7 @@ bool Collisions::checkUpperCollision(MapTile *neighboringTiles[9], int *xPos, in
 
     for (int a = 0; a < 9; a++) {
 
-        if (neighboringTiles[a] == 0 || !neighboringTiles[a]->collidable)
+        if (neighboringTiles[a] == nullptr || !neighboringTiles[a]->collidable)
             continue;
 
         if (!upperCollision) {
@@ -43,8 +43,9 @@ bool Collisions::checkUpperCollision(MapTile *neighboringTiles[9], int *xPos, in
                     *ySpeed = (-1) * bouncing_factor * *ySpeed;
 //                    if (*ySpeed < BOUNCING_STOP_SPEED)
 //                        *ySpeed = 0;
-                } else
+                } else {
                     *ySpeed = 0;
+                }
 
                 *yPos = (neighboringTiles[a]->y * TILE_H) + TILE_H;
             }
@@ -125,10 +126,10 @@ bool Collisions::checkLeftCollision(MapTile *neighboringTiles[9], int *xPos, int
 //        if (!leftCollision) {
 
         if (width == 16) {
-            w2 = (*xPos < (neighboringTiles[a]->x * TILE_W) - 0.75 * width &&
-                  (*xPos > (neighboringTiles[a]->x * TILE_W) - width));
+            w2 = *xPos < (neighboringTiles[a]->x * TILE_W) - 0.75 * width &&
+                  *xPos > (neighboringTiles[a]->x * TILE_W) - width;
         } else {
-            w2 = (*xPos + width < (neighboringTiles[a]->x * TILE_W) + TILE_W * 0.75 &&
+            w2 = (*xPos < (neighboringTiles[a]->x * TILE_W) - width + (TILE_W * 0.75)&&
                   (*xPos + width > (neighboringTiles[a]->x * TILE_W)));
         }
 
@@ -168,39 +169,24 @@ bool Collisions::checkRightCollision(MapTile *neighboringTiles[9], int *xPos, in
     bool w2;
     for (int a = 0; a < 9; a++) {
 
-        if (neighboringTiles[a] == 0 || !neighboringTiles[a]->collidable)
+        if (neighboringTiles[a] == nullptr || !neighboringTiles[a]->collidable)
             continue;
 
-        if (!rightCollision) {
+        w2 = (*xPos < (neighboringTiles[a]->x * TILE_W) + width &&
+              (*xPos > (neighboringTiles[a]->x * TILE_W) + 0.75 * width));
+        w1 = (*yPos > (neighboringTiles[a]->y * TILE_H) - height &&
+          (*yPos < (neighboringTiles[a]->y * TILE_H) + TILE_H));
+        rightCollision = w1 && w2;
+        if (rightCollision) {
 
-            if (width == 16) {
-                w2 = (*xPos < (neighboringTiles[a]->x * TILE_W) + width &&
-                      (*xPos > (neighboringTiles[a]->x * TILE_W) + 0.75 * width));
-            } else {
-                w2 = (*xPos < (neighboringTiles[a]->x * TILE_W) + TILE_W &&
-                      (*xPos > (neighboringTiles[a]->x * TILE_W) + 0.75 * width));
-            }
-
-            w1 = (*yPos > (neighboringTiles[a]->y * TILE_H) - height &&
-                  (*yPos < (neighboringTiles[a]->y * TILE_H) + TILE_H));
-
-
-            rightCollision = w1 && w2;
-
-            if (rightCollision) {
-
-                if (bounce) {
-                    *xSpeed = (-1) * bouncing_factor * *xSpeed;
+            if (bounce) {
+                *xSpeed = (-1) * bouncing_factor * *xSpeed;
 //                    if (*xSpeed < BOUNCING_STOP_SPEED)
 //                        *xSpeed = 0;
-                } else
-                    *xSpeed = 0;
+            } else
+                *xSpeed = 0;
 
-                *xPos = (neighboringTiles[a]->x * TILE_W) + TILE_W;
-                return true;
-            }
-
-        } else {
+            *xPos = (neighboringTiles[a]->x * TILE_W) + TILE_W;
             return true;
         }
     }
@@ -305,11 +291,11 @@ bool Collisions::checkCollisionWithMainDudeWidthBoundary(int x, int y, int width
 }
 
 bool Collisions::checkCollisionWithMainDudeWhip(int x, int y, int width, int height) {
-    if (global::main_dude->state == SpriteState::W_LEFT) {
+    if (global::main_dude->sprite_state== SpriteState::W_LEFT) {
         return x + width >= global::main_dude->x - WHIP_WIDTH &&
                x + width < global::main_dude->x + MAIN_DUDE_PHYSICAL_WIDTH &&
                y + height > global::main_dude->y && y < global::main_dude->y + MAIN_DUDE_PHYSICAL_HEIGHT;
-    } else if (global::main_dude->state == SpriteState::W_RIGHT) {
+    } else if (global::main_dude->sprite_state== SpriteState::W_RIGHT) {
         return x + width >= global::main_dude->x &&
                x + width < global::main_dude->x + MAIN_DUDE_PHYSICAL_WIDTH + WHIP_WIDTH * 2 &&
                y + height > global::main_dude->y && y < global::main_dude->y + MAIN_DUDE_PHYSICAL_HEIGHT;

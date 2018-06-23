@@ -28,6 +28,8 @@ void GameState::start_new_game() {
     global::hud->bombs = 4;
     global::hud->dollars = 0;
     global::hud->items_offset_y = 7;
+
+    global::hud->disable_all_prompts();
 }
 
 void GameState::start_main_menu() {

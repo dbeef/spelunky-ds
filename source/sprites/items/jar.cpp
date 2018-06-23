@@ -36,7 +36,7 @@ void Jar::draw() {
 
         y = global::main_dude->y + 6;
 
-        if (global::main_dude->state == 1) {
+        if (global::main_dude->sprite_state == 1) {
             x = global::main_dude->x - 2;
         } else
             x = global::main_dude->x + 10;
@@ -61,7 +61,7 @@ void Jar::draw() {
 
     if (kill_mobs_if_thrown(1)) {
         apply_dmg(1);
-        global::killed_npcs.push_back(spriteType);
+        global::killed_npcs.push_back(spritesheet_type);
     }
 
     int main_x, main_y, sub_x, sub_y;
@@ -86,7 +86,7 @@ void Jar::draw() {
 
 void Jar::init() {
     initSprite();
-    activated_by_main_dude = true;
+    activated = true;
 }
 
 void Jar::updateSpeed() {
@@ -148,7 +148,7 @@ Jar::Jar() {
     physical_width = JAR_PHYSICAL_WIDTH;
     sprite_height = JAR_SPRITE_HEIGHT;
     sprite_width = JAR_SPRITE_WIDTH;
-    spriteType = SpritesheetType::JAR;
+    spritesheet_type = SpritesheetType::JAR;
     hitpoints = JAR_HITPOINTS;
 }
 

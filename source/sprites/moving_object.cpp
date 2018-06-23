@@ -13,6 +13,8 @@
 #include "../../build/soundbank.h"
 #include "animations/blood.h"
 
+//TODO FUNKCJA UPDATE SPRITE STATE
+
 void MovingObject::spawn_blood() {
     for (int a = 0; a < 4; a++) {
         Blood *blood = new Blood();
@@ -70,11 +72,11 @@ void MovingObject::kill_if_main_dude_jumped_on_you(int dmg_to_apply) {
 
 //for opening chests and crates
 bool MovingObject::check_if_can_be_opened() {
-    if (!activated_by_main_dude &&
+    if (!activated &&
         Collisions::checkCollisionWithMainDudeWidthBoundary(x, y, physical_width, physical_height, 8) &&
         global::input_handler->up_key_held && global::input_handler->y_key_down) {
 
-        activated_by_main_dude = true;
+        activated = true;
         global::input_handler->y_key_down = false;
 
         return true;
@@ -136,12 +138,25 @@ void MovingObject::set_pickuped_position(int pickup_offset_x, int pickup_offset_
 
         y = global::main_dude->y + pickup_offset_y;
 
-        if (global::main_dude->state == 1) {
+        if (global::main_dude->sprite_state == SpriteState::W_LEFT) {
             x = global::main_dude->x - pickup_offset_x;
         } else
             x = global::main_dude->x + pickup_offset_x;
 
     }
+
+}
+
+//this should be applied, when item is being carried by another moving object
+void
+MovingObject::set_pickuped_position_on_another_moving_obj(int pickup_offset_x, int pickup_offset_y, MovingObject *m) {
+
+    m->y = y + pickup_offset_y;
+
+    if (sprite_state == SpriteState::W_LEFT) {
+        m->x = x - pickup_offset_x;
+    } else
+        m->x = x + pickup_offset_x;
 
 }
 
@@ -151,7 +166,7 @@ void MovingObject::set_pickuped_position_not_checking(int pickup_offset_x, int p
 
     y = global::main_dude->y + pickup_offset_y;
 
-    if (global::main_dude->state == SpriteState::W_LEFT) {
+    if (global::main_dude->sprite_state == SpriteState::W_LEFT) {
         x = global::main_dude->x - pickup_offset_x;
     } else
         x = global::main_dude->x + pickup_offset_x;
@@ -167,10 +182,10 @@ bool MovingObject::kill_mobs_if_thrown(int dmg_to_apply) {
     if (abs(xSpeed) > 0 || abs(ySpeed) > 0) {
         for (int a = 0; a < global::sprites.size(); a++) {
 
-            if ((global::sprites.at(a)->spriteType == SpritesheetType::SNAKE ||
-                 global::sprites.at(a)->spriteType == SpritesheetType::BAT_JETPACK ||
-                 global::sprites.at(a)->spriteType == SpritesheetType::CAVEMAN_DAMSEL ||
-                 global::sprites.at(a)->spriteType == SpritesheetType::SPIDER)
+            if ((global::sprites.at(a)->spritesheet_type == SpritesheetType::SNAKE ||
+                 global::sprites.at(a)->spritesheet_type == SpritesheetType::BAT_JETPACK ||
+                 global::sprites.at(a)->spritesheet_type == SpritesheetType::CAVEMAN_DAMSEL ||
+                 global::sprites.at(a)->spritesheet_type == SpritesheetType::SPIDER)
                 && !global::sprites.at(a)->killed) {
                 if (Collisions::checkCollisionBodies(x, y, 16, 16, global::sprites.at(a)->x,
                                                      global::sprites.at(a)->y, physical_width, physical_height)) {
@@ -209,12 +224,13 @@ bool MovingObject::kill_mobs_items_if_thrown(int dmg_to_apply) {
 
     if (abs(xSpeed) > 0 || abs(ySpeed) > 0) {
         for (int a = 0; a < global::sprites.size(); a++) {
-            if ((global::sprites.at(a)->spriteType == SpritesheetType::SNAKE ||
-                 global::sprites.at(a)->spriteType == SpritesheetType::BAT_JETPACK ||
-                 global::sprites.at(a)->spriteType == SpritesheetType::SHOPKEEPER ||
-                 global::sprites.at(a)->spriteType == SpritesheetType::SPIDER ||
-                 global::sprites.at(a)->spriteType == SpritesheetType::CAVEMAN_DAMSEL ||
-                 global::sprites.at(a)->spriteType == SpritesheetType::JAR)
+            //FIXME Change spritesheet type to sprite_type, so jetpack wouldn't be affected
+            if ((global::sprites.at(a)->spritesheet_type == SpritesheetType::SNAKE ||
+                 global::sprites.at(a)->spritesheet_type == SpritesheetType::BAT_JETPACK ||
+                 global::sprites.at(a)->spritesheet_type == SpritesheetType::SHOPKEEPER ||
+                 global::sprites.at(a)->spritesheet_type == SpritesheetType::SPIDER ||
+                 global::sprites.at(a)->spritesheet_type == SpritesheetType::CAVEMAN_DAMSEL ||
+                 global::sprites.at(a)->spritesheet_type == SpritesheetType::JAR)
                 && !global::sprites.at(a)->ready_to_dispose) {
 
                 if (Collisions::checkCollisionBodies(x, y, physical_width, physical_height,
@@ -271,6 +287,7 @@ void MovingObject::apply_friction(float friction_delta_speed) {
 
 //get x,y position according to current camera position
 void MovingObject::get_x_y_viewported(int *out_main_x, int *out_main_y, int *out_sub_x, int *out_sub_y) {
+
     *out_main_x = x - global::camera->x;
     *out_main_y = y - global::camera->y;
     *out_sub_x = x - global::camera->x;
@@ -340,4 +357,11 @@ void MovingObject::update_position() {
         tempYspeed--;
 
     }
+}
+
+void MovingObject::set_sprite_state_basing_on_speed() {
+    if (xSpeed > 0)
+        sprite_state = SpriteState::W_RIGHT;
+    else
+        sprite_state = SpriteState::W_LEFT;
 }

@@ -59,10 +59,6 @@ public:
 
     u8 *frameGfx{};
 
-    SpriteState spriteState{};
-
-    SpritesheetType spriteType{};
-
     void set_position();
 
     void equip();

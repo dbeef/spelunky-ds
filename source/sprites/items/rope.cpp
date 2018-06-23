@@ -42,7 +42,7 @@ void Rope::draw() {
         }
     }
 
-    if (activated_by_main_dude && !thrown && !finished) {
+    if (activated && !thrown && !finished) {
         mmEffect(SFX_XTHROW);
 
         thrown = true;

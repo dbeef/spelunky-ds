@@ -3,6 +3,7 @@
 //
 
 
+#include <cstdlib>
 #include "compass.h"
 #include "../../globals_declarations.h"
 #include "../../collisions/collisions.h"
@@ -97,10 +98,10 @@ void Compass::initSprite() {
 
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_saleablePal, gfx_saleablePalLen,
                                                         nullptr, sprite_width * sprite_height, sprite_width,
-                                                        spriteType, true, false, LAYER_LEVEL::MIDDLE_TOP);
+                                                        spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_saleablePal, gfx_saleablePalLen,
                                                           nullptr, sprite_width * sprite_height, sprite_width,
-                                                          spriteType, true, false, LAYER_LEVEL::MIDDLE_TOP);
+                                                          spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
 
     frameGfx = (u8 *) gfx_saleableTiles + (sprite_width * sprite_height * (2) / 2);
 
@@ -154,7 +155,7 @@ Compass::Compass() {
     physical_width = COMPASS_PHYSICAL_WIDTH;
     sprite_height = COMPASS_SPRITE_HEIGHT;
     sprite_width = COMPASS_SPRITE_WIDTH;
-    spriteType = SpritesheetType::SALEABLE;
+    spritesheet_type = SpritesheetType::SALEABLE;
 }
 
 void Compass::apply_down_arrow() {

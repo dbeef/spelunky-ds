@@ -94,10 +94,10 @@ void SpikeShoes::initSprite() {
 
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_saleablePal, gfx_saleablePalLen,
                                                         nullptr, sprite_width * sprite_height, sprite_width,
-                                                        spriteType, true, false, LAYER_LEVEL::MIDDLE_TOP);
+                                                        spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_saleablePal, gfx_saleablePalLen,
                                                           nullptr, sprite_width * sprite_height, sprite_width,
-                                                          spriteType, true, false, LAYER_LEVEL::MIDDLE_TOP);
+                                                          spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
 
     frameGfx = (u8 *) gfx_saleableTiles + (sprite_width * sprite_height * (12) / 2);
 
@@ -145,7 +145,7 @@ SpikeShoes::SpikeShoes() {
     physical_width = SPIKE_SHOES_PHYSICAL_WIDTH;
     sprite_height = SPIKE_SHOES_SPRITE_HEIGHT;
     sprite_width = SPIKE_SHOES_SPRITE_WIDTH;
-    spriteType = SpritesheetType::SALEABLE;
+    spritesheet_type = SpritesheetType::SALEABLE;
 }
 
 void SpikeShoes::equip() {

@@ -104,7 +104,10 @@ void Hud::draw() {
             std::cout << '\n' << "   " << "    " << "    " << "    " << "   " << "+" << dollars_buffer;
         }
 
-        if (introduce_shop) {
+        if(thief){
+            printf("\n\n      COME BACK HERE, THIEF!");
+        }
+        else if (introduce_shop) {
             printf(shop_name);
         } else if (recently_bough_item) {
             printf("\n\n      YOU GOT A %s!", recently_bought_item_name);
@@ -273,6 +276,16 @@ void Hud::draw_scores() {
 
 void Hud::update() {
 
+    if(thief){
+        thief_timer += *global::timer;
+
+        if (thief_timer > 4000) {
+            thief_timer = 0;
+            thief = false;
+            draw();
+        }
+    }
+
     if (not_enough_money) {
         not_enough_money_timer += *global::timer;
 
@@ -413,6 +426,10 @@ void Hud::debug_oam() {
 }
 
 void Hud::disable_all_prompts() {
+
+    thief = false;
+    thief_timer = 0;
+
     introduce_shop = false;
     introduce_shop_timer = 0;
 

@@ -93,7 +93,7 @@ void Moniez::init() {
 
     initSprite();
 
-    activated_by_main_dude = true;
+    activated = true;
     collected = false;
 
 }

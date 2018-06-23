@@ -3,7 +3,7 @@
 //
 #include "../globals_declarations.h"
 
-namespace time {
+namespace time_utils {
 
     //note -> calling timerElapsed(0) flushes the value, so by the next timerElapsed(0) that
     //happens in the same frame, you will get 0 - make sure then, that you call it only once every frame!
