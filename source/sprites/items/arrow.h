@@ -5,7 +5,7 @@
 #ifndef SPELUNKYDS_ARROW_H
 #define SPELUNKYDS_ARROW_H
 
-#define MAX_X_SPEED_ARROW 4.5
+#define MAX_X_SPEED_ARROW 5
 #define MAX_Y_SPEED_ARROW 4
 
 #define ARROW_PHYSICAL_HEIGHT 8
@@ -49,6 +49,9 @@ public:
     u8 * frameGfx{};
 
     double angle{};
+
+    bool thrown{};
+    int armed_timer{};
 
     void update_frame(int frame_num);
 };

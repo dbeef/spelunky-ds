@@ -9,6 +9,7 @@
 
 class GameState {
 public:
+    bool robbed_killed_shopkeeper{};
     bool bombed{};
     bool splash_screen{};
     bool levels_transition_screen{};
@@ -34,6 +35,8 @@ public:
     void set_position_to(MapTileType t);
 
     void handle_transition_screen_smooch();
+
+    void reset_main_dude();
 };
 
 #endif //SPELUNKYDS_GAME_STATE_H

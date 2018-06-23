@@ -4,6 +4,7 @@
 
 #include <maxmod9.h>
 #include <cstdlib>
+#include <iostream>
 #include "../../globals_declarations.h"
 #include "../collectibles/pistol.h"
 #include "../collectibles/shotgun.h"
@@ -190,20 +191,21 @@ void MainDude::spawn_carried_items() {
         global::hud->next_item();
     }
     if (carrying_shotgun) {
+        holding_item = true;
         Shotgun *shotgun = new Shotgun();
+        shotgun->bought = true;
         shotgun->hold_by_main_dude = true;
         shotgun->init();
-        shotgun->bought = true;
         global::sprites.push_back(shotgun);
-        holding_item = true;
     }
+
     if (carrying_pistol) {
+        holding_item = true;
         Pistol *pistol = new Pistol();
         pistol->bought = true;
         pistol->hold_by_main_dude = true;
         pistol->init();
         global::sprites.push_back(pistol);
-        holding_item = true;
     }
 }
 

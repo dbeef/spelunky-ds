@@ -143,6 +143,8 @@ void MovingObject::set_pickuped_position(int pickup_offset_x, int pickup_offset_
         } else
             x = global::main_dude->x + pickup_offset_x;
 
+
+        sprite_state = global::main_dude->sprite_state;
     }
 
 }

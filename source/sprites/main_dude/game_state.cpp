@@ -12,7 +12,9 @@
 //
 // Created by xdbeef on 27.05.18.
 //
-void GameState::start_new_game() {
+
+void GameState::reset_main_dude() {
+
     global::main_dude->carrying_spring_shoes = false;
     global::main_dude->carrying_compass = false;
     global::main_dude->carrying_glove = false;
@@ -22,6 +24,16 @@ void GameState::start_new_game() {
     global::main_dude->carrying_shotgun = false;
     global::main_dude->carrying_pistol = false;
     global::main_dude->carrying_jetpack = false;
+    global::main_dude->dead = false;
+    global::main_dude->stunned = false;
+    global::main_dude->hanging_on_tile_right = false;
+    global::main_dude->hanging_on_tile_left = false;
+
+}
+
+void GameState::start_new_game() {
+
+    reset_main_dude();
 
     global::hud->hearts = 4;
     global::hud->ropes = 4;
@@ -43,7 +55,9 @@ void GameState::start_main_menu() {
 }
 
 void GameState::start_scores() {
-    global::main_dude->dead = false;
+
+    reset_main_dude();
+
     global::game_state->scores_screen = true;
     global::hud->hide();
     global::hud->draw_scores();
@@ -128,6 +142,10 @@ void GameState::handle_changing_screens() {
             global::level_generator->generate_frame();
             global::level_generator->generate_rooms();
             set_position_to(MapTileType::ENTRANCE);
+
+
+            if (global::game_state->in_main_menu)
+                global::game_state->robbed_killed_shopkeeper = false;
 
         } else {
 
@@ -231,15 +249,15 @@ void GameState::set_position_to(MapTileType t) {
 
 void GameState::handle_transition_screen_smooch() {
     if (smooching) {
-        if(144 - global::main_dude->x <= 16){
+        if (144 - global::main_dude->x <= 16) {
             smooch_timer += *global::timer;
             global::input_handler->right_key_held = false;
-            if(!spawned_smooch) {
+            if (!spawned_smooch) {
                 mmEffect(SFX_XKISS);
                 spawned_smooch = true;
                 Smooch *s = new Smooch();
-                s->x =144;
-                s->y =436;
+                s->x = 144;
+                s->y = 436;
                 s->init();
                 global::sprites.push_back(s);
             }

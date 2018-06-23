@@ -18,6 +18,7 @@ namespace sound{
 //        mmLoadEffect(SFX_MTITLE);
 
         mmLoadEffect(SFX_XJUMP);
+        mmLoadEffect(SFX_XARROWTRAP);
         mmLoadEffect(SFX_XKISS);
         mmLoadEffect(SFX_XJETPACK);
         mmLoadEffect(SFX_XWHIP);

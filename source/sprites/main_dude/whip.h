@@ -42,6 +42,8 @@ public:
     SpriteInfo *main_sprite_info {};
     SpriteInfo *sub_sprite_info {};
 
+    u8 * frameGfx{};
+
     int whip_timer{};
 
     void assign_pre_whip_sprite();

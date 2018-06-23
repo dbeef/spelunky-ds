@@ -13,27 +13,15 @@
 #define SHOPKEEPER_POS_INC_DELTA 18
 #define SHOPKEEPER_TRIGGERED_SPEED 3
 #define SHOPKEEPER_ANIM_FRAME_DELTA 65
-#define SHOPKEEPER_INVERT_SPEED_DELTA 500
+#define SHOPKEEPER_INVERT_SPEED_DELTA 100
 
-//todo tryb standby z shotgunem
-
-//todo wywalenie spritesheetu bomby 64x64 i zrobienie dwóch 8x8 i 64x64 (wtedy największe obciążenie będzie jedynie przy wybuchach)
-
-//nie strzela dopóki nie ma main dude w pobliżu
-//bardzo wysoko skacze
-//jak jest na tej samej wysokości ot nie skacze w ogóle
-//strzela tylko na +- tej samej wysokości
-
-//todo w main dude zmienić dead na killed
-
-//todo odwracanie w zależności od tego czy in_bounds + od której strony jest main_dude + podbieganie
-//todo triggerowanie w zależności od tego czy !in_bounds + czy trzyma niesprzedany przedmiot
-//todo spawnowanie shotguna i logika strzelania sobie + jeśli shotgun wypadnie z rąk to podniesienie w kontakcie
-//todo dodać do bulletów żeby dawały dmg do main_dude <- przetestować
-//todo logika biegania lewo-prawo przy triggerowaniu
-
-//todo dodać do każdego itemu to samo co przy glove <- dodane, spróbować ubrać to jakoś w klasę abstrakcyjną
-//żeby nie powtarzać kodu
+//todo Make "standby" mode for shopkeeper (not triggered, but having shotgun and triggering just on walking into a shop)
+//todo Make separate 8x8 spritesheet for bomb and 64x64 for explosion animation
+//1) Shopkeeper does not shoot if there's no main dude nearby (and triggered)
+//2) Shopkeeper can jump very high when triggered
+//3) Inverts speed very fast
+//4) If shopkeeper is on ~same y-height as main dude it does not jump
+//todo Main dude field dead duplicates field killed
 
 void Shopkeeper::draw() {
 
@@ -99,7 +87,7 @@ void Shopkeeper::draw() {
             shotgun->sprite_state = SpriteState::W_LEFT;
         }
 
-        if (!global::main_dude->dead) {
+        if (!global::main_dude->dead && triggered) {
             shotgun->activated = true;
         }
     }
@@ -155,11 +143,20 @@ void Shopkeeper::draw() {
     jumping_timer += *global::timer;
 
 
+    if(triggered){
+        if(global::main_dude->dead){
+            triggered = false;
+            standby = true;
+        }
+    }
 }
-
 
 void Shopkeeper::init() {
 
+    if (global::game_state->robbed_killed_shopkeeper) {
+        standby = true;
+        spawn_shotgun();
+    }
 
     activated = true;
     initSprite();
@@ -179,15 +176,23 @@ void Shopkeeper::randomizeMovement() {
 
     if (r == 0) {
         sprite_state = SpriteState::W_LEFT;
-
+        if(shotgun != nullptr)
+            shotgun->sprite_state = SpriteState::W_LEFT;
     } else if (r == 1) {
-        if (sprite_state == SpriteState::W_RIGHT)
-            sprite_state = SpriteState::W_RIGHT;
+
+        sprite_state = SpriteState::W_RIGHT;
+
+        if(shotgun != nullptr)
+            shotgun->sprite_state = SpriteState::W_RIGHT;
     }
 
-    go_timer = (rand() % (1 * 2000)) + 1000;
-
-    waitTimer = rand() % 1500;
+    if(standby) {
+        go_timer = (rand() % 500) + 100;
+        waitTimer = (rand() % 1500) + 2000;
+    } else if(triggered){
+        go_timer = (rand() % (1 * 2000)) + 1000;
+        waitTimer = rand() % 1500;
+    }
 }
 
 void Shopkeeper::updateSpeed() {
@@ -269,14 +274,14 @@ void Shopkeeper::apply_dmg(int dmg_to_apply) {
         return;
 
     if (hitpoints <= 0) {
+        global::hud->disable_all_prompts();
+        global::hud->draw();
+        de_shopify_all_items();
+        global::game_state->robbed_killed_shopkeeper = true;
         killed = true;
         stunned = false;
         global::killed_npcs.push_back(spritesheet_type);
     }
-
-    /*else {
-        stunned = true;
-    }*/
 
 }
 
@@ -347,7 +352,7 @@ void Shopkeeper::make_some_movement() {
     if (killed || stunned)
         return;
 
-    if (waitTimer > 0 && !triggered) {
+    if (waitTimer > 0 && (!triggered || standby)) {
         waitTimer -= *global::timer;
     } else {
 
@@ -359,9 +364,14 @@ void Shopkeeper::make_some_movement() {
                 xSpeed = SHOPKEEPER_TRIGGERED_SPEED;
             else
                 xSpeed = -SHOPKEEPER_TRIGGERED_SPEED;
+        } else if(standby){
+            if (sprite_state == SpriteState::W_RIGHT)
+                xSpeed = 1;
+            else
+                xSpeed = -1;
         }
 
-        if (go_timer <= 0 && !triggered) {
+        if (go_timer <= 0 && (!triggered && standby))  {
             randomizeMovement();
             xSpeed = 0;
         }
@@ -516,9 +526,16 @@ void Shopkeeper::set_shop_bounds() {
 //done
 void Shopkeeper::check_if_dude_in_shop_bounds() {
 
+    if(killed)
+        return;
 
     if (global::main_dude->x < shop_bounds_right_x_px && global::main_dude->x > shop_bounds_left_x_px &&
         global::main_dude->y > shop_bounds_up_y_px && global::main_dude->y < shop_bounds_down_y_px) {
+
+        if (standby)
+        {
+            trigger();
+        }
 
         if (!introduced_shop_name) {
             global::hud->disable_all_prompts();
@@ -556,18 +573,7 @@ void Shopkeeper::check_if_dude_in_shop_bounds() {
 
 
     } else if (global::hud->holding_item_shopping && !triggered) {
-        global::hud->disable_all_prompts();
-        triggered = true;
-        global::hud->thief = true;
-        global::hud->draw();
-        de_shopify_all_items();
-        shotgun = new Shotgun();
-        shotgun->hold_by_main_dude = false;
-        shotgun->init();
-        shotgun->bought = true;
-        shotgun->cooldown = 250;
-        global::sprites.push_back(shotgun);
-        holding_shotgun = true;
+        trigger();
     } else {
 
         bool shopkeeper_in_shop = x < shop_bounds_right_x_px && x > shop_bounds_left_x_px &&
@@ -586,5 +592,30 @@ void Shopkeeper::de_shopify_all_items() {
     for (int a = 0; a < 4; a++) {
         if (shop_items[a] != nullptr)
             shop_items[a]->bought = true;
+    }
+    global::game_state->robbed_killed_shopkeeper = true;
+}
+
+void Shopkeeper::spawn_shotgun() {
+    shotgun = new Shotgun();
+    shotgun->hold_by_main_dude = false;
+    shotgun->init();
+    shotgun->bought = true;
+    shotgun->cooldown = 250;
+    global::sprites.push_back(shotgun);
+    holding_shotgun = true;
+
+}
+
+void Shopkeeper::trigger() {
+
+    global::hud->disable_all_prompts();
+    standby = false;
+    triggered = true;
+    global::hud->thief = true;
+    global::hud->draw();
+    de_shopify_all_items();
+    if (!holding_shotgun) {
+        spawn_shotgun();
     }
 }

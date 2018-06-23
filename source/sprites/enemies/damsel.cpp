@@ -263,8 +263,7 @@ void Damsel::apply_dmg(int dmg_to_apply) {
     hitpoints -= dmg_to_apply;
 
     if (blood_spawn_timer > 1000) {
-        if (!killed)
-            spawn_blood();
+        spawn_blood();
         blood_spawn_timer = 0;
         ySpeed = -2.5;
     }

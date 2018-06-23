@@ -14,13 +14,8 @@
 #include "../animations/got_collectible.h"
 #include "../../tiles/map_utils.h"
 
-#define BLAST_SPRITE_SIZE_X 16
-#define BLAST_SPRITE_SIZE_Y 16
 #define SHOTGUN_POS_INC_DELTA 15
-#define SHOTGUN_FIRING_OFFSET_X 14
-#define SHOTGUN_FIRING_OFFSET_Y 6
 #define SHOTGUN_COOLDOWN 750
-#define SHOTGUN_BLAST_ANIM_DELTA 30
 
 void Shotgun::draw() {
 
@@ -41,9 +36,9 @@ void Shotgun::draw() {
             sprite_state = SpriteState::W_RIGHT;
         else if (global::main_dude->xSpeed < 0)
             sprite_state = SpriteState::W_LEFT;
-        else if(global::main_dude->hanging_on_tile_left)
+        else if (global::main_dude->hanging_on_tile_left)
             sprite_state = SpriteState::W_RIGHT;
-        else if(global::main_dude->hanging_on_tile_right)
+        else if (global::main_dude->hanging_on_tile_right)
             sprite_state = SpriteState::W_LEFT;
 
         if (shopping_transaction(this)) {
@@ -102,62 +97,27 @@ void Shotgun::draw() {
         int main_x, main_y, sub_x, sub_y;
         get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
 
-        blast_mainSpriteInfo->entry->y = main_y - SHOTGUN_FIRING_OFFSET_Y;
-        blast_subSpriteInfo->entry->y = sub_y - SHOTGUN_FIRING_OFFSET_Y;
-
-        if (sprite_state == SpriteState::W_LEFT) {
-            blast_mainSpriteInfo->entry->x = main_x - SHOTGUN_FIRING_OFFSET_X;
-            blast_subSpriteInfo->entry->x = sub_x - SHOTGUN_FIRING_OFFSET_X;
-        } else {
-            blast_mainSpriteInfo->entry->x = main_x + SHOTGUN_FIRING_OFFSET_X;
-            blast_subSpriteInfo->entry->x = sub_x + SHOTGUN_FIRING_OFFSET_X;
-        }
-
-
         spawn_bullets();
 
     } else {
         activated = false;
     }
 
-    if (firing) {
 
-        animFrameTimer += *global::timer;
+    if (blast->animFrame >= 9) {
+        firing = false;
+        blast->animFrame = 0;
+    }
 
-        if (animFrameTimer > SHOTGUN_BLAST_ANIM_DELTA) {
-            animFrameTimer = 0;
-            animFrame++;
-        }
+    blast->firing = firing;
 
-        frameGfx = (u8 *) gfx_spike_collectibles_flameTiles + (sprite_width * sprite_height * (13 + animFrame) / 2);
-        blast_subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
-        blast_mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
-
-        if (sprite_state == SpriteState::W_LEFT) {
-            blast_mainSpriteInfo->entry->hFlip = true;
-            blast_subSpriteInfo->entry->hFlip = true;
-        } else {
-            blast_mainSpriteInfo->entry->hFlip = false;
-            blast_subSpriteInfo->entry->hFlip = false;
-        }
-
-        blast_mainSpriteInfo->entry->vFlip = false;
-        blast_subSpriteInfo->entry->vFlip = false;
-
-        if (animFrame >= 9) {
-            firing = false;
-            animFrame = 0;
-        }
-
-        blast_mainSpriteInfo->entry->isHidden = false;
-        blast_subSpriteInfo->entry->isHidden = false;
-    } else {
-
+    if (!firing)
         cooldown += *global::timer;
 
-        blast_mainSpriteInfo->entry->isHidden = true;
-        blast_subSpriteInfo->entry->isHidden = true;
-
+    if (!firing) {
+        blast->x = x;
+        blast->y = y;
+        blast->sprite_state = sprite_state;
     }
 
     kill_mobs_if_thrown(1);
@@ -168,7 +128,9 @@ void Shotgun::draw() {
 void Shotgun::init() {
     initSprite();
     init_anim_icon();
-
+    blast = new Blast();
+    blast->init();
+    global::sprites.push_back(blast);
 }
 
 void Shotgun::updateSpeed() {
@@ -219,14 +181,6 @@ void Shotgun::initSprite() {
                                                           nullptr, sprite_width * sprite_height, sprite_width,
                                                           spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
 
-    blast_subSpriteInfo = global::sub_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
-                                                              gfx_spike_collectibles_flamePalLen,
-                                                              nullptr, sprite_width * sprite_height, sprite_width,
-                                                              spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
-    blast_mainSpriteInfo = global::main_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
-                                                                gfx_spike_collectibles_flamePalLen,
-                                                                nullptr, sprite_width * sprite_height, sprite_width,
-                                                                spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
 
     if (sprite_state == SpriteState::W_LEFT)
         frameGfx = (u8 *) gfx_spike_collectibles_flameTiles + (sprite_width * sprite_height * (12) / 2);
@@ -282,10 +236,10 @@ void Shotgun::spawn_bullets() {
 
         if (sprite_state == SpriteState::W_LEFT) {
             b->xSpeed = -4.3 - ((rand() % 20) / 10.0);
-            b->x-=5;
+            b->x -= 5;
         } else {
             b->xSpeed = 4.3 + ((rand() % 20) / 10.0);
-            b->x+=5 + physical_width;
+            b->x += 5 + physical_width;
         }
 
         b->init();

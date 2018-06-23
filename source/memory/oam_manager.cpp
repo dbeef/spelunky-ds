@@ -5,6 +5,7 @@
 #include <nds.h>
 #include <nds/arm9/cache.h>
 #include <assert.h>
+#include <iostream>
 #include "oam_manager.h"
 #include "../globals_declarations.h"
 #include "../camera/layer_level.h"
@@ -197,6 +198,7 @@ OAMManager::initSprite(const unsigned short pallette[], int palLen, const unsign
 
 
     if (!spriteEntry->palette) {
+
 
         spriteEntry->palette = spriteInfo->oamId_palette;
         spriteInfo->oamId_palette = current_oam_id_palette;

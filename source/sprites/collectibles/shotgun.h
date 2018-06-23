@@ -8,6 +8,7 @@
 
 #include "../moving_object.h"
 #include "../shopping_object.h"
+#include "../animations/blast.h"
 
 #define SHOTGUN_PHYSICAL_HEIGHT 7
 #define SHOTGUN_PHYSICAL_WIDTH 13
@@ -51,14 +52,10 @@ public:
     SpriteInfo *mainSpriteInfo {};
     SpriteInfo *subSpriteInfo {};
 
-    SpriteInfo *blast_mainSpriteInfo {};
-    SpriteInfo *blast_subSpriteInfo {};
+    Blast *blast{};
 
     int cooldown{};
     bool firing{};
-    int animFrame{};
-    int animFrameTimer{};
-
     u8 * frameGfx{};
 
     void set_position();

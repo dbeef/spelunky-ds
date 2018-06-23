@@ -30,6 +30,7 @@ namespace oam_utils {
                 if (!global::sprites.at(a)->ready_to_dispose /*&& !global::sprites.at(a)->killed*/)
                     global::sprites.at(a)->initSprite();
                 else {
+                    //
                 }
             }
 

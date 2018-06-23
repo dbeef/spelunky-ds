@@ -14,6 +14,8 @@ enum room_type {
     R_ENTRANCE,
     R_SHOP_LEFT,
     R_SHOP_RIGHT,
+    R_SHOP_LEFT_MUGSHOT,
+    R_SHOP_RIGHT_MUGSHOT,
 };
 
 #endif //SPELUNKYDS_ROOMTYPE_H

@@ -3,7 +3,7 @@
 //
 
 #include "whip.h"
-#include "../../../build/gfx_whip.h"
+#include "../../../build/gfx_spike_collectibles_flame.h"
 #include "../../globals_declarations.h"
 
 void Whip::draw() {
@@ -44,7 +44,7 @@ void Whip::update_position() {
     if (whip_timer > 100 && whip_timer < 180) {
         assign_pre_whip_sprite();
 
-        if (global::main_dude->sprite_state== SpriteState::W_LEFT) {
+        if (global::main_dude->sprite_state == SpriteState::W_LEFT) {
             main_sprite_info->entry->x = main_x + 8;
             sub_sprite_info->entry->x = sub_x + 8;
             main_sprite_info->entry->hFlip = true;
@@ -59,7 +59,7 @@ void Whip::update_position() {
     } else if (whip_timer >= 220) {
         assign_whip_sprite();
 
-        if (global::main_dude->sprite_state== SpriteState::W_LEFT) {
+        if (global::main_dude->sprite_state == SpriteState::W_LEFT) {
             main_sprite_info->entry->x = main_x - 16;
             sub_sprite_info->entry->x = sub_x - 16;
             main_sprite_info->entry->hFlip = false;
@@ -75,34 +75,36 @@ void Whip::update_position() {
         hide();
     }
 
-    main_sprite_info->entry->y = main_y -1;
+    main_sprite_info->entry->y = main_y - 1;
     sub_sprite_info->entry->y = sub_y - 1;
 
 }
 
 void Whip::initSprite() {
-    main_sprite_info = global::main_oam_manager->initSprite(gfx_whipPal, gfx_whipPalLen,
-                                                            nullptr, 16 * 16, 16, WHIP, true, false,LAYER_LEVEL::MIDDLE_TOP);
 
-    sub_sprite_info = global::sub_oam_manager->initSprite(gfx_whipPal, gfx_whipPalLen,
-                                                          nullptr, 16 * 16, 16, WHIP, true, false,LAYER_LEVEL::MIDDLE_TOP);
+    //FIXME TYPE SHOULD BE SPIKE_COLLECTIBLES BUT MAKES PALETTE BUGS
+    main_sprite_info = global::main_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
+                                                            gfx_spike_collectibles_flamePalLen,
+                                                            nullptr, 16 * 16, 16, WHIP,
+                                                            true, false, LAYER_LEVEL::MIDDLE_TOP);
+
+    sub_sprite_info = global::sub_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
+                                                          gfx_spike_collectibles_flamePalLen, nullptr,
+                                                          16 * 16, 16, WHIP, true, false,
+                                                          LAYER_LEVEL::MIDDLE_TOP);
     hide();
 }
 
 void Whip::assign_pre_whip_sprite() {
-    u8 *frame_gfx = (u8 *) gfx_whipTiles;
-    u8 *frame_gfx_pre_whip = (frame_gfx + (1 * sprite_height * sprite_width / 2));
-
-    main_sprite_info->updateFrame(frame_gfx_pre_whip, sprite_height * sprite_width);
-    sub_sprite_info->updateFrame(frame_gfx_pre_whip, sprite_height * sprite_width);
-
+    frameGfx = (u8 *) gfx_spike_collectibles_flameTiles + (41 * sprite_height * sprite_width / 2);
+    main_sprite_info->updateFrame(frameGfx, sprite_height * sprite_width);
+    sub_sprite_info->updateFrame(frameGfx, sprite_height * sprite_width);
 }
 
 void Whip::assign_whip_sprite() {
-    u8 *frame_gfx = (u8 *) gfx_whipTiles;
-    u8 *frame_gfx_whip = (frame_gfx + (0 * sprite_width * sprite_height / 2));
-    main_sprite_info->updateFrame(frame_gfx_whip, sprite_width * sprite_height);
-    sub_sprite_info->updateFrame(frame_gfx_whip, sprite_width * sprite_height);
+    frameGfx = (u8 *) gfx_spike_collectibles_flameTiles + (40 * sprite_width * sprite_height / 2);
+    main_sprite_info->updateFrame(frameGfx, sprite_width * sprite_height);
+    sub_sprite_info->updateFrame(frameGfx, sprite_width * sprite_height);
 }
 
 void Whip::hide() {
@@ -115,4 +117,5 @@ Whip::Whip() {
     sprite_height = 16;
     physical_width = 16;
     physical_height = 16;
+    spritesheet_type = SPIKES_COLLECTIBLES;
 }

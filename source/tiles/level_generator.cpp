@@ -101,14 +101,14 @@ void LevelGenerator::newLayout(int seed) {
                     layout_room_types[curr_x][curr_y] = room_type::R_LEFT_RIGHT;
                 }
 
-                if(rand() % 3 == 2)
+                if (rand() % 3 == 2)
                     direction = Direction::DOWN;
 
             }
 
         } else if (direction == Direction::RIGHT) {
 
-            if (curr_x == ROOMS_X - 1 ) {
+            if (curr_x == ROOMS_X - 1) {
                 direction = Direction::DOWN;
             } else {
                 curr_x++;
@@ -120,7 +120,7 @@ void LevelGenerator::newLayout(int seed) {
                     layout_room_types[curr_x][curr_y] = room_type::R_LEFT_RIGHT;
                 }
 
-                if(rand() % 3 == 2)
+                if (rand() % 3 == 2)
                     direction = Direction::DOWN;
 
             }
@@ -135,10 +135,10 @@ void LevelGenerator::newLayout(int seed) {
 
             } else {
 
-                if (!exit_placed ) {
+                if (!exit_placed) {
                     layout_room_types[curr_x][curr_y] = room_type::R_EXIT;
                 }
-                    break;
+                break;
             }
         }
     }
@@ -154,12 +154,18 @@ void LevelGenerator::newLayout(int seed) {
 
                 if (a == 0) {
                     if (layout_room_types[a + 1][b] != room_type::R_CLOSED) {
-                        layout_room_types[a][b] = room_type::R_SHOP_RIGHT;
+                        if (global::game_state->robbed_killed_shopkeeper)
+                            layout_room_types[a][b] = room_type::R_SHOP_RIGHT_MUGSHOT;
+                        else
+                            layout_room_types[a][b] = room_type::R_SHOP_RIGHT;
                         ex = true;
                     }
                 } else if (a == 2) {
                     if (layout_room_types[a - 1][b] != room_type::R_CLOSED) {
-                        layout_room_types[a][b] = room_type::R_SHOP_LEFT;
+                        if (global::game_state->robbed_killed_shopkeeper)
+                            layout_room_types[a][b] = room_type::R_SHOP_LEFT_MUGSHOT;
+                        else
+                            layout_room_types[a][b] = room_type::R_SHOP_LEFT;
                         ex = true;
                     }
                 } else if (a == 1) {
@@ -356,6 +362,12 @@ void LevelGenerator::generate_rooms() {
                     break;
                 case room_type::R_SHOP_RIGHT:
                     memcpy(tab, shops[1], sizeof(shops[1]));
+                    break;
+                case room_type::R_SHOP_LEFT_MUGSHOT:
+                    memcpy(tab, shops_mugshots[0], sizeof(shops_mugshots[0]));
+                    break;
+                case room_type::R_SHOP_RIGHT_MUGSHOT:
+                    memcpy(tab, shops_mugshots[1], sizeof(shops_mugshots[1]));
                     break;
                 default:
                     break;

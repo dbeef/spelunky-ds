@@ -289,11 +289,11 @@ void gameloop::populate_cave_npcs() {
                         npc = exit_room_npcs[room_id][tab_y][tab_x];
                     else if (room_type == room_type::R_CLOSED)
                         npc = closed_rooms_npcs[room_id][tab_y][tab_x];
-                    else if (room_type == room_type::R_SHOP_LEFT) {
+                    else if (room_type == room_type::R_SHOP_LEFT || room_type == room_type::R_SHOP_LEFT_MUGSHOT) {
                         npc = shops_npcs[0][tab_y][tab_x];
                         if (shop_starting_item == -1)
                             shop_starting_item = rand() % 9;
-                    } else if (room_type == room_type::R_SHOP_RIGHT) {
+                    } else if (room_type == room_type::R_SHOP_RIGHT || room_type == room_type::R_SHOP_RIGHT_MUGSHOT) {
                         npc = shops_npcs[1][tab_y][tab_x];
                         if (shop_starting_item == -1)
                             shop_starting_item = rand() % 9;
@@ -395,7 +395,7 @@ void gameloop::populate_cave_npcs() {
                         shopkeeper->set_shop_bounds();
                     }
 
-                    if (npc == 9) {
+                    if (npc == 12) {
                         if (shop_starting_item >= 9)
                             shop_starting_item = 0;
 

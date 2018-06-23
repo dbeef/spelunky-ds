@@ -4,6 +4,7 @@
 
 #include <cmath>
 #include <iostream>
+#include <maxmod9.h>
 #include "../../globals_declarations.h"
 #include "../main_dude/main_dude.h"
 #include "../../../build/gfx_arrow.h"
@@ -11,6 +12,7 @@
 #include "../../collisions/collisions.h"
 #include "../../tiles/map_utils.h"
 #include "arrow.h"
+#include "../../../build/soundbank.h"
 
 #define ARROW_POS_INC_DELTA 15
 
@@ -33,6 +35,8 @@ void Arrow::draw() {
 
     if (hold_by_main_dude) {
 
+        thrown = false;
+
         y = global::main_dude->y + 6;
 
         if (global::main_dude->sprite_state == SpriteState::W_LEFT) {
@@ -48,6 +52,12 @@ void Arrow::draw() {
 
         double frame = floor(angle / 22.5f);
         update_frame(frame);
+    } else if (thrown) {
+        armed_timer += *global::timer;
+        if (armed_timer > 100) {
+            thrown = true;
+            armed_timer = 0;
+        }
     }
 
     int main_x, main_y, sub_x, sub_y;
@@ -65,17 +75,53 @@ void Arrow::draw() {
     mainSpriteInfo->entry->vFlip = false;
     subSpriteInfo->entry->vFlip = false;
 
-    if(kill_mobs_if_thrown(1)){
-//        ready_to_dispose = true;
+    if (kill_mobs_if_thrown(3)) {
+        ready_to_dispose = true;
+    } else if (thrown && (abs(xSpeed) > 1.5f || abs(ySpeed) > 1.5) && kill_main_dude_if_thrown(3)) {
+        ready_to_dispose = true;
+        spawn_blood();
+
+        global::main_dude->can_climb_rope = false;
+        global::main_dude->started_climbing_rope= false;
+        global::main_dude->can_climb_ladder = false;
+        global::main_dude->started_climbing_ladder= false;
+        global::main_dude->climbing = false;
+        global::main_dude->hanging_on_tile_left = false;
+        global::main_dude->hanging_on_tile_right = false;
+        global::main_dude->using_whip = false;
+
+        global::main_dude->stunned_timer = 0;
+        global::main_dude->stunned = true;
+
+        if (sprite_state == SpriteState::W_LEFT)
+            global::main_dude->xSpeed = -3;
+        else if (sprite_state == SpriteState::W_RIGHT)
+            global::main_dude->xSpeed = 3;
+
+        global::main_dude->time_since_last_damage = 0;
+        global::hud->hearts -= 2;
+        global::hud->draw();
+
+
+        if (global::hud->hearts <= 0) {
+            global::hud->hide();
+            global::main_dude->ySpeed = -MAIN_DUDE_JUMP_SPEED * 0.25;
+            global::main_dude->dead = true;
+            mmEffect(SFX_XDIE);
+        } else
+            mmEffect(SFX_XHIT);
+
     }
 
 }
 
 
 void Arrow::init() {
+    thrown = true;
     activated = true;
     angle = 90;
     initSprite();
+
 }
 
 void Arrow::updateSpeed() {
@@ -134,7 +180,7 @@ void Arrow::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in
                                                      BOUNCING_FACTOR_Y * 2);
 
     bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, physical_width, physical_height, true,
-                                                       BOUNCING_FACTOR_Y*1.5);
+                                                       BOUNCING_FACTOR_Y * 1.2);
     leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true,
                                                    BOUNCING_FACTOR_X);
     rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true,
@@ -178,11 +224,10 @@ void Arrow::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in
     }
 
 
-    if (bottomCollision && abs(ySpeed < 0.2f)) {
+    if (bottomCollision && abs(ySpeed < 0.22f)) {
         if (angle > 0 && angle <= 180) {
             angle = 90;
-        }
-        else {
+        } else {
             angle = 270;
         }
 
@@ -217,6 +262,7 @@ Arrow::Arrow() {
     sprite_height = ARROW_SPRITE_HEIGHT;
     sprite_width = ARROW_SPRITE_WIDTH;
     spritesheet_type = SpritesheetType::ARROW;
+    sprite_type = SpriteType::S_ARROW;
 }
 
 void Arrow::update_frame(int frame_num) {

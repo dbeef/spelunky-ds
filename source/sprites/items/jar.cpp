@@ -129,6 +129,8 @@ void Jar::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_t
 }
 
 void Jar::initSprite() {
+
+    //spikes_collectibles instead of jar? FIXME
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_spike_collectibles_flamePal, gfx_spike_collectibles_flamePalLen,
                                                         nullptr, sprite_width * sprite_height, 16, JAR, true, false,
                                                         LAYER_LEVEL::MIDDLE_TOP);

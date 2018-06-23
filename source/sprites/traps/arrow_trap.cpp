@@ -30,18 +30,20 @@ void ArrowTrap::draw() {
 
             if (sprite_state == SpriteState::W_LEFT) {
 
-                if (global::sprites.at(a)->x <= x && global::sprites.at(a)->x > x - (6 * ARROW_TRAP_PHYSICAL_WIDTH)) {
+                if (global::sprites.at(a)->x <= x && global::sprites.at(a)->x > x - (7 * ARROW_TRAP_PHYSICAL_WIDTH)) {
                     activated = true;
                     spawn_arrow();
+                    mmEffect(SFX_XARROWTRAP);
                     break;
                 }
 
             } else if (sprite_state == SpriteState::W_RIGHT) {
 
                 if (global::sprites.at(a)->x >= x + ARROW_TRAP_PHYSICAL_WIDTH &&
-                    global::sprites.at(a)->x < x + ARROW_TRAP_PHYSICAL_WIDTH + (6 * ARROW_TRAP_PHYSICAL_WIDTH)) {
+                    global::sprites.at(a)->x < x + ARROW_TRAP_PHYSICAL_WIDTH + (7 * ARROW_TRAP_PHYSICAL_WIDTH)) {
                     activated = true;
                     spawn_arrow();
+                    mmEffect(SFX_XARROWTRAP);
                     break;
                 }
 
@@ -74,14 +76,14 @@ void ArrowTrap::spawn_arrow() {
     arrow->sprite_state = sprite_state;
 
     if (sprite_state == SpriteState::W_LEFT) {
-        arrow->x = x - 6;
-        arrow->xSpeed = -4.5f;
+        arrow->x = x - 7;
+        arrow->xSpeed = -4;
     } else if (sprite_state == SpriteState::W_RIGHT) {
-        arrow->x = x + ARROW_TRAP_PHYSICAL_WIDTH + 6;
-        arrow->xSpeed = 4.5f;
+        arrow->x = x + ARROW_TRAP_PHYSICAL_WIDTH + 7;
+        arrow->xSpeed = 4;
     }
 
     arrow->init();
-    arrow->y = y + 3;
+    arrow->y = y - 3;
 
 }

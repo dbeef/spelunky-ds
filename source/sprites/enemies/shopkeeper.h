@@ -73,6 +73,7 @@ public:
 
     bool landlocked{};
     bool triggered{};
+    bool standby{};
     bool stunned{};
     int stunned_timer{};
 
@@ -111,6 +112,10 @@ public:
     void check_if_dude_in_shop_bounds();
 
     void de_shopify_all_items();
+
+    void spawn_shotgun();
+
+    void trigger();
 };
 
 
