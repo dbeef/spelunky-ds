@@ -28,9 +28,12 @@ void ArrowTrap::draw() {
 
         if (global::sprites.at(a)->y >= y && global::sprites.at(a)->y < y + ARROW_TRAP_PHYSICAL_HEIGHT) {
 
+
             if (sprite_state == SpriteState::W_LEFT) {
 
                 if (global::sprites.at(a)->x <= x && global::sprites.at(a)->x > x - (7 * ARROW_TRAP_PHYSICAL_WIDTH)) {
+
+
                     activated = true;
                     spawn_arrow();
                     mmEffect(SFX_XARROWTRAP);
@@ -41,6 +44,10 @@ void ArrowTrap::draw() {
 
                 if (global::sprites.at(a)->x >= x + ARROW_TRAP_PHYSICAL_WIDTH &&
                     global::sprites.at(a)->x < x + ARROW_TRAP_PHYSICAL_WIDTH + (7 * ARROW_TRAP_PHYSICAL_WIDTH)) {
+
+                    //todo checking like in the caveman
+
+
                     activated = true;
                     spawn_arrow();
                     mmEffect(SFX_XARROWTRAP);
@@ -84,6 +91,6 @@ void ArrowTrap::spawn_arrow() {
     }
 
     arrow->init();
-    arrow->y = y - 3;
+    arrow->y = y - 2;
 
 }

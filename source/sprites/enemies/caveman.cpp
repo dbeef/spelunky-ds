@@ -95,7 +95,11 @@ void Caveman::draw() {
 
     }
 
-    check_if_can_be_triggered();
+    if (!triggered && !killed && !stunned) {
+        check_if_can_be_triggered();
+        if(triggered)
+            mmEffect(SFX_XALERT);
+    }
 
     make_some_movement();
 
@@ -246,7 +250,8 @@ void Caveman::initSprite() {
                                                         false,
                                                         LAYER_LEVEL::MIDDLE_BOT);
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_caveman_damselPal, gfx_caveman_damselPalLen,
-                                                          nullptr, sprite_width * sprite_height, 16, CAVEMAN_DAMSEL, true,
+                                                          nullptr, sprite_width * sprite_height, 16, CAVEMAN_DAMSEL,
+                                                          true,
                                                           false, LAYER_LEVEL::MIDDLE_BOT);
     subSpriteInfo->entry->isHidden = false;
     mainSpriteInfo->entry->isHidden = false;
@@ -377,6 +382,7 @@ void Caveman::check_if_can_be_triggered() {
 
             if (abs(xx - dude_xx) - a == 0)
                 break;
+
         }
     }
 

@@ -118,7 +118,7 @@ void gameloop::populate_cave_moniez() {
                 for (int tab_x = 0; tab_x < ROOM_TILE_WIDTH_GAME; tab_x++) {
 
                     last_placement++;
-                    if (last_placement < 4)
+                    if (last_placement < 3)
                         continue;
 
                     int npc;
@@ -210,7 +210,7 @@ void gameloop::populate_cave_moniez() {
                     }
 
 
-                    if (loot_type == 4 && rocks_left > 0 && r == 1) {
+                    if (loot_type == 4 && chests_left > 0 && r == 1) {
                         Chest *chest = new Chest();
                         chest->init();
                         global::sprites.push_back(chest);
@@ -221,7 +221,7 @@ void gameloop::populate_cave_moniez() {
                     }
 
 
-                    if (loot_type == 5 && rocks_left > 0 && r == 1) {
+                    if (loot_type == 5 && crates_left > 0 && r == 1) {
                         Crate *crate = new Crate();
                         crate->init();
                         global::sprites.push_back(crate);
@@ -275,7 +275,7 @@ void gameloop::populate_cave_npcs() {
 
 
                     last_placement++;
-                    if (last_placement < 4)
+                    if (last_placement < 3)
                         continue;
 
                     int npc;

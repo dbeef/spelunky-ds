@@ -3,10 +3,11 @@
 //
 
 #include <maxmod9.h>
+#include <cstdlib>
 #include "snake.h"
 #include "../../globals_declarations.h"
 #include "../items/rock.h"
-#include "../../../build/gfx_snake.h"
+#include "../../../build/gfx_bat_snake_jetpack.h"
 #include "../animations/blood.h"
 #include "../../collisions/collisions.h"
 #include "../../tiles/map_utils.h"
@@ -84,7 +85,7 @@ void Snake::init() {
 
     initSprite();
 
-    frameGfx = (u8 *) gfx_snakeTiles;
+    frameGfx = (u8 *) gfx_bat_snake_jetpackTiles + ((sprite_width * sprite_height * (9)) / 2);
     subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
     mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
 
@@ -172,10 +173,10 @@ void Snake::apply_dmg(int dmg_to_apply) {
 }
 
 void Snake::initSprite() {
-    subSpriteInfo = global::sub_oam_manager->initSprite(gfx_snakePal, gfx_snakePalLen,
+    subSpriteInfo = global::sub_oam_manager->initSprite(gfx_bat_snake_jetpackPal, gfx_bat_snake_jetpackPalLen,
                                                         nullptr, sprite_width * sprite_height, 16, SNAKE, true, false,
                                                         LAYER_LEVEL::MIDDLE_TOP);
-    mainSpriteInfo = global::main_oam_manager->initSprite(gfx_snakePal, gfx_snakePalLen,
+    mainSpriteInfo = global::main_oam_manager->initSprite(gfx_bat_snake_jetpackPal, gfx_bat_snake_jetpackPalLen,
                                                           nullptr, sprite_width * sprite_height, 16, SNAKE, true, false,
                                                           LAYER_LEVEL::MIDDLE_TOP);
     subSpriteInfo->entry->isHidden = false;
@@ -206,7 +207,7 @@ void Snake::set_position() {
 }
 
 void Snake::set_sprite_left() {
-    frameGfx = (u8 *) gfx_snakeTiles + ((sprite_width * sprite_height * (animFrame + 4)) / 2);
+    frameGfx = (u8 *) gfx_bat_snake_jetpackTiles + ((sprite_width * sprite_height * (animFrame + 13)) / 2);
     subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
     mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
     mainSpriteInfo->entry->hFlip = true;
@@ -217,7 +218,7 @@ void Snake::set_sprite_left() {
 }
 
 void Snake::set_sprite_right() {
-    frameGfx = (u8 *) gfx_snakeTiles + ((sprite_width * sprite_height * animFrame) / 2);
+    frameGfx = (u8 *) gfx_bat_snake_jetpackTiles + ((sprite_width * sprite_height * (animFrame + 9)) / 2);
     subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
     mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
     mainSpriteInfo->entry->hFlip = true;

@@ -31,15 +31,17 @@ void Shotgun::draw() {
     check_if_can_be_pickuped();
 
     if (hold_by_main_dude) {
-
+/*
         if (global::main_dude->xSpeed > 0)
             sprite_state = SpriteState::W_RIGHT;
         else if (global::main_dude->xSpeed < 0)
-            sprite_state = SpriteState::W_LEFT;
-        else if (global::main_dude->hanging_on_tile_left)
-            sprite_state = SpriteState::W_RIGHT;
-        else if (global::main_dude->hanging_on_tile_right)
-            sprite_state = SpriteState::W_LEFT;
+            sprite_state = SpriteState::W_LEFT;*/
+//        else if (global::main_dude->hanging_on_tile_left)
+//            sprite_state = SpriteState::W_RIGHT;
+//        else if (global::main_dude->hanging_on_tile_right)
+//            sprite_state = SpriteState::W_LEFT;
+
+        sprite_state = global::main_dude->sprite_state;
 
         if (shopping_transaction(this)) {
             equip();

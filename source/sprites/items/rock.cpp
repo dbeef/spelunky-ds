@@ -71,7 +71,7 @@ void Rock::updateSpeed() {
     bool change_pos = (pos_inc_timer > ROCK_POS_INC_DELTA) && !hold_by_main_dude;
 
     if (change_pos) {
-        apply_friction(0.055);
+        apply_friction(0.08);
         update_position();
         apply_gravity(GRAVITY_DELTA_SPEED * 0.8);
         pos_inc_timer = 0;

@@ -2,7 +2,7 @@
 // Created by xdbeef on 02.06.18.
 //
 
-#include "../../../build/gfx_bat_jetpack.h"
+#include "../../../build/gfx_bat_snake_jetpack.h"
 #include "../../globals_declarations.h"
 #include "../animations/got_collectible.h"
 #include "../../collisions/collisions.h"
@@ -91,9 +91,9 @@ void Jetpack::draw() {
 
         }
 
-        frameGfx = (u8 *) gfx_bat_jetpackTiles + (sprite_width * sprite_height * (8) / 2);
+        frameGfx = (u8 *) gfx_bat_snake_jetpackTiles + (sprite_width * sprite_height * (8) / 2);
     } else {
-        frameGfx = (u8 *) gfx_bat_jetpackTiles + (sprite_width * sprite_height * (7) / 2);
+        frameGfx = (u8 *) gfx_bat_snake_jetpackTiles + (sprite_width * sprite_height * (7) / 2);
     }
 
     subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
@@ -160,17 +160,17 @@ void Jetpack::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_
 
 void Jetpack::initSprite() {
 
-    subSpriteInfo = global::sub_oam_manager->initSprite(gfx_bat_jetpackPal, gfx_bat_jetpackPalLen,
+    subSpriteInfo = global::sub_oam_manager->initSprite(gfx_bat_snake_jetpackPal, gfx_bat_snake_jetpackPalLen,
                                                         nullptr, sprite_width * sprite_height, sprite_width,
                                                         spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
-    mainSpriteInfo = global::main_oam_manager->initSprite(gfx_bat_jetpackPal, gfx_bat_jetpackPalLen,
+    mainSpriteInfo = global::main_oam_manager->initSprite(gfx_bat_snake_jetpackPal, gfx_bat_snake_jetpackPalLen,
                                                           nullptr, sprite_width * sprite_height, sprite_width,
                                                           spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
 
     if (collected) {
-        frameGfx = (u8 *) gfx_bat_jetpackTiles + (sprite_width * sprite_height * (8) / 2);
+        frameGfx = (u8 *) gfx_bat_snake_jetpackTiles + (sprite_width * sprite_height * (8) / 2);
     } else {
-        frameGfx = (u8 *) gfx_bat_jetpackTiles + (sprite_width * sprite_height * (7) / 2);
+        frameGfx = (u8 *) gfx_bat_snake_jetpackTiles + (sprite_width * sprite_height * (7) / 2);
     }
 
     subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);

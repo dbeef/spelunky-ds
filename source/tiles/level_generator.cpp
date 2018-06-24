@@ -334,7 +334,7 @@ void LevelGenerator::generate_rooms() {
         for (int a = 0; a < ROOMS_X; a++) {
 
             int room_type = layout_room_types[a][b];
-            r = rand() % 3;
+            r = rand() % 6;
             layout_room_ids[a][b] = r;
             //-1 if no NPC's
 

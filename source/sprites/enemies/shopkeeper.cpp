@@ -143,8 +143,8 @@ void Shopkeeper::draw() {
     jumping_timer += *global::timer;
 
 
-    if(triggered){
-        if(global::main_dude->dead){
+    if (triggered) {
+        if (global::main_dude->dead) {
             triggered = false;
             standby = true;
         }
@@ -176,20 +176,20 @@ void Shopkeeper::randomizeMovement() {
 
     if (r == 0) {
         sprite_state = SpriteState::W_LEFT;
-        if(shotgun != nullptr)
+        if (shotgun != nullptr)
             shotgun->sprite_state = SpriteState::W_LEFT;
     } else if (r == 1) {
 
         sprite_state = SpriteState::W_RIGHT;
 
-        if(shotgun != nullptr)
+        if (shotgun != nullptr)
             shotgun->sprite_state = SpriteState::W_RIGHT;
     }
 
-    if(standby) {
+    if (standby) {
         go_timer = (rand() % 500) + 100;
         waitTimer = (rand() % 1500) + 2000;
-    } else if(triggered){
+    } else if (triggered) {
         go_timer = (rand() % (1 * 2000)) + 1000;
         waitTimer = rand() % 1500;
     }
@@ -364,14 +364,14 @@ void Shopkeeper::make_some_movement() {
                 xSpeed = SHOPKEEPER_TRIGGERED_SPEED;
             else
                 xSpeed = -SHOPKEEPER_TRIGGERED_SPEED;
-        } else if(standby){
+        } else if (standby) {
             if (sprite_state == SpriteState::W_RIGHT)
                 xSpeed = 1;
             else
                 xSpeed = -1;
         }
 
-        if (go_timer <= 0 && (!triggered && standby))  {
+        if (go_timer <= 0 && (!triggered && standby)) {
             randomizeMovement();
             xSpeed = 0;
         }
@@ -513,11 +513,18 @@ void Shopkeeper::set_shop_bounds() {
         //left oriented shop (exit/entrance is on the left side)
         sprite_state = SpriteState::W_LEFT;
         shop_bounds_right_x_px = x + (3 * TILE_W);
-        shop_bounds_left_x_px = x - (6 * TILE_W);
+        if (standby)
+            shop_bounds_left_x_px = x - (9 * TILE_W);
+        else
+            shop_bounds_left_x_px = x - (6 * TILE_W);
+
     } else {
         sprite_state = SpriteState::W_RIGHT;
         shop_bounds_left_x_px = x - (3 * TILE_W);
-        shop_bounds_right_x_px = x + (6 * TILE_W);
+        if (standby)
+            shop_bounds_right_x_px = x + (9 * TILE_W);
+        else
+            shop_bounds_right_x_px = x + (6 * TILE_W);
     }
 
 }
@@ -526,14 +533,13 @@ void Shopkeeper::set_shop_bounds() {
 //done
 void Shopkeeper::check_if_dude_in_shop_bounds() {
 
-    if(killed)
+    if (killed)
         return;
 
     if (global::main_dude->x < shop_bounds_right_x_px && global::main_dude->x > shop_bounds_left_x_px &&
         global::main_dude->y > shop_bounds_up_y_px && global::main_dude->y < shop_bounds_down_y_px) {
 
-        if (standby)
-        {
+        if (standby) {
             trigger();
         }
 

@@ -3,6 +3,7 @@
 //
 
 #include <maxmod9.h>
+#include <cstdlib>
 #include "../items/jar.h"
 #include "../moving_object.h"
 #include "moniez.h"
