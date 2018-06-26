@@ -9,21 +9,49 @@
 <h2 align="center">To-do list as for now</h2>
 <ul>
  
-<li> 🗙	Implement shopkeeper logics and randomly spawned shops  </li>
+<li> ✔	Implement shopkeeper logics and randomly spawned shops  </li>
 <li> ✔ Implement damsel </li>
 <li> ✔ Implement caveman </li>
 <li> 🗙 Implement skeleton </li>
-<li> 🗙 Implement arrow trap </li>
+<li> ✔ Implement arrow trap </li>
 <li> ✔ Fix rope logics - if thrown, when it touches bottom of some tile above it or it reaches its maximum travel distance of 8 tiles up, then it should expand to the bottom. Now it's the opposite - it expands as it travels upwards. </li>
 <li> ✔ Implement cape and jetpack </li>
 <li> 🗙 Putting project on Travis </li>
 <li> ✔ Implement 4 layers system - top one for the console and HUD, bottom one for tilemap and the rest for other sprites </li>
 <li> 🗙 Tune-up the level generator; make it more random; add random events like snake well </li>
 <li> 🗙 Implement music using streaming from filesystem - I elaborated a bit on this on my blog: https://dbeef.wordpress.com/2018/05/24/some-words-on-developing-spelunkyds/ </li> 
+<li> 🗙 Pausing </li>
+<li> 🗙 Jars dropping loot </li>
+<li> 🗙 Ghost when spending too much time on level </li>
+<li> 🗙 Shake screen when dropping a bomb </li>
+<li> 🗙 Attempt to make levels a bit bigger (current size is 512x512, what I can probably make is 1024x512 or 512x1024, though not sure of that) </li>
  
 </ul>
  
  Obviously I omit things like implement Olmec or implement lava city - let's finish cave level first.
+
+<h2 align="center">Known bugs</h2>
+<ul>
+
+<li> 🗙 </li>
+
+<li> 🗙 Though overall randomness of the generator is improved it sometimes makes some ugly structures, to be fixed later</li>
+<li> 🗙 I messed up a bit with collision detection</li>
+<li> 🗙 Arrow trap is triggered even if there's a tile (or tiles) between some moving object and the trap</li>
+<li> 🗙 Once thrown chest can't be opened</li>
+<li> 🗙 Sometimes there's a level where there are spikes just hanging in air</li>
+<li> 🗙 Sometimes you can loose your items (shotgun, pistol) when changing levels</li>
+<li> 🗙 UI bugs - you can throw rope / drop bomb in scores screen</li>
+<li> 🗙 Damage system appears to be broken in terms of shopkeeper (you can't throw arrows, rocks, jars, etc on him)</li>
+<li> 🗙 There's a bug when carrying damsel while sprinting through spikes</li>
+<li> 🗙 There's a bug when jumping on more than one NPC (snake, bat, etc) at the same time</li>
+<li> 🗙 Displaying loot in level-transition screen</li>
+<li> 🗙 Shopkeeper is quite dumb, easy to steal</li>
+<li> 🗙 Bullets can collide with jetpack, so it can work as a bulletproof vest</li>
+<li> 🗙 Blood drops / bullets can trigger arrow trap</li>
+
+</ul>
+ 
 
 <h2 align="center"> Building </h2>
 
