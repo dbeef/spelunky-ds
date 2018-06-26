@@ -32,9 +32,7 @@
 
 <h2 align="center">Known bugs</h2>
 <ul>
-
-<li> 🗙 </li>
-
+ 
 <li> 🗙 Though overall randomness of the generator is improved it sometimes makes some ugly structures, to be fixed later</li>
 <li> 🗙 I messed up a bit with collision detection</li>
 <li> 🗙 Arrow trap is triggered even if there's a tile (or tiles) between some moving object and the trap</li>
