@@ -162,6 +162,8 @@ bool Collisions::checkLeftCollision(MapTile *neighboringTiles[9], int *xPos, int
 }
 
 //Collision from right side of the tile, with rectangle given by x,y, width and height.
+
+//Collision from right side of the tile, with rectangle given by x,y, width and height.
 bool Collisions::checkRightCollision(MapTile *neighboringTiles[9], int *xPos, int *yPos, double *xSpeed, int width,
                                      int height, bool bounce, float bouncing_factor) {
     bool rightCollision = false;
@@ -169,24 +171,39 @@ bool Collisions::checkRightCollision(MapTile *neighboringTiles[9], int *xPos, in
     bool w2;
     for (int a = 0; a < 9; a++) {
 
-        if (neighboringTiles[a] == nullptr || !neighboringTiles[a]->collidable)
+        if (neighboringTiles[a] == 0 || !neighboringTiles[a]->collidable)
             continue;
 
-        w2 = (*xPos < (neighboringTiles[a]->x * TILE_W) + width &&
-              (*xPos > (neighboringTiles[a]->x * TILE_W) + 0.75 * width));
-        w1 = (*yPos > (neighboringTiles[a]->y * TILE_H) - height &&
-          (*yPos < (neighboringTiles[a]->y * TILE_H) + TILE_H));
-        rightCollision = w1 && w2;
-        if (rightCollision) {
+        if (!rightCollision) {
 
-            if (bounce) {
-                *xSpeed = (-1) * bouncing_factor * *xSpeed;
+            if (width == 16) {
+                w2 = (*xPos < (neighboringTiles[a]->x * TILE_W) + width &&
+                      (*xPos > (neighboringTiles[a]->x * TILE_W) + 0.75 * width));
+            } else {
+                w2 = (*xPos < (neighboringTiles[a]->x * TILE_W) + TILE_W &&
+                      (*xPos > (neighboringTiles[a]->x * TILE_W) + 0.75 * width));
+            }
+
+            w1 = (*yPos > (neighboringTiles[a]->y * TILE_H) - height &&
+                  (*yPos < (neighboringTiles[a]->y * TILE_H) + TILE_H));
+
+
+            rightCollision = w1 && w2;
+
+            if (rightCollision) {
+
+                if (bounce) {
+                    *xSpeed = (-1) * bouncing_factor * *xSpeed;
 //                    if (*xSpeed < BOUNCING_STOP_SPEED)
 //                        *xSpeed = 0;
-            } else
-                *xSpeed = 0;
+                } else
+                    *xSpeed = 0;
 
-            *xPos = (neighboringTiles[a]->x * TILE_W) + TILE_W;
+                *xPos = (neighboringTiles[a]->x * TILE_W) + TILE_W;
+                return true;
+            }
+
+        } else {
             return true;
         }
     }

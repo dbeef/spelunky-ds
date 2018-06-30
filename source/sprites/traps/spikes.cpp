@@ -42,7 +42,7 @@ void Spikes::draw() {
                                                  global::sprites.at(a)->physical_width,
                                                  global::sprites.at(a)->physical_height)) {
 
-                if (!global::sprites.at(a)->bottomCollision && global::sprites.at(a)->ySpeed > 0) {
+                if (!global::sprites.at(a)->bottomCollision && global::sprites.at(a)->ySpeed > 0 && !global::sprites.at(a)->hold_by_main_dude) {
                     global::sprites.at(a)->apply_dmg(8);
                     global::sprites.at(a)->xSpeed = 0;
 
