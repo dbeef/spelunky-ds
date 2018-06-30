@@ -41,7 +41,7 @@
 <li> 🗙 Sometimes you can loose your items (shotgun, pistol) when changing levels</li>
 <li> 🗙 UI bugs - you can throw rope / drop bomb in scores screen</li>
 <li> 🗙 Damage system appears to be broken in terms of shopkeeper (you can't throw arrows, rocks, jars, etc on him)</li>
-<li> 🗙 There's a bug when carrying damsel while sprinting through spikes</li>
+<li> ✔ There's a bug when carrying damsel while sprinting through spikes</li>
 <li> 🗙 There's a bug when jumping on more than one NPC (snake, bat, etc) at the same time</li>
 <li> 🗙 Displaying loot in level-transition screen</li>
 <li> 🗙 Shopkeeper is quite dumb, easy to steal</li>
