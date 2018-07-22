@@ -5,6 +5,7 @@
 #include <nds.h>
 #include <nds/arm9/sprite.h>
 #include <maxmod9.h>
+#include <cstdlib>
 #include "main_dude.h"
 #include "../../globals_declarations.h"
 #include "../../collisions/collisions.h"
@@ -57,8 +58,7 @@ void MainDude::handle_key_input() {
                 jetpack_fuel_counter--;
                 mmEffect(SFX_XJETPACK);
                 time_since_last_jump = 0;
-            }
-            else
+            } else
                 using_jetpack = false;
 
         }
@@ -85,7 +85,7 @@ void MainDude::handle_key_input() {
 
         if (global::input_handler->left_key_held) {
 
-            sprite_state= W_LEFT;
+            sprite_state = W_LEFT;
             hanging_on_tile_left = false;
             if (!(hanging_on_tile_right || hanging_on_tile_left) && !climbing)
                 if (speed_inc_timer > X_SPEED_DELTA_TIME_MS) {
@@ -119,6 +119,14 @@ void MainDude::handle_key_input() {
             global::input_handler->down_key_held) {
 
             if (climbing) {
+
+                if (global::game_state->in_main_menu && !global::game_state->exiting_game) {
+                    if (y <= 100) {
+                        global::game_state->exiting_game = true;
+                        //                        exit(0);
+                    }
+                }
+
                 climbing_timer += *global::timer;
                 if (climbing_timer > 260) {
                     climbing_timer = 0;

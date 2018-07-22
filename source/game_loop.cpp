@@ -55,6 +55,38 @@ void gameloop::scroll() {
 
         global::input_handler->updateInput();
 
+        if (global::game_state->just_started_game) {
+            global::game_state->change_brightness_timer += *global::timer;
+
+            if (global::game_state->change_brightness_timer > 100) {
+
+                global::game_state->brightness_level--;
+
+                if (global::game_state->brightness_level == 0)
+                    global::game_state->just_started_game = false;
+                else
+                    setBrightness(3, global::game_state->brightness_level);
+
+            }
+
+        }
+
+        if (global::game_state->in_main_menu && global::game_state->exiting_game) {
+
+            global::game_state->change_brightness_timer += *global::timer;
+
+            if (global::game_state->change_brightness_timer > 100) {
+
+                global::game_state->brightness_level++;
+
+                if (global::game_state->brightness_level > 16)
+                    exit(0);
+
+                setBrightness(3, global::game_state->brightness_level);
+
+            }
+        }
+
         if (global::game_state->bombed) {
             global::level_generator->render_tiles_on_base_map();
             global::game_state->bombed = false;
@@ -305,14 +337,14 @@ void gameloop::populate_cave_npcs() {
                     u16 pos_x = (OFFSET_X + tab_x * 2 + 2 * ROOM_TILE_WIDTH_GAME * a) / 2;
                     u16 pos_y = (OFFSET_X + tab_y * 2 + 2 * ROOM_TILE_HEIGHT_GAME * ((ROOMS_Y - b) - 1)) / 2;
 
-                    if(npc == 9 || npc == 10){
+                    if (npc == 9 || npc == 10) {
                         ArrowTrap *arrowTrap = new ArrowTrap();
                         arrowTrap->init();
                         arrowTrap->x = pos_x * 16;
                         arrowTrap->y = pos_y * 16;
-                        if(npc == 9)
+                        if (npc == 9)
                             arrowTrap->sprite_state = SpriteState::W_LEFT;
-                        else if(npc == 10)
+                        else if (npc == 10)
                             arrowTrap->sprite_state = SpriteState::W_RIGHT;
                         global::sprites.push_back(arrowTrap);
                     }
@@ -400,7 +432,7 @@ void gameloop::populate_cave_npcs() {
                             shop_starting_item = 0;
 
                         ShoppingObject *m = collectibles_utils::spawn_item(pos_x * 16, pos_y * 16, shop_starting_item,
-                                                                         false);
+                                                                           false);
 
                         shop_items[shop_items_index] = m;
                         shop_items_index++;
@@ -476,9 +508,11 @@ void gameloop::populate_main_menu() {
     Rope *rope = new Rope();
     rope->init();
     rope->x = 227;
-    rope->y = 260;
+    rope->y = 272;
     rope->ySpeed = -4;
 
+    rope->instant_rope = true;
+    rope->extended_rope = true;
     rope->hold_by_main_dude = false;
     rope->activated = false;
     rope->thrown = true;

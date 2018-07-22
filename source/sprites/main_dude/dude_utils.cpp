@@ -39,11 +39,22 @@ void MainDude::throw_item() {
                                 (*global::sprites.at(a)).xSpeed = -6 - abs(xSpeed);
                             else
                                 (*global::sprites.at(a)).xSpeed = 6 + abs(xSpeed);
+
                         } else {
-                            if (sprite_state == SpriteState::W_LEFT)
-                                (*global::sprites.at(a)).xSpeed = -4 - abs(xSpeed);
-                            else
-                                (*global::sprites.at(a)).xSpeed = 4 + abs(xSpeed);
+
+                            if (global::sprites.at(a)->speed_of_throwing_x != 0) {
+                                if (sprite_state == SpriteState::W_LEFT)
+                                    (*global::sprites.at(a)).xSpeed = -global::sprites.at(a)->speed_of_throwing_x - abs(xSpeed);
+                                else
+                                    (*global::sprites.at(a)).xSpeed = global::sprites.at(a)->speed_of_throwing_x + abs(xSpeed);
+                            } else {
+                                if (sprite_state == SpriteState::W_LEFT)
+                                    (*global::sprites.at(a)).xSpeed = -4 - abs(xSpeed);
+                                else
+                                    (*global::sprites.at(a)).xSpeed = 4 + abs(xSpeed);
+                            }
+
+
                         }
 
                     } else {
@@ -57,17 +68,33 @@ void MainDude::throw_item() {
 
                     if (global::input_handler->up_key_held)
                         (*global::sprites.at(a)).ySpeed = -3 - abs(ySpeed);
-                    else
-                        (*global::sprites.at(a)).ySpeed = -1;
+                    else {
 
+                        if (global::sprites.at(a)->speed_of_throwing_y != 0) {
+                            (*global::sprites.at(a)).ySpeed = -global::sprites.at(a)->speed_of_throwing_y;
+                        } else
+                            (*global::sprites.at(a)).ySpeed = -1;
+
+
+                    }
 
                     if (global::sprites.at(a)->sprite_width >= 8) {
 
-                        int xx = floor_div(global::sprites.at(a)->x + 0.5 * global::sprites.at(a)->physical_width, TILE_W);
-                        int yy = floor_div(global::sprites.at(a)->y + 0.5 * global::sprites.at(a)->physical_height, TILE_H);
+                        int xx = floor_div(global::sprites.at(a)->x + 0.5 * global::sprites.at(a)->physical_width,
+                                           TILE_W);
+                        int yy = floor_div(global::sprites.at(a)->y + 0.5 * global::sprites.at(a)->physical_height,
+                                           TILE_H);
 
-                        global::sprites.at(a)->x = xx * TILE_W;
-                        global::sprites.at(a)->y = yy * TILE_H;
+                        MapTile *t = nullptr;
+                        if(xx >= 0 && xx <= 31 && yy > 0 && yy <=31) {
+                            t = global::level_generator->map_tiles[xx][yy];
+                            if(t != nullptr && !t->collidable) {
+                                global::sprites.at(a)->x = xx * TILE_W;
+                                global::sprites.at(a)->y = yy * TILE_H;
+                                global::sprites.at(a)->updateCollisionsMap(xx, yy);
+                            }
+                        }
+
                     }
 
                     (*global::sprites.at(a)).hold_by_main_dude = false;
@@ -130,11 +157,11 @@ void MainDude::spawn_carried_items() {
     }
 
     if (carrying_spike_shoes) {
-        SpikeShoes *spikeShoes= new SpikeShoes();
+        SpikeShoes *spikeShoes = new SpikeShoes();
         spikeShoes->x = HUD_ITEMS_ROW_X;
         spikeShoes->y = global::hud->items_offset_y;
         spikeShoes->collected = true;
-        spikeShoes->bought= true;
+        spikeShoes->bought = true;
         spikeShoes->init();
         global::sprites.push_back(spikeShoes);
         global::hud->next_item();
@@ -165,7 +192,7 @@ void MainDude::spawn_carried_items() {
         cape->x = HUD_ITEMS_ROW_X;
         cape->y = global::hud->items_offset_y;
         cape->collected = true;
-        cape->bought= true;
+        cape->bought = true;
         cape->init();
         global::sprites.push_back(cape);
         global::hud->next_item();
@@ -360,7 +387,7 @@ void MainDude::apply_falling_sprite() {
         frame = animFrame + sprite_state * FRAMES_PER_ANIMATION;
         offset = frameGfx + frame * MAIN_DUDE_SPRITE_WIDTH * MAIN_DUDE_SPRITE_HEIGHT / 2;
     } else {
-        if (sprite_state== SpriteState::W_LEFT) {
+        if (sprite_state == SpriteState::W_LEFT) {
             frame = (2 * SPRITESHEET_ROW_WIDTH) + 2;
             offset = frameGfx + frame * MAIN_DUDE_SPRITE_WIDTH * MAIN_DUDE_SPRITE_HEIGHT / 2;
         } else if (sprite_state == SpriteState::W_RIGHT) {
@@ -457,7 +484,7 @@ void MainDude::can_hang_on_tile(MapTile **neighboringTiles) {
 }
 
 void MainDude::apply_dmg(int dmg_to_apply) {
-    if(dmg_to_apply == 4){
+    if (dmg_to_apply == 4) {
 
         //fixme some enum that would indicate 'instant death, no matter for hp quantity' or a function kill_instantly
         //to differentiate
@@ -466,12 +493,12 @@ void MainDude::apply_dmg(int dmg_to_apply) {
         global::main_dude->ySpeed = -MAIN_DUDE_JUMP_SPEED * 0.25;
         global::main_dude->dead = true;
         global::main_dude->climbing = false;
-        global::main_dude->can_climb_rope= false;
-        global::main_dude->can_climb_ladder= false;
-        global::main_dude->hanging_on_tile_left= false;
-        global::main_dude->hanging_on_tile_right= false;
-        global::main_dude->pushing_left= false;
-        global::main_dude->pushing_right= false;
+        global::main_dude->can_climb_rope = false;
+        global::main_dude->can_climb_ladder = false;
+        global::main_dude->hanging_on_tile_left = false;
+        global::main_dude->hanging_on_tile_right = false;
+        global::main_dude->pushing_left = false;
+        global::main_dude->pushing_right = false;
 
         mmEffect(SFX_XDIE);
     }

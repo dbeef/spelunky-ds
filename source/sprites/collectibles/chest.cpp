@@ -11,10 +11,12 @@
 #include "../../../build/soundbank.h"
 #include "moniez.h"
 
+#define SPEED_OF_THROWING_CHEST_X 1
+#define SPEED_OF_THROWING_CHEST_Y 1
 #define CHEST_PICKUP_OFFSET_X 8
 #define CHECK_PICKUP_OFFSET_Y 2
 #define CHEST_POS_INC_DELTA 15
-#define CHEST_FRICTION 0.055
+#define CHEST_FRICTION 0.2
 
 void Chest::draw() {
 
@@ -62,7 +64,10 @@ void Chest::updateSpeed() {
 
     if (change_pos) {
         update_position();
+
+        if(bottomCollision)
         apply_friction(CHEST_FRICTION);
+
         apply_gravity(GRAVITY_DELTA_SPEED);
         pos_inc_timer = 0;
     }
@@ -74,7 +79,7 @@ void Chest::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in
                                     tiles);
 
     upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, physical_width, true, BOUNCING_FACTOR_Y);
-    bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, physical_width, physical_height, true, BOUNCING_FACTOR_Y);
+    bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, physical_width, physical_height, true, BOUNCING_FACTOR_Y*1.2f);
     leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true,BOUNCING_FACTOR_X);
     rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true, BOUNCING_FACTOR_X);
 
@@ -122,6 +127,8 @@ Chest::Chest() {
     physical_width = CHEST_PHYSICAL_WIDTH;
     sprite_height = CHEST_SPRITE_HEIGHT;
     sprite_width = CHEST_SPRITE_WIDTH;
+    speed_of_throwing_x = SPEED_OF_THROWING_CHEST_X;
+    speed_of_throwing_y = SPEED_OF_THROWING_CHEST_Y;
     spritesheet_type = SpritesheetType::SPIKES_COLLECTIBLES;
 }
 
@@ -132,7 +139,7 @@ void Chest::spawn_treasure() {
 
         moniez->spritesheet_type = MONIEZ_RUBY;
         moniez->value = 1200;
-        moniez->init();
+        moniez->init(); 
         global::sprites.push_back(moniez);
         moniez->x = x + CHEST_PHYSICAL_WIDTH * 0.5;
         moniez->y = y + CHEST_PHYSICAL_HEIGHT * 0.5;

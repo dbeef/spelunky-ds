@@ -1,5 +1,6 @@
 //
 // Created by xdbeef on 07.04.18.
+// sizeof(MovingObject) is 80 bytes
 //
 
 #ifndef SPELUNKYDS_MOVINGOBJECT_H
@@ -91,6 +92,10 @@ public:
     SpritesheetType spritesheet_type{};
 
     SpriteType sprite_type{};
+
+    //todo apply this
+    double speed_of_throwing_x{};
+    double speed_of_throwing_y{};
 
     void get_x_y_viewported(int *out_main_x, int *out_main_y, int *out_sub_x, int *out_sub_y);
 

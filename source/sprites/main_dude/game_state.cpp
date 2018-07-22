@@ -136,7 +136,7 @@ void GameState::handle_changing_screens() {
 
             mmEffectCancel(global::menu_music_handler);
             mmEffectCancel(global::cave_music_handler);
-            //global::cave_music_handler = mmEffect(SFX_MCAVE);
+            global::cave_music_handler = mmEffect(SFX_MCAVE);
 
             global::level_generator->generate_frame();
             global::level_generator->generate_rooms();
@@ -151,7 +151,7 @@ void GameState::handle_changing_screens() {
                 global::game_state->robbed_killed_shopkeeper = false;
 
                 mmEffectCancel(global::cave_music_handler);
-                //global::menu_music_handler = mmEffect(SFX_MTITLE);
+                global::menu_music_handler = mmEffect(SFX_MTITLE);
                 global::level_generator->generate_splash_screen(SplashScreenType::MAIN_MENU_UPPER);
                 global::level_generator->generate_splash_screen(SplashScreenType::MAIN_MENU_LOWER);
 //                set_position_to(MapTileType::ENTRANCE);
@@ -211,7 +211,7 @@ void GameState::handle_changing_screens() {
         }
 
         global::main_dude->exiting_level = false;
-        //mmEffectCancel(SFX_MCAVE);
+        mmEffectCancel(SFX_MCAVE);
 
     } else if (global::main_dude->animFrame >= 16 && global::game_state->splash_screen) {
 

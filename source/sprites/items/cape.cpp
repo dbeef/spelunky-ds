@@ -133,13 +133,13 @@ void Cape::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_
                                     y_current_pos_in_tiles,
                                     tiles);
 
+    upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, physical_width, true, BOUNCING_FACTOR_Y);
     bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, physical_width, physical_height, true,
                                                        BOUNCING_FACTOR_Y);
     leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true,
                                                    BOUNCING_FACTOR_X);
     rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true,
                                                      BOUNCING_FACTOR_X);
-    upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, physical_width, true, BOUNCING_FACTOR_Y);
 }
 
 void Cape::initSprite() {

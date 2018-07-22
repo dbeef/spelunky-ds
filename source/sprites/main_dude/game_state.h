@@ -9,6 +9,8 @@
 
 class GameState {
 public:
+    bool just_started_game = true;
+    bool exiting_game{};
     bool robbed_killed_shopkeeper{};
     bool bombed{};
     bool splash_screen{};
@@ -19,6 +21,8 @@ public:
     bool smooching{};
     int damsels_rescued_this_level{};
     int smooch_timer{};
+    int brightness_level = 16;
+    int change_brightness_timer{};
 
     void start_new_game();
 

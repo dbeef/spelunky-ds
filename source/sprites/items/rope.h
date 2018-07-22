@@ -52,6 +52,8 @@ public:
 
     u8 * frameGfx{};
 
+    bool instant_rope{}; //todo, for main menu rope
+    bool extended_rope{};
     bool thrown{};
     bool finished{};
     int expand_timer{};

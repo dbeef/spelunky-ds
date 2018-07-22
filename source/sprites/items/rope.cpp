@@ -12,6 +12,7 @@
 
 #define ROPE_POS_INC_DELTA 15
 #define MAX_ROPE_CHAIN_SIZE 8
+#define MAX_ROPE_CHAIN_SIZE_EXTENDED 12
 
 void Rope::draw() {
 
@@ -178,11 +179,13 @@ void Rope::initSprite() {
 
 
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_blood_rock_rope_poofPal, gfx_blood_rock_rope_poofPalLen,
-                                                        nullptr, sprite_width * sprite_height, 8, BLOOD_ROCK_ROPE_POOF, true,
+                                                        nullptr, sprite_width * sprite_height, 8, BLOOD_ROCK_ROPE_POOF,
+                                                        true,
                                                         false,
                                                         LAYER_LEVEL::MIDDLE_TOP);
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_blood_rock_rope_poofPal, gfx_blood_rock_rope_poofPalLen,
-                                                          nullptr, sprite_width * sprite_height, 8, BLOOD_ROCK_ROPE_POOF,
+                                                          nullptr, sprite_width * sprite_height, 8,
+                                                          BLOOD_ROCK_ROPE_POOF,
                                                           true, false,
                                                           LAYER_LEVEL::MIDDLE_TOP);
 
@@ -220,10 +223,13 @@ void Rope::add_rope_if_needed() {
             element->draw();
 
             ropeChain.push_back(element);
-            if (ropeChain.size() == MAX_ROPE_CHAIN_SIZE) {
+
+            if ((extended_rope && ropeChain.size() == MAX_ROPE_CHAIN_SIZE_EXTENDED) ||
+                (!extended_rope && ropeChain.size() == MAX_ROPE_CHAIN_SIZE)) {
                 throwingFinished();
                 finished = true;
             }
+
         }
     }
 }

@@ -14,8 +14,8 @@ namespace sound{
     void load_sounds(){
         mmInitDefaultMem((mm_addr) soundbank_bin);
 
-//        mmLoadEffect(SFX_MCAVE);
-//        mmLoadEffect(SFX_MTITLE);
+        mmLoadEffect(SFX_MCAVE);
+        mmLoadEffect(SFX_MTITLE);
 
         mmLoadEffect(SFX_XJUMP);
         mmLoadEffect(SFX_XALERT);
@@ -41,7 +41,7 @@ namespace sound{
     }
 
     void start_menu_music(){
-//        global::menu_music_handler = mmEffect(SFX_MTITLE);
+        global::menu_music_handler = mmEffect(SFX_MTITLE);
     }
 
 }

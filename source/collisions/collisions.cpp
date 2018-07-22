@@ -219,6 +219,7 @@ bool Collisions::isStandingOnRightEdge(MapTile *neighboringTiles[9], int x, int 
     return (!neighboringTiles[TileOrientation::RIGHT_DOWN] /*&& !neighboringTiles[8]->collidable && x >= (tileX * 16)*/);
 }
 
+
 //#include <cassert>
 //
 void Collisions::getNeighboringTiles(MapTile *mapTiles[32][32], int xx, int yy, MapTile *out_neighboringTiles[9]) {
