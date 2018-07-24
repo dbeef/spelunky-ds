@@ -26,14 +26,14 @@
 <li> 🗙 Attempt to make levels a bit bigger (current size is 512x512, what I can probably make is 1024x512 or 512x1024, though not sure of that) </li>
 
 
- <p> Development thread: </p>
- <p> https://gbatemp.net/threads/spelunkyds.507192/#post-8044792 </p>
- 
-
 </ul>
  
  Obviously I omit things like implement Olmec or implement lava city - let's finish cave level first.
 
+<p></p>
+ <p> Development thread: </p>
+ <p> https://gbatemp.net/threads/spelunkyds.507192/#post-8044792 </p>
+ 
 <h2 align="center">Known bugs</h2>
 <ul>
  
