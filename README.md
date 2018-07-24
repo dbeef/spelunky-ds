@@ -59,7 +59,8 @@
 
 <h2 align="center"> Running </h2>
 <p> For running on a PC I preffer an emulator called Desmume. type 'desmume spelunky.nds' for running. </p>
-<p> For running on an NDS I use 'R4i-3DS-RTS-WiFi' (oh boy) card, but it's probably going to work on any other card. Just make sure, you have NDS program called 'moonshell', which helps running homebrew.
+<p> For running on an NDS I use 'R4i-3DS-RTS-WiFi' (oh boy) card, but it's probably going to work on any other card. Just make sure, you have NDS program called 'DSiMenu++', which helps running homebrew. Installation instructions:
+ https://gbatemp.net/threads/ds-i-3ds-dsimenu-ds-i-menu-replacement.472200/
 
 <h2 align="center"> Tools I use </h2>
 <ul>
