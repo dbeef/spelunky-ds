@@ -4,8 +4,10 @@
 <p align="center"><img src="https://github.com/dbeef/spelunky-ds/blob/master/readme/gameplay.gif" alt="Works on real NDS!"
  width="240" height="340">
  
+ <p> Development thread: </p>
+ <p> https://gbatemp.net/threads/spelunkyds.507192/#post-8044792 </p>
+ 
 </p>
-
 <h2 align="center">To-do list as for now</h2>
 <ul>
  
