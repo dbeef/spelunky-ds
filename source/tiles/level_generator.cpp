@@ -7,7 +7,7 @@
 #include <cstring>
 #include "level_generator.h"
 #include "../globals_declarations.h"
-#include "splash_screen_type.h"
+#include "splash_screen_type.hpp"
 #include "../rooms/entrance_rooms.hpp"
 #include "../rooms/exit_rooms.hpp"
 #include "../rooms/closed_rooms.hpp"
@@ -18,7 +18,7 @@
 #include "../rooms/room_type.hpp"
 #include "map_utils.h"
 #include "../rooms/shops.hpp"
-#include "direction.h"
+#include "direction.hpp"
 
 
 void LevelGenerator::render_tiles_on_base_map() {

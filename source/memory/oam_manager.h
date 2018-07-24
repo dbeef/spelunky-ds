@@ -7,10 +7,10 @@
 
 #define MAX_SPRITE_NUMBER 128
 
-#include "../sprites/spritesheet_type.h"
-#include "oam_type.h"
+#include "../sprites/spritesheet_type.hpp"
+#include "oam_type.hpp"
 #include "../sprites/sprite_info.h"
-#include "../camera/layer_level.h"
+#include "../camera/layer_level.hpp"
 
 
 class OAMManager {

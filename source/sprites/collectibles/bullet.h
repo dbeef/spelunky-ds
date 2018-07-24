@@ -6,7 +6,7 @@
 #define SPELUNKYDS_BULLET_H
 
 #include "../moving_object.h"
-#include "../sprite_state.h"
+#include "../sprite_state.hpp"
 
 #define BULLET_PHYSICAL_HEIGHT 4
 #define BULLET_PHYSICAL_WIDTH 4

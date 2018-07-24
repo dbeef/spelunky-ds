@@ -30,7 +30,7 @@
 
 #include "../moving_object.h"
 #include "../sprite_info.h"
-#include "../sprite_type.h"
+#include "../sprite_type.hpp"
 
 class Moniez : public MovingObject {
 

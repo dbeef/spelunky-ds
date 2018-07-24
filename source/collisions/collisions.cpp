@@ -7,7 +7,7 @@
 #include "collisions.h"
 #include "../sprites/main_dude/main_dude.h"
 #include "../globals_declarations.h"
-#include "../tiles/tile_orientation.h"
+#include "../tiles/tile_orientation.hpp"
 
 #define BOUNCING_STOP_SPEED 0.05
 

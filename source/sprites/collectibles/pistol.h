@@ -6,7 +6,7 @@
 #define SPELUNKYDS_PISTOL_H
 
 #include "../moving_object.h"
-#include "../sprite_state.h"
+#include "../sprite_state.hpp"
 #include "../shopping_object.h"
 
 #define PISTOL_PHYSICAL_HEIGHT 6

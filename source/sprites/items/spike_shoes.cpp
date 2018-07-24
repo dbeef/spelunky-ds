@@ -3,7 +3,7 @@
 //
 
 
-#include "../spritesheet_type.h"
+#include "../spritesheet_type.hpp"
 #include "../../globals_declarations.h"
 #include "../../collisions/collisions.h"
 #include "../../../build/gfx_saleable.h"

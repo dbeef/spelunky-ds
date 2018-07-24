@@ -5,7 +5,7 @@
 #ifndef SPELUNKYDS_LEVELGENERATOR_H
 #define SPELUNKYDS_LEVELGENERATOR_H
 
-#include "map_tile.h"
+#include "map_tile.hpp"
 
 #define ROOMS_X 3
 #define ROOMS_Y 3

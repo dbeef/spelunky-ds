@@ -6,7 +6,7 @@
 #define SPELUNKYDS_SMOOCH_H
 
 #include "../sprite_info.h"
-#include "../sprite_state.h"
+#include "../sprite_state.hpp"
 #include "../moving_object.h"
 
 #define SMOOCH_SPRITE_HEIGHT 16

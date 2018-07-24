@@ -18,7 +18,7 @@
 #define MAX_Y_SPEED_DAMSEL 4
 
 #include "../moving_object.h"
-#include "../sprite_state.h"
+#include "../sprite_state.hpp"
 #include "../sprite_info.h"
 
 class Damsel : public MovingObject {

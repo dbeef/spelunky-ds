@@ -7,7 +7,7 @@
 
 
 #include "../sprite_info.h"
-#include "../sprite_state.h"
+#include "../sprite_state.hpp"
 #include "../moving_object.h"
 
 #define GOT_COLLECTIBLE_SPRITE_HEIGHT 32

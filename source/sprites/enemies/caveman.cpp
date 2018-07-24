@@ -12,7 +12,7 @@
 #include "../animations/blood.h"
 #include "../../../build/gfx_caveman_damsel.h"
 #include "../../tiles/map_utils.h"
-#include "../../tiles/tile_orientation.h"
+#include "../../tiles/tile_orientation.hpp"
 
 #define CAVEMAN_POS_INC_DELTA 20
 #define CAVEMAN_TRIGGERED_SPEED 3

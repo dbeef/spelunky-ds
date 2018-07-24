@@ -4,7 +4,7 @@
 
 
 #include <iostream>
-#include "../spritesheet_type.h"
+#include "../spritesheet_type.hpp"
 #include "mitt.h"
 #include "glove.h"
 #include "../../globals_declarations.h"

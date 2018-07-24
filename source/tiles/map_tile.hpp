@@ -5,7 +5,7 @@
 #ifndef SPELUNKYDS_MAPTILE_H
 #define SPELUNKYDS_MAPTILE_H
 
-#include "map_tile_type.h"
+#include "map_tile_type.hpp"
 
 class MapTile {
 public:

@@ -4,7 +4,7 @@
 #include "../../globals_declarations.h"
 #include "../../game_loop.h"
 #include "../../tiles/map_utils.h"
-#include "../../tiles/splash_screen_type.h"
+#include "../../tiles/splash_screen_type.hpp"
 #include "../../memory/oam_utils.h"
 #include "../../../build/soundbank.h"
 #include "../enemies/damsel.h"

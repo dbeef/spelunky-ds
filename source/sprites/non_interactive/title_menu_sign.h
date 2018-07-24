@@ -12,7 +12,7 @@
 #define START_SCORES_SIGN_SPRITE_HEIGHT 32
 
 #include "../moving_object.h"
-#include "../menu_sign_type.h"
+#include "../menu_sign_type.hpp"
 
 //TODO SPLIT THIS TO SEPARATE CLASSES
 

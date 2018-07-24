@@ -8,7 +8,7 @@
 #include <iostream>
 #include "oam_manager.h"
 #include "../globals_declarations.h"
-#include "../camera/layer_level.h"
+#include "../camera/layer_level.hpp"
 
 /**
  * "Another advantage of using 16-color sprites is the ability to use 16 different palettes."

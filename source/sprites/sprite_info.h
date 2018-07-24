@@ -7,8 +7,8 @@
 
 
 #include <nds/arm9/sprite.h>
-#include "spritesheet_type.h"
-#include "../memory/oam_type.h"
+#include "spritesheet_type.hpp"
+#include "../memory/oam_type.hpp"
 
 class SpriteInfo {
 public:

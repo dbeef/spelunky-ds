@@ -16,7 +16,7 @@
 #include "../../collisions/collisions.h"
 #include "../../tiles/map_utils.h"
 #include "../../../build/soundbank.h"
-#include "../../tiles/tile_orientation.h"
+#include "../../tiles/tile_orientation.hpp"
 #include "../items/spike_shoes.h"
 #include "../items/cape.h"
 #include "../items/jetpack.h"

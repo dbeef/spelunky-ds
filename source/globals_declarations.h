@@ -11,7 +11,7 @@
 #include "hud/hud.h"
 #include "camera/camera.h"
 #include "sprites/main_dude/main_dude.h"
-#include "sprites/sprite_type.h"
+#include "sprites/sprite_type.hpp"
 #include "tiles/level_generator.h"
 #include "sprites/sprite_info.h"
 #include "sprites/main_dude/game_state.h"

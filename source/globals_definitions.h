@@ -6,8 +6,8 @@
 #define SPELUNKYDS_GLOBALS_DEFINITIONS_H
 
 #include <mm_types.h>
-#include "sprites/spritesheet_type.h"
-#include "sprites/sprite_type.h"
+#include "sprites/spritesheet_type.hpp"
+#include "sprites/sprite_type.hpp"
 #include "sprites/sprite_info.h"
 #include "hud/hud.h"
 #include "tiles/level_generator.h"

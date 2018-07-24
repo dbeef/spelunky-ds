@@ -8,7 +8,7 @@
 #include "../../globals_declarations.h"
 #include "../../collisions/collisions.h"
 #include "../../../build/gfx_caveman_damsel.h"
-#include "../../tiles/tile_orientation.h"
+#include "../../tiles/tile_orientation.hpp"
 #include "damsel.h"
 #include "../../../build/soundbank.h"
 

@@ -12,7 +12,7 @@
 #include "../../../build/gfx_rubies.h"
 #include "../items/rock.h"
 #include "../../../build/soundbank.h"
-#include "../sprite_type.h"
+#include "../sprite_type.hpp"
 #include "../../collisions/collisions.h"
 #include "../../tiles/map_utils.h"
 

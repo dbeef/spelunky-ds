@@ -9,7 +9,7 @@
 #include "../build/gfx_cavebg.h"
 #include "globals_declarations.h"
 #include "globals_definitions.h"
-#include "tiles/splash_screen_type.h"
+#include "tiles/splash_screen_type.hpp"
 #include "game_loop.h"
 #include "sound/sound_utils.h"
 #include "console/console_utils.h"

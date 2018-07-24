@@ -3,7 +3,7 @@
 //
 
 
-#include "../spritesheet_type.h"
+#include "../spritesheet_type.hpp"
 #include "pistol.h"
 #include "spring_shoes.h"
 #include "../../globals_declarations.h"

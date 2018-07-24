@@ -28,8 +28,8 @@
 
 #include <nds.h>
 #include <vector>
-#include "../sprite_state.h"
-#include "../../tiles/map_tile.h"
+#include "../sprite_state.hpp"
+#include "../../tiles/map_tile.hpp"
 #include "../../tiles/level_generator.h"
 #include "../../camera/camera.h"
 #include "../sprite_info.h"

@@ -12,7 +12,7 @@
 #include "../../tiles/map_utils.h"
 #include "../../../build/gfx_spelunker.h"
 #include "../../../build/soundbank.h"
-#include "../../tiles/tile_orientation.h"
+#include "../../tiles/tile_orientation.hpp"
 #include "../animations/fall_poof.h"
 #include "../../sound/sound_utils.h"
 

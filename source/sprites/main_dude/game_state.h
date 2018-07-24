@@ -5,7 +5,7 @@
 #ifndef SPELUNKYDS_GAME_STATE_H
 #define SPELUNKYDS_GAME_STATE_H
 
-#include "../../tiles/map_tile_type.h"
+#include "../../tiles/map_tile_type.hpp"
 
 class GameState {
 public:

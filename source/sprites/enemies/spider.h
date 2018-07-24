@@ -14,7 +14,7 @@
 #define SPIDER_SPRITE_WIDTH 16
 
 #include "../moving_object.h"
-#include "../sprite_state.h"
+#include "../sprite_state.hpp"
 #include "../sprite_info.h"
 
 class Spider : public MovingObject {

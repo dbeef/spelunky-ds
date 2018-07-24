@@ -6,7 +6,7 @@
 #include "shopkeeper.h"
 #include "../../globals_declarations.h"
 #include "../../collisions/collisions.h"
-#include "../../tiles/tile_orientation.h"
+#include "../../tiles/tile_orientation.hpp"
 #include "../../../build/gfx_shopkeeper.h"
 
 #define SHOPKEEPER_SPRITESHEET_OFFSET 0

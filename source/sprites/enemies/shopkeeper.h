@@ -17,7 +17,7 @@
 #define SHOPKEEPER_HITPOINTS 3
 
 #include "../moving_object.h"
-#include "../sprite_state.h"
+#include "../sprite_state.hpp"
 #include "../sprite_info.h"
 #include "../shopping_object.h"
 #include "../collectibles/shotgun.h"

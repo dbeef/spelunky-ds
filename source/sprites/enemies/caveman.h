@@ -17,7 +17,7 @@
 #define MAX_Y_SPEED_CAVEMAN 4
 
 #include "../moving_object.h"
-#include "../sprite_state.h"
+#include "../sprite_state.hpp"
 #include "../sprite_info.h"
 
 class Caveman : public MovingObject {

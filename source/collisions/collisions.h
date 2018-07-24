@@ -6,7 +6,7 @@
 #define SPELUNKYDS_COLLISIONS_H
 
 
-#include "../tiles/map_tile.h"
+#include "../tiles/map_tile.hpp"
 
 #define BOUNCING_FACTOR_X 0.15
 #define BOUNCING_FACTOR_Y 0.35

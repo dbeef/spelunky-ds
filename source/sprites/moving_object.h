@@ -8,9 +8,9 @@
 
 #include "../memory/oam_manager.h"
 #include "../camera/camera.h"
-#include "spritesheet_type.h"
-#include "sprite_state.h"
-#include "sprite_type.h"
+#include "spritesheet_type.hpp"
+#include "sprite_state.hpp"
+#include "sprite_type.hpp"
 
 /**
  *  https://en.wikibooks.org/wiki/C%2B%2B_Programming/Classes/Abstract_Classes
