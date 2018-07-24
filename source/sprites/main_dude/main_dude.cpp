@@ -124,7 +124,6 @@ void MainDude::handle_key_input() {
                 if (global::game_state->in_main_menu && !global::game_state->exiting_game) {
                     if (y <= 100) {
                         global::game_state->exiting_game = true;
-                        //                        exit(0);
                     }
                 }
 

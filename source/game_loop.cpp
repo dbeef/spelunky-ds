@@ -130,12 +130,12 @@ void gameloop::populate_cave_moniez() {
 
     int last_placement = 3;
 
-    int gold_bars_left = 8;
-    int rubies_left = 8;
-    int rocks_left = 8;
-    int jars_left = 8;
+    int gold_bars_left = 6;
+    int rubies_left = 6;
+    int rocks_left = 4;
+    int jars_left = 4;
     int chests_left = 3;
-    int crates_left = 3;
+    int crates_left = 2;
 
     std::cout << '\n' << '\n';
 
@@ -285,10 +285,10 @@ void gameloop::populate_cave_npcs() {
 
     int last_placement = 3;
 
-    int bats_left = 5;
+    int bats_left = 4;
     int damsels_left = 1;
-    int spiders_left = 5;
-    int snakes_left = 5;
+    int spiders_left = 4;
+    int snakes_left = 4;
     int spikes_left = 4;
     int cavemen_left = 3;
 
