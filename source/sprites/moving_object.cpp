@@ -12,6 +12,7 @@
 #include "../collisions/collisions.h"
 #include "../../build/soundbank.h"
 #include "animations/blood.h"
+#include "../sound/sound_utils.h"
 
 //TODO FUNKCJA UPDATE SPRITE STATE
 
@@ -45,6 +46,7 @@ void MovingObject::deal_damage_main_dude_on_collision(int dmg_to_apply) {
             global::main_dude->ySpeed = -MAIN_DUDE_JUMP_SPEED * 0.25;
             global::main_dude->dead = true;
             mmEffect(SFX_XDIE);
+            sound::stop_cave_music();
         } else
             mmEffect(SFX_XHIT);
     }

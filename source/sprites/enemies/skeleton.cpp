@@ -54,6 +54,7 @@ void Skeleton::draw() {
     }
 
 
+/*
     if (bottomCollision) {
         if (waitTimer > 0) {
             waitTimer -= *global::timer;
@@ -76,6 +77,7 @@ void Skeleton::draw() {
             }
         }
     }
+*/
 
 
     kill_if_whip(1);
@@ -98,36 +100,6 @@ void Skeleton::init() {
     randomizeMovement();
 }
 
-void Skeleton::randomizeMovement() {
-
-    int r = rand() % 2;
-
-    if (r == 0) {
-        if (spriteState == SpriteState::W_LEFT)
-            sameDirectionInRow++;
-        else
-            sameDirectionInRow = 0;
-
-        if (sameDirectionInRow == 2)
-            spriteState = SpriteState::W_RIGHT;
-        else
-            spriteState = SpriteState::W_LEFT;
-
-    } else if (r == 1) {
-        if (spriteState == SpriteState::W_RIGHT)
-            sameDirectionInRow++;
-        else
-            sameDirectionInRow = 0;
-
-        if (sameDirectionInRow == 2)
-            spriteState = SpriteState::W_LEFT;
-        else
-            spriteState = SpriteState::W_RIGHT;
-    }
-
-    goTimer = (rand() % 2000) + 1000;
-    waitTimer = rand() % 500;
-}
 
 void Skeleton::updateSpeed() {
 

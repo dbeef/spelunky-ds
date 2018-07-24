@@ -194,6 +194,7 @@ void LevelGenerator::newLayout(int seed) {
 
 void LevelGenerator::generate_frame() {
 
+    //upper row
     for (int a = 0; a < MAP_GAME_HEIGHT_TILES; a++) {
         delete (map_tiles[a][0]);
         MapTile *t = new MapTile();
@@ -209,6 +210,7 @@ void LevelGenerator::generate_frame() {
         this->map_tiles[a][0] = t;
     }
 
+    //right row
     for (int a = 0; a < MAP_GAME_HEIGHT_TILES; a++) {
         delete (map_tiles[a][MAP_GAME_WIDTH_TILES - 1]);
         MapTile *t = new MapTile();
@@ -224,6 +226,7 @@ void LevelGenerator::generate_frame() {
         this->map_tiles[a][31] = t;
     }
 
+    //left row
     for (int a = 0; a < MAP_GAME_WIDTH_TILES; a++) {
         delete (map_tiles[0][a]);
         MapTile *t = new MapTile();
@@ -239,6 +242,7 @@ void LevelGenerator::generate_frame() {
         this->map_tiles[0][a] = t;
     }
 
+    //bottom row
     for (int a = 0; a < MAP_GAME_WIDTH_TILES; a++) {
         delete (map_tiles[MAP_GAME_HEIGHT_TILES - 1][a]);
         MapTile *t = new MapTile();

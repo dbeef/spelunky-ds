@@ -88,11 +88,13 @@ mm_word stream(mm_word length, mm_addr dest, mm_stream_formats format) {
 
 int main() {
 
+    swiWaitForVBlank();
     setBrightness(3, global::game_state->brightness_level);
 
     global::game_state->in_main_menu = true;
 
     sound::load_sounds();
+
     sound::start_menu_music();
 
     time_utils::start();

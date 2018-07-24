@@ -9,6 +9,7 @@
 #include "../../../build/soundbank.h"
 #include "../enemies/damsel.h"
 #include "../animations/smooch.h"
+#include "../../sound/sound_utils.h"
 
 //
 // Created by xdbeef on 27.05.18.
@@ -33,7 +34,6 @@ void GameState::reset_main_dude() {
 void GameState::start_new_game() {
 
     reset_main_dude();
-
     global::hud->hearts = 4;
     global::hud->ropes = 4;
     global::hud->bombs = 4;
@@ -45,6 +45,7 @@ void GameState::start_new_game() {
 
 void GameState::start_main_menu() {
 
+    global::main_dude->climbing = false;
     global::camera->follow_main_dude = false;
     global::game_state->in_main_menu = true;
     global::game_state->levels_transition_screen = false;
@@ -134,9 +135,12 @@ void GameState::handle_changing_screens() {
 
             //next level or starting game
 
-            mmEffectCancel(global::menu_music_handler);
-            mmEffectCancel(global::cave_music_handler);
-            global::cave_music_handler = mmEffect(SFX_MCAVE);
+            if (global::game_state->in_main_menu) {
+                sound::stop_menu_music();
+                sound::start_cave_music();
+            } else
+                sound::stop_cave_music();
+
 
             global::level_generator->generate_frame();
             global::level_generator->generate_rooms();
@@ -150,8 +154,9 @@ void GameState::handle_changing_screens() {
 
                 global::game_state->robbed_killed_shopkeeper = false;
 
-                mmEffectCancel(global::cave_music_handler);
-                global::menu_music_handler = mmEffect(SFX_MTITLE);
+                sound::stop_cave_music();
+                sound::start_menu_music();
+
                 global::level_generator->generate_splash_screen(SplashScreenType::MAIN_MENU_UPPER);
                 global::level_generator->generate_splash_screen(SplashScreenType::MAIN_MENU_LOWER);
 //                set_position_to(MapTileType::ENTRANCE);
@@ -196,6 +201,8 @@ void GameState::handle_changing_screens() {
 
             if (global::game_state->in_main_menu) {
                 global::game_state->start_new_game();
+            } else {
+                sound::start_cave_music();
             }
 
             global::game_state->start_next_level();
@@ -204,14 +211,14 @@ void GameState::handle_changing_screens() {
 
             if (global::game_state->scores_screen)
                 global::game_state->start_main_menu();
-            else if (global::main_dude->dead)
+            else if (global::main_dude->dead) {
                 global::game_state->start_scores();
-            else
+            } else
                 global::game_state->start_level_transition_screen();
         }
 
         global::main_dude->exiting_level = false;
-        mmEffectCancel(SFX_MCAVE);
+
 
     } else if (global::main_dude->animFrame >= 16 && global::game_state->splash_screen) {
 

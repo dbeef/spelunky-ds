@@ -55,37 +55,6 @@ void gameloop::scroll() {
 
         global::input_handler->updateInput();
 
-        if (global::game_state->just_started_game) {
-            global::game_state->change_brightness_timer += *global::timer;
-
-            if (global::game_state->change_brightness_timer > 100) {
-
-                global::game_state->brightness_level--;
-
-                if (global::game_state->brightness_level == 0)
-                    global::game_state->just_started_game = false;
-                else
-                    setBrightness(3, global::game_state->brightness_level);
-
-            }
-
-        }
-
-        if (global::game_state->in_main_menu && global::game_state->exiting_game) {
-
-            global::game_state->change_brightness_timer += *global::timer;
-
-            if (global::game_state->change_brightness_timer > 100) {
-
-                global::game_state->brightness_level++;
-
-                if (global::game_state->brightness_level > 16)
-                    exit(0);
-
-                setBrightness(3, global::game_state->brightness_level);
-
-            }
-        }
 
         if (global::game_state->bombed) {
             global::level_generator->render_tiles_on_base_map();
@@ -110,6 +79,41 @@ void gameloop::scroll() {
         global::hud->update();
 
         swiWaitForVBlank();
+
+        //-> this should be done after Vblank (or crash!)
+        if (global::game_state->just_started_game) {
+            global::game_state->change_brightness_timer += *global::timer;
+
+            if (global::game_state->change_brightness_timer > 100) {
+
+                global::game_state->brightness_level--;
+
+                if (global::game_state->brightness_level == 0)
+                    global::game_state->just_started_game = false;
+                else
+                    setBrightness(3, global::game_state->brightness_level);
+
+            }
+        }
+
+        if (global::game_state->in_main_menu && global::game_state->exiting_game) {
+
+            global::game_state->change_brightness_timer += *global::timer;
+
+            if (global::game_state->change_brightness_timer > 100) {
+
+                global::game_state->brightness_level++;
+
+                if (global::game_state->brightness_level > 16)
+                    exit(0);
+
+                setBrightness(3, global::game_state->brightness_level);
+
+            }
+        }
+        //
+
+
         global::camera->set_scroll();
 
         global::main_oam_manager->updateOAM();

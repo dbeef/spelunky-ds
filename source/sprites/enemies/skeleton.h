@@ -47,13 +47,9 @@ public:
     SpriteInfo *mainSpriteInfo {};
     SpriteInfo *subSpriteInfo{};
     u8 *frameGfx{};
-    int sameDirectionInRow{};
-
 
     //Skeleton goes for random amount of time_utils on random direction, then waits random time_utils and the cycle goes again
     SpriteState spriteState{};
-    int waitTimer{};
-    int goTimer{};
 
     int animFrame{};
     int animFrameTimer{};

@@ -13,6 +13,7 @@
 #include "../../tiles/map_utils.h"
 #include "arrow.h"
 #include "../../../build/soundbank.h"
+#include "../../sound/sound_utils.h"
 
 #define ARROW_POS_INC_DELTA 15
 
@@ -107,6 +108,8 @@ void Arrow::draw() {
             global::main_dude->ySpeed = -MAIN_DUDE_JUMP_SPEED * 0.25;
             global::main_dude->dead = true;
             mmEffect(SFX_XDIE);
+            sound::stop_cave_music();
+
         } else
             mmEffect(SFX_XHIT);
 

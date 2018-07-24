@@ -14,6 +14,7 @@
 #include "../../../build/soundbank.h"
 #include "../../tiles/tile_orientation.h"
 #include "../animations/fall_poof.h"
+#include "../../sound/sound_utils.h"
 
 void MainDude::handle_key_input() {
 
@@ -158,7 +159,8 @@ void MainDude::handle_key_input() {
             if (exiting_level) {
 
                 mmEffect(SFX_XSTEPS);
-                mmEffectCancel(global::cave_music_handler);
+
+                sound::stop_cave_music();
 
                 x = neighboringTiles[CENTER]->x * 16;
                 y = neighboringTiles[CENTER]->y * 16;
@@ -309,6 +311,7 @@ void MainDude::updateTimers() {
             global::hud->hearts--;
             global::hud->draw();
         }
+
         stunned = true;
 
         FallPoof *f_left = new FallPoof();
@@ -330,7 +333,9 @@ void MainDude::updateTimers() {
             global::hud->hide();
             global::main_dude->ySpeed = -MAIN_DUDE_JUMP_SPEED * 0.25;
             global::main_dude->dead = true;
+
             mmEffect(SFX_XDIE);
+            sound::stop_cave_music();
 
             global::hud->ropes = 0;
             global::hud->bombs = 0;

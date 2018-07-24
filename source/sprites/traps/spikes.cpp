@@ -10,6 +10,7 @@
 #include "../../globals_declarations.h"
 #include "../../../build/soundbank.h"
 #include "../animations/blood.h"
+#include "../../sound/sound_utils.h"
 
 void Spikes::draw() {
 
@@ -115,6 +116,7 @@ Spikes::Spikes() {
 void Spikes::kill_main_dude() {
 
     mmEffect(SFX_XDIE);
+    sound::stop_cave_music();
 
     global::main_dude->time_since_last_damage = 0;
     global::hud->hearts = 0;
@@ -123,5 +125,6 @@ void Spikes::kill_main_dude() {
     global::hud->hide();
     global::main_dude->ySpeed = -MAIN_DUDE_JUMP_SPEED * 0.25;
     global::main_dude->dead = true;
+
 }
 

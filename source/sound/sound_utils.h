@@ -9,40 +9,17 @@
 #include "../../build/soundbank_bin.h"
 #include "../../build/soundbank.h"
 
-namespace sound{
+namespace sound {
 
-    void load_sounds(){
-        mmInitDefaultMem((mm_addr) soundbank_bin);
+    void load_sounds();
 
-        mmLoadEffect(SFX_MCAVE);
-        mmLoadEffect(SFX_MTITLE);
+    void start_menu_music();
 
-        mmLoadEffect(SFX_XJUMP);
-        mmLoadEffect(SFX_XALERT);
-        mmLoadEffect(SFX_XARROWTRAP);
-        mmLoadEffect(SFX_XKISS);
-        mmLoadEffect(SFX_XJETPACK);
-        mmLoadEffect(SFX_XWHIP);
-        mmLoadEffect(SFX_XCOIN);
-        mmLoadEffect(SFX_XTHROW);
-        mmLoadEffect(SFX_XGEM);
-        mmLoadEffect(SFX_XEXPLOSION);
-        mmLoadEffect(SFX_XSTEPS);
-        mmLoadEffect(SFX_XLAND);
-        mmLoadEffect(SFX_XBAT);
-        mmLoadEffect(SFX_XPICKUP);
-        mmLoadEffect(SFX_XCLIMB1);
-        mmLoadEffect(SFX_XCLIMB2);
-        mmLoadEffect(SFX_XHIT);
-        mmLoadEffect(SFX_XHURT);
-        mmLoadEffect(SFX_XDIE);
-        mmLoadEffect(SFX_XCHESTOPEN);
-        mmLoadEffect(SFX_XSHOTGUN);
-    }
+    void stop_menu_music();
 
-    void start_menu_music(){
-        global::menu_music_handler = mmEffect(SFX_MTITLE);
-    }
+    void start_cave_music();
+
+    void stop_cave_music();
 
 }
 
