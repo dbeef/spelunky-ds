@@ -5,7 +5,6 @@
  width="240" height="340">
  
 </p>
-
 <h2 align="center">To-do list as for now</h2>
 <ul>
  
@@ -25,11 +24,16 @@
 <li> 🗙 Ghost when spending too much time on level </li>
 <li> 🗙 Shake screen when dropping a bomb </li>
 <li> 🗙 Attempt to make levels a bit bigger (current size is 512x512, what I can probably make is 1024x512 or 512x1024, though not sure of that) </li>
- 
+
+
 </ul>
  
  Obviously I omit things like implement Olmec or implement lava city - let's finish cave level first.
 
+<p></p>
+ <p> Development thread: </p>
+ <p> https://gbatemp.net/threads/spelunkyds.507192/#post-8044792 </p>
+ 
 <h2 align="center">Known bugs</h2>
 <ul>
  
@@ -59,7 +63,8 @@
 
 <h2 align="center"> Running </h2>
 <p> For running on a PC I preffer an emulator called Desmume. type 'desmume spelunky.nds' for running. </p>
-<p> For running on an NDS I use 'R4i-3DS-RTS-WiFi' (oh boy) card, but it's probably going to work on any other card. Just make sure, you have NDS program called 'moonshell', which helps running homebrew.
+<p> For running on an NDS I use 'R4i-3DS-RTS-WiFi' (oh boy) card, but it's probably going to work on any other card. Just make sure, you have NDS program called 'DSiMenu++', which helps running homebrew. Installation instructions:
+ https://gbatemp.net/threads/ds-i-3ds-dsimenu-ds-i-menu-replacement.472200/
 
 <h2 align="center"> Tools I use </h2>
 <ul>
