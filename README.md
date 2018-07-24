@@ -4,9 +4,6 @@
 <p align="center"><img src="https://github.com/dbeef/spelunky-ds/blob/master/readme/gameplay.gif" alt="Works on real NDS!"
  width="240" height="340">
  
- <p> Development thread: </p>
- <p> https://gbatemp.net/threads/spelunkyds.507192/#post-8044792 </p>
- 
 </p>
 <h2 align="center">To-do list as for now</h2>
 <ul>
@@ -27,7 +24,12 @@
 <li> 🗙 Ghost when spending too much time on level </li>
 <li> 🗙 Shake screen when dropping a bomb </li>
 <li> 🗙 Attempt to make levels a bit bigger (current size is 512x512, what I can probably make is 1024x512 or 512x1024, though not sure of that) </li>
+
+
+ <p> Development thread: </p>
+ <p> https://gbatemp.net/threads/spelunkyds.507192/#post-8044792 </p>
  
+
 </ul>
  
  Obviously I omit things like implement Olmec or implement lava city - let's finish cave level first.
