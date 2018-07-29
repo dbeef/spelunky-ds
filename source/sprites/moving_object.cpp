@@ -110,7 +110,6 @@ void MovingObject::check_if_can_be_pickuped() {
 
         global::main_dude->holding_item = true;
         hold_by_main_dude = true;
-        global::main_dude->holding_item = true;
         global::input_handler->y_key_down = false;
 
     }

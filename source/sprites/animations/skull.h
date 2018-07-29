@@ -56,6 +56,7 @@ public:
 
     void set_position();
 
+    void set_orientation();
 };
 
 

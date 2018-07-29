@@ -181,24 +181,16 @@ void Skeleton::apply_dmg(int dmg_to_apply) {
     b_1->animFrame=6;
     b_2->init();
 
-    Bone *b_3 = new Bone();
-    b_3->x = x - 5;
-    b_3->y = y - 2;
-    b_3->xSpeed = 1.5f;
-    b_3->ySpeed = -1.7f;
-    b_3->init();
-    
+
     Skull *s= new Skull();
     s->x = x - 6;
     s->y = y - 4;
     s->xSpeed = -0.5f;
     s->ySpeed = -1.8f;
     s->init();
-    
 
     global::sprites.push_back(b_1);
     global::sprites.push_back(b_2);
-    global::sprites.push_back(b_3);
     global::sprites.push_back(s);
 
 }
