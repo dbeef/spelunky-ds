@@ -13,6 +13,7 @@
 #include "../../tiles/map_utils.h"
 #include "../../../build/soundbank.h"
 #include "../animations/bone.h"
+#include "../animations/skull.h"
 
 #define SKELETON_POS_INC_DELTA 19
 #define SKELETON_ANIM_FRAME_DELTA 90
@@ -186,10 +187,19 @@ void Skeleton::apply_dmg(int dmg_to_apply) {
     b_3->xSpeed = 1.5f;
     b_3->ySpeed = -1.7f;
     b_3->init();
+    
+    Skull *s= new Skull();
+    s->x = x - 6;
+    s->y = y - 4;
+    s->xSpeed = -0.5f;
+    s->ySpeed = -1.8f;
+    s->init();
+    
 
     global::sprites.push_back(b_1);
     global::sprites.push_back(b_2);
     global::sprites.push_back(b_3);
+    global::sprites.push_back(s);
 
 }
 
