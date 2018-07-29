@@ -1,9 +1,12 @@
 
 <h1 align="center"> Spelunky® remake for the NintendoDS. </h1><p align="center">(a.k.a SpelunkyDS)</p>
 
-<p align="center"><img src="https://github.com/dbeef/spelunky-ds/blob/master/readme/gameplay.gif" alt="Works on real NDS!"
+<p align="center">
+<img src="https://github.com/dbeef/spelunky-ds/blob/master/readme/gameplay.gif" alt="Works on real NDS!"
  width="240" height="340">
- 
+<img src="https://github.com/dbeef/spelunky-ds/blob/master/readme/n3dsxl.gif" alt="Works on real N3DSXL!"
+ width="240" height="340">
+
 </p>
 <h2 align="center">To-do list as for now</h2>
 <ul>
