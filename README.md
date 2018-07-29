@@ -44,7 +44,7 @@
 <li> 🗙 I messed up a bit with collision detection</li>
 <li> 🗙 Arrow trap is triggered even if there's a tile (or tiles) between some moving object and the trap</li>
 <li> 🗙 Once thrown chest can't be opened</li>
-<li> 🗙 Sometimes there's a level where there are spikes just hanging in air</li>
+<li> ✔ Sometimes there's a level where there are spikes just hanging in air</li>
 <li> 🗙 Sometimes you can loose your items (shotgun, pistol) when changing levels</li>
 <li> 🗙 UI bugs - you can throw rope / drop bomb in scores screen</li>
 <li> 🗙 Damage system appears to be broken in terms of shopkeeper (you can't throw arrows, rocks, jars, etc on him)</li>
@@ -54,6 +54,7 @@
 <li> 🗙 Shopkeeper is quite dumb, easy to steal</li>
 <li> 🗙 Bullets can collide with jetpack, so it can work as a bulletproof vest</li>
 <li> 🗙 Blood drops / bullets can trigger arrow trap</li>
+<li> 🗙 Game tends to crash after some time of playing (at least on my vanilla DS) </li>
 
 </ul>
  
