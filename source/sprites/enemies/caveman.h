@@ -1,5 +1,6 @@
 //
 // Created by xdbeef on 31.05.18.
+// http://spelunky.wikia.com/wiki/Caveman
 //
 
 #ifndef SPELUNKYDS_CAVEMAN_H

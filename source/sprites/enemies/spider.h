@@ -1,5 +1,6 @@
 //
 // Created by xdbeef on 03.05.18.
+// http://spelunky.wikia.com/wiki/Spider
 //
 
 #ifndef SPELUNKYDS_SPIDER_H

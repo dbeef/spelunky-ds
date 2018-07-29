@@ -2,10 +2,7 @@
 #include <nds/arm9/video.h>
 #include <nds/arm9/sprite.h>
 #include <nds/arm9/console.h>
-#include <iostream>
-#include <cstring>
-#include <dirent.h>
-#include <filesystem.h>
+#include <nds/arm9/decompress.h>
 #include "../build/gfx_cavebg.h"
 #include "globals_declarations.h"
 #include "globals_definitions.h"

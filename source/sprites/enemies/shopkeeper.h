@@ -1,5 +1,6 @@
 //
 // Created by xdbeef on 25.05.18.
+// http://spelunky.wikia.com/wiki/Shopkeeper
 //
 
 #ifndef SPELUNKYDS_SHOPKEEPER_H

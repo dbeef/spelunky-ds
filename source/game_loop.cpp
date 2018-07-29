@@ -28,6 +28,7 @@
 #include "sprites/collectibles/collectibles_utils.h"
 #include "sprites/items/arrow.h"
 #include "sprites/traps/arrow_trap.h"
+#include "sprites/enemies/skeleton.h"
 
 static const int BOUNDARY_VALUE = 64; /* This is the default boundary value (can be set in REG_DISPCNT) */
 static const int OFFSET_MULTIPLIER_MAIN = BOUNDARY_VALUE / sizeof(SPRITE_GFX[0]);
@@ -285,6 +286,7 @@ void gameloop::populate_cave_npcs() {
 
     int last_placement = 3;
 
+    int skeletons_left = 3;
     int bats_left = 4;
     int damsels_left = 1;
     int spiders_left = 4;
@@ -352,6 +354,17 @@ void gameloop::populate_cave_npcs() {
                             arrowTrap->sprite_state = SpriteState::W_RIGHT;
                         global::sprites.push_back(arrowTrap);
                     }
+
+                    if (npc == 13 && skeletons_left > 0 && r == 1) {
+                        Skeleton *skeleton = new Skeleton();
+                        skeleton->init();
+                        global::sprites.push_back(skeleton);
+                        skeleton->x = pos_x * 16;
+                        skeleton->y = pos_y * 16;
+                        skeletons_left--;
+                        last_placement = 0;
+                    }
+
 
                     if (npc == 1 && snakes_left > 0 && r == 1) {
                         Snake *snake = new Snake();

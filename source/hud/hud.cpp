@@ -185,7 +185,7 @@ void Hud::draw_on_level_done() {
             bat->ready_to_dispose = true;
             bat->set_sprite_flying_left();
             bat->set_position();
-        } else if (global::killed_npcs.at(a) == SpritesheetType::SPIDER) {
+        } else if (global::killed_npcs.at(a) == SpritesheetType::SKELETON_SPIDER) {
             Spider *spider = new Spider();
             spider->init();
             global::sprites.push_back(spider);

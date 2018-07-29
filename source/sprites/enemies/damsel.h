@@ -1,7 +1,7 @@
 //
 // Created by xdbeef on 09.06.18.
+// http://spelunky.wikia.com/wiki/Damsel
 //
-
 
 #ifndef SPELUNKYDS_DAMSEL_H
 #define SPELUNKYDS_DAMSEL_H

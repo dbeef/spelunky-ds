@@ -1,5 +1,6 @@
 //
 // Created by xdbeef on 02.05.18.
+// http://spelunky.wikia.com/wiki/Bat
 //
 
 #ifndef SPELUNKYDS_BAT_H

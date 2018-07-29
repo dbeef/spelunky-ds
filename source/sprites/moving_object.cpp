@@ -189,7 +189,7 @@ bool MovingObject::kill_mobs_if_thrown(int dmg_to_apply) {
             if ((global::sprites.at(a)->spritesheet_type == SpritesheetType::SNAKE ||
                  global::sprites.at(a)->spritesheet_type == SpritesheetType::BAT_JETPACK ||
                  global::sprites.at(a)->spritesheet_type == SpritesheetType::CAVEMAN_DAMSEL ||
-                 global::sprites.at(a)->spritesheet_type == SpritesheetType::SPIDER)
+                 global::sprites.at(a)->spritesheet_type == SpritesheetType::SKELETON_SPIDER)
                 && !global::sprites.at(a)->killed) {
                 if (Collisions::checkCollisionBodies(x, y, 16, 16, global::sprites.at(a)->x,
                                                      global::sprites.at(a)->y, physical_width, physical_height)) {
@@ -232,7 +232,7 @@ bool MovingObject::kill_mobs_items_if_thrown(int dmg_to_apply) {
             if ((global::sprites.at(a)->spritesheet_type == SpritesheetType::SNAKE ||
                  global::sprites.at(a)->spritesheet_type == SpritesheetType::BAT_JETPACK ||
                  global::sprites.at(a)->spritesheet_type == SpritesheetType::SHOPKEEPER ||
-                 global::sprites.at(a)->spritesheet_type == SpritesheetType::SPIDER ||
+                 global::sprites.at(a)->spritesheet_type == SpritesheetType::SKELETON_SPIDER ||
                  global::sprites.at(a)->spritesheet_type == SpritesheetType::CAVEMAN_DAMSEL ||
                  global::sprites.at(a)->spritesheet_type == SpritesheetType::JAR)
                 && !global::sprites.at(a)->ready_to_dispose) {

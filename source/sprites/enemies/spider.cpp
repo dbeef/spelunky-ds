@@ -6,7 +6,7 @@
 #include "spider.h"
 #include "../../globals_declarations.h"
 #include "../animations/blood.h"
-#include "../../../build/gfx_spider.h"
+#include "../../../build/gfx_spider_skeleton.h"
 #include "../items/rock.h"
 #include "../../collisions/collisions.h"
 #include "../../tiles/map_utils.h"
@@ -138,19 +138,18 @@ void Spider::apply_dmg(int dmg_to_apply) {
 
 void Spider::initSprite() {
 
-    subSpriteInfo = global::sub_oam_manager->initSprite(gfx_spiderPal, gfx_spiderPalLen,
-                                                        nullptr, sprite_width * sprite_height, 16, SPIDER, true, false,
+    subSpriteInfo = global::sub_oam_manager->initSprite(gfx_spider_skeletonPal, gfx_spider_skeletonPalLen,
+                                                        nullptr, sprite_width * sprite_height, 16, SKELETON_SPIDER, true, false,
                                                         LAYER_LEVEL::MIDDLE_TOP);
-    mainSpriteInfo = global::main_oam_manager->initSprite(gfx_spiderPal, gfx_spiderPalLen,
-                                                          nullptr, sprite_width * sprite_height, 16, SPIDER, true,
+    mainSpriteInfo = global::main_oam_manager->initSprite(gfx_spider_skeletonPal, gfx_spider_skeletonPalLen,
+                                                          nullptr, sprite_width * sprite_height, 16, SKELETON_SPIDER, true,
                                                           false,
                                                           LAYER_LEVEL::MIDDLE_TOP);
 
-    frameGfx = (u8 *) gfx_spiderTiles + sprite_width * sprite_height * 4 / 2;
+    frameGfx = (u8 *) gfx_spider_skeletonTiles + sprite_width * sprite_height * 4 / 2;
     subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
     mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
 
-    spritesheet_type = SpritesheetType::SPIDER;
 
 
     subSpriteInfo->entry->isHidden = false;
@@ -164,19 +163,19 @@ void Spider::initSprite() {
 }
 
 void Spider::set_sprite_hanging() {
-    frameGfx = (u8 *) gfx_spiderTiles + (sprite_width * sprite_height * (4) / 2);
+    frameGfx = (u8 *) gfx_spider_skeletonTiles + (sprite_width * sprite_height * (4) / 2);
 }
 
 void Spider::set_sprite_flipping() {
-    frameGfx = (u8 *) gfx_spiderTiles + (sprite_width * sprite_height * (animFrame + 4) / 2);
+    frameGfx = (u8 *) gfx_spider_skeletonTiles + (sprite_width * sprite_height * (animFrame + 4) / 2);
 }
 
 void Spider::set_sprite_jumping() {
-    frameGfx = (u8 *) gfx_spiderTiles + (sprite_width * sprite_height * (animFrame) / 2);
+    frameGfx = (u8 *) gfx_spider_skeletonTiles + (sprite_width * sprite_height * (animFrame) / 2);
 }
 
 void Spider::set_sprite_falling() {
-    frameGfx = (u8 *) gfx_spiderTiles + (sprite_width * sprite_height * (0) / 2);
+    frameGfx = (u8 *) gfx_spider_skeletonTiles + (sprite_width * sprite_height * (0) / 2);
 
     subSpriteInfo->entry->hFlip = true;
     mainSpriteInfo->entry->hFlip = true;
@@ -208,6 +207,8 @@ Spider::Spider() {
     sprite_height = SPIDER_SPRITE_HEIGHT;
     sprite_width = SPIDER_SPRITE_WIDTH;
     hitpoints = SPIDER_HITPOINTS;
+    spritesheet_type = SpritesheetType::SKELETON_SPIDER;
+    sprite_type = SpriteType ::S_SPIDER;
 }
 
 void Spider::jump_to_main_dude() {

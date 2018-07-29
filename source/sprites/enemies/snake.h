@@ -1,5 +1,6 @@
 //
 // Created by xdbeef on 23.04.18.
+// http://spelunky.wikia.com/wiki/Snake
 //
 
 #ifndef SPELUNKYDS_SNAKE_H
@@ -29,7 +30,7 @@ public:
 
     void draw() override;
 
-    void apply_dmg(int dmg_to_apply) override ;
+    void apply_dmg(int dmg_to_apply) override;
 
     void updateTimers() override {};
 
@@ -45,7 +46,7 @@ public:
 
     double pos_inc_timer{};
 
-    SpriteInfo *mainSpriteInfo {};
+    SpriteInfo *mainSpriteInfo{};
     SpriteInfo *subSpriteInfo{};
     u8 *frameGfx{};
     int sameDirectionInRow{};

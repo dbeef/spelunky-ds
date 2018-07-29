@@ -1,7 +1,7 @@
 //
 // Created by xdbeef on 22.07.18.
+// http://spelunky.wikia.com/wiki/Skeleton
 //
-
 #ifndef SPELUNKYDS_SKELETON_H
 #define SPELUNKYDS_SKELETON_H
 #define SKELETON_PHYSICAL_HEIGHT 16
@@ -28,7 +28,7 @@ public:
 
     void draw() override;
 
-    void apply_dmg(int dmg_to_apply) override ;
+    void apply_dmg(int dmg_to_apply) override;
 
     void updateTimers() override {};
 
@@ -44,23 +44,29 @@ public:
 
     double pos_inc_timer{};
 
-    SpriteInfo *mainSpriteInfo {};
+    SpriteInfo *mainSpriteInfo{};
     SpriteInfo *subSpriteInfo{};
     u8 *frameGfx{};
 
-    //Skeleton goes for random amount of time_utils on random direction, then waits random time_utils and the cycle goes again
-    SpriteState spriteState{};
-
-    int animFrame{};
-    int animFrameTimer{};
-
-    void randomizeMovement();
+    int change_turn_timer{};
+    int summoning_delay_timer{};
+    int anim_frame_counter{};
+    int anim_frame_timer{};
+    bool set_up{};
+    bool summoned{};
+    bool can_be_summoned{};
+    SpriteState main_dude_orientation_at_summoning_moment{};
 
     void set_position();
 
-    void set_sprite_left();
+    void set_sprite_walking();
 
-    void set_sprite_right();
+    void set_sprite_summoning();
+
+    void check_if_can_be_summoned();
+
+    void set_sprite_pile_of_bones();
+
 };
 
 

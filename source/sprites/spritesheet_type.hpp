@@ -26,13 +26,12 @@ enum SpritesheetType{
     SPELUNKY_COPYRIGHTS,        //16
     BAT_JETPACK,                //17
     SHOPKEEPER,                 //17
-    SPIDER,                     //18
+    SKELETON_SPIDER,            //18
     SPIKES_COLLECTIBLES,        //19
     SALEABLE,                   //20
     GOT_COLLECTIBLE,            //21
     CAVEMAN_DAMSEL,             //22
     ARROW,             //23
-    SKELETON
 };
 
 #endif //SPELUNKYDS_SPRITETYPES_H

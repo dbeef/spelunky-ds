@@ -5,14 +5,12 @@
 #ifndef SPELUNKYDS_FALL_BLOOP_H
 #define SPELUNKYDS_FALL_BLOOP_H
 
-
 #include "../sprite_info.h"
 #include "../sprite_state.hpp"
 #include "../moving_object.h"
 
 #define FALL_POOF_SPRITE_HEIGHT 8
 #define FALL_POOF_SPRITE_WIDTH 8
-
 
 #define FALL_POOF_PHYSICAL_HEIGHT 8
 #define FALL_POOF_PHYSICAL_WIDTH 8
@@ -56,12 +54,10 @@ public:
     u8 *frameGfx{};
 
     bool gravity{};
-    
+
     void set_position();
 
 };
-
-
 
 
 #endif //SPELUNKYDS_FALL_BLOOP_H
