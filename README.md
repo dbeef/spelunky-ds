@@ -14,7 +14,7 @@
 <li> ✔	Implement shopkeeper logics and randomly spawned shops  </li>
 <li> ✔ Implement damsel </li>
 <li> ✔ Implement caveman </li>
-<li> 🗙 Implement skeleton </li>
+<li> ✔ Implement skeleton </li>
 <li> ✔ Implement arrow trap </li>
 <li> ✔ Fix rope logics - if thrown, when it touches bottom of some tile above it or it reaches its maximum travel distance of 8 tiles up, then it should expand to the bottom. Now it's the opposite - it expands as it travels upwards. </li>
 <li> ✔ Implement cape and jetpack </li>
