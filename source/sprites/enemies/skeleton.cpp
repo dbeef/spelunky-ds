@@ -12,6 +12,7 @@
 #include "../../collisions/collisions.h"
 #include "../../tiles/map_utils.h"
 #include "../../../build/soundbank.h"
+#include "../animations/bone.h"
 
 #define SKELETON_POS_INC_DELTA 19
 #define SKELETON_ANIM_FRAME_DELTA 90
@@ -104,7 +105,7 @@ void Skeleton::updateSpeed() {
 
 void Skeleton::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
 
-    bool death_speed = ySpeed > 3.2f;
+    bool death_speed = ySpeed > 3.5f;
 
     MapTile *tiles[9] = {};
     Collisions::getNeighboringTiles(global::level_generator->map_tiles, x_current_pos_in_tiles,
@@ -157,12 +158,38 @@ void Skeleton::apply_dmg(int dmg_to_apply) {
     subSpriteInfo = nullptr;
     mainSpriteInfo = nullptr;
 
-    spawn_blood();
     killed = true;
     ready_to_dispose = true;
     global::hud->draw();
     global::killed_npcs.push_back(spritesheet_type);
     mmEffect(SFX_XBREAK);
+
+    Bone *b_1 = new Bone();
+    b_1->x = x;
+    b_1->y = y - 5;
+    b_1->xSpeed = 0;
+    b_1->ySpeed = -1.4f;
+    b_1->animFrame=2;
+    b_1->init();
+    
+    Bone *b_2 = new Bone();
+    b_2->x = x + 5;
+    b_2->y = y - 2;
+    b_2->xSpeed = -1.5f;
+    b_2->ySpeed = -1.6f;
+    b_1->animFrame=6;
+    b_2->init();
+
+    Bone *b_3 = new Bone();
+    b_3->x = x - 5;
+    b_3->y = y - 2;
+    b_3->xSpeed = 1.5f;
+    b_3->ySpeed = -1.7f;
+    b_3->init();
+
+    global::sprites.push_back(b_1);
+    global::sprites.push_back(b_2);
+    global::sprites.push_back(b_3);
 
 }
 
