@@ -40,12 +40,12 @@ public:
 
     int dollars_buffer{};
     int dollars_timer{};
-    //it has to be zero, to pass dollars from dollars_buffer to dollars
+    //it has to be zero, to pass money from dollars_buffer to money
     int collecting_timer{};
 
     int hearts{};
     int bombs{};
-    int dollars{};
+    int money{};
     int ropes{};
 
     double time_spent_on_level{};
@@ -65,24 +65,29 @@ public:
     int items_offset_y{};
 
     void update();
-    void collectedMoniez(int value);
+    void add_moniez_on_collected_loot(int value);
 
     void draw_on_level_done();
     void draw_scores();
 
-    void hide();
+    void hide_hud_sprites();
 
-    void show();
+    void show_hud_sprites();
 
-    void initSprites();
+    void init_sprites();
 
-    void set_position();
+    void set_hud_sprites_attributes();
 
-    void next_item();
-
-    void draw_item_shop(char *item_name, int i);
+    void increment_offset_on_grabbed_item();
 
     void debug_oam();
+
+    void draw_collected_loot();
+
+    void draw_killed_npcs();
+
+
+    void hide_hud();
 };
 
 

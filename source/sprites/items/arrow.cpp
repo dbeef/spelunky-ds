@@ -3,7 +3,6 @@
 //
 
 #include <cmath>
-#include <iostream>
 #include <maxmod9.h>
 #include "../../globals_declarations.h"
 #include "../main_dude/main_dude.h"
@@ -78,7 +77,7 @@ void Arrow::draw() {
 
     if (kill_mobs_if_thrown(3)) {
         ready_to_dispose = true;
-    } else if (thrown && (abs(xSpeed) > 1.5f || abs(ySpeed) > 1.5) && kill_main_dude_if_thrown(3)) {
+    } else if (thrown && (fabs(xSpeed) > 1.5f || fabs(ySpeed) > 1.5) && kill_main_dude_if_thrown(3)) {
         ready_to_dispose = true;
         spawn_blood();
 
@@ -104,11 +103,12 @@ void Arrow::draw() {
 
 
         if (global::hud->hearts <= 0) {
-            global::hud->hide();
+            global::hud->hide_hud_sprites();
             global::main_dude->ySpeed = -MAIN_DUDE_JUMP_SPEED * 0.25;
             global::main_dude->dead = true;
             mmEffect(SFX_XDIE);
             sound::stop_cave_music();
+            consoleClear();
 
         } else
             mmEffect(SFX_XHIT);

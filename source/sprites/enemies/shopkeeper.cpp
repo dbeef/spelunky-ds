@@ -2,7 +2,7 @@
 // Created by xdbeef on 25.05.18.
 //
 
-#include <iostream>
+#include <cstdlib>
 #include "shopkeeper.h"
 #include "../../globals_declarations.h"
 #include "../../collisions/collisions.h"
@@ -275,7 +275,6 @@ void Shopkeeper::apply_dmg(int dmg_to_apply) {
 
     if (hitpoints <= 0) {
         global::hud->disable_all_prompts();
-        global::hud->draw();
         de_shopify_all_items();
         global::game_state->robbed_killed_shopkeeper = true;
         killed = true;

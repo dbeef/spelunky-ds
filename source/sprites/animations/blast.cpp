@@ -2,6 +2,7 @@
 // Created by xdbeef on 23.06.18.
 //
 
+#include <cstdio>
 #include "../../../build/gfx_got_collectible.h"
 #include "blast.h"
 #include "../../globals_declarations.h"
@@ -36,6 +37,16 @@ void Blast::draw() {
         subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
         mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
 
+        mainSpriteInfo->entry->vFlip = false;
+        subSpriteInfo->entry->vFlip = false;
+
+        mainSpriteInfo->entry->isHidden = false;
+        subSpriteInfo->entry->isHidden = false;
+    } else {
+
+        mainSpriteInfo->entry->isHidden = true;
+        subSpriteInfo->entry->isHidden = true;
+
         if (sprite_state == SpriteState::W_LEFT) {
             mainSpriteInfo->entry->hFlip = true;
             subSpriteInfo->entry->hFlip = true;
@@ -43,15 +54,6 @@ void Blast::draw() {
             mainSpriteInfo->entry->hFlip = false;
             subSpriteInfo->entry->hFlip = false;
         }
-
-        mainSpriteInfo->entry->vFlip = false;
-        subSpriteInfo->entry->vFlip = false;
-
-        mainSpriteInfo->entry->isHidden = false;
-        subSpriteInfo->entry->isHidden = false;
-    } else {
-        mainSpriteInfo->entry->isHidden = true;
-        subSpriteInfo->entry->isHidden = true;
     }
 
     set_position();
@@ -91,12 +93,6 @@ void Blast::set_position() {
 
     mainSpriteInfo->entry->y = main_y - SHOTGUN_FIRING_OFFSET_Y;
     subSpriteInfo->entry->y = sub_y - SHOTGUN_FIRING_OFFSET_Y;
-
-    mainSpriteInfo->entry->vFlip = false;
-    mainSpriteInfo->entry->hFlip = false;
-
-    subSpriteInfo->entry->vFlip = false;
-    subSpriteInfo->entry->hFlip = false;
 
     if (sprite_state == SpriteState::W_LEFT) {
         mainSpriteInfo->entry->x = main_x - SHOTGUN_FIRING_OFFSET_X;

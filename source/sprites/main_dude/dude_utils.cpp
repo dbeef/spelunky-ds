@@ -4,7 +4,6 @@
 
 #include <maxmod9.h>
 #include <cstdlib>
-#include <iostream>
 #include "../../globals_declarations.h"
 #include "../collectibles/pistol.h"
 #include "../collectibles/shotgun.h"
@@ -20,6 +19,7 @@
 #include "../items/spike_shoes.h"
 #include "../items/cape.h"
 #include "../items/jetpack.h"
+
 
 void MainDude::throw_item() {
 
@@ -153,7 +153,7 @@ void MainDude::spawn_carried_items() {
         springShoes->bought = true;
         springShoes->init();
         global::sprites.push_back(springShoes);
-        global::hud->next_item();
+        global::hud->increment_offset_on_grabbed_item();
     }
 
     if (carrying_spike_shoes) {
@@ -164,7 +164,7 @@ void MainDude::spawn_carried_items() {
         spikeShoes->bought = true;
         spikeShoes->init();
         global::sprites.push_back(spikeShoes);
-        global::hud->next_item();
+        global::hud->increment_offset_on_grabbed_item();
     }
 
     if (carrying_compass) {
@@ -175,7 +175,7 @@ void MainDude::spawn_carried_items() {
         compass->bought = true;
         compass->init();
         global::sprites.push_back(compass);
-        global::hud->next_item();
+        global::hud->increment_offset_on_grabbed_item();
     }
     if (carrying_glove) {
         Glove *glove = new Glove();
@@ -185,7 +185,7 @@ void MainDude::spawn_carried_items() {
         glove->bought = true;
         glove->init();
         global::sprites.push_back(glove);
-        global::hud->next_item();
+        global::hud->increment_offset_on_grabbed_item();
     }
     if (carrying_cape) {
         Cape *cape = new Cape();
@@ -195,7 +195,7 @@ void MainDude::spawn_carried_items() {
         cape->bought = true;
         cape->init();
         global::sprites.push_back(cape);
-        global::hud->next_item();
+        global::hud->increment_offset_on_grabbed_item();
     }
     if (carrying_jetpack) {
         Jetpack *jetpack = new Jetpack();
@@ -205,7 +205,7 @@ void MainDude::spawn_carried_items() {
         jetpack->bought = true;
         jetpack->init();
         global::sprites.push_back(jetpack);
-        global::hud->next_item();
+        global::hud->increment_offset_on_grabbed_item();
     }
     if (carrying_mitt) {
         Mitt *mitt = new Mitt();
@@ -215,7 +215,7 @@ void MainDude::spawn_carried_items() {
         mitt->bought = true;
         mitt->init();
         global::sprites.push_back(mitt);
-        global::hud->next_item();
+        global::hud->increment_offset_on_grabbed_item();
     }
     if (carrying_shotgun) {
         holding_item = true;
@@ -243,9 +243,9 @@ void MainDude::apply_crawling_sprite() {
     u8 *offset;
 
     if (sprite_state == SpriteState::W_LEFT)
-        frame = animFrame + (4) * SPRITESHEET_ROW_WIDTH;
+        frame = animFrame + (4) * MAIN_DUDE_SPRITESHEET_ROW_WIDTH;
     else
-        frame = animFrame + (5) * SPRITESHEET_ROW_WIDTH + 3;
+        frame = animFrame + (5) * MAIN_DUDE_SPRITESHEET_ROW_WIDTH + 3;
 
     offset = frameGfx + frame * MAIN_DUDE_SPRITE_WIDTH * MAIN_DUDE_SPRITE_HEIGHT / 2;
     main_spelunker->updateFrame(offset, sprite_width * sprite_height);
@@ -258,10 +258,10 @@ void MainDude::apply_hanging_on_tile_sprite() {
     u8 *offset;
 
     if (hanging_on_tile_right) {
-        frame = (2 * SPRITESHEET_ROW_WIDTH) + 1;
+        frame = (2 * MAIN_DUDE_SPRITESHEET_ROW_WIDTH) + 1;
         offset = frameGfx + frame * MAIN_DUDE_SPRITE_WIDTH * MAIN_DUDE_SPRITE_HEIGHT / 2;
     } else if (hanging_on_tile_left) {
-        frame = (2 * SPRITESHEET_ROW_WIDTH);
+        frame = (2 * MAIN_DUDE_SPRITESHEET_ROW_WIDTH);
         offset = frameGfx + frame * MAIN_DUDE_SPRITE_WIDTH * MAIN_DUDE_SPRITE_HEIGHT / 2;
     }
 
@@ -275,10 +275,10 @@ void MainDude::apply_whip_sprite() {
     u8 *offset;
 
     if (sprite_state == SpriteState::W_LEFT) {
-        frame = (9 * SPRITESHEET_ROW_WIDTH) + 2 + animFrame;
+        frame = (9 * MAIN_DUDE_SPRITESHEET_ROW_WIDTH) + 2 + animFrame;
         offset = frameGfx + frame * MAIN_DUDE_SPRITE_WIDTH * MAIN_DUDE_SPRITE_HEIGHT / 2;
     } else if (sprite_state == 0) {
-        frame = (10 * SPRITESHEET_ROW_WIDTH) + 2 + animFrame;
+        frame = (10 * MAIN_DUDE_SPRITESHEET_ROW_WIDTH) + 2 + animFrame;
         offset = frameGfx + frame * MAIN_DUDE_SPRITE_WIDTH * MAIN_DUDE_SPRITE_HEIGHT / 2;
     }
 
@@ -293,9 +293,9 @@ void MainDude::apply_pushing_sprite() {
     u8 *offset;
 
     if (pushing_left)
-        frame = animFrame + (7) * SPRITESHEET_ROW_WIDTH;
+        frame = animFrame + (7) * MAIN_DUDE_SPRITESHEET_ROW_WIDTH;
     else
-        frame = animFrame + (8) * SPRITESHEET_ROW_WIDTH + 1;
+        frame = animFrame + (8) * MAIN_DUDE_SPRITESHEET_ROW_WIDTH + 1;
 
 
     offset = frameGfx + frame * MAIN_DUDE_SPRITE_WIDTH * MAIN_DUDE_SPRITE_HEIGHT / 2;
@@ -312,7 +312,7 @@ void MainDude::apply_stunned_sprite() {
     if (animFrame > 4)
         animFrame = 0;
 
-    frame = (3 * SPRITESHEET_ROW_WIDTH) + animFrame;
+    frame = (3 * MAIN_DUDE_SPRITESHEET_ROW_WIDTH) + animFrame;
     offset = frameGfx + frame * MAIN_DUDE_SPRITE_WIDTH * MAIN_DUDE_SPRITE_HEIGHT / 2;
     main_spelunker->updateFrame(offset, sprite_width * sprite_height);
     sub_spelunker->updateFrame(offset, sprite_width * sprite_height);
@@ -327,7 +327,7 @@ void MainDude::apply_climbing_sprite() {
         if (animFrame >= 12)
             animFrame = 0;
 
-        frame = ((12) * SPRITESHEET_ROW_WIDTH) + animFrame + 2;
+        frame = ((12) * MAIN_DUDE_SPRITESHEET_ROW_WIDTH) + animFrame + 2;
         offset = frameGfx + frame * MAIN_DUDE_SPRITE_WIDTH * MAIN_DUDE_SPRITE_HEIGHT / 2;
         main_spelunker->updateFrame(offset, sprite_width * sprite_height);
         sub_spelunker->updateFrame(offset, sprite_width * sprite_height);
@@ -337,7 +337,7 @@ void MainDude::apply_climbing_sprite() {
         if (animFrame >= 6)
             animFrame = 0;
 
-        frame = ((16) * SPRITESHEET_ROW_WIDTH) + animFrame;
+        frame = ((16) * MAIN_DUDE_SPRITESHEET_ROW_WIDTH) + animFrame;
         offset = frameGfx + frame * MAIN_DUDE_SPRITE_WIDTH * MAIN_DUDE_SPRITE_HEIGHT / 2;
         main_spelunker->updateFrame(offset, sprite_width * sprite_height);
         sub_spelunker->updateFrame(offset, sprite_width * sprite_height);
@@ -352,9 +352,9 @@ void MainDude::apply_dead_sprite() {
     u8 *offset;
 
     if (bottomCollision) {
-        frame = ((2) * SPRITESHEET_ROW_WIDTH) + 5;
+        frame = ((2) * MAIN_DUDE_SPRITESHEET_ROW_WIDTH) + 5;
     } else
-        frame = ((2) * SPRITESHEET_ROW_WIDTH) + 4;
+        frame = ((2) * MAIN_DUDE_SPRITESHEET_ROW_WIDTH) + 4;
 
     offset = frameGfx + frame * MAIN_DUDE_SPRITE_WIDTH * MAIN_DUDE_SPRITE_HEIGHT / 2;
     main_spelunker->updateFrame(offset, sprite_width * sprite_height);
@@ -367,10 +367,10 @@ void MainDude::apply_walking_sprite() {
     u8 *offset;
 
     if (sprite_state == SpriteState::W_LEFT) {
-        frame = sprite_state * FRAMES_PER_ANIMATION;
+        frame = sprite_state * MAIN_DUDE_FRAMES_PER_ANIMATION;
         offset = frameGfx + frame * MAIN_DUDE_SPRITE_WIDTH * MAIN_DUDE_SPRITE_HEIGHT / 2;
     } else if (sprite_state == SpriteState::W_RIGHT) {
-        frame = sprite_state * FRAMES_PER_ANIMATION;
+        frame = sprite_state * MAIN_DUDE_FRAMES_PER_ANIMATION;
         offset = frameGfx + frame * MAIN_DUDE_SPRITE_WIDTH * MAIN_DUDE_SPRITE_HEIGHT / 2;
     }
     main_spelunker->updateFrame(offset, sprite_width * sprite_height);
@@ -384,14 +384,14 @@ void MainDude::apply_falling_sprite() {
     u8 *offset;
 
     if (abs(xSpeed) != 0) {
-        frame = animFrame + sprite_state * FRAMES_PER_ANIMATION;
+        frame = animFrame + sprite_state * MAIN_DUDE_FRAMES_PER_ANIMATION;
         offset = frameGfx + frame * MAIN_DUDE_SPRITE_WIDTH * MAIN_DUDE_SPRITE_HEIGHT / 2;
     } else {
         if (sprite_state == SpriteState::W_LEFT) {
-            frame = (2 * SPRITESHEET_ROW_WIDTH) + 2;
+            frame = (2 * MAIN_DUDE_SPRITESHEET_ROW_WIDTH) + 2;
             offset = frameGfx + frame * MAIN_DUDE_SPRITE_WIDTH * MAIN_DUDE_SPRITE_HEIGHT / 2;
         } else if (sprite_state == SpriteState::W_RIGHT) {
-            frame = (2 * SPRITESHEET_ROW_WIDTH) + 3;
+            frame = (2 * MAIN_DUDE_SPRITESHEET_ROW_WIDTH) + 3;
             offset = frameGfx + frame * MAIN_DUDE_SPRITE_WIDTH * MAIN_DUDE_SPRITE_HEIGHT / 2;
         }
 
@@ -405,7 +405,7 @@ void MainDude::apply_exiting_level_sprite() {
     int frame;
     u8 *offset;
 
-    frame = ((13) * SPRITESHEET_ROW_WIDTH) + animFrame + 2;
+    frame = ((13) * MAIN_DUDE_SPRITESHEET_ROW_WIDTH) + animFrame + 2;
     offset = frameGfx + frame * MAIN_DUDE_SPRITE_WIDTH * MAIN_DUDE_SPRITE_HEIGHT / 2;
     main_spelunker->updateFrame(offset, sprite_width * sprite_height);
     sub_spelunker->updateFrame(offset, sprite_width * sprite_height);
@@ -415,7 +415,7 @@ void MainDude::apply_exiting_level_sprite() {
 void MainDude::apply_blinking_on_damage() {
 
     if (!global::game_state->levels_transition_screen) {
-        if (time_since_last_damage < DAMAGE_PROTECTION_TIME) {
+        if (time_since_last_damage < MAIN_DUDE_DAMAGE_PROTECTION_TIME) {
             if (time_since_last_damage % 100 < 50) {
                 main_spelunker->entry->isHidden = true;
                 sub_spelunker->entry->isHidden = true;
@@ -463,7 +463,7 @@ void MainDude::can_hang_on_tile(MapTile **neighboringTiles) {
                    (this->x >= (neighboringTiles[RIGHT_MIDDLE]->x * 16) - 16));
     }
 
-    if ((y_bound && x_bound) && hanging_timer > MIN_HANGING_TIME) {
+    if ((y_bound && x_bound) && hanging_timer > MAIN_DUDE_MIN_HANGING_TIME) {
 
         if (rightCollision && neighboringTiles[LEFT_MIDDLE]->collidable) {
             this->y = (neighboringTiles[LEFT_MIDDLE]->y * 16);
@@ -489,7 +489,7 @@ void MainDude::apply_dmg(int dmg_to_apply) {
         //fixme some enum that would indicate 'instant death, no matter for hp quantity' or a function kill_instantly
         //to differentiate
 
-        global::hud->hide();
+        global::hud->hide_hud_sprites();
         global::main_dude->ySpeed = -MAIN_DUDE_JUMP_SPEED * 0.25;
         global::main_dude->dead = true;
         global::main_dude->climbing = false;
@@ -499,6 +499,7 @@ void MainDude::apply_dmg(int dmg_to_apply) {
         global::main_dude->hanging_on_tile_right = false;
         global::main_dude->pushing_left = false;
         global::main_dude->pushing_right = false;
+        consoleClear();
 
         mmEffect(SFX_XDIE);
     }

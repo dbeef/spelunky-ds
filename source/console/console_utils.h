@@ -18,7 +18,7 @@ namespace console {
 
         //The default instance utilizes the sub display, approximatly 15KiB of vram C starting
         //at tile base 0 and 2KiB of map at map base 30.
-        consoleInit(global::printConsole, OBJPRIORITY_0, BgType_Text4bpp, BgSize_T_256x256, map_base, tile_base, true, false);
+        consoleInit(global::print_console, OBJPRIORITY_0, BgType_Text4bpp, BgSize_T_256x256, map_base, tile_base, true, false);
 
         ConsoleFont font;
 
@@ -29,7 +29,7 @@ namespace console {
         font.bpp = 4;
         font.asciiOffset = 32;
         font.convertSingleColor = true;
-        consoleSetFont(global::printConsole, &font);
+        consoleSetFont(global::print_console, &font);
     }
 
 }

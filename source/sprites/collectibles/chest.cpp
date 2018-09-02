@@ -41,7 +41,6 @@ void Chest::draw() {
         mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
         mmEffect(SFX_XCHESTOPEN);
         spawn_treasure();
-        global::hud->draw();
 
     }
 

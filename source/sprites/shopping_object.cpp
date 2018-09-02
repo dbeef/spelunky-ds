@@ -3,7 +3,6 @@
 //
 
 
-#include <iostream>
 #include "shopping_object.h"
 #include "../globals_declarations.h"
 
@@ -41,9 +40,9 @@ bool ShoppingObject::shopping_transaction(MovingObject *m) {
     if (!bought) {
         console_display_name_cost();
         if (global::input_handler->l_bumper_down) {
-            if (global::hud->dollars >= cost) {
+            if (global::hud->money >= cost) {
                 bought = true;
-                global::hud->dollars -= cost;
+                global::hud->money -= cost;
                 global::hud->disable_all_prompts();
                 global::hud->recently_bough_item = true;
                 global::hud->recently_bought_item_name = name;

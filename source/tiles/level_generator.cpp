@@ -3,7 +3,6 @@
 //
 
 #include <cstdlib>
-#include <iostream>
 #include <cstring>
 #include "level_generator.h"
 #include "../globals_declarations.h"
@@ -22,12 +21,12 @@
 
 
 void LevelGenerator::render_tiles_on_base_map() {
-    dmaCopyHalfWords(DMA_CHANNEL, global::base_map, global::current_map, sizeof(global::current_map));
+    dmaCopyHalfWords(DEFAULT_DMA_CHANNEL, global::base_map, global::current_map, sizeof(global::current_map));
     tiles_to_map();
     sectorize_map();
-    dmaCopyHalfWords(DMA_CHANNEL, global::current_map, bgGetMapPtr(global::bg_main_address),
+    dmaCopyHalfWords(DEFAULT_DMA_CHANNEL, global::current_map, bgGetMapPtr(global::bg_main_address),
                      sizeof(global::current_map));
-    dmaCopyHalfWords(DMA_CHANNEL, global::current_map, bgGetMapPtr(global::bg_sub_address),
+    dmaCopyHalfWords(DEFAULT_DMA_CHANNEL, global::current_map, bgGetMapPtr(global::bg_sub_address),
                      sizeof(global::current_map));
 }
 

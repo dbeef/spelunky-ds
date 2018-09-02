@@ -3,7 +3,6 @@
 //
 #include <nds.h>
 #include <nds/arm9/input.h>
-#include <iostream>
 #include "input_handler.h"
 #include "../globals_declarations.h"
 

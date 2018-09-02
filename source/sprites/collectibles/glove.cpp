@@ -3,7 +3,6 @@
 //
 
 
-#include <iostream>
 #include "../spritesheet_type.hpp"
 #include "mitt.h"
 #include "glove.h"
@@ -167,7 +166,7 @@ void Glove::equip() {
         set_position();
         x = HUD_ITEMS_ROW_X;
         y = global::hud->items_offset_y;
-        global::hud->next_item();
+        global::hud->increment_offset_on_grabbed_item();
     } else {
         mainSpriteInfo->entry->isHidden = true;
         subSpriteInfo->entry->isHidden = true;

@@ -3,7 +3,7 @@
 //
 // Created by xdbeef on 18.03.18.
 //
-#include <iostream>
+#include <cmath>
 #include "collisions.h"
 #include "../sprites/main_dude/main_dude.h"
 #include "../globals_declarations.h"
@@ -95,7 +95,7 @@ bool Collisions::checkBottomCollision(MapTile *neighboringTiles[9], int *xPos, i
 
                 if (bounce) {
                     *ySpeed = (-1) * bouncing_factor * *ySpeed;
-                    if (abs(*ySpeed) < 0.15f)
+                    if (fabs(*ySpeed) < 0.15f)
                         *ySpeed = 0;
                 } else
                     *ySpeed = 0;

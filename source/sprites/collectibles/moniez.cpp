@@ -31,7 +31,6 @@ void Moniez::draw() {
 
     if (!collected && collectible_timer >= 500 &&
         Collisions::checkCollisionWithMainDudeWidthBoundary(x, y, physical_width, physical_height, 8)) {
-        global::hud->draw();
 
         if (spritesheet_type == SpritesheetType::MONIEZ_RUBY) {
             mmEffect(SFX_XGEM);
@@ -39,7 +38,7 @@ void Moniez::draw() {
             mmEffect(SFX_XCOIN);
         }
 
-        global::hud->collectedMoniez(value);
+        global::hud->add_moniez_on_collected_loot(value);
         collected = true;
         subSpriteInfo->entry->isHidden = true;
         mainSpriteInfo->entry->isHidden = true;

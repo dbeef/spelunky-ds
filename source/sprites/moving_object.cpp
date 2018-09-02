@@ -5,7 +5,6 @@
 
 #include <maxmod9.h>
 #include <cstdlib>
-#include <iostream>
 #include "moving_object.h"
 #include "../globals_declarations.h"
 #include "../tiles/map_utils.h"
@@ -42,10 +41,12 @@ void MovingObject::deal_damage_main_dude_on_collision(int dmg_to_apply) {
         global::hud->draw();
 
         if (global::hud->hearts <= 0) {
-            global::hud->hide();
+            global::hud->hide_hud_sprites();
             global::main_dude->ySpeed = -MAIN_DUDE_JUMP_SPEED * 0.25;
             global::main_dude->dead = true;
             mmEffect(SFX_XDIE);
+            consoleClear();
+
             sound::stop_cave_music();
         } else
             mmEffect(SFX_XHIT);

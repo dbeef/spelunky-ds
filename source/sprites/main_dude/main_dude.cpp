@@ -36,7 +36,7 @@ void MainDude::handle_key_input() {
             } else if (ySpeed > 0 && carrying_cape) {
                 using_cape = true;
             }
-            if ((hanging_on_tile_left || hanging_on_tile_right) && hanging_timer > MIN_HANGING_TIME &&
+            if ((hanging_on_tile_left || hanging_on_tile_right) && hanging_timer > MAIN_DUDE_MIN_HANGING_TIME &&
                 time_since_last_jump > 100) {
 
                 mmEffect(SFX_XJUMP);
@@ -89,8 +89,8 @@ void MainDude::handle_key_input() {
             sprite_state = W_LEFT;
             hanging_on_tile_left = false;
             if (!(hanging_on_tile_right || hanging_on_tile_left) && !climbing)
-                if (speed_inc_timer > X_SPEED_DELTA_TIME_MS) {
-                    xSpeed -= X_SPEED_DELTA_VALUE;
+                if (speed_inc_timer > MAIN_DUDE_X_SPEED_DELTA_TIME_MS) {
+                    xSpeed -= MAIN_DUDE_X_SPEED_DELTA_VALUE;
                     speed_inc_timer = 0;
                 }
 
@@ -101,8 +101,8 @@ void MainDude::handle_key_input() {
             sprite_state = W_RIGHT;
             hanging_on_tile_right = false;
             if (!(hanging_on_tile_right || hanging_on_tile_left) && !climbing) {
-                if (speed_inc_timer > X_SPEED_DELTA_TIME_MS) {
-                    xSpeed += X_SPEED_DELTA_VALUE;
+                if (speed_inc_timer > MAIN_DUDE_X_SPEED_DELTA_TIME_MS) {
+                    xSpeed += MAIN_DUDE_X_SPEED_DELTA_VALUE;
                     speed_inc_timer = 0;
                 }
             }
@@ -274,7 +274,7 @@ void MainDude::updateTimers() {
     if ((leftCollision || rightCollision) && !crawling && !hanging_on_tile_left && !hanging_on_tile_right &&
         (global::input_handler->left_key_held || global::input_handler->right_key_held)) {
         pushing_timer += *global::timer;
-        if (pushing_timer > PUSHING_TIME) {
+        if (pushing_timer > MAIN_DUDE_PUSHING_TIME) {
             if (leftCollision) {
                 pushing_right = true;
                 pushing_timer = 0;
@@ -290,7 +290,7 @@ void MainDude::updateTimers() {
         pushing_right = false;
     }
 
-    if (animFrame >= FRAMES_PER_ANIMATION && !crawling && !pushing_left && !pushing_right && !exiting_level)
+    if (animFrame >= MAIN_DUDE_FRAMES_PER_ANIMATION && !crawling && !pushing_left && !pushing_right && !exiting_level)
         animFrame = 0;
 
     if (animFrame >= 9 && crawling)
@@ -303,7 +303,7 @@ void MainDude::updateTimers() {
     if (!bottomCollision && !hanging_on_tile_left && !hanging_on_tile_right && !climbing)
         jumping_timer += *global::timer;
 
-    if (bottomCollision && jumping_timer > STUN_FALLING_TIME) {
+    if (bottomCollision && jumping_timer > MAIN_DUDE_STUN_FALLING_TIME) {
 
 
         if (global::hud->hearts > 0) {
@@ -329,9 +329,10 @@ void MainDude::updateTimers() {
         global::sprites.push_back(f_right);
 
         if (global::hud->hearts == 0) {
-            global::hud->hide();
+            global::hud->hide_hud_sprites();
             global::main_dude->ySpeed = -MAIN_DUDE_JUMP_SPEED * 0.25;
             global::main_dude->dead = true;
+            consoleClear();
 
             mmEffect(SFX_XDIE);
             sound::stop_cave_music();
@@ -344,13 +345,13 @@ void MainDude::updateTimers() {
         mmEffect(SFX_XLAND);
 
         jumping_timer = 0;
-    } else if (bottomCollision && jumping_timer < STUN_FALLING_TIME) {
+    } else if (bottomCollision && jumping_timer < MAIN_DUDE_STUN_FALLING_TIME) {
         jumping_timer = 0;
     }
 
     if (stunned)
         stunned_timer += *global::timer;
-    if (stunned_timer > STUN_TIME) {
+    if (stunned_timer > MAIN_DUDE_STUN_TIME) {
         stunned = false;
         stunned_timer = 0;
     }
@@ -384,7 +385,7 @@ void MainDude::updateSpeed() {
 
     if (change_pos) {
 
-        apply_friction(FRICTION_DELTA_SPEED * 0.9f);
+        apply_friction(MAIN_DUDE_FRICTION_DELTA_SPEED * 0.9f);
         update_position();
         pos_inc_timer = 0;
 
@@ -441,7 +442,7 @@ void MainDude::init() {
 
     initSprite();
     frameGfx = (u8 *) gfx_spelunkerTiles;
-    time_since_last_damage = DAMAGE_PROTECTION_TIME + 1;
+    time_since_last_damage = MAIN_DUDE_DAMAGE_PROTECTION_TIME + 1;
 
     whip = new Whip();
     whip->init();

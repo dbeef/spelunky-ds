@@ -14,7 +14,6 @@
 #include "rooms/exit_rooms.hpp"
 #include "rooms/closed_rooms.hpp"
 #include <algorithm>
-#include <iostream>
 #include "time/time_utils.h"
 #include "memory/oam_utils.h"
 #include "sprites/traps/spikes.h"
@@ -138,8 +137,6 @@ void gameloop::populate_cave_moniez() {
     int jars_left = 4;
     int chests_left = 3;
     int crates_left = 2;
-
-    std::cout << '\n' << '\n';
 
     for (int b = ROOMS_Y - 1; b >= 0; b--) {
         for (int a = 0; a < ROOMS_X; a++) {
@@ -294,8 +291,6 @@ void gameloop::populate_cave_npcs() {
     int snakes_left = 4;
     int spikes_left = 4;
     int cavemen_left = 3;
-
-    std::cout << '\n' << '\n';
 
     for (int b = ROOMS_Y - 1; b >= 0; b--) {
         for (int a = 0; a < ROOMS_X; a++) {
@@ -484,7 +479,7 @@ void gameloop::populate_cave_npcs() {
 
 void gameloop::populate_main_menu() {
 
-    global::hud->hide();
+    global::hud->hide_hud_sprites();
     global::hud->bombs = 0;
     global::hud->ropes = 0;
 

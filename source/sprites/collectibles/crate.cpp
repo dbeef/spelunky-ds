@@ -41,7 +41,6 @@ void Crate::draw() {
     }
 
     if (check_if_can_be_opened()) {
-        global::hud->draw();
         mmEffect(SFX_XPICKUP);
         if (hold_by_main_dude) {
             hold_by_main_dude = false;
@@ -176,7 +175,6 @@ void Crate::drop_loot() {
 
         g->init();
         global::sprites.push_back(g);
-        global::hud->draw();
     } else {
         collectibles_utils::spawn_random_item(this->x, this->y);
     }

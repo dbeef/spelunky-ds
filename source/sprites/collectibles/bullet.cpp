@@ -2,7 +2,6 @@
 // Created by xdbeef on 17.05.18.
 //
 
-#include <iostream>
 #include "../../globals_declarations.h"
 #include "../../collisions/collisions.h"
 #include "../../../build/gfx_spike_collectibles_flame.h"

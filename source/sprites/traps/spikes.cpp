@@ -122,9 +122,10 @@ void Spikes::kill_main_dude() {
     global::hud->hearts = 0;
     global::hud->draw();
 
-    global::hud->hide();
+    global::hud->hide_hud_sprites();
     global::main_dude->ySpeed = -MAIN_DUDE_JUMP_SPEED * 0.25;
     global::main_dude->dead = true;
+    consoleClear();
 
 }
 

@@ -34,7 +34,7 @@ namespace oam_utils {
                 }
             }
 
-            global::hud->initSprites();
+            global::hud->init_sprites();
 
             global::clean_unused_oam_timer = 0;
         }

@@ -17,3 +17,150 @@ Quite easy to overflow that number.
 Game mechanics:
 - Ladders are not destructable, neither are ropes.
 - Rope is up to 8 tiles height (8 x 16px)
+
+
+**** SNIPPETS
+
+> Streaming music from filesystem
+
+/*
+
+
+bool done = false;
+FILE *pFile;
+
+//---------------------------------------------------------------------------------
+void dirlist(const char *path) {
+//---------------------------------------------------------------------------------
+
+    DIR *pdir = opendir(path);
+
+    if (pdir != NULL) {
+
+        while (true) {
+            struct dirent *pent = readdir(pdir);
+            if (pent == NULL) break;
+
+            if (strcmp(".", pent->d_name) != 0 && strcmp("..", pent->d_name) != 0) {
+                if (pent->d_type == DT_DIR) {
+                    printf("%s/%s <DIR>\n", (strcmp("/", path) == 0) ? "" : path, pent->d_name);
+                    char *dnbuf = (char *) malloc(strlen(pent->d_name) + strlen(path) + 2);
+                    sprintf(dnbuf, "%s/%s", (strcmp("/", path) == 0) ? "" : path, pent->d_name);
+                    dirlist(dnbuf);
+                    free(dnbuf);
+                } else {
+                    printf("%s/%s\n", (strcmp("/", path) == 0) ? "" : path, pent->d_name);
+                }
+            }
+        }
+
+        closedir(pdir);
+    } else {
+        printf("OPENDIR() FAILIURE.\n");
+    }
+}
+
+
+mm_word stream(mm_word length, mm_addr dest, mm_stream_formats format) {
+    size_t samplesize;
+    switch (format) {
+        case MM_STREAM_8BIT_MONO:
+            samplesize = 1;
+            break;
+        case MM_STREAM_8BIT_STEREO:
+            samplesize = 2;
+            break;
+        case MM_STREAM_16BIT_MONO:
+            samplesize = 2;
+            break;
+        case MM_STREAM_16BIT_STEREO:
+            samplesize = 4;
+            break;
+    }
+
+    int res = fread(dest, samplesize, length, pFile);
+
+    if (res) {
+        length = res;
+        std::cout << length << '\n';
+    } else {
+        //End of file
+        std::cout << "END OF FILE" << '\n';
+        length = 0;
+        done = true;
+    }
+
+    return length; //Return the number of samples read
+}
+
+*/
+/*
+    if (nitroFSInit(NULL)) {
+
+        dirlist("/");
+
+        {
+            // now, try reading a file to make sure things are working OK.
+            FILE *inf = fopen("file1.txt", "rb");
+            if (inf) {
+                int len;
+
+                fseek(inf, 0, SEEK_END);
+                len = ftell(inf);
+                fseek(inf, 0, SEEK_SET);
+
+                printf("\nTHE FOLLOWING %d BYTES MESSAGE\nfrom file1.txt is\nbrought to you by fread:\n", len);
+                {
+                    char *entireFile = (char *) malloc(len + 1);
+                    entireFile[len] = 0;
+                    if (fread(entireFile, 1, len, inf) != len)
+                        printf("SAVAGE ERROR READING BYTES FROM THE FILE!\n");
+                    else
+                        printf("%s\n-DONE-\n", entireFile);
+                    free(entireFile);
+                }
+
+                fclose(inf);
+            }
+        }
+
+        printf("HERE IS THE DIRLIST ONCE MORE:\n");
+        dirlist("/");
+
+    } else {
+        printf("NITROFSINIT FAILIURE: TERMINATIONG\n");
+    }*/
+
+/*
+
+    timerStart(0, ClockDivider_1024, 1000, 0);
+
+    mm_stream mystream;
+    mystream.buffer_length = 1024; //16kb
+    mystream.callback = stream;
+    mystream.timer = MM_TIMER1;
+    mystream.manual = false;
+    mystream.sampling_rate = 16000;
+    mystream.format = MM_STREAM_8BIT_MONO;
+
+    pFile = fopen("xpause.raw", "rb");
+
+    mmStreamOpen(&mystream);
+
+    int timer = 0;
+
+    while (1) {
+//        mmStreamUpdate();
+        swiWaitForVBlank();
+        if (done) {
+            mmStreamClose();
+            fclose(pFile);
+        }
+//        timer += (timerElapsed(0) / TICKS_PER_SECOND);
+//        if(timer > 100 * 1000) {
+//            timer = 0;
+//
+//        }
+
+    }
+*/

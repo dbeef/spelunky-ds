@@ -5,7 +5,6 @@
 #include <nds.h>
 #include <nds/arm9/cache.h>
 #include <assert.h>
-#include <iostream>
 #include "oam_manager.h"
 #include "../globals_declarations.h"
 #include "../camera/layer_level.hpp"
@@ -45,7 +44,7 @@ void OAMManager::clearAllSprites() {
     current_oam_id_tiles = 0;
     nextAvailableTileIdx = 0;
 
-    global::spriteInfos.clear();
+    global::sprite_infos.clear();
 
     /*
      * For all 128 sprites on the DS, disable and clear any attributes they
@@ -170,18 +169,18 @@ OAMManager::initSprite(const unsigned short pallette[], int palLen, const unsign
      */
     if (reuse_palette || reuse_tiles) {
         //Re-using already loaded palletes / tiles
-        for (int a = 0; a < global::spriteInfos.size(); a++) {
-            if (global::spriteInfos.at(a)) {
+        for (int a = 0; a < global::sprite_infos.size(); a++) {
+            if (global::sprite_infos.at(a)) {
 
-                if ((*global::spriteInfos.at(a)).spriteType == type &&
-                    (*global::spriteInfos.at(a)).oamType == oamType) {
+                if ((*global::sprite_infos.at(a)).spriteType == type &&
+                    (*global::sprite_infos.at(a)).oamType == oamType) {
 
                     if (reuse_palette) {
-                        spriteInfo->oamId_palette = (*global::spriteInfos.at(a)).oamId_palette;
-                        spriteEntry->palette = (*global::spriteInfos.at(a)).oamId_palette;
+                        spriteInfo->oamId_palette = (*global::sprite_infos.at(a)).oamId_palette;
+                        spriteEntry->palette = (*global::sprite_infos.at(a)).oamId_palette;
                     }
                     if (reuse_tiles) {
-                        spriteEntry->gfxIndex = (*(*global::spriteInfos.at(a)).entry).gfxIndex;
+                        spriteEntry->gfxIndex = (*(*global::sprite_infos.at(a)).entry).gfxIndex;
                     }
                     break;
                 }
@@ -216,7 +215,7 @@ OAMManager::initSprite(const unsigned short pallette[], int palLen, const unsign
 
     spriteInfo->oam_address = *oam_address;
 
-    global::spriteInfos.push_back(spriteInfo);
+    global::sprite_infos.push_back(spriteInfo);
 
     current_oam_id_tiles++;
 

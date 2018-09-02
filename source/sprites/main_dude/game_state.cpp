@@ -1,5 +1,8 @@
+//
+// Created by xdbeef on 27.05.18.
+//
+
 #include <maxmod9.h>
-#include <iostream>
 #include "game_state.h"
 #include "../../globals_declarations.h"
 #include "../../game_loop.h"
@@ -10,10 +13,7 @@
 #include "../enemies/damsel.h"
 #include "../animations/smooch.h"
 #include "../../sound/sound_utils.h"
-
-//
-// Created by xdbeef on 27.05.18.
-//
+#include "../../base_map.h"
 
 void GameState::reset_main_dude() {
     global::main_dude->carrying_spring_shoes = false;
@@ -37,10 +37,13 @@ void GameState::start_new_game() {
     global::hud->hearts = 4;
     global::hud->ropes = 4;
     global::hud->bombs = 4;
-    global::hud->dollars = 0;
+    global::hud->money = 0;
     global::hud->items_offset_y = 7;
-
+    global::hud->game_over_timer = 0;
     global::hud->disable_all_prompts();
+    global::hud->set_hud_sprites_attributes();
+    global::hud->draw();
+
 }
 
 void GameState::start_main_menu() {
@@ -59,7 +62,7 @@ void GameState::start_scores() {
     reset_main_dude();
 
     global::game_state->scores_screen = true;
-    global::hud->hide();
+    global::hud->hide_hud_sprites();
     global::hud->draw_scores();
     global::camera->follow_main_dude = false;
 }
@@ -105,12 +108,9 @@ void GameState::start_level_transition_screen() {
 void GameState::start_next_level() {
 
     global::hud->items_offset_y = 7;
-
     global::main_dude->holding_item = false;
-
     global::main_dude->spawn_carried_items();
-
-    global::hud->init();
+    global::hud->init_sprites();
     gameloop::populate_cave_npcs();
     gameloop::populate_cave_moniez();
     global::game_state->levels_transition_screen = false;
@@ -118,7 +118,7 @@ void GameState::start_next_level() {
     global::killed_npcs.clear();
     global::collected_loot.clear();
     global::hud->money_on_this_level = 0;
-
+    global::hud->draw();
 }
 
 void GameState::handle_changing_screens() {
@@ -127,7 +127,7 @@ void GameState::handle_changing_screens() {
         (global::main_dude->animFrame >= 16 && !global::game_state->splash_screen)) {
 
         global::main_dude->animFrame = 0;
-        dmaCopyHalfWords(DMA_CHANNEL, global::base_map, global::current_map, sizeof(global::current_map));
+        dmaCopyHalfWords(DEFAULT_DMA_CHANNEL, global::base_map, global::current_map, sizeof(global::current_map));
 
         global::level_generator->newLayout(*global::timer);
 
@@ -184,9 +184,9 @@ void GameState::handle_changing_screens() {
         //
         global::level_generator->tiles_to_map();
         sectorize_map();
-        dmaCopyHalfWords(DMA_CHANNEL, global::current_map, bgGetMapPtr(global::bg_main_address),
+        dmaCopyHalfWords(DEFAULT_DMA_CHANNEL, global::current_map, bgGetMapPtr(global::bg_main_address),
                          sizeof(global::current_map));
-        dmaCopyHalfWords(DMA_CHANNEL, global::current_map, bgGetMapPtr(global::bg_sub_address),
+        dmaCopyHalfWords(DEFAULT_DMA_CHANNEL, global::current_map, bgGetMapPtr(global::bg_sub_address),
                          sizeof(global::current_map));
         //
 

@@ -123,7 +123,6 @@ void Bat::apply_dmg(int dmg_to_apply) {
 
     killed = true;
     ready_to_dispose = true;
-    global::hud->draw();
     global::killed_npcs.push_back(spritesheet_type);
 
 }
