@@ -4,6 +4,7 @@
 
 #include <maxmod9.h>
 #include <cstdlib>
+#include <cstdio>
 #include "spider.h"
 #include "../../globals_declarations.h"
 #include "../animations/blood.h"
@@ -12,6 +13,7 @@
 #include "../../collisions/collisions.h"
 #include "../../tiles/map_utils.h"
 #include "../../../build/soundbank.h"
+#include "../sprite_utils.h"
 
 #define SPIDER_HITPOINTS 1
 #define SPIDER_POS_INC_DELTA 30
@@ -30,58 +32,54 @@ void Spider::draw() {
         return;
 
     set_position();
-
-    subSpriteInfo->entry->hFlip = true;
-    mainSpriteInfo->entry->hFlip = true;
-    mainSpriteInfo->entry->isHidden = false;
-    subSpriteInfo->entry->isHidden = false;
+    sprite_utils::set_visibility(true, mainSpriteInfo, subSpriteInfo);
+    sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);
+    sprite_utils::set_horizontal_flip(false, mainSpriteInfo, subSpriteInfo);
 
     if (!hunting)
+        //Check if main dude is direcly under the spider - intentionally not checking for terrain obstacles,
+        //like in the original game. Also check if main dude is in certain range
         hunting = abs(y - global::main_dude->y) < 9 * TILE_H && global::main_dude->x + MAIN_DUDE_PHYSICAL_WIDTH > x &&
                   global::main_dude->x < x + physical_width && global::main_dude->y > y;
-    else
+    else {
+        time_since_last_big_jump += *global::timer;
+        time_since_last_jump += *global::timer;
         animFrameTimer += *global::timer;
+    }
 
     if (animFrameTimer > SPIDER_ANIM_FRAME_DELTA) {
+
+        animFrameTimer = 0;
         animFrame++;
 
         if (jumping && animFrame >= 4) {
+            //done jumping, now still
             animFrame = 0;
             jumping = false;
         }
 
         if (hanging && hunting && animFrame >= 7) {
+            //done rotating animation, now still
             animFrame = 0;
             hanging = false;
         }
 
-        if (hanging && !hunting)
-            set_sprite_hanging();
-        else if (hanging && hunting)
-            set_sprite_flipping();
-        else if (!hanging && hunting && jumping)
-            set_sprite_jumping();
-        else
-            set_sprite_falling();
-
-        animFrameTimer = 0;
+        match_animation();
     }
 
+    if (hunting && bottomCollision && !hanging)
+        jump_to_main_dude();
 
     kill_if_whip(1);
     kill_if_main_dude_jumped_on_you(1);
     deal_damage_main_dude_on_collision(1);
-
-    if (hunting && bottomCollision && !hanging) {
-        jump_to_main_dude();
-    }
 }
 
 
 void Spider::init() {
-    initSprite();
-    random_speed = 0;
     hanging = true;
+    random_speed = 0;
+    initSprite();
 }
 
 void Spider::updateSpeed() {
@@ -94,8 +92,12 @@ void Spider::updateSpeed() {
 
     if (pos_inc_timer > SPIDER_POS_INC_DELTA) {
         update_position();
+
         if (hunting)
-            apply_gravity(GRAVITY_DELTA_SPEED * 0.8);
+            if (previously_collided)
+                apply_gravity(GRAVITY_DELTA_SPEED * 1);
+            else
+                apply_gravity(GRAVITY_DELTA_SPEED * 0.8);
 
         pos_inc_timer = 0;
     }
@@ -105,101 +107,90 @@ void Spider::updateSpeed() {
 
 void Spider::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
 
-    MapTile *tiles[9] = {};
-    Collisions::getNeighboringTiles(global::level_generator->map_tiles, x_current_pos_in_tiles,
-                                    y_current_pos_in_tiles, tiles);
+    MapTile *t[9] = {};
+    Collisions::getNeighboringTiles(global::level_generator->map_tiles,
+                                    x_current_pos_in_tiles, y_current_pos_in_tiles, t);
 
-    standingOnLeftEdge = Collisions::isStandingOnLeftEdge(tiles, x, physical_width, x_current_pos_in_tiles);
-    standingOnRightEdge = Collisions::isStandingOnRightEdge(tiles, x, physical_width, x_current_pos_in_tiles);
-    bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, physical_width, physical_height, false, 0);
-    leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, false, 0);
-    rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, false, 0);
-    upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, physical_width, false, 0);
+    standingOnLeftEdge = Collisions::isStandingOnLeftEdge(t, x, physical_width, x_current_pos_in_tiles);
+    standingOnRightEdge = Collisions::isStandingOnRightEdge(t, x, physical_width, x_current_pos_in_tiles);
+    bottomCollision = Collisions::checkBottomCollision(t, &x, &y, &ySpeed, physical_width, physical_height, false, 0);
+    leftCollision = Collisions::checkLeftCollision(t, &x, &y, &xSpeed, physical_width, physical_height, false, 0);
+    rightCollision = Collisions::checkRightCollision(t, &x, &y, &xSpeed, physical_width, physical_height, false, 0);
+    upperCollision = Collisions::checkUpperCollision(t, &x, &y, &ySpeed, physical_width, false, 0);
+
+    if (bottomCollision)
+        random_speed = 0;
+
+
+    if (!previously_collided && (leftCollision || rightCollision)) {
+
+        xSpeed = 0;
+        previously_collided = true;
+
+        if (leftCollision)
+            previous_collision_side = SpriteState::W_LEFT;
+        else
+            previous_collision_side = SpriteState::W_RIGHT;
+
+    }
 
 }
 
+//!>spider has only 1 dmg point, always kill if any dmg_apply
 void Spider::apply_dmg(int dmg_to_apply) {
 
-    //spider has only 1 dmg point, always kill if any dmg_apply
-
-    subSpriteInfo->entry->isHidden = true;
-    mainSpriteInfo->entry->isHidden = true;
-
+    sprite_utils::set_visibility(false, mainSpriteInfo, subSpriteInfo);
+    global::killed_npcs.push_back(SpriteType::S_SPIDER);
     spawn_blood();
-
     killed = true;
     ready_to_dispose = true;
-    global::killed_npcs.push_back(SpriteType::S_SPIDER);
 
 }
 
 void Spider::initSprite() {
 
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_spider_skeletonPal, gfx_spider_skeletonPalLen,
-                                                        nullptr, sprite_width * sprite_height, 16, SKELETON_SPIDER, true, false,
-                                                        LAYER_LEVEL::MIDDLE_TOP);
+                                                        nullptr, SPIDER_SPRITE_SIZE, 16, SKELETON_SPIDER, true,
+                                                        false, LAYER_LEVEL::MIDDLE_TOP);
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_spider_skeletonPal, gfx_spider_skeletonPalLen,
-                                                          nullptr, sprite_width * sprite_height, 16, SKELETON_SPIDER, true,
-                                                          false,
-                                                          LAYER_LEVEL::MIDDLE_TOP);
+                                                          nullptr, SPIDER_SPRITE_SIZE, 16, SKELETON_SPIDER, true,
+                                                          false, LAYER_LEVEL::MIDDLE_TOP);
+    match_animation();
+    set_position();
+    sprite_utils::set_visibility(true, mainSpriteInfo, subSpriteInfo);
+    sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);
+    sprite_utils::set_horizontal_flip(false, mainSpriteInfo, subSpriteInfo);
 
-    frameGfx = (u8 *) gfx_spider_skeletonTiles + sprite_width * sprite_height * 4 / 2;
-    subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
-    mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
-
-
-
-    subSpriteInfo->entry->isHidden = false;
-    mainSpriteInfo->entry->isHidden = false;
-
-    subSpriteInfo->entry->vFlip = false;
-    subSpriteInfo->entry->hFlip = false;
-
-    mainSpriteInfo->entry->vFlip = false;
-    mainSpriteInfo->entry->hFlip = false;
 }
 
 void Spider::set_sprite_hanging() {
-    frameGfx = (u8 *) gfx_spider_skeletonTiles + (sprite_width * sprite_height * (4) / 2);
-    subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
-    mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
+    frameGfx = sprite_utils::get_frame((u8 *) gfx_spider_skeletonTiles, SPIDER_SPRITE_SIZE, 4);
 }
 
 void Spider::set_sprite_flipping() {
-    frameGfx = (u8 *) gfx_spider_skeletonTiles + (sprite_width * sprite_height * (animFrame + 4) / 2);
-    subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
-    mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
+    frameGfx = sprite_utils::get_frame((u8 *) gfx_spider_skeletonTiles, SPIDER_SPRITE_SIZE, animFrame + 4);
 }
 
 void Spider::set_sprite_jumping() {
-    frameGfx = (u8 *) gfx_spider_skeletonTiles + (sprite_width * sprite_height * (animFrame) / 2);
-    subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
-    mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
+    frameGfx = sprite_utils::get_frame((u8 *) gfx_spider_skeletonTiles, SPIDER_SPRITE_SIZE, animFrame);
 }
 
 void Spider::set_sprite_falling() {
-    frameGfx = (u8 *) gfx_spider_skeletonTiles + (sprite_width * sprite_height * (0) / 2);
-
-    subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
-    mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
+    frameGfx = sprite_utils::get_frame((u8 *) gfx_spider_skeletonTiles, SPIDER_SPRITE_SIZE, 0);
 }
-
 
 void Spider::set_position() {
 
     int main_x, main_y, sub_x, sub_y;
     get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
 
-    mainSpriteInfo->entry->x = main_x;
-    subSpriteInfo->entry->x = sub_x;
-
     if (!hanging) {
-        mainSpriteInfo->entry->y = main_y - SPIDER_HANGING_OFFSET;
-        subSpriteInfo->entry->y = sub_y - SPIDER_HANGING_OFFSET;
-    } else {
-        mainSpriteInfo->entry->y = main_y;
-        subSpriteInfo->entry->y = sub_y;
+        main_y -= SPIDER_HANGING_OFFSET;
+        sub_y -= SPIDER_HANGING_OFFSET;
     }
+
+    sprite_utils::set_entry_xy(mainSpriteInfo, main_x, main_y);
+    sprite_utils::set_entry_xy(subSpriteInfo, sub_x, sub_y);
 }
 
 Spider::Spider() {
@@ -209,26 +200,96 @@ Spider::Spider() {
     sprite_width = SPIDER_SPRITE_WIDTH;
     hitpoints = SPIDER_HITPOINTS;
     spritesheet_type = SpritesheetType::SKELETON_SPIDER;
-    sprite_type = SpriteType ::S_SPIDER;
+    sprite_type = SpriteType::S_SPIDER;
 }
 
 void Spider::jump_to_main_dude() {
+
+    if (!bottomCollision || time_since_last_jump < (200 + jump_delay))
+        return;
+
+    time_since_last_jump = 0;
+
     int diff = global::main_dude->x - x > 0;
 
-    if (diff > 40)
-        diff = 40;
+    bool additional_jump_speed = false;
 
-    if (diff)
-        random_speed = 1.1 + ((rand() % diff) / 10);
+    if (diff) {
+
+        if (previously_collided && time_since_last_big_jump > 2500) {
+
+            if (previous_collision_side == SpriteState::W_RIGHT) {
+                random_speed = 0.3f;
+                xSpeed = 0.3f;
+            } else {
+                random_speed = -0.3f;
+                xSpeed = -0.3f;
+            }
+
+            additional_jump_speed = true;
+            time_since_last_big_jump = 0;
+
+        } else {
+            if (jump_delay >= 400)
+                random_speed = 1.5 + ((rand() % diff) / 10);
+            else
+                random_speed = 1.1 + ((rand() % diff) / 10);
+        }
+
+    } else {
+        if (previously_collided && time_since_last_big_jump > 2500) {
+
+            if (previous_collision_side == SpriteState::W_RIGHT) {
+                random_speed = 0.3f;
+                xSpeed = 0.3f;
+            } else {
+                random_speed = -0.3f;
+                xSpeed = -0.3f;
+            }
+
+            xSpeed = -0.3f;
+            random_speed = -0.3f;
+            additional_jump_speed = true;
+            time_since_last_big_jump = 0;
+        } else {
+            if (jump_delay >= 400)
+                random_speed = -1.5 + ((rand() % 3) / 10);
+            else
+                random_speed = -1.1 + ((rand() % 3) / 10);
+        }
+    }
+
+    if (additional_jump_speed)
+        jump_delay = rand() % 700;
     else
-        random_speed = -1.1 - ((rand() % diff) / 10);
+        jump_delay = rand() % 500;
 
     jumping = true;
     animFrame = 0;
-    ySpeed = -1.5 - ((rand() % diff) / 5);
+    previously_collided = false;
+
+    if (additional_jump_speed) {
+        ySpeed = -3.5;
+    } else
+        ySpeed = -1.6 - ((rand() % 3) / 10);
+
 }
 
 Spider::Spider(int x, int y) : Spider() {
     this->x = x;
     this->y = y;
+}
+
+void Spider::match_animation() {
+
+    if (hanging && !hunting)
+        set_sprite_hanging();
+    else if (hanging && hunting)
+        set_sprite_flipping();
+    else if (!hanging && hunting && jumping)
+        set_sprite_jumping();
+    else
+        set_sprite_falling();
+
+    sprite_utils::update_frame(frameGfx, SPIDER_SPRITE_SIZE, mainSpriteInfo, subSpriteInfo);
 }

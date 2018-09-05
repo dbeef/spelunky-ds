@@ -8,7 +8,7 @@
 
 namespace sprite_utils {
 
-    void set_entry_xy(SpriteInfo *i, u16 x, u16 y) {
+    void set_entry_xy(SpriteInfo *i, int x, int y) {
         i->entry->x = x;
         i->entry->y = y;
     }

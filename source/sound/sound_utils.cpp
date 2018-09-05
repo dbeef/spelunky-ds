@@ -9,23 +9,23 @@
 #include "sound_utils.h"
 
 void sound::start_menu_music() {
-//    mmLoadEffect(SFX_MTITLE);
-//    global::menu_music_handler = mmEffect(SFX_MTITLE);
+    mmLoadEffect(SFX_MTITLE);
+    global::menu_music_handler = mmEffect(SFX_MTITLE);
 }
 
 void sound::stop_menu_music() {
-//    mmEffectCancel(global::menu_music_handler);
-//    mmUnloadEffect(SFX_MTITLE);
+    mmEffectCancel(global::menu_music_handler);
+    mmUnloadEffect(SFX_MTITLE);
 }
 
 void sound::start_cave_music() {
-//    mmLoadEffect(SFX_MCAVE);
-//    global::cave_music_handler = mmEffect(SFX_MCAVE);
+    mmLoadEffect(SFX_MCAVE);
+    global::cave_music_handler = mmEffect(SFX_MCAVE);
 }
 
 void sound::stop_cave_music() {
-//    mmEffectCancel(global::cave_music_handler);
-//    mmUnloadEffect(SFX_MCAVE);
+    mmEffectCancel(global::cave_music_handler);
+    mmUnloadEffect(SFX_MCAVE);
 }
 
 void sound::load_sounds() {
