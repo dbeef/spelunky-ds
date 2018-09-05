@@ -11,8 +11,10 @@
 
 #define BAT_PHYSICAL_HEIGHT 16
 #define BAT_PHYSICAL_WIDTH 16
+
 #define BAT_SPRITE_HEIGHT 16
 #define BAT_SPRITE_WIDTH 16
+#define BAT_SPRITE_SIZE BAT_SPRITE_HEIGHT * BAT_SPRITE_WIDTH
 
 #include "../moving_object.h"
 #include "../sprite_state.hpp"
@@ -23,7 +25,9 @@ class Bat : public MovingObject {
 public:
 
     Bat();
-    
+
+    Bat(int x, int y);
+
     void updateOther() override {};
 
     void init() override;
@@ -51,7 +55,7 @@ public:
     u8 *frameGfx{};
 
     int animFrame{};
-    int animFrameTimer{};
+    double animFrameTimer{};
 
     bool hanging{};
     bool hunting{};
@@ -65,6 +69,8 @@ public:
     void set_position();
 
     void follow_main_dude();
+
+    void match_animation();
 };
 
 

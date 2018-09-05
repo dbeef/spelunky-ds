@@ -3,6 +3,7 @@
 //
 
 #include <maxmod9.h>
+#include <cstdlib>
 #include "spider.h"
 #include "../../globals_declarations.h"
 #include "../animations/blood.h"
@@ -62,9 +63,6 @@ void Spider::draw() {
             set_sprite_jumping();
         else
             set_sprite_falling();
-
-        subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
-        mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
 
         animFrameTimer = 0;
     }
@@ -131,7 +129,7 @@ void Spider::apply_dmg(int dmg_to_apply) {
 
     killed = true;
     ready_to_dispose = true;
-    global::killed_npcs.push_back(spritesheet_type);
+    global::killed_npcs.push_back(SpriteType::S_SPIDER);
 
 }
 
@@ -163,23 +161,27 @@ void Spider::initSprite() {
 
 void Spider::set_sprite_hanging() {
     frameGfx = (u8 *) gfx_spider_skeletonTiles + (sprite_width * sprite_height * (4) / 2);
+    subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
+    mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
 }
 
 void Spider::set_sprite_flipping() {
     frameGfx = (u8 *) gfx_spider_skeletonTiles + (sprite_width * sprite_height * (animFrame + 4) / 2);
+    subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
+    mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
 }
 
 void Spider::set_sprite_jumping() {
     frameGfx = (u8 *) gfx_spider_skeletonTiles + (sprite_width * sprite_height * (animFrame) / 2);
+    subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
+    mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
 }
 
 void Spider::set_sprite_falling() {
     frameGfx = (u8 *) gfx_spider_skeletonTiles + (sprite_width * sprite_height * (0) / 2);
 
-    subSpriteInfo->entry->hFlip = true;
-    mainSpriteInfo->entry->hFlip = true;
-    mainSpriteInfo->entry->isHidden = false;
-    subSpriteInfo->entry->isHidden = false;
+    subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
+    mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
 }
 
 
@@ -224,4 +226,9 @@ void Spider::jump_to_main_dude() {
     jumping = true;
     animFrame = 0;
     ySpeed = -1.5 - ((rand() % diff) / 5);
+}
+
+Spider::Spider(int x, int y) : Spider() {
+    this->x = x;
+    this->y = y;
 }

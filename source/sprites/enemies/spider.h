@@ -24,6 +24,8 @@ public:
 
     Spider();
 
+    Spider(int x, int y);
+
     void initSprite() override;
 
     void updateOther() override {};

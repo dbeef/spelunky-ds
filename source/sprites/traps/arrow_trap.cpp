@@ -91,6 +91,6 @@ void ArrowTrap::spawn_arrow() {
     }
 
     arrow->init();
-    arrow->y = y - 2;
+    arrow->y = y + 4;
 
 }

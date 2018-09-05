@@ -99,11 +99,10 @@ void Arrow::draw() {
 
         global::main_dude->time_since_last_damage = 0;
         global::hud->hearts -= 2;
-        global::hud->draw();
+        global::hud->draw_level_hud();
 
 
         if (global::hud->hearts <= 0) {
-            global::hud->hide_hud_sprites();
             global::main_dude->ySpeed = -MAIN_DUDE_JUMP_SPEED * 0.25;
             global::main_dude->dead = true;
             mmEffect(SFX_XDIE);

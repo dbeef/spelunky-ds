@@ -38,8 +38,9 @@ enum SpriteType {
     S_SPIKES,                     //21
     S_SHOTGUN,                     //21
     S_ARROW,
-    S_SKELETON
-
+    S_SKELETON,
+    S_CAVEMAN,
+    S_DAMSEL, S_SHOPKEEPER
 };
 
 #endif //SPELUNKYDS_SPRITETYPE_H

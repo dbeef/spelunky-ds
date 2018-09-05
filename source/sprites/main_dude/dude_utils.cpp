@@ -101,7 +101,7 @@ void MainDude::throw_item() {
                     holding_item = false;
 
                     global::hud->disable_all_prompts();
-                    global::hud->draw();
+                    global::hud->draw_level_hud();
 
                     mmEffect(SFX_XTHROW);
 
@@ -116,7 +116,7 @@ void MainDude::throw_item() {
 
 void MainDude::take_out_bomb() {
     global::hud->bombs--;
-    global::hud->draw();
+    global::hud->draw_level_hud();
 
     Bomb *bomb = new Bomb();
     bomb->init();
@@ -129,7 +129,7 @@ void MainDude::take_out_bomb() {
 void MainDude::throw_rope() {
 
     global::hud->ropes--;
-    global::hud->draw();
+    global::hud->draw_level_hud();
 
     Rope *rope = new Rope();
     rope->init();
@@ -489,7 +489,6 @@ void MainDude::apply_dmg(int dmg_to_apply) {
         //fixme some enum that would indicate 'instant death, no matter for hp quantity' or a function kill_instantly
         //to differentiate
 
-        global::hud->hide_hud_sprites();
         global::main_dude->ySpeed = -MAIN_DUDE_JUMP_SPEED * 0.25;
         global::main_dude->dead = true;
         global::main_dude->climbing = false;

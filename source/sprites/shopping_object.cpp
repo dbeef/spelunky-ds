@@ -31,7 +31,7 @@ void ShoppingObject::console_display_name_cost() {
         global::hud->holding_item_shopping = true;
         global::hud->holding_item_cost = &cost;
         global::hud->holding_item_name = name;
-        global::hud->draw();
+        global::hud->draw_level_hud();
     }
 }
 
@@ -46,13 +46,13 @@ bool ShoppingObject::shopping_transaction(MovingObject *m) {
                 global::hud->disable_all_prompts();
                 global::hud->recently_bough_item = true;
                 global::hud->recently_bought_item_name = name;
-                global::hud->draw();
+                global::hud->draw_level_hud();
                 return true;
             } else {
                 global::hud->disable_all_prompts();
                 global::hud->not_enough_money = true;
                 global::main_dude->holding_item = false;
-                global::hud->draw();
+                global::hud->draw_level_hud();
                 m->bottomCollision = false;
                 m->hold_by_main_dude = false;
                 return false;

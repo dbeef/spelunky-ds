@@ -22,6 +22,9 @@
 
 void Caveman::draw() {
 
+    if(ready_to_dispose)
+        return;
+
     invert_speed_timer += *global::timer;
     blood_spawn_timer += *global::timer;
 
@@ -249,7 +252,7 @@ void Caveman::apply_dmg(int dmg_to_apply) {
     if (hitpoints <= 0) {
         killed = true;
         stunned = false;
-        global::killed_npcs.push_back(spritesheet_type);
+        global::killed_npcs.push_back(SpriteType::S_CAVEMAN);
     } else {
         stunned = true;
     }
@@ -447,4 +450,10 @@ void Caveman::apply_stunned_sprites() {
         frameGfx = (u8 *) gfx_caveman_damselTiles + ((sprite_width * sprite_height * (4)) / 2);
     else
         frameGfx = (u8 *) gfx_caveman_damselTiles + ((sprite_width * sprite_height * (2)) / 2);
+}
+
+
+Caveman::Caveman(int x, int y) : Caveman() {
+    this->x = x;
+    this->y = y;
 }

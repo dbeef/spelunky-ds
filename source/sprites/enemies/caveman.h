@@ -26,6 +26,7 @@ class Caveman : public MovingObject {
 public:
 
     Caveman();
+    Caveman(int x, int y);
 
     void updateOther() override {};
 

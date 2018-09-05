@@ -28,6 +28,7 @@ class Shopkeeper : public MovingObject {
 public:
 
     //todo shopkeeper's name
+    Shopkeeper(int x, int y);
 
     Shotgun *shotgun{};
     bool holding_shotgun{};
@@ -72,6 +73,7 @@ public:
     int invert_speed_timer{};
     int blood_spawn_timer{};
 
+    bool no_shotgun{};
     bool landlocked{};
     bool triggered{};
     bool standby{};

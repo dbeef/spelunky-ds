@@ -4,17 +4,19 @@
 
 #include <nds/arm9/sprite.h>
 #include <cstdio>
-#include <nds/arm9/console.h>
 #include <algorithm>
 #include "hud.h"
-#include "../../build/gfx_hud.h"
 #include "../globals_declarations.h"
 #include "../sprites/enemies/snake.h"
 #include "../sprites/enemies/bat.h"
 #include "../sprites/enemies/spider.h"
 #include "../sprites/collectibles/moniez.h"
-
-//FIXME This class needs extensive cleaning!
+#include "../sprites/sprite_utils.h"
+#include "../../build/gfx_hud.h"
+#include "../sprites/enemies/damsel.h"
+#include "../sprites/enemies/skeleton.h"
+#include "../sprites/enemies/caveman.h"
+#include "../sprites/enemies/shopkeeper.h"
 
 #define HEART_POSITION_X 5
 #define HEART_POSITION_Y 5
@@ -31,50 +33,40 @@
 #define HOLDING_ITEM_FRAME_POSITION_X 5
 #define HOLDING_ITEM_FRAME_POSITION_Y 20
 
-void Hud::hide_hud_sprites() {
-    heartSpriteInfo->entry->isHidden = true;
-    dollarSpriteInfo->entry->isHidden = true;
-    bombSpriteInfo->entry->isHidden = true;
-    ropeSpriteInfo->entry->isHidden = true;
-    holdingItemSpriteInfo->entry->isHidden = true;
-}
-
-void Hud::show_hud_sprites() {
-    heartSpriteInfo->entry->isHidden = false;
-    dollarSpriteInfo->entry->isHidden = false;
-    bombSpriteInfo->entry->isHidden = false;
-    ropeSpriteInfo->entry->isHidden = false;
-    holdingItemSpriteInfo->entry->isHidden = false;
-}
+#define HUD_ICON_WIDTH 16
+#define HUD_ICON_HEIGHT 16
+#define HUD_ICON_SIZE HUD_ICON_WIDTH * HUD_ICON_HEIGHT
 
 void Hud::init_sprites() {
 
-    heartSpriteInfo = global::main_oam_manager->initSprite(gfx_hudPal, gfx_hudPalLen, nullptr, 16 * 16, 16, HUD, true,
-                                                           false, LAYER_LEVEL::TOP);
-    dollarSpriteInfo = global::main_oam_manager->initSprite(gfx_hudPal, gfx_hudPalLen, nullptr, 16 * 16, 16, HUD, true,
-                                                            false, LAYER_LEVEL::TOP);
-    bombSpriteInfo = global::main_oam_manager->initSprite(gfx_hudPal, gfx_hudPalLen, nullptr, 16 * 16, 16, HUD, true,
-                                                          false, LAYER_LEVEL::TOP);
-    ropeSpriteInfo = global::main_oam_manager->initSprite(gfx_hudPal, gfx_hudPalLen, nullptr, 16 * 16, 16, HUD, true,
-                                                          false, LAYER_LEVEL::TOP);
-    holdingItemSpriteInfo = global::main_oam_manager->initSprite(gfx_hudPal, gfx_hudPalLen, nullptr, 16 * 16, 16, HUD,
-                                                                 true,
-                                                                 false, LAYER_LEVEL::TOP);
+    heartSpriteInfo = global::main_oam_manager->initSprite(gfx_hudPal, gfx_hudPalLen,
+                                                           nullptr, HUD_ICON_SIZE,
+                                                           16, HUD, true, false, LAYER_LEVEL::TOP);
+    dollarSpriteInfo = global::main_oam_manager->initSprite(gfx_hudPal, gfx_hudPalLen,
+                                                            nullptr, HUD_ICON_SIZE,
+                                                            16, HUD, true, false, LAYER_LEVEL::TOP);
+    bombSpriteInfo = global::main_oam_manager->initSprite(gfx_hudPal, gfx_hudPalLen,
+                                                          nullptr, HUD_ICON_SIZE,
+                                                          16, HUD, true, false, LAYER_LEVEL::TOP);
+    ropeSpriteInfo = global::main_oam_manager->initSprite(gfx_hudPal, gfx_hudPalLen,
+                                                          nullptr, HUD_ICON_SIZE,
+                                                          16, HUD, true, false, LAYER_LEVEL::TOP);
+    holdingItemSpriteInfo = global::main_oam_manager->initSprite(gfx_hudPal, gfx_hudPalLen,
+                                                                 nullptr, HUD_ICON_SIZE,
+                                                                 16, HUD, true, false, LAYER_LEVEL::TOP);
 
-    u8 *frameGfxHeart = (u8 *) gfx_hudTiles + 0 * 16 * 16 / 2;
-    heartSpriteInfo->updateFrame(frameGfxHeart, 16 * 16);
 
-    u8 *frameGfxHoldingItem = (u8 *) gfx_hudTiles + 1 * 16 * 16 / 2;
-    holdingItemSpriteInfo->updateFrame(frameGfxHoldingItem, 16 * 16);
+    u8 *frameGfxHeart = sprite_utils::get_frame((u8 *) gfx_hudTiles, HUD_ICON_SIZE, 0);
+    u8 *frameGfxHoldingItem = sprite_utils::get_frame((u8 *) gfx_hudTiles, HUD_ICON_SIZE, 1);
+    u8 *frameGfxRope = sprite_utils::get_frame((u8 *) gfx_hudTiles, HUD_ICON_SIZE, 2);
+    u8 *frameGfxBomb = sprite_utils::get_frame((u8 *) gfx_hudTiles, HUD_ICON_SIZE, 3);
+    u8 *frameGfxDollar = sprite_utils::get_frame((u8 *) gfx_hudTiles, HUD_ICON_SIZE, 4);
 
-    u8 *frameGfxRope = (u8 *) gfx_hudTiles + 2 * 16 * 16 / 2;
-    ropeSpriteInfo->updateFrame(frameGfxRope, 16 * 16);
-
-    u8 *frameGfxBomb = (u8 *) gfx_hudTiles + 3 * 16 * 16 / 2;
-    bombSpriteInfo->updateFrame(frameGfxBomb, 16 * 16);
-
-    u8 *frameGfxDollar = (u8 *) gfx_hudTiles + 4 * 16 * 16 / 2;
-    dollarSpriteInfo->updateFrame(frameGfxDollar, 16 * 16);
+    heartSpriteInfo->updateFrame(frameGfxHeart, HUD_ICON_SIZE);
+    holdingItemSpriteInfo->updateFrame(frameGfxHoldingItem, HUD_ICON_SIZE);
+    ropeSpriteInfo->updateFrame(frameGfxRope, HUD_ICON_SIZE);
+    bombSpriteInfo->updateFrame(frameGfxBomb, HUD_ICON_SIZE);
+    dollarSpriteInfo->updateFrame(frameGfxDollar, HUD_ICON_SIZE);
 
     set_hud_sprites_attributes();
 }
@@ -85,15 +77,22 @@ void Hud::init() {
     init_sprites();
 }
 
-//call only when something changed (i.e hearts counter decremented and it needs to be updated on hud)
-void Hud::draw() {
+//Call only when something changed (i.e hearts counter decremented and it needs to be updated on hud)
+//otherwise, if called frequently, font blinking will occur.
+//TODO Statically sized array - printing to the buffer, then to the console, to avoid screen flickering.
+//^ other way to avoid flickering is OAM sprite for every digit (but then it would take some from the 128 sprites pool).
+//^ btw, flickering is very noticable on an emulator, but not that much on a real NDS
+void Hud::draw_level_hud() {
 
     consoleClear();
 
     if (!global::main_dude->dead) {
-        printf("\n   %d    %d    %d    %d", hearts, bombs, ropes, money);
-        if (dollars_buffer != 0)
-            printf("\n                  +%d", dollars_buffer);
+
+        if (dollars_buffer != 0) {
+            printf("\n   %d    %d    %d    %d\n                  +%d",
+                   hearts, bombs, ropes, money, dollars_buffer);
+        } else
+            printf("\n   %d    %d    %d    %d", hearts, bombs, ropes, money);
 
         if (thief) {
             printf("\n\n      COME BACK HERE, THIEF!");
@@ -111,7 +110,9 @@ void Hud::draw() {
         //debug_oam();
     } else {
 
-        hide_hud_sprites();
+        sprite_utils::set_visibility(false, heartSpriteInfo, bombSpriteInfo,
+                                     ropeSpriteInfo, dollarSpriteInfo, holdingItemSpriteInfo);
+
         printf("\n\n\n\n\n          GAME OVER");
 
         if (game_over_timer > 1750)
@@ -124,11 +125,10 @@ void Hud::draw() {
 
     }
 
+
 }
 
 void Hud::draw_on_level_done() {
-
-    consoleClear();
 
     int seconds_on_level = (int) time_spent_on_level / 1000;
     int seconds_total = (int) total_time_spent / 1000;
@@ -151,7 +151,6 @@ void Hud::draw_on_level_done() {
 }
 
 void Hud::draw_scores() {
-    hide_hud_sprites();
     printf("\n\n\n\n                TOP DEFILERS");
     printf("\n\n              MONEY: %d", money);
     printf("\n              KILLS: %d", 0);
@@ -164,6 +163,8 @@ void Hud::draw_scores() {
 
 void Hud::update() {
 
+    set_hud_sprites_attributes();
+
     if (thief) {
 
         thief_timer += *global::timer;
@@ -171,7 +172,7 @@ void Hud::update() {
         if (thief_timer > 4000) {
             thief_timer = 0;
             thief = false;
-            draw();
+            draw_level_hud();
         }
     }
 
@@ -182,7 +183,7 @@ void Hud::update() {
         if (not_enough_money_timer > 4000) {
             not_enough_money_timer = 0;
             not_enough_money = false;
-            draw();
+            draw_level_hud();
         }
 
     }
@@ -194,7 +195,7 @@ void Hud::update() {
         if (introduce_shop_timer > 4000) {
             introduce_shop_timer = 0;
             introduce_shop = false;
-            draw();
+            draw_level_hud();
         }
     }
 
@@ -205,7 +206,7 @@ void Hud::update() {
         if (recently_bough_item_timer > 4000) {
             recently_bough_item = false;
             recently_bough_item_timer = 0;
-            draw();
+            draw_level_hud();
         }
     }
 
@@ -221,11 +222,6 @@ void Hud::update() {
     }
 
 
-    if (!global::game_state->in_main_menu && !global::game_state->scores_screen &&
-        !global::game_state->levels_transition_screen) {
-        set_hud_sprites_attributes();
-    }
-
     if (collecting_timer == 0 && dollars_buffer != 0) {
         dollars_timer += *global::timer;
     }
@@ -239,7 +235,7 @@ void Hud::update() {
             dollars_buffer -= dollars_buffer % 100;
         }
         dollars_timer = 0;
-        draw();
+        draw_level_hud();
     }
 
     if (!global::game_state->splash_screen)
@@ -256,7 +252,7 @@ void Hud::update() {
         if ((!milestone_1750 && game_over_timer > 1750) ||
             (!milestone_2750 && game_over_timer > 2750) ||
             (!milestone_0 && game_over_timer > 0))
-            draw();
+            draw_level_hud();
 
     }
 
@@ -266,45 +262,30 @@ void Hud::add_moniez_on_collected_loot(int value) {
     collecting_timer += 500;
     dollars_buffer += value;
     money_on_this_level += value;
-    draw();
+    draw_level_hud();
 }
 
 void Hud::set_hud_sprites_attributes() {
 
-    if (!global::main_dude->dead)
-        show_hud_sprites();
-    else
-        hide_hud_sprites();
+    bool playing_level =
+            !global::game_state->in_main_menu &&
+            !global::game_state->scores_screen &&
+            !global::game_state->levels_transition_screen;
 
-    heartSpriteInfo->entry->hFlip = false;
-    heartSpriteInfo->entry->vFlip = false;
+    sprite_utils::set_visibility(!global::main_dude->dead & playing_level,
+                                 heartSpriteInfo, bombSpriteInfo, ropeSpriteInfo, dollarSpriteInfo,
+                                 holdingItemSpriteInfo);
 
-    dollarSpriteInfo->entry->hFlip = false;
-    dollarSpriteInfo->entry->vFlip = false;
+    sprite_utils::set_horizontal_flip(false, heartSpriteInfo, dollarSpriteInfo,
+                                      bombSpriteInfo, ropeSpriteInfo, holdingItemSpriteInfo);
+    sprite_utils::set_vertical_flip(false, heartSpriteInfo, dollarSpriteInfo,
+                                    bombSpriteInfo, ropeSpriteInfo, holdingItemSpriteInfo);
 
-    bombSpriteInfo->entry->hFlip = false;
-    bombSpriteInfo->entry->vFlip = false;
-
-    ropeSpriteInfo->entry->hFlip = false;
-    ropeSpriteInfo->entry->vFlip = false;
-
-    holdingItemSpriteInfo->entry->hFlip = false;
-    holdingItemSpriteInfo->entry->vFlip = false;
-
-    heartSpriteInfo->entry->x = HEART_POSITION_X;
-    heartSpriteInfo->entry->y = HEART_POSITION_Y;
-
-    bombSpriteInfo->entry->x = BOMB_POSITION_X;
-    bombSpriteInfo->entry->y = BOMB_POSITION_Y;
-
-    dollarSpriteInfo->entry->x = DOLLAR_POSITION_X;
-    dollarSpriteInfo->entry->y = DOLLAR_POSITION_Y;
-
-    ropeSpriteInfo->entry->x = ROPE_POSITION_X;
-    ropeSpriteInfo->entry->y = ROPE_POSITION_Y;
-
-    holdingItemSpriteInfo->entry->x = HOLDING_ITEM_FRAME_POSITION_X;
-    holdingItemSpriteInfo->entry->y = HOLDING_ITEM_FRAME_POSITION_Y;
+    sprite_utils::set_entry_xy(heartSpriteInfo, HEART_POSITION_X, HEART_POSITION_Y);
+    sprite_utils::set_entry_xy(bombSpriteInfo, BOMB_POSITION_X, BOMB_POSITION_Y);
+    sprite_utils::set_entry_xy(dollarSpriteInfo, DOLLAR_POSITION_X, DOLLAR_POSITION_Y);
+    sprite_utils::set_entry_xy(ropeSpriteInfo, ROPE_POSITION_X, ROPE_POSITION_Y);
+    sprite_utils::set_entry_xy(holdingItemSpriteInfo, HOLDING_ITEM_FRAME_POSITION_X, HOLDING_ITEM_FRAME_POSITION_Y);
 
 }
 
@@ -328,115 +309,119 @@ void Hud::debug_oam() {
 }
 
 void Hud::disable_all_prompts() {
-
-    thief = false;
-    thief_timer = 0;
-
-    introduce_shop = false;
-    introduce_shop_timer = 0;
-
-    recently_bough_item = false;
-    recently_bough_item_timer = 0;
-
-    not_enough_money = false;
-    not_enough_money_timer = 0;
-
-    holding_item_shopping = false;
+    thief = introduce_shop = recently_bough_item = not_enough_money = holding_item_shopping = false;
+    thief_timer = recently_bough_item_timer = not_enough_money_timer = introduce_shop_timer = 0;
 }
 
 void Hud::draw_collected_loot() {
 
     for (int a = 0; a < global::collected_loot.size(); a++) {
-        if (global::collected_loot.at(a) == SpriteType::S_MONIEZ_TRIPLE_GOLDBARS) {
-            Moniez *moniez = new Moniez();
-            moniez->sprite_height = 16;
-            moniez->sprite_width = 16;
-            moniez->spritesheet_type = MONIEZ_GOLDBARS;
-            moniez->value = 1000;
-            moniez->init();
-            global::sprites.push_back(moniez);
-            moniez->x = 90 + (a * 8);
-            moniez->y = 190;
-            moniez->ready_to_dispose = true;
-            moniez->set_position();
-
-        } else if (global::collected_loot.at(a) == SpriteType::S_MONIEZ_RUBY_BIG_RED) {
-
-            Moniez *moniez = new Moniez();
-            moniez->sprite_height = 8;
-            moniez->sprite_width = 8;
-            moniez->spritesheet_type = MONIEZ_RUBY;
-            moniez->value = 1200;
-            moniez->initSprite();
-            global::sprites.push_back(moniez);
-            moniez->x = 96 + (a * 8);
-            moniez->y = 198;
-            moniez->ready_to_dispose = true;
-            moniez->set_position();
-
-        } else if (global::collected_loot.at(a) == SpriteType::S_MONIEZ_RUBY_BIG_GREEN) {
-
-            Moniez *moniez = new Moniez();
-            moniez->sprite_height = 8;
-            moniez->sprite_width = 8;
-            moniez->spritesheet_type = MONIEZ_RUBY;
-            moniez->value = 1200;
-            moniez->initSprite();
-            global::sprites.push_back(moniez);
-            moniez->x = 96 + (a * 8);
-            moniez->y = 198;
-            moniez->ready_to_dispose = true;
-            moniez->set_position();
-
-        } else if (global::collected_loot.at(a) == SpriteType::S_MONIEZ_RUBY_BIG_BLUE) {
-
-            Moniez *moniez = new Moniez();
-            moniez->sprite_height = 8;
-            moniez->sprite_width = 8;
-            moniez->spritesheet_type = MONIEZ_RUBY;
-            moniez->value = 1200;
-            moniez->initSprite();
-            global::sprites.push_back(moniez);
-            moniez->x = 96 + (a * 8);
-            moniez->y = 198;
-            moniez->ready_to_dispose = true;
-            moniez->set_position();
-        }
-
-
+        auto *moniez = new Moniez(90 + (a * 4), 190, global::collected_loot.at(a));
+        moniez->init();
+        moniez->y += (16 - moniez->physical_height); //aligning to same level
+        global::sprites.push_back(moniez);
+        moniez->set_position();
+        moniez->ready_to_dispose = true;
     }
+
 }
 
 void Hud::draw_killed_npcs() {
 
     for (int a = 0; a < global::killed_npcs.size(); a++) {
-        if (global::killed_npcs.at(a) == SpritesheetType::SNAKE) {
-            Snake *snake = new Snake();
-            snake->init();
-            global::sprites.push_back(snake);
-            snake->x = 95 + (a * 8);
-            snake->y = 208;
-            snake->ready_to_dispose = true;
-            snake->set_position();
-            snake->set_sprite_left();
-        } else if (global::killed_npcs.at(a) == SpritesheetType::BAT_JETPACK) {
-            Bat *bat = new Bat();
-            bat->init();
-            global::sprites.push_back(bat);
-            bat->x = 95 + (a * 8);
-            bat->y = 208;
-            bat->ready_to_dispose = true;
-            bat->set_sprite_flying_left();
-            bat->set_position();
-        } else if (global::killed_npcs.at(a) == SpritesheetType::SKELETON_SPIDER) {
-            Spider *spider = new Spider();
-            spider->init();
-            global::sprites.push_back(spider);
-            spider->x = 95 + (a * 8);
-            spider->y = 208;
-            spider->ready_to_dispose = true;
-            spider->set_sprite_falling();
-            spider->set_position();
+
+        switch (global::killed_npcs.at(a)) {
+
+            case SpriteType::S_SPIDER: {
+                auto *spider = new Spider(95 + (a * 8), 208);
+                spider->init();
+                //deliberately not aligning to same level - already aligned
+                global::sprites.push_back(spider);
+                spider->ready_to_dispose = true;
+                spider->set_sprite_falling();
+                spider->set_position();
+                break;
+            }
+            case SpriteType::S_BAT: {
+                auto *bat = new Bat(95 + (a * 8), 208);
+                bat->xSpeed = -1; //so it would face leftwards
+                bat->y += (16 - bat->physical_height); //aligning to same level
+                bat->init();
+                bat->set_sprite_flying_left();
+                bat->set_position();
+                bat->ready_to_dispose = true;
+                global::sprites.push_back(bat);
+                break;
+            }
+            case SpriteType::S_SNAKE: {
+                auto *snake = new Snake(95 + (a * 8), 208);
+                snake->sprite_state = SpriteState::W_LEFT;
+                snake->initSprite();
+                snake->y += (16 - snake->physical_height); //aligning to same level
+                global::sprites.push_back(snake);
+                snake->ready_to_dispose = true;
+                snake->set_position();
+                snake->set_sprite_left();
+                break;
+            }
+
+            case SpriteType::S_DAMSEL: {
+                auto *damsel = new Damsel(95 + (a * 8), 208);
+                damsel->init();
+                damsel->update_animation();
+                damsel->draw();
+                damsel->y += (16 - damsel->physical_height); //aligning to same level
+                global::sprites.push_back(damsel);
+                damsel->ready_to_dispose = true;
+                damsel->set_position();
+                break;
+            }
+
+            case SpriteType::S_SKELETON: {
+                auto *skeleton = new Skeleton(95 + (a * 8), 208);
+                skeleton->summoned = true;
+                skeleton->main_dude_orientation_at_summoning_moment = SpriteState::W_RIGHT;
+                skeleton->initSprite();
+                skeleton->set_sprite_walking();
+                skeleton->y += (16 - skeleton->physical_height); //aligning to same level
+                global::sprites.push_back(skeleton);
+                skeleton->ready_to_dispose = true;
+                skeleton->set_position();
+                break;
+            }
+
+            case SpriteType::S_CAVEMAN: {
+                auto *caveman = new Caveman(95 + (a * 8), 208);
+                caveman->sprite_state = SpriteState::W_LEFT;
+                caveman->animFrameTimer = 1000;
+                caveman->init();
+                caveman->draw();
+                caveman->y += (16 - caveman->physical_height); //aligning to same level
+                global::sprites.push_back(caveman);
+                caveman->ready_to_dispose = true;
+                caveman->set_position();
+                break;
+            }
+
+            case SpriteType::S_SHOPKEEPER: {
+                auto *shopkeeper = new Shopkeeper(95 + (a * 8), 208);
+                shopkeeper->no_shotgun = true;
+                shopkeeper->anim_frame_timer = 1000;
+                shopkeeper->init();
+                shopkeeper->sprite_state = SpriteState::W_LEFT;
+                shopkeeper->draw();
+                shopkeeper->y += (16 - shopkeeper->physical_height); //aligning to same level
+                global::sprites.push_back(shopkeeper);
+                shopkeeper->ready_to_dispose = true;
+                shopkeeper->set_position();
+                break;
+            }
+
+            default:
+                break;
         }
+
     }
+
 }
+

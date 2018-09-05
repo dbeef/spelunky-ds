@@ -25,6 +25,9 @@
 
 void Shopkeeper::draw() {
 
+    if (ready_to_dispose)
+        return;
+
     kill_if_whip(1);
 
     if (!global::main_dude->dead)
@@ -53,7 +56,7 @@ void Shopkeeper::draw() {
 
     set_pickuped_position(9, -4);
 
-    //TODO Odszukiwanie shotguna
+    //TODO Searching for lost shotgun
 
     if (stunned || killed) {
         holding_shotgun = false;
@@ -153,7 +156,7 @@ void Shopkeeper::draw() {
 
 void Shopkeeper::init() {
 
-    if (global::game_state->robbed_killed_shopkeeper) {
+    if (global::game_state->robbed_killed_shopkeeper && !no_shotgun) {
         standby = true;
         spawn_shotgun();
     }
@@ -279,7 +282,7 @@ void Shopkeeper::apply_dmg(int dmg_to_apply) {
         global::game_state->robbed_killed_shopkeeper = true;
         killed = true;
         stunned = false;
-        global::killed_npcs.push_back(spritesheet_type);
+        global::killed_npcs.push_back(SpriteType::S_SHOPKEEPER);
     }
 
 }
@@ -546,7 +549,7 @@ void Shopkeeper::check_if_dude_in_shop_bounds() {
             global::hud->disable_all_prompts();
             global::hud->introduce_shop = true;
             global::hud->shop_name = "\n\n\n\nWELCOME TO SMITHY'S SUPPLY SHOP!";
-            global::hud->draw();
+            global::hud->draw_level_hud();
             introduced_shop_name = true;
         }
 
@@ -618,9 +621,15 @@ void Shopkeeper::trigger() {
     standby = false;
     triggered = true;
     global::hud->thief = true;
-    global::hud->draw();
+    global::hud->draw_level_hud();
     de_shopify_all_items();
     if (!holding_shotgun) {
         spawn_shotgun();
     }
+}
+
+
+Shopkeeper::Shopkeeper(int x, int y) : Shopkeeper() {
+    this->x = x;
+    this->y = y;
 }

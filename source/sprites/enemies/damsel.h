@@ -26,6 +26,7 @@ class Damsel : public MovingObject {
 public:
 
     Damsel();
+    Damsel(int x, int y);
 
     void updateOther() override {};
 

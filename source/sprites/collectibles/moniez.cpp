@@ -19,15 +19,8 @@
 
 void Moniez::draw() {
 
-    if (ready_to_dispose) {
-        mainSpriteInfo->entry->isHidden = true;
-        subSpriteInfo->entry->isHidden = true;
+    if (ready_to_dispose)
         return;
-    } else {
-        mainSpriteInfo->entry->isHidden = false;
-        subSpriteInfo->entry->isHidden = false;
-    }
-
 
     if (!collected && collectible_timer >= 500 &&
         Collisions::checkCollisionWithMainDudeWidthBoundary(x, y, physical_width, physical_height, 8)) {
@@ -58,7 +51,6 @@ void Moniez::draw() {
 
 
 void Moniez::init() {
-
 
     int type = rand() % 8;
 
@@ -135,23 +127,55 @@ void Moniez::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_i
 void Moniez::initSprite() {
 
 
-    if (spritesheet_type == SpritesheetType::MONIEZ_GOLDBARS) {
+    if (sprite_type == SpriteType::S_MONIEZ_TRIPLE_GOLDBARS) {
+        physical_height = TRIPLE_GOLDBAR_PHYSICAL_HEIGHT;
+        physical_width = TRIPLE_GOLDBAR_PHYSICAL_WIDTH;
+        sprite_height = TRIPLE_GOLDBAR_SPRITE_HEIGHT;
+        sprite_width = TRIPLE_GOLDBAR_SPRITE_WIDTH;
+        value = 1000;
+        frameGfx = (u8 *) gfx_goldbarsTiles;
+        spritesheet_type = SpritesheetType::MONIEZ_GOLDBARS;
+    } else if (sprite_type == SpriteType::S_MONIEZ_ONE_GOLDBAR) {
+        physical_height = ONE_GOLDBAR_PHYSICAL_HEIGHT;
+        physical_width = ONE_GOLDBAR_PHYSICAL_WIDTH;
+        sprite_height = ONE_GOLDBAR_SPRITE_HEIGHT;
+        sprite_width = ONE_GOLDBAR_SPRITE_WIDTH;
+        value = 500;
+        frameGfx = (u8 *) gfx_goldbarsTiles + (sprite_width * sprite_height * 1 / 2);
+        spritesheet_type = SpritesheetType::MONIEZ_GOLDBARS;
+    }
 
-        if (sprite_type == SpriteType::S_MONIEZ_TRIPLE_GOLDBARS) {
-            physical_height = TRIPLE_GOLDBAR_PHYSICAL_HEIGHT;
-            physical_width = TRIPLE_GOLDBAR_PHYSICAL_WIDTH;
-            sprite_height = TRIPLE_GOLDBAR_SPRITE_HEIGHT;
-            sprite_width = TRIPLE_GOLDBAR_SPRITE_WIDTH;
-            value = 1000;
-            frameGfx = (u8 *) gfx_goldbarsTiles;
-        } else {
-            physical_height = ONE_GOLDBAR_PHYSICAL_HEIGHT;
-            physical_width = ONE_GOLDBAR_PHYSICAL_WIDTH;
-            sprite_height = ONE_GOLDBAR_SPRITE_HEIGHT;
-            sprite_width = ONE_GOLDBAR_SPRITE_WIDTH;
-            value = 500;
-            frameGfx = (u8 *) gfx_goldbarsTiles + ( sprite_width * sprite_height * 1/ 2);
-        }
+    if (sprite_type == SpriteType::S_MONIEZ_RUBY_SMALL_BLUE ||
+        sprite_type == SpriteType::S_MONIEZ_RUBY_SMALL_GREEN ||
+        sprite_type == SpriteType::S_MONIEZ_RUBY_SMALL_RED) {
+
+        physical_height = RUBY_SMALL_PHYSICAL_HEIGHT;
+        physical_width = RUBY_SMALL_PHYSICAL_WIDTH;
+        sprite_height = RUBY_SMALL_SPRITE_HEIGHT;
+        sprite_width = RUBY_SMALL_SPRITE_WIDTH;
+        value = 1000;
+        spritesheet_type = SpritesheetType::MONIEZ_RUBY;
+
+    } else if (sprite_type == SpriteType::S_MONIEZ_RUBY_BIG_BLUE ||
+               sprite_type == SpriteType::S_MONIEZ_RUBY_BIG_RED ||
+               sprite_type == SpriteType::S_MONIEZ_RUBY_BIG_GREEN) {
+        physical_height = RUBY_BIG_PHYSICAL_HEIGHT;
+        physical_width = RUBY_BIG_PHYSICAL_WIDTH;
+        sprite_height = RUBY_BIG_SPRITE_HEIGHT;
+        sprite_width = RUBY_BIG_SPRITE_WIDTH;
+        value = 1200;
+        spritesheet_type = SpritesheetType::MONIEZ_RUBY;
+    }
+
+    if (spritesheet_type == SpritesheetType::MONIEZ_RUBY) {
+        subSpriteInfo = global::sub_oam_manager->initSprite(gfx_rubiesPal, gfx_rubiesPalLen,
+                                                            nullptr, sprite_width * sprite_height, 8,
+                                                            spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
+        mainSpriteInfo = global::main_oam_manager->initSprite(gfx_rubiesPal, gfx_rubiesPalLen,
+                                                              nullptr, sprite_width * sprite_height, 8,
+                                                              spritesheet_type, true, false,
+                                                              LAYER_LEVEL::MIDDLE_TOP);
+    } else if (spritesheet_type == SpritesheetType::MONIEZ_GOLDBARS) {
 
         subSpriteInfo = global::sub_oam_manager->initSprite(gfx_goldbarsPal, gfx_goldbarsPalLen,
                                                             nullptr, sprite_width * sprite_height, 16,
@@ -159,31 +183,9 @@ void Moniez::initSprite() {
         mainSpriteInfo = global::main_oam_manager->initSprite(gfx_goldbarsPal, gfx_goldbarsPalLen,
                                                               nullptr, sprite_width * sprite_height, 16,
                                                               spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
+    }
 
-    } else if (spritesheet_type == SpritesheetType::MONIEZ_RUBY) {
-
-        if (sprite_type == SpriteType::S_MONIEZ_RUBY_SMALL_BLUE || sprite_type == SpriteType::S_MONIEZ_RUBY_SMALL_GREEN
-            || sprite_type == SpriteType::S_MONIEZ_RUBY_SMALL_RED) {
-            physical_height = RUBY_SMALL_PHYSICAL_HEIGHT;
-            physical_width = RUBY_SMALL_PHYSICAL_WIDTH;
-            sprite_height = RUBY_SMALL_SPRITE_HEIGHT;
-            sprite_width = RUBY_SMALL_SPRITE_WIDTH;
-            value = 1000;
-        } else {
-            physical_height = RUBY_BIG_PHYSICAL_HEIGHT;
-            physical_width = RUBY_BIG_PHYSICAL_WIDTH;
-            sprite_height = RUBY_BIG_SPRITE_HEIGHT;
-            sprite_width = RUBY_BIG_SPRITE_WIDTH;
-            value = 1200;
-        }
-
-        subSpriteInfo = global::sub_oam_manager->initSprite(gfx_rubiesPal, gfx_rubiesPalLen,
-                                                            nullptr, sprite_width * sprite_height, 8,
-                                                            spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
-        mainSpriteInfo = global::main_oam_manager->initSprite(gfx_rubiesPal, gfx_rubiesPalLen,
-                                                              nullptr, sprite_width * sprite_height, 8,
-                                                              spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
-
+    if(spritesheet_type == SpritesheetType::MONIEZ_RUBY) {
         int ruby_type;
 
         if (sprite_type == SpriteType::S_MONIEZ_RUBY_BIG_RED)
@@ -230,3 +232,8 @@ Moniez::Moniez() {
     collectible_timer = 500;
 }
 
+Moniez::Moniez(int x, int y, SpriteType sprite_type) : Moniez() {
+    this->x = x;
+    this->y = y;
+    this->sprite_type = sprite_type;
+}

@@ -38,6 +38,8 @@ public:
 
     Moniez();
 
+    Moniez(int x, int y, SpriteType sprite_type);
+
     void updateOther() override {};
 
     void init() override;

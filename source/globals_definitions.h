@@ -27,15 +27,15 @@ namespace global {
     GameState *game_state = nullptr;
     PrintConsole *print_console = nullptr; //initialised in console_utils.h call from main
 
-    std::vector<MovingObject *> sprites(0);
+    std::vector<MovingObject *> sprites(0); //FIXME clang tidy tips
     std::vector<SpriteInfo *> sprite_infos(0);
-    std::vector<SpritesheetType> killed_npcs(0);
+    std::vector<SpriteType > killed_npcs(0);
     std::vector<SpriteType> collected_loot(0);
 
     int bg_main_address{};
     int bg_sub_address{};
     double *timer{};
-    int clean_unused_oam_timer{};
+    double clean_unused_oam_timer{};
     mm_sfxhand menu_music_handler{};
     mm_sfxhand cave_music_handler{};
 

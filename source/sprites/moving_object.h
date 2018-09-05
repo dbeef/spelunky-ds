@@ -23,6 +23,8 @@
 class MovingObject {
 public:
 
+    virtual ~MovingObject() = default;
+
     void update() {
         updateOther();
         updateSpeed();
@@ -87,7 +89,7 @@ public:
     bool killed{};
     bool ready_to_dispose{};
 
-    SpriteState sprite_state;
+    SpriteState sprite_state{};
 
     SpritesheetType spritesheet_type{};
 

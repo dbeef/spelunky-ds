@@ -308,7 +308,7 @@ void MainDude::updateTimers() {
 
         if (global::hud->hearts > 0) {
             global::hud->hearts--;
-            global::hud->draw();
+            global::hud->draw_level_hud();
         }
 
         stunned = true;
@@ -329,7 +329,6 @@ void MainDude::updateTimers() {
         global::sprites.push_back(f_right);
 
         if (global::hud->hearts == 0) {
-            global::hud->hide_hud_sprites();
             global::main_dude->ySpeed = -MAIN_DUDE_JUMP_SPEED * 0.25;
             global::main_dude->dead = true;
             consoleClear();

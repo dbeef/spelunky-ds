@@ -80,6 +80,7 @@ void OAMManager::updateOAM() {
                      SPRITE_COUNT * sizeof(SpriteEntry));
 }
 
+//FIXME replace int for ENUM as 'size' parameter
 SpriteInfo *
 OAMManager::initSprite(const unsigned short pallette[], int palLen, const unsigned int tiles[], int tilesLen,
                        int size, SpritesheetType type, bool reuse_palette, bool reuse_tiles, LAYER_LEVEL l) {

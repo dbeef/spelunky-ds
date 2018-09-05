@@ -479,7 +479,6 @@ void gameloop::populate_cave_npcs() {
 
 void gameloop::populate_main_menu() {
 
-    global::hud->hide_hud_sprites();
     global::hud->bombs = 0;
     global::hud->ropes = 0;
 

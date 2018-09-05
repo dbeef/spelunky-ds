@@ -42,7 +42,7 @@ void GameState::start_new_game() {
     global::hud->game_over_timer = 0;
     global::hud->disable_all_prompts();
     global::hud->set_hud_sprites_attributes();
-    global::hud->draw();
+    global::hud->draw_level_hud();
 
 }
 
@@ -62,7 +62,6 @@ void GameState::start_scores() {
     reset_main_dude();
 
     global::game_state->scores_screen = true;
-    global::hud->hide_hud_sprites();
     global::hud->draw_scores();
     global::camera->follow_main_dude = false;
 }
@@ -78,6 +77,7 @@ void GameState::start_level_transition_screen() {
     global::input_handler->l_bumper_held = true;
     global::input_handler->right_key_held = true;
     global::camera->follow_main_dude = false;
+    consoleClear();
     global::hud->draw_on_level_done();
 
 
@@ -118,7 +118,8 @@ void GameState::start_next_level() {
     global::killed_npcs.clear();
     global::collected_loot.clear();
     global::hud->money_on_this_level = 0;
-    global::hud->draw();
+    global::hud->draw_level_hud();
+
 }
 
 void GameState::handle_changing_screens() {

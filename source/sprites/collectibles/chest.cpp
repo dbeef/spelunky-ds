@@ -64,8 +64,8 @@ void Chest::updateSpeed() {
     if (change_pos) {
         update_position();
 
-        if(bottomCollision)
-        apply_friction(CHEST_FRICTION);
+        if (bottomCollision)
+            apply_friction(CHEST_FRICTION);
 
         apply_gravity(GRAVITY_DELTA_SPEED);
         pos_inc_timer = 0;
@@ -78,18 +78,23 @@ void Chest::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in
                                     tiles);
 
     upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, physical_width, true, BOUNCING_FACTOR_Y);
-    bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, physical_width, physical_height, true, BOUNCING_FACTOR_Y*1.2f);
-    leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true,BOUNCING_FACTOR_X);
-    rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true, BOUNCING_FACTOR_X);
+    bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, physical_width, physical_height, true,
+                                                       BOUNCING_FACTOR_Y * 1.2f);
+    leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true,
+                                                   BOUNCING_FACTOR_X);
+    rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true,
+                                                     BOUNCING_FACTOR_X);
 
 }
 
 void Chest::initSprite() {
 
-    subSpriteInfo = global::sub_oam_manager->initSprite(gfx_spike_collectibles_flamePal, gfx_spike_collectibles_flamePalLen,
+    subSpriteInfo = global::sub_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
+                                                        gfx_spike_collectibles_flamePalLen,
                                                         nullptr, sprite_width * sprite_height, sprite_width,
                                                         spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
-    mainSpriteInfo = global::main_oam_manager->initSprite(gfx_spike_collectibles_flamePal, gfx_spike_collectibles_flamePalLen,
+    mainSpriteInfo = global::main_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
+                                                          gfx_spike_collectibles_flamePalLen,
                                                           nullptr, sprite_width * sprite_height, sprite_width,
                                                           spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
     if (activated)
@@ -136,14 +141,36 @@ void Chest::spawn_treasure() {
     for (int a = 0; a < 4; a++) {
         Moniez *moniez = new Moniez();
 
-        moniez->spritesheet_type = MONIEZ_RUBY;
-        moniez->value = 1200;
-        moniez->init(); 
+        int ruby_type = rand() % 6;
+
+        switch (ruby_type) {
+            case 0:
+                moniez->sprite_type = SpriteType::S_MONIEZ_RUBY_BIG_RED;
+                break;
+            case 1:
+                moniez->sprite_type = SpriteType::S_MONIEZ_RUBY_BIG_GREEN;
+                break;
+            case 2:
+                moniez->sprite_type = SpriteType::S_MONIEZ_RUBY_BIG_BLUE;
+                break;
+            case 3:
+                moniez->sprite_type = SpriteType::S_MONIEZ_RUBY_SMALL_RED;
+                break;
+            case 4:
+                moniez->sprite_type = SpriteType::S_MONIEZ_RUBY_SMALL_GREEN;
+                break;
+            case 5:
+                moniez->sprite_type = SpriteType::S_MONIEZ_RUBY_SMALL_BLUE;
+                break;
+            default:
+                break;
+        }
+
+        moniez->initSprite();
         global::sprites.push_back(moniez);
         moniez->x = x + CHEST_PHYSICAL_WIDTH * 0.5;
         moniez->y = y + CHEST_PHYSICAL_HEIGHT * 0.5;
         moniez->ySpeed = -1.7;
-
         moniez->collectible_timer = 0;
 
         if (rand() % 2 == 0)

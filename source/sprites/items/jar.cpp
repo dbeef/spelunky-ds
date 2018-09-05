@@ -61,7 +61,6 @@ void Jar::draw() {
 
     if (kill_mobs_if_thrown(1)) {
         apply_dmg(1);
-        global::killed_npcs.push_back(spritesheet_type);
     }
 
     int main_x, main_y, sub_x, sub_y;

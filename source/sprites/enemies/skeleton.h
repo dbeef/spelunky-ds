@@ -4,10 +4,13 @@
 //
 #ifndef SPELUNKYDS_SKELETON_H
 #define SPELUNKYDS_SKELETON_H
+
 #define SKELETON_PHYSICAL_HEIGHT 16
 #define SKELETON_PHYSICAL_WIDTH 16
+
 #define SKELETON_SPRITE_HEIGHT 16
 #define SKELETON_SPRITE_WIDTH 16
+#define SKELETON_SPRITE_SIZE SKELETON_SPRITE_HEIGHT * SKELETON_SPRITE_WIDTH
 
 #define MAX_X_SPEED_SKELETON 4
 #define MAX_Y_SPEED_SKELETON 4
@@ -21,6 +24,7 @@ class Skeleton : public MovingObject {
 public:
 
     Skeleton();
+    Skeleton(int x, int y);
 
     void updateOther() override {};
 
@@ -48,10 +52,10 @@ public:
     SpriteInfo *subSpriteInfo{};
     u8 *frameGfx{};
 
-    int change_turn_timer{};
-    int summoning_delay_timer{};
+    double change_turn_timer{};
+    double summoning_delay_timer{};
     int anim_frame_counter{};
-    int anim_frame_timer{};
+    double anim_frame_timer{};
     bool set_up{};
     bool summoned{};
     bool can_be_summoned{};
@@ -67,6 +71,9 @@ public:
 
     void set_sprite_pile_of_bones();
 
+    void match_animation();
+
+    void spawn_remnants();
 };
 
 

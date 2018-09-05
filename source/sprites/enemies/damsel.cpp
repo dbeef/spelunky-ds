@@ -20,6 +20,9 @@
 
 void Damsel::draw() {
 
+    if(ready_to_dispose)
+        return;
+
     if (rescued) {
         mainSpriteInfo->entry->isHidden = true;
         subSpriteInfo->entry->isHidden = true;
@@ -167,9 +170,12 @@ void Damsel::init() {
     activated = true;
     initSprite();
 
-    frameGfx = (u8 *) gfx_caveman_damselTiles;
+    //fixme probably those lines aren't needed anymore
+    frameGfx = (u8 *) gfx_caveman_damselTiles +
+               ((sprite_width * sprite_height * (35)) / 2);
     subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
     mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
+    //
 
     spritesheet_type = SpritesheetType::CAVEMAN_DAMSEL;
 
@@ -274,7 +280,7 @@ void Damsel::apply_dmg(int dmg_to_apply) {
     if (hitpoints <= 0) {
         killed = true;
         stunned = false;
-        global::killed_npcs.push_back(spritesheet_type);
+        global::killed_npcs.push_back(SpriteType::S_DAMSEL);
     } else {
         stunned = true;
     }
@@ -549,4 +555,9 @@ void Damsel::apply_smooching_sprites() {
     }
 
 
+}
+
+Damsel::Damsel(int x, int y) : Damsel() {
+    this->x = x;
+    this->y = y;
 }

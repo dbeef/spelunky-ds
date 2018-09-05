@@ -12,6 +12,7 @@
 #include "../../collisions/collisions.h"
 #include "../../tiles/map_utils.h"
 #include "../../../build/soundbank.h"
+#include "../sprite_utils.h"
 
 #define SNAKE_POS_INC_DELTA 35
 #define SNAKE_ANIM_FRAME_DELTA 125
@@ -23,54 +24,45 @@ void Snake::draw() {
         return;
 
     set_position();
-
-    mainSpriteInfo->entry->hFlip = true;
-    subSpriteInfo->entry->hFlip = true;
-
-    mainSpriteInfo->entry->vFlip = false;
-    subSpriteInfo->entry->vFlip = false;
-
-    mainSpriteInfo->entry->isHidden = false;
-    subSpriteInfo->entry->isHidden = false;
+    sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);
+    sprite_utils::set_visibility(true, mainSpriteInfo, subSpriteInfo);
+    sprite_utils::set_horizontal_flip(true, mainSpriteInfo, subSpriteInfo);
 
     animFrameTimer += *global::timer;
 
     if (animFrameTimer > SNAKE_ANIM_FRAME_DELTA) {
+        //update animation
 
+        animFrameTimer = 0;
         animFrame++;
         if (animFrame >= 4)
             animFrame = 0;
 
-        if (spriteState == SpriteState::W_LEFT) {
-            set_sprite_left();
-        } else if (spriteState == SpriteState::W_RIGHT) {
-            set_sprite_right();
-        }
-        animFrameTimer = 0;
-
+        match_animation();
     }
 
-
     if (bottomCollision) {
-        if (waitTimer > 0) {
-            waitTimer -= *global::timer;
-        } else {
-            if (goTimer > 0)
+        //update movement
 
+        if (goTimer > 0) {
+            goTimer -= *global::timer;
 
-                goTimer -= *global::timer;
-
-            if (standingOnLeftEdge && spriteState == 1 || standingOnRightEdge && spriteState == 0) {
-                xSpeed = 0;
-            } else if (spriteState == 0)
-                xSpeed = 0.5;
+            if ((standingOnLeftEdge && spriteState == SpriteState::W_LEFT) ||
+                (standingOnRightEdge && spriteState == SpriteState::W_RIGHT))
+                xSpeed = 0; //stop if standing on an edge and facing towards it
+            else if (spriteState == SpriteState::W_RIGHT)
+                xSpeed = 0.5; //if not standing on an edge and facing towards it, go where you're facing
             else
                 xSpeed = -0.5;
 
-            if (goTimer <= 0) {
+        } else {
+
+            xSpeed = 0;
+
+            if (waitTimer > 0)
+                waitTimer -= *global::timer;
+            else if (waitTimer <= 0)
                 randomizeMovement();
-                xSpeed = 0;
-            }
         }
     }
 
@@ -82,23 +74,20 @@ void Snake::draw() {
 
 
 void Snake::init() {
-
-    initSprite();
-
-    frameGfx = (u8 *) gfx_bat_snake_jetpackTiles + ((sprite_width * sprite_height * (9)) / 2);
-    subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
-    mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
-
     spritesheet_type = SpritesheetType::SNAKE;
-
+    initSprite();
     randomizeMovement();
 }
 
+//!> sets a random direction and time of travelling based on previously used directions
 void Snake::randomizeMovement() {
 
+    goTimer = (rand() % 1000) + 1000;
+    waitTimer = (rand() % 500) + 500;
     int r = rand() % 2;
 
-    if (r == 0) {
+    if (r == SpriteState::W_LEFT) {
+
         if (spriteState == SpriteState::W_LEFT)
             sameDirectionInRow++;
         else
@@ -109,7 +98,8 @@ void Snake::randomizeMovement() {
         else
             spriteState = SpriteState::W_LEFT;
 
-    } else if (r == 1) {
+    } else if (r == SpriteState::W_RIGHT) {
+
         if (spriteState == SpriteState::W_RIGHT)
             sameDirectionInRow++;
         else
@@ -120,15 +110,11 @@ void Snake::randomizeMovement() {
         else
             spriteState = SpriteState::W_RIGHT;
     }
-
-    goTimer = (rand() % 2000) + 1000;
-    waitTimer = rand() % 500;
 }
 
 void Snake::updateSpeed() {
 
     limit_speed(MAX_X_SPEED_SNAKE, MAX_Y_SPEED_SNAKE);
-
     pos_inc_timer += *global::timer;
 
     if (pos_inc_timer > SNAKE_POS_INC_DELTA) {
@@ -141,90 +127,64 @@ void Snake::updateSpeed() {
 
 void Snake::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
 
-    MapTile *tiles[9] = {};
-    Collisions::getNeighboringTiles(global::level_generator->map_tiles, x_current_pos_in_tiles,
-                                    y_current_pos_in_tiles, tiles);
+    MapTile *t[9] = {};
+    Collisions::getNeighboringTiles(global::level_generator->map_tiles,
+                                    x_current_pos_in_tiles,
+                                    y_current_pos_in_tiles, t);
 
-    standingOnLeftEdge = Collisions::isStandingOnLeftEdge(tiles, x, physical_width, x_current_pos_in_tiles);
-    standingOnRightEdge = Collisions::isStandingOnRightEdge(tiles, x, physical_width, x_current_pos_in_tiles);
-    bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, physical_width, physical_height, false, 0);
-    leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, false, 0);
-    rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, false, 0);
-    upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, physical_width, false, 0);
+    standingOnLeftEdge = Collisions::isStandingOnLeftEdge(t, x, physical_width, x_current_pos_in_tiles);
+    standingOnRightEdge = Collisions::isStandingOnRightEdge(t, x, physical_width, x_current_pos_in_tiles);
+    bottomCollision = Collisions::checkBottomCollision(t, &x, &y, &ySpeed, physical_width, physical_height, false, 0);
+    leftCollision = Collisions::checkLeftCollision(t, &x, &y, &xSpeed, physical_width, physical_height, false, 0);
+    rightCollision = Collisions::checkRightCollision(t, &x, &y, &xSpeed, physical_width, physical_height, false, 0);
+    upperCollision = Collisions::checkUpperCollision(t, &x, &y, &ySpeed, physical_width, false, 0);
 
 }
 
+//!> snake has only 1 dmg point, always kill if any dmg_apply
 void Snake::apply_dmg(int dmg_to_apply) {
 
-    //snake has only 1 dmg point, always kill if any dmg_apply
-
-    subSpriteInfo->entry->isHidden = true;
-    mainSpriteInfo->entry->isHidden = true;
-
-    subSpriteInfo = nullptr;
-    mainSpriteInfo = nullptr;
+    //FIXME Leaving pointers like that is not a good idea! Find other classes that do that.
+    //    subSpriteInfo = nullptr;
+    //    mainSpriteInfo = nullptr;
 
     spawn_blood();
+    global::killed_npcs.push_back(SpriteType::S_SNAKE);
+    sprite_utils::set_visibility(false, mainSpriteInfo, subSpriteInfo);
     killed = true;
     ready_to_dispose = true;
-    global::killed_npcs.push_back(spritesheet_type);
-
 }
 
 void Snake::initSprite() {
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_bat_snake_jetpackPal, gfx_bat_snake_jetpackPalLen,
-                                                        nullptr, sprite_width * sprite_height, 16, SNAKE, true, false,
+                                                        nullptr, SNAKE_SPRITE_SIZE, 16, SNAKE, true, false,
                                                         LAYER_LEVEL::MIDDLE_TOP);
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_bat_snake_jetpackPal, gfx_bat_snake_jetpackPalLen,
-                                                          nullptr, sprite_width * sprite_height, 16, SNAKE, true, false,
+                                                          nullptr, SNAKE_SPRITE_SIZE, 16, SNAKE, true, false,
                                                           LAYER_LEVEL::MIDDLE_TOP);
-    subSpriteInfo->entry->isHidden = false;
-    mainSpriteInfo->entry->isHidden = false;
-
-    int main_x, main_y, sub_x, sub_y;
-    get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
-
-    mainSpriteInfo->entry->x = main_x;
-    mainSpriteInfo->entry->y = main_y;
-
-    subSpriteInfo->entry->x = sub_x;
-    subSpriteInfo->entry->y = sub_y;
-
+    sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);
+    sprite_utils::set_visibility(true, mainSpriteInfo, subSpriteInfo);
+    sprite_utils::set_horizontal_flip(true, mainSpriteInfo, subSpriteInfo);
+    set_position();
+    match_animation();
 
 }
 
 void Snake::set_position() {
-
     int main_x, main_y, sub_x, sub_y;
     get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
-
-    mainSpriteInfo->entry->x = main_x;
-    mainSpriteInfo->entry->y = main_y;
-
-    subSpriteInfo->entry->x = sub_x;
-    subSpriteInfo->entry->y = sub_y;
+    sprite_utils::set_entry_xy(mainSpriteInfo, main_x, main_y);
+    sprite_utils::set_entry_xy(subSpriteInfo, sub_x, sub_y);
 }
 
+//!> after calling this function, call sprite_utils::update_frame to update OAM with current frameGfx
 void Snake::set_sprite_left() {
-    frameGfx = (u8 *) gfx_bat_snake_jetpackTiles + ((sprite_width * sprite_height * (animFrame + 13)) / 2);
-    subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
-    mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
-    mainSpriteInfo->entry->hFlip = true;
-    subSpriteInfo->entry->hFlip = true;
-
-    mainSpriteInfo->entry->isHidden = false;
-    subSpriteInfo->entry->isHidden = false;
+    frameGfx = sprite_utils::get_frame((u8 *) gfx_bat_snake_jetpackTiles, SNAKE_SPRITE_SIZE, animFrame + 13);
 }
 
+//!> after calling this function, call sprite_utils::update_frame to update OAM with current frameGfx
 void Snake::set_sprite_right() {
-    frameGfx = (u8 *) gfx_bat_snake_jetpackTiles + ((sprite_width * sprite_height * (animFrame + 9)) / 2);
-    subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
-    mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
-    mainSpriteInfo->entry->hFlip = true;
-    subSpriteInfo->entry->hFlip = true;
-
-    mainSpriteInfo->entry->isHidden = false;
-    subSpriteInfo->entry->isHidden = false;
+    frameGfx = sprite_utils::get_frame((u8 *) gfx_bat_snake_jetpackTiles, SNAKE_SPRITE_SIZE, animFrame + 9);
 }
 
 Snake::Snake() {
@@ -233,5 +193,19 @@ Snake::Snake() {
     sprite_height = SNAKE_SPRITE_HEIGHT;
     sprite_width = SNAKE_SPRITE_WIDTH;
     hitpoints = SNAKE_HITPOINTS;
+}
+
+Snake::Snake(int x, int y) : Snake() {
+    this->x = x;
+    this->y = y;
+}
+
+void Snake::match_animation() {
+    if (spriteState == SpriteState::W_LEFT)
+        set_sprite_left();
+    else if (spriteState == SpriteState::W_RIGHT)
+        set_sprite_right();
+
+    sprite_utils::update_frame(frameGfx, SNAKE_SPRITE_SIZE, mainSpriteInfo, subSpriteInfo);
 }
 

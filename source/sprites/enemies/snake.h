@@ -8,8 +8,10 @@
 
 #define SNAKE_PHYSICAL_HEIGHT 16
 #define SNAKE_PHYSICAL_WIDTH 16
+
 #define SNAKE_SPRITE_HEIGHT 16
 #define SNAKE_SPRITE_WIDTH 16
+#define SNAKE_SPRITE_SIZE SNAKE_SPRITE_HEIGHT * SNAKE_SPRITE_WIDTH
 
 #define MAX_X_SPEED_SNAKE 4
 #define MAX_Y_SPEED_SNAKE 4
@@ -23,6 +25,8 @@ class Snake : public MovingObject {
 public:
 
     Snake();
+
+    Snake(int x, int y);
 
     void updateOther() override {};
 
@@ -54,11 +58,11 @@ public:
 
     //Snake goes for random amount of time_utils on random direction, then waits random time_utils and the cycle goes again
     SpriteState spriteState{};
-    int waitTimer{};
-    int goTimer{};
+    double waitTimer{};
+    double goTimer{};
 
     int animFrame{};
-    int animFrameTimer{};
+    double animFrameTimer{};
 
     void randomizeMovement();
 
@@ -67,6 +71,9 @@ public:
     void set_sprite_left();
 
     void set_sprite_right();
+
+    void match_animation();
+
 };
 
 
