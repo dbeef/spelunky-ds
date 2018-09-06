@@ -12,6 +12,21 @@
 //!> https://www.reddit.com/r/C_Programming/comments/4sfcpm/are_variadic_functions_computationally_expensive/
 namespace sprite_utils {
 
+    //!>variadic template function that recursively sets priority of a set of sprites
+
+    //function to end the recursion and set the last element
+    template<typename T>
+    void set_priority(ObjPriority priority, T *i) {
+        i->entry->priority = priority;
+    }
+
+    //this function will be called for all but the last element in the pack
+    template<typename T, typename ... Param>
+    void set_priority(ObjPriority priority, T *i, Param *... params) {
+        i->entry->priority = priority;
+        set_priority(priority, params ...);
+    }
+
     //!>variadic template function that recursively sets visibility of a set of sprites
 
     //function to end the recursion and set the last element

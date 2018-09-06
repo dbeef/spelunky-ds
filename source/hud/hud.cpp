@@ -368,7 +368,7 @@ void Hud::draw_killed_npcs() {
             case SpriteType::S_DAMSEL: {
                 auto *damsel = new Damsel(95 + (a * 8), 208);
                 damsel->init();
-                damsel->update_animation();
+                damsel->match_animation();
                 damsel->draw();
                 damsel->y += (16 - damsel->physical_height); //aligning to same level
                 global::sprites.push_back(damsel);

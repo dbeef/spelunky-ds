@@ -11,8 +11,10 @@
 
 #define DAMSEL_PHYSICAL_HEIGHT 16
 #define DAMSEL_PHYSICAL_WIDTH 16
+
 #define DAMSEL_SPRITE_HEIGHT 16
 #define DAMSEL_SPRITE_WIDTH 16
+#define DAMSEL_SPRITE_SIZE DAMSEL_SPRITE_WIDTH * DAMSEL_SPRITE_HEIGHT
 
 #define MAX_X_SPEED_DAMSEL 5
 #define MAX_Y_SPEED_DAMSEL 4
@@ -58,16 +60,16 @@ public:
 
     u8 *frameGfx{};
 
-    int waitTimer{};
-    int goTimer{};
+    double waitTimer{};
+    double goTimer{};
 
     int animFrame{};
-    int animFrameTimer{};
+    double animFrameTimer{};
 
-    int invert_speed_timer{};
-    int yell_timer{};
+    double invert_speed_timer{};
+    double yell_timer{};
     bool yelling{};
-    int blood_spawn_timer{};
+    double blood_spawn_timer{};
 
     bool landlocked{};
     bool triggered{};
@@ -76,7 +78,7 @@ public:
     bool rescued{};
     bool call_for_help{};
 
-    int stunned_timer{};
+    double stunned_timer{};
 
     void randomizeMovement();
 
@@ -88,8 +90,6 @@ public:
 
     void make_some_movement();
 
-    void check_if_can_be_triggered();
-
     void apply_stunned_carried_sprites();
 
     void apply_dead_carried_sprites();
@@ -100,7 +100,7 @@ public:
 
     void apply_yelling_sprites();
 
-    void update_animation();
+    void match_animation();
 
     void apply_smooching_sprites();
 };

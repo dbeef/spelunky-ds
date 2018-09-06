@@ -163,18 +163,22 @@ void Spider::initSprite() {
 
 }
 
+//!> after calling this function, call sprite_utils::update_frame to update OAM with current frameGfx
 void Spider::set_sprite_hanging() {
     frameGfx = sprite_utils::get_frame((u8 *) gfx_spider_skeletonTiles, SPIDER_SPRITE_SIZE, 4);
 }
 
+//!> after calling this function, call sprite_utils::update_frame to update OAM with current frameGfx
 void Spider::set_sprite_flipping() {
     frameGfx = sprite_utils::get_frame((u8 *) gfx_spider_skeletonTiles, SPIDER_SPRITE_SIZE, animFrame + 4);
 }
 
+//!> after calling this function, call sprite_utils::update_frame to update OAM with current frameGfx
 void Spider::set_sprite_jumping() {
     frameGfx = sprite_utils::get_frame((u8 *) gfx_spider_skeletonTiles, SPIDER_SPRITE_SIZE, animFrame);
 }
 
+//!> after calling this function, call sprite_utils::update_frame to update OAM with current frameGfx
 void Spider::set_sprite_falling() {
     frameGfx = sprite_utils::get_frame((u8 *) gfx_spider_skeletonTiles, SPIDER_SPRITE_SIZE, 0);
 }

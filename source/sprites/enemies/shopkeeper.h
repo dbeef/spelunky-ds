@@ -11,8 +11,10 @@
 
 #define SHOPKEEPER_PHYSICAL_HEIGHT 16
 #define SHOPKEEPER_PHYSICAL_WIDTH 16
+
 #define SHOPKEEPER_SPRITE_HEIGHT 16
 #define SHOPKEEPER_SPRITE_WIDTH 16
+#define SHOPKEEPER_SPRITE_SIZE SHOPKEEPER_SPRITE_HEIGHT * SHOPKEEPER_SPRITE_WIDTH
 
 #define SHOPKEEPER_STUN_TIME 7000
 #define SHOPKEEPER_HITPOINTS 3
@@ -64,27 +66,27 @@ public:
 
     u8 *frameGfx{};
 
-    int waitTimer{};
-    int go_timer{};
+    double waitTimer{};
+    double go_timer{};
 
     int anim_frame{};
-    int anim_frame_timer{};
+    double anim_frame_timer{};
 
-    int invert_speed_timer{};
-    int blood_spawn_timer{};
+    double invert_speed_timer{};
+    double blood_spawn_timer{};
 
     bool no_shotgun{};
     bool landlocked{};
     bool triggered{};
     bool standby{};
     bool stunned{};
-    int stunned_timer{};
+    double stunned_timer{};
 
     int shop_bounds_left_x_px{};
     int shop_bounds_right_x_px{};
     int shop_bounds_up_y_px{};
     int shop_bounds_down_y_px{};
-    int jumping_timer{};
+    double jumping_timer{};
 
     int staying_on_ground{};
 
@@ -100,15 +102,13 @@ public:
 
     void make_some_movement();
 
-    void check_if_can_be_triggered();
-
     void apply_stunned_carried_sprites();
 
     void apply_dead_carried_sprites();
 
     void apply_dead_sprites();
 
-    void update_animation();
+    void match_animation();
 
     void set_shop_bounds();
 

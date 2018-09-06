@@ -86,6 +86,7 @@ bool MovingObject::check_if_can_be_opened() {
         return false;
 }
 
+//TODO Merge check_if_can_be_pickuped with set_pickuped_position
 //check, if main dude can pickup this item (to hands, not to inventory)
 void MovingObject::check_if_can_be_pickuped() {
 
