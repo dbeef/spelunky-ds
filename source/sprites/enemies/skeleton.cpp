@@ -217,10 +217,12 @@ void Skeleton::check_if_can_be_summoned() {
     }
 }
 
+//!> after calling this function, call sprite_utils::update_frame to update OAM with current frameGfx
 void Skeleton::set_sprite_pile_of_bones() {
     frameGfx = sprite_utils::get_frame((u8 *) gfx_spider_skeletonTiles, SKELETON_SPRITE_SIZE, 12);
 }
 
+//!> after calling this function, call sprite_utils::update_frame to update OAM with current frameGfx
 void Skeleton::set_sprite_walking() {
 
     if (anim_frame_counter >= 5)
@@ -229,6 +231,7 @@ void Skeleton::set_sprite_walking() {
     frameGfx = sprite_utils::get_frame((u8 *) gfx_spider_skeletonTiles, SKELETON_SPRITE_SIZE, anim_frame_counter + 18);
 }
 
+//!> after calling this function, call sprite_utils::update_frame to update OAM with current frameGfx
 void Skeleton::set_sprite_summoning() {
 
     if (anim_frame_counter >= 6) {

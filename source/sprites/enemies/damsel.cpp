@@ -208,7 +208,7 @@ void Damsel::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_i
     if (bounce || exiting_level)
         return;
 
-    //TODO This piece of code should be shared between shopkeeper and damsel in some utils file
+    //TODO This piece of code should be shared between shopkeeper/damsel/caveman in some utils file
 
     if (bottomCollision && t[TileOrientation::RIGHT_MIDDLE] != nullptr &&
         t[TileOrientation::RIGHT_MIDDLE]->collidable &&
@@ -246,7 +246,7 @@ void Damsel::apply_dmg(int dmg_to_apply) {
         return;
     }
 
-    //TODO Share this piece of code between damsel and shopkeeper
+    //TODO Share this piece of code between damsel/shopkeeper/caveman
     hitpoints -= dmg_to_apply;
     if (blood_spawn_timer > 1000) {
         blood_spawn_timer = 0;
@@ -387,18 +387,21 @@ void Damsel::make_some_movement() {
 
 }
 
+//!> after calling this function, call sprite_utils::update_frame to update OAM with current frameGfx
 void Damsel::apply_stunned_carried_sprites() {
     animFrame = 0;
     frameGfx = sprite_utils::get_frame((u8 *) gfx_caveman_damselTiles, DAMSEL_SPRITE_SIZE,
                                        DAMSEL_SPRITESHEET_OFFSET + 4);
 }
 
+//!> after calling this function, call sprite_utils::update_frame to update OAM with current frameGfx
 void Damsel::apply_dead_carried_sprites() {
     animFrame = 0;
     frameGfx = sprite_utils::get_frame((u8 *) gfx_caveman_damselTiles, DAMSEL_SPRITE_SIZE,
                                        DAMSEL_SPRITESHEET_OFFSET + 4);
 }
 
+//!> after calling this function, call sprite_utils::update_frame to update OAM with current frameGfx
 void Damsel::apply_dead_sprites() {
     animFrame = 0;
     if (ySpeed == 0)
@@ -414,7 +417,7 @@ void Damsel::apply_dead_sprites() {
 
 }
 
-
+//!> after calling this function, call sprite_utils::update_frame to update OAM with current frameGfx
 void Damsel::apply_walking_sprites() {
 
     if (animFrame >= 4)
@@ -431,6 +434,7 @@ void Damsel::apply_walking_sprites() {
                                            DAMSEL_SPRITESHEET_OFFSET + 3);
 }
 
+//!> after calling this function, call sprite_utils::update_frame to update OAM with current frameGfx
 void Damsel::apply_stunned_sprites() {
     if (animFrame >= 5)
         animFrame = 0;
@@ -446,6 +450,7 @@ void Damsel::apply_stunned_sprites() {
                                            DAMSEL_SPRITESHEET_OFFSET + 2);
 }
 
+//!> after calling this function, call sprite_utils::update_frame to update OAM with current frameGfx
 void Damsel::apply_exiting_level_sprites() {
     if (animFrame >= 16) {
         rescued = true;
@@ -455,6 +460,7 @@ void Damsel::apply_exiting_level_sprites() {
                                            DAMSEL_SPRITESHEET_OFFSET + 14 + animFrame);
 }
 
+//!> after calling this function, call sprite_utils::update_frame to update OAM with current frameGfx
 void Damsel::apply_yelling_sprites() {
 
     if (animFrame >= 10) {
@@ -467,6 +473,7 @@ void Damsel::apply_yelling_sprites() {
 
 }
 
+//!> after calling this function, call sprite_utils::update_frame to update OAM with current frameGfx
 void Damsel::match_animation() {
 
     if (global::game_state->smooching && global::game_state->smooch_timer > 0)
@@ -487,6 +494,7 @@ void Damsel::match_animation() {
     sprite_utils::update_frame(frameGfx, DAMSEL_SPRITE_SIZE, mainSpriteInfo, subSpriteInfo);
 }
 
+//!> after calling this function, call sprite_utils::update_frame to update OAM with current frameGfx
 void Damsel::apply_smooching_sprites() {
 
     if (animFrame >= 10) {

@@ -11,8 +11,10 @@
 
 #define CAVEMAN_PHYSICAL_HEIGHT 16
 #define CAVEMAN_PHYSICAL_WIDTH 16
+
 #define CAVEMAN_SPRITE_HEIGHT 16
 #define CAVEMAN_SPRITE_WIDTH 16
+#define CAVEMAN_SPRITE_SIZE CAVEMAN_SPRITE_WIDTH * CAVEMAN_SPRITE_HEIGHT
 
 #define MAX_X_SPEED_CAVEMAN 4
 #define MAX_Y_SPEED_CAVEMAN 4
@@ -26,6 +28,7 @@ class Caveman : public MovingObject {
 public:
 
     Caveman();
+
     Caveman(int x, int y);
 
     void updateOther() override {};
@@ -54,21 +57,21 @@ public:
     SpriteInfo *subSpriteInfo{};
     u8 *frameGfx{};
 
-    int waitTimer{};
-    int goTimer{};
+    double waitTimer{};
+    double goTimer{};
 
     int animFrame{};
-    int animFrameTimer{};
+    double animFrameTimer{};
 
-    int invert_speed_timer{};
+    double invert_speed_timer{};
 
-    int blood_spawn_timer{};
+    double blood_spawn_timer{};
 
     bool landlocked{};
     bool triggered{};
     bool stunned{};
 
-    int stunned_timer{};
+    double stunned_timer{};
 
     void randomizeMovement();
 
@@ -87,6 +90,8 @@ public:
     void apply_dead_carried_sprites();
 
     void apply_dead_sprites();
+
+    void match_animation();
 };
 
 
