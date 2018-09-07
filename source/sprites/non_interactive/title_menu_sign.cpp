@@ -6,6 +6,7 @@
 #include "../../globals_declarations.h"
 #include "../../../build/gfx_menu_signs_start_scores.h"
 #include "../../../build/gfx_menu_signs_tutorial_quit.h"
+#include "../sprite_utils.h"
 
 void TitleMenuSign::draw() {
 
@@ -19,43 +20,32 @@ void TitleMenuSign::draw() {
     int main_x, main_y, sub_x, sub_y;
     get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
 
-    mainSpriteInfo_1->entry->x = main_x;
-    mainSpriteInfo_1->entry->y = main_y;
+    sprite_utils::set_entry_xy(mainSpriteInfo_1, main_x, main_y);
+    sprite_utils::set_entry_xy(mainSpriteInfo_2, main_x + offset, main_y);
 
-    mainSpriteInfo_2->entry->x = main_x + offset;
-    mainSpriteInfo_2->entry->y = main_y;
-
-
-    subSpriteInfo_1->entry->x = sub_x;
-    subSpriteInfo_1->entry->y = sub_y;
-
-    subSpriteInfo_2->entry->x = sub_x + offset;
-    subSpriteInfo_2->entry->y = sub_y;
+    sprite_utils::set_entry_xy(subSpriteInfo_1, sub_x, sub_y);
+    sprite_utils::set_entry_xy(subSpriteInfo_2, sub_x + offset, sub_y);
 
 }
 
 
 void TitleMenuSign::init() {
     initSprite();
-
-    mainSpriteInfo_1->entry->hFlip = false;
-    mainSpriteInfo_2->entry->hFlip = false;
-    mainSpriteInfo_1->entry->vFlip = false;
-    mainSpriteInfo_2->entry->vFlip = false;
+    sprite_utils::set_vertical_flip(false, mainSpriteInfo_1, mainSpriteInfo_2);
+    sprite_utils::set_horizontal_flip(false, mainSpriteInfo_1, mainSpriteInfo_2);
 }
 
 
 void TitleMenuSign::initSprite() {
 
-    OAMManager *used_oam_manager;
-    if (oamType == OamType::MAIN) {
-        used_oam_manager = global::main_oam_manager;
-    } else if (oamType == OamType::SUB) {
-        used_oam_manager = global::sub_oam_manager;
-    }
+    OAMManager *used_oam_manager = nullptr;
+    u8 *frameGfx1 = nullptr;
+    u8 *frameGfx2 = nullptr;
 
-    u8 *frameGfx1;
-    u8 *frameGfx2;
+    if (oamType == OamType::MAIN)
+        used_oam_manager = global::main_oam_manager;
+    else if (oamType == OamType::SUB)
+        used_oam_manager = global::sub_oam_manager;
 
     switch (menuSignType) {
 
@@ -132,10 +122,4 @@ void TitleMenuSign::initSprite() {
 
 }
 
-TitleMenuSign::TitleMenuSign(){
-    physical_height = 32;
-    physical_width = 32;
-    sprite_height = 32;
-    sprite_width = 32;
-}
 

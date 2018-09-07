@@ -5,23 +5,22 @@
 #include "whip.h"
 #include "../../../build/gfx_spike_collectibles_flame.h"
 #include "../../globals_declarations.h"
+#include "../sprite_utils.h"
 
 void Whip::draw() {
 
     if (global::main_dude->using_whip) {
-
         update_position();
 
         whip_timer += *global::timer;
-        if (whip_timer > 420 + 0 * 70) {
+        if (whip_timer > 420) {
             whip_timer = 0;
             global::main_dude->using_whip = false;
             hide();
         }
 
-    } else {
+    } else
         hide();
-    }
 
 }
 
@@ -33,56 +32,50 @@ void Whip::init() {
 void Whip::update_position() {
 
     x = global::main_dude->x;
-    y = global::main_dude->y;
-
-    int main_x, main_y, sub_x, sub_y;
-    get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
-
-    main_sprite_info->entry->isHidden = main_x < -sprite_width || main_y < -sprite_height;
-    sub_sprite_info->entry->isHidden = sub_x < -sprite_width || sub_y < -sprite_height;
+    y = global::main_dude->y - 1;
 
     if (whip_timer > 100 && whip_timer < 180) {
+
+        //whiping, phase 1 - whip is behind main dude
         assign_pre_whip_sprite();
+        sprite_utils::set_visibility(true, main_sprite_info, sub_sprite_info);
 
         if (global::main_dude->sprite_state == SpriteState::W_LEFT) {
-            main_sprite_info->entry->x = main_x + 8;
-            sub_sprite_info->entry->x = sub_x + 8;
-            main_sprite_info->entry->hFlip = true;
-            sub_sprite_info->entry->hFlip = true;
+            x += 8;
+            sprite_utils::set_horizontal_flip(true, main_sprite_info, sub_sprite_info);
         } else {
-            main_sprite_info->entry->x = main_x - 8;
-            sub_sprite_info->entry->x = sub_x - 8;
-            main_sprite_info->entry->hFlip = false;
-            sub_sprite_info->entry->hFlip = false;
+            x -= 8;
+            sprite_utils::set_horizontal_flip(false, main_sprite_info, sub_sprite_info);
         }
 
     } else if (whip_timer >= 220) {
+
+        //whipping, phase 2 - whip is in front of main dude
         assign_whip_sprite();
+        sprite_utils::set_visibility(true, main_sprite_info, sub_sprite_info);
 
         if (global::main_dude->sprite_state == SpriteState::W_LEFT) {
-            main_sprite_info->entry->x = main_x - 16;
-            sub_sprite_info->entry->x = sub_x - 16;
-            main_sprite_info->entry->hFlip = false;
-            sub_sprite_info->entry->hFlip = false;
+            x -= 16;
+            sprite_utils::set_horizontal_flip(false, main_sprite_info, sub_sprite_info);
         } else {
-            main_sprite_info->entry->x = main_x + 16;
-            sub_sprite_info->entry->x = sub_x + 16;
-            main_sprite_info->entry->hFlip = true;
-            sub_sprite_info->entry->hFlip = true;
+            x += 16;
+            sprite_utils::set_horizontal_flip(true, main_sprite_info, sub_sprite_info);
         }
 
-    } else {
+    } else
         hide();
-    }
 
-    main_sprite_info->entry->y = main_y - 1;
-    sub_sprite_info->entry->y = sub_y - 1;
+    int main_x, main_y, sub_x, sub_y;
+    get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
+    sprite_utils::set_entry_xy(main_sprite_info, main_x, main_y);
+    sprite_utils::set_entry_xy(sub_sprite_info, sub_x, sub_y);
 
+    sprite_utils::set_vertical_flip(false, main_sprite_info, sub_sprite_info);
+    sprite_utils::update_frame(frameGfx, WHIP_SPRITE_SIZE, main_sprite_info, sub_sprite_info);
 }
 
 void Whip::initSprite() {
 
-    //FIXME TYPE SHOULD BE SPIKE_COLLECTIBLES BUT MAKES PALETTE BUGS
     main_sprite_info = global::main_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
                                                             gfx_spike_collectibles_flamePalLen,
                                                             nullptr, 16 * 16, 16, WHIP,
@@ -95,27 +88,24 @@ void Whip::initSprite() {
     hide();
 }
 
+//!> after calling this function, call sprite_utils::update_frame to update OAM with current frameGfx
 void Whip::assign_pre_whip_sprite() {
-    frameGfx = (u8 *) gfx_spike_collectibles_flameTiles + (41 * sprite_height * sprite_width / 2);
-    main_sprite_info->updateFrame(frameGfx, sprite_height * sprite_width);
-    sub_sprite_info->updateFrame(frameGfx, sprite_height * sprite_width);
+    frameGfx = sprite_utils::get_frame((u8 *) gfx_spike_collectibles_flameTiles, WHIP_SPRITE_SIZE, 41);
 }
 
+//!> after calling this function, call sprite_utils::update_frame to update OAM with current frameGfx
 void Whip::assign_whip_sprite() {
-    frameGfx = (u8 *) gfx_spike_collectibles_flameTiles + (40 * sprite_width * sprite_height / 2);
-    main_sprite_info->updateFrame(frameGfx, sprite_width * sprite_height);
-    sub_sprite_info->updateFrame(frameGfx, sprite_width * sprite_height);
+    frameGfx = sprite_utils::get_frame((u8 *) gfx_spike_collectibles_flameTiles, WHIP_SPRITE_SIZE, 40);
 }
 
 void Whip::hide() {
-    main_sprite_info->entry->isHidden = true;
-    sub_sprite_info->entry->isHidden = true;
+    sprite_utils::set_visibility(false, main_sprite_info, sub_sprite_info);
 }
 
 Whip::Whip() {
-    sprite_width = 16;
-    sprite_height = 16;
-    physical_width = 16;
-    physical_height = 16;
+    sprite_width = WHIP_SPRITE_WIDTH;
+    sprite_height = WHIP_SPRITE_HEIGHT;
+    physical_width = WHIP_PHYSICAL_WIDTH;
+    physical_height = WHIP_PHYSICAL_HEIGHT;
     spritesheet_type = SPIKES_COLLECTIBLES;
 }

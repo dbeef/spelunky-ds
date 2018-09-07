@@ -246,7 +246,7 @@ void Damsel::apply_dmg(int dmg_to_apply) {
         return;
     }
 
-    //TODO Share this piece of code between damsel/shopkeeper/caveman
+    //TODO Share this piece of code between damsel/shopkeeper/caveman/main dude
     hitpoints -= dmg_to_apply;
     if (blood_spawn_timer > 1000) {
         blood_spawn_timer = 0;

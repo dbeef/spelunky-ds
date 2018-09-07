@@ -7,21 +7,20 @@
 
 #define TUTORIAL_QUIT_SIGN_SPRITE_WIDTH 16
 #define TUTORIAL_QUIT_SIGN_SPRITE_HEIGHT 16
+#define TUTORIAL_QUIT_SIGN_SPRITE_SIZE TUTORIAL_QUIT_SIGN_SPRITE_WIDTH * TUTORIAL_QUIT_SIGN_SPRITE_HEIGHT
 
 #define START_SCORES_SIGN_SPRITE_WIDTH 32
 #define START_SCORES_SIGN_SPRITE_HEIGHT 32
+#define START_SCORES_SIGN_SPRITE_SIZE START_SCORES_SIGN_SPRITE_WIDTH * START_SCORES_SIGN_SPRITE_HEIGHT
 
 #include "../moving_object.h"
 #include "../menu_sign_type.hpp"
 
-//TODO SPLIT THIS TO SEPARATE CLASSES
-
-//used for main menu signs: tutorial, scores, start, quit
+//TODO Split this class to separate classes - one for (tutorial/quit) and one for (start/scores)
+//!> used for main menu signs: tutorial, scores, start, quit
 class TitleMenuSign : public MovingObject {
 
 public:
-
-    TitleMenuSign();
 
     void initSprite() override;
 

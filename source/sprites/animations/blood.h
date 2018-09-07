@@ -10,8 +10,10 @@
 
 #define BLOOD_PHYSICAL_HEIGHT 5
 #define BLOOD_PHYSICAL_WIDTH 5
+
 #define BLOOD_SPRITE_HEIGHT 8
 #define BLOOD_SPRITE_WIDTH 8
+#define BLOOD_SPRITE_SIZE BLOOD_SPRITE_WIDTH * BLOOD_SPRITE_HEIGHT
 
 #define BLOOD_CHANGE_POS_DELTA 17
 #define BLOOD_ANIM_FRAME_DELTA 90
@@ -64,14 +66,18 @@ public:
 
     bool finished{};
     int currentFrame{};
-    int animFrameTimer{};
+    double animFrameTimer{};
 
     std::vector<BloodElement *> bloodTrail;
 
-    int living_timer{};
-    int time_since_last_spawn{};
+    double living_timer{};
+    double time_since_last_spawn{};
 
     void spawn_blood();
+
+    void match_animation();
+
+    void set_position();
 };
 
 

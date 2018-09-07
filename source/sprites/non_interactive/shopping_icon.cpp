@@ -6,33 +6,20 @@
 #include "../../globals_declarations.h"
 #include "../../../build/gfx_goldbars.h"
 #include "shopping_icon.h"
+#include "../sprite_utils.h"
 
 #define SHOPPING_ICON_OFFSET 12
 #define ANIM_FRAME_DELTA 25
 
 void ShoppingIcon::draw() {
 
-    if (ready_to_dispose) {
-        mainSpriteInfo->entry->isHidden = true;
-        subSpriteInfo->entry->isHidden = true;
+    if (ready_to_dispose)
         return;
-    }
 
-    mainSpriteInfo->entry->isHidden = false;
-    subSpriteInfo->entry->isHidden = false;
-    mainSpriteInfo->entry->hFlip = false;
-    subSpriteInfo->entry->hFlip = false;
-    mainSpriteInfo->entry->vFlip = false;
-    subSpriteInfo->entry->vFlip = false;
-
-    int main_x, main_y, sub_x, sub_y;
-    get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
-
-    mainSpriteInfo->entry->x = main_x;
-    mainSpriteInfo->entry->y = main_y;
-
-    subSpriteInfo->entry->x = sub_x;
-    subSpriteInfo->entry->y = sub_y;
+    sprite_utils::set_visibility(true, mainSpriteInfo, subSpriteInfo);
+    sprite_utils::set_horizontal_flip(false, mainSpriteInfo, subSpriteInfo);
+    sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);
+    set_position();
 
     trigger_timer += *global::timer;
 
@@ -48,11 +35,7 @@ void ShoppingIcon::draw() {
             trigger_timer = 0;
         }
 
-        u8 *frameGfx = (u8 *) gfx_goldbarsTiles +
-                       ((SHOPPING_ICON_OFFSET + anim_frame) * SHOPPING_ICON_SPRITE_WIDTH * SHOPPING_ICON_SPRITE_HEIGHT /
-                        2);
-        mainSpriteInfo->updateFrame(frameGfx, SHOPPING_ICON_SPRITE_WIDTH * SHOPPING_ICON_SPRITE_HEIGHT);
-        subSpriteInfo->updateFrame(frameGfx, SHOPPING_ICON_SPRITE_WIDTH * SHOPPING_ICON_SPRITE_HEIGHT);
+        match_animation();
     }
 
 }
@@ -79,11 +62,11 @@ void ShoppingIcon::initSprite() {
                                                         true,
                                                         false, LAYER_LEVEL::MIDDLE_TOP);
 
-    u8 *frameGfx = (u8 *) gfx_goldbarsTiles +
-                   ((SHOPPING_ICON_OFFSET + anim_frame) * SHOPPING_ICON_SPRITE_WIDTH * SHOPPING_ICON_SPRITE_HEIGHT / 2);
-    mainSpriteInfo->updateFrame(frameGfx, SHOPPING_ICON_SPRITE_WIDTH * SHOPPING_ICON_SPRITE_HEIGHT);
-    subSpriteInfo->updateFrame(frameGfx, SHOPPING_ICON_SPRITE_WIDTH * SHOPPING_ICON_SPRITE_HEIGHT);
-
+    match_animation();
+    sprite_utils::set_visibility(true, mainSpriteInfo, subSpriteInfo);
+    sprite_utils::set_horizontal_flip(false, mainSpriteInfo, subSpriteInfo);
+    sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);
+    set_position();
 }
 
 
@@ -92,4 +75,17 @@ ShoppingIcon::ShoppingIcon() {
     physical_width = SHOPPING_ICON_PHYSICAL_WIDTH;
     sprite_height = SHOPPING_ICON_SPRITE_HEIGHT;
     sprite_width = SHOPPING_ICON_SPRITE_WIDTH;
+}
+
+void ShoppingIcon::set_position() {
+    int main_x, main_y, sub_x, sub_y;
+    get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
+    sprite_utils::set_entry_xy(mainSpriteInfo, main_x, main_y);
+    sprite_utils::set_entry_xy(subSpriteInfo, sub_x, sub_y);
+}
+
+void ShoppingIcon::match_animation() {
+    u8 *frameGfx = sprite_utils::get_frame((u8 *) gfx_goldbarsTiles, SHOPPING_ICON_SPRITE_SIZE,
+                                           SHOPPING_ICON_OFFSET + anim_frame);
+    sprite_utils::update_frame(frameGfx, SHOPPING_ICON_SPRITE_SIZE, mainSpriteInfo, subSpriteInfo);
 }

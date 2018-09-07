@@ -7,6 +7,7 @@
 
 #define LAMP_SPRITE_HEIGHT 16
 #define LAMP_SPRITE_WIDTH 16
+#define LAMP_SPRITE_SIZE LAMP_SPRITE_WIDTH * LAMP_SPRITE_HEIGHT
 
 #define LAMP_PHYSICAL_HEIGHT 16
 #define LAMP_PHYSICAL_WIDTH 16
@@ -41,12 +42,16 @@ public:
 
     void onCollisionWithMainCharacter() override {};
 
+    void set_position();
+
     SpriteInfo *mainSpriteInfo{};
     SpriteInfo *subSpriteInfo{};
-
+    u8 *frameGfx{};
     int anim_frame{};
-    int anim_frame_timer{};
+    double anim_frame_timer{};
 
+
+    void match_animation();
 };
 
 

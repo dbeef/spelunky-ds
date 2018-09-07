@@ -3,6 +3,7 @@
 //
 
 #include <maxmod9.h>
+#include <cstdio>
 #include "game_state.h"
 #include "../../globals_declarations.h"
 #include "../../game_loop.h"
@@ -192,7 +193,6 @@ void GameState::handle_changing_screens() {
         //
 
         oam_utils::delete_all_sprites();
-
         global::main_dude->init();
         global::sprites.push_back(global::main_dude);
 

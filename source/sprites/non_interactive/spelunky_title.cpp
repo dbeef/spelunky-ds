@@ -5,116 +5,86 @@
 #include "spelunky_title.h"
 #include "../../globals_declarations.h"
 #include "../../../build/gfx_spelunky_title.h"
+#include "../sprite_utils.h"
 
 void SpelunkyTitle::draw() {
 
     int main_x, main_y, sub_x, sub_y;
     get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
 
-    mainSpriteInfo_1->entry->x = main_x;
-    mainSpriteInfo_1->entry->y = main_y;
+    sprite_utils::set_entry_xy(mainSpriteInfo_1, main_x, main_y);
+    sprite_utils::set_entry_xy(mainSpriteInfo_2, main_x + SPELUNKY_TITLE_SPRITE_WIDTH, main_y);
+    sprite_utils::set_entry_xy(mainSpriteInfo_3, main_x + SPELUNKY_TITLE_SPRITE_WIDTH * 2, main_y);
 
-    mainSpriteInfo_2->entry->x = main_x + SPELUNKY_TITLE_SPRITE_WIDTH;
-    mainSpriteInfo_2->entry->y = main_y;
-
-    mainSpriteInfo_3->entry->x = main_x + SPELUNKY_TITLE_SPRITE_WIDTH * 2;
-    mainSpriteInfo_3->entry->y = main_y;
-
-    subSpriteInfo_1->entry->x = sub_x;
-    subSpriteInfo_1->entry->y = sub_y;
-
-    subSpriteInfo_2->entry->x = sub_x + SPELUNKY_TITLE_SPRITE_WIDTH;
-    subSpriteInfo_2->entry->y = sub_y;
-
-    subSpriteInfo_3->entry->x = sub_x + SPELUNKY_TITLE_SPRITE_WIDTH * 2;
-    subSpriteInfo_3->entry->y = sub_y;
+    sprite_utils::set_entry_xy(subSpriteInfo_1, sub_x, sub_y);
+    sprite_utils::set_entry_xy(subSpriteInfo_2, sub_x + SPELUNKY_TITLE_SPRITE_WIDTH, sub_y);
+    sprite_utils::set_entry_xy(subSpriteInfo_3, sub_x + SPELUNKY_TITLE_SPRITE_WIDTH * 2, sub_y);
 
 }
 
 void SpelunkyTitle::init() {
     initSprite();
-
-    mainSpriteInfo_1->entry->hFlip = false;
-    mainSpriteInfo_2->entry->hFlip = false;
-    mainSpriteInfo_3->entry->hFlip = false;
-
-
-    subSpriteInfo_1->entry->hFlip = false;
-    subSpriteInfo_2->entry->hFlip = false;
-    subSpriteInfo_3->entry->hFlip = false;
-
 }
 
 void SpelunkyTitle::initSprite() {
-
+    
     if (oamType == OamType::MAIN) {
         mainSpriteInfo_1 = global::main_oam_manager->initSprite(gfx_spelunky_titlePal, gfx_spelunky_titlePalLen,
-                                                                nullptr, SPELUNKY_TITLE_SPRITE_WIDTH *
-                                                                         SPELUNKY_TITLE_SPRITE_HEIGHT, 64,
-                                                                SpritesheetType::SPELUNKY_TITLE,
-                                                                true,
+                                                                nullptr, SPELUNKY_TITLE_SPRITE_SIZE, 64,
+                                                                SpritesheetType::SPELUNKY_TITLE, true,
                                                                 false, LAYER_LEVEL::MIDDLE_TOP);
         mainSpriteInfo_2 = global::main_oam_manager->initSprite(gfx_spelunky_titlePal, gfx_spelunky_titlePalLen,
-                                                                nullptr, SPELUNKY_TITLE_SPRITE_WIDTH *
-                                                                         SPELUNKY_TITLE_SPRITE_HEIGHT, 64,
-                                                                SpritesheetType::SPELUNKY_TITLE,
-                                                                true,
+                                                                nullptr, SPELUNKY_TITLE_SPRITE_SIZE, 64,
+                                                                SpritesheetType::SPELUNKY_TITLE, true,
                                                                 false, LAYER_LEVEL::MIDDLE_TOP);
         mainSpriteInfo_3 = global::main_oam_manager->initSprite(gfx_spelunky_titlePal, gfx_spelunky_titlePalLen,
-                                                                nullptr, SPELUNKY_TITLE_SPRITE_WIDTH *
-                                                                         SPELUNKY_TITLE_SPRITE_HEIGHT, 64,
-                                                                SpritesheetType::SPELUNKY_TITLE,
-                                                                true,
+                                                                nullptr, SPELUNKY_TITLE_SPRITE_SIZE, 64,
+                                                                SpritesheetType::SPELUNKY_TITLE, true,
                                                                 false, LAYER_LEVEL::MIDDLE_TOP);
 
-        u8 *frameGfx1 =
-                (u8 *) gfx_spelunky_titleTiles + 0 * SPELUNKY_TITLE_SPRITE_WIDTH * SPELUNKY_TITLE_SPRITE_HEIGHT / 2;
-        u8 *frameGfx2 =
-                (u8 *) gfx_spelunky_titleTiles + 1 * SPELUNKY_TITLE_SPRITE_WIDTH * SPELUNKY_TITLE_SPRITE_HEIGHT / 2;
-        u8 *frameGfx3 =
-                (u8 *) gfx_spelunky_titleTiles + 2 * SPELUNKY_TITLE_SPRITE_WIDTH * SPELUNKY_TITLE_SPRITE_HEIGHT / 2;
 
-        mainSpriteInfo_1->updateFrame(frameGfx1, SPELUNKY_TITLE_SPRITE_WIDTH * SPELUNKY_TITLE_SPRITE_HEIGHT);
-        mainSpriteInfo_2->updateFrame(frameGfx2, SPELUNKY_TITLE_SPRITE_WIDTH * SPELUNKY_TITLE_SPRITE_HEIGHT);
-        mainSpriteInfo_3->updateFrame(frameGfx3, SPELUNKY_TITLE_SPRITE_WIDTH * SPELUNKY_TITLE_SPRITE_HEIGHT);
+        sprite_utils::set_horizontal_flip(false, mainSpriteInfo_1, mainSpriteInfo_2, mainSpriteInfo_3);
+        sprite_utils::set_vertical_flip(false, mainSpriteInfo_1, mainSpriteInfo_2, mainSpriteInfo_3);
+        
+        u8 *frameGfx1 = sprite_utils::get_frame((u8 *) gfx_spelunky_titleTiles, SPELUNKY_TITLE_SPRITE_SIZE, 0);
+        u8 *frameGfx2 = sprite_utils::get_frame((u8 *) gfx_spelunky_titleTiles, SPELUNKY_TITLE_SPRITE_SIZE, 1);
+        u8 *frameGfx3 = sprite_utils::get_frame((u8 *) gfx_spelunky_titleTiles, SPELUNKY_TITLE_SPRITE_SIZE, 2);
 
+        sprite_utils::update_frame(frameGfx1, SPELUNKY_TITLE_SPRITE_SIZE, mainSpriteInfo_1);
+        sprite_utils::update_frame(frameGfx2, SPELUNKY_TITLE_SPRITE_SIZE, mainSpriteInfo_2);
+        sprite_utils::update_frame(frameGfx3, SPELUNKY_TITLE_SPRITE_SIZE, mainSpriteInfo_3);
     }
 
     if (oamType == OamType::SUB) {
         subSpriteInfo_1 = global::sub_oam_manager->initSprite(gfx_spelunky_titlePal, gfx_spelunky_titlePalLen,
-                                                              nullptr, SPELUNKY_TITLE_SPRITE_WIDTH *
-                                                                       SPELUNKY_TITLE_SPRITE_HEIGHT, 64,
-                                                              SpritesheetType::SPELUNKY_TITLE,
-                                                              true,
+                                                              nullptr, SPELUNKY_TITLE_SPRITE_SIZE, 64,
+                                                              SpritesheetType::SPELUNKY_TITLE, true,
                                                               false, LAYER_LEVEL::MIDDLE_TOP);
         subSpriteInfo_2 = global::sub_oam_manager->initSprite(gfx_spelunky_titlePal, gfx_spelunky_titlePalLen,
-                                                              nullptr, SPELUNKY_TITLE_SPRITE_WIDTH *
-                                                                       SPELUNKY_TITLE_SPRITE_HEIGHT, 64,
-                                                              SpritesheetType::SPELUNKY_TITLE,
-                                                              true,
+                                                              nullptr, SPELUNKY_TITLE_SPRITE_SIZE, 64,
+                                                              SpritesheetType::SPELUNKY_TITLE, true,
                                                               false, LAYER_LEVEL::MIDDLE_TOP);
         subSpriteInfo_3 = global::sub_oam_manager->initSprite(gfx_spelunky_titlePal, gfx_spelunky_titlePalLen,
-                                                              nullptr, SPELUNKY_TITLE_SPRITE_WIDTH *
-                                                                       SPELUNKY_TITLE_SPRITE_HEIGHT, 64,
-                                                              SpritesheetType::SPELUNKY_TITLE,
-                                                              true,
+                                                              nullptr, SPELUNKY_TITLE_SPRITE_SIZE, 64,
+                                                              SpritesheetType::SPELUNKY_TITLE, true,
                                                               false, LAYER_LEVEL::MIDDLE_TOP);
+        
+        sprite_utils::set_horizontal_flip(false, subSpriteInfo_1, subSpriteInfo_2, subSpriteInfo_3);
+        sprite_utils::set_vertical_flip(false, subSpriteInfo_1, subSpriteInfo_2, subSpriteInfo_3);
 
-        u8 *frameGfx1 =
-                (u8 *) gfx_spelunky_titleTiles + 0 * SPELUNKY_TITLE_SPRITE_WIDTH * SPELUNKY_TITLE_SPRITE_HEIGHT / 2;
-        u8 *frameGfx2 =
-                (u8 *) gfx_spelunky_titleTiles + 1 * SPELUNKY_TITLE_SPRITE_WIDTH * SPELUNKY_TITLE_SPRITE_HEIGHT / 2;
-        u8 *frameGfx3 =
-                (u8 *) gfx_spelunky_titleTiles + 2 * SPELUNKY_TITLE_SPRITE_WIDTH * SPELUNKY_TITLE_SPRITE_HEIGHT / 2;
+        u8 *frameGfx1 = sprite_utils::get_frame((u8 *) gfx_spelunky_titleTiles, SPELUNKY_TITLE_SPRITE_SIZE, 0);
+        u8 *frameGfx2 = sprite_utils::get_frame((u8 *) gfx_spelunky_titleTiles, SPELUNKY_TITLE_SPRITE_SIZE, 1);
+        u8 *frameGfx3 = sprite_utils::get_frame((u8 *) gfx_spelunky_titleTiles, SPELUNKY_TITLE_SPRITE_SIZE, 2);
 
-        subSpriteInfo_1->updateFrame(frameGfx1, SPELUNKY_TITLE_SPRITE_WIDTH * SPELUNKY_TITLE_SPRITE_HEIGHT);
-        subSpriteInfo_2->updateFrame(frameGfx2, SPELUNKY_TITLE_SPRITE_WIDTH * SPELUNKY_TITLE_SPRITE_HEIGHT);
-        subSpriteInfo_3->updateFrame(frameGfx3, SPELUNKY_TITLE_SPRITE_WIDTH * SPELUNKY_TITLE_SPRITE_HEIGHT);
+        sprite_utils::update_frame(frameGfx1, SPELUNKY_TITLE_SPRITE_SIZE, subSpriteInfo_1);
+        sprite_utils::update_frame(frameGfx2, SPELUNKY_TITLE_SPRITE_SIZE, subSpriteInfo_2);
+        sprite_utils::update_frame(frameGfx3, SPELUNKY_TITLE_SPRITE_SIZE, subSpriteInfo_3);
     }
+
 }
 
 
-SpelunkyTitle::SpelunkyTitle(){
+SpelunkyTitle::SpelunkyTitle() {
     physical_height = SPELUNKY_TITLE_PHYSICAL_HEIGHT;
     physical_width = SPELUNKY_TITLE_PHYSICAL_WIDTH;
     sprite_height = SPELUNKY_TITLE_SPRITE_HEIGHT;

@@ -8,14 +8,17 @@
 
 #define MAIN_DUDE_PHYSICAL_WIDTH 16
 #define MAIN_DUDE_PHYSICAL_HEIGHT 16
+
 #define MAIN_DUDE_SPRITE_WIDTH 16
 #define MAIN_DUDE_SPRITE_HEIGHT 16
+#define MAIN_DUDE_SPRITE_SIZE MAIN_DUDE_SPRITE_WIDTH * MAIN_DUDE_SPRITE_HEIGHT
+
 #define MAIN_DUDE_MAX_X_SPEED 2
-#define MAIN_DUDE_MAX_X_SPEED_CRAWLING 1.5
+#define MAIN_DUDE_MAX_X_SPEED_CRAWLING 1.5f
 #define MAIN_DUDE_MAX_X_SPEED_RUNNING 3
-#define MAIN_DUDE_MAX_Y_SPEED 3.3
-#define MAIN_DUDE_MAX_Y_SPEED_USING_CAPE 1.7
-#define MAIN_DUDE_JUMP_SPEED 2.55
+#define MAIN_DUDE_MAX_Y_SPEED 3.3f
+#define MAIN_DUDE_MAX_Y_SPEED_USING_CAPE 1.7f
+#define MAIN_DUDE_JUMP_SPEED 2.55f
 #define MAIN_DUDE_MIN_HANGING_TIME 100
 #define MAIN_DUDE_STUN_TIME 2000
 #define MAIN_DUDE_STUN_FALLING_TIME 900
@@ -72,17 +75,17 @@ public:
     int current_x_in_tiles{};
     int current_y_in_tiles{};
 
-    int animation_frame_timer{};
-    int speed_inc_timer{};
-    int pos_inc_timer{};
+    double animation_frame_timer{};
+    double speed_inc_timer{};
+    double pos_inc_timer{};
     //How much time_utils was spent on hanging, since last flag hanging_on_tile_left/right occured.
-    int hanging_timer{};
+    double hanging_timer{};
 
-    int stunned_timer{};
-    int jumping_timer{};
-    int pushing_timer{};
-    int time_since_last_jump{};
-    int time_since_last_damage{};
+    double stunned_timer{};
+    double jumping_timer{};
+    double pushing_timer{};
+    double time_since_last_jump{};
+    double time_since_last_damage = MAIN_DUDE_DAMAGE_PROTECTION_TIME + 1;
 
     bool hanging_on_tile_left{};
     bool hanging_on_tile_right{};
@@ -105,7 +108,7 @@ public:
     u8 *frameGfx{};
     Whip *whip{};
 
-    int climbing_timer{};
+    double climbing_timer{};
     int climbing_sound{};
 
     bool started_climbing_rope{};
@@ -131,25 +134,25 @@ public:
 
     void can_hang_on_tile(MapTile **neighboringTiles);
 
-    void apply_crawling_sprite();
+    void set_sprite_crawling();
 
-    void apply_hanging_on_tile_sprite();
+    void set_sprite_hanging_on_tile();
 
-    void apply_whip_sprite();
+    void set_sprite_whiping();
 
-    void apply_pushing_sprite();
+    void set_sprite_pushing();
 
-    void apply_stunned_sprite();
+    void set_sprite_stunned();
 
-    void apply_climbing_sprite();
+    void set_sprite_climbing();
 
-    void apply_dead_sprite();
+    void set_sprite_dead();
 
-    void apply_walking_sprite();
+    void set_sprite_walking_when_in_air();
 
-    void apply_falling_sprite();
+    void set_sprite_falling();
 
-    void apply_exiting_level_sprite();
+    void set_sprite_exiting_level();
 
     void apply_blinking_on_damage();
 
@@ -162,6 +165,8 @@ public:
     void throw_rope();
 
     void spawn_carried_items();
+
+    void match_animation();
 };
 
 

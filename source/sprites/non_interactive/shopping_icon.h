@@ -8,6 +8,7 @@
 
 #define SHOPPING_ICON_SPRITE_HEIGHT 16
 #define SHOPPING_ICON_SPRITE_WIDTH 16
+#define SHOPPING_ICON_SPRITE_SIZE SHOPPING_ICON_SPRITE_WIDTH * SHOPPING_ICON_SPRITE_HEIGHT
 
 #define SHOPPING_ICON_PHYSICAL_HEIGHT 6
 #define SHOPPING_ICON_PHYSICAL_WIDTH 8
@@ -46,9 +47,12 @@ public:
     SpriteInfo *subSpriteInfo{};
 
     int anim_frame{};
-    int anim_frame_timer{};
-    int trigger_timer{};
+    double anim_frame_timer{};
+    double trigger_timer{};
 
+    void set_position();
+
+    void match_animation();
 };
 
 

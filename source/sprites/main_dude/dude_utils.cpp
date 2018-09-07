@@ -4,6 +4,8 @@
 
 #include <maxmod9.h>
 #include <cstdlib>
+#include <cmath>
+#include <cstdio>
 #include "../../globals_declarations.h"
 #include "../collectibles/pistol.h"
 #include "../collectibles/shotgun.h"
@@ -19,6 +21,8 @@
 #include "../items/spike_shoes.h"
 #include "../items/cape.h"
 #include "../items/jetpack.h"
+#include "../sprite_utils.h"
+#include "../../../build/gfx_spelunker.h"
 
 
 void MainDude::throw_item() {
@@ -44,9 +48,11 @@ void MainDude::throw_item() {
 
                             if (global::sprites.at(a)->speed_of_throwing_x != 0) {
                                 if (sprite_state == SpriteState::W_LEFT)
-                                    (*global::sprites.at(a)).xSpeed = -global::sprites.at(a)->speed_of_throwing_x - abs(xSpeed);
+                                    (*global::sprites.at(a)).xSpeed =
+                                            -global::sprites.at(a)->speed_of_throwing_x - abs(xSpeed);
                                 else
-                                    (*global::sprites.at(a)).xSpeed = global::sprites.at(a)->speed_of_throwing_x + abs(xSpeed);
+                                    (*global::sprites.at(a)).xSpeed =
+                                            global::sprites.at(a)->speed_of_throwing_x + abs(xSpeed);
                             } else {
                                 if (sprite_state == SpriteState::W_LEFT)
                                     (*global::sprites.at(a)).xSpeed = -4 - abs(xSpeed);
@@ -86,9 +92,9 @@ void MainDude::throw_item() {
                                            TILE_H);
 
                         MapTile *t = nullptr;
-                        if(xx >= 0 && xx <= 31 && yy > 0 && yy <=31) {
+                        if (xx >= 0 && xx <= 31 && yy > 0 && yy <= 31) {
                             t = global::level_generator->map_tiles[xx][yy];
-                            if(t != nullptr && !t->collidable) {
+                            if (t != nullptr && !t->collidable) {
                                 global::sprites.at(a)->x = xx * TILE_W;
                                 global::sprites.at(a)->y = yy * TILE_H;
                                 global::sprites.at(a)->updateCollisionsMap(xx, yy);
@@ -146,7 +152,7 @@ void MainDude::throw_rope() {
 void MainDude::spawn_carried_items() {
 
     if (carrying_spring_shoes) {
-        SpringShoes *springShoes = new SpringShoes();
+        auto *springShoes = new SpringShoes();
         springShoes->x = HUD_ITEMS_ROW_X;
         springShoes->y = global::hud->items_offset_y;
         springShoes->collected = true;
@@ -157,7 +163,7 @@ void MainDude::spawn_carried_items() {
     }
 
     if (carrying_spike_shoes) {
-        SpikeShoes *spikeShoes = new SpikeShoes();
+        auto *spikeShoes = new SpikeShoes();
         spikeShoes->x = HUD_ITEMS_ROW_X;
         spikeShoes->y = global::hud->items_offset_y;
         spikeShoes->collected = true;
@@ -168,7 +174,7 @@ void MainDude::spawn_carried_items() {
     }
 
     if (carrying_compass) {
-        Compass *compass = new Compass();
+        auto *compass = new Compass();
         compass->x = HUD_ITEMS_ROW_X;
         compass->y = global::hud->items_offset_y;
         compass->collected = true;
@@ -178,7 +184,7 @@ void MainDude::spawn_carried_items() {
         global::hud->increment_offset_on_grabbed_item();
     }
     if (carrying_glove) {
-        Glove *glove = new Glove();
+        auto *glove = new Glove();
         glove->x = HUD_ITEMS_ROW_X;
         glove->y = global::hud->items_offset_y;
         glove->collected = true;
@@ -188,7 +194,7 @@ void MainDude::spawn_carried_items() {
         global::hud->increment_offset_on_grabbed_item();
     }
     if (carrying_cape) {
-        Cape *cape = new Cape();
+        auto cape = new Cape();
         cape->x = HUD_ITEMS_ROW_X;
         cape->y = global::hud->items_offset_y;
         cape->collected = true;
@@ -198,7 +204,7 @@ void MainDude::spawn_carried_items() {
         global::hud->increment_offset_on_grabbed_item();
     }
     if (carrying_jetpack) {
-        Jetpack *jetpack = new Jetpack();
+        auto *jetpack = new Jetpack();
         jetpack->x = HUD_ITEMS_ROW_X;
         jetpack->y = global::hud->items_offset_y;
         jetpack->collected = true;
@@ -208,7 +214,7 @@ void MainDude::spawn_carried_items() {
         global::hud->increment_offset_on_grabbed_item();
     }
     if (carrying_mitt) {
-        Mitt *mitt = new Mitt();
+        auto mitt = new Mitt();
         mitt->x = HUD_ITEMS_ROW_X;
         mitt->y = global::hud->items_offset_y;
         mitt->collected = true;
@@ -219,7 +225,7 @@ void MainDude::spawn_carried_items() {
     }
     if (carrying_shotgun) {
         holding_item = true;
-        Shotgun *shotgun = new Shotgun();
+        auto *shotgun = new Shotgun();
         shotgun->bought = true;
         shotgun->hold_by_main_dude = true;
         shotgun->init();
@@ -228,7 +234,7 @@ void MainDude::spawn_carried_items() {
 
     if (carrying_pistol) {
         holding_item = true;
-        Pistol *pistol = new Pistol();
+        auto *pistol = new Pistol();
         pistol->bought = true;
         pistol->hold_by_main_dude = true;
         pistol->init();
@@ -237,196 +243,103 @@ void MainDude::spawn_carried_items() {
 }
 
 
-void MainDude::apply_crawling_sprite() {
-
-    int frame;
-    u8 *offset;
+void MainDude::set_sprite_crawling() {
 
     if (sprite_state == SpriteState::W_LEFT)
-        frame = animFrame + (4) * MAIN_DUDE_SPRITESHEET_ROW_WIDTH;
+        frameGfx = sprite_utils::get_frame((u8 *) gfx_spelunkerTiles, MAIN_DUDE_SPRITE_SIZE,
+                                           animFrame + 24);
     else
-        frame = animFrame + (5) * MAIN_DUDE_SPRITESHEET_ROW_WIDTH + 3;
-
-    offset = frameGfx + frame * MAIN_DUDE_SPRITE_WIDTH * MAIN_DUDE_SPRITE_HEIGHT / 2;
-    main_spelunker->updateFrame(offset, sprite_width * sprite_height);
-    sub_spelunker->updateFrame(offset, sprite_width * sprite_height);
-}
-
-void MainDude::apply_hanging_on_tile_sprite() {
-
-    int frame;
-    u8 *offset;
-
-    if (hanging_on_tile_right) {
-        frame = (2 * MAIN_DUDE_SPRITESHEET_ROW_WIDTH) + 1;
-        offset = frameGfx + frame * MAIN_DUDE_SPRITE_WIDTH * MAIN_DUDE_SPRITE_HEIGHT / 2;
-    } else if (hanging_on_tile_left) {
-        frame = (2 * MAIN_DUDE_SPRITESHEET_ROW_WIDTH);
-        offset = frameGfx + frame * MAIN_DUDE_SPRITE_WIDTH * MAIN_DUDE_SPRITE_HEIGHT / 2;
-    }
-
-    main_spelunker->updateFrame(offset, sprite_width * sprite_height);
-    sub_spelunker->updateFrame(offset, sprite_width * sprite_height);
-}
-
-void MainDude::apply_whip_sprite() {
-
-    int frame;
-    u8 *offset;
-
-    if (sprite_state == SpriteState::W_LEFT) {
-        frame = (9 * MAIN_DUDE_SPRITESHEET_ROW_WIDTH) + 2 + animFrame;
-        offset = frameGfx + frame * MAIN_DUDE_SPRITE_WIDTH * MAIN_DUDE_SPRITE_HEIGHT / 2;
-    } else if (sprite_state == 0) {
-        frame = (10 * MAIN_DUDE_SPRITESHEET_ROW_WIDTH) + 2 + animFrame;
-        offset = frameGfx + frame * MAIN_DUDE_SPRITE_WIDTH * MAIN_DUDE_SPRITE_HEIGHT / 2;
-    }
-
-    main_spelunker->updateFrame(offset, sprite_width * sprite_height);
-    sub_spelunker->updateFrame(offset, sprite_width * sprite_height);
+        frameGfx = sprite_utils::get_frame((u8 *) gfx_spelunkerTiles, MAIN_DUDE_SPRITE_SIZE,
+                                           animFrame + 33);
 
 }
 
-void MainDude::apply_pushing_sprite() {
+void MainDude::set_sprite_hanging_on_tile() {
 
-    int frame;
-    u8 *offset;
+    if (hanging_on_tile_right)
+        frameGfx = sprite_utils::get_frame((u8 *) gfx_spelunkerTiles, MAIN_DUDE_SPRITE_SIZE, 13);
+    else if (hanging_on_tile_left)
+        frameGfx = sprite_utils::get_frame((u8 *) gfx_spelunkerTiles, MAIN_DUDE_SPRITE_SIZE, 12);
+}
+
+void MainDude::set_sprite_whiping() {
+
+    if (sprite_state == SpriteState::W_LEFT)
+        frameGfx = sprite_utils::get_frame((u8 *) gfx_spelunkerTiles, MAIN_DUDE_SPRITE_SIZE, 56 + animFrame);
+    else if (sprite_state == 0)
+        frameGfx = sprite_utils::get_frame((u8 *) gfx_spelunkerTiles, MAIN_DUDE_SPRITE_SIZE, 62 + animFrame);
+
+}
+
+void MainDude::set_sprite_pushing() {
 
     if (pushing_left)
-        frame = animFrame + (7) * MAIN_DUDE_SPRITESHEET_ROW_WIDTH;
+        frameGfx = sprite_utils::get_frame((u8 *) gfx_spelunkerTiles, MAIN_DUDE_SPRITE_SIZE, 42 + animFrame);
     else
-        frame = animFrame + (8) * MAIN_DUDE_SPRITESHEET_ROW_WIDTH + 1;
-
-
-    offset = frameGfx + frame * MAIN_DUDE_SPRITE_WIDTH * MAIN_DUDE_SPRITE_HEIGHT / 2;
-    main_spelunker->updateFrame(offset, sprite_width * sprite_height);
-    sub_spelunker->updateFrame(offset, sprite_width * sprite_height);
-
+        frameGfx = sprite_utils::get_frame((u8 *) gfx_spelunkerTiles, MAIN_DUDE_SPRITE_SIZE, 49 + animFrame);
 }
 
-void MainDude::apply_stunned_sprite() {
-
-    int frame;
-    u8 *offset;
+void MainDude::set_sprite_stunned() {
 
     if (animFrame > 4)
         animFrame = 0;
 
-    frame = (3 * MAIN_DUDE_SPRITESHEET_ROW_WIDTH) + animFrame;
-    offset = frameGfx + frame * MAIN_DUDE_SPRITE_WIDTH * MAIN_DUDE_SPRITE_HEIGHT / 2;
-    main_spelunker->updateFrame(offset, sprite_width * sprite_height);
-    sub_spelunker->updateFrame(offset, sprite_width * sprite_height);
+    frameGfx = sprite_utils::get_frame((u8 *) gfx_spelunkerTiles, MAIN_DUDE_SPRITE_SIZE, 18 + animFrame);
 }
 
-void MainDude::apply_climbing_sprite() {
-
-    int frame;
-    u8 *offset;
+void MainDude::set_sprite_climbing() {
 
     if (started_climbing_rope) {
+
         if (animFrame >= 12)
             animFrame = 0;
 
-        frame = ((12) * MAIN_DUDE_SPRITESHEET_ROW_WIDTH) + animFrame + 2;
-        offset = frameGfx + frame * MAIN_DUDE_SPRITE_WIDTH * MAIN_DUDE_SPRITE_HEIGHT / 2;
-        main_spelunker->updateFrame(offset, sprite_width * sprite_height);
-        sub_spelunker->updateFrame(offset, sprite_width * sprite_height);
-
+        frameGfx = sprite_utils::get_frame((u8 *) gfx_spelunkerTiles, MAIN_DUDE_SPRITE_SIZE, 74 + animFrame);
     } else if (started_climbing_ladder) {
 
         if (animFrame >= 6)
             animFrame = 0;
 
-        frame = ((16) * MAIN_DUDE_SPRITESHEET_ROW_WIDTH) + animFrame;
-        offset = frameGfx + frame * MAIN_DUDE_SPRITE_WIDTH * MAIN_DUDE_SPRITE_HEIGHT / 2;
-        main_spelunker->updateFrame(offset, sprite_width * sprite_height);
-        sub_spelunker->updateFrame(offset, sprite_width * sprite_height);
+        frameGfx = sprite_utils::get_frame((u8 *) gfx_spelunkerTiles, MAIN_DUDE_SPRITE_SIZE, 96 + animFrame);
     }
 
-
 }
 
-void MainDude::apply_dead_sprite() {
-
-    int frame;
-    u8 *offset;
-
-    if (bottomCollision) {
-        frame = ((2) * MAIN_DUDE_SPRITESHEET_ROW_WIDTH) + 5;
-    } else
-        frame = ((2) * MAIN_DUDE_SPRITESHEET_ROW_WIDTH) + 4;
-
-    offset = frameGfx + frame * MAIN_DUDE_SPRITE_WIDTH * MAIN_DUDE_SPRITE_HEIGHT / 2;
-    main_spelunker->updateFrame(offset, sprite_width * sprite_height);
-    sub_spelunker->updateFrame(offset, sprite_width * sprite_height);
+void MainDude::set_sprite_dead() {
+    if (bottomCollision)
+        frameGfx = sprite_utils::get_frame((u8 *) gfx_spelunkerTiles, MAIN_DUDE_SPRITE_SIZE, 17);
+    else
+        frameGfx = sprite_utils::get_frame((u8 *) gfx_spelunkerTiles, MAIN_DUDE_SPRITE_SIZE, 16);
 }
 
-void MainDude::apply_walking_sprite() {
-
-    int frame;
-    u8 *offset;
-
-    if (sprite_state == SpriteState::W_LEFT) {
-        frame = sprite_state * MAIN_DUDE_FRAMES_PER_ANIMATION;
-        offset = frameGfx + frame * MAIN_DUDE_SPRITE_WIDTH * MAIN_DUDE_SPRITE_HEIGHT / 2;
-    } else if (sprite_state == SpriteState::W_RIGHT) {
-        frame = sprite_state * MAIN_DUDE_FRAMES_PER_ANIMATION;
-        offset = frameGfx + frame * MAIN_DUDE_SPRITE_WIDTH * MAIN_DUDE_SPRITE_HEIGHT / 2;
-    }
-    main_spelunker->updateFrame(offset, sprite_width * sprite_height);
-    sub_spelunker->updateFrame(offset, sprite_width * sprite_height);
-
+void MainDude::set_sprite_walking_when_in_air() {
+    frameGfx = sprite_utils::get_frame((u8 *) gfx_spelunkerTiles, MAIN_DUDE_SPRITE_SIZE, sprite_state * 6);
 }
 
-void MainDude::apply_falling_sprite() {
+void MainDude::set_sprite_falling() {
 
-    int frame;
-    u8 *offset;
-
-    if (abs(xSpeed) != 0) {
-        frame = animFrame + sprite_state * MAIN_DUDE_FRAMES_PER_ANIMATION;
-        offset = frameGfx + frame * MAIN_DUDE_SPRITE_WIDTH * MAIN_DUDE_SPRITE_HEIGHT / 2;
-    } else {
-        if (sprite_state == SpriteState::W_LEFT) {
-            frame = (2 * MAIN_DUDE_SPRITESHEET_ROW_WIDTH) + 2;
-            offset = frameGfx + frame * MAIN_DUDE_SPRITE_WIDTH * MAIN_DUDE_SPRITE_HEIGHT / 2;
-        } else if (sprite_state == SpriteState::W_RIGHT) {
-            frame = (2 * MAIN_DUDE_SPRITESHEET_ROW_WIDTH) + 3;
-            offset = frameGfx + frame * MAIN_DUDE_SPRITE_WIDTH * MAIN_DUDE_SPRITE_HEIGHT / 2;
-        }
-
-    }
-    main_spelunker->updateFrame(offset, sprite_width * sprite_height);
-    sub_spelunker->updateFrame(offset, sprite_width * sprite_height);
+    if (fabs(xSpeed) != 0)
+        frameGfx = sprite_utils::get_frame((u8 *) gfx_spelunkerTiles, MAIN_DUDE_SPRITE_SIZE,
+                                           animFrame + (sprite_state * MAIN_DUDE_FRAMES_PER_ANIMATION));
+    else if (sprite_state == SpriteState::W_LEFT)
+        frameGfx = sprite_utils::get_frame((u8 *) gfx_spelunkerTiles, MAIN_DUDE_SPRITE_SIZE, 14);
+    else if (sprite_state == SpriteState::W_RIGHT)
+        frameGfx = sprite_utils::get_frame((u8 *) gfx_spelunkerTiles, MAIN_DUDE_SPRITE_SIZE, 15);
 }
 
-void MainDude::apply_exiting_level_sprite() {
-
-    int frame;
-    u8 *offset;
-
-    frame = ((13) * MAIN_DUDE_SPRITESHEET_ROW_WIDTH) + animFrame + 2;
-    offset = frameGfx + frame * MAIN_DUDE_SPRITE_WIDTH * MAIN_DUDE_SPRITE_HEIGHT / 2;
-    main_spelunker->updateFrame(offset, sprite_width * sprite_height);
-    sub_spelunker->updateFrame(offset, sprite_width * sprite_height);
-
+void MainDude::set_sprite_exiting_level() {
+    frameGfx = sprite_utils::get_frame((u8 *) gfx_spelunkerTiles, MAIN_DUDE_SPRITE_SIZE, 80 + animFrame);
 }
 
 void MainDude::apply_blinking_on_damage() {
 
     if (!global::game_state->levels_transition_screen) {
+
         if (time_since_last_damage < MAIN_DUDE_DAMAGE_PROTECTION_TIME) {
-            if (time_since_last_damage % 100 < 50) {
-                main_spelunker->entry->isHidden = true;
-                sub_spelunker->entry->isHidden = true;
-            } else {
-                main_spelunker->entry->isHidden = false;
-                sub_spelunker->entry->isHidden = false;
-            }
-        } else {
-            main_spelunker->entry->isHidden = false;
-            sub_spelunker->entry->isHidden = false;
-        }
+            sprite_utils::set_visibility((int) time_since_last_damage % 100 >= 50, main_spelunker, sub_spelunker);
+        } else
+            sprite_utils::set_visibility(true, main_spelunker, sub_spelunker);
+
     }
 }
 
@@ -502,4 +415,32 @@ void MainDude::apply_dmg(int dmg_to_apply) {
 
         mmEffect(SFX_XDIE);
     }
+}
+
+void MainDude::match_animation() {
+
+    if (exiting_level || (dead && global::input_handler->y_key_down)) {
+        global::game_state->handle_changing_screens();
+        set_sprite_exiting_level();
+    } else if (using_whip) {
+        set_sprite_whiping();
+    } else if (dead) {
+        set_sprite_dead();
+    } else if (climbing) {
+        set_sprite_climbing();
+    } else if (stunned) {
+        set_sprite_stunned();
+    } else if (pushing_left || pushing_right) {
+        set_sprite_pushing();
+    } else if (hanging_on_tile_right || hanging_on_tile_left) {
+        set_sprite_hanging_on_tile();
+    } else if (crawling) {
+        set_sprite_crawling();
+    } else if (!bottomCollision) {
+        set_sprite_walking_when_in_air();
+    } else {
+        set_sprite_falling();
+    }
+
+    sprite_utils::update_frame(frameGfx, MAIN_DUDE_SPRITE_SIZE, main_spelunker, sub_spelunker);
 }

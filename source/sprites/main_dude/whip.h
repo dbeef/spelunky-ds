@@ -5,8 +5,12 @@
 #ifndef SPELUNKYDS_WHIP_H
 #define SPELUNKYDS_WHIP_H
 
+#define WHIP_PHYSICAL_WIDTH 16
+#define WHIP_PHYSICAL_HEIGHT 16
 #define WHIP_SPRITE_WIDTH 16
 #define WHIP_SPRITE_HEIGHT 16
+#define WHIP_SPRITE_SIZE WHIP_SPRITE_WIDTH * WHIP_SPRITE_HEIGHT 
+
 #define WHIP_WIDTH 12
 
 #include "../moving_object.h"
@@ -44,7 +48,7 @@ public:
 
     u8 * frameGfx{};
 
-    int whip_timer{};
+    double whip_timer{};
 
     void assign_pre_whip_sprite();
 
@@ -52,7 +56,6 @@ public:
 
     void hide();
 
-    void show();
 };
 
 

@@ -41,12 +41,15 @@ public:
 
     u8 * frameGfx{};
 
-    int living_timer{};
     int currentFrame{};
-    int frameTimer{};
-    int pos_inc_timer{};
-    int inactive_delay{};
+    double frameTimer{};
+    double pos_inc_timer{};
+    double inactive_delay{};
     bool finished{};
+
+    void set_position();
+
+    void match_animation();
 };
 
 

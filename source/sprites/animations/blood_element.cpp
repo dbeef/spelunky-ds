@@ -8,26 +8,22 @@
 #include "blood.h"
 #include "../../collisions/collisions.h"
 #include "../../tiles/map_utils.h"
+#include "../sprite_utils.h"
 
 void BloodElement::draw() {
 
-    if (ready_to_dispose || finished) {
+    if (ready_to_dispose || finished)
         return;
-    }
 
-
+    //won't change speed untill this timer reaches treshold
     inactive_delay += *global::timer;
 
-//    if (bottomCollision)
-//        living_timer += 4 * *global::timer;
-//    else
-//        living_timer += *global::timer;
-
-
     if (!finished) {
+        //animation not finished
         frameTimer += *global::timer;
 
         if (frameTimer > BLOOD_ANIM_FRAME_DELTA) {
+
             frameTimer = 0;
             currentFrame++;
 
@@ -37,31 +33,15 @@ void BloodElement::draw() {
                 ready_to_dispose = true;
                 mainSpriteInfo->entry->isHidden = true;
                 subSpriteInfo->entry->isHidden = true;
-//                if(living_timer > 1000) {
-//                }
 
-            } else {
+            } else
+                match_animation();
 
-
-//                if(living_timer < 1000 && currentFrame >= 5)
-//                    currentFrame = 0;
-
-                frameGfx = (u8 *) gfx_blood_rock_rope_poofTiles + (currentFrame * sprite_width * sprite_height / 2);
-                subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
-                mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
-
-            }
         }
 
-        int main_x, main_y, sub_x, sub_y;
-        get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
-
-        mainSpriteInfo->entry->x = main_x;
-        mainSpriteInfo->entry->y = main_y;
-
-        subSpriteInfo->entry->x = sub_x;
-        subSpriteInfo->entry->y = sub_y;
-
+        sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);
+        sprite_utils::set_horizontal_flip(false, mainSpriteInfo, subSpriteInfo);
+        set_position();
     }
 
 }
@@ -83,7 +63,6 @@ void BloodElement::updateSpeed() {
     bool change_pos = (pos_inc_timer > BLOOD_CHANGE_POS_DELTA) && !finished;
 
     if (change_pos) {
-//        apply_friction(0.01);
         update_position();
         apply_gravity(GRAVITY_DELTA_SPEED * 0.2f);
         pos_inc_timer = 0;
@@ -92,31 +71,26 @@ void BloodElement::updateSpeed() {
 }
 
 void BloodElement::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
-
-    MapTile *tiles[9];
-    Collisions::getNeighboringTiles(global::level_generator->map_tiles, x_current_pos_in_tiles, y_current_pos_in_tiles,
-                                    tiles);
-
-    upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, physical_width, true, 0.7f);
-    bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, physical_width, physical_height, true, 0.7f);
-    leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true, 0.7f);
-    rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true, 0.7f);
-
-
+    MapTile *t[9];
+    Collisions::getNeighboringTiles(global::level_generator->map_tiles,
+                                    x_current_pos_in_tiles, y_current_pos_in_tiles, t);
+    upperCollision = Collisions::checkUpperCollision(t, &x, &y, &ySpeed, physical_width, true, 0.7f);
+    bottomCollision = Collisions::checkBottomCollision(t, &x, &y, &ySpeed, physical_width, physical_height, true, 0.7f);
+    leftCollision = Collisions::checkLeftCollision(t, &x, &y, &xSpeed, physical_width, physical_height, true, 0.7f);
+    rightCollision = Collisions::checkRightCollision(t, &x, &y, &xSpeed, physical_width, physical_height, true, 0.7f);
 }
 
 void BloodElement::initSprite() {
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_blood_rock_rope_poofPal, gfx_blood_rock_rope_poofPalLen,
-                                                        nullptr, sprite_width * sprite_height, 8, BLOOD_ROCK_ROPE_POOF, true,
-                                                        false, LAYER_LEVEL::MIDDLE_TOP);
+                                                        nullptr, BLOOD_SPRITE_SIZE, 8, BLOOD_ROCK_ROPE_POOF,
+                                                        true, false, LAYER_LEVEL::MIDDLE_TOP);
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_blood_rock_rope_poofPal, gfx_blood_rock_rope_poofPalLen,
-                                                          nullptr, sprite_width * sprite_height, 8, BLOOD_ROCK_ROPE_POOF,
+                                                          nullptr, BLOOD_SPRITE_SIZE, 8, BLOOD_ROCK_ROPE_POOF,
                                                           true, false, LAYER_LEVEL::MIDDLE_TOP);
-
-    frameGfx = (u8 *) gfx_blood_rock_rope_poofTiles + (currentFrame * sprite_width * sprite_height / 2);
-    subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
-    mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
-
+    match_animation();
+    sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);
+    sprite_utils::set_horizontal_flip(false, mainSpriteInfo, subSpriteInfo);
+    set_position();
 }
 
 BloodElement::BloodElement() {
@@ -124,4 +98,16 @@ BloodElement::BloodElement() {
     physical_height = BLOOD_PHYSICAL_HEIGHT;
     sprite_width = BLOOD_SPRITE_WIDTH;
     sprite_height = BLOOD_SPRITE_HEIGHT;
+}
+
+void BloodElement::set_position() {
+    int main_x, main_y, sub_x, sub_y;
+    get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
+    sprite_utils::set_entry_xy(mainSpriteInfo, main_x, main_y);
+    sprite_utils::set_entry_xy(subSpriteInfo, sub_x, sub_y);
+}
+
+void BloodElement::match_animation() {
+    frameGfx = sprite_utils::get_frame((u8 *) gfx_blood_rock_rope_poofTiles, BLOOD_SPRITE_SIZE, currentFrame);
+    sprite_utils::update_frame(frameGfx, BLOOD_SPRITE_SIZE, mainSpriteInfo, subSpriteInfo);
 }

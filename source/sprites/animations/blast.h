@@ -11,6 +11,7 @@
 
 #define BLAST_SPRITE_HEIGHT 16
 #define BLAST_SPRITE_WIDTH 16
+#define BLAST_SPRITE_SIZE BLAST_SPRITE_WIDTH * BLAST_SPRITE_HEIGHT
 
 class Blast : public MovingObject {
 
@@ -38,7 +39,7 @@ public:
 
     void onCollisionWithMainCharacter() override {};
 
-    int animFrameTimer{};
+    double animFrameTimer{};
     int animFrame{};
 
     SpriteInfo *mainSpriteInfo{};
@@ -47,11 +48,10 @@ public:
     u8 *frameGfx{};
 
     bool firing{};
-
     void set_position();
+
+    void match_animation();
 };
-
-
 
 
 #endif //SPELUNKYDS_BLAST_H

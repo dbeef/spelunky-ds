@@ -15,6 +15,7 @@
 #include "../../tiles/tile_orientation.hpp"
 #include "../animations/fall_poof.h"
 #include "../../sound/sound_utils.h"
+#include "../sprite_utils.h"
 
 void MainDude::handle_key_input() {
 
@@ -109,7 +110,6 @@ void MainDude::handle_key_input() {
 
         }
 
-
         int xx = floor_div(this->x + 0.5 * MAIN_DUDE_PHYSICAL_WIDTH, TILE_W);
         int yy = floor_div(this->y + 0.5 * MAIN_DUDE_PHYSICAL_HEIGHT, TILE_H);
 
@@ -172,8 +172,8 @@ void MainDude::handle_key_input() {
             }
 
             on_top_of_climbing_space = on_top_of_climbing_space ||
-                                       neighboringTiles[UP_MIDDLE] != nullptr &&
-                                       neighboringTiles[UP_MIDDLE]->collidable;
+                                       (neighboringTiles[UP_MIDDLE] != nullptr &&
+                                        neighboringTiles[UP_MIDDLE]->collidable);
 
             if (can_climb_ladder) {
                 x = neighboringTiles[CENTER]->x * 16;
@@ -313,8 +313,8 @@ void MainDude::updateTimers() {
 
         stunned = true;
 
-        FallPoof *f_left = new FallPoof();
-        FallPoof *f_right = new FallPoof();
+        auto *f_left = new FallPoof();
+        auto *f_right = new FallPoof();
 
         f_left->x = x - 4;
         f_right->x = x + MAIN_DUDE_PHYSICAL_WIDTH - 6;
@@ -399,18 +399,16 @@ void MainDude::updateSpeed() {
 
 void MainDude::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
 
-    MapTile *tiles[9];
-    Collisions::getNeighboringTiles(global::level_generator->map_tiles, x_current_pos_in_tiles, y_current_pos_in_tiles,
-                                    tiles);
+    MapTile *t[9];
+    Collisions::getNeighboringTiles(global::level_generator->map_tiles,
+                                    x_current_pos_in_tiles, y_current_pos_in_tiles, t);
 
-    bottomCollision = Collisions::checkBottomCollision(tiles, &this->x, &this->y, &ySpeed, 16, 16, dead,
-                                                       BOUNCING_FACTOR_Y);
-    leftCollision = Collisions::checkLeftCollision(tiles, &this->x, &this->y, &xSpeed, 16, 16, dead, BOUNCING_FACTOR_X);
-    rightCollision = Collisions::checkRightCollision(tiles, &this->x, &this->y, &xSpeed, 16, 16, dead,
-                                                     BOUNCING_FACTOR_X);
-    upperCollision = Collisions::checkUpperCollision(tiles, &this->x, &this->y, &ySpeed, 16, dead, BOUNCING_FACTOR_Y);
+    bottomCollision = Collisions::checkBottomCollision(t, &this->x, &this->y, &ySpeed, 16, 16, dead, BOUNCING_FACTOR_Y);
+    leftCollision = Collisions::checkLeftCollision(t, &this->x, &this->y, &xSpeed, 16, 16, dead, BOUNCING_FACTOR_X);
+    rightCollision = Collisions::checkRightCollision(t, &this->x, &this->y, &xSpeed, 16, 16, dead, BOUNCING_FACTOR_X);
+    upperCollision = Collisions::checkUpperCollision(t, &this->x, &this->y, &ySpeed, 16, dead, BOUNCING_FACTOR_Y);
 
-    can_hang_on_tile(tiles);
+    can_hang_on_tile(t);
 
     if (hanging_on_tile_right || hanging_on_tile_left) {
         using_cape = false;
@@ -425,11 +423,17 @@ void MainDude::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos
     }
 
     if (!bottomCollision) {
-        if (((tiles[1] == nullptr || !tiles[1]->collidable) && (tiles[6] != nullptr && tiles[8] != nullptr))) {
+        if ((t[TileOrientation::RIGHT_MIDDLE] == nullptr || !t[TileOrientation::RIGHT_MIDDLE]->collidable) &&
+            (t[TileOrientation::RIGHT_UP] != nullptr && t[TileOrientation::RIGHT_DOWN] != nullptr)) {
+            //if there's no collidable tile on right-mid, but there are on right-up and right-down,
+            //add extra x-pos to ease going through a hole
             if (xSpeed > 0)
                 x += 2;
         }
-        if (((tiles[0] == nullptr || !tiles[0]->collidable) && (tiles[5] != nullptr && tiles[7] != nullptr))) {
+
+        if ((t[TileOrientation::LEFT_MIDDLE] == nullptr || !t[TileOrientation::LEFT_MIDDLE]->collidable) &&
+            (t[TileOrientation::LEFT_UP] != nullptr && t[TileOrientation::LEFT_DOWN] != nullptr)) {
+            //same but for left side
             if (xSpeed < 0)
                 x -= 2;
         }
@@ -438,11 +442,7 @@ void MainDude::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos
 }
 
 void MainDude::init() {
-
     initSprite();
-    frameGfx = (u8 *) gfx_spelunkerTiles;
-    time_since_last_damage = MAIN_DUDE_DAMAGE_PROTECTION_TIME + 1;
-
     whip = new Whip();
     whip->init();
     global::sprites.push_back(whip);
@@ -458,36 +458,10 @@ void MainDude::draw() {
 
     int main_x, main_y, sub_x, sub_y;
     get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
+    sprite_utils::set_entry_xy(main_spelunker, main_x, main_y);
+    sprite_utils::set_entry_xy(sub_spelunker, sub_x, sub_y);
 
-    main_spelunker->entry->x = main_x;
-    main_spelunker->entry->y = main_y;
-
-    sub_spelunker->entry->x = sub_x;
-    sub_spelunker->entry->y = sub_y;
-
-    if (exiting_level || (dead && global::input_handler->y_key_down)) {
-        global::game_state->handle_changing_screens();
-        apply_exiting_level_sprite();
-    } else if (using_whip) {
-        apply_whip_sprite();
-    } else if (dead) {
-        apply_dead_sprite();
-    } else if (climbing) {
-        apply_climbing_sprite();
-    } else if (stunned) {
-        apply_stunned_sprite();
-    } else if (pushing_left || pushing_right) {
-        apply_pushing_sprite();
-    } else if (hanging_on_tile_right || hanging_on_tile_left) {
-        apply_hanging_on_tile_sprite();
-    } else if (crawling) {
-        apply_crawling_sprite();
-    } else if (!bottomCollision) {
-        apply_walking_sprite();
-    } else {
-        apply_falling_sprite();
-    }
-
+    match_animation();
     reset_values_checked_every_frame();
     apply_blinking_on_damage();
 }
@@ -503,16 +477,10 @@ void MainDude::initSprite() {
                                                         sprite_width * sprite_height, 16, MAIN_DUDE, true, false,
                                                         LAYER_LEVEL::MIDDLE_TOP);
 
-    int main_x = x - global::camera->x;
-    int main_y = y - global::camera->y;
-    int sub_x = x - global::camera->x;
-    int sub_y = y - global::camera->y - 192;
-
-    main_spelunker->entry->x = main_x;
-    main_spelunker->entry->y = main_y;
-
-    sub_spelunker->entry->x = sub_x;
-    sub_spelunker->entry->y = sub_y;
+    int main_x, main_y, sub_x, sub_y;
+    get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
+    sprite_utils::set_entry_xy(main_spelunker, main_x, main_y);
+    sprite_utils::set_entry_xy(sub_spelunker, sub_x, sub_y);
 
 }
 
