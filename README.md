@@ -26,6 +26,7 @@
 <li> 🗙 Jars dropping loot </li>
 <li> 🗙 Ghost when spending too much time on level </li>
 <li> 🗙 Shake screen when dropping a bomb </li>
+<li> 🗙 Add github link to the main menu's copyrights sprite - so people would find the current version even if it was downloaded from some other source </li>
 <li> 🗙 Attempt to make levels a bit bigger (current size is 512x512, what I can probably make is 1024x512 or 512x1024, though not sure of that) </li>
 
 
