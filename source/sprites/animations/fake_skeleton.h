@@ -11,6 +11,7 @@
 
 #define FAKE_SKELETON_SPRITE_HEIGHT 16
 #define FAKE_SKELETON_SPRITE_WIDTH 16
+#define FAKE_SKELETON_SPRITE_SIZE FAKE_SKELETON_SPRITE_WIDTH * FAKE_SKELETON_SPRITE_HEIGHT
 
 #define FAKE_SKELETON_PHYSICAL_HEIGHT_WOUT_SKULL 4
 #define FAKE_SKELETON_PHYSICAL_HEIGHT_WITH_SKULL 7
@@ -48,7 +49,7 @@ public:
     bool tried_to_pickup{};
     int animFrameTimer{};
     int animFrame{};
-    int pos_inc_timer{};
+    double pos_inc_timer{};
 
     SpriteInfo *mainSpriteInfo{};
     SpriteInfo *subSpriteInfo{};
@@ -57,6 +58,9 @@ public:
 
     void set_position();
 
+    void spawn_skull();
+
+    void match_animation();
 };
 
 

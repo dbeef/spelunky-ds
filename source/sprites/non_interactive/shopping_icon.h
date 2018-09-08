@@ -21,6 +21,8 @@ public:
 
     ShoppingIcon();
 
+    void set_ready_to_dispose();
+
     void initSprite() override;
 
     void updateOther() override {};

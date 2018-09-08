@@ -89,3 +89,8 @@ void ShoppingIcon::match_animation() {
                                            SHOPPING_ICON_OFFSET + anim_frame);
     sprite_utils::update_frame(frameGfx, SHOPPING_ICON_SPRITE_SIZE, mainSpriteInfo, subSpriteInfo);
 }
+
+void ShoppingIcon::set_ready_to_dispose() {
+    ready_to_dispose = true;
+    sprite_utils::set_visibility(false, mainSpriteInfo, subSpriteInfo);
+}

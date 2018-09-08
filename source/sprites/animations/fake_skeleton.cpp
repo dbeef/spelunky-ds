@@ -9,21 +9,24 @@
 #include "../../collisions/collisions.h"
 #include "fake_skeleton.h"
 #include "skull.h"
+#include "../sprite_utils.h"
 
 #define FAKE_SKELETON_POS_INC_DELTA 25
-#define FAKE_SKELETON_ANIM_FRAME_DELTA  45
 #define FRAME_OFFSET_FAKE_SKELETON_WITH_SKULL 33
 #define FRAME_OFFSET_FAKE_SKELETON_WOUT_SKULL 23
+
 //Skull object is spawned only when main dude attempts to pick it up,
 //before that a single sprite is drawn that has both skeleton and skull. (saving some memory)
 
 void FakeSkeleton::draw() {
 
-    if (ready_to_dispose) {
-        mainSpriteInfo->entry->isHidden = true;
-        subSpriteInfo->entry->isHidden = true;
+    if (ready_to_dispose)
         return;
-    }
+
+    sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);
+    sprite_utils::set_horizontal_flip(false, mainSpriteInfo, subSpriteInfo);
+    sprite_utils::set_priority(OBJPRIORITY_0, mainSpriteInfo, subSpriteInfo);
+    set_position();
 
     if (!tried_to_pickup) {
 
@@ -38,30 +41,14 @@ void FakeSkeleton::draw() {
             global::input_handler->y_key_down = false;
 
             tried_to_pickup = true;
-            frameGfx = (u8 *) gfx_spider_skeletonTiles +
-                       (sprite_width * sprite_height * (animFrame + FRAME_OFFSET_FAKE_SKELETON_WOUT_SKULL) / 2);
-            subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
-            mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
-
-            //spawn skull
-
-            Skull *s = new Skull();
-            s->x = x;
-            s->y = y;
-            s->hold_by_main_dude = true;
-            s->init();
-
-            global::sprites.push_back(s);
-
+            match_animation();
+            spawn_skull();
             physical_height = FAKE_SKELETON_PHYSICAL_HEIGHT_WOUT_SKULL;
-//            bottomCollision = false;
-            y+=2;
-//            y += FAKE_SKELETON_PHYSICAL_HEIGHT_WITH_SKULL - FAKE_SKELETON_PHYSICAL_HEIGHT_WOUT_SKULL;
+            y += 2;
         }
 
     }
 
-    set_position();
 }
 
 
@@ -72,47 +59,23 @@ void FakeSkeleton::init() {
 void FakeSkeleton::initSprite() {
 
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_spider_skeletonPal, gfx_spider_skeletonPalLen,
-                                                        nullptr, sprite_width * sprite_height, sprite_width,
+                                                        nullptr, FAKE_SKELETON_SPRITE_SIZE, sprite_width,
                                                         spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_spider_skeletonPal, gfx_spider_skeletonPalLen,
-                                                          nullptr, sprite_width * sprite_height, sprite_width,
+                                                          nullptr, FAKE_SKELETON_SPRITE_SIZE, sprite_width,
                                                           spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
-
-    if (tried_to_pickup)
-        frameGfx = (u8 *) gfx_spider_skeletonTiles +
-                   (sprite_width * sprite_height * (animFrame + FRAME_OFFSET_FAKE_SKELETON_WOUT_SKULL) / 2);
-    else
-        frameGfx = (u8 *) gfx_spider_skeletonTiles +
-                   (sprite_width * sprite_height * (animFrame + FRAME_OFFSET_FAKE_SKELETON_WITH_SKULL) / 2);
-
-    subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
-    mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
-
+    sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);
+    sprite_utils::set_horizontal_flip(false, mainSpriteInfo, subSpriteInfo);
+    sprite_utils::set_priority(OBJPRIORITY_0, mainSpriteInfo, subSpriteInfo);
+    set_position();
+    match_animation();
 }
 
 void FakeSkeleton::set_position() {
-
-    if (ready_to_dispose)
-        return;
-
     int main_x, main_y, sub_x, sub_y;
     get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
-
-    mainSpriteInfo->entry->x = main_x;
-    mainSpriteInfo->entry->y = main_y;
-
-    subSpriteInfo->entry->x = sub_x;
-    subSpriteInfo->entry->y = sub_y;
-
-    mainSpriteInfo->entry->vFlip = false;
-    mainSpriteInfo->entry->hFlip = false;
-
-    subSpriteInfo->entry->vFlip = false;
-    subSpriteInfo->entry->hFlip = false;
-
-    mainSpriteInfo->entry->priority = OBJPRIORITY_0;
-    subSpriteInfo->entry->priority = OBJPRIORITY_0;
-
+    sprite_utils::set_entry_xy(mainSpriteInfo, main_x, main_y);
+    sprite_utils::set_entry_xy(subSpriteInfo, sub_x, sub_y);
 }
 
 FakeSkeleton::FakeSkeleton() {
@@ -125,17 +88,14 @@ FakeSkeleton::FakeSkeleton() {
 
 void FakeSkeleton::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
 
-    MapTile *tiles[9];
-    Collisions::getNeighboringTiles(global::level_generator->map_tiles, x_current_pos_in_tiles, y_current_pos_in_tiles,
-                                    tiles);
+    MapTile *t[9];
+    Collisions::getNeighboringTiles(global::level_generator->map_tiles,
+                                    x_current_pos_in_tiles, y_current_pos_in_tiles, t);
 
-    upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, physical_width, true, BOUNCING_FACTOR_Y);
-    bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, physical_width, physical_height, true,
-                                                       0.3f);
-    leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true,
-                                                   BOUNCING_FACTOR_X);
-    rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true,
-                                                     BOUNCING_FACTOR_X);
+    upperCollision = Collisions::checkUpperCollision(t, &x, &y, &ySpeed, physical_width, true, 0.35);
+    bottomCollision = Collisions::checkBottomCollision(t, &x, &y, &ySpeed, physical_width, physical_height, true, 0.3f);
+    leftCollision = Collisions::checkLeftCollision(t, &x, &y, &xSpeed, physical_width, physical_height, true, 0.15);
+    rightCollision = Collisions::checkRightCollision(t, &x, &y, &xSpeed, physical_width, physical_height, true, 0.15);
 
 }
 
@@ -153,5 +113,27 @@ void FakeSkeleton::updateSpeed() {
         apply_gravity(GRAVITY_DELTA_SPEED * 3);
         pos_inc_timer = 0;
     }
+
+}
+
+void FakeSkeleton::spawn_skull() {
+    auto s = new Skull();
+    s->x = x;
+    s->y = y;
+    s->hold_by_main_dude = true;
+    s->init();
+    global::sprites.push_back(s);
+}
+
+void FakeSkeleton::match_animation() {
+
+    if (tried_to_pickup)
+        frameGfx = sprite_utils::get_frame((u8 *) gfx_spider_skeletonTiles, FAKE_SKELETON_SPRITE_SIZE,
+                                           animFrame + FRAME_OFFSET_FAKE_SKELETON_WOUT_SKULL);
+    else
+        frameGfx = sprite_utils::get_frame((u8 *) gfx_spider_skeletonTiles, FAKE_SKELETON_SPRITE_SIZE,
+                                           animFrame + FRAME_OFFSET_FAKE_SKELETON_WITH_SKULL);
+
+    sprite_utils::update_frame(frameGfx, FAKE_SKELETON_SPRITE_SIZE, mainSpriteInfo, subSpriteInfo);
 
 }

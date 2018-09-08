@@ -7,6 +7,7 @@
 #include "../../../build/gfx_spider_skeleton.h"
 #include "../../collisions/collisions.h"
 #include "bone.h"
+#include "../sprite_utils.h"
 
 #define BONE_POS_INC_DELTA 35
 #define BONE_ANIM_FRAME_DELTA  45
@@ -17,47 +18,22 @@
 
 void Bone::draw() {
 
-    if (ready_to_dispose) {
-        mainSpriteInfo->entry->isHidden = true;
-        subSpriteInfo->entry->isHidden = true;
+    if (ready_to_dispose)
         return;
-    }
+
+    sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);
+    sprite_utils::set_horizontal_flip(false, mainSpriteInfo, subSpriteInfo);
+    sprite_utils::set_priority(OBJPRIORITY_0, mainSpriteInfo, subSpriteInfo);
+    set_position();
 
     animFrameTimer += *global::timer;
 
     if (animFrameTimer > BONE_ANIM_FRAME_DELTA) {
-
         animFrameTimer = 0;
         animFrame++;
-
-        if (collided) {
-
-            if (animFrame >= COLLIDED_FRAMES)
-                ready_to_dispose = true;
-            else {
-
-                frameGfx = (u8 *) gfx_spider_skeletonTiles +
-                           (sprite_width * sprite_height * (animFrame + FRAME_OFFSET_COLLIDED) / 2);
-
-            }
-
-
-        } else {
-
-            if (animFrame >= BONE_FRAMES)
-                animFrame = 0;
-
-            frameGfx = (u8 *) gfx_spider_skeletonTiles +
-                       (sprite_width * sprite_height * (animFrame + FRAME_OFFSET_BONE) / 2);
-        }
-
-        subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
-        mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
-
+        match_animation();
     }
 
-
-    set_position();
 }
 
 
@@ -68,43 +44,23 @@ void Bone::init() {
 void Bone::initSprite() {
 
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_spider_skeletonPal, gfx_spider_skeletonPalLen,
-                                                        nullptr, sprite_width * sprite_height, sprite_width,
+                                                        nullptr, BONE_SPRITE_SIZE, sprite_width,
                                                         spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_spider_skeletonPal, gfx_spider_skeletonPalLen,
-                                                          nullptr, sprite_width * sprite_height, sprite_width,
+                                                          nullptr, BONE_SPRITE_SIZE, sprite_width,
                                                           spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
-
-    frameGfx = (u8 *) gfx_spider_skeletonTiles +
-               (sprite_width * sprite_height * (animFrame + FRAME_OFFSET_BONE) / 2);
-
-    subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
-    mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
-
+    sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);
+    sprite_utils::set_horizontal_flip(false, mainSpriteInfo, subSpriteInfo);
+    sprite_utils::set_priority(OBJPRIORITY_0, mainSpriteInfo, subSpriteInfo);
+    match_animation();
+    set_position();
 }
 
 void Bone::set_position() {
-
-    if (ready_to_dispose)
-        return;
-
     int main_x, main_y, sub_x, sub_y;
     get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
-
-    mainSpriteInfo->entry->x = main_x;
-    mainSpriteInfo->entry->y = main_y;
-
-    subSpriteInfo->entry->x = sub_x;
-    subSpriteInfo->entry->y = sub_y;
-
-    mainSpriteInfo->entry->vFlip = false;
-    mainSpriteInfo->entry->hFlip = false;
-
-    subSpriteInfo->entry->vFlip = false;
-    subSpriteInfo->entry->hFlip = false;
-
-    mainSpriteInfo->entry->priority = OBJPRIORITY_0;
-    subSpriteInfo->entry->priority = OBJPRIORITY_0;
-
+    sprite_utils::set_entry_xy(mainSpriteInfo, main_x, main_y);
+    sprite_utils::set_entry_xy(subSpriteInfo, sub_x, sub_y);
 }
 
 Bone::Bone() {
@@ -117,17 +73,14 @@ Bone::Bone() {
 
 void Bone::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
 
-    MapTile *tiles[9];
-    Collisions::getNeighboringTiles(global::level_generator->map_tiles, x_current_pos_in_tiles, y_current_pos_in_tiles,
-                                    tiles);
+    MapTile *t[9];
+    Collisions::getNeighboringTiles(global::level_generator->map_tiles,
+                                    x_current_pos_in_tiles, y_current_pos_in_tiles, t);
 
-    upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, physical_width, true, BOUNCING_FACTOR_Y);
-    bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, physical_width, physical_height, true,
-                                                       BOUNCING_FACTOR_Y);
-    leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true,
-                                                   BOUNCING_FACTOR_X);
-    rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true,
-                                                     BOUNCING_FACTOR_X);
+    upperCollision = Collisions::checkUpperCollision(t, &x, &y, &ySpeed, physical_width, true, 0.35);
+    bottomCollision = Collisions::checkBottomCollision(t, &x, &y, &ySpeed, physical_width, physical_height, true, 0.35);
+    leftCollision = Collisions::checkLeftCollision(t, &x, &y, &xSpeed, physical_width, physical_height, true, 0.15);
+    rightCollision = Collisions::checkRightCollision(t, &x, &y, &xSpeed, physical_width, physical_height, true, 0.15);
 
     if (upperCollision || bottomCollision || leftCollision || rightCollision) {
         collided = true;
@@ -151,4 +104,29 @@ void Bone::updateSpeed() {
         pos_inc_timer = 0;
     }
 
+}
+
+void Bone::match_animation() {
+
+    if (collided) {
+
+        if (animFrame >= COLLIDED_FRAMES) {
+            //poof animation done, bone is ready to dispose
+            sprite_utils::set_visibility(false, mainSpriteInfo, subSpriteInfo);
+            ready_to_dispose = true;
+        } else
+            //continue poof animation
+            frameGfx = sprite_utils::get_frame((u8 *) gfx_spider_skeletonTiles, BONE_SPRITE_SIZE,
+                                               animFrame + FRAME_OFFSET_COLLIDED);
+
+    } else {
+        //rotating bone animation
+        if (animFrame >= BONE_FRAMES)
+            animFrame = 0;
+
+        frameGfx = sprite_utils::get_frame((u8 *) gfx_spider_skeletonTiles, BONE_SPRITE_SIZE,
+                                           animFrame + FRAME_OFFSET_BONE);
+    }
+
+    sprite_utils::update_frame(frameGfx, BONE_SPRITE_SIZE, mainSpriteInfo, subSpriteInfo);
 }

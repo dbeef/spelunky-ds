@@ -18,31 +18,29 @@ void BloodElement::draw() {
     //won't change speed untill this timer reaches treshold
     inactive_delay += *global::timer;
 
-    if (!finished) {
-        //animation not finished
-        frameTimer += *global::timer;
+    //animation not finished
+    frameTimer += *global::timer;
 
-        if (frameTimer > BLOOD_ANIM_FRAME_DELTA) {
+    if (frameTimer > BLOOD_ANIM_FRAME_DELTA) {
 
-            frameTimer = 0;
-            currentFrame++;
+        frameTimer = 0;
+        currentFrame++;
 
-            if (currentFrame >= 7) {
-                currentFrame = 0;
-                finished = true;
-                ready_to_dispose = true;
-                mainSpriteInfo->entry->isHidden = true;
-                subSpriteInfo->entry->isHidden = true;
+        if (currentFrame >= 7) {
+            currentFrame = 0;
+            finished = true;
+            ready_to_dispose = true;
+            mainSpriteInfo->entry->isHidden = true;
+            subSpriteInfo->entry->isHidden = true;
 
-            } else
-                match_animation();
+        } else
+            match_animation();
 
-        }
-
-        sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);
-        sprite_utils::set_horizontal_flip(false, mainSpriteInfo, subSpriteInfo);
-        set_position();
     }
+
+    sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);
+    sprite_utils::set_horizontal_flip(false, mainSpriteInfo, subSpriteInfo);
+    set_position();
 
 }
 

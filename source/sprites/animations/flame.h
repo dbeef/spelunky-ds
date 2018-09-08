@@ -10,8 +10,10 @@
 
 #define FLAME_PHYSICAL_HEIGHT 6
 #define FLAME_PHYSICAL_WIDTH 6
+
 #define FLAME_SPRITE_HEIGHT 16
 #define FLAME_SPRITE_WIDTH 16
+#define FLAME_SPRITE_SIZE FLAME_SPRITE_WIDTH * FLAME_SPRITE_HEIGHT
 
 #define FLAME_CHANGE_POS_DELTA 16
 #define FLAME_ANIM_FRAME_DELTA 90
@@ -60,16 +62,20 @@ public:
 
     bool finished{};
     int currentFrame{};
-    int animFrameTimer{};
+    double animFrameTimer{};
 
     std::vector<FlameElement *> flame_trail;
 
-    int living_timer{};
-    int time_since_last_spawn{};
+    double living_timer{};
+    double time_since_last_spawn{};
 
     int change_pos_delta_offset{};
 
     void spawn_flame();
+
+    void set_position();
+
+    void match_animation();
 };
 
 

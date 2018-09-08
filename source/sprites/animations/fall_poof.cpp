@@ -8,6 +8,7 @@
 #include "../moving_object.h"
 #include "fall_poof.h"
 #include "../../collisions/collisions.h"
+#include "../sprite_utils.h"
 
 
 #define FALL_POOF_POS_INC_DELTA 35
@@ -16,11 +17,13 @@
 
 void FallPoof::draw() {
 
-    if (ready_to_dispose) {
-        mainSpriteInfo->entry->isHidden = true;
-        subSpriteInfo->entry->isHidden = true;
+    if (ready_to_dispose)
         return;
-    }
+
+    sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);
+    sprite_utils::set_horizontal_flip(false, mainSpriteInfo, subSpriteInfo);
+    sprite_utils::set_priority(OBJPRIORITY_0, mainSpriteInfo, subSpriteInfo);
+    set_position();
 
     animFrameTimer += *global::timer;
 
@@ -31,15 +34,12 @@ void FallPoof::draw() {
 
         if (animFrame >= FALL_POOF_FRAMES) {
             ready_to_dispose = true;
-        } else {
-            frameGfx = (u8 *) gfx_blood_rock_rope_poofTiles +
-                       (sprite_width * sprite_height * (animFrame  + 13)/ 2);
-            subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
-            mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
-        }
+            sprite_utils::set_visibility(false, mainSpriteInfo, subSpriteInfo);
+        } else
+            match_animation();
+
     }
 
-    set_position();
 }
 
 
@@ -50,45 +50,25 @@ void FallPoof::init() {
 void FallPoof::initSprite() {
 
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_blood_rock_rope_poofPal, gfx_blood_rock_rope_poofPalLen,
-                                                        nullptr, sprite_width * sprite_height, sprite_width,
+                                                        nullptr, FALL_POOF_SPRITE_SIZE, sprite_width,
                                                         spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_blood_rock_rope_poofPal, gfx_blood_rock_rope_poofPalLen,
-                                                          nullptr, sprite_width * sprite_height, sprite_width,
+                                                          nullptr, FALL_POOF_SPRITE_SIZE, sprite_width,
                                                           spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
 
-
-    frameGfx = (u8 *) gfx_blood_rock_rope_poofTiles +
-               (sprite_width * sprite_height * (animFrame  + 13 )/ 2);
-
-    subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
-    mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
-
+    sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);
+    sprite_utils::set_horizontal_flip(false, mainSpriteInfo, subSpriteInfo);
+    sprite_utils::set_priority(OBJPRIORITY_0, mainSpriteInfo, subSpriteInfo);
+    match_animation();
+    set_position();
 
 }
 
 void FallPoof::set_position() {
-
-    if (ready_to_dispose)
-        return;
-
     int main_x, main_y, sub_x, sub_y;
     get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
-
-    mainSpriteInfo->entry->x = main_x;
-    mainSpriteInfo->entry->y = main_y;
-
-    subSpriteInfo->entry->x = sub_x;
-    subSpriteInfo->entry->y = sub_y;
-
-    mainSpriteInfo->entry->vFlip = false;
-    mainSpriteInfo->entry->hFlip = false;
-
-    subSpriteInfo->entry->vFlip = false;
-    subSpriteInfo->entry->hFlip = false;
-
-    mainSpriteInfo->entry->priority = OBJPRIORITY_0;
-    subSpriteInfo->entry->priority = OBJPRIORITY_0;
-
+    sprite_utils::set_entry_xy(mainSpriteInfo, main_x, main_y);
+    sprite_utils::set_entry_xy(subSpriteInfo, sub_x, sub_y);
 }
 
 FallPoof::FallPoof() {
@@ -100,23 +80,23 @@ FallPoof::FallPoof() {
 }
 
 void FallPoof::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
-    if(!gravity)
-        return;
-    
-    MapTile *tiles[9];
-    Collisions::getNeighboringTiles(global::level_generator->map_tiles, x_current_pos_in_tiles, y_current_pos_in_tiles,
-                                    tiles);
 
-    upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, physical_width, true, BOUNCING_FACTOR_Y);
-    bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, physical_width, physical_height, true, BOUNCING_FACTOR_Y);
-    leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true, BOUNCING_FACTOR_X);
-    rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true, BOUNCING_FACTOR_X);
+    if (!gravity)
+        return;
+
+    MapTile *t[9];
+    Collisions::getNeighboringTiles(global::level_generator->map_tiles,
+                                    x_current_pos_in_tiles, y_current_pos_in_tiles, t);
+    upperCollision = Collisions::checkUpperCollision(t, &x, &y, &ySpeed, physical_width, true, 0.35);
+    bottomCollision = Collisions::checkBottomCollision(t, &x, &y, &ySpeed, physical_width, physical_height, true, 0.35);
+    leftCollision = Collisions::checkLeftCollision(t, &x, &y, &xSpeed, physical_width, physical_height, true, 0.15);
+    rightCollision = Collisions::checkRightCollision(t, &x, &y, &xSpeed, physical_width, physical_height, true, 0.15);
 
 }
 
 void FallPoof::updateSpeed() {
 
-    if(!gravity)
+    if (!gravity)
         return;
 
     limit_speed(MAX_X_SPEED_FALL_POOF, MAX_Y_SPEED_FALL_POOF);
@@ -132,4 +112,9 @@ void FallPoof::updateSpeed() {
         pos_inc_timer = 0;
     }
 
+}
+
+void FallPoof::match_animation() {
+    frameGfx = sprite_utils::get_frame((u8 *) gfx_blood_rock_rope_poofTiles, FALL_POOF_SPRITE_SIZE, animFrame + 13);
+    sprite_utils::update_frame(frameGfx, FALL_POOF_SPRITE_SIZE, mainSpriteInfo, subSpriteInfo);
 }

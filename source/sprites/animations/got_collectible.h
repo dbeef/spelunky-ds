@@ -12,6 +12,7 @@
 
 #define GOT_COLLECTIBLE_SPRITE_HEIGHT 32
 #define GOT_COLLECTIBLE_SPRITE_WIDTH 32
+#define GOT_COLLECTIBLE_SPRITE_SIZE GOT_COLLECTIBLE_SPRITE_WIDTH * GOT_COLLECTIBLE_SPRITE_HEIGHT
 
 class GotCollectible : public MovingObject {
 
@@ -39,7 +40,7 @@ public:
 
     void onCollisionWithMainCharacter() override {};
 
-    int animFrameTimer{};
+    double animFrameTimer{};
     int animFrame{};
     int cycle_counter{};
 
@@ -51,6 +52,8 @@ public:
     void set_position();
 
     int collectible_type{};
+
+    void match_animation();
 };
 
 

@@ -11,6 +11,7 @@
 
 #define FALL_POOF_SPRITE_HEIGHT 8
 #define FALL_POOF_SPRITE_WIDTH 8
+#define FALL_POOF_SPRITE_SIZE FALL_POOF_SPRITE_WIDTH * FALL_POOF_SPRITE_HEIGHT
 
 #define FALL_POOF_PHYSICAL_HEIGHT 8
 #define FALL_POOF_PHYSICAL_WIDTH 8
@@ -44,9 +45,9 @@ public:
 
     void onCollisionWithMainCharacter() override {};
 
-    int animFrameTimer{};
+    double animFrameTimer{};
     int animFrame{};
-    int pos_inc_timer{};
+    double pos_inc_timer{};
 
     SpriteInfo *mainSpriteInfo{};
     SpriteInfo *subSpriteInfo{};
@@ -57,6 +58,7 @@ public:
 
     void set_position();
 
+    void match_animation();
 };
 
 

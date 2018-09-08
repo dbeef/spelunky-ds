@@ -20,7 +20,7 @@ void ShoppingObject::update_anim_icon(int x, int y, int carrier_width) {
         shopping_icon->x = (int) (x + ((0.5 * carrier_width)) - (0.5 * shopping_icon->physical_width));
         shopping_icon->y = y - 12;
     } else
-        shopping_icon->ready_to_dispose = true;
+        shopping_icon->set_ready_to_dispose();
 
 }
 

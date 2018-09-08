@@ -11,6 +11,7 @@
 
 #define BONE_SPRITE_HEIGHT 16
 #define BONE_SPRITE_WIDTH 16
+#define BONE_SPRITE_SIZE BONE_SPRITE_WIDTH * BONE_SPRITE_HEIGHT
 
 #define BONE_PHYSICAL_HEIGHT 8
 #define BONE_PHYSICAL_WIDTH 8
@@ -45,9 +46,9 @@ public:
     void onCollisionWithMainCharacter() override {};
 
     bool collided{};
-    int animFrameTimer{};
+    double animFrameTimer{};
     int animFrame{};
-    int pos_inc_timer{};
+    double pos_inc_timer{};
 
     SpriteInfo *mainSpriteInfo{};
     SpriteInfo *subSpriteInfo{};
@@ -56,6 +57,7 @@ public:
 
     void set_position();
 
+    void match_animation();
 };
 
 
