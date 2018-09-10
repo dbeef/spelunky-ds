@@ -27,6 +27,8 @@ class Caveman : public MovingObject {
 
 public:
 
+    void introduce_yourself() override { printf("CAVEMAN\n"); };
+
     Caveman();
 
     Caveman(int x, int y);

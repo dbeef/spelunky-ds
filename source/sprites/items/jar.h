@@ -19,6 +19,8 @@ class Jar : public MovingObject {
 
 public:
 
+    void introduce_yourself() override { printf("JAR\n"); };
+
     Jar();
 
     void updateOther() override {};

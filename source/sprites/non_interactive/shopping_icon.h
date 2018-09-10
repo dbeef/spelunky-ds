@@ -19,6 +19,8 @@ class ShoppingIcon : public MovingObject {
 
 public:
 
+    void introduce_yourself() override { printf("SHOPPING_ICON\n"); };
+
     ShoppingIcon();
 
     void set_ready_to_dispose();

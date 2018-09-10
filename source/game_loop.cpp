@@ -14,6 +14,8 @@
 #include "rooms/exit_rooms.hpp"
 #include "rooms/closed_rooms.hpp"
 #include <algorithm>
+#include <cstdio>
+#include <cctype>
 #include "time/time_utils.h"
 #include "memory/oam_utils.h"
 #include "sprites/traps/spikes.h"
@@ -56,7 +58,6 @@ void gameloop::scroll() {
 
         global::input_handler->updateInput();
 
-
         if (global::game_state->bombed) {
             global::level_generator->render_tiles_on_base_map();
             global::game_state->bombed = false;
@@ -66,7 +67,25 @@ void gameloop::scroll() {
 
         global::camera->update_position();
 
+        unsigned long size = global::sprites_to_add.size();
+
+        for (int a = 0; a < size; a++) {
+            if (global::sprites_to_add.at(a)) {
+                MovingObject *o = global::sprites_to_add.at(a);
+                global::sprites.push_back(o);
+            }
+        }
+
+
+        if (size)
+            global::sprites_to_add.clear();
+
+
         for (int a = 0; a < global::sprites.size(); a++) {
+
+//            if (size)
+//                (*global::sprites.at(a)).introduce_yourself();
+
             if (global::sprites.at(
                     a) /*&& !global::sprites.at(a)->ready_to_dispose *//*&& !global::sprites.at(a)->killed*/) {
                 (*global::sprites.at(a)).update();
@@ -112,16 +131,11 @@ void gameloop::scroll() {
 
             }
         }
-        //
-
 
         global::camera->set_scroll();
-
         global::main_oam_manager->updateOAM();
         global::sub_oam_manager->updateOAM();
-
         oam_utils::clean_unused_oam();
-
     }
 
 }
@@ -370,7 +384,7 @@ void gameloop::populate_cave_npcs() {
                             fakeSkeleton->y = pos_y * 16;
                             skeletons_left--;
                             last_placement = 0;
-                            
+
                         }
                     }
 

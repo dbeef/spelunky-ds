@@ -6,6 +6,7 @@
 #ifndef SPELUNKYDS_MOVINGOBJECT_H
 #define SPELUNKYDS_MOVINGOBJECT_H
 
+#include <cstdio>
 #include "../memory/oam_manager.h"
 #include "../camera/camera.h"
 #include "spritesheet_type.hpp"
@@ -22,6 +23,11 @@
  */
 class MovingObject {
 public:
+
+    //for debugging purposes
+    //https://stackoverflow.com/questions/3649278/how-can-i-get-the-class-name-from-a-c-object
+    //https://stackoverflow.com/questions/32016809/using-typeid-to-get-name-of-derived-class
+    virtual void introduce_yourself() = 0;
 
     virtual ~MovingObject() = default;
 

@@ -18,8 +18,8 @@ namespace time_utils {
     }
 
     void start() {
-        timerStart(0, ClockDivider_1024, 1000, 0);
-        timerStart(1, ClockDivider_1, 10, 0);
+        timerStart(0, ClockDivider_1024, 1000, nullptr);
+        timerStart(1, ClockDivider_1, 10, nullptr);
     }
 
 }

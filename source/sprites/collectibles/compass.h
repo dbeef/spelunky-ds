@@ -22,6 +22,8 @@ class Compass : public MovingObject , public ShoppingObject {
 
 public:
 
+    void introduce_yourself() override { printf("COMPASS\n"); };
+
     Compass();
 
     void updateOther() override {};

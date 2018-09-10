@@ -49,6 +49,8 @@ public:
 
     MainDude();
 
+    void introduce_yourself() override { printf("MAIN_DUDE\n"); };
+
     void updateOther() override {};
 
     void apply_dmg(int dmg_to_apply) override;

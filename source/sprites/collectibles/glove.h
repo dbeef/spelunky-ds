@@ -23,6 +23,8 @@ class Glove : public MovingObject , public ShoppingObject {
 
 public:
 
+    void introduce_yourself() override { printf("GLOVE\n"); };
+
     Glove();
 
     void updateOther() override {};

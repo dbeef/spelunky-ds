@@ -29,6 +29,8 @@ class Flame : public MovingObject {
 
 public:
 
+    void introduce_yourself() override { printf("FLAME\n"); };
+
     Flame();
 
     void updateOther() override {};

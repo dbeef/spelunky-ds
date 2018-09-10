@@ -12,6 +12,8 @@ class BloodElement : public MovingObject {
 
 public:
 
+    void introduce_yourself() override { printf("BLOOD_ELEMENT\n"); };
+
     BloodElement();
 
     void updateOther() override {};

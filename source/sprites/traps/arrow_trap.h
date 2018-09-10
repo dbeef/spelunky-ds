@@ -16,6 +16,8 @@ class ArrowTrap : public MovingObject {
 
 public:
 
+    void introduce_yourself() override { printf("ARROW_TRAP\n"); };
+
     ArrowTrap();
 
     void updateOther() override {};

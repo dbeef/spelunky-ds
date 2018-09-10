@@ -10,8 +10,10 @@
 
 #define BULLET_PHYSICAL_HEIGHT 4
 #define BULLET_PHYSICAL_WIDTH 4
+
 #define BULLET_SPRITE_HEIGHT 16
 #define BULLET_SPRITE_WIDTH 16
+#define BULLET_SPRITE_SIZE BULLET_SPRITE_WIDTH * BULLET_SPRITE_HEIGHT
 
 #define MAX_X_SPEED_BULLET 8
 #define MAX_Y_SPEED_BULLET 8
@@ -19,6 +21,8 @@
 class Bullet : public MovingObject {
 
 public:
+
+    void introduce_yourself() override { printf("BULLET\n"); };
 
     Bullet();
 
@@ -52,10 +56,10 @@ public:
     u8 *frameGfx{};
 
     int animFrame{};
-    int animFrameTimer{};
-    int lifetime{};
+    double animFrameTimer{};
+    double lifetime{};
 
-    void apply_bullet_dispose_animation();
+    void match_animation();
 };
 
 

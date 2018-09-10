@@ -23,6 +23,8 @@ class Bone : public MovingObject {
 
 public:
 
+    void introduce_yourself() override { printf("BONE\n"); };
+
     Bone();
 
     void updateOther() override {};

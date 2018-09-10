@@ -18,6 +18,8 @@ class GotCollectible : public MovingObject {
 
 public:
 
+    void introduce_yourself() override { printf("GOT_COLLECTIBLE\n"); };
+
     GotCollectible();
 
     void updateOther() override {};

@@ -18,6 +18,8 @@ class Lamp : public MovingObject {
 
 public:
 
+    void introduce_yourself() override { printf("LAMP\n"); };
+
     Lamp();
 
     void initSprite() override;

@@ -538,7 +538,7 @@ void Shopkeeper::check_if_dude_in_shop_bounds() {
                                   y > shop_bounds_up_y_px && y < shop_bounds_down_y_px;
 
         if ((bottomCollision && (leftCollision || rightCollision)) ||
-            !shopkeeper_in_shop && jumping_timer > staying_on_ground && bottomCollision && !(killed || stunned)) {
+                (!shopkeeper_in_shop && jumping_timer > staying_on_ground && bottomCollision && !(killed || stunned))) {
             ySpeed = -5 - ((rand() % 10) / 5);
             jumping_timer = 0;
             staying_on_ground = 250 + (rand() % 1250);

@@ -24,6 +24,8 @@ class Spider : public MovingObject {
 
 public:
 
+    void introduce_yourself() override { printf("SPIDER\n"); };
+
     Spider();
 
     Spider(int x, int y);

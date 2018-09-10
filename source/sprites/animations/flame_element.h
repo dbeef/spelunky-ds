@@ -12,6 +12,8 @@ class FlameElement : public MovingObject {
 
 public:
 
+    void introduce_yourself() override { printf("FLAME_ELEMENT\n"); };
+
     FlameElement();
 
     void updateOther() override {};

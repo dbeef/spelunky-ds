@@ -23,6 +23,8 @@ class FallPoof : public MovingObject {
 
 public:
 
+    void introduce_yourself() override { printf("FALL_POOF\n"); };
+
     FallPoof();
 
     void updateOther() override {};

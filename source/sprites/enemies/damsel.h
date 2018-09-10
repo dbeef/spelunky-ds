@@ -27,6 +27,8 @@ class Damsel : public MovingObject {
 
 public:
 
+    void introduce_yourself() override { printf("DAMSEL\n"); };
+
     Damsel();
     Damsel(int x, int y);
 

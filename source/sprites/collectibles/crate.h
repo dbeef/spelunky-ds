@@ -22,6 +22,8 @@ class Crate: public MovingObject {
 
 public:
 
+    void introduce_yourself() override { printf("CRATE\n"); };
+
     Crate();
 
     void updateOther() override {};

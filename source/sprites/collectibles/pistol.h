@@ -11,8 +11,10 @@
 
 #define PISTOL_PHYSICAL_HEIGHT 6
 #define PISTOL_PHYSICAL_WIDTH 9
+
 #define PISTOL_SPRITE_HEIGHT 16
 #define PISTOL_SPRITE_WIDTH 16
+#define PISTOL_SPRITE_SIZE PISTOL_SPRITE_WIDTH * PISTOL_SPRITE_HEIGHT
 
 #define MAX_X_SPEED_PISTOL 4
 #define MAX_Y_SPEED_PISTOL 4
@@ -21,6 +23,8 @@
 class Pistol : public MovingObject, public ShoppingObject {
 
 public:
+
+    void introduce_yourself() override { printf("PISTOL\n"); };
 
     Pistol();
 

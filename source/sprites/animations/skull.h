@@ -11,6 +11,7 @@
 
 #define SKULL_SPRITE_HEIGHT 16
 #define SKULL_SPRITE_WIDTH 16
+#define SKULL_SPRITE_SIZE SKULL_SPRITE_WIDTH * SKULL_SPRITE_HEIGHT
 
 #define SKULL_PHYSICAL_HEIGHT 8
 #define SKULL_PHYSICAL_WIDTH 8
@@ -21,6 +22,8 @@
 class Skull : public MovingObject {
 
 public:
+
+    void introduce_yourself() override { printf("SKULL\n"); };
 
     Skull();
 
@@ -45,9 +48,9 @@ public:
     void onCollisionWithMainCharacter() override {};
 
     bool collided{};
-    int animFrameTimer{};
+    double animFrameTimer{};
     int animFrame{};
-    int pos_inc_timer{};
+    double  pos_inc_timer{};
 
     SpriteInfo *mainSpriteInfo{};
     SpriteInfo *subSpriteInfo{};
@@ -56,7 +59,7 @@ public:
 
     void set_position();
 
-    void set_orientation();
+    void match_animation();
 };
 
 

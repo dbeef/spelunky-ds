@@ -33,6 +33,8 @@ class Blood : public MovingObject {
 
 public:
 
+    void introduce_yourself() override { printf("BLOOD\n"); };
+
     Blood();
 
     void updateOther() override {};

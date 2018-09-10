@@ -4,9 +4,8 @@
 
 #include "../../globals_declarations.h"
 #include "../../../build/gfx_blood_rock_rope_poof.h"
-#include "rope_element.h";
+#include "rope_element.h"
 #include "rope.h"
-
 
 void RopeElement::draw() {
 

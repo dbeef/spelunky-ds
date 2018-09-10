@@ -241,7 +241,6 @@ void Collisions::getNeighboringTiles(MapTile *mapTiles[32][32], int xx, int yy, 
             *left_down = nullptr,
             *right_down = nullptr;
 
-
     if (xx > 0)
         left_middle = mapTiles[xx - 1][yy];
     if (xx < 31)

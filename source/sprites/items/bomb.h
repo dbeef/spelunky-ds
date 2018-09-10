@@ -26,6 +26,8 @@ class Bomb : public MovingObject {
 
 public:
 
+    void introduce_yourself() override { printf("BOMB\n"); };
+
     Bomb();
 
     void updateOther() override {};

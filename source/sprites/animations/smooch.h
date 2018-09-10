@@ -11,10 +11,13 @@
 
 #define SMOOCH_SPRITE_HEIGHT 16
 #define SMOOCH_SPRITE_WIDTH 16
+#define SMOOCH_SPRITE_SIZE SMOOCH_SPRITE_WIDTH * SMOOCH_SPRITE_HEIGHT
 
 class Smooch : public MovingObject {
 
 public:
+
+    void introduce_yourself() override { printf("SMOOCH\n"); };
 
     Smooch();
 
@@ -38,7 +41,7 @@ public:
 
     void onCollisionWithMainCharacter() override {};
 
-    int animFrameTimer{};
+    double animFrameTimer{};
     int animFrame{};
     int cycle_counter{};
 
@@ -49,6 +52,7 @@ public:
 
     void set_position();
 
+    void match_animation();
 };
 
 

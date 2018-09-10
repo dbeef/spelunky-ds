@@ -19,6 +19,8 @@ class Whip : public MovingObject {
 
 public:
 
+    void introduce_yourself() override { printf("WHIP\n"); };
+
     Whip();
 
     void updateOther() override {};

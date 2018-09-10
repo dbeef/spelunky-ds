@@ -10,7 +10,7 @@ void ShoppingObject::init_anim_icon() {
     if (!bought) {
         shopping_icon = new ShoppingIcon();
         shopping_icon->init();
-        global::sprites.push_back(shopping_icon);
+        global::sprites_to_add.push_back(shopping_icon);
     }
 }
 

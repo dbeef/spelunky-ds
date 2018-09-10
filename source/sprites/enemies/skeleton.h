@@ -23,6 +23,8 @@ class Skeleton : public MovingObject {
 
 public:
 
+    void introduce_yourself() override { printf("SKELETON\n"); };
+
     Skeleton();
     Skeleton(int x, int y);
 

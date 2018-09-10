@@ -24,6 +24,8 @@ class FakeSkeleton : public MovingObject {
 
 public:
 
+    void introduce_yourself() override { printf("FAKE_SKELETON\n"); };
+
     FakeSkeleton();
 
     void updateOther() override {};

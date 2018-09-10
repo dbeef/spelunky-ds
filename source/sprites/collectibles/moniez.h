@@ -36,6 +36,8 @@ class Moniez : public MovingObject {
 
 public:
 
+    void introduce_yourself() override { printf("MONIEZ\n"); };
+
     Moniez();
 
     Moniez(int x, int y, SpriteType sprite_type);
@@ -69,7 +71,7 @@ public:
 
     int value{};
 
-    int collectible_timer{};
+    double collectible_timer{};
 
     bool collected{};
 

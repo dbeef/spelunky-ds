@@ -4,6 +4,7 @@
 
 #include <maxmod9.h>
 #include <cstdlib>
+#include <cstdio>
 #include "../../../build/gfx_spike_collectibles_flame.h"
 #include "chest.h"
 #include "../../collisions/collisions.h"
@@ -26,14 +27,8 @@
 
 void Crate::draw() {
 
-    if (ready_to_dispose) {
-        mainSpriteInfo->entry->isHidden = true;
-        subSpriteInfo->entry->isHidden = true;
+    if (ready_to_dispose)
         return;
-    } else {
-        mainSpriteInfo->entry->isHidden = false;
-        subSpriteInfo->entry->isHidden = false;
-    }
 
     if (!dropped_loot) {
         check_if_can_be_pickuped();
@@ -60,15 +55,15 @@ void Crate::draw() {
 
         play_collectible_animation();
 
+
     } else {
         mainSpriteInfo->entry->isHidden = false;
         subSpriteInfo->entry->isHidden = false;
     }
 
-
     kill_mobs_if_thrown(1);
-
     set_position();
+
 }
 
 
@@ -99,9 +94,12 @@ void Crate::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in
                                     tiles);
 
     upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, physical_width, true, BOUNCING_FACTOR_Y);
-    bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, physical_width, physical_height, true, BOUNCING_FACTOR_Y);
-    leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true, BOUNCING_FACTOR_X);
-    rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true, BOUNCING_FACTOR_X);
+    bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, physical_width, physical_height, true,
+                                                       BOUNCING_FACTOR_Y);
+    leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true,
+                                                   BOUNCING_FACTOR_X);
+    rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true,
+                                                     BOUNCING_FACTOR_X);
 
 }
 
@@ -116,14 +114,11 @@ void Crate::initSprite() {
                                                           gfx_spike_collectibles_flamePalLen,
                                                           nullptr, sprite_width * sprite_height, sprite_width,
                                                           spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
-    if (activated)
-        frameGfx = nullptr;
-    else
+    if (!activated) {
         frameGfx = (u8 *) gfx_spike_collectibles_flameTiles + (sprite_width * sprite_height * (4) / 2);
-
-    subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
-    mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
-
+        subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
+        mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
+    }
 }
 
 void Crate::set_position() {
@@ -157,6 +152,7 @@ Crate::Crate() {
 void Crate::drop_loot() {
 
     int r = rand() % 3;
+//    r = 3;
 
     //drop rope or bomb
     if (r == 0 || r == 1) {
@@ -173,19 +169,19 @@ void Crate::drop_loot() {
             g->collectible_type = 1;
         }
 
+        global::hud->draw_level_hud();
+
         g->init();
         global::sprites.push_back(g);
     } else {
         collectibles_utils::spawn_random_item(this->x, this->y);
+//        printf("AFTER SPAWNING\n");
     }
 
     dropped_loot = true;
 }
 
 void Crate::play_collectible_animation() {
-    frameGfx = (u8 *) gfx_spike_collectibles_flameTiles + (sprite_width * sprite_height * (5 + animFrame) / 2);
-    subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
-    mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
 
     animFrameTimer += *global::timer;
 
@@ -195,10 +191,14 @@ void Crate::play_collectible_animation() {
     }
 
     if (animFrame >= 6) {
-
         ready_to_dispose = true;
         mainSpriteInfo->entry->isHidden = true;
         subSpriteInfo->entry->isHidden = true;
+    } else {
+        frameGfx = (u8 *) gfx_spike_collectibles_flameTiles + (sprite_width * sprite_height * (5 + animFrame) / 2);
+        subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
+        mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
     }
+
 }
 

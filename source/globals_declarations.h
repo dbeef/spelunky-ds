@@ -36,6 +36,7 @@ namespace global {
     extern PrintConsole *print_console; //in-game console
 
     extern std::vector<MovingObject *> sprites; //technically list of logical structures called MovingObject FIXME naming
+    extern std::vector<MovingObject *> sprites_to_add;
     extern std::vector<SpriteInfo *> sprite_infos; //technically list of wrappers around OAM entries FIXME naming
     extern std::vector<SpriteType> killed_npcs; //list of NPCs killed in current level //FIXME should be SpriteType
     extern std::vector<SpriteType> collected_loot; //list of loot collected in current level

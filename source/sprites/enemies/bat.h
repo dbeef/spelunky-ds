@@ -24,6 +24,8 @@ class Bat : public MovingObject {
 
 public:
 
+    void introduce_yourself() override { printf("BAT\n"); };
+
     Bat();
 
     Bat(int x, int y);

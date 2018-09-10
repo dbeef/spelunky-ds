@@ -23,6 +23,8 @@ class Jetpack : public MovingObject, public ShoppingObject  {
 
 public:
 
+    void introduce_yourself() override { printf("JETPACK\n"); };
+
     Jetpack();
 
     void updateOther() override {};

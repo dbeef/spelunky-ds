@@ -18,6 +18,7 @@
 #define PISTOL_FIRING_OFFSET_Y 6
 #define PISTOL_COOLDOWN 750
 
+//TODO use 'blast' class here like in the shotgun class
 void Pistol::draw() {
 
 

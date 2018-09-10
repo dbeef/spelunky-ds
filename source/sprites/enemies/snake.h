@@ -24,6 +24,8 @@ class Snake : public MovingObject {
 
 public:
 
+    void introduce_yourself() override { printf("SNAKE\n"); };
+
     Snake();
 
     Snake(int x, int y);

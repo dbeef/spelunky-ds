@@ -20,6 +20,8 @@ class Arrow : public MovingObject {
 
 public:
 
+    void introduce_yourself() override { printf("ARROW\n"); };
+
     Arrow();
     
     void updateOther() override {};

@@ -4,16 +4,14 @@
 //
 
 #include <maxmod9.h>
-#include <cstdlib>
+#include <cmath>
 #include "moving_object.h"
 #include "../globals_declarations.h"
 #include "../tiles/map_utils.h"
 #include "../collisions/collisions.h"
 #include "../../build/soundbank.h"
-#include "animations/blood.h"
 #include "../sound/sound_utils.h"
-
-//TODO FUNKCJA UPDATE SPRITE STATE
+#include "animations/blood.h"
 
 void MovingObject::spawn_blood() {
     for (int a = 0; a < 4; a++) {
@@ -308,7 +306,7 @@ void MovingObject::get_x_y_viewported(int *out_main_x, int *out_main_y, int *out
         *out_main_y = -SCREEN_HEIGHT;
     }
 
-    if (*out_sub_y + sprite_height < 0 || out_sub_x + sprite_width < 0) {
+    if (*out_sub_y + sprite_height < 0 || *out_sub_x + sprite_width < 0) {
         *out_sub_x = -SCREEN_HEIGHT;
         *out_sub_y = -SCREEN_HEIGHT;
     }
@@ -323,8 +321,8 @@ void MovingObject::get_x_y_viewported(int *out_main_x, int *out_main_y, int *out
 //moves this object according to current x/y speed, also check collisions with map
 void MovingObject::update_position() {
 
-    double tempXspeed = abs(xSpeed);
-    double tempYspeed = abs(ySpeed);
+    double tempXspeed = fabs(xSpeed);
+    double tempYspeed = fabs(ySpeed);
 
     int old_xx = -1;
     int old_yy = -1;

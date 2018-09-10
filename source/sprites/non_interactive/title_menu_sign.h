@@ -22,6 +22,8 @@ class TitleMenuSign : public MovingObject {
 
 public:
 
+    void introduce_yourself() override { printf("TITLE_MENU_SIGN\n"); };
+
     void initSprite() override;
 
     void updateOther() override {};

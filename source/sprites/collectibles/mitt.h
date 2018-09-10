@@ -23,6 +23,8 @@ class Mitt : public MovingObject, public ShoppingObject  {
 
 public:
 
+    void introduce_yourself() override { printf("MITT\n"); };
+
     Mitt();
 
     void updateOther() override {};

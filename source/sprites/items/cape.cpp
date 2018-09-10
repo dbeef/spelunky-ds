@@ -78,10 +78,10 @@ void Cape::draw() {
         }
 
 
-        if (global::main_dude->sprite_type == SpriteState::W_LEFT) {
+        if (global::main_dude->sprite_state == SpriteState::W_LEFT) {
             mainSpriteInfo->entry->hFlip = false;
             subSpriteInfo->entry->hFlip = false;
-        } else if (global::main_dude->sprite_type == SpriteState::W_RIGHT) {
+        } else if (global::main_dude->sprite_state == SpriteState::W_RIGHT) {
             mainSpriteInfo->entry->hFlip = true;
             subSpriteInfo->entry->hFlip = true;
         }

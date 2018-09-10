@@ -23,6 +23,8 @@ class Shotgun: public MovingObject, public ShoppingObject {
 
 public:
 
+    void introduce_yourself() override { printf("SHOTGUN\n"); };
+
     Shotgun();
 
     void updateOther() override {};

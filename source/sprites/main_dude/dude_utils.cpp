@@ -336,7 +336,7 @@ void MainDude::apply_blinking_on_damage() {
     if (!global::game_state->levels_transition_screen) {
 
         if (time_since_last_damage < MAIN_DUDE_DAMAGE_PROTECTION_TIME) {
-            sprite_utils::set_visibility((int) time_since_last_damage % 100 >= 50, main_spelunker, sub_spelunker);
+            sprite_utils::set_visibility(((int) time_since_last_damage % 100) >= 50, main_spelunker, sub_spelunker);
         } else
             sprite_utils::set_visibility(true, main_spelunker, sub_spelunker);
 

@@ -17,6 +17,8 @@ class Spikes: public MovingObject {
 
 public:
 
+    void introduce_yourself() override { printf("SPIKES\n"); };
+
     Spikes();
 
     void updateOther() override {};

@@ -5,7 +5,7 @@
 #include <maxmod9.h>
 #include "../../globals_declarations.h"
 #include "../../../build/gfx_blood_rock_rope_poof.h"
-#include "rope.h";
+#include "rope.h"
 #include "../../../build/soundbank.h"
 #include "../../collisions/collisions.h"
 #include "../../tiles/map_utils.h"

@@ -14,5 +14,6 @@ void global::init_globals(){
     sub_oam_manager = new OAMManager();
     hud = new Hud();
     game_state = new GameState();
-
+//    global::sprites.reserve(256);
+//    global::sprite_infos.reserve(256);
 }

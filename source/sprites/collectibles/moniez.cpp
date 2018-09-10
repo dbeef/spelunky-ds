@@ -15,34 +15,31 @@
 #include "../sprite_type.hpp"
 #include "../../collisions/collisions.h"
 #include "../../tiles/map_utils.h"
+#include "../sprite_utils.h"
 
-
+//TODO Split this into separate classes for ruby, gold bar, gold nugget etc. Make moniez an abstract.
 void Moniez::draw() {
 
-    if (ready_to_dispose)
-        return;
+    if (ready_to_dispose) return;
+
+    set_position();
+    sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);
+    sprite_utils::set_horizontal_flip(false, mainSpriteInfo, subSpriteInfo);
 
     if (!collected && collectible_timer >= 500 &&
         Collisions::checkCollisionWithMainDudeWidthBoundary(x, y, physical_width, physical_height, 8)) {
 
-        if (spritesheet_type == SpritesheetType::MONIEZ_RUBY) {
+        if (spritesheet_type == SpritesheetType::MONIEZ_RUBY)
             mmEffect(SFX_XGEM);
-        } else if (spritesheet_type == SpritesheetType::MONIEZ_GOLDBARS) {
+        else if (spritesheet_type == SpritesheetType::MONIEZ_GOLDBARS)
             mmEffect(SFX_XCOIN);
-        }
 
         global::hud->add_moniez_on_collected_loot(value);
         collected = true;
-        subSpriteInfo->entry->isHidden = true;
-        mainSpriteInfo->entry->isHidden = true;
-
+        sprite_utils::set_visibility(false, mainSpriteInfo, subSpriteInfo);
         global::collected_loot.push_back(sprite_type);
-
         ready_to_dispose = true;
     }
-
-
-    set_position();
 
     if (collectible_timer < 500)
         collectible_timer += *global::timer;
@@ -110,22 +107,17 @@ void Moniez::updateSpeed() {
 
 void Moniez::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
 
-    MapTile *tiles[9];
-    Collisions::getNeighboringTiles(global::level_generator->map_tiles, x_current_pos_in_tiles, y_current_pos_in_tiles,
-                                    tiles);
+    MapTile *t[9];
+    Collisions::getNeighboringTiles(global::level_generator->map_tiles,
+                                    x_current_pos_in_tiles, y_current_pos_in_tiles, t);
 
-    upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, physical_width, true, BOUNCING_FACTOR_Y);
-    bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, physical_width, physical_height, true,
-                                                       BOUNCING_FACTOR_Y);
-    leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true,
-                                                   BOUNCING_FACTOR_X);
-    rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true,
-                                                     BOUNCING_FACTOR_X);
-
+    upperCollision = Collisions::checkUpperCollision(t, &x, &y, &ySpeed, physical_width, true, 0.35);
+    bottomCollision = Collisions::checkBottomCollision(t, &x, &y, &ySpeed, physical_width, physical_height, true, 0.35);
+    leftCollision = Collisions::checkLeftCollision(t, &x, &y, &xSpeed, physical_width, physical_height, true, 0.15);
+    rightCollision = Collisions::checkRightCollision(t, &x, &y, &xSpeed, physical_width, physical_height, true, 0.15);
 }
 
 void Moniez::initSprite() {
-
 
     if (sprite_type == SpriteType::S_MONIEZ_TRIPLE_GOLDBARS) {
         physical_height = TRIPLE_GOLDBAR_PHYSICAL_HEIGHT;
@@ -168,13 +160,13 @@ void Moniez::initSprite() {
     }
 
     if (spritesheet_type == SpritesheetType::MONIEZ_RUBY) {
+
         subSpriteInfo = global::sub_oam_manager->initSprite(gfx_rubiesPal, gfx_rubiesPalLen,
                                                             nullptr, sprite_width * sprite_height, 8,
                                                             spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
-        mainSpriteInfo = global::main_oam_manager->initSprite(gfx_rubiesPal, gfx_rubiesPalLen,
-                                                              nullptr, sprite_width * sprite_height, 8,
-                                                              spritesheet_type, true, false,
-                                                              LAYER_LEVEL::MIDDLE_TOP);
+        mainSpriteInfo = global::main_oam_manager->initSprite(gfx_rubiesPal, gfx_rubiesPalLen, nullptr,
+                                                              sprite_width * sprite_height, 8, spritesheet_type, true,
+                                                              false, LAYER_LEVEL::MIDDLE_TOP);
     } else if (spritesheet_type == SpritesheetType::MONIEZ_GOLDBARS) {
 
         subSpriteInfo = global::sub_oam_manager->initSprite(gfx_goldbarsPal, gfx_goldbarsPalLen,
@@ -185,7 +177,7 @@ void Moniez::initSprite() {
                                                               spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
     }
 
-    if(spritesheet_type == SpritesheetType::MONIEZ_RUBY) {
+    if (spritesheet_type == SpritesheetType::MONIEZ_RUBY) {
         int ruby_type;
 
         if (sprite_type == SpriteType::S_MONIEZ_RUBY_BIG_RED)
@@ -204,28 +196,19 @@ void Moniez::initSprite() {
         frameGfx = (u8 *) gfx_rubiesTiles + 8 * 8 * (ruby_type) / 2;
     }
 
-    subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
-    mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
+    sprite_utils::update_frame(frameGfx, sprite_width * sprite_height, mainSpriteInfo, subSpriteInfo);
+
+    set_position();
+    sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);
+    sprite_utils::set_horizontal_flip(false, mainSpriteInfo, subSpriteInfo);
 
 }
 
 void Moniez::set_position() {
-
     int main_x, main_y, sub_x, sub_y;
     get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
-
-    mainSpriteInfo->entry->x = main_x;
-    mainSpriteInfo->entry->y = main_y;
-
-    subSpriteInfo->entry->x = sub_x;
-    subSpriteInfo->entry->y = sub_y;
-
-    mainSpriteInfo->entry->vFlip = false;
-    mainSpriteInfo->entry->hFlip = false;
-
-    subSpriteInfo->entry->vFlip = false;
-    subSpriteInfo->entry->hFlip = false;
-
+    sprite_utils::set_entry_xy(mainSpriteInfo, main_x, main_y);
+    sprite_utils::set_entry_xy(subSpriteInfo, sub_x, sub_y);
 }
 
 Moniez::Moniez() {

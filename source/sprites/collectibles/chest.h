@@ -9,8 +9,10 @@
 
 #define CHEST_PHYSICAL_HEIGHT 8
 #define CHEST_PHYSICAL_WIDTH 12
+
 #define CHEST_SPRITE_HEIGHT 16
 #define CHEST_SPRITE_WIDTH 16
+#define CHEST_SPRITE_SIZE CHEST_SPRITE_WIDTH * CHEST_SPRITE_HEIGHT
 
 #define MAX_X_SPEED_CHEST 6
 #define MAX_Y_SPEED_CHEST 4
@@ -19,6 +21,8 @@
 class Chest: public MovingObject {
 
 public:
+
+    void introduce_yourself() override { printf("CHEST\n"); };
 
     Chest();
 
@@ -51,6 +55,8 @@ public:
     void set_position();
 
     void spawn_treasure();
+
+    void match_animation();
 };
 
 

@@ -29,6 +29,8 @@ class Shopkeeper : public MovingObject {
 
 public:
 
+    void introduce_yourself() override { printf("SHOPKEEPER\n"); };
+
     //todo shopkeeper's name
     Shopkeeper(int x, int y);
 

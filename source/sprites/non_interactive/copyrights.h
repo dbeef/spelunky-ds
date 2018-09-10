@@ -18,6 +18,8 @@ class Copyrights : public MovingObject {
 
 public:
 
+    void introduce_yourself() override { printf("COPYRIGHTS\n"); };
+
     Copyrights();
 
     void initSprite() override;

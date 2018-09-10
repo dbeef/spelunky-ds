@@ -17,6 +17,8 @@ class Blast : public MovingObject {
 
 public:
 
+    void introduce_yourself() override { printf("BLAST\n"); };
+
     Blast();
 
     void updateOther() override {};

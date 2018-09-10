@@ -23,6 +23,8 @@ class SpringShoes : public MovingObject , public ShoppingObject {
 
 public:
 
+    void introduce_yourself() override { printf("SPRING_SHOES\n"); };
+
     SpringShoes();
 
     void updateOther() override {};

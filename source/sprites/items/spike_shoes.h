@@ -22,6 +22,8 @@ class SpikeShoes : public MovingObject, public ShoppingObject  {
 
 public:
 
+    void introduce_yourself() override { printf("SPIKE_SHOES\n"); };
+
     SpikeShoes();
 
     void updateOther() override {};

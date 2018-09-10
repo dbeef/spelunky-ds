@@ -19,6 +19,8 @@ class SpelunkyTitle : public MovingObject {
 
 public:
 
+    void introduce_yourself() override { printf("SPELUNKY_TITLE\n"); };
+
     SpelunkyTitle();
 
     void updateOther() override {};

@@ -3,6 +3,7 @@
 //
 
 #include <cstdlib>
+#include <cstdio>
 #include "collectibles_utils.h"
 #include "../../globals_declarations.h"
 #include "../items/jetpack.h"
@@ -26,7 +27,6 @@ ShoppingObject * collectibles_utils::spawn_item(int x, int y, int r, bool bought
     SpikeShoes *spikeShoes = nullptr;
     Mitt *mitt = nullptr;
     Jetpack *jetpack = nullptr;
-
 
     switch (r) {
         case 0:
@@ -80,9 +80,9 @@ ShoppingObject * collectibles_utils::spawn_item(int x, int y, int r, bool bought
 
     ShoppingObject *c[9] = {pistol, springShoes, cape, compass, shotgun, spikeShoes, mitt, jetpack, glove};
 
-    for (int a = 0; a < 9; a++)
-        if (c[a] != nullptr)
-            return c[a];
+    for (auto &a : c)
+        if (a != nullptr)
+            return a;
 
     return nullptr;
 }
@@ -91,10 +91,11 @@ void collectibles_utils::spawn_set_up(int x, int y, MovingObject *m) {
     m->init();
     m->x = x + (int) (0.5 * (16 - m->physical_width));
     m->y = y;
-    global::sprites.push_back(m);
+    global::sprites_to_add.push_back(m);
 }
 
 void collectibles_utils::spawn_random_item(int x, int y) {
     int r = rand() % 9;
+//    r = 6;
     spawn_item(x, y, r, true);
 }

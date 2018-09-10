@@ -3,6 +3,7 @@
 //
 
 
+#include <cstdio>
 #include "../spritesheet_type.hpp"
 #include "../../globals_declarations.h"
 #include "../../collisions/collisions.h"
@@ -14,7 +15,6 @@
 #define SPIKE_SHOES_POS_INC_DELTA 15
 
 void SpikeShoes::draw() {
-
 
     if (ready_to_dispose) {
         mainSpriteInfo->entry->isHidden = true;
@@ -45,6 +45,8 @@ void SpikeShoes::draw() {
             equip();
         }
     }
+
+
 }
 
 
@@ -118,6 +120,7 @@ void SpikeShoes::set_position() {
         mainSpriteInfo->entry->isHidden = false;
 
     } else {
+
         int main_x, main_y, sub_x, sub_y;
         get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
 
@@ -128,6 +131,7 @@ void SpikeShoes::set_position() {
         subSpriteInfo->entry->y = sub_y;
     }
 
+
     mainSpriteInfo->entry->vFlip = false;
     mainSpriteInfo->entry->hFlip = false;
 
@@ -135,6 +139,7 @@ void SpikeShoes::set_position() {
     subSpriteInfo->entry->hFlip = false;
 
     update_anim_icon(x, y, physical_width);
+
 
 }
 

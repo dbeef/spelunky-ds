@@ -14,6 +14,8 @@ class RopeElement : public MovingObject {
 
 public:
 
+    void introduce_yourself() override { printf("ROPE_ELEMENT\n"); };
+
     RopeElement();
 
     void updateOther() override {};

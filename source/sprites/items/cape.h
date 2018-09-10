@@ -23,6 +23,8 @@ class Cape : public MovingObject , public ShoppingObject {
 
 public:
 
+    void introduce_yourself() override { printf("CAPE\n"); };
+
     Cape();
 
     void updateOther() override {};

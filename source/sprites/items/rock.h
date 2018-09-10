@@ -20,6 +20,8 @@ class Rock : public MovingObject {
 
 public:
 
+    void introduce_yourself() override { printf("ROCK\n"); };
+
     Rock();
     
     void updateOther() override {};
