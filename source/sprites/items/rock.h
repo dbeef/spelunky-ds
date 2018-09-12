@@ -10,8 +10,10 @@
 
 #define ROCK_PHYSICAL_HEIGHT 7
 #define ROCK_PHYSICAL_WIDTH 7
+
 #define ROCK_SPRITE_HEIGHT 8
 #define ROCK_SPRITE_WIDTH 8
+#define ROCK_SPRITE_SIZE ROCK_SPRITE_WIDTH * ROCK_SPRITE_HEIGHT
 
 #include <nds/arm9/sprite.h>
 #include "../moving_object.h"
@@ -50,6 +52,9 @@ public:
     SpriteInfo *subSpriteInfo {};
     u8 * frameGfx{};
 
+    void set_position();
+
+    void set_sprite_attributes();
 };
 
 

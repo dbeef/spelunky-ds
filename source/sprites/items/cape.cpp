@@ -8,34 +8,30 @@
 #include "../../globals_declarations.h"
 #include "../animations/got_collectible.h"
 #include "../../collisions/collisions.h"
+#include "../sprite_utils.h"
 
 #define CAPE_ANIM_FRAME_DELTA 60
 #define CAPE_POS_INC_DELTA 15
 
 void Cape::draw() {
 
-
     if (global::main_dude->carrying_jetpack && collected) {
         global::main_dude->carrying_cape = false;
+        sprite_utils::set_visibility(false, mainSpriteInfo, subSpriteInfo);
         ready_to_dispose = true;
     }
 
-    if (ready_to_dispose) {
-        mainSpriteInfo->entry->isHidden = true;
-        subSpriteInfo->entry->isHidden = true;
-        return;
-    } else{
-        mainSpriteInfo->entry->isHidden = false;
-        subSpriteInfo->entry->isHidden = false;
-    }
+    if (ready_to_dispose) return;
 
-    set_position();
+    sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);
+    sprite_utils::set_horizontal_flip(false, mainSpriteInfo, subSpriteInfo);
+    update_anim_icon(x, y, physical_width);
+    sprite_utils::set_visibility(true, mainSpriteInfo, subSpriteInfo);
 
-    if (bought && !collected && check_if_can_be_equipped()) {
+    if (bought && !collected && check_if_can_be_equipped())
         equip();
-    } else if (!bought && !hold_by_main_dude) {
+    else if (!bought && !hold_by_main_dude)
         check_if_can_be_pickuped();
-    }
 
     if (hold_by_main_dude) {
         set_pickuped_position(4, -4);
@@ -45,52 +41,35 @@ void Cape::draw() {
         }
     }
 
+    set_position();
 
     if (collected) {
 
-        anim_frame_timer += *global::timer;
-
+        //match sprite rendering priority and x/y offset to the main dude's sprite state
         if (global::main_dude->climbing || global::main_dude->exiting_level) {
             set_pickuped_position_not_checking(0, 4);
-            mainSpriteInfo->entry->priority = OBJPRIORITY_0;
-            subSpriteInfo->entry->priority = OBJPRIORITY_0;
+            sprite_utils::set_priority(OBJPRIORITY_0, mainSpriteInfo, subSpriteInfo);
         } else if (global::input_handler->down_key_held || global::main_dude->dead || global::main_dude->stunned) {
             set_pickuped_position_not_checking(0, 4);
-            mainSpriteInfo->entry->priority = OBJPRIORITY_1;
-            subSpriteInfo->entry->priority = OBJPRIORITY_1;
+            sprite_utils::set_priority(OBJPRIORITY_1, mainSpriteInfo, subSpriteInfo);
         } else {
-            mainSpriteInfo->entry->priority = OBJPRIORITY_1;
-            subSpriteInfo->entry->priority = OBJPRIORITY_1;
+            sprite_utils::set_priority(OBJPRIORITY_1, mainSpriteInfo, subSpriteInfo);
             set_pickuped_position_not_checking(-3, -1);
         }
+
+        anim_frame_timer += *global::timer;
 
         if (anim_frame_timer > CAPE_ANIM_FRAME_DELTA) {
 
             if (global::main_dude->xSpeed != 0 || global::main_dude->ySpeed != 0)
                 anim_frame++;
+
             anim_frame_timer = 0;
-
-            set_frame_gfx();
-
-            subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
-            mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
-
+            match_animation();
         }
 
-
-        if (global::main_dude->sprite_state == SpriteState::W_LEFT) {
-            mainSpriteInfo->entry->hFlip = false;
-            subSpriteInfo->entry->hFlip = false;
-        } else if (global::main_dude->sprite_state == SpriteState::W_RIGHT) {
-            mainSpriteInfo->entry->hFlip = true;
-            subSpriteInfo->entry->hFlip = true;
-        }
-
-        mainSpriteInfo->entry->isHidden = false;
-        subSpriteInfo->entry->isHidden = false;
-        mainSpriteInfo->entry->vFlip = false;
-        subSpriteInfo->entry->vFlip = false;
-
+        sprite_utils::set_horizontal_flip(global::main_dude->sprite_state == SpriteState::W_RIGHT,
+                                          mainSpriteInfo, subSpriteInfo);
 
         if (global::main_dude->bottomCollision)
             global::main_dude->using_cape = false;
@@ -103,7 +82,7 @@ void Cape::draw() {
 void Cape::init() {
     initSprite();
     init_anim_icon();
-
+    update_anim_icon(x, y, physical_width);
 }
 
 void Cape::updateSpeed() {
@@ -125,62 +104,46 @@ void Cape::updateSpeed() {
 
 void Cape::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
 
-    if (collected)
-        return;
+    if (collected) return;
 
-    MapTile *tiles[9];
-    Collisions::getNeighboringTiles(global::level_generator->map_tiles, x_current_pos_in_tiles,
-                                    y_current_pos_in_tiles,
-                                    tiles);
+    MapTile *t[9];
+    Collisions::getNeighboringTiles(global::level_generator->map_tiles,
+                                    x_current_pos_in_tiles, y_current_pos_in_tiles, t);
 
-    upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, physical_width, true, BOUNCING_FACTOR_Y);
-    bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, physical_width, physical_height, true,
-                                                       BOUNCING_FACTOR_Y);
-    leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true,
-                                                   BOUNCING_FACTOR_X);
-    rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true,
-                                                     BOUNCING_FACTOR_X);
+    upperCollision = Collisions::checkUpperCollision(t, &x, &y, &ySpeed, physical_width, true, 0.35);
+    bottomCollision = Collisions::checkBottomCollision(t, &x, &y, &ySpeed, physical_width, physical_height, true, 0.35);
+    leftCollision = Collisions::checkLeftCollision(t, &x, &y, &xSpeed, physical_width, physical_height, true, 0.15);
+    rightCollision = Collisions::checkRightCollision(t, &x, &y, &xSpeed, physical_width, physical_height, true, 0.15);
 }
 
 void Cape::initSprite() {
 
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_goldbarsPal, gfx_goldbarsPalLen,
-                                                        nullptr, sprite_width * sprite_height, sprite_width,
+                                                        nullptr, CAPE_SPRITE_SIZE, sprite_width,
                                                         spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_goldbarsPal, gfx_goldbarsPalLen,
-                                                          nullptr, sprite_width * sprite_height, sprite_width,
+                                                          nullptr, CAPE_SPRITE_SIZE, sprite_width,
                                                           spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
+    set_position();
+    match_animation();
+    sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);
 
-    set_frame_gfx();
-
-    subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
-    mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
-
+    if (collected)
+        sprite_utils::set_horizontal_flip(global::main_dude->sprite_state == SpriteState::W_RIGHT,
+                                          mainSpriteInfo, subSpriteInfo);
+    else
+        sprite_utils::set_horizontal_flip(false, mainSpriteInfo, subSpriteInfo);
 }
 
 void Cape::set_position() {
     int main_x, main_y, sub_x, sub_y;
     get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
-
-    mainSpriteInfo->entry->x = main_x;
-    mainSpriteInfo->entry->y = main_y;
-
-    subSpriteInfo->entry->x = sub_x;
-    subSpriteInfo->entry->y = sub_y;
-
-    mainSpriteInfo->entry->vFlip = false;
-    mainSpriteInfo->entry->hFlip = false;
-
-    subSpriteInfo->entry->vFlip = false;
-    subSpriteInfo->entry->hFlip = false;
-
-    update_anim_icon(x, y, physical_width);
-
-
+    sprite_utils::set_entry_xy(mainSpriteInfo, main_x, main_y);
+    sprite_utils::set_entry_xy(subSpriteInfo, sub_x, sub_y);
 }
 
 Cape::Cape() {
-    cost = 13000;
+    cost = 13 * 1000;
     name = "CAPE";
     physical_height = CAPE_PHYSICAL_HEIGHT;
     physical_width = CAPE_PHYSICAL_WIDTH;
@@ -189,58 +152,49 @@ Cape::Cape() {
     spritesheet_type = SpritesheetType::MONIEZ_GOLDBARS;
 }
 
-void Cape::set_frame_gfx() {
-
+void Cape::match_animation() {
 
     if (!collected) {
-        frameGfx = (u8 *) gfx_goldbarsTiles + (sprite_width * sprite_height * (2) / 2);
-
-    }
-    else if (global::main_dude->climbing) {
+        frameGfx = sprite_utils::get_frame((u8 *) gfx_goldbarsTiles, CAPE_SPRITE_SIZE, 2);
+    } else if (global::main_dude->climbing) {
         //climbing
-        frameGfx = (u8 *) gfx_goldbarsTiles + (sprite_width * sprite_height * (3) / 2);
-
-    } else if (global::input_handler->down_key_held || global::main_dude->dead || global::main_dude->stunned) {
+        frameGfx = sprite_utils::get_frame((u8 *) gfx_goldbarsTiles, CAPE_SPRITE_SIZE, 3);
+    } else if (global::input_handler->down_key_held || global::main_dude->dead || global::main_dude->stunned ||
+               (!global::main_dude->using_cape && !global::main_dude->stunned &&
+                (global::main_dude->xSpeed != 0 || global::main_dude->ySpeed != 0))) {
 
         if (anim_frame >= 5)
             anim_frame = 0;
 
-        frameGfx = (u8 *) gfx_goldbarsTiles + (sprite_width * sprite_height * (5 + anim_frame) / 2);
-    } else if (!global::main_dude->using_cape && !global::main_dude->stunned &&
-               (global::main_dude->xSpeed != 0 || global::main_dude->ySpeed != 0)) {
-
-        //falling, using cape
-        if (anim_frame >= 5)
-            anim_frame = 0;
-        frameGfx = (u8 *) gfx_goldbarsTiles + (sprite_width * sprite_height * (5 + anim_frame) / 2);
+        frameGfx = sprite_utils::get_frame((u8 *) gfx_goldbarsTiles, CAPE_SPRITE_SIZE, 5 + anim_frame);
 
     } else if (global::main_dude->xSpeed == 0 && global::main_dude->ySpeed == 0) {
         //staying still
-        frameGfx = (u8 *) gfx_goldbarsTiles + (sprite_width * sprite_height * (4) / 2);
+        frameGfx = sprite_utils::get_frame((u8 *) gfx_goldbarsTiles, CAPE_SPRITE_SIZE, 4);
     } else {
 
         //falling
         if (anim_frame >= 2)
             anim_frame = 0;
 
-        frameGfx = (u8 *) gfx_goldbarsTiles + (sprite_width * sprite_height * (10 + anim_frame) / 2);
-
+        frameGfx = sprite_utils::get_frame((u8 *) gfx_goldbarsTiles, CAPE_SPRITE_SIZE, 10 + anim_frame);
     }
+
+    sprite_utils::update_frame(frameGfx, CAPE_SPRITE_SIZE, mainSpriteInfo, subSpriteInfo);
 
 }
 
 void Cape::equip() {
 
-    GotCollectible *g = new GotCollectible();
+    auto g = new GotCollectible();
     g->x = x - 12;
     g->y = y - 20;
     g->collectible_type = 0;
     g->init();
-    global::sprites.push_back(g);
+    global::sprites_to_add.push_back(g);
 
-    if (global::main_dude->carrying_jetpack) {
+    if (global::main_dude->carrying_jetpack)
         global::main_dude->carrying_jetpack = false;
-    }
 
     if (!global::main_dude->carrying_cape) {
         global::main_dude->carrying_cape = true;
@@ -249,6 +203,8 @@ void Cape::equip() {
     } else {
         //we've collected an item that is already in inventory, dispose
         ready_to_dispose = true;
+        sprite_utils::set_visibility(false, mainSpriteInfo, subSpriteInfo);
     }
+
 }
 

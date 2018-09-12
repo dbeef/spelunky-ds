@@ -11,8 +11,10 @@
 
 #define BOMB_PHYSICAL_HEIGHT 8
 #define BOMB_PHYSICAL_WIDTH 8
+
 #define BOMB_SPRITE_HEIGHT 64
 #define BOMB_SPRITE_WIDTH 64
+#define BOMB_SPRITE_SIZE BOMB_SPRITE_WIDTH * BOMB_SPRITE_HEIGHT
 
 #define MAX_X_SPEED_BOMB 4
 #define MAX_Y_SPEED_BOMB 4
@@ -59,13 +61,17 @@ public:
     bool armed{};
 
     int armedTimer{};
-    int explosionTimer{};
+    double explosionTimer{};
 
     int explosionFrame{};
 
     void disarm();
 
     void arm();
+
+    void explode();
+
+    void set_position();
 };
 
 

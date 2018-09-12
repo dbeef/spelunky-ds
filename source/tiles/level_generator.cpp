@@ -160,24 +160,24 @@ void LevelGenerator::newLayout(int seed) {
                         ex = true;
                     }
                 } else if (a == 2) {
-//                    if (layout_room_types[a - 1][b] != room_type::R_CLOSED) {
-//                        if (global::game_state->robbed_killed_shopkeeper)
-//                            layout_room_types[a][b] = room_type::R_SHOP_LEFT_MUGSHOT;
-//                        else
-//                            layout_room_types[a][b] = room_type::R_SHOP_LEFT;
-//                        ex = true;
-//                    }
+                    if (layout_room_types[a - 1][b] != room_type::R_CLOSED) {
+                        if (global::game_state->robbed_killed_shopkeeper)
+                            layout_room_types[a][b] = room_type::R_SHOP_LEFT_MUGSHOT;
+                        else
+                            layout_room_types[a][b] = room_type::R_SHOP_LEFT;
+                        ex = true;
+                    }
                 } else if (a == 1) {
-//                    if (layout_room_types[a - 1][b] != room_type::R_CLOSED &&
-//                        layout_room_types[a + 1][b] != room_type::R_CLOSED) {
-//
-//                        if (rand() % 2 == 0)
-//                            layout_room_types[a][b] = room_type::R_SHOP_LEFT;
-//                        else
-//                            layout_room_types[a][b] = room_type::R_SHOP_RIGHT;
-//
-//                        ex = true;
-//                    }
+                    if (layout_room_types[a - 1][b] != room_type::R_CLOSED &&
+                        layout_room_types[a + 1][b] != room_type::R_CLOSED) {
+
+                        if (rand() % 2 == 0)
+                            layout_room_types[a][b] = room_type::R_SHOP_LEFT;
+                        else
+                            layout_room_types[a][b] = room_type::R_SHOP_RIGHT;
+
+                        ex = true;
+                    }
                 }
 
                 if (ex)

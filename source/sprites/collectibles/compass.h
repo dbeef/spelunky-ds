@@ -12,8 +12,10 @@
 
 #define COMPASS_PHYSICAL_HEIGHT 12
 #define COMPASS_PHYSICAL_WIDTH 12
+
 #define COMPASS_SPRITE_HEIGHT 16
 #define COMPASS_SPRITE_WIDTH 16
+#define COMPASS_SPRITE_SIZE COMPASS_SPRITE_WIDTH * COMPASS_SPRITE_HEIGHT
 
 #define MAX_X_SPEED_COMPASS 4
 #define MAX_Y_SPEED_COMPASS 4
@@ -56,16 +58,6 @@ public:
     u8 *frameGfx{};
 
     void set_position();
-
-    void apply_down_arrow();
-
-    void apply_left_arrow();
-
-    void apply_right_arrow();
-
-    void apply_down_right_arrow();
-
-    void apply_down_left_arrow();
 
     void draw_arrow_to_exit();
 

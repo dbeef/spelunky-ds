@@ -92,5 +92,6 @@ void ShoppingIcon::match_animation() {
 
 void ShoppingIcon::set_ready_to_dispose() {
     ready_to_dispose = true;
-    sprite_utils::set_visibility(false, mainSpriteInfo, subSpriteInfo);
+    if (mainSpriteInfo != nullptr && subSpriteInfo != nullptr)
+        sprite_utils::set_visibility(false, mainSpriteInfo, subSpriteInfo);
 }

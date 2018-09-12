@@ -13,8 +13,10 @@
 
 #define GLOVE_PHYSICAL_HEIGHT 15
 #define GLOVE_PHYSICAL_WIDTH 16
+
 #define GLOVE_SPRITE_HEIGHT 16
 #define GLOVE_SPRITE_WIDTH 16
+#define GLOVE_SPRITE_SIZE GLOVE_SPRITE_WIDTH * GLOVE_SPRITE_HEIGHT
 
 #define MAX_X_SPEED_GLOVE 4
 #define MAX_Y_SPEED_GLOVE 4
@@ -59,6 +61,8 @@ public:
     void set_position();
 
     void equip();
+
+    void match_animation();
 };
 
 

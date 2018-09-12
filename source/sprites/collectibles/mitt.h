@@ -13,8 +13,10 @@
 
 #define MITT_PHYSICAL_HEIGHT 14
 #define MITT_PHYSICAL_WIDTH 14
+
 #define MITT_SPRITE_HEIGHT 16
 #define MITT_SPRITE_WIDTH 16
+#define MITT_SPRITE_SIZE MITT_SPRITE_WIDTH * MITT_SPRITE_HEIGHT
 
 #define MAX_X_SPEED_MITT 4
 #define MAX_Y_SPEED_MITT 4
@@ -59,6 +61,8 @@ public:
     void set_position();
 
     void equip();
+
+    void match_animation();
 };
 
 

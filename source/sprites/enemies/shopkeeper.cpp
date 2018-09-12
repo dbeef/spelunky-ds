@@ -557,10 +557,10 @@ void Shopkeeper::de_shopify_all_items() {
 void Shopkeeper::spawn_shotgun() {
     shotgun = new Shotgun();
     shotgun->hold_by_main_dude = false;
-    shotgun->init();
     shotgun->bought = true;
+    shotgun->init();
     shotgun->cooldown = 250;
-    global::sprites.push_back(shotgun);
+    global::sprites_to_add.push_back(shotgun);
     holding_shotgun = true;
 
 }

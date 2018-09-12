@@ -310,8 +310,8 @@ void Skeleton::spawn_remnants() {
     s->ySpeed = -1.8f;
     s->init();
 
-    global::sprites.push_back(b_1);
-    global::sprites.push_back(b_2);
-    global::sprites.push_back(s);
+    global::sprites_to_add.push_back(b_1);
+    global::sprites_to_add.push_back(b_2);
+    global::sprites_to_add.push_back(s);
 
 }

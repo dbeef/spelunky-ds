@@ -77,21 +77,22 @@ void gameloop::scroll() {
         }
 
 
-        if (size)
-            global::sprites_to_add.clear();
-
-
         for (int a = 0; a < global::sprites.size(); a++) {
 
 //            if (size)
 //                (*global::sprites.at(a)).introduce_yourself();
 
+            //TODO Add checking if ready to dispose here, and remove checking in MovingObject subclasses
             if (global::sprites.at(
                     a) /*&& !global::sprites.at(a)->ready_to_dispose *//*&& !global::sprites.at(a)->killed*/) {
                 (*global::sprites.at(a)).update();
                 (*global::sprites.at(a)).draw();
             }
+
         }
+
+        if (size)
+            global::sprites_to_add.clear();
 
         global::game_state->handle_transition_screen_smooch();
 

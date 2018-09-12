@@ -14,9 +14,10 @@
 
 #define ROPE_PHYSICAL_HEIGHT 8
 #define ROPE_PHYSICAL_WIDTH 8
+
 #define ROPE_SPRITE_HEIGHT 8
 #define ROPE_SPRITE_WIDTH 8
-
+#define ROPE_SPRITE_SIZE ROPE_SPRITE_WIDTH * ROPE_SPRITE_HEIGHT
 
 class Rope : public MovingObject {
 
@@ -49,10 +50,10 @@ public:
 
     double pos_inc_timer{};
 
-    SpriteInfo *mainSpriteInfo {};
-    SpriteInfo *subSpriteInfo {};
+    SpriteInfo *mainSpriteInfo{};
+    SpriteInfo *subSpriteInfo{};
 
-    u8 * frameGfx{};
+    u8 *frameGfx{};
 
     bool instant_rope{}; //todo, for main menu rope
     bool extended_rope{};
@@ -64,12 +65,15 @@ public:
     std::vector<RopeElement *> ropeChain{};
 
     void throwingFinished();
+
     void notThrown();
 
 
     bool isThereChainForThisTile(int rope_y_tiles);
 
     void add_rope_if_needed();
+
+    void set_position();
 };
 
 

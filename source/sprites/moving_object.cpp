@@ -26,7 +26,7 @@ void MovingObject::spawn_blood() {
             blood->xSpeed = (0.8 + ((float) (rand() % 20) / 10)) / a;
 
         blood->ySpeed = (-1.5 - (((float) (rand() % 20) / 5))) / a;
-        global::sprites.push_back(blood);
+        global::sprites_to_add.push_back(blood);
     }
 }
 
@@ -142,6 +142,24 @@ void MovingObject::set_pickuped_position(int pickup_offset_x, int pickup_offset_
             x = global::main_dude->x - pickup_offset_x;
         } else
             x = global::main_dude->x + pickup_offset_x;
+
+
+        sprite_state = global::main_dude->sprite_state;
+    }
+
+}
+
+//this should be applied, when item is being carried by main dude
+void MovingObject::set_pickuped_position(int pickup_offset_x_left, int pickup_offset_x_right, int pickup_offset_y) {
+
+    if (hold_by_main_dude) {
+
+        y = global::main_dude->y + pickup_offset_y;
+
+        if (global::main_dude->sprite_state == SpriteState::W_LEFT) {
+            x = global::main_dude->x - pickup_offset_x_left;
+        } else
+            x = global::main_dude->x + pickup_offset_x_right;
 
 
         sprite_state = global::main_dude->sprite_state;

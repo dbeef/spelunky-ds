@@ -4,37 +4,30 @@
 
 
 #include "../spritesheet_type.hpp"
-#include "pistol.h"
 #include "spring_shoes.h"
 #include "../../globals_declarations.h"
 #include "../../collisions/collisions.h"
 #include "../../../build/gfx_saleable.h"
 #include "mitt.h"
 #include "../animations/got_collectible.h"
+#include "../sprite_utils.h"
 
 #define MITT_POS_INC_DELTA 15
 
 void Mitt::draw() {
 
-    if (ready_to_dispose) {
-        mainSpriteInfo->entry->isHidden = true;
-        subSpriteInfo->entry->isHidden = true;
-        return;
-    } else {
-        mainSpriteInfo->entry->isHidden = false;
-        subSpriteInfo->entry->isHidden = false;
-    }
+    if (ready_to_dispose) return;
 
-    set_position();
+    sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);
+    sprite_utils::set_horizontal_flip(false, mainSpriteInfo, subSpriteInfo);
+    update_anim_icon(x, y, physical_width);
 
-    if (collected)
-        return;
+    if (collected) return;
 
-    if (bought && check_if_can_be_equipped()) {
+    if (bought && check_if_can_be_equipped())
         equip();
-    } else if (!bought && !hold_by_main_dude) {
+    else if (!bought && !hold_by_main_dude)
         check_if_can_be_pickuped();
-    }
 
     if (hold_by_main_dude) {
         set_pickuped_position(4, -4);
@@ -44,20 +37,19 @@ void Mitt::draw() {
         }
     }
 
-
+    set_position();
 }
 
 
 void Mitt::init() {
     initSprite();
     init_anim_icon();
-
+    update_anim_icon(x, y, physical_width);
 }
 
 void Mitt::updateSpeed() {
 
-    if (collected)
-        return;
+    if (collected) return;
 
     limit_speed(MAX_X_SPEED_MITT, MAX_Y_SPEED_MITT);
 
@@ -76,76 +68,47 @@ void Mitt::updateSpeed() {
 
 void Mitt::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
 
-    if (collected)
-        return;
+    if (collected) return;
 
-    MapTile *tiles[9];
-    Collisions::getNeighboringTiles(global::level_generator->map_tiles, x_current_pos_in_tiles,
-                                    y_current_pos_in_tiles,
-                                    tiles);
+    MapTile *t[9];
+    Collisions::getNeighboringTiles(global::level_generator->map_tiles,
+                                    x_current_pos_in_tiles, y_current_pos_in_tiles, t);
 
-    upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, physical_width, true, BOUNCING_FACTOR_Y);
-    bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, physical_width, physical_height, true,
-                                                       BOUNCING_FACTOR_Y);
-    leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true,
-                                                   BOUNCING_FACTOR_X);
-    rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true,
-                                                     BOUNCING_FACTOR_X);
+    upperCollision = Collisions::checkUpperCollision(t, &x, &y, &ySpeed, physical_width, true, 0.35);
+    bottomCollision = Collisions::checkBottomCollision(t, &x, &y, &ySpeed, physical_width, physical_height, true, 0.35);
+    leftCollision = Collisions::checkLeftCollision(t, &x, &y, &xSpeed, physical_width, physical_height, true, 0.15);
+    rightCollision = Collisions::checkRightCollision(t, &x, &y, &xSpeed, physical_width, physical_height, true, 0.15);
 
 }
 
 void Mitt::initSprite() {
-
-
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_saleablePal, gfx_saleablePalLen,
-                                                        nullptr, sprite_width * sprite_height, sprite_width,
+                                                        nullptr, MITT_SPRITE_SIZE, sprite_width,
                                                         spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_saleablePal, gfx_saleablePalLen,
-                                                          nullptr, sprite_width * sprite_height, sprite_width,
+                                                          nullptr, MITT_SPRITE_SIZE, sprite_width,
                                                           spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
 
-    frameGfx = (u8 *) gfx_saleableTiles + (sprite_width * sprite_height * (0) / 2);
-
-    mainSpriteInfo->entry->x = x;
-    subSpriteInfo->entry->y = y;
-
-    subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
-    mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
-
-
+    sprite_utils::set_visibility(true, mainSpriteInfo, subSpriteInfo);
+    sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);
+    sprite_utils::set_horizontal_flip(false, mainSpriteInfo, subSpriteInfo);
+    set_position();
+    match_animation();
 }
 
 void Mitt::set_position() {
 
     if (collected) {
-
         mainSpriteInfo->entry->priority = OBJPRIORITY_0;
-
-        mainSpriteInfo->entry->x = x;
-        mainSpriteInfo->entry->y = y;
-
+        sprite_utils::set_entry_xy(mainSpriteInfo, x, y);
         subSpriteInfo->entry->isHidden = true;
         mainSpriteInfo->entry->isHidden = false;
-
     } else {
         int main_x, main_y, sub_x, sub_y;
         get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
-
-        mainSpriteInfo->entry->x = main_x;
-        mainSpriteInfo->entry->y = main_y;
-
-        subSpriteInfo->entry->x = sub_x;
-        subSpriteInfo->entry->y = sub_y;
+        sprite_utils::set_entry_xy(mainSpriteInfo, main_x, main_y);
+        sprite_utils::set_entry_xy(subSpriteInfo, sub_x, sub_y);
     }
-
-    mainSpriteInfo->entry->vFlip = false;
-    mainSpriteInfo->entry->hFlip = false;
-
-    subSpriteInfo->entry->vFlip = false;
-    subSpriteInfo->entry->hFlip = false;
-
-    update_anim_icon(x, y, physical_width);
-
 
 }
 
@@ -162,7 +125,7 @@ Mitt::Mitt() {
 void Mitt::equip() {
     collected = true;
 
-    GotCollectible *g = new GotCollectible();
+    auto *g = new GotCollectible();
     g->x = x - 12;
     g->y = y - 20;
     g->collectible_type = 0;
@@ -176,10 +139,14 @@ void Mitt::equip() {
         y = global::hud->items_offset_y;
         global::hud->increment_offset_on_grabbed_item();
     } else {
-        mainSpriteInfo->entry->isHidden = true;
-        subSpriteInfo->entry->isHidden = true;
+        sprite_utils::set_visibility(false, mainSpriteInfo, subSpriteInfo);
         ready_to_dispose = true;
     }
 
+}
+
+void Mitt::match_animation() {
+    frameGfx = sprite_utils::get_frame((u8 *) gfx_saleableTiles, MITT_SPRITE_SIZE, 0);
+    sprite_utils::update_frame(frameGfx, MITT_SPRITE_SIZE, mainSpriteInfo, subSpriteInfo);
 }
 

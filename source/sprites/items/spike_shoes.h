@@ -12,13 +12,15 @@
 
 #define SPIKE_SHOES_PHYSICAL_HEIGHT 11
 #define SPIKE_SHOES_PHYSICAL_WIDTH 14
+
 #define SPIKE_SHOES_SPRITE_HEIGHT 16
 #define SPIKE_SHOES_SPRITE_WIDTH 16
+#define SPIKE_SHOES_SPRITE_SIZE SPIKE_SHOES_SPRITE_WIDTH * SPIKE_SHOES_SPRITE_HEIGHT
 
 #define MAX_X_SPEED_SPIKE_SHOES 4
 #define MAX_Y_SPEED_SPIKE_SHOES 4
 
-class SpikeShoes : public MovingObject, public ShoppingObject  {
+class SpikeShoes : public MovingObject, public ShoppingObject {
 
 public:
 
@@ -58,6 +60,8 @@ public:
     void set_position();
 
     void equip();
+
+    void set_sprite_attributes();
 };
 
 

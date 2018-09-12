@@ -8,6 +8,7 @@
 #include "../moving_object.h"
 #include "../sprite_state.hpp"
 #include "../shopping_object.h"
+#include "../animations/blast.h"
 
 #define PISTOL_PHYSICAL_HEIGHT 6
 #define PISTOL_PHYSICAL_WIDTH 9
@@ -53,10 +54,9 @@ public:
     SpriteInfo *mainSpriteInfo{};
     SpriteInfo *subSpriteInfo{};
 
-    SpriteInfo *blast_mainSpriteInfo{};
-    SpriteInfo *blast_subSpriteInfo{};
+    Blast *blast{};
 
-    int cooldown{};
+    double cooldown{};
     bool firing{};
     int animFrame{};
     int animFrameTimer{};
@@ -66,6 +66,12 @@ public:
     void set_position();
 
     void equip();
+
+    void spawn_bullet();
+
+    void handle_shooting();
+
+    void match_animation();
 };
 
 

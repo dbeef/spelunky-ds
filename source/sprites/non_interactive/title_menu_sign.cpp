@@ -23,6 +23,7 @@ void TitleMenuSign::draw() {
     sprite_utils::set_entry_xy(mainSpriteInfo_1, main_x, main_y);
     sprite_utils::set_entry_xy(mainSpriteInfo_2, main_x + offset, main_y);
 
+    //FIXME Why subspriteinfo anyway? It's only on the uppper screen
     sprite_utils::set_entry_xy(subSpriteInfo_1, sub_x, sub_y);
     sprite_utils::set_entry_xy(subSpriteInfo_2, sub_x + offset, sub_y);
 
@@ -33,6 +34,7 @@ void TitleMenuSign::init() {
     initSprite();
     sprite_utils::set_vertical_flip(false, mainSpriteInfo_1, mainSpriteInfo_2);
     sprite_utils::set_horizontal_flip(false, mainSpriteInfo_1, mainSpriteInfo_2);
+    sprite_utils::set_visibility(true, mainSpriteInfo_1, mainSpriteInfo_2);
 }
 
 

@@ -9,6 +9,7 @@
 #include "../../../build/soundbank.h"
 #include "../../collisions/collisions.h"
 #include "../../tiles/map_utils.h"
+#include "../sprite_utils.h"
 
 #define ROPE_POS_INC_DELTA 15
 #define MAX_ROPE_CHAIN_SIZE 8
@@ -16,15 +17,7 @@
 
 void Rope::draw() {
 
-
-    if (ready_to_dispose) {
-        mainSpriteInfo->entry->isHidden = true;
-        subSpriteInfo->entry->isHidden = true;
-        return;
-    } else {
-        mainSpriteInfo->entry->isHidden = false;
-        subSpriteInfo->entry->isHidden = false;
-    }
+    if (ready_to_dispose) return;
 
     expand_timer += *global::timer;
 
@@ -86,15 +79,7 @@ void Rope::draw() {
         kill_mobs_if_thrown(1);
     }
 
-    int main_x, main_y, sub_x, sub_y;
-    get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
-
-    mainSpriteInfo->entry->x = main_x;
-    mainSpriteInfo->entry->y = main_y;
-
-    subSpriteInfo->entry->x = sub_x;
-    subSpriteInfo->entry->y = sub_y;
-
+    set_position();
 }
 
 
@@ -104,15 +89,13 @@ void Rope::init() {
 }
 
 void Rope::notThrown() {
-    frameGfx = (u8 *) gfx_blood_rock_rope_poofTiles + 9 * sprite_width * sprite_height / 2;
-    subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
-    mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
+    frameGfx = sprite_utils::get_frame((u8 *) gfx_blood_rock_rope_poofTiles, ROPE_SPRITE_SIZE, 9);
+    sprite_utils::update_frame(frameGfx, ROPE_SPRITE_SIZE, mainSpriteInfo, subSpriteInfo);
 }
 
 void Rope::throwingFinished() {
-    frameGfx = (u8 *) gfx_blood_rock_rope_poofTiles + (10 * sprite_width * sprite_height / 2);
-    subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
-    mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
+    frameGfx = sprite_utils::get_frame((u8 *) gfx_blood_rock_rope_poofTiles, ROPE_SPRITE_SIZE, 10);
+    sprite_utils::update_frame(frameGfx, ROPE_SPRITE_SIZE, mainSpriteInfo, subSpriteInfo);
 }
 
 void Rope::updateSpeed() {
@@ -133,17 +116,14 @@ void Rope::updateSpeed() {
 
 void Rope::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
 
-    MapTile *tiles[9];
-    Collisions::getNeighboringTiles(global::level_generator->map_tiles, x_current_pos_in_tiles, y_current_pos_in_tiles,
-                                    tiles);
+    MapTile *t[9];
+    Collisions::getNeighboringTiles(global::level_generator->map_tiles,
+                                    x_current_pos_in_tiles, y_current_pos_in_tiles, t);
 
-    bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, physical_width, physical_height, true,
-                                                       BOUNCING_FACTOR_Y);
-    leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true,
-                                                   BOUNCING_FACTOR_X);
-    rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true,
-                                                     BOUNCING_FACTOR_X);
-    upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, physical_width, false, 0);
+    bottomCollision = Collisions::checkBottomCollision(t, &x, &y, &ySpeed, physical_width, physical_height, true, 0.35);
+    leftCollision = Collisions::checkLeftCollision(t, &x, &y, &xSpeed, physical_width, physical_height, true, 0.15);
+    rightCollision = Collisions::checkRightCollision(t, &x, &y, &xSpeed, physical_width, physical_height, true, 0.15);
+    upperCollision = Collisions::checkUpperCollision(t, &x, &y, &ySpeed, physical_width, false, 0);
 
     if (upperCollision) {
         if (!finished) {
@@ -152,24 +132,21 @@ void Rope::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_
 
             int temp_y = floor_div(this->y + (0.5 * physical_height), TILE_H);
 
-            RopeElement *element = new RopeElement();
+            auto element = new RopeElement();
             element->init();
-
             element->x = x;
             element->y = temp_y * TILE_H;
-
             element->draw();
 
             ropeChain.push_back(element);
-
         }
     }
 
 }
 
 bool Rope::isThereChainForThisTile(int rope_y) {
-    for (int a = 0; a < ropeChain.size(); a++) {
-        if (ropeChain.at(a)->y == rope_y)
+    for (auto &a : ropeChain) {
+        if (a->y == rope_y)
             return true;
     }
     return false;
@@ -177,26 +154,19 @@ bool Rope::isThereChainForThisTile(int rope_y) {
 
 void Rope::initSprite() {
 
-
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_blood_rock_rope_poofPal, gfx_blood_rock_rope_poofPalLen,
-                                                        nullptr, sprite_width * sprite_height, 8, BLOOD_ROCK_ROPE_POOF,
-                                                        true,
-                                                        false,
-                                                        LAYER_LEVEL::MIDDLE_TOP);
+                                                        nullptr, ROPE_SPRITE_SIZE, 8, BLOOD_ROCK_ROPE_POOF, true,
+                                                        false, LAYER_LEVEL::MIDDLE_TOP);
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_blood_rock_rope_poofPal, gfx_blood_rock_rope_poofPalLen,
-                                                          nullptr, sprite_width * sprite_height, 8,
-                                                          BLOOD_ROCK_ROPE_POOF,
-                                                          true, false,
-                                                          LAYER_LEVEL::MIDDLE_TOP);
+                                                          nullptr, ROPE_SPRITE_SIZE, 8, BLOOD_ROCK_ROPE_POOF, true,
+                                                          false, LAYER_LEVEL::MIDDLE_TOP);
 
-    mainSpriteInfo->entry->isHidden = false;
-    subSpriteInfo->entry->isHidden = false;
+    sprite_utils::set_visibility(true, mainSpriteInfo, subSpriteInfo);
 
     notThrown();
 
-    for (int a = 0; a < ropeChain.size(); a++) {
-        ropeChain.at(a)->initSprite();
-    }
+    for (auto &a : ropeChain)
+        a->initSprite();
 }
 
 Rope::Rope() {
@@ -214,7 +184,7 @@ void Rope::add_rope_if_needed() {
 
         if (temp_y * TILE_H > y) {
 
-            RopeElement *element = new RopeElement();
+            auto *element = new RopeElement();
             element->init();
 
             element->x = x;
@@ -232,5 +202,12 @@ void Rope::add_rope_if_needed() {
 
         }
     }
+}
+
+void Rope::set_position() {
+    int main_x, main_y, sub_x, sub_y;
+    get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
+    sprite_utils::set_entry_xy(mainSpriteInfo, main_x, main_y);
+    sprite_utils::set_entry_xy(subSpriteInfo, sub_x, sub_y);
 }
 

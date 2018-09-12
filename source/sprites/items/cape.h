@@ -13,8 +13,10 @@
 
 #define CAPE_PHYSICAL_HEIGHT 15
 #define CAPE_PHYSICAL_WIDTH 14
+
 #define CAPE_SPRITE_HEIGHT 16
 #define CAPE_SPRITE_WIDTH 16
+#define CAPE_SPRITE_SIZE CAPE_SPRITE_WIDTH * CAPE_SPRITE_HEIGHT
 
 #define MAX_X_SPEED_CAPE 4
 #define MAX_Y_SPEED_CAPE 4
@@ -61,7 +63,7 @@ public:
 
     void set_position();
 
-    void set_frame_gfx();
+    void match_animation();
 
     void equip();
 };

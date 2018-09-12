@@ -12,8 +12,10 @@
 
 #define SHOTGUN_PHYSICAL_HEIGHT 7
 #define SHOTGUN_PHYSICAL_WIDTH 13
+
 #define SHOTGUN_SPRITE_HEIGHT 16
 #define SHOTGUN_SPRITE_WIDTH 16
+#define SHOTGUN_SPRITE_SIZE SHOTGUN_SPRITE_WIDTH * SHOTGUN_SPRITE_HEIGHT
 
 #define MAX_X_SPEED_SHOTGUN 4
 #define MAX_Y_SPEED_SHOTGUN 4
@@ -56,7 +58,7 @@ public:
 
     Blast *blast{};
 
-    int cooldown{};
+    double cooldown{};
     bool firing{};
     u8 * frameGfx{};
 
@@ -65,6 +67,10 @@ public:
     void spawn_bullets();
 
     void equip();
+
+    void match_animation();
+
+    void handle_shooting();
 };
 
 

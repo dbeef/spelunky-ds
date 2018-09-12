@@ -26,7 +26,6 @@ void Chest::draw() {
     sprite_utils::set_visibility(true, mainSpriteInfo, subSpriteInfo);
     sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);
     sprite_utils::set_horizontal_flip(false, mainSpriteInfo, subSpriteInfo);
-    set_position();
 
     check_if_can_be_pickuped();
     set_pickuped_position(CHEST_PICKUP_OFFSET_X, CHECK_PICKUP_OFFSET_Y);
@@ -38,6 +37,7 @@ void Chest::draw() {
     }
 
     kill_mobs_if_thrown(1);
+    set_position();
 }
 
 
@@ -141,7 +141,7 @@ void Chest::spawn_treasure() {
         }
 
         moniez->initSprite();
-        global::sprites.push_back(moniez);
+        global::sprites_to_add.push_back(moniez);
         moniez->x = x + CHEST_PHYSICAL_WIDTH * 0.5;
         moniez->y = y + CHEST_PHYSICAL_HEIGHT * 0.5;
         moniez->ySpeed = -1.7;

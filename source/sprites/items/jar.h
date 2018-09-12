@@ -7,8 +7,10 @@
 
 #define JAR_PHYSICAL_HEIGHT 9
 #define JAR_PHYSICAL_WIDTH 10
+
 #define JAR_SPRITE_HEIGHT 16
 #define JAR_SPRITE_WIDTH 16
+#define JAR_SPRITE_SIZE JAR_SPRITE_WIDTH * JAR_SPRITE_HEIGHT
 
 #define MAX_X_SPEED_JAR 4
 #define MAX_Y_SPEED_JAR 4
@@ -53,6 +55,11 @@ public:
     int frame{};
     int frameTimer{};
 
+    void match_animation();
+
+    void set_position();
+
+    void set_sprite_attributes();
 };
 
 

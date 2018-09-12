@@ -78,8 +78,8 @@ ArrowTrap::ArrowTrap() {
 }
 
 void ArrowTrap::spawn_arrow() {
-    Arrow *arrow = new Arrow();
-    global::sprites.push_back(arrow);
+    auto *arrow = new Arrow();
+    global::sprites_to_add.push_back(arrow);
     arrow->sprite_state = sprite_state;
 
     if (sprite_state == SpriteState::W_LEFT) {

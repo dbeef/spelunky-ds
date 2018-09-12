@@ -66,6 +66,7 @@ void Blast::initSprite() {
     sprite_utils::set_horizontal_flip(sprite_state == SpriteState::W_LEFT, mainSpriteInfo, subSpriteInfo);
     match_animation();
     set_position();
+    sprite_utils::set_priority(OBJPRIORITY_0, mainSpriteInfo, subSpriteInfo);
 
 }
 

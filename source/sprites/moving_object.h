@@ -115,6 +115,8 @@ public:
 
     void set_pickuped_position(int pickup_offset_x, int pickup_offset_y);
 
+    void set_pickuped_position(int pickup_offset_x_left, int pickup_offset_x_right, int pickup_offset_y);
+
     bool check_if_can_be_opened();
 
     bool kill_mobs_items_if_thrown(int dmg_to_apply);

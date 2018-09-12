@@ -85,7 +85,7 @@ void Jetpack::draw() {
                 f->x = x + 4;
                 f->y = y + 4;
                 f->init();
-                global::sprites.push_back(f);
+                global::sprites_to_add.push_back(f);
 
             }
 
@@ -215,7 +215,7 @@ void Jetpack::equip() {
     g->y = y - 20;
     g->collectible_type = 0;
     g->init();
-    global::sprites.push_back(g);
+    global::sprites_to_add.push_back(g);
 
     if (global::main_dude->carrying_cape) {
         global::main_dude->carrying_cape = false;

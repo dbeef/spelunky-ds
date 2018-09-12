@@ -9,33 +9,26 @@
 #include "../../collisions/collisions.h"
 #include "../../../build/gfx_saleable.h"
 #include "../animations/got_collectible.h"
+#include "../sprite_utils.h"
 
 #define COMPASS_POS_INC_DELTA 15
 
 void Compass::draw() {
 
+    if (ready_to_dispose) return;
 
-    if (ready_to_dispose) {
-        mainSpriteInfo->entry->isHidden = true;
-        subSpriteInfo->entry->isHidden = true;
-        return;
-    } else {
-        mainSpriteInfo->entry->isHidden = false;
-        subSpriteInfo->entry->isHidden = false;
-    }
-
-    set_position();
+    update_anim_icon(x, y, physical_width);
+    sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);
+    sprite_utils::set_horizontal_flip(false, mainSpriteInfo, subSpriteInfo);
 
     if (collected) {
         draw_arrow_to_exit();
     } else {
 
-
-        if (bought && check_if_can_be_equipped()) {
+        if (bought && check_if_can_be_equipped())
             equip();
-        } else if (!bought && !hold_by_main_dude) {
+        else if (!bought && !hold_by_main_dude)
             check_if_can_be_pickuped();
-        }
 
         if (hold_by_main_dude) {
             set_pickuped_position(4, -4);
@@ -47,18 +40,20 @@ void Compass::draw() {
 
     }
 
+    set_position();
+
 }
 
 
 void Compass::init() {
     initSprite();
     init_anim_icon();
+    update_anim_icon(x, y, physical_width);
 }
 
 void Compass::updateSpeed() {
 
-    if (collected)
-        return;
+    if (collected) return;
 
     limit_speed(MAX_X_SPEED_COMPASS, MAX_Y_SPEED_COMPASS);
 
@@ -76,71 +71,55 @@ void Compass::updateSpeed() {
 }
 
 void Compass::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
-    if (!collected) {
-        MapTile *tiles[9];
-        Collisions::getNeighboringTiles(global::level_generator->map_tiles, x_current_pos_in_tiles,
-                                        y_current_pos_in_tiles,
-                                        tiles);
+    if (collected) return;
 
-        upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, physical_width, true, BOUNCING_FACTOR_Y);
-        bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, physical_width, physical_height, true, BOUNCING_FACTOR_Y);
-        leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true, BOUNCING_FACTOR_X);
-        rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true, BOUNCING_FACTOR_X);
-    }
+    MapTile *t[9];
+    Collisions::getNeighboringTiles(global::level_generator->map_tiles,
+                                    x_current_pos_in_tiles, y_current_pos_in_tiles, t);
+    upperCollision = Collisions::checkUpperCollision(t, &x, &y, &ySpeed, physical_width, true, 0.35);
+    bottomCollision = Collisions::checkBottomCollision(t, &x, &y, &ySpeed, physical_width, physical_height, true, 0.35);
+    leftCollision = Collisions::checkLeftCollision(t, &x, &y, &xSpeed, physical_width, physical_height, true, 0.15);
+    rightCollision = Collisions::checkRightCollision(t, &x, &y, &xSpeed, physical_width, physical_height, true, 0.15);
 }
 
 void Compass::initSprite() {
 
-
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_saleablePal, gfx_saleablePalLen,
-                                                        nullptr, sprite_width * sprite_height, sprite_width,
+                                                        nullptr, COMPASS_SPRITE_SIZE, sprite_width,
                                                         spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_saleablePal, gfx_saleablePalLen,
-                                                          nullptr, sprite_width * sprite_height, sprite_width,
+                                                          nullptr, COMPASS_SPRITE_SIZE, sprite_width,
                                                           spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
 
-    frameGfx = (u8 *) gfx_saleableTiles + (sprite_width * sprite_height * (2) / 2);
+    set_position();
+    sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);
+    sprite_utils::set_horizontal_flip(false, mainSpriteInfo, subSpriteInfo);
 
-    mainSpriteInfo->entry->x = x;
-    mainSpriteInfo->entry->y = y;
-
-    subSpriteInfo->entry->x = x;
-    subSpriteInfo->entry->y = y;
-
-    subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
-    mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
-
+    if (collected)
+        //compass is collected and drawn as hud, visibility is set in the function call below
+        draw_arrow_to_exit();
+    else {
+        //compass is an item just like any else so set as visible
+        sprite_utils::set_visibility(true, mainSpriteInfo, subSpriteInfo);
+        frameGfx = sprite_utils::get_frame((u8 *) gfx_saleableTiles, COMPASS_SPRITE_SIZE, 2);
+        sprite_utils::update_frame(frameGfx, COMPASS_SPRITE_SIZE, mainSpriteInfo, subSpriteInfo);
+    }
 
 }
 
 void Compass::set_position() {
 
     if (collected) {
-        //hud
-        mainSpriteInfo->entry->x = x;
-        mainSpriteInfo->entry->y = y;
-        mainSpriteInfo->entry->priority = OBJPRIORITY_0;
-        subSpriteInfo->entry->priority = OBJPRIORITY_0;
-
+        //draw as hud
+        sprite_utils::set_entry_xy(mainSpriteInfo, x, y);
+        sprite_utils::set_priority(OBJPRIORITY_0, mainSpriteInfo, subSpriteInfo);
     } else {
 
         int main_x, main_y, sub_x, sub_y;
         get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
-
-        mainSpriteInfo->entry->x = main_x;
-        mainSpriteInfo->entry->y = main_y;
-
-        subSpriteInfo->entry->x = sub_x;
-        subSpriteInfo->entry->y = sub_y;
+        sprite_utils::set_entry_xy(mainSpriteInfo, main_x, main_y);
+        sprite_utils::set_entry_xy(subSpriteInfo, sub_x, sub_y);
     }
-
-    update_anim_icon(x, y, physical_width);
-
-    mainSpriteInfo->entry->vFlip = false;
-    mainSpriteInfo->entry->hFlip = false;
-
-    subSpriteInfo->entry->vFlip = false;
-    subSpriteInfo->entry->hFlip = false;
 
 }
 
@@ -154,35 +133,12 @@ Compass::Compass() {
     spritesheet_type = SpritesheetType::SALEABLE;
 }
 
-void Compass::apply_down_arrow() {
-    frameGfx = (u8 *) gfx_saleableTiles + (sprite_width * sprite_height * (6) / 2);
-    subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
-}
-
-void Compass::apply_left_arrow() {
-    frameGfx = (u8 *) gfx_saleableTiles + (sprite_width * sprite_height * (5) / 2);
-    subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
-}
-
-void Compass::apply_right_arrow() {
-    frameGfx = (u8 *) gfx_saleableTiles + (sprite_width * sprite_height * (4) / 2);
-    subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
-}
-
-void Compass::apply_down_right_arrow() {
-    frameGfx = (u8 *) gfx_saleableTiles + (sprite_width * sprite_height * (9) / 2);
-    subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
-}
-
-void Compass::apply_down_left_arrow() {
-    frameGfx = (u8 *) gfx_saleableTiles + (sprite_width * sprite_height * (8) / 2);
-    subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
-}
 
 void Compass::draw_arrow_to_exit() {
 
     MapTile *exit = nullptr;
     global::level_generator->get_first_tile(MapTileType::EXIT, exit);
+
 
     if (exit != nullptr) {
 
@@ -201,45 +157,38 @@ void Compass::draw_arrow_to_exit() {
 
         } else if (diff_x < 6 * TILE_W) {
             //down arrow
-            subSpriteInfo->entry->x = (SCREEN_WIDTH * 0.5) - 8;
-            subSpriteInfo->entry->y = SCREEN_HEIGHT - 2 - sprite_height;
-            apply_down_arrow();
-
+            sprite_utils::set_entry_xy(subSpriteInfo, (SCREEN_WIDTH * 0.5) - 8, SCREEN_HEIGHT - 2 - sprite_height);
+            frameGfx = sprite_utils::get_frame((u8 *) gfx_saleableTiles, COMPASS_SPRITE_SIZE, 6);
         } else if (diff_y < 3 * TILE_H) {
 
             if (global::main_dude->x > tile_x) {
                 //left_arrow
-                apply_left_arrow();
-
-                subSpriteInfo->entry->x = 4;
-                subSpriteInfo->entry->y = SCREEN_HEIGHT * 0.5;
+                frameGfx = sprite_utils::get_frame((u8 *) gfx_saleableTiles, COMPASS_SPRITE_SIZE, 5);
+                sprite_utils::set_entry_xy(subSpriteInfo, 4, SCREEN_HEIGHT * 0.5);
 
             } else {
                 //right arrow
-                apply_right_arrow();
-
-                subSpriteInfo->entry->x = SCREEN_WIDTH - 4 - sprite_width;
-                subSpriteInfo->entry->y = SCREEN_HEIGHT * 0.5;
+                frameGfx = sprite_utils::get_frame((u8 *) gfx_saleableTiles, COMPASS_SPRITE_SIZE, 4);
+                sprite_utils::set_entry_xy(subSpriteInfo, SCREEN_WIDTH - 4 - sprite_width, SCREEN_HEIGHT * 0.5);
             }
 
         } else {
 
             if (global::main_dude->x > tile_x) {
                 //down-left arrow
-                apply_down_left_arrow();
-
-                subSpriteInfo->entry->x = 4;
-                subSpriteInfo->entry->y = SCREEN_HEIGHT - 4 - sprite_height;
+                frameGfx = sprite_utils::get_frame((u8 *) gfx_saleableTiles, COMPASS_SPRITE_SIZE, 8);
+                sprite_utils::set_entry_xy(subSpriteInfo, 4, SCREEN_HEIGHT - 4 - sprite_height);
 
             } else {
                 //down-right arrow
-                subSpriteInfo->entry->x = SCREEN_WIDTH - 4 - sprite_width;
-                subSpriteInfo->entry->y = SCREEN_HEIGHT - 4 - sprite_height;
-
-                apply_down_right_arrow();
+                sprite_utils::set_entry_xy(subSpriteInfo, SCREEN_WIDTH - 4 - sprite_width,
+                                           SCREEN_HEIGHT - 4 - sprite_height);
+                frameGfx = sprite_utils::get_frame((u8 *) gfx_saleableTiles, COMPASS_SPRITE_SIZE, 9);
             }
 
         }
+
+        subSpriteInfo->updateFrame(frameGfx, COMPASS_SPRITE_SIZE);
     }
 
 }
@@ -247,12 +196,12 @@ void Compass::draw_arrow_to_exit() {
 void Compass::equip() {
     collected = true;
 
-    GotCollectible *g = new GotCollectible();
+    auto *g = new GotCollectible();
     g->x = x - 12;
     g->y = y - 20;
     g->collectible_type = 0;
     g->init();
-    global::sprites.push_back(g);
+    global::sprites_to_add.push_back(g);
 
     if (!global::main_dude->carrying_compass) {
         global::main_dude->carrying_compass = true;
@@ -261,8 +210,7 @@ void Compass::equip() {
         y = global::hud->items_offset_y;
         global::hud->increment_offset_on_grabbed_item();
     } else {
-        mainSpriteInfo->entry->isHidden = true;
-        subSpriteInfo->entry->isHidden = true;
+        sprite_utils::set_visibility(false, mainSpriteInfo, subSpriteInfo);
         ready_to_dispose = true;
     }
 

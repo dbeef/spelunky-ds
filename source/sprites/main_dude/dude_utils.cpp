@@ -7,7 +7,6 @@
 #include <cmath>
 #include <cstdio>
 #include "../../globals_declarations.h"
-#include "../collectibles/pistol.h"
 #include "../collectibles/shotgun.h"
 #include "../collectibles/mitt.h"
 #include "../collectibles/glove.h"
@@ -23,6 +22,7 @@
 #include "../items/jetpack.h"
 #include "../sprite_utils.h"
 #include "../../../build/gfx_spelunker.h"
+#include "../items/pistol.h"
 
 
 void MainDude::throw_item() {
@@ -128,7 +128,7 @@ void MainDude::take_out_bomb() {
     bomb->init();
     bomb->hold_by_main_dude = true;
 
-    global::sprites.push_back(bomb);
+    global::sprites_to_add.push_back(bomb);
     holding_item = true;
 }
 
@@ -145,7 +145,7 @@ void MainDude::throw_rope() {
     rope->x = floor_div(x + 0.5 * MAIN_DUDE_PHYSICAL_WIDTH, TILE_W) * TILE_W + ROPE_PHYSICAL_WIDTH * 0.5;
     rope->ySpeed = -4;
 
-    global::sprites.push_back(rope);
+    global::sprites_to_add.push_back(rope);
 
 }
 
@@ -158,7 +158,7 @@ void MainDude::spawn_carried_items() {
         springShoes->collected = true;
         springShoes->bought = true;
         springShoes->init();
-        global::sprites.push_back(springShoes);
+        global::sprites_to_add.push_back(springShoes);
         global::hud->increment_offset_on_grabbed_item();
     }
 
@@ -169,7 +169,7 @@ void MainDude::spawn_carried_items() {
         spikeShoes->collected = true;
         spikeShoes->bought = true;
         spikeShoes->init();
-        global::sprites.push_back(spikeShoes);
+        global::sprites_to_add.push_back(spikeShoes);
         global::hud->increment_offset_on_grabbed_item();
     }
 
@@ -180,7 +180,7 @@ void MainDude::spawn_carried_items() {
         compass->collected = true;
         compass->bought = true;
         compass->init();
-        global::sprites.push_back(compass);
+        global::sprites_to_add.push_back(compass);
         global::hud->increment_offset_on_grabbed_item();
     }
     if (carrying_glove) {
@@ -190,7 +190,7 @@ void MainDude::spawn_carried_items() {
         glove->collected = true;
         glove->bought = true;
         glove->init();
-        global::sprites.push_back(glove);
+        global::sprites_to_add.push_back(glove);
         global::hud->increment_offset_on_grabbed_item();
     }
     if (carrying_cape) {
@@ -200,7 +200,7 @@ void MainDude::spawn_carried_items() {
         cape->collected = true;
         cape->bought = true;
         cape->init();
-        global::sprites.push_back(cape);
+        global::sprites_to_add.push_back(cape);
         global::hud->increment_offset_on_grabbed_item();
     }
     if (carrying_jetpack) {
@@ -210,7 +210,7 @@ void MainDude::spawn_carried_items() {
         jetpack->collected = true;
         jetpack->bought = true;
         jetpack->init();
-        global::sprites.push_back(jetpack);
+        global::sprites_to_add.push_back(jetpack);
         global::hud->increment_offset_on_grabbed_item();
     }
     if (carrying_mitt) {
@@ -220,7 +220,7 @@ void MainDude::spawn_carried_items() {
         mitt->collected = true;
         mitt->bought = true;
         mitt->init();
-        global::sprites.push_back(mitt);
+        global::sprites_to_add.push_back(mitt);
         global::hud->increment_offset_on_grabbed_item();
     }
     if (carrying_shotgun) {
@@ -229,7 +229,7 @@ void MainDude::spawn_carried_items() {
         shotgun->bought = true;
         shotgun->hold_by_main_dude = true;
         shotgun->init();
-        global::sprites.push_back(shotgun);
+        global::sprites_to_add.push_back(shotgun);
     }
 
     if (carrying_pistol) {
@@ -238,7 +238,7 @@ void MainDude::spawn_carried_items() {
         pistol->bought = true;
         pistol->hold_by_main_dude = true;
         pistol->init();
-        global::sprites.push_back(pistol);
+        global::sprites_to_add.push_back(pistol);
     }
 }
 

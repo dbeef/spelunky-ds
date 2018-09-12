@@ -110,7 +110,7 @@ void Skull::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in
         b->ySpeed = -1.4f;
         b->animFrame = 2;
         b->init();
-        global::sprites.push_back(b);
+        global::sprites_to_add.push_back(b);
     }
 
 }

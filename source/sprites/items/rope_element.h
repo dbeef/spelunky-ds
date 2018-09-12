@@ -51,6 +51,11 @@ public:
 
     u8 * frameGfx{};
 
+    void set_position();
+
+    void set_visibility();
+
+    void set_sprite_attributes();
 };
 
 

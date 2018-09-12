@@ -8,52 +8,18 @@
 #include "rock.h"
 #include "../../collisions/collisions.h"
 #include "../../tiles/map_utils.h"
+#include "../sprite_utils.h"
 
 #define ROCK_POS_INC_DELTA 15
 
 void Rock::draw() {
 
-
-    if (ready_to_dispose) {
-        mainSpriteInfo->entry->isHidden = true;
-        subSpriteInfo->entry->isHidden = true;
-        return;
-    } else {
-        mainSpriteInfo->entry->isHidden = false;
-        subSpriteInfo->entry->isHidden = false;
-    }
-
+    if (ready_to_dispose) return;
 
     check_if_can_be_pickuped();
-
-    if (hold_by_main_dude) {
-
-        y = global::main_dude->y + 6;
-
-        if (global::main_dude->sprite_state == 1) {
-            x = global::main_dude->x - 2;
-        } else
-            x = global::main_dude->x + 10;
-
-    }
-
-    int main_x, main_y, sub_x, sub_y;
-    get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
-
-    mainSpriteInfo->entry->x = main_x;
-    mainSpriteInfo->entry->y = main_y;
-
-    subSpriteInfo->entry->x = sub_x;
-    subSpriteInfo->entry->y = sub_y;
-
-    mainSpriteInfo->entry->hFlip = false;
-    subSpriteInfo->entry->hFlip = false;
-
-    mainSpriteInfo->entry->vFlip = false;
-    subSpriteInfo->entry->vFlip = false;
-
+    set_pickuped_position(0, 10, 6);
+    set_sprite_attributes();
     kill_mobs_if_thrown(1);
-
 }
 
 
@@ -82,30 +48,29 @@ void Rock::updateSpeed() {
 
 void Rock::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
 
-    MapTile *tiles[9];
-    Collisions::getNeighboringTiles(global::level_generator->map_tiles, x_current_pos_in_tiles, y_current_pos_in_tiles,
-                                    tiles);
+    MapTile *t[9];
+    Collisions::getNeighboringTiles(global::level_generator->map_tiles,
+                                    x_current_pos_in_tiles, y_current_pos_in_tiles, t);
 
-    upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, physical_width, true, BOUNCING_FACTOR_Y);
-    bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, physical_width, physical_height, true, BOUNCING_FACTOR_Y);
-    leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true, BOUNCING_FACTOR_X);
-    rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true, BOUNCING_FACTOR_X);
+    upperCollision = Collisions::checkUpperCollision(t, &x, &y, &ySpeed, physical_width, true, 0.35);
+    bottomCollision = Collisions::checkBottomCollision(t, &x, &y, &ySpeed, physical_width, physical_height, true, 0.35);
+    leftCollision = Collisions::checkLeftCollision(t, &x, &y, &xSpeed, physical_width, physical_height, true, 0.15);
+    rightCollision = Collisions::checkRightCollision(t, &x, &y, &xSpeed, physical_width, physical_height, true, 0.15);
 
 }
 
 void Rock::initSprite() {
 
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_blood_rock_rope_poofPal, gfx_blood_rock_rope_poofPalLen,
-                                                        nullptr, sprite_width * sprite_height, 8, BLOOD_ROCK_ROPE_POOF, true, false,
+                                                        nullptr, ROCK_SPRITE_SIZE, 8, BLOOD_ROCK_ROPE_POOF, true, false,
                                                         LAYER_LEVEL::MIDDLE_TOP);
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_blood_rock_rope_poofPal, gfx_blood_rock_rope_poofPalLen,
-                                                          nullptr, sprite_width * sprite_height, 8, BLOOD_ROCK_ROPE_POOF, true, false,
-                                                          LAYER_LEVEL::MIDDLE_TOP);
+                                                          nullptr, ROCK_SPRITE_SIZE, 8, BLOOD_ROCK_ROPE_POOF, true,
+                                                          false, LAYER_LEVEL::MIDDLE_TOP);
 
-    frameGfx = (u8 *) gfx_blood_rock_rope_poofTiles + (sprite_height * sprite_width * 7 / 2);
-    subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
-    mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
-
+    frameGfx = sprite_utils::get_frame((u8 *) gfx_blood_rock_rope_poofTiles, ROCK_SPRITE_SIZE, 7);
+    sprite_utils::update_frame(frameGfx, ROCK_SPRITE_SIZE, mainSpriteInfo, subSpriteInfo);
+    set_sprite_attributes();
 }
 
 Rock::Rock() {
@@ -116,3 +81,17 @@ Rock::Rock() {
     spritesheet_type = SpritesheetType::BLOOD_ROCK_ROPE_POOF;
 }
 
+void Rock::set_position() {
+    int main_x, main_y, sub_x, sub_y;
+    get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
+    sprite_utils::set_entry_xy(mainSpriteInfo, main_x, main_y);
+    sprite_utils::set_entry_xy(subSpriteInfo, sub_x, sub_y);
+}
+
+void Rock::set_sprite_attributes() {
+    set_position();
+    sprite_utils::set_priority(OBJPRIORITY_0, mainSpriteInfo, subSpriteInfo);
+    sprite_utils::set_horizontal_flip(false, mainSpriteInfo, subSpriteInfo);
+    sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);
+    sprite_utils::set_visibility(true, mainSpriteInfo, subSpriteInfo);
+}

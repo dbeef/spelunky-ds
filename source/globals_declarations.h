@@ -43,7 +43,7 @@ namespace global {
 
     extern int bg_main_address; //technically, it's an id returned by oam init FIXME naming
     extern int bg_sub_address; //technically, it's an id returned by oam init FIXME naming
-    extern double *timer; //global timer, updated in game loop
+    extern double *timer; //global timer, updated in game loop FIXME can be int, /delta time/ is in milliseconds anyway
     extern double clean_unused_oam_timer; //every arbitrary amount of time OAM is checked for unused sprites and cleaned off
     extern u16 current_map[4096]; //cave background with tiles rendered on it
     extern u16 base_map[4096]; //cave background only

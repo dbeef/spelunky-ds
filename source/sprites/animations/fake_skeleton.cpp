@@ -122,7 +122,7 @@ void FakeSkeleton::spawn_skull() {
     s->y = y;
     s->hold_by_main_dude = true;
     s->init();
-    global::sprites.push_back(s);
+    global::sprites_to_add.push_back(s);
 }
 
 void FakeSkeleton::match_animation() {

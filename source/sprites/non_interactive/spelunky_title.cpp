@@ -43,6 +43,7 @@ void SpelunkyTitle::initSprite() {
                                                                 false, LAYER_LEVEL::MIDDLE_TOP);
 
 
+        sprite_utils::set_visibility(true, mainSpriteInfo_1, mainSpriteInfo_2, mainSpriteInfo_3);
         sprite_utils::set_horizontal_flip(false, mainSpriteInfo_1, mainSpriteInfo_2, mainSpriteInfo_3);
         sprite_utils::set_vertical_flip(false, mainSpriteInfo_1, mainSpriteInfo_2, mainSpriteInfo_3);
         
@@ -68,7 +69,8 @@ void SpelunkyTitle::initSprite() {
                                                               nullptr, SPELUNKY_TITLE_SPRITE_SIZE, 64,
                                                               SpritesheetType::SPELUNKY_TITLE, true,
                                                               false, LAYER_LEVEL::MIDDLE_TOP);
-        
+
+        sprite_utils::set_visibility(true, subSpriteInfo_1, subSpriteInfo_2, subSpriteInfo_3);
         sprite_utils::set_horizontal_flip(false, subSpriteInfo_1, subSpriteInfo_2, subSpriteInfo_3);
         sprite_utils::set_vertical_flip(false, subSpriteInfo_1, subSpriteInfo_2, subSpriteInfo_3);
 
@@ -80,7 +82,7 @@ void SpelunkyTitle::initSprite() {
         sprite_utils::update_frame(frameGfx2, SPELUNKY_TITLE_SPRITE_SIZE, subSpriteInfo_2);
         sprite_utils::update_frame(frameGfx3, SPELUNKY_TITLE_SPRITE_SIZE, subSpriteInfo_3);
     }
-
+    
 }
 
 

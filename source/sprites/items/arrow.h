@@ -10,8 +10,10 @@
 
 #define ARROW_PHYSICAL_HEIGHT 8
 #define ARROW_PHYSICAL_WIDTH 8
+
 #define ARROW_SPRITE_HEIGHT 8
 #define ARROW_SPRITE_WIDTH 8
+#define ARROW_SPRITE_SIZE ARROW_SPRITE_WIDTH * ARROW_SPRITE_HEIGHT
 
 #include <nds/arm9/sprite.h>
 #include "../moving_object.h"
@@ -53,9 +55,11 @@ public:
     double angle{};
 
     bool thrown{};
-    int armed_timer{};
+    double armed_timer{};
 
     void update_frame(int frame_num);
+
+    void set_position();
 };
 
 

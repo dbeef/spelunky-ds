@@ -14,7 +14,7 @@
 #include "compass.h"
 #include "../items/cape.h"
 #include "spring_shoes.h"
-#include "pistol.h"
+#include "../items/pistol.h"
 
 ShoppingObject * collectibles_utils::spawn_item(int x, int y, int r, bool bought) {
     //drop an item
@@ -96,6 +96,5 @@ void collectibles_utils::spawn_set_up(int x, int y, MovingObject *m) {
 
 void collectibles_utils::spawn_random_item(int x, int y) {
     int r = rand() % 9;
-//    r = 6;
     spawn_item(x, y, r, true);
 }
