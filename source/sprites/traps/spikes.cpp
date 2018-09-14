@@ -70,6 +70,9 @@ void Spikes::init() {
 
 void Spikes::initSprite() {
 
+    delete mainSpriteInfo;
+    delete subSpriteInfo;
+
     if (blood)
         frameGfx = (u8 *) gfx_spike_collectibles_flameTiles + (sprite_width * sprite_height * (1) / 2);
     else

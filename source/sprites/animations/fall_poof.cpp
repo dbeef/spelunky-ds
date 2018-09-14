@@ -49,6 +49,9 @@ void FallPoof::init() {
 
 void FallPoof::initSprite() {
 
+    delete mainSpriteInfo;
+    delete subSpriteInfo;
+
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_blood_rock_rope_poofPal, gfx_blood_rock_rope_poofPalLen,
                                                         nullptr, FALL_POOF_SPRITE_SIZE, sprite_width,
                                                         spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);

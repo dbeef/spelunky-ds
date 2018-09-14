@@ -80,6 +80,9 @@ void SpikeShoes::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_p
 
 void SpikeShoes::initSprite() {
 
+    delete mainSpriteInfo;
+    delete subSpriteInfo;
+
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_saleablePal, gfx_saleablePalLen,
                                                         nullptr, SPIKE_SHOES_SPRITE_SIZE, sprite_width,
                                                         spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);

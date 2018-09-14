@@ -40,6 +40,12 @@ void TitleMenuSign::init() {
 
 void TitleMenuSign::initSprite() {
 
+    delete mainSpriteInfo_1;
+    delete mainSpriteInfo_2;
+    
+    delete subSpriteInfo_1;
+    delete subSpriteInfo_2;
+    
     OAMManager *used_oam_manager = nullptr;
     u8 *frameGfx1 = nullptr;
     u8 *frameGfx2 = nullptr;

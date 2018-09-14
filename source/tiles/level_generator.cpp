@@ -21,7 +21,7 @@
 
 
 void LevelGenerator::render_tiles_on_base_map() {
-    dmaCopyHalfWords(DEFAULT_DMA_CHANNEL, global::base_map, global::current_map, sizeof(global::current_map));
+    dmaCopyHalfWords(DEFAULT_DMA_CHANNEL, global::base_map, global::current_map, sizeof(global::base_map));
     tiles_to_map();
     sectorize_map();
     dmaCopyHalfWords(DEFAULT_DMA_CHANNEL, global::current_map, bgGetMapPtr(global::bg_main_address),
@@ -39,6 +39,7 @@ void LevelGenerator::newLayout(int seed) {
 
     for (int x = 0; x < MAP_GAME_WIDTH_TILES; x++) {
         for (int y = 0; y < MAP_GAME_HEIGHT_TILES; y++) {
+            delete map_tiles[x][y];
             map_tiles[x][y] = nullptr;
         }
     }

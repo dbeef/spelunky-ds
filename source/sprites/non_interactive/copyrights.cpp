@@ -43,6 +43,15 @@ void Copyrights::init() {
 
 void Copyrights::initSprite() {
 
+    delete mainSpriteInfo_1;
+    delete mainSpriteInfo_2;
+    delete mainSpriteInfo_3;
+    delete mainSpriteInfo_4;
+    delete subSpriteInfo_1;
+    delete subSpriteInfo_2;
+    delete subSpriteInfo_3;
+    delete subSpriteInfo_4;
+    
     if (oamType == OamType::MAIN) {
         mainSpriteInfo_1 = global::main_oam_manager->initSprite(gfx_copyrightsPal, gfx_copyrightsPalLen, nullptr,
                                                                 COPYRIGHTS_SPRITE_SIZE, 32,

@@ -98,6 +98,9 @@ void Shotgun::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_
 
 void Shotgun::initSprite() {
 
+    delete mainSpriteInfo;
+    delete subSpriteInfo;
+
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
                                                         gfx_spike_collectibles_flamePalLen,
                                                         nullptr, SHOTGUN_SPRITE_SIZE, sprite_width,

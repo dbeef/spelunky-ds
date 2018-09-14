@@ -106,6 +106,10 @@ void Flame::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in
 }
 
 void Flame::initSprite() {
+
+    delete mainSpriteInfo;
+    delete subSpriteInfo;
+
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
                                                         gfx_spike_collectibles_flamePalLen, nullptr, FLAME_SPRITE_SIZE,
                                                         8, SPIKES_COLLECTIBLES, true, false, LAYER_LEVEL::MIDDLE_TOP);

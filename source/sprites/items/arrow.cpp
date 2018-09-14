@@ -203,6 +203,10 @@ void Arrow::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in
 }
 
 void Arrow::initSprite() {
+
+    delete mainSpriteInfo;
+    delete subSpriteInfo;
+
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_arrowPal, gfx_arrowPalLen,
                                                         nullptr, ARROW_SPRITE_SIZE, 8, SpritesheetType::ARROW,
                                                         true, false, LAYER_LEVEL::MIDDLE_TOP);

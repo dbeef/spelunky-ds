@@ -82,6 +82,10 @@ void Mitt::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_
 }
 
 void Mitt::initSprite() {
+
+    delete mainSpriteInfo;
+    delete subSpriteInfo;
+
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_saleablePal, gfx_saleablePalLen,
                                                         nullptr, MITT_SPRITE_SIZE, sprite_width,
                                                         spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);

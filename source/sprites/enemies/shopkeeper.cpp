@@ -274,6 +274,9 @@ void Shopkeeper::apply_dmg(int dmg_to_apply) {
 
 void Shopkeeper::initSprite() {
 
+    delete mainSpriteInfo;
+    delete subSpriteInfo;
+
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_shopkeeperPal, gfx_shopkeeperPalLen,
                                                         nullptr, SHOPKEEPER_SPRITE_SIZE, 16, SHOPKEEPER,
                                                         true, false, LAYER_LEVEL::MIDDLE_BOT);

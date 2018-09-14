@@ -90,6 +90,9 @@ void Pistol::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_i
 
 void Pistol::initSprite() {
 
+    delete mainSpriteInfo;
+    delete subSpriteInfo;
+
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
                                                           gfx_spike_collectibles_flamePalLen,
                                                           nullptr, PISTOL_SPRITE_SIZE, sprite_width,

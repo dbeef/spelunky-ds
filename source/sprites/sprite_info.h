@@ -15,7 +15,7 @@ public:
     u16 *sprite_address{};
     int offset_multiplier{};
 
-    int oamId_palette{};
+    u8 oamId_palette{};
     int oamId_tiles{};
 
     int width{};

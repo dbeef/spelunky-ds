@@ -156,12 +156,17 @@ void Snake::apply_dmg(int dmg_to_apply) {
 }
 
 void Snake::initSprite() {
+
+    delete subSpriteInfo;
+    delete mainSpriteInfo;
+
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_bat_snake_jetpackPal, gfx_bat_snake_jetpackPalLen,
                                                         nullptr, SNAKE_SPRITE_SIZE, 16, SNAKE, true, false,
                                                         LAYER_LEVEL::MIDDLE_TOP);
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_bat_snake_jetpackPal, gfx_bat_snake_jetpackPalLen,
                                                           nullptr, SNAKE_SPRITE_SIZE, 16, SNAKE, true, false,
                                                           LAYER_LEVEL::MIDDLE_TOP);
+    
     sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);
     sprite_utils::set_visibility(true, mainSpriteInfo, subSpriteInfo);
     sprite_utils::set_horizontal_flip(true, mainSpriteInfo, subSpriteInfo);

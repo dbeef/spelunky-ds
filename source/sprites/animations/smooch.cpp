@@ -52,6 +52,9 @@ void Smooch::init() {
 
 void Smooch::initSprite() {
 
+    delete mainSpriteInfo;
+    delete subSpriteInfo;
+
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_caveman_damselPal, gfx_caveman_damselPalLen,
                                                         nullptr, SMOOCH_SPRITE_SIZE, sprite_width,
                                                         spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);

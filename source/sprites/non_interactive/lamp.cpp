@@ -39,6 +39,9 @@ void Lamp::init() {
 
 void Lamp::initSprite() {
 
+    delete mainSpriteInfo;
+    delete subSpriteInfo;
+
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_shopkeeperPal, gfx_shopkeeperPalLen, nullptr,
                                                           LAMP_SPRITE_WIDTH * LAMP_SPRITE_HEIGHT, 16,
                                                           SpritesheetType::SHOPKEEPER, true,

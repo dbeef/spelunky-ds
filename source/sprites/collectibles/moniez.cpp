@@ -119,6 +119,9 @@ void Moniez::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_i
 
 void Moniez::initSprite() {
 
+    delete mainSpriteInfo;
+    delete subSpriteInfo;
+
     if (sprite_type == SpriteType::S_MONIEZ_TRIPLE_GOLDBARS) {
         physical_height = TRIPLE_GOLDBAR_PHYSICAL_HEIGHT;
         physical_width = TRIPLE_GOLDBAR_PHYSICAL_WIDTH;

@@ -268,6 +268,12 @@ void Damsel::apply_dmg(int dmg_to_apply) {
 }
 
 void Damsel::initSprite() {
+
+    delete subSpriteInfo;
+    delete mainSpriteInfo;
+    delete yell_subSpriteInfo;
+    delete yell_mainSpriteInfo;
+
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_caveman_damselPal, gfx_caveman_damselPalLen,
                                                         nullptr, DAMSEL_SPRITE_SIZE, 16, CAVEMAN_DAMSEL,
                                                         true, false, LAYER_LEVEL::MIDDLE_BOT);

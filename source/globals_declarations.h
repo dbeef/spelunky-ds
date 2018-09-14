@@ -47,6 +47,7 @@ namespace global {
     extern double clean_unused_oam_timer; //every arbitrary amount of time OAM is checked for unused sprites and cleaned off
     extern u16 current_map[4096]; //cave background with tiles rendered on it
     extern u16 base_map[4096]; //cave background only
+    extern u16 *temp_map; //cave background only
     extern mm_sfxhand menu_music_handler; //integer identifier for menu music
     extern mm_sfxhand cave_music_handler; //integer identifier for cave level music
 }

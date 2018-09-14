@@ -160,6 +160,9 @@ void Jetpack::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_
 
 void Jetpack::initSprite() {
 
+    delete mainSpriteInfo;
+    delete subSpriteInfo;
+
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_bat_snake_jetpackPal, gfx_bat_snake_jetpackPalLen,
                                                         nullptr, sprite_width * sprite_height, sprite_width,
                                                         spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);

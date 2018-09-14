@@ -69,12 +69,14 @@ void Whip::update_position() {
     get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
     sprite_utils::set_entry_xy(main_sprite_info, main_x, main_y);
     sprite_utils::set_entry_xy(sub_sprite_info, sub_x, sub_y);
-
     sprite_utils::set_vertical_flip(false, main_sprite_info, sub_sprite_info);
     sprite_utils::update_frame(frameGfx, WHIP_SPRITE_SIZE, main_sprite_info, sub_sprite_info);
 }
 
 void Whip::initSprite() {
+
+    delete main_sprite_info;
+    delete sub_sprite_info;
 
     main_sprite_info = global::main_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
                                                             gfx_spike_collectibles_flamePalLen,

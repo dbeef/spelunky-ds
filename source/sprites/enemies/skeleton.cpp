@@ -148,6 +148,9 @@ void Skeleton::apply_dmg(int dmg_to_apply) {
 
 void Skeleton::initSprite() {
 
+    delete subSpriteInfo;
+    delete mainSpriteInfo;
+
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_spider_skeletonPal, gfx_spider_skeletonPalLen,
                                                         nullptr, SKELETON_SPRITE_SIZE, 16, SKELETON_SPIDER,
                                                         true, false, LAYER_LEVEL::MIDDLE_TOP);

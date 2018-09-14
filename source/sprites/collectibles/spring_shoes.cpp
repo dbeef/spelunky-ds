@@ -84,6 +84,9 @@ void SpringShoes::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_
 
 void SpringShoes::initSprite() {
 
+    delete mainSpriteInfo;
+    delete subSpriteInfo;
+
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_saleablePal, gfx_saleablePalLen,
                                                         nullptr, SPRING_SHOES_SPRITE_SIZE, sprite_width,
                                                         spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);

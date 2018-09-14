@@ -77,6 +77,7 @@ void GameState::start_level_transition_screen() {
     global::input_handler->stop_handling = true;
     global::input_handler->l_bumper_held = true;
     global::input_handler->right_key_held = true;
+
     global::camera->follow_main_dude = false;
     consoleClear();
     global::hud->draw_on_level_done();
@@ -129,7 +130,16 @@ void GameState::handle_changing_screens() {
         (global::main_dude->animFrame >= 16 && !global::game_state->splash_screen)) {
 
         global::main_dude->animFrame = 0;
-        dmaCopyHalfWords(DEFAULT_DMA_CHANNEL, global::base_map, global::current_map, sizeof(global::current_map));
+
+//        printf("BEFORE DMA COPY\n");
+//        for(int a =0;a < 1*60;a++)
+//            swiWaitForVBlank();
+
+        dmaCopyHalfWords(DEFAULT_DMA_CHANNEL, global::base_map, global::current_map, sizeof(global::base_map));
+
+//        printf("BEFORE NEW LAYOUT\n");
+//        for(int a =0;a < 1*60;a++)
+//            swiWaitForVBlank();
 
         global::level_generator->newLayout(*global::timer);
 
@@ -144,9 +154,23 @@ void GameState::handle_changing_screens() {
                 sound::stop_cave_music();
 
 
+//            printf("BEFORE GENERATE FRAME\n");
+//            for(int a =0;a < 1*60;a++)
+//                swiWaitForVBlank();
+
             global::level_generator->generate_frame();
+
+//            printf("BEFORE GENERATE ROOMS\n");
+//            for(int a =0;a < 1*60;a++)
+//                swiWaitForVBlank();
+
             global::level_generator->generate_rooms();
             set_position_to(MapTileType::ENTRANCE);
+
+
+//            printf("AFTER GENERATE ROOMS\n");
+//            for(int a =0;a < 1*60;a++)
+//                swiWaitForVBlank();
 
         } else {
 
@@ -184,17 +208,57 @@ void GameState::handle_changing_screens() {
         }
 
         //
+
+//        printf("BEFORE TILES TO MAP\n");
+//        for(int a =0;a < 1*60;a++)
+//            swiWaitForVBlank();
+
         global::level_generator->tiles_to_map();
+
+
+//        printf("BEFORE SECTORIZE\n");
+//        for(int a =0;a < 1*60;a++)
+//            swiWaitForVBlank();
+
         sectorize_map();
+
+//        printf("BEFORE COPY 1\n");
+//        for(int a =0;a < 1*60;a++)
+//            swiWaitForVBlank();
+
         dmaCopyHalfWords(DEFAULT_DMA_CHANNEL, global::current_map, bgGetMapPtr(global::bg_main_address),
                          sizeof(global::current_map));
+
+
+//        printf("BEFORE COPY 2\n");
+//        for(int a =0;a < 1*60;a++)
+//            swiWaitForVBlank();
+
         dmaCopyHalfWords(DEFAULT_DMA_CHANNEL, global::current_map, bgGetMapPtr(global::bg_sub_address),
                          sizeof(global::current_map));
         //
 
+//        printf("BEFORE DELETE ALL SPRITES\n");
+//        for(int a =0;a < 1*60;a++)
+//            swiWaitForVBlank();
+
         oam_utils::delete_all_sprites();
+
+//        printf("BEFORE MAIN DUDE INIT\n");
+//        for(int a =0;a < 1*60;a++)
+//            swiWaitForVBlank();
+
         global::main_dude->init();
+
+//        printf("BEFORE MAIN PUSH\n");
+//        for(int a =0;a < 1*60;a++)
+//            swiWaitForVBlank();
+
         global::sprites.push_back(global::main_dude);
+
+//        printf("AFTER MAIN PUSH\n");
+//        for(int a =0;a < 1*60;a++)
+//            swiWaitForVBlank();
 
         consoleClear();
 

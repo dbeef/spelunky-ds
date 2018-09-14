@@ -41,5 +41,6 @@ namespace global {
     mm_sfxhand cave_music_handler{};
 
     u16 current_map[4096];
+    u16 *temp_map = new u16[4096];
 }
 #endif //SPELUNKYDS_GLOBALS_DEFINITIONS_H

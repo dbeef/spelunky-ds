@@ -77,6 +77,9 @@ void Chest::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in
 
 void Chest::initSprite() {
 
+    delete mainSpriteInfo;
+    delete subSpriteInfo;
+
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
                                                         gfx_spike_collectibles_flamePalLen,
                                                         nullptr, CHEST_SPRITE_SIZE, sprite_width,

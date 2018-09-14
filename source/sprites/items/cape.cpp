@@ -118,6 +118,9 @@ void Cape::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_
 
 void Cape::initSprite() {
 
+    delete mainSpriteInfo;
+    delete subSpriteInfo;
+
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_goldbarsPal, gfx_goldbarsPalLen,
                                                         nullptr, CAPE_SPRITE_SIZE, sprite_width,
                                                         spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);

@@ -468,6 +468,9 @@ void MainDude::draw() {
 
 void MainDude::initSprite() {
 
+    delete main_spelunker;
+    delete sub_spelunker;
+
     main_spelunker = global::main_oam_manager->initSprite(gfx_spelunkerPal, gfx_spelunkerPalLen, nullptr,
                                                           sprite_width * sprite_height, 16, MAIN_DUDE, true, false,
                                                           LAYER_LEVEL::MIDDLE_TOP);

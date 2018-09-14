@@ -28,9 +28,14 @@ void floor_div(int a, int b, int *return_value) {
 //make it 4 different tiles
 void sectorize_map() {
 
+//    printf("BEFORE SECTORIZE \n");
+//    for (int a = 0; a < 60; a++)
+//        swiWaitForVBlank();
+
     //malloc always needed on global::current_map declaration! Otherwise won't work
-    u16 *map_temp = (u16 *) std::malloc(sizeof(u16[4096]));
-    dmaCopyHalfWords(3, global::current_map, map_temp, sizeof(global::current_map));
+//    u16 *map_temp = (u16 *) std::malloc(sizeof(u16[4096]));
+//    u16 *map_temp = new u16[4096];
+    dmaCopyHalfWords(3, global::current_map, global::temp_map, sizeof(global::current_map));
 
     int b = 0;
 
@@ -40,7 +45,7 @@ void sectorize_map() {
             a += 32;
 
         if (a < 2048) {
-            global::current_map[b] = map_temp[a];
+            global::current_map[b] = global::temp_map[a];
             b++;
         }
     }
@@ -51,7 +56,7 @@ void sectorize_map() {
             a += 32;
 
         if (a < 2048) {
-            global::current_map[b] = map_temp[a];
+            global::current_map[b] = global::temp_map[a];
             b++;
         }
     }
@@ -63,7 +68,7 @@ void sectorize_map() {
             a += 32;
 
         if (a < 4096) {
-            global::current_map[b] = map_temp[a];
+            global::current_map[b] = global::temp_map[a];
             b++;
         }
 
@@ -75,9 +80,15 @@ void sectorize_map() {
             a += 32;
 
         if (a < 4096) {
-            global::current_map[b] = map_temp[a];
+            global::current_map[b] = global::temp_map[a];
             b++;
         }
     }
 
+//    free(map_temp);
+//    delete[] map_temp;
+
+//    printf("AFTER SECTORIZE \n");
+//    for (int a = 0; a < 60; a++)
+//        swiWaitForVBlank();
 }

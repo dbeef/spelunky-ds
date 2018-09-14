@@ -49,6 +49,8 @@ void Blast::init() {
 
 void Blast::initSprite() {
 
+    delete mainSpriteInfo;
+    delete subSpriteInfo;
 
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
                                                         gfx_spike_collectibles_flamePalLen,

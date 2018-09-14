@@ -39,8 +39,8 @@ static const int OFFSET_MULTIPLIER_SUB = BOUNDARY_VALUE / sizeof(SPRITE_GFX_SUB[
 void gameloop::scroll() {
 
     global::main_oam_manager->initOAMTable(SPRITE_GFX, SPRITE_PALETTE, OAM, OFFSET_MULTIPLIER_MAIN, OamType::MAIN);
-    global::sub_oam_manager->initOAMTable(SPRITE_GFX_SUB, SPRITE_PALETTE_SUB, OAM_SUB, OFFSET_MULTIPLIER_SUB,
-                                          OamType::SUB);
+    global::sub_oam_manager->initOAMTable(SPRITE_GFX_SUB, SPRITE_PALETTE_SUB, OAM_SUB,
+            OFFSET_MULTIPLIER_SUB, OamType::SUB);
     global::main_dude->init();
     global::camera->x = 0;
     global::camera->y = 127;
@@ -83,13 +83,15 @@ void gameloop::scroll() {
 //                (*global::sprites.at(a)).introduce_yourself();
 
             //TODO Add checking if ready to dispose here, and remove checking in MovingObject subclasses
-            if (global::sprites.at(
-                    a) /*&& !global::sprites.at(a)->ready_to_dispose *//*&& !global::sprites.at(a)->killed*/) {
+            if (global::sprites.at(a) /*&& !global::sprites.at(a)->ready_to_dispose *//*&& !global::sprites.at(a)->killed*/) {
+//                printf("START ");
+//                (*global::sprites.at(a)).introduce_yourself();
                 (*global::sprites.at(a)).update();
                 (*global::sprites.at(a)).draw();
             }
 
         }
+//        printf("DONE ALL\n");
 
         if (size)
             global::sprites_to_add.clear();
@@ -138,7 +140,6 @@ void gameloop::scroll() {
         global::sub_oam_manager->updateOAM();
         oam_utils::clean_unused_oam();
     }
-
 }
 
 void gameloop::populate_cave_moniez() {

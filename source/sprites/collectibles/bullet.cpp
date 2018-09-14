@@ -119,6 +119,8 @@ void Bullet::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_i
 
 void Bullet::initSprite() {
 
+    delete mainSpriteInfo;
+    delete subSpriteInfo;
 
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
                                                         gfx_spike_collectibles_flamePalLen,

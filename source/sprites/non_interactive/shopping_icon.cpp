@@ -49,6 +49,9 @@ void ShoppingIcon::init() {
 
 void ShoppingIcon::initSprite() {
 
+    delete mainSpriteInfo;
+    delete subSpriteInfo;
+
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_goldbarsPal, gfx_goldbarsPalLen,
                                                           nullptr, SHOPPING_ICON_SPRITE_WIDTH *
                                                                    SHOPPING_ICON_SPRITE_HEIGHT, 16,

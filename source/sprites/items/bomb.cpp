@@ -127,6 +127,10 @@ void Bomb::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_
 }
 
 void Bomb::initSprite() {
+
+    delete mainSpriteInfo;
+    delete subSpriteInfo;
+
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_explosionPal, gfx_explosionPalLen,
                                                         nullptr, BOMB_SPRITE_SIZE, 64, BOMB, true, false,
                                                         LAYER_LEVEL::MIDDLE_TOP);

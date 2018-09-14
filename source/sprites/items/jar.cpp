@@ -90,6 +90,10 @@ void Jar::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_t
 }
 
 void Jar::initSprite() {
+
+    delete mainSpriteInfo;
+    delete subSpriteInfo;
+
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
                                                         gfx_spike_collectibles_flamePalLen, nullptr, JAR_SPRITE_SIZE,
                                                         16, JAR, true, false, LAYER_LEVEL::MIDDLE_TOP);

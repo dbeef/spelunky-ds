@@ -154,6 +154,9 @@ bool Rope::isThereChainForThisTile(int rope_y) {
 
 void Rope::initSprite() {
 
+    delete mainSpriteInfo;
+    delete subSpriteInfo;
+
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_blood_rock_rope_poofPal, gfx_blood_rock_rope_poofPalLen,
                                                         nullptr, ROPE_SPRITE_SIZE, 8, BLOOD_ROCK_ROPE_POOF, true,
                                                         false, LAYER_LEVEL::MIDDLE_TOP);

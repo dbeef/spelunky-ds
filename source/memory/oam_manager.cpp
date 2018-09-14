@@ -24,13 +24,12 @@ static const int COLORS_PER_PALETTE = 16;
 
 void
 OAMManager::initOAMTable(u16 *sprite_address, u16 *paletteAddress, u16 *oam_address, int offset_multiplier, OamType o) {
-    oam = new OAMTable();
 
+    oam = new OAMTable();
     this->oamType = o;
     this->sprite_address = sprite_address;
     this->palette_address = paletteAddress;
     this->oam_address = oam_address;
-    this->oam = oam;
     this->offset_multiplier = offset_multiplier;
 
     clearAllSprites();
@@ -43,6 +42,11 @@ void OAMManager::clearAllSprites() {
     current_oam_id_palette = 0;
     current_oam_id_tiles = 0;
     nextAvailableTileIdx = 0;
+
+//    for (auto &sprite_info : global::sprite_infos) {
+//        delete sprite_info;
+//        sprite_info = nullptr;
+//    }
 
     global::sprite_infos.clear();
 
@@ -69,7 +73,6 @@ void OAMManager::clearAllSprites() {
 
     updateOAM();
 
-
 }
 
 void OAMManager::updateOAM() {
@@ -85,11 +88,22 @@ SpriteInfo *
 OAMManager::initSprite(const unsigned short pallette[], int palLen, const unsigned int tiles[], int tilesLen,
                        int size, SpritesheetType type, bool reuse_palette, bool reuse_tiles, LAYER_LEVEL l) {
 
+//    if (global::hud->level > 6) {
+//        printf("NEW SPRITE INFO\n");
+//        for (int a = 0; a < 60; a++)
+//            swiWaitForVBlank();
+//    }
 
     /* Keep track of the available tiles */
     assert(current_oam_id_palette < SPRITE_COUNT && current_oam_id_tiles < SPRITE_COUNT);
-    SpriteInfo *spriteInfo = new SpriteInfo();/*&spriteInfo[current_oam_id];*/
+    SpriteInfo *spriteInfo = new SpriteInfo();
     SpriteEntry *spriteEntry = &oam->oamBuffer[current_oam_id_tiles];
+
+//    if (global::hud->level > 6) {
+//        printf("DONE SPRITE INFO\n");
+//        for (int a = 0; a < 60; a++)
+//            swiWaitForVBlank();
+//    }
 
     /* Initialize spriteInfo */
     spriteInfo->oamType = oamType;

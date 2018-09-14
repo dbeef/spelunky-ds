@@ -23,11 +23,14 @@ void Bat::draw() {
     if (ready_to_dispose)
         return;
 
+//    printf("1");
     set_position();
+//    printf("2");
 
     sprite_utils::set_horizontal_flip(true, mainSpriteInfo, subSpriteInfo);
     sprite_utils::set_visibility(true, mainSpriteInfo, subSpriteInfo);
     sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);
+//    printf("3");
 
     if (!hunting) {
         //check if main dude is in bat's triggering scope
@@ -52,7 +55,9 @@ void Bat::draw() {
         if (animFrame >= 3)
             animFrame = 0;
 
+//        printf("4");
         match_animation();
+//        printf("5");
     }
 
     if (hunting) {
@@ -63,6 +68,8 @@ void Bat::draw() {
         ySpeed = -1;
     }
 
+//    printf("6");
+//here
     kill_if_whip(1);
     kill_if_main_dude_jumped_on_you(1);
     deal_damage_main_dude_on_collision(1);
@@ -117,6 +124,10 @@ void Bat::apply_dmg(int dmg_to_apply) {
 }
 
 void Bat::initSprite() {
+
+    delete subSpriteInfo;
+    delete mainSpriteInfo;
+
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_bat_snake_jetpackPal, gfx_bat_snake_jetpackPalLen,
                                                         nullptr, BAT_SPRITE_SIZE, 16, BAT_JETPACK, true,
                                                         false, LAYER_LEVEL::MIDDLE_TOP);
@@ -191,5 +202,6 @@ void Bat::match_animation() {
     else if (xSpeed <= 0)
         set_sprite_flying_left();
 
+//    printf("A");
     sprite_utils::update_frame(frameGfx, BAT_SPRITE_SIZE, mainSpriteInfo, subSpriteInfo);
 }

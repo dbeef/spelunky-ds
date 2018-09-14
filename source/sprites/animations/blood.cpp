@@ -105,6 +105,10 @@ void Blood::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in
 }
 
 void Blood::initSprite() {
+
+    delete mainSpriteInfo;
+    delete subSpriteInfo;
+
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_blood_rock_rope_poofPal, gfx_blood_rock_rope_poofPalLen,
                                                         nullptr, BLOOD_SPRITE_SIZE, 8, BLOOD_ROCK_ROPE_POOF,
                                                         true, false, LAYER_LEVEL::MIDDLE_TOP);

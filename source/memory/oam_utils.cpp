@@ -9,11 +9,11 @@ namespace oam_utils {
 
     //TODO Clean only the higher addresses of memory, don't clean up the hud and main dude sprites, so the blinking
     // that the cleaning causes would be less visible.
-    void clean_unused_oam() {
+    bool clean_unused_oam() {
 
         global::clean_unused_oam_timer += *global::timer;
 
-        if (global::clean_unused_oam_timer > 250 && global::main_oam_manager->current_oam_id_tiles >= 120) {
+        if (/*global::clean_unused_oam_timer > 250 && */global::main_oam_manager->current_oam_id_tiles >= 120) {
 
             for (int a = 0; a < global::sprites.size(); a++) {
                 if (global::sprites.at(a)->ready_to_dispose) {
@@ -27,18 +27,18 @@ namespace oam_utils {
 
             for (int a = 0; a < global::sprites.size(); a++) {
                 //fixme - being killed not always means it's ready for disposing!
-                if (!global::sprites.at(a)->ready_to_dispose /*&& !global::sprites.at(a)->killed*/)
+                if (!global::sprites.at(a)->ready_to_dispose /*&& !global::sprites.at(a)->killed*/) {
                     global::sprites.at(a)->initSprite();
-                else {
-                    //
                 }
             }
 
             global::hud->init_sprites();
 
-            global::clean_unused_oam_timer = 0;
+//            global::clean_unused_oam_timer = 0;
+            return true;
         }
 
+        return false;
     };
 
 

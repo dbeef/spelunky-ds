@@ -9,6 +9,8 @@
 namespace sprite_utils {
 
     void set_entry_xy(SpriteInfo *i, int x, int y) {
+//        if(i == nullptr)
+//            printf("NULLPTR XY\n");
         i->entry->x = x;
         i->entry->y = y;
     }

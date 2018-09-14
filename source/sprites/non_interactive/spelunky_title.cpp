@@ -28,6 +28,14 @@ void SpelunkyTitle::init() {
 
 void SpelunkyTitle::initSprite() {
     
+    delete mainSpriteInfo_1;
+    delete mainSpriteInfo_2;
+    delete mainSpriteInfo_3;
+    
+    delete subSpriteInfo_1;
+    delete subSpriteInfo_2;
+    delete subSpriteInfo_3;
+    
     if (oamType == OamType::MAIN) {
         mainSpriteInfo_1 = global::main_oam_manager->initSprite(gfx_spelunky_titlePal, gfx_spelunky_titlePalLen,
                                                                 nullptr, SPELUNKY_TITLE_SPRITE_SIZE, 64,

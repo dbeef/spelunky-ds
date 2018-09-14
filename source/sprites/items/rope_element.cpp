@@ -28,6 +28,11 @@ void RopeElement::init() {
 
 void RopeElement::initSprite() {
 
+    delete mainSpriteInfo;
+    delete subSpriteInfo;
+    delete mainSpriteInfo_2;
+    delete subSpriteInfo_2;
+
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_blood_rock_rope_poofPal, gfx_blood_rock_rope_poofPalLen,
                                                         nullptr, ROPE_SPRITE_SIZE, 8, BLOOD_ROCK_ROPE_POOF, true,
                                                         false, LAYER_LEVEL::MIDDLE_TOP);
