@@ -11,11 +11,17 @@ public:
     int position_update_timer{};
     int x{};
     int y{};
-    void update_position();
-    void set_scroll();
-    void instant_focus();
+
+    void update();
+
+    void write_current_position_to_graphics_engines();
+
     void apply_map_boundaries();
-    void center_camera(int camera_speed);
+
+    void instant_focus();
+
+    void incremental_focus(int camera_speed);
+
 };
 
 #endif //SPELUNKYDS_CAMERA_H

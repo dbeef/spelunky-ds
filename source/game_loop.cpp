@@ -65,7 +65,7 @@ void gameloop::scroll() {
                 (*global::sprites.at(a)).bottomCollision = false;
         }
 
-        global::camera->update_position();
+        global::camera->update();
 
         unsigned long size = global::sprites_to_add.size();
 
@@ -135,7 +135,7 @@ void gameloop::scroll() {
             }
         }
 
-        global::camera->set_scroll();
+        global::camera->write_current_position_to_graphics_engines();
         global::main_oam_manager->updateOAM();
         global::sub_oam_manager->updateOAM();
         oam_utils::clean_unused_oam();
