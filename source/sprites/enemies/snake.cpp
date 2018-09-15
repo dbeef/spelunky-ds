@@ -10,7 +10,7 @@
 #include "../../../build/gfx_bat_snake_jetpack.h"
 #include "../animations/blood.h"
 #include "../../collisions/collisions.h"
-#include "../../tiles/map_utils.h"
+#include "../../tiles/level_rendering_utils.h"
 #include "../../../build/soundbank.h"
 #include "../sprite_utils.h"
 
@@ -128,7 +128,7 @@ void Snake::updateSpeed() {
 void Snake::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
 
     MapTile *t[9] = {};
-    Collisions::getNeighboringTiles(global::level_generator->map_tiles,
+    Collisions::getNeighboringTiles(global::current_level->map_tiles,
                                     x_current_pos_in_tiles,
                                     y_current_pos_in_tiles, t);
 

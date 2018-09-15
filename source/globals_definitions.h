@@ -11,7 +11,7 @@
 #include "sprites/sprite_type.hpp"
 #include "sprites/sprite_info.h"
 #include "hud/hud.h"
-#include "tiles/level_generator.h"
+#include "tiles/level.h"
 #include "sprites/main_dude/main_dude.h"
 #include "sprites/main_dude/game_state.h"
 
@@ -20,7 +20,7 @@ namespace global {
     InputHandler *input_handler = nullptr;
     Camera *camera = nullptr;
     MainDude *main_dude = nullptr;
-    LevelGenerator *level_generator = nullptr;
+    Level *current_level = nullptr;
     OAMManager *main_oam_manager = nullptr;
     OAMManager *sub_oam_manager = nullptr;
     Hud *hud = nullptr;

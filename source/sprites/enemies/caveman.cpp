@@ -11,7 +11,7 @@
 #include "../../../build/soundbank.h"
 #include "../animations/blood.h"
 #include "../../../build/gfx_caveman_damsel.h"
-#include "../../tiles/map_utils.h"
+#include "../../tiles/level_rendering_utils.h"
 #include "../../tiles/tile_orientation.hpp"
 #include "../sprite_utils.h"
 
@@ -135,7 +135,7 @@ void Caveman::updateSpeed() {
 void Caveman::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
 
     MapTile *t[9] = {};
-    Collisions::getNeighboringTiles(global::level_generator->map_tiles, x_current_pos_in_tiles,
+    Collisions::getNeighboringTiles(global::current_level->map_tiles, x_current_pos_in_tiles,
                                     y_current_pos_in_tiles, t);
 
     bool bounce = (stunned || killed);
@@ -330,9 +330,9 @@ void Caveman::check_if_can_be_triggered() {
 
         MapTile *tiles[9] = {};
         if (sprite_state == SpriteState::W_RIGHT && diff < 0)
-            Collisions::getTilesOnRightFromXY(global::level_generator->map_tiles, xx, yy, tiles);
+            Collisions::getTilesOnRightFromXY(global::current_level->map_tiles, xx, yy, tiles);
         else if (sprite_state == SpriteState::W_LEFT && diff > 0)
-            Collisions::getTilesOnLeftFromXY(global::level_generator->map_tiles, xx, yy, tiles);
+            Collisions::getTilesOnLeftFromXY(global::current_level->map_tiles, xx, yy, tiles);
         else triggered = false;
 
 

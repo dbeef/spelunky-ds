@@ -7,7 +7,7 @@
 #include "game_state.h"
 #include "../../globals_declarations.h"
 #include "../../game_loop.h"
-#include "../../tiles/map_utils.h"
+#include "../../tiles/level_rendering_utils.h"
 #include "../../tiles/splash_screen_type.hpp"
 #include "../../memory/oam_utils.h"
 #include "../../../build/soundbank.h"
@@ -15,6 +15,7 @@
 #include "../animations/smooch.h"
 #include "../../sound/sound_utils.h"
 #include "../../base_map.h"
+#include "../../tiles/level_generator.h"
 
 void GameState::reset_main_dude() {
     global::main_dude->carrying_spring_shoes = false;
@@ -95,7 +96,7 @@ void GameState::start_level_transition_screen() {
 
 
         MapTile *entrance;
-        global::level_generator->get_first_tile(MapTileType::ENTRANCE, entrance);
+        global::current_level->get_first_tile_of_given_type(MapTileType::ENTRANCE, entrance);
         if (entrance != nullptr) {
             damsel->x = (entrance->x * 16) + 7 * 16;
             damsel->y = entrance->y * 16;
@@ -141,7 +142,7 @@ void GameState::handle_changing_screens() {
 //        for(int a =0;a < 1*60;a++)
 //            swiWaitForVBlank();
 
-        global::level_generator->generate_new_rooms_layout();
+        generate_new_level_layout();
 
         if (global::game_state->in_main_menu || global::game_state->levels_transition_screen) {
 
@@ -158,13 +159,13 @@ void GameState::handle_changing_screens() {
 //            for(int a =0;a < 1*60;a++)
 //                swiWaitForVBlank();
 
-            global::level_generator->generate_frame();
+            global::current_level->generate_frame();
 
 //            printf("BEFORE GENERATE ROOMS\n");
 //            for(int a =0;a < 1*60;a++)
 //                swiWaitForVBlank();
 
-            global::level_generator->generate_rooms();
+            global::current_level->initialise_tiles_from_room_layout();
             set_position_to(MapTileType::ENTRANCE);
 
 
@@ -183,8 +184,8 @@ void GameState::handle_changing_screens() {
                 sound::stop_cave_music();
                 sound::start_menu_music();
 
-                global::level_generator->generate_splash_screen(SplashScreenType::MAIN_MENU_UPPER);
-                global::level_generator->generate_splash_screen(SplashScreenType::MAIN_MENU_LOWER);
+                global::current_level->initialise_tiles_from_splash_screen(SplashScreenType::MAIN_MENU_UPPER);
+                global::current_level->initialise_tiles_from_splash_screen(SplashScreenType::MAIN_MENU_LOWER);
 //                set_position_to(MapTileType::ENTRANCE);
                 global::main_dude->x = 113;
                 global::main_dude->y = 288;
@@ -192,12 +193,12 @@ void GameState::handle_changing_screens() {
                 global::camera->instant_focus();
 
             } else if (global::main_dude->dead) {
-                global::level_generator->generate_splash_screen(SplashScreenType::SCORES_UPPER);
-                global::level_generator->generate_splash_screen(SplashScreenType::SCORES_LOWER);
+                global::current_level->initialise_tiles_from_splash_screen(SplashScreenType::SCORES_UPPER);
+                global::current_level->initialise_tiles_from_splash_screen(SplashScreenType::SCORES_LOWER);
                 set_position_to(MapTileType::EXIT);
             } else {
-                global::level_generator->generate_splash_screen(SplashScreenType::ON_LEVEL_DONE_UPPER);
-                global::level_generator->generate_splash_screen(SplashScreenType::ON_LEVEL_DONE_LOWER);
+                global::current_level->initialise_tiles_from_splash_screen(SplashScreenType::ON_LEVEL_DONE_UPPER);
+                global::current_level->initialise_tiles_from_splash_screen(SplashScreenType::ON_LEVEL_DONE_LOWER);
                 set_position_to(MapTileType::ENTRANCE);
 //                global::main_dude->x = 32;
 //                global::main_dude->y = 280;
@@ -213,7 +214,7 @@ void GameState::handle_changing_screens() {
 //        for(int a =0;a < 1*60;a++)
 //            swiWaitForVBlank();
 
-        global::level_generator->tiles_to_map();
+        global::current_level->write_tiles_to_map();
 
 
 //        printf("BEFORE SECTORIZE\n");
@@ -301,7 +302,7 @@ void GameState::handle_changing_screens() {
 void GameState::set_position_to(MapTileType t) {
 
     MapTile *entrance;
-    global::level_generator->get_first_tile(t, entrance);
+    global::current_level->get_first_tile_of_given_type(t, entrance);
 
     if (entrance != nullptr) {
         global::main_dude->x = entrance->x * 16;

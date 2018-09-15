@@ -126,7 +126,7 @@ void Damsel::draw() {
 
         //search for an exit
         MapTile *tiles[9] = {};
-        Collisions::getNeighboringTiles(global::level_generator->map_tiles, global::main_dude->current_x_in_tiles,
+        Collisions::getNeighboringTiles(global::current_level->map_tiles, global::main_dude->current_x_in_tiles,
                                         global::main_dude->current_y_in_tiles, tiles);
 
         exiting_level = tiles[CENTER] != nullptr && tiles[CENTER]->mapTileType == MapTileType::EXIT;
@@ -188,7 +188,7 @@ void Damsel::updateSpeed() {
 void Damsel::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
 
     MapTile *t[9] = {};
-    Collisions::getNeighboringTiles(global::level_generator->map_tiles, x_current_pos_in_tiles,
+    Collisions::getNeighboringTiles(global::current_level->map_tiles, x_current_pos_in_tiles,
                                     y_current_pos_in_tiles, t);
 
 

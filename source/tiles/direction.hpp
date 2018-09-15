@@ -5,6 +5,9 @@
 #ifndef SPELUNKYDS_DIRECTION_H
 #define SPELUNKYDS_DIRECTION_H
 
+/**
+ * Indicates direction, where level generator can go when making new level layout.
+ */
 enum Direction{
     LEFT,
     RIGHT,

@@ -55,9 +55,9 @@ int main() {
 
     console::init();
 
-    global::level_generator->generate_splash_screen(SplashScreenType::MAIN_MENU_UPPER);
-    global::level_generator->generate_splash_screen(SplashScreenType::MAIN_MENU_LOWER);
-    global::level_generator->render_tiles_on_base_map();
+    global::current_level->initialise_tiles_from_splash_screen(SplashScreenType::MAIN_MENU_UPPER);
+    global::current_level->initialise_tiles_from_splash_screen(SplashScreenType::MAIN_MENU_LOWER);
+    global::current_level->update_level();
 
     dmaCopy(gfx_cavebgPal, BG_PALETTE, gfx_cavebgPalLen);
     dmaCopy(gfx_cavebgPal, BG_PALETTE_SUB, gfx_cavebgPalLen);

@@ -69,7 +69,7 @@ void SpikeShoes::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_p
     if (collected) return;
 
     MapTile *t[9];
-    Collisions::getNeighboringTiles(global::level_generator->map_tiles,
+    Collisions::getNeighboringTiles(global::current_level->map_tiles,
                                     x_current_pos_in_tiles, y_current_pos_in_tiles, t);
 
     upperCollision = Collisions::checkUpperCollision(t, &x, &y, &ySpeed, physical_width, true, 0.35);

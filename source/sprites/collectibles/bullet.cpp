@@ -7,7 +7,7 @@
 #include "../../../build/gfx_spike_collectibles_flame.h"
 #include "../moving_object.h"
 #include "bullet.h"
-#include "../../tiles/map_utils.h"
+#include "../../tiles/level_rendering_utils.h"
 #include "../sprite_utils.h"
 
 #define BULLET_POSITION_INC_DELTA 15
@@ -86,7 +86,7 @@ void Bullet::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_i
         return;
 
     MapTile *t[9];
-    Collisions::getNeighboringTiles(global::level_generator->map_tiles,
+    Collisions::getNeighboringTiles(global::current_level->map_tiles,
                                     x_current_pos_in_tiles, y_current_pos_in_tiles, t);
 
     upperCollision = Collisions::checkUpperCollision(t, &x, &y, &ySpeed, physical_width, false, 0);

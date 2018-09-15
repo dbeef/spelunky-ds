@@ -7,7 +7,7 @@
 #include "../../../build/gfx_blood_rock_rope_poof.h"
 #include "rock.h"
 #include "../../collisions/collisions.h"
-#include "../../tiles/map_utils.h"
+#include "../../tiles/level_rendering_utils.h"
 #include "../sprite_utils.h"
 
 #define ROCK_POS_INC_DELTA 15
@@ -49,7 +49,7 @@ void Rock::updateSpeed() {
 void Rock::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
 
     MapTile *t[9];
-    Collisions::getNeighboringTiles(global::level_generator->map_tiles,
+    Collisions::getNeighboringTiles(global::current_level->map_tiles,
                                     x_current_pos_in_tiles, y_current_pos_in_tiles, t);
 
     upperCollision = Collisions::checkUpperCollision(t, &x, &y, &ySpeed, physical_width, true, 0.35);

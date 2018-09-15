@@ -145,7 +145,7 @@ void Jetpack::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_
         return;
 
     MapTile *tiles[9];
-    Collisions::getNeighboringTiles(global::level_generator->map_tiles, x_current_pos_in_tiles,
+    Collisions::getNeighboringTiles(global::current_level->map_tiles, x_current_pos_in_tiles,
                                     y_current_pos_in_tiles,
                                     tiles);
 

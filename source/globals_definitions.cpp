@@ -10,7 +10,7 @@ void global::init_globals() {
     input_handler = new InputHandler();
     camera = new Camera();
     main_dude = new MainDude();
-    level_generator = new LevelGenerator();
+    current_level = new Level();
     main_oam_manager = new OAMManager();
     sub_oam_manager = new OAMManager();
     hud = new Hud();

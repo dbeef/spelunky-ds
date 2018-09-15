@@ -9,7 +9,7 @@
 #include "../../../build/gfx_spider_skeleton.h"
 #include "../../globals_declarations.h"
 #include "../../collisions/collisions.h"
-#include "../../tiles/map_utils.h"
+#include "../../tiles/level_rendering_utils.h"
 #include "../../../build/soundbank.h"
 #include "../animations/bone.h"
 #include "../animations/skull.h"
@@ -94,7 +94,7 @@ void Skeleton::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos
     bool death_speed = ySpeed > 3.5f; //skeleton disintegrates in contact with the bottom above some speed
 
     MapTile *t[9] = {};
-    Collisions::getNeighboringTiles(global::level_generator->map_tiles,
+    Collisions::getNeighboringTiles(global::current_level->map_tiles,
                                     x_current_pos_in_tiles, y_current_pos_in_tiles, t);
 
     standingOnLeftEdge = Collisions::isStandingOnLeftEdge(t, x, physical_width, x_current_pos_in_tiles);
@@ -194,11 +194,11 @@ void Skeleton::check_if_can_be_summoned() {
         if (diff > 0) {
             //must have been walking towards skeleton from skeleton's left side, so pointing rightwards
             main_dude_orientation_at_summoning_moment = SpriteState::W_RIGHT;
-            Collisions::getTilesOnLeftFromXY(global::level_generator->map_tiles, xx, yy, tiles);
+            Collisions::getTilesOnLeftFromXY(global::current_level->map_tiles, xx, yy, tiles);
         } else {
             //must have been walking towards skeleton from skeleton's right side, so pointing leftwards
             main_dude_orientation_at_summoning_moment = SpriteState::W_LEFT;
-            Collisions::getTilesOnRightFromXY(global::level_generator->map_tiles, xx, yy, tiles);
+            Collisions::getTilesOnRightFromXY(global::current_level->map_tiles, xx, yy, tiles);
         }
 
         for (int a = 0; a < 9; a++) {

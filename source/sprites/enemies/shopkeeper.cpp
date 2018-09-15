@@ -197,7 +197,7 @@ void Shopkeeper::updateSpeed() {
 void Shopkeeper::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
 
     MapTile *t[9] = {};
-    Collisions::getNeighboringTiles(global::level_generator->map_tiles,
+    Collisions::getNeighboringTiles(global::current_level->map_tiles,
                                     x_current_pos_in_tiles, y_current_pos_in_tiles, t);
 
     bool bounce = (stunned || killed);
@@ -457,7 +457,7 @@ void Shopkeeper::set_shop_bounds() {
 
 
     MapTile *shop_sign = nullptr;
-    global::level_generator->get_first_tile(MapTileType::SHOP_SIGN_RARE, shop_sign);
+    global::current_level->get_first_tile_of_given_type(MapTileType::SHOP_SIGN_RARE, shop_sign);
 
     int tile_x = shop_sign->x * TILE_W;
 

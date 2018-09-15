@@ -12,7 +12,7 @@
 #include "shotgun.h"
 #include "bullet.h"
 #include "../animations/got_collectible.h"
-#include "../../tiles/map_utils.h"
+#include "../../tiles/level_rendering_utils.h"
 #include "../sprite_utils.h"
 
 #define SHOTGUN_POS_INC_DELTA 15
@@ -86,7 +86,7 @@ void Shotgun::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_
     if (hold_by_anyone) return;
 
     MapTile *t[9];
-    Collisions::getNeighboringTiles(global::level_generator->map_tiles,
+    Collisions::getNeighboringTiles(global::current_level->map_tiles,
                                     x_current_pos_in_tiles, y_current_pos_in_tiles, t);
 
     upperCollision = Collisions::checkUpperCollision(t, &x, &y, &ySpeed, physical_width, true, 0.35);

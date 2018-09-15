@@ -10,7 +10,7 @@
 #include "../../../build/gfx_spike_collectibles_flame.h"
 #include "../../../build/soundbank.h"
 #include "../animations/got_collectible.h"
-#include "../../tiles/map_utils.h"
+#include "../../tiles/level_rendering_utils.h"
 #include "../sprite_utils.h"
 #include "../animations/blast.h"
 #include "../collectibles/bullet.h"
@@ -79,7 +79,7 @@ void Pistol::updateSpeed() {
 
 void Pistol::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
     MapTile *t[9];
-    Collisions::getNeighboringTiles(global::level_generator->map_tiles,
+    Collisions::getNeighboringTiles(global::current_level->map_tiles,
                                     x_current_pos_in_tiles, y_current_pos_in_tiles, t);
 
     upperCollision = Collisions::checkUpperCollision(t, &x, &y, &ySpeed, physical_width, true, 0.35);

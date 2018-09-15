@@ -6,7 +6,7 @@
 #define SPELUNKYDS_SCROLLING_H
 
 #include <nds/arm9/sprite.h>
-#include "tiles/level_generator.h"
+#include "tiles/level.h"
 #include "sprites/sprite_info.h"
 #include "sprites/collectibles/moniez.h"
 #include "globals_declarations.h"

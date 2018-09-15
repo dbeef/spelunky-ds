@@ -9,7 +9,7 @@
 #include "main_dude.h"
 #include "../../globals_declarations.h"
 #include "../../collisions/collisions.h"
-#include "../../tiles/map_utils.h"
+#include "../../tiles/level_rendering_utils.h"
 #include "../../../build/gfx_spelunker.h"
 #include "../../../build/soundbank.h"
 #include "../../tiles/tile_orientation.hpp"
@@ -141,7 +141,7 @@ void MainDude::handle_key_input() {
             }
 
             MapTile *neighboringTiles[9] = {};
-            Collisions::getNeighboringTiles(global::level_generator->map_tiles, xx, yy, neighboringTiles);
+            Collisions::getNeighboringTiles(global::current_level->map_tiles, xx, yy, neighboringTiles);
 
 
             can_climb_ladder = neighboringTiles[CENTER] != nullptr &&
@@ -208,7 +208,7 @@ void MainDude::handle_key_input() {
 
             MapTile *neighboringTiles[9] = {};
 
-            Collisions::getNeighboringTiles(global::level_generator->map_tiles, xx, yy, neighboringTiles);
+            Collisions::getNeighboringTiles(global::current_level->map_tiles, xx, yy, neighboringTiles);
             can_climb_ladder = neighboringTiles[CENTER]->mapTileType == MapTileType::LADDER ||
                                neighboringTiles[CENTER]->mapTileType == MapTileType::LADDER_DECK;
 
@@ -400,7 +400,7 @@ void MainDude::updateSpeed() {
 void MainDude::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
 
     MapTile *t[9];
-    Collisions::getNeighboringTiles(global::level_generator->map_tiles,
+    Collisions::getNeighboringTiles(global::current_level->map_tiles,
                                     x_current_pos_in_tiles, y_current_pos_in_tiles, t);
 
     bottomCollision = Collisions::checkBottomCollision(t, &this->x, &this->y, &ySpeed, 16, 16, dead, BOUNCING_FACTOR_Y);

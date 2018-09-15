@@ -4,12 +4,12 @@
 
 #include "bomb.h"
 #include "../../globals_declarations.h"
-#include "../../tiles/map_utils.h"
+#include "../../tiles/level_rendering_utils.h"
 #include "../../collisions/collisions.h"
 #include "../main_dude/main_dude.h"
 #include "../../../build/gfx_explosion.h"
 #include "../../../build/soundbank.h"
-#include "../../tiles/map_utils.h"
+#include "../../tiles/level_rendering_utils.h"
 #include "../../collisions/collisions.h"
 #include "../animations/flame.h"
 #include "../sprite_utils.h"
@@ -117,7 +117,7 @@ void Bomb::updateSpeed() {
 void Bomb::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
 
     MapTile *t[9];
-    Collisions::getNeighboringTiles(global::level_generator->map_tiles,
+    Collisions::getNeighboringTiles(global::current_level->map_tiles,
                                     x_current_pos_in_tiles, y_current_pos_in_tiles, t);
 
     upperCollision = Collisions::checkUpperCollision(t, &x, &y, &ySpeed, physical_width, true, 0.35);
@@ -187,7 +187,7 @@ void Bomb::explode() {
     int xx = floor_div(this->x + 0.5 * BOMB_SIZE, TILE_W);
     int yy = floor_div(this->y + 0.5 * BOMB_SIZE, TILE_H);
 
-    Collisions::bombNeighboringTiles(global::level_generator->map_tiles, xx, yy);
+    Collisions::bombNeighboringTiles(global::current_level->map_tiles, xx, yy);
     global::game_state->bombed = true;
 
 }

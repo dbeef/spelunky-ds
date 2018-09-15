@@ -7,7 +7,7 @@
 #include <cmath>
 #include "moving_object.h"
 #include "../globals_declarations.h"
-#include "../tiles/map_utils.h"
+#include "../tiles/level_rendering_utils.h"
 #include "../collisions/collisions.h"
 #include "../../build/soundbank.h"
 #include "../sound/sound_utils.h"

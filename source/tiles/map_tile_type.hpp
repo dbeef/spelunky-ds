@@ -5,8 +5,11 @@
 #ifndef SPELUNKYDS_MAPTILETYPES_H
 #define SPELUNKYDS_MAPTILETYPES_H
 
+//https://stackoverflow.com/questions/23288934/c-how-to-have-same-enum-members-name-in-different-enum-names-without-getting-e
+
 /**
- * https://stackoverflow.com/questions/23288934/c-how-to-have-same-enum-members-name-in-different-enum-names-without-getting-e
+ * Indicates type of a MapTile.
+ * Tilemap can be found at gfx/tilemaps/gfx_cavebg.png
  */
 enum MapTileType {
     NOTHING,                        //0  NON_COLLIDABLE
@@ -45,7 +48,7 @@ enum MapTileType {
     SHOP_SIGN_CRAPS,                //33
     SHOP_SIGN_GENERAL,              //34
     SHOP_SIGN_KISSING,              //35
-    NA,                             //36
+    NA,                             //36 FIXME Probably not used, delete after checking out
     SHOP_MUGSHOT_1,                 //37
     SHOP_MUGSHOT_2,                 //38
     SHOP_MUGSHOT_3,                 //39

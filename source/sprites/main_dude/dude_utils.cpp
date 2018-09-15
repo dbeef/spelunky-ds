@@ -14,7 +14,7 @@
 #include "../collectibles/spring_shoes.h"
 #include "../items/rope.h"
 #include "../../collisions/collisions.h"
-#include "../../tiles/map_utils.h"
+#include "../../tiles/level_rendering_utils.h"
 #include "../../../build/soundbank.h"
 #include "../../tiles/tile_orientation.hpp"
 #include "../items/spike_shoes.h"
@@ -93,7 +93,7 @@ void MainDude::throw_item() {
 
                         MapTile *t = nullptr;
                         if (xx >= 0 && xx <= 31 && yy > 0 && yy <= 31) {
-                            t = global::level_generator->map_tiles[xx][yy];
+                            t = global::current_level->map_tiles[xx][yy];
                             if (t != nullptr && !t->collidable) {
                                 global::sprites.at(a)->x = xx * TILE_W;
                                 global::sprites.at(a)->y = yy * TILE_H;

@@ -1,62 +1,16 @@
 //
-// Created by xdbeef on 04.03.18.
+// Created by xdbeef on 15.09.18.
 //
 
-#ifndef SPELUNKYDS_LEVELGENERATOR_H
-#define SPELUNKYDS_LEVELGENERATOR_H
+#ifndef SPELUNKYDS_LEVEL_LAYOUT_H
+#define SPELUNKYDS_LEVEL_LAYOUT_H
 
-#include "map_tile.hpp"
-#include "direction.hpp"
+#include "level.h"
 
-#define ROOMS_X 3
-#define ROOMS_Y 3
+void generate_new_level_layout();
 
-#define SPLASH_SCREEN_WIDTH 16
-#define SPLASH_SCREEN_HEIGHT 12
+void obtain_new_direction(int curr_x, Direction &direction);
 
-#define ROOM_TILE_WIDTH_SPLASH_SCREEN 16
-#define ROOM_TILE_HEIGHT_SPLASH_SCREEN 12
+void place_a_shop();
 
-#define ROOM_TILE_WIDTH_GAME 10
-#define ROOM_TILE_HEIGHT_GAME 10
-
-#define MAP_GAME_HEIGHT_TILES 32
-#define MAP_GAME_WIDTH_TILES 32
-
-#define LINE_WIDTH 64
-//Offset of 2 tiles, 8 px each
-#define OFFSET_X 2
-//Offset of 128 tiles, 8px  each (2 lines, 64 each)
-#define OFFSET_Y 128
-
-class  LevelGenerator {
-
-public:
-
-    MapTile *map_tiles[32][32];
-
-    int layout_room_types[ROOMS_X][ROOMS_Y];
-
-    int layout_room_ids[ROOMS_X][ROOMS_Y];
-
-    void generate_new_rooms_layout();
-
-    void tiles_to_map();
-
-    void generate_frame();
-
-    void generate_rooms();
-
-    void generate_splash_screen(int room_type);
-
-    void get_first_tile(MapTileType mapTileType, MapTile *&m);
-
-    void render_tiles_on_base_map();
-
-    void place_a_shop();
-
-    void obtain_new_direction(int curr_x, Direction &direction);
-};
-
-#endif //SPELUNKYDS_LEVELGENERATOR_H
-
+#endif //SPELUNKYDS_LEVEL_LAYOUT_H

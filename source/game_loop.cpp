@@ -7,7 +7,7 @@
 #include "sprites/enemies/bat.h"
 #include "sprites/enemies/spider.h"
 #include "rooms/left_right_rooms.hpp"
-#include "rooms/room_type.hpp"
+#include "rooms/RoomType.hpp"
 #include "rooms/left_right_down_rooms.hpp"
 #include "rooms/left_right_up_rooms.hpp"
 #include "rooms/entrance_rooms.hpp"
@@ -59,7 +59,7 @@ void gameloop::scroll() {
         global::input_handler->updateInput();
 
         if (global::game_state->bombed) {
-            global::level_generator->render_tiles_on_base_map();
+            global::current_level->update_level();
             global::game_state->bombed = false;
             for (int a = 0; a < global::sprites.size(); a++)
                 (*global::sprites.at(a)).bottomCollision = false;
@@ -157,8 +157,8 @@ void gameloop::populate_cave_moniez() {
     for (int b = ROOMS_Y - 1; b >= 0; b--) {
         for (int a = 0; a < ROOMS_X; a++) {
 
-            int room_type = global::level_generator->layout_room_types[a][b];
-            int room_id = global::level_generator->layout_room_ids[a][b];
+            int room_type = global::current_level->layout[a][b];
+            int room_id = global::current_level->layout_room_ids[a][b];
 
 
             if (room_id == -1)
@@ -174,17 +174,17 @@ void gameloop::populate_cave_moniez() {
 
                     int npc;
 
-                    if (room_type == room_type::R_LEFT_RIGHT)
+                    if (room_type == RoomType::R_LEFT_RIGHT)
                         npc = left_right_loot[room_id][tab_y][tab_x];
-                    else if (room_type == room_type::R_LEFT_RIGHT_UP)
+                    else if (room_type == RoomType::R_LEFT_RIGHT_UP)
                         npc = left_right_up_loot[room_id][tab_y][tab_x];
-                    else if (room_type == room_type::R_LEFT_RIGHT_DOWN)
+                    else if (room_type == RoomType::R_LEFT_RIGHT_DOWN)
                         npc = left_right_down_loot[room_id][tab_y][tab_x];
-                    else if (room_type == room_type::R_ENTRANCE)
+                    else if (room_type == RoomType::R_ENTRANCE)
                         npc = entrance_room_loot[room_id][tab_y][tab_x];
-                    else if (room_type == room_type::R_EXIT)
+                    else if (room_type == RoomType::R_EXIT)
                         npc = exit_room_loot[room_id][tab_y][tab_x];
-                    else if (room_type == room_type::R_CLOSED)
+                    else if (room_type == RoomType::R_CLOSED)
                         npc = closed_rooms_loot[room_id][tab_y][tab_x];
                     else
                         continue;
@@ -311,8 +311,8 @@ void gameloop::populate_cave_npcs() {
     for (int b = ROOMS_Y - 1; b >= 0; b--) {
         for (int a = 0; a < ROOMS_X; a++) {
 
-            int room_type = global::level_generator->layout_room_types[a][b];
-            int room_id = global::level_generator->layout_room_ids[a][b];
+            int room_type = global::current_level->layout[a][b];
+            int room_id = global::current_level->layout_room_ids[a][b];
 
 
             if (room_id == -1)
@@ -329,21 +329,21 @@ void gameloop::populate_cave_npcs() {
                         continue;
 
                     int npc;
-                    if (room_type == room_type::R_LEFT_RIGHT)
+                    if (room_type == RoomType::R_LEFT_RIGHT)
                         npc = left_right_npcs[room_id][tab_y][tab_x];
-                    else if (room_type == room_type::R_LEFT_RIGHT_DOWN)
+                    else if (room_type == RoomType::R_LEFT_RIGHT_DOWN)
                         npc = left_right_down_npcs[room_id][tab_y][tab_x];
-                    else if (room_type == room_type::R_LEFT_RIGHT_UP)
+                    else if (room_type == RoomType::R_LEFT_RIGHT_UP)
                         npc = left_right_up_npcs[room_id][tab_y][tab_x];
-                    else if (room_type == room_type::R_EXIT)
+                    else if (room_type == RoomType::R_EXIT)
                         npc = exit_room_npcs[room_id][tab_y][tab_x];
-                    else if (room_type == room_type::R_CLOSED)
+                    else if (room_type == RoomType::R_CLOSED)
                         npc = closed_rooms_npcs[room_id][tab_y][tab_x];
-                    else if (room_type == room_type::R_SHOP_LEFT || room_type == room_type::R_SHOP_LEFT_MUGSHOT) {
+                    else if (room_type == RoomType::R_SHOP_LEFT || room_type == RoomType::R_SHOP_LEFT_MUGSHOT) {
                         npc = shops_npcs[0][tab_y][tab_x];
                         if (shop_starting_item == -1)
                             shop_starting_item = rand() % 9;
-                    } else if (room_type == room_type::R_SHOP_RIGHT || room_type == room_type::R_SHOP_RIGHT_MUGSHOT) {
+                    } else if (room_type == RoomType::R_SHOP_RIGHT || room_type == RoomType::R_SHOP_RIGHT_MUGSHOT) {
                         npc = shops_npcs[1][tab_y][tab_x];
                         if (shop_starting_item == -1)
                             shop_starting_item = rand() % 9;

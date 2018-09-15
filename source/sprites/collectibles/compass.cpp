@@ -74,7 +74,7 @@ void Compass::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_
     if (collected) return;
 
     MapTile *t[9];
-    Collisions::getNeighboringTiles(global::level_generator->map_tiles,
+    Collisions::getNeighboringTiles(global::current_level->map_tiles,
                                     x_current_pos_in_tiles, y_current_pos_in_tiles, t);
     upperCollision = Collisions::checkUpperCollision(t, &x, &y, &ySpeed, physical_width, true, 0.35);
     bottomCollision = Collisions::checkBottomCollision(t, &x, &y, &ySpeed, physical_width, physical_height, true, 0.35);
@@ -140,7 +140,7 @@ Compass::Compass() {
 void Compass::draw_arrow_to_exit() {
 
     MapTile *exit = nullptr;
-    global::level_generator->get_first_tile(MapTileType::EXIT, exit);
+    global::current_level->get_first_tile_of_given_type(MapTileType::EXIT, exit);
 
 
     if (exit != nullptr) {

@@ -12,7 +12,7 @@
 #include "camera/camera.h"
 #include "sprites/main_dude/main_dude.h"
 #include "sprites/sprite_type.hpp"
-#include "tiles/level_generator.h"
+#include "tiles/level.h"
 #include "sprites/sprite_info.h"
 #include "sprites/main_dude/game_state.h"
 
@@ -28,7 +28,7 @@ namespace global {
     extern MainDude *main_dude;
     extern InputHandler *input_handler;
     extern Camera *camera;
-    extern LevelGenerator *level_generator;
+    extern Level *current_level;
     extern OAMManager *main_oam_manager;
     extern OAMManager *sub_oam_manager;
     extern Hud *hud;
