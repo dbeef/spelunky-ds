@@ -10,6 +10,8 @@
 #include "splash_screen_type.hpp"
 #include "../rooms/RoomType.hpp"
 
+//TODO Move from macros to constexpr in other classes too.
+
 constexpr u16 ROOMS_X = 3;
 constexpr u16 ROOMS_Y = 3;
 
@@ -35,9 +37,13 @@ public:
 
     MapTile *map_tiles[32][32];
 
+    //holds information on what room type is at specific array index
     RoomType layout[ROOMS_X][ROOMS_Y];
 
-    int layout_room_ids[ROOMS_X][ROOMS_Y];
+    //holds information on specific variation of room type, that is given from 'layout' array
+    //i.e, we have 6 possible 'closed' rooms declared in the closed_rooms.hpp,
+    //so this array lets us know, that we have a 'closed' room number 3 (for example) at some place.
+    u16 layout_room_ids[ROOMS_X][ROOMS_Y];
 
     void update_level();
 
