@@ -141,7 +141,7 @@ void GameState::handle_changing_screens() {
 //        for(int a =0;a < 1*60;a++)
 //            swiWaitForVBlank();
 
-        global::level_generator->newLayout(*global::timer);
+        global::level_generator->generate_new_rooms_layout();
 
         if (global::game_state->in_main_menu || global::game_state->levels_transition_screen) {
 

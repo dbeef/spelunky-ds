@@ -28,16 +28,17 @@
 //Offset of 128 tiles, 8px  each (2 lines, 64 each)
 #define OFFSET_Y 128
 
-
 class  LevelGenerator {
 
 public:
 
     MapTile *map_tiles[32][32];
+
     int layout_room_types[ROOMS_X][ROOMS_Y];
+
     int layout_room_ids[ROOMS_X][ROOMS_Y];
 
-    void newLayout(int seed);
+    void generate_new_rooms_layout();
 
     void tiles_to_map();
 
@@ -46,8 +47,6 @@ public:
     void generate_rooms();
 
     void generate_splash_screen(int room_type);
-
-    void match_tile(MapTile *t, int value);
 
     void get_first_tile(MapTileType mapTileType, MapTile *&m);
 

@@ -7,20 +7,28 @@
 
 #include "map_tile_type.hpp"
 
+/**
+ * https://stackoverflow.com/questions/629017/how-does-array100-0-set-the-entire-array-to-0
+ */
 class MapTile {
 public:
-    //There's 512 px x 512 px map
-    //That makes 64x64 of (8x8) tiles
-    //I decided that the smallest, logical object is 2x2 of 8px tiles, which makes 16 x 16
-    //(practical reasons, compromise between having as much tiles as possible on screen and readability)
-    int values[4];
-    int map_index[4];
-    int x; //32
-    int y; //32
-    bool collidable;
-    bool destroyable;
-    MapTileType mapTileType;
-    MapTile();
+    //In SpelunkyDS there's a 512x512 px render space that can be filled with 8x8 tiles,
+    //in the origial Spelunky, tiles are of 16 px width and 16 px height, so in SpelunkyDS it makes an array of 32x32
+    //tiles, the smallest object that tile map can use is 8x8 px tile, so to have a 16x16px tile I need a 2x2 array
+    //(called 'values') which will store 4 integer values that represent an index on the spritesheet, from which
+    //graphics for this tile will be copied.
+    //32x32 makes a map of 3x3 rooms composed of 10x10 tiles + a frame of 1 undestroyable tile over the whole map.
+    int values[4]{};
+    //index on the render space, takes values 0 to (512x512 / 8x8) = 4096
+    //this index moves from the left-upper corner to the right-down corner, increments once every 8x8 tile
+    int map_index[4]{};
+    //this x,y means position on 32x32 MapTile array
+    int x{}; //0-32
+    int y{}; //0-32
+    bool collidable{};
+    bool destroyable{};
+    MapTileType mapTileType{};
+    void match_tile(MapTileType type);
 };
 
 
