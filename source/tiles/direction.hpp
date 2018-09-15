@@ -8,8 +8,7 @@
 enum Direction{
     LEFT,
     RIGHT,
-    DOWN,
-    UNDEFINED
+    DOWN
 };
 
 #endif //SPELUNKYDS_DIRECTION_H

@@ -6,6 +6,7 @@
 #define SPELUNKYDS_MAPTILE_H
 
 #include "map_tile_type.hpp"
+#include "nds.h"
 
 /**
  * https://stackoverflow.com/questions/629017/how-does-array100-0-set-the-entire-array-to-0
@@ -18,7 +19,7 @@ public:
     //(called 'values') which will store 4 integer values that represent an index on the spritesheet, from which
     //graphics for this tile will be copied.
     //32x32 makes a map of 3x3 rooms composed of 10x10 tiles + a frame of 1 undestroyable tile over the whole map.
-    int values[4]{};
+    u16 values[4]{};
     //index on the render space, takes values 0 to (512x512 / 8x8) = 4096
     //this index moves from the left-upper corner to the right-down corner, increments once every 8x8 tile
     int map_index[4]{};

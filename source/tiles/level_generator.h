@@ -6,6 +6,7 @@
 #define SPELUNKYDS_LEVELGENERATOR_H
 
 #include "map_tile.hpp"
+#include "direction.hpp"
 
 #define ROOMS_X 3
 #define ROOMS_Y 3
@@ -51,6 +52,10 @@ public:
     void get_first_tile(MapTileType mapTileType, MapTile *&m);
 
     void render_tiles_on_base_map();
+
+    void place_a_shop();
+
+    void obtain_new_direction(int curr_x, Direction &direction);
 };
 
 #endif //SPELUNKYDS_LEVELGENERATOR_H
