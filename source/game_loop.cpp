@@ -142,6 +142,7 @@ void gameloop::scroll() {
     }
 }
 
+//TODO Move it to utils file
 void gameloop::populate_cave_moniez() {
 
 
@@ -291,7 +292,7 @@ void gameloop::populate_cave_moniez() {
 
 }
 
-//TODO Utils file for this
+//TODO Move it to utils file
 void gameloop::populate_cave_npcs() {
 
     Shopkeeper *shopkeeper = nullptr;
@@ -493,6 +494,7 @@ void gameloop::populate_cave_npcs() {
 
 }
 
+//TODO Move it to utils file
 void gameloop::populate_main_menu() {
 
     global::hud->bombs = 0;
