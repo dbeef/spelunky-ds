@@ -12,6 +12,7 @@
 #define ARROW_TRAP_SPRITE_HEIGHT 16
 #define ARROW_TRAP_SPRITE_WIDTH 16
 
+//http://spelunky.wikia.com/wiki/Arrow_Trap
 class ArrowTrap : public MovingObject {
 
 public:

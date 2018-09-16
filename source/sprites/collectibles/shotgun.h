@@ -20,7 +20,7 @@
 #define MAX_X_SPEED_SHOTGUN 4
 #define MAX_Y_SPEED_SHOTGUN 4
 
-
+//http://spelunky.wikia.com/wiki/Shotgun
 class Shotgun: public MovingObject, public ShoppingObject {
 
 public:

@@ -5,6 +5,11 @@
 #ifndef SPELUNKYDS_BOMB_H
 #define SPELUNKYDS_BOMB_H
 
+#include <nds/arm9/sprite.h>
+#include "../../camera/camera.h"
+#include "../moving_object.h"
+#include "../sprite_info.h"
+
 #define BOMB_SIZE 8
 #define ARMED_TIME_BLINK_SLOW 2000
 #define ARMED_TIME_BLINK_FAST 3500
@@ -19,11 +24,7 @@
 #define MAX_X_SPEED_BOMB 4
 #define MAX_Y_SPEED_BOMB 4
 
-#include <nds/arm9/sprite.h>
-#include "../../camera/camera.h"
-#include "../moving_object.h"
-#include "../sprite_info.h"
-
+//http://spelunky.wikia.com/wiki/Bombs
 class Bomb : public MovingObject {
 
 public:

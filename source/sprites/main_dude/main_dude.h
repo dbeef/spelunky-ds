@@ -43,6 +43,7 @@
 #include "../../input/input_handler.h"
 #include "whip.h"
 
+//http://spelunky.wikia.com/wiki/Spelunky_Guy
 class MainDude : public MovingObject {
 
 public:

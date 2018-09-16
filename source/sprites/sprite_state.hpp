@@ -5,6 +5,9 @@
 #ifndef SPELUNKYDS_SPRITESTATE_H
 #define SPELUNKYDS_SPRITESTATE_H
 
+/**
+ * Indicates state of a sprite - is it facing right, left, or else.
+ */
 enum SpriteState {
     W_RIGHT = 0,
     W_LEFT = 1,

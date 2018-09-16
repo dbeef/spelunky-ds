@@ -20,7 +20,7 @@
 #define MAX_X_SPEED_PISTOL 4
 #define MAX_Y_SPEED_PISTOL 4
 
-
+//http://spelunky.wikia.com/wiki/Pistol
 class Pistol : public MovingObject, public ShoppingObject {
 
 public:

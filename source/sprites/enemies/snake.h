@@ -20,6 +20,7 @@
 #include "../sprite_state.hpp"
 #include "../sprite_info.h"
 
+//http://spelunky.wikia.com/wiki/Snake
 class Snake : public MovingObject {
 
 public:
@@ -56,7 +57,6 @@ public:
     SpriteInfo *subSpriteInfo{};
     u8 *frameGfx{};
     int sameDirectionInRow{};
-
 
     //Snake goes for random amount of time_utils on random direction, then waits random time_utils and the cycle goes again
     SpriteState spriteState{};

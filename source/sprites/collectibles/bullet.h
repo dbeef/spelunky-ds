@@ -18,6 +18,9 @@
 #define MAX_X_SPEED_BULLET 8
 #define MAX_Y_SPEED_BULLET 8
 
+/**
+ * \see Shotgun, Pistol
+ */
 class Bullet : public MovingObject {
 
 public:

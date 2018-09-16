@@ -11,6 +11,7 @@
 #include "../../../build/soundbank.h"
 #include "../animations/blood.h"
 #include "../../sound/sound_utils.h"
+#include "../sprite_utils.h"
 
 void Spikes::draw() {
 
@@ -26,9 +27,8 @@ void Spikes::draw() {
         kill_main_dude();
         spawn_blood();
         blood = true;
-        frameGfx = (u8 *) gfx_spike_collectibles_flameTiles + (sprite_width * sprite_height * (1) / 2);
-        subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
-        mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
+        frameGfx = (u8 *) gfx_spike_collectibles_flameTiles + (SPIKES_SPRITE_SIZE * (1) / 2);
+        sprite_utils::update_frame(frameGfx, SPIKES_SPRITE_SIZE, mainSpriteInfo, subSpriteInfo);
     }
 
     for (int a = 0; a < global::sprites.size(); a++) {
@@ -46,20 +46,18 @@ void Spikes::draw() {
                 if (!global::sprites.at(a)->bottomCollision && global::sprites.at(a)->ySpeed > 0 && !global::sprites.at(a)->hold_by_main_dude) {
                     global::sprites.at(a)->apply_dmg(8);
                     global::sprites.at(a)->xSpeed = 0;
-
-
                     blood = true;
-                    frameGfx = (u8 *) gfx_spike_collectibles_flameTiles + (sprite_width * sprite_height * (1) / 2);
-                    subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
-                    mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
+                    frameGfx = (u8 *) gfx_spike_collectibles_flameTiles + (SPIKES_SPRITE_SIZE * (1) / 2);
+                    sprite_utils::update_frame(frameGfx, SPIKES_SPRITE_SIZE, mainSpriteInfo, subSpriteInfo);
                 }
             }
 
         }
     }
 
-
     set_position();
+    sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);
+    sprite_utils::set_horizontal_flip(false, mainSpriteInfo, subSpriteInfo);
 }
 
 
@@ -74,38 +72,25 @@ void Spikes::initSprite() {
     delete subSpriteInfo;
 
     if (blood)
-        frameGfx = (u8 *) gfx_spike_collectibles_flameTiles + (sprite_width * sprite_height * (1) / 2);
+        frameGfx = (u8 *) gfx_spike_collectibles_flameTiles + (SPIKES_SPRITE_SIZE * (1) / 2);
     else
         frameGfx = (u8 *) gfx_spike_collectibles_flameTiles;
 
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_spike_collectibles_flamePal, gfx_spike_collectibles_flamePalLen,
-                                                        nullptr, sprite_width * sprite_height, sprite_width,
+                                                        nullptr, SPIKES_SPRITE_SIZE, sprite_width,
                                                         spriteType, true, false, LAYER_LEVEL::MIDDLE_BOT);
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_spike_collectibles_flamePal, gfx_spike_collectibles_flamePalLen,
-                                                          nullptr, sprite_width * sprite_height, sprite_width,
+                                                          nullptr, SPIKES_SPRITE_SIZE, sprite_width,
                                                           spriteType, true, false, LAYER_LEVEL::MIDDLE_BOT);
 
-    subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
-    mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
+    sprite_utils::update_frame(frameGfx, SPIKES_SPRITE_SIZE, mainSpriteInfo, subSpriteInfo);
 }
 
 void Spikes::set_position() {
-
     int main_x, main_y, sub_x, sub_y;
     get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
-
-    mainSpriteInfo->entry->x = main_x;
-    mainSpriteInfo->entry->y = main_y;
-
-    subSpriteInfo->entry->x = sub_x;
-    subSpriteInfo->entry->y = sub_y;
-
-    mainSpriteInfo->entry->vFlip = false;
-    mainSpriteInfo->entry->hFlip = false;
-
-    subSpriteInfo->entry->vFlip = false;
-    subSpriteInfo->entry->hFlip = false;
-
+    sprite_utils::set_entry_xy(mainSpriteInfo, main_x, main_y);
+    sprite_utils::set_entry_xy(subSpriteInfo, sub_x, sub_y);
 }
 
 Spikes::Spikes() {

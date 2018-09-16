@@ -18,16 +18,12 @@ namespace sprite_utils {
     //function to end the recursion and set the last element
     template<typename T>
     void set_priority(ObjPriority priority, T *i) {
-//        if(i == nullptr)
-//            printf("NULLPTR\n");
         i->entry->priority = priority;
     }
 
     //this function will be called for all but the last element in the pack
     template<typename T, typename ... Param>
     void set_priority(ObjPriority priority, T *i, Param *... params) {
-//        if(i == nullptr)
-//            printf("NULLPTR\n");
         i->entry->priority = priority;
         set_priority(priority, params ...);
     }
@@ -37,16 +33,12 @@ namespace sprite_utils {
     //function to end the recursion and set the last element
     template<typename T>
     void set_visibility(bool visibility, const T *i) {
-//        if(i == nullptr)
-//            printf("NULLPTR V\n");
         i->entry->isHidden = !visibility;
     }
 
     //this function will be called for all but the last element in the pack
     template<typename T, typename ... Param>
     void set_visibility(bool visibility, const T *i, const Param *... params) {
-//        if(i == nullptr)
-//            printf("NULLPTR V\n");
         i->entry->isHidden = !visibility;
         set_visibility(visibility, params ...);
     }
@@ -56,16 +48,12 @@ namespace sprite_utils {
     //function to end the recursion and set the last element
     template<typename T>
     void set_vertical_flip(bool vertical_flip, const T *i) {
-//        if(i == nullptr)
-//            printf("NULLPTR V_F\n");
         i->entry->vFlip = vertical_flip;
     }
 
     //this function will be called for all but the last element in the pack
     template<typename T, typename ... Param>
     void set_vertical_flip(bool vertical_flip, const T *i, const Param *... params) {
-//        if(i == nullptr)
-//            printf("NULLPTR V_F\n");
         i->entry->vFlip = vertical_flip;
         set_vertical_flip(vertical_flip, params ...);
     }
@@ -75,16 +63,12 @@ namespace sprite_utils {
     //function to end the recursion and set the last element
     template<typename T>
     void set_horizontal_flip(bool horizontal_flip, const T *i) {
-//        if(i == nullptr)
-//            printf("NULLPTR H_F\n");
         i->entry->hFlip = horizontal_flip;
     }
 
     //this function will be called for all but the last element in the pack
     template<typename T, typename ... Param>
     void set_horizontal_flip(bool horizontal_flip, const T *i, const Param *... params) {
-//        if(i == nullptr)
-//            printf("NULLPTR H_F\n");
         i->entry->hFlip = horizontal_flip;
         set_horizontal_flip(horizontal_flip, params ...);
     }
@@ -94,16 +78,12 @@ namespace sprite_utils {
     //function to end the recursion and set the last element
     template<typename T>
     void update_frame(u8 *frameGfx, int size, T *i) {
-//        if(i == nullptr)
-//            printf("NULLPTR U_F\n");
         i->updateFrame(frameGfx, size);
     }
 
     //this function will be called for all but the last element in the pack
     template<typename T, typename ... Param>
     void update_frame(u8 *frameGfx, int size, T *i, Param *... params) {
-//        if(i == nullptr)
-//            printf("NULLPTR U_F\n");
         i->updateFrame(frameGfx, size);
         update_frame(frameGfx, size, params ...);
     }

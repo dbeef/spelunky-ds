@@ -19,7 +19,7 @@
 #define MAX_X_SPEED_CRATE 4
 #define MAX_Y_SPEED_CRATE 4
 
-
+//http://spelunky.wikia.com/wiki/Crate
 class Crate: public MovingObject {
 
 public:

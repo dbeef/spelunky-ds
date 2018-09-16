@@ -5,6 +5,9 @@
 #ifndef SPELUNKYDS_ROCK_H
 #define SPELUNKYDS_ROCK_H
 
+#include <nds/arm9/sprite.h>
+#include "../moving_object.h"
+
 #define MAX_X_SPEED_ROCK 4
 #define MAX_Y_SPEED_ROCK 4
 
@@ -15,9 +18,7 @@
 #define ROCK_SPRITE_WIDTH 8
 #define ROCK_SPRITE_SIZE ROCK_SPRITE_WIDTH * ROCK_SPRITE_HEIGHT
 
-#include <nds/arm9/sprite.h>
-#include "../moving_object.h"
-
+//http://spelunky.wikia.com/wiki/Rock
 class Rock : public MovingObject {
 
 public:

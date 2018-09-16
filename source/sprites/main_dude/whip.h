@@ -15,6 +15,7 @@
 
 #include "../moving_object.h"
 
+//http://spelunky.wikia.com/wiki/Whip
 class Whip : public MovingObject {
 
 public:

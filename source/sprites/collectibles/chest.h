@@ -17,7 +17,7 @@
 #define MAX_X_SPEED_CHEST 6
 #define MAX_Y_SPEED_CHEST 4
 
-
+//http://spelunky.wikia.com/wiki/Chest
 class Chest: public MovingObject {
 
 public:

@@ -21,6 +21,7 @@
 #define MAX_X_SPEED_CAPE 4
 #define MAX_Y_SPEED_CAPE 4
 
+//http://spelunky.wikia.com/wiki/Cape
 class Cape : public MovingObject , public ShoppingObject {
 
 public:

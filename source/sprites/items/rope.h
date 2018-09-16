@@ -19,6 +19,7 @@
 #define ROPE_SPRITE_WIDTH 8
 #define ROPE_SPRITE_SIZE ROPE_SPRITE_WIDTH * ROPE_SPRITE_HEIGHT
 
+//http://spelunky.wikia.com/wiki/Rope
 class Rope : public MovingObject {
 
 public:

@@ -21,6 +21,7 @@
 #define MAX_X_SPEED_GLOVE 4
 #define MAX_Y_SPEED_GLOVE 4
 
+//http://spelunky.wikia.com/wiki/Climbing_Gloves
 class Glove : public MovingObject , public ShoppingObject {
 
 public:

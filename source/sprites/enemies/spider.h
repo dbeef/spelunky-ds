@@ -20,6 +20,7 @@
 #include "../sprite_state.hpp"
 #include "../sprite_info.h"
 
+//http://spelunky.wikia.com/wiki/Spider
 class Spider : public MovingObject {
 
 public:

@@ -21,6 +21,7 @@
 #define MAX_X_SPEED_SPRING_SHOES 4
 #define MAX_Y_SPEED_SPRING_SHOES 4
 
+//http://spelunky.wikia.com/wiki/Spring_Shoes
 class SpringShoes : public MovingObject , public ShoppingObject {
 
 public:

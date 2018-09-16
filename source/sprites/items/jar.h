@@ -17,6 +17,7 @@
 
 #include "../moving_object.h"
 
+//http://spelunky.wikia.com/wiki/Pot
 class Jar : public MovingObject {
 
 public:

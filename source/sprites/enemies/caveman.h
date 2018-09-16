@@ -23,6 +23,7 @@
 #include "../sprite_state.hpp"
 #include "../sprite_info.h"
 
+//http://spelunky.wikia.com/wiki/Caveman
 class Caveman : public MovingObject {
 
 public:

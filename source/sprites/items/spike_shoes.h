@@ -20,6 +20,7 @@
 #define MAX_X_SPEED_SPIKE_SHOES 4
 #define MAX_Y_SPEED_SPIKE_SHOES 4
 
+//http://spelunky.wikia.com/wiki/Spike_Shoes
 class SpikeShoes : public MovingObject, public ShoppingObject {
 
 public:

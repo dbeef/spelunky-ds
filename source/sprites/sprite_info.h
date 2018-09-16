@@ -18,16 +18,17 @@ public:
     u8 oamId_palette{};
     int oamId_tiles{};
 
+    //FIXME MovingObject duplicates those fields:
     int width{};
     int height{};
     int angle{};
     SpriteEntry *entry{};
-    SpritesheetType spriteType{};
 
+    SpritesheetType spriteType{};
     u16 oam_address{};
     OamType oamType{};
 
-    void updateFrame(u8 *tile, int size);
+    void updateFrame(u8 *tile, u32 size);
 };
 
 

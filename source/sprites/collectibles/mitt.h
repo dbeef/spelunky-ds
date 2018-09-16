@@ -21,6 +21,7 @@
 #define MAX_X_SPEED_MITT 4
 #define MAX_Y_SPEED_MITT 4
 
+//http://spelunky.wikia.com/wiki/Pitcher%27s_Mitt
 class Mitt : public MovingObject, public ShoppingObject  {
 
 public:

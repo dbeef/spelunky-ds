@@ -19,6 +19,7 @@
 #define MAX_X_SPEED_JETPACK 4
 #define MAX_Y_SPEED_JETPACK 4
 
+//http://spelunky.wikia.com/wiki/jetpack
 class Jetpack : public MovingObject, public ShoppingObject  {
 
 public:

@@ -14,6 +14,7 @@
 
 #include "../moving_object.h"
 
+//http://spelunky.wikia.com/wiki/Lantern
 class Lamp : public MovingObject {
 
 public:

@@ -23,6 +23,7 @@
 #include "../sprite_state.hpp"
 #include "../sprite_info.h"
 
+//http://spelunky.wikia.com/wiki/Damsel
 class Damsel : public MovingObject {
 
 public:

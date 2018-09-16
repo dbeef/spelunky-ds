@@ -20,6 +20,7 @@
 #define MAX_X_SPEED_COMPASS 4
 #define MAX_Y_SPEED_COMPASS 4
 
+//http://spelunky.wikia.com/wiki/Compass
 class Compass : public MovingObject , public ShoppingObject {
 
 public:

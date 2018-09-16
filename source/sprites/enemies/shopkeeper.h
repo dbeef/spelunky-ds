@@ -25,6 +25,7 @@
 #include "../shopping_object.h"
 #include "../collectibles/shotgun.h"
 
+//http://spelunky.wikia.com/wiki/Shopkeeper
 class Shopkeeper : public MovingObject {
 
 public:

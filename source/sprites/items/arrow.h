@@ -18,6 +18,7 @@
 #include <nds/arm9/sprite.h>
 #include "../moving_object.h"
 
+//http://spelunky.wikia.com/wiki/Arrow
 class Arrow : public MovingObject {
 
 public:

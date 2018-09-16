@@ -9,10 +9,12 @@
 
 #define SPIKES_PHYSICAL_HEIGHT 13
 #define SPIKES_PHYSICAL_WIDTH 16
+
 #define SPIKES_SPRITE_HEIGHT 16
 #define SPIKES_SPRITE_WIDTH 16
+#define SPIKES_SPRITE_SIZE SPIKES_SPRITE_WIDTH * SPIKES_SPRITE_HEIGHT
 
-
+//http://spelunky.wikia.com/wiki/Spikes
 class Spikes: public MovingObject {
 
 public:
