@@ -22,6 +22,8 @@ public:
 
     void incremental_focus(int camera_speed);
 
+    //TODO Shakescreen function, that would be called on bomb explosion
+
 };
 
 #endif //SPELUNKYDS_CAMERA_H

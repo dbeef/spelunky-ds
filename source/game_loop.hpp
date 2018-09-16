@@ -16,7 +16,9 @@
 
 namespace gameloop {
 
-    void scroll();
+    void run();
+
+    void manage_brightness();
 
 }
 #endif //SPELUNKYDS_SCROLLING_H

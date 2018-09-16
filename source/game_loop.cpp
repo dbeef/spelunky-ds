@@ -5,15 +5,8 @@
 #include "time/time_utils.h"
 #include "memory/oam_utils.hpp"
 
-constexpr int BOUNDARY_VALUE = 64; /* This is the default boundary value (can be set in REG_DISPCNT) */
-constexpr int OFFSET_MULTIPLIER_MAIN = BOUNDARY_VALUE / sizeof(SPRITE_GFX[0]);
-constexpr int OFFSET_MULTIPLIER_SUB = BOUNDARY_VALUE / sizeof(SPRITE_GFX_SUB[0]);
+void gameloop::run() {
 
-void gameloop::scroll() {
-
-    global::main_oam_manager->initOAMTable(SPRITE_GFX, SPRITE_PALETTE, OAM, OFFSET_MULTIPLIER_MAIN, OamType::MAIN);
-    global::sub_oam_manager->initOAMTable(SPRITE_GFX_SUB, SPRITE_PALETTE_SUB, OAM_SUB,
-            OFFSET_MULTIPLIER_SUB, OamType::SUB);
     global::main_dude->init();
     global::camera->x = 0;
     global::camera->y = 127;
@@ -49,14 +42,14 @@ void gameloop::scroll() {
             }
         }
 
-
         for (int a = 0; a < global::sprites.size(); a++) {
-
+            //TODO Debugging flag
 //            if (size)
 //                (*global::sprites.at(a)).introduce_yourself();
 
             //TODO Add checking if ready to dispose here, and remove checking in MovingObject subclasses
-            if (global::sprites.at(a) /*&& !global::sprites.at(a)->ready_to_dispose *//*&& !global::sprites.at(a)->killed*/) {
+            if (global::sprites.at(a)
+            /*&& !global::sprites.at(a)->ready_to_dispose *//*&& !global::sprites.at(a)->killed*/) {
 //                printf("START ");
 //                (*global::sprites.at(a)).introduce_yourself();
                 (*global::sprites.at(a)).update();
@@ -76,41 +69,51 @@ void gameloop::scroll() {
 
         swiWaitForVBlank();
 
-        //-> this should be done after Vblank (or crash!)
-        if (global::game_state->just_started_game) {
-            global::game_state->change_brightness_timer += *global::timer;
-
-            if (global::game_state->change_brightness_timer > 100) {
-
-                global::game_state->brightness_level--;
-
-                if (global::game_state->brightness_level == 0)
-                    global::game_state->just_started_game = false;
-                else
-                    setBrightness(3, global::game_state->brightness_level);
-
-            }
-        }
-
-        if (global::game_state->in_main_menu && global::game_state->exiting_game) {
-
-            global::game_state->change_brightness_timer += *global::timer;
-
-            if (global::game_state->change_brightness_timer > 100) {
-
-                global::game_state->brightness_level++;
-
-                if (global::game_state->brightness_level > 16)
-                    exit(0);
-
-                setBrightness(3, global::game_state->brightness_level);
-
-            }
-        }
+        manage_brightness();
 
         global::camera->write_current_position_to_graphics_engines();
         global::main_oam_manager->updateOAM();
         global::sub_oam_manager->updateOAM();
         oam_utils::clean_unused_oam();
     }
+
+}
+
+//!> this should be done after Vblank (otherwise - crash!)
+void gameloop::manage_brightness() {
+
+    if (global::game_state->just_started_game) {
+        //just started the game, so lowering the brightness to the normal level.
+        //game starts with the maximum brightness, so the transition between DSiMenu++ would look smoother
+        global::game_state->change_brightness_timer += *global::timer;
+
+        if (global::game_state->change_brightness_timer > 100) {
+
+            global::game_state->brightness_level--;
+
+            if (global::game_state->brightness_level == 0)
+                global::game_state->just_started_game = false;
+            else
+                setBrightness(3, global::game_state->brightness_level);
+
+        }
+    }
+
+    if (global::game_state->in_main_menu && global::game_state->exiting_game) {
+        //exiting game, so increasing the brightness to the maximum level so the transition
+        //between the game and DSiMenu++ would be smoother
+        global::game_state->change_brightness_timer += *global::timer;
+
+        if (global::game_state->change_brightness_timer > 100) {
+
+            global::game_state->brightness_level++;
+
+            if (global::game_state->brightness_level > 16)
+                exit(0);
+
+            setBrightness(3, global::game_state->brightness_level);
+
+        }
+    }
+
 }

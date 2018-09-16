@@ -27,8 +27,8 @@ namespace global {
     GameState *game_state = nullptr;
     PrintConsole *print_console = nullptr; //initialised in console_utils.h call from main
 
-    std::vector<MovingObject *> sprites; //FIXME clang tidy tips
-    std::vector<MovingObject *> sprites_to_add; //for adding new MovingObjects during iteration through 'sprites'
+    std::vector<MovingObject *> sprites;
+    std::vector<MovingObject *> sprites_to_add;
     std::vector<SpriteInfo *> sprite_infos;
     std::vector<SpriteType> killed_npcs;
     std::vector<SpriteType> collected_loot;

@@ -4,24 +4,27 @@
 #include <nds/arm9/console.h>
 #include "../build/gfx_cavebg.h"
 #include "globals_declarations.hpp"
-#include "globals_definitions.h"
+#include "globals_definitions.hpp"
 #include "tiles/splash_screen_type.hpp"
 #include "game_loop.hpp"
 #include "sound/sound_utils.hpp"
 #include "console/console_utils.hpp"
 #include "time/time_utils.h"
 
+/**
+ * Set-up before the gameloop can be run.
+ * TODO Link current VRAM bank configuration.
+ */
 int main() {
 
     global::init_globals();
 
-    swiWaitForVBlank();
-    setBrightness(3, global::game_state->brightness_level);
+    swiWaitForVBlank(); //waiting for a next frame so it would be allowed to change the brightness
+    setBrightness(3, global::game_state->brightness_level); //setting brightness to max to smooth transition from menu
 
     global::game_state->in_main_menu = true;
 
     sound::load_sounds();
-
     sound::start_menu_music();
 
     time_utils::start();
@@ -50,21 +53,34 @@ int main() {
     bgSetPriority(global::bg_main_address, BG_PRIORITY_3);
     bgSetPriority(global::bg_sub_address, BG_PRIORITY_3);
 
+    //Copy cave background tiles to the graphics memory
     dmaCopy(gfx_cavebgTiles, bgGetGfxPtr(global::bg_main_address), sizeof(gfx_cavebgTiles));
     dmaCopy(gfx_cavebgTiles, bgGetGfxPtr(global::bg_sub_address), sizeof(gfx_cavebgTiles));
 
     console::init();
 
+    //Set-up main menu scene from tiles
     global::current_level->initialise_tiles_from_splash_screen(SplashScreenType::MAIN_MENU_UPPER);
     global::current_level->initialise_tiles_from_splash_screen(SplashScreenType::MAIN_MENU_LOWER);
     global::current_level->update_level();
 
+    //Copy cave background palette to the graphics memory
     dmaCopy(gfx_cavebgPal, BG_PALETTE, gfx_cavebgPalLen);
     dmaCopy(gfx_cavebgPal, BG_PALETTE_SUB, gfx_cavebgPalLen);
 
-    gameloop::scroll();
+    //Initialise sprite memory
+    constexpr int BOUNDARY_VALUE = 64; /* This is the default boundary value (can be set in REG_DISPCNT) */
+    constexpr int OFFSET_MULTIPLIER_MAIN = BOUNDARY_VALUE / sizeof(SPRITE_GFX[0]);
+    constexpr int OFFSET_MULTIPLIER_SUB = BOUNDARY_VALUE / sizeof(SPRITE_GFX_SUB[0]);
+
+    global::main_oam_manager->initOAMTable(SPRITE_GFX, SPRITE_PALETTE, OAM, OFFSET_MULTIPLIER_MAIN, OamType::MAIN);
+    global::sub_oam_manager->initOAMTable(SPRITE_GFX_SUB, SPRITE_PALETTE_SUB, OAM_SUB, OFFSET_MULTIPLIER_SUB,
+                                          OamType::SUB);
+
+    gameloop::run();
 
     time_utils::stop();
+    //TODO Cleanup
 
     return 0;
 }

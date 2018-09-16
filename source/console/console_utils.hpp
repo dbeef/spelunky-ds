@@ -7,7 +7,7 @@
 
 #include <nds/arm9/console.h>
 #include "../../build/font.h"
-#include "../globals_definitions.h"
+#include "../globals_definitions.hpp"
 #include "../camera/layer_level.hpp"
 
 namespace console {

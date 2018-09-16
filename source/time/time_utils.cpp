@@ -2,6 +2,7 @@
 // Created by xdbeef on 06.05.18.
 //
 #include "../globals_declarations.hpp"
+
 #define TICKS_PER_SECOND 30.5554503
 
 namespace time_utils {
@@ -18,6 +19,10 @@ namespace time_utils {
     }
 
     void start() {
+        //With selected divisor value as 1024:
+        //1 tick = 32.7284 kHz
+        //32.7284 ticks must be counted every millisecond
+        //1 / 32.7284 = 0,030554503, so every ~0.03 millisecond gives 1 tick
         timerStart(0, ClockDivider_1024, 1000, nullptr);
         timerStart(1, ClockDivider_1, 10, nullptr);
     }
