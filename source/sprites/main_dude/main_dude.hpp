@@ -35,13 +35,13 @@
 #include <vector>
 #include "../sprite_state.hpp"
 #include "../../tiles/map_tile.hpp"
-#include "../../tiles/level.h"
-#include "../../camera/camera.h"
+#include "../../tiles/level.hpp"
+#include "../../camera/camera.hpp"
 #include "../sprite_info.h"
-#include "../items/bomb.h"
+#include "../items/bomb.hpp"
 #include "../moving_object.h"
-#include "../../input/input_handler.h"
-#include "whip.h"
+#include "../../input/input_handler.hpp"
+#include "whip.hpp"
 
 //http://spelunky.wikia.com/wiki/Spelunky_Guy
 class MainDude : public MovingObject {

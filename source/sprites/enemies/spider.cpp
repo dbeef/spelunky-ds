@@ -5,15 +5,15 @@
 #include <maxmod9.h>
 #include <cstdlib>
 #include <cstdio>
-#include "spider.h"
-#include "../../globals_declarations.h"
-#include "../animations/blood.h"
+#include "spider.hpp"
+#include "../../globals_declarations.hpp"
+#include "../animations/blood.hpp"
 #include "../../../build/gfx_spider_skeleton.h"
-#include "../items/rock.h"
-#include "../../collisions/collisions.h"
-#include "../../tiles/level_rendering_utils.h"
+#include "../items/rock.hpp"
+#include "../../collisions/collisions.hpp"
+#include "../../tiles/level_rendering_utils.hpp"
 #include "../../../build/soundbank.h"
-#include "../sprite_utils.h"
+#include "../sprite_utils.hpp"
 
 #define SPIDER_HITPOINTS 1
 #define SPIDER_POS_INC_DELTA 30

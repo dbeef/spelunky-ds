@@ -4,12 +4,12 @@
 
 
 #include "../spritesheet_type.hpp"
-#include "spring_shoes.h"
-#include "../../globals_declarations.h"
-#include "../../collisions/collisions.h"
+#include "spring_shoes.hpp"
+#include "../../globals_declarations.hpp"
+#include "../../collisions/collisions.hpp"
 #include "../../../build/gfx_saleable.h"
-#include "../animations/got_collectible.h"
-#include "../sprite_utils.h"
+#include "../animations/got_collectible.hpp"
+#include "../sprite_utils.hpp"
 
 #define SPRING_SHOES_POS_INC_DELTA 15
 

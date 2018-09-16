@@ -4,8 +4,8 @@
 
 #include <cstdlib>
 #include <nds/arm9/background.h>
-#include "camera.h"
-#include "../globals_declarations.h"
+#include "camera.hpp"
+#include "../globals_declarations.hpp"
 
 constexpr u16 MAP_WIDTH = 512;
 constexpr u16 MAP_HEIGHT = 512;

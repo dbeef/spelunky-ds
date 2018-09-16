@@ -3,12 +3,12 @@
 //
 
 
-#include "cape.h"
+#include "cape.hpp"
 #include "../../../build/gfx_goldbars.h"
-#include "../../globals_declarations.h"
-#include "../animations/got_collectible.h"
-#include "../../collisions/collisions.h"
-#include "../sprite_utils.h"
+#include "../../globals_declarations.hpp"
+#include "../animations/got_collectible.hpp"
+#include "../../collisions/collisions.hpp"
+#include "../sprite_utils.hpp"
 
 #define CAPE_ANIM_FRAME_DELTA 60
 #define CAPE_POS_INC_DELTA 15

@@ -3,11 +3,11 @@
 //
 
 
-#include "smooch.h"
-#include "got_collectible.h"
+#include "smooch.hpp"
+#include "got_collectible.hpp"
 #include "../../../build/gfx_caveman_damsel.h"
-#include "../../globals_declarations.h"
-#include "../sprite_utils.h"
+#include "../../globals_declarations.hpp"
+#include "../sprite_utils.hpp"
 
 #define SMOOCH_CYCLES_TO_HIDE 25
 #define SMOOCH_ANIM_FRAME_DELTA 70

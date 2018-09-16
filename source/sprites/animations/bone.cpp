@@ -2,12 +2,12 @@
 // Created by xdbeef on 29.07.18.
 //
 
-#include "got_collectible.h"
-#include "../../globals_declarations.h"
+#include "got_collectible.hpp"
+#include "../../globals_declarations.hpp"
 #include "../../../build/gfx_spider_skeleton.h"
-#include "../../collisions/collisions.h"
-#include "bone.h"
-#include "../sprite_utils.h"
+#include "../../collisions/collisions.hpp"
+#include "bone.hpp"
+#include "../sprite_utils.hpp"
 
 #define BONE_POS_INC_DELTA 35
 #define BONE_ANIM_FRAME_DELTA  45

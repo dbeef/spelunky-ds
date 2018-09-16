@@ -2,10 +2,10 @@
 // Created by xdbeef on 19.05.18.
 //
 
-#include "got_collectible.h"
-#include "../../globals_declarations.h"
+#include "got_collectible.hpp"
+#include "../../globals_declarations.hpp"
 #include "../../../build/gfx_got_collectible.h"
-#include "../sprite_utils.h"
+#include "../sprite_utils.hpp"
 
 #define GOT_COLLECTIBLE_CYCLES_TO_HIDE 10
 #define GOT_COLLECTIBLE_ANIM_FRAME_DELTA 90

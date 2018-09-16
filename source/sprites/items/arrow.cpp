@@ -4,16 +4,16 @@
 
 #include <cmath>
 #include <maxmod9.h>
-#include "../../globals_declarations.h"
-#include "../main_dude/main_dude.h"
+#include "../../globals_declarations.hpp"
+#include "../main_dude/main_dude.hpp"
 #include "../../../build/gfx_arrow.h"
-#include "rock.h"
-#include "../../collisions/collisions.h"
-#include "../../tiles/level_rendering_utils.h"
-#include "arrow.h"
+#include "rock.hpp"
+#include "../../collisions/collisions.hpp"
+#include "../../tiles/level_rendering_utils.hpp"
+#include "arrow.hpp"
 #include "../../../build/soundbank.h"
-#include "../../sound/sound_utils.h"
-#include "../sprite_utils.h"
+#include "../../sound/sound_utils.hpp"
+#include "../sprite_utils.hpp"
 
 #define ARROW_POS_INC_DELTA 15
 

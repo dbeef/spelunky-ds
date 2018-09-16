@@ -4,13 +4,13 @@
 
 
 #include "../spritesheet_type.hpp"
-#include "mitt.h"
-#include "glove.h"
-#include "../../globals_declarations.h"
-#include "../../collisions/collisions.h"
+#include "mitt.hpp"
+#include "glove.hpp"
+#include "../../globals_declarations.hpp"
+#include "../../collisions/collisions.hpp"
 #include "../../../build/gfx_saleable.h"
-#include "../animations/got_collectible.h"
-#include "../sprite_utils.h"
+#include "../animations/got_collectible.hpp"
+#include "../sprite_utils.hpp"
 
 void Glove::draw() {
 

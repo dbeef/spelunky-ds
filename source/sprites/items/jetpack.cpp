@@ -3,11 +3,11 @@
 //
 
 #include "../../../build/gfx_bat_snake_jetpack.h"
-#include "../../globals_declarations.h"
-#include "../animations/got_collectible.h"
-#include "../../collisions/collisions.h"
-#include "jetpack.h"
-#include "../animations/fall_poof.h"
+#include "../../globals_declarations.hpp"
+#include "../animations/got_collectible.hpp"
+#include "../../collisions/collisions.hpp"
+#include "jetpack.hpp"
+#include "../animations/fall_poof.hpp"
 
 #define JETPACK_POS_INC_DELTA 15
 

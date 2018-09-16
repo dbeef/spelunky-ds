@@ -7,14 +7,14 @@
 
 #include <mm_types.h>
 #include <nds/arm9/console.h>
-#include "input/input_handler.h"
-#include "hud/hud.h"
-#include "camera/camera.h"
-#include "sprites/main_dude/main_dude.h"
+#include "input/input_handler.hpp"
+#include "hud/hud.hpp"
+#include "camera/camera.hpp"
+#include "sprites/main_dude/main_dude.hpp"
 #include "sprites/sprite_type.hpp"
-#include "tiles/level.h"
+#include "tiles/level.hpp"
 #include "sprites/sprite_info.h"
-#include "sprites/main_dude/game_state.h"
+#include "sprites/main_dude/game_state.hpp"
 
 #define GRAVITY_DELTA_SPEED 0.22 //FIXME isn't it mob-specific?
 #define DEFAULT_DMA_CHANNEL 3

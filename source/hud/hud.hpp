@@ -5,7 +5,7 @@
 #ifndef SPELUNKYDS_HUD_H
 #define SPELUNKYDS_HUD_H
 
-#include "../memory/oam_manager.h"
+#include "../memory/oam_manager.hpp"
 #define HUD_ITEMS_ROW_X 236
 
 class Hud {

@@ -4,16 +4,16 @@
 
 #include <cstdlib>
 #include <maxmod9.h>
-#include "skeleton.h"
+#include "skeleton.hpp"
 
 #include "../../../build/gfx_spider_skeleton.h"
-#include "../../globals_declarations.h"
-#include "../../collisions/collisions.h"
-#include "../../tiles/level_rendering_utils.h"
+#include "../../globals_declarations.hpp"
+#include "../../collisions/collisions.hpp"
+#include "../../tiles/level_rendering_utils.hpp"
 #include "../../../build/soundbank.h"
-#include "../animations/bone.h"
-#include "../animations/skull.h"
-#include "../sprite_utils.h"
+#include "../animations/bone.hpp"
+#include "../animations/skull.hpp"
+#include "../sprite_utils.hpp"
 
 #define SKELETON_POS_INC_DELTA 19
 #define SKELETON_ANIM_FRAME_DELTA 90

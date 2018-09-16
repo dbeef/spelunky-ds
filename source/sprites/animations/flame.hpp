@@ -21,7 +21,7 @@
 #include <vector>
 #include "../moving_object.h"
 #include "../sprite_info.h"
-#include "flame_element.h"
+#include "flame_element.hpp"
 
 //almost same as blood animation
 

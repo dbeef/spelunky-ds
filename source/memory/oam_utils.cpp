@@ -2,8 +2,8 @@
 // Created by xdbeef on 06.05.18.
 //
 
-#include "oam_utils.h"
-#include "../globals_declarations.h"
+#include "oam_utils.hpp"
+#include "../globals_declarations.hpp"
 
 namespace oam_utils {
 

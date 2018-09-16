@@ -2,13 +2,13 @@
 // Created by xdbeef on 28.04.18.
 //
 
-#include "blood_element.h"
+#include "blood_element.hpp"
 #include "../../../build/gfx_blood_rock_rope_poof.h"
-#include "../../globals_declarations.h"
-#include "blood.h"
-#include "../../collisions/collisions.h"
-#include "../../tiles/level_rendering_utils.h"
-#include "../sprite_utils.h"
+#include "../../globals_declarations.hpp"
+#include "blood.hpp"
+#include "../../collisions/collisions.hpp"
+#include "../../tiles/level_rendering_utils.hpp"
+#include "../sprite_utils.hpp"
 
 void BloodElement::draw() {
 

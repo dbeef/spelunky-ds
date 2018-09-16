@@ -6,23 +6,23 @@
 #include <cstdlib>
 #include <cmath>
 #include <cstdio>
-#include "../../globals_declarations.h"
-#include "../collectibles/shotgun.h"
-#include "../collectibles/mitt.h"
-#include "../collectibles/glove.h"
-#include "../collectibles/compass.h"
-#include "../collectibles/spring_shoes.h"
-#include "../items/rope.h"
-#include "../../collisions/collisions.h"
-#include "../../tiles/level_rendering_utils.h"
+#include "../../globals_declarations.hpp"
+#include "../collectibles/shotgun.hpp"
+#include "../collectibles/mitt.hpp"
+#include "../collectibles/glove.hpp"
+#include "../collectibles/compass.hpp"
+#include "../collectibles/spring_shoes.hpp"
+#include "../items/rope.hpp"
+#include "../../collisions/collisions.hpp"
+#include "../../tiles/level_rendering_utils.hpp"
 #include "../../../build/soundbank.h"
 #include "../../tiles/tile_orientation.hpp"
-#include "../items/spike_shoes.h"
-#include "../items/cape.h"
-#include "../items/jetpack.h"
-#include "../sprite_utils.h"
+#include "../items/spike_shoes.hpp"
+#include "../items/cape.hpp"
+#include "../items/jetpack.hpp"
+#include "../sprite_utils.hpp"
 #include "../../../build/gfx_spelunker.h"
-#include "../items/pistol.h"
+#include "../items/pistol.hpp"
 
 
 void MainDude::throw_item() {

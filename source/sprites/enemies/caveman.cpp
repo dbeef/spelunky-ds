@@ -5,15 +5,15 @@
 
 #include <maxmod9.h>
 #include <cstdlib>
-#include "caveman.h"
-#include "../../globals_declarations.h"
-#include "../../collisions/collisions.h"
+#include "caveman.hpp"
+#include "../../globals_declarations.hpp"
+#include "../../collisions/collisions.hpp"
 #include "../../../build/soundbank.h"
-#include "../animations/blood.h"
+#include "../animations/blood.hpp"
 #include "../../../build/gfx_caveman_damsel.h"
-#include "../../tiles/level_rendering_utils.h"
+#include "../../tiles/level_rendering_utils.hpp"
 #include "../../tiles/tile_orientation.hpp"
-#include "../sprite_utils.h"
+#include "../sprite_utils.hpp"
 
 #define CAVEMAN_POS_INC_DELTA 20
 #define CAVEMAN_TRIGGERED_SPEED 3

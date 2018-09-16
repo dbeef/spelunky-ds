@@ -4,7 +4,7 @@
 
 #include <cstdarg>
 #include <cstdio>
-#include "sprite_utils.h"
+#include "sprite_utils.hpp"
 
 namespace sprite_utils {
 

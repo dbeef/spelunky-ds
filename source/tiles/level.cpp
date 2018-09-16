@@ -4,8 +4,8 @@
 
 #include <cstdlib>
 #include <cstring>
-#include "level.h"
-#include "../globals_declarations.h"
+#include "level.hpp"
+#include "../globals_declarations.hpp"
 #include "splash_screen_type.hpp"
 #include "../rooms/entrance_rooms.hpp"
 #include "../rooms/exit_rooms.hpp"
@@ -15,7 +15,7 @@
 #include "../rooms/left_right_up_rooms.hpp"
 #include "../rooms/splash_screens.hpp"
 #include "../rooms/RoomType.hpp"
-#include "level_rendering_utils.h"
+#include "level_rendering_utils.hpp"
 #include "../rooms/shops.hpp"
 #include "direction.hpp"
 

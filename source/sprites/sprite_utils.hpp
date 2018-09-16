@@ -89,7 +89,7 @@ namespace sprite_utils {
     }
 
     //!> sets xy for given sprite entry
-    void set_entry_xy(SpriteInfo *i, int x, int y);
+    void set_entry_xy(SpriteInfo *i, u16 x, u16 y);
 
     u8 *get_frame(u8 *tileset, int size, int frame_offset);
 }

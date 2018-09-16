@@ -3,11 +3,11 @@
 //
 
 #include "../../../build/gfx_spike_collectibles_flame.h"
-#include "../../globals_declarations.h"
-#include "../../collisions/collisions.h"
-#include "flame_element.h"
-#include "flame.h"
-#include "../sprite_utils.h"
+#include "../../globals_declarations.hpp"
+#include "../../collisions/collisions.hpp"
+#include "flame_element.hpp"
+#include "flame.hpp"
+#include "../sprite_utils.hpp"
 
 //TODO remove 'finished' flag - duplicates ready_to_dispose - same for blood element
 //TODO Give bombs a bigger rendering priority than other things - but no bigger than hud

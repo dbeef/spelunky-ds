@@ -3,8 +3,8 @@
 //
 #include <nds.h>
 #include <nds/arm9/input.h>
-#include "input_handler.h"
-#include "../globals_declarations.h"
+#include "input_handler.hpp"
+#include "../globals_declarations.hpp"
 
 void InputHandler::updateInput() {
 

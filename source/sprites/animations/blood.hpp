@@ -20,7 +20,7 @@
 
 #include <vector>
 #include "../moving_object.h"
-#include "blood_element.h"
+#include "blood_element.hpp"
 #include "../sprite_info.h"
 
 

@@ -2,13 +2,13 @@
 // Created by xdbeef on 17.05.18.
 //
 
-#include "../../globals_declarations.h"
-#include "../../collisions/collisions.h"
+#include "../../globals_declarations.hpp"
+#include "../../collisions/collisions.hpp"
 #include "../../../build/gfx_spike_collectibles_flame.h"
 #include "../moving_object.h"
-#include "bullet.h"
-#include "../../tiles/level_rendering_utils.h"
-#include "../sprite_utils.h"
+#include "bullet.hpp"
+#include "../../tiles/level_rendering_utils.hpp"
+#include "../sprite_utils.hpp"
 
 #define BULLET_POSITION_INC_DELTA 15
 #define BULLET_ANIM_X_OFFSET 5

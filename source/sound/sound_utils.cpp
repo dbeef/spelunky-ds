@@ -5,8 +5,8 @@
 
 #include <maxmod9.h>
 #include "../../build/soundbank.h"
-#include "../globals_declarations.h"
-#include "sound_utils.h"
+#include "../globals_declarations.hpp"
+#include "sound_utils.hpp"
 
 void sound::start_menu_music() {
     mmLoadEffect(SFX_MTITLE);

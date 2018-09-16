@@ -4,15 +4,15 @@
 
 #include <maxmod9.h>
 #include <cstdlib>
-#include "bat.h"
-#include "../../globals_declarations.h"
+#include "bat.hpp"
+#include "../../globals_declarations.hpp"
 #include "../../../build/gfx_bat_snake_jetpack.h"
-#include "../items/rock.h"
-#include "../animations/blood.h"
-#include "../../collisions/collisions.h"
-#include "../../tiles/level_rendering_utils.h"
+#include "../items/rock.hpp"
+#include "../animations/blood.hpp"
+#include "../../collisions/collisions.hpp"
+#include "../../tiles/level_rendering_utils.hpp"
 #include "../../../build/soundbank.h"
-#include "../sprite_utils.h"
+#include "../sprite_utils.hpp"
 
 #define BAT_ANIM_FRAME_DELTA 100
 #define BAT_POS_INC_DELTA 30

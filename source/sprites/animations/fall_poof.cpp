@@ -2,13 +2,13 @@
 // Created by xdbeef on 01.06.18.
 //
 
-#include "got_collectible.h"
-#include "../../globals_declarations.h"
+#include "got_collectible.hpp"
+#include "../../globals_declarations.hpp"
 #include "../../../build/gfx_blood_rock_rope_poof.h"
 #include "../moving_object.h"
-#include "fall_poof.h"
-#include "../../collisions/collisions.h"
-#include "../sprite_utils.h"
+#include "fall_poof.hpp"
+#include "../../collisions/collisions.hpp"
+#include "../sprite_utils.hpp"
 
 
 #define FALL_POOF_POS_INC_DELTA 35

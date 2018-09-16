@@ -3,10 +3,10 @@
 //
 
 #include "title_menu_sign.h"
-#include "../../globals_declarations.h"
+#include "../../globals_declarations.hpp"
 #include "../../../build/gfx_menu_signs_start_scores.h"
 #include "../../../build/gfx_menu_signs_tutorial_quit.h"
-#include "../sprite_utils.h"
+#include "../sprite_utils.hpp"
 
 void TitleMenuSign::draw() {
 

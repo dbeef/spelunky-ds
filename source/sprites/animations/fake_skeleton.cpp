@@ -3,13 +3,13 @@
 //
 
 #include <cmath>
-#include "got_collectible.h"
-#include "../../globals_declarations.h"
+#include "got_collectible.hpp"
+#include "../../globals_declarations.hpp"
 #include "../../../build/gfx_spider_skeleton.h"
-#include "../../collisions/collisions.h"
-#include "fake_skeleton.h"
-#include "skull.h"
-#include "../sprite_utils.h"
+#include "../../collisions/collisions.hpp"
+#include "fake_skeleton.hpp"
+#include "skull.hpp"
+#include "../sprite_utils.hpp"
 
 #define FAKE_SKELETON_POS_INC_DELTA 25
 #define FRAME_OFFSET_FAKE_SKELETON_WITH_SKULL 33

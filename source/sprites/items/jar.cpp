@@ -3,11 +3,11 @@
 //
 
 #include <cmath>
-#include "jar.h"
-#include "../../globals_declarations.h"
+#include "jar.hpp"
+#include "../../globals_declarations.hpp"
 #include "../../../build/gfx_spike_collectibles_flame.h"
-#include "../../collisions/collisions.h"
-#include "../sprite_utils.h"
+#include "../../collisions/collisions.hpp"
+#include "../sprite_utils.hpp"
 
 #define JAR_POS_INC_DELTA 15
 #define JAR_HITPOINTS 1

@@ -3,12 +3,12 @@
 #include <nds/arm9/sprite.h>
 #include <nds/arm9/console.h>
 #include "../build/gfx_cavebg.h"
-#include "globals_declarations.h"
+#include "globals_declarations.hpp"
 #include "globals_definitions.h"
 #include "tiles/splash_screen_type.hpp"
-#include "game_loop.h"
-#include "sound/sound_utils.h"
-#include "console/console_utils.h"
+#include "game_loop.hpp"
+#include "sound/sound_utils.hpp"
+#include "console/console_utils.hpp"
 #include "time/time_utils.h"
 
 int main() {

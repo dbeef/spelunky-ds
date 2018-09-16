@@ -8,7 +8,7 @@
 
 #include "../moving_object.h"
 #include "../shopping_object.h"
-#include "../animations/blast.h"
+#include "../animations/blast.hpp"
 
 #define SHOTGUN_PHYSICAL_HEIGHT 7
 #define SHOTGUN_PHYSICAL_WIDTH 13

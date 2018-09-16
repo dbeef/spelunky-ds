@@ -4,9 +4,9 @@
 
 
 #include "lamp.h"
-#include "../../globals_declarations.h"
+#include "../../globals_declarations.hpp"
 #include "../../../build/gfx_shopkeeper.h"
-#include "../sprite_utils.h"
+#include "../sprite_utils.hpp"
 
 #define LAMP_OFFSET 25
 #define ANIM_FRAME_DELTA 60

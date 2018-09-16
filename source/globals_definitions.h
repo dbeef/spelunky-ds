@@ -10,10 +10,10 @@
 #include "sprites/spritesheet_type.hpp"
 #include "sprites/sprite_type.hpp"
 #include "sprites/sprite_info.h"
-#include "hud/hud.h"
-#include "tiles/level.h"
-#include "sprites/main_dude/main_dude.h"
-#include "sprites/main_dude/game_state.h"
+#include "hud/hud.hpp"
+#include "tiles/level.hpp"
+#include "sprites/main_dude/main_dude.hpp"
+#include "sprites/main_dude/game_state.hpp"
 
 namespace global {
 

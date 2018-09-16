@@ -4,18 +4,18 @@
 
 #include <maxmod9.h>
 #include <cstdlib>
-#include "../items/jar.h"
+#include "../items/jar.hpp"
 #include "../moving_object.h"
-#include "moniez.h"
-#include "../../globals_declarations.h"
+#include "moniez.hpp"
+#include "../../globals_declarations.hpp"
 #include "../../../build/gfx_goldbars.h"
 #include "../../../build/gfx_rubies.h"
-#include "../items/rock.h"
+#include "../items/rock.hpp"
 #include "../../../build/soundbank.h"
 #include "../sprite_type.hpp"
-#include "../../collisions/collisions.h"
-#include "../../tiles/level_rendering_utils.h"
-#include "../sprite_utils.h"
+#include "../../collisions/collisions.hpp"
+#include "../../tiles/level_rendering_utils.hpp"
+#include "../sprite_utils.hpp"
 
 //TODO Split this into separate classes for ruby, gold bar, gold nugget etc. Make moniez an abstract.
 void Moniez::draw() {

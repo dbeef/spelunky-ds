@@ -23,7 +23,7 @@
 #include "../sprite_state.hpp"
 #include "../sprite_info.h"
 #include "../shopping_object.h"
-#include "../collectibles/shotgun.h"
+#include "../collectibles/shotgun.hpp"
 
 //http://spelunky.wikia.com/wiki/Shopkeeper
 class Shopkeeper : public MovingObject {

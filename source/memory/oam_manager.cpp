@@ -5,8 +5,8 @@
 #include <nds.h>
 #include <nds/arm9/cache.h>
 #include <assert.h>
-#include "oam_manager.h"
-#include "../globals_declarations.h"
+#include "oam_manager.hpp"
+#include "../globals_declarations.hpp"
 #include "../camera/layer_level.hpp"
 
 /**

@@ -6,7 +6,7 @@
 #define SPELUNKYDS_BOMB_H
 
 #include <nds/arm9/sprite.h>
-#include "../../camera/camera.h"
+#include "../../camera/camera.hpp"
 #include "../moving_object.h"
 #include "../sprite_info.h"
 

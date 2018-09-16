@@ -5,15 +5,15 @@
 #include <maxmod9.h>
 #include <cstdlib>
 #include "../../../build/gfx_spike_collectibles_flame.h"
-#include "chest.h"
-#include "../../collisions/collisions.h"
-#include "../../globals_declarations.h"
+#include "chest.hpp"
+#include "../../collisions/collisions.hpp"
+#include "../../globals_declarations.hpp"
 #include "../../../build/soundbank.h"
-#include "shotgun.h"
-#include "bullet.h"
-#include "../animations/got_collectible.h"
-#include "../../tiles/level_rendering_utils.h"
-#include "../sprite_utils.h"
+#include "shotgun.hpp"
+#include "bullet.hpp"
+#include "../animations/got_collectible.hpp"
+#include "../../tiles/level_rendering_utils.hpp"
+#include "../sprite_utils.hpp"
 
 #define SHOTGUN_POS_INC_DELTA 15
 #define SHOTGUN_COOLDOWN 750

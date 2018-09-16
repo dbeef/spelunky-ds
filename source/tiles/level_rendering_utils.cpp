@@ -5,7 +5,7 @@
 #include <cstring>
 #include <cstdlib>
 #include <nds.h>
-#include "../globals_declarations.h"
+#include "../globals_declarations.hpp"
 
 //https://stackoverflow.com/questions/11072244/c-multiple-definitions-of-a-variable
 

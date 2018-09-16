@@ -7,7 +7,7 @@
 
 #include <nds/arm9/sprite.h>
 #include <vector>
-#include "rope_element.h"
+#include "rope_element.hpp"
 
 #define MAX_Y_SPEED_ROPE 4
 #define MAX_X_SPEED_ROPE 4

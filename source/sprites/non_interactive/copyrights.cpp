@@ -3,10 +3,10 @@
 //
 
 #include "spelunky_title.h"
-#include "../../globals_declarations.h"
+#include "../../globals_declarations.hpp"
 #include "../../../build/gfx_copyrights.h"
 #include "copyrights.h"
-#include "../sprite_utils.h"
+#include "../sprite_utils.hpp"
 
 void Copyrights::draw() {
 

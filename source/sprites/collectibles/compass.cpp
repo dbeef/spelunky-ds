@@ -4,12 +4,12 @@
 
 
 #include <cstdlib>
-#include "compass.h"
-#include "../../globals_declarations.h"
-#include "../../collisions/collisions.h"
+#include "compass.hpp"
+#include "../../globals_declarations.hpp"
+#include "../../collisions/collisions.hpp"
 #include "../../../build/gfx_saleable.h"
-#include "../animations/got_collectible.h"
-#include "../sprite_utils.h"
+#include "../animations/got_collectible.hpp"
+#include "../sprite_utils.hpp"
 
 #define COMPASS_POS_INC_DELTA 15
 

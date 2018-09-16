@@ -6,16 +6,16 @@
 #include <nds/arm9/sprite.h>
 #include <maxmod9.h>
 #include <cstdlib>
-#include "main_dude.h"
-#include "../../globals_declarations.h"
-#include "../../collisions/collisions.h"
-#include "../../tiles/level_rendering_utils.h"
+#include "main_dude.hpp"
+#include "../../globals_declarations.hpp"
+#include "../../collisions/collisions.hpp"
+#include "../../tiles/level_rendering_utils.hpp"
 #include "../../../build/gfx_spelunker.h"
 #include "../../../build/soundbank.h"
 #include "../../tiles/tile_orientation.hpp"
-#include "../animations/fall_poof.h"
-#include "../../sound/sound_utils.h"
-#include "../sprite_utils.h"
+#include "../animations/fall_poof.hpp"
+#include "../../sound/sound_utils.hpp"
+#include "../sprite_utils.hpp"
 
 void MainDude::handle_key_input() {
 

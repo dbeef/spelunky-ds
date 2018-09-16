@@ -4,15 +4,15 @@
 
 #include <maxmod9.h>
 #include <cstdlib>
-#include "snake.h"
-#include "../../globals_declarations.h"
-#include "../items/rock.h"
+#include "snake.hpp"
+#include "../../globals_declarations.hpp"
+#include "../items/rock.hpp"
 #include "../../../build/gfx_bat_snake_jetpack.h"
-#include "../animations/blood.h"
-#include "../../collisions/collisions.h"
-#include "../../tiles/level_rendering_utils.h"
+#include "../animations/blood.hpp"
+#include "../../collisions/collisions.hpp"
+#include "../../tiles/level_rendering_utils.hpp"
 #include "../../../build/soundbank.h"
-#include "../sprite_utils.h"
+#include "../sprite_utils.hpp"
 
 #define SNAKE_POS_INC_DELTA 35
 #define SNAKE_ANIM_FRAME_DELTA 125

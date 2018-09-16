@@ -7,8 +7,8 @@
 #define SPELUNKYDS_MOVINGOBJECT_H
 
 #include <cstdio>
-#include "../memory/oam_manager.h"
-#include "../camera/camera.h"
+#include "../memory/oam_manager.hpp"
+#include "../camera/camera.hpp"
 #include "spritesheet_type.hpp"
 #include "sprite_state.hpp"
 #include "sprite_type.hpp"

@@ -4,10 +4,10 @@
 
 #include <cstdio>
 #include "../../../build/gfx_got_collectible.h"
-#include "blast.h"
-#include "../../globals_declarations.h"
+#include "blast.hpp"
+#include "../../globals_declarations.hpp"
 #include "../../../build/gfx_spike_collectibles_flame.h"
-#include "../sprite_utils.h"
+#include "../sprite_utils.hpp"
 
 #define SHOTGUN_FIRING_OFFSET_X 14
 #define SHOTGUN_FIRING_OFFSET_Y 6

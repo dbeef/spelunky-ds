@@ -6,12 +6,12 @@
 #include <cstdlib>
 #include <maxmod9.h>
 #include "spikes.h"
-#include "../../collisions/collisions.h"
-#include "../../globals_declarations.h"
+#include "../../collisions/collisions.hpp"
+#include "../../globals_declarations.hpp"
 #include "../../../build/soundbank.h"
-#include "../animations/blood.h"
-#include "../../sound/sound_utils.h"
-#include "../sprite_utils.h"
+#include "../animations/blood.hpp"
+#include "../../sound/sound_utils.hpp"
+#include "../sprite_utils.hpp"
 
 void Spikes::draw() {
 

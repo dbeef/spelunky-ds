@@ -2,7 +2,7 @@
 // Created by xdbeef on 02.09.18.
 //
 
-#include "globals_declarations.h"
+#include "globals_declarations.hpp"
 
 void global::init_globals() {
 

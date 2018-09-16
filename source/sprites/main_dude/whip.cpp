@@ -2,10 +2,10 @@
 // Created by xdbeef on 07.05.18.
 //
 
-#include "whip.h"
+#include "whip.hpp"
 #include "../../../build/gfx_spike_collectibles_flame.h"
-#include "../../globals_declarations.h"
-#include "../sprite_utils.h"
+#include "../../globals_declarations.hpp"
+#include "../sprite_utils.hpp"
 
 void Whip::draw() {
 

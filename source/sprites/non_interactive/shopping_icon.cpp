@@ -3,10 +3,10 @@
 //
 
 #include <cstdlib>
-#include "../../globals_declarations.h"
+#include "../../globals_declarations.hpp"
 #include "../../../build/gfx_goldbars.h"
 #include "shopping_icon.h"
-#include "../sprite_utils.h"
+#include "../sprite_utils.hpp"
 
 #define SHOPPING_ICON_OFFSET 12
 #define ANIM_FRAME_DELTA 25

@@ -4,18 +4,19 @@
 
 #include <maxmod9.h>
 #include <cstdio>
-#include "game_state.h"
-#include "../../globals_declarations.h"
-#include "../../game_loop.h"
-#include "../../tiles/level_rendering_utils.h"
+#include "game_state.hpp"
+#include "../../globals_declarations.hpp"
+#include "../../game_loop.hpp"
+#include "../../tiles/level_rendering_utils.hpp"
 #include "../../tiles/splash_screen_type.hpp"
-#include "../../memory/oam_utils.h"
+#include "../../memory/oam_utils.hpp"
 #include "../../../build/soundbank.h"
-#include "../enemies/damsel.h"
-#include "../animations/smooch.h"
-#include "../../sound/sound_utils.h"
-#include "../../base_map.h"
-#include "../../tiles/level_generator.h"
+#include "../enemies/damsel.hpp"
+#include "../animations/smooch.hpp"
+#include "../../sound/sound_utils.hpp"
+#include "../../base_map.hpp"
+#include "../../tiles/level_generator.hpp"
+#include "../../tiles/populating_utils.hpp"
 
 void GameState::reset_main_dude() {
     global::main_dude->carrying_spring_shoes = false;
@@ -55,8 +56,7 @@ void GameState::start_main_menu() {
     global::game_state->in_main_menu = true;
     global::game_state->levels_transition_screen = false;
     global::game_state->scores_screen = false;
-    gameloop::populate_main_menu();
-
+    populate_main_menu();
 }
 
 void GameState::start_scores() {
@@ -114,8 +114,8 @@ void GameState::start_next_level() {
     global::main_dude->holding_item = false;
     global::main_dude->spawn_carried_items();
     global::hud->init_sprites();
-    gameloop::populate_cave_npcs();
-    gameloop::populate_cave_moniez();
+    populate_cave_npcs();
+    populate_cave_moniez();
     global::game_state->levels_transition_screen = false;
     global::game_state->in_main_menu = false;
     global::killed_npcs.clear();

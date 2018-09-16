@@ -6,12 +6,12 @@
 #include <cstdlib>
 #include <maxmod9.h>
 #include "spikes.h"
-#include "../../collisions/collisions.h"
-#include "../../globals_declarations.h"
+#include "../../collisions/collisions.hpp"
+#include "../../globals_declarations.hpp"
 #include "../../../build/soundbank.h"
-#include "../animations/blood.h"
+#include "../animations/blood.hpp"
 #include "arrow_trap.h"
-#include "../items/arrow.h"
+#include "../items/arrow.hpp"
 
 void ArrowTrap::draw() {
 

@@ -2,12 +2,12 @@
 // Created by xdbeef on 28.04.18.
 //
 
-#include "blood.h"
-#include "../../globals_declarations.h"
+#include "blood.hpp"
+#include "../../globals_declarations.hpp"
 #include "../../../build/gfx_blood_rock_rope_poof.h"
-#include "../../collisions/collisions.h"
-#include "../../tiles/level_rendering_utils.h"
-#include "../sprite_utils.h"
+#include "../../collisions/collisions.hpp"
+#include "../../tiles/level_rendering_utils.hpp"
+#include "../sprite_utils.hpp"
 
 void Blood::draw() {
 

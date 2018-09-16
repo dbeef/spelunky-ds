@@ -2,17 +2,17 @@
 // Created by xdbeef on 04.04.18.
 //
 
-#include "bomb.h"
-#include "../../globals_declarations.h"
-#include "../../tiles/level_rendering_utils.h"
-#include "../../collisions/collisions.h"
-#include "../main_dude/main_dude.h"
+#include "bomb.hpp"
+#include "../../globals_declarations.hpp"
+#include "../../tiles/level_rendering_utils.hpp"
+#include "../../collisions/collisions.hpp"
+#include "../main_dude/main_dude.hpp"
 #include "../../../build/gfx_explosion.h"
 #include "../../../build/soundbank.h"
-#include "../../tiles/level_rendering_utils.h"
-#include "../../collisions/collisions.h"
-#include "../animations/flame.h"
-#include "../sprite_utils.h"
+#include "../../tiles/level_rendering_utils.hpp"
+#include "../../collisions/collisions.hpp"
+#include "../animations/flame.hpp"
+#include "../sprite_utils.hpp"
 #include <math.h>       /* floor */
 #include <maxmod9.h>
 

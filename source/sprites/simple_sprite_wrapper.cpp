@@ -3,8 +3,8 @@
 //
 
 #include "simple_sprite_wrapper.h"
-#include "sprite_utils.h"
-#include "../globals_declarations.h"
+#include "sprite_utils.hpp"
+#include "../globals_declarations.hpp"
 
 void SimpleSpriteWrapper::set_position() {
     int main_x, main_y, sub_x, sub_y;

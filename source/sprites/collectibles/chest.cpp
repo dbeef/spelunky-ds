@@ -5,12 +5,12 @@
 #include <maxmod9.h>
 #include <cstdlib>
 #include "../../../build/gfx_spike_collectibles_flame.h"
-#include "chest.h"
-#include "../../collisions/collisions.h"
-#include "../../globals_declarations.h"
+#include "chest.hpp"
+#include "../../collisions/collisions.hpp"
+#include "../../globals_declarations.hpp"
 #include "../../../build/soundbank.h"
-#include "moniez.h"
-#include "../sprite_utils.h"
+#include "moniez.hpp"
+#include "../sprite_utils.hpp"
 
 #define SPEED_OF_THROWING_CHEST_X 1
 #define SPEED_OF_THROWING_CHEST_Y 1

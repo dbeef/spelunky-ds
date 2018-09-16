@@ -7,7 +7,7 @@
 
 #include <nds/arm9/sprite.h>
 #include <vector>
-#include "../../camera/camera.h"
+#include "../../camera/camera.hpp"
 #include "../moving_object.h"
 
 class RopeElement : public MovingObject {

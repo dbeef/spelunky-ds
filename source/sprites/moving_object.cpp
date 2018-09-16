@@ -6,12 +6,12 @@
 #include <maxmod9.h>
 #include <cmath>
 #include "moving_object.h"
-#include "../globals_declarations.h"
-#include "../tiles/level_rendering_utils.h"
-#include "../collisions/collisions.h"
+#include "../globals_declarations.hpp"
+#include "../tiles/level_rendering_utils.hpp"
+#include "../collisions/collisions.hpp"
 #include "../../build/soundbank.h"
-#include "../sound/sound_utils.h"
-#include "animations/blood.h"
+#include "../sound/sound_utils.hpp"
+#include "animations/blood.hpp"
 
 void MovingObject::spawn_blood() {
     for (int a = 0; a < 4; a++) {

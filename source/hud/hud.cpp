@@ -5,18 +5,18 @@
 #include <nds/arm9/sprite.h>
 #include <cstdio>
 #include <algorithm>
-#include "hud.h"
-#include "../globals_declarations.h"
-#include "../sprites/enemies/snake.h"
-#include "../sprites/enemies/bat.h"
-#include "../sprites/enemies/spider.h"
-#include "../sprites/collectibles/moniez.h"
-#include "../sprites/sprite_utils.h"
+#include "hud.hpp"
+#include "../globals_declarations.hpp"
+#include "../sprites/enemies/snake.hpp"
+#include "../sprites/enemies/bat.hpp"
+#include "../sprites/enemies/spider.hpp"
+#include "../sprites/collectibles/moniez.hpp"
+#include "../sprites/sprite_utils.hpp"
 #include "../../build/gfx_hud.h"
-#include "../sprites/enemies/damsel.h"
-#include "../sprites/enemies/skeleton.h"
-#include "../sprites/enemies/caveman.h"
-#include "../sprites/enemies/shopkeeper.h"
+#include "../sprites/enemies/damsel.hpp"
+#include "../sprites/enemies/skeleton.hpp"
+#include "../sprites/enemies/caveman.hpp"
+#include "../sprites/enemies/shopkeeper.hpp"
 
 #define HEART_POSITION_X 5
 #define HEART_POSITION_Y 5

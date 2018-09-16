@@ -1,7 +1,7 @@
 //
 // Created by xdbeef on 06.05.18.
 //
-#include "../globals_declarations.h"
+#include "../globals_declarations.hpp"
 #define TICKS_PER_SECOND 30.5554503
 
 namespace time_utils {

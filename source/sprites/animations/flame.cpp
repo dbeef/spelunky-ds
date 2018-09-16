@@ -4,11 +4,11 @@
 
 
 #include <cstdlib>
-#include "../../globals_declarations.h"
+#include "../../globals_declarations.hpp"
 #include "../../../build/gfx_spike_collectibles_flame.h"
-#include "../../collisions/collisions.h"
-#include "flame.h"
-#include "../sprite_utils.h"
+#include "../../collisions/collisions.hpp"
+#include "flame.hpp"
+#include "../sprite_utils.hpp"
 
 void Flame::draw() {
 

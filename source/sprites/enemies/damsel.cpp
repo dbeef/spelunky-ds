@@ -4,14 +4,14 @@
 
 #include <maxmod9.h>
 #include <cstdlib>
-#include "caveman.h"
-#include "../../globals_declarations.h"
-#include "../../collisions/collisions.h"
+#include "caveman.hpp"
+#include "../../globals_declarations.hpp"
+#include "../../collisions/collisions.hpp"
 #include "../../../build/gfx_caveman_damsel.h"
 #include "../../tiles/tile_orientation.hpp"
-#include "damsel.h"
+#include "damsel.hpp"
 #include "../../../build/soundbank.h"
-#include "../sprite_utils.h"
+#include "../sprite_utils.hpp"
 
 #define DAMSEL_SPRITESHEET_OFFSET 25
 #define DAMSEL_POS_INC_DELTA 18

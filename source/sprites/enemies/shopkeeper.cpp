@@ -3,12 +3,12 @@
 //
 
 #include <cstdlib>
-#include "shopkeeper.h"
-#include "../../globals_declarations.h"
-#include "../../collisions/collisions.h"
+#include "shopkeeper.hpp"
+#include "../../globals_declarations.hpp"
+#include "../../collisions/collisions.hpp"
 #include "../../tiles/tile_orientation.hpp"
 #include "../../../build/gfx_shopkeeper.h"
-#include "../sprite_utils.h"
+#include "../sprite_utils.hpp"
 
 #define SHOPKEEPER_SPRITESHEET_OFFSET 0
 #define SHOPKEEPER_POS_INC_DELTA 18

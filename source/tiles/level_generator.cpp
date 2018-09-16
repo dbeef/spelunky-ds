@@ -3,10 +3,10 @@
 //
 
 #include <cstdlib>
-#include "level.h"
-#include "level_generator.h"
+#include "level.hpp"
+#include "level_generator.hpp"
 #include "../rooms/RoomType.hpp"
-#include "../globals_declarations.h"
+#include "../globals_declarations.hpp"
 
 /**
  * How the Spelunky level generator works:

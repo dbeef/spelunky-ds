@@ -2,13 +2,13 @@
 // Created by xdbeef on 04.04.18.
 //
 
-#include "../../globals_declarations.h"
-#include "../main_dude/main_dude.h"
+#include "../../globals_declarations.hpp"
+#include "../main_dude/main_dude.hpp"
 #include "../../../build/gfx_blood_rock_rope_poof.h"
-#include "rock.h"
-#include "../../collisions/collisions.h"
-#include "../../tiles/level_rendering_utils.h"
-#include "../sprite_utils.h"
+#include "rock.hpp"
+#include "../../collisions/collisions.hpp"
+#include "../../tiles/level_rendering_utils.hpp"
+#include "../sprite_utils.hpp"
 
 #define ROCK_POS_INC_DELTA 15
 

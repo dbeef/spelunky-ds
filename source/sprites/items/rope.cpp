@@ -3,13 +3,13 @@
 //
 
 #include <maxmod9.h>
-#include "../../globals_declarations.h"
+#include "../../globals_declarations.hpp"
 #include "../../../build/gfx_blood_rock_rope_poof.h"
-#include "rope.h"
+#include "rope.hpp"
 #include "../../../build/soundbank.h"
-#include "../../collisions/collisions.h"
-#include "../../tiles/level_rendering_utils.h"
-#include "../sprite_utils.h"
+#include "../../collisions/collisions.hpp"
+#include "../../tiles/level_rendering_utils.hpp"
+#include "../sprite_utils.hpp"
 
 #define ROPE_POS_INC_DELTA 15
 #define MAX_ROPE_CHAIN_SIZE 8

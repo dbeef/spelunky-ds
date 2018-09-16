@@ -4,16 +4,16 @@
 
 
 #include <maxmod9.h>
-#include "pistol.h"
-#include "../../globals_declarations.h"
-#include "../../collisions/collisions.h"
+#include "pistol.hpp"
+#include "../../globals_declarations.hpp"
+#include "../../collisions/collisions.hpp"
 #include "../../../build/gfx_spike_collectibles_flame.h"
 #include "../../../build/soundbank.h"
-#include "../animations/got_collectible.h"
-#include "../../tiles/level_rendering_utils.h"
-#include "../sprite_utils.h"
-#include "../animations/blast.h"
-#include "../collectibles/bullet.h"
+#include "../animations/got_collectible.hpp"
+#include "../../tiles/level_rendering_utils.hpp"
+#include "../sprite_utils.hpp"
+#include "../animations/blast.hpp"
+#include "../collectibles/bullet.hpp"
 
 #define PISTOL_POS_INC_DELTA 15
 #define PISTOL_COOLDOWN 750

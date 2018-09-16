@@ -2,11 +2,11 @@
 // Created by xdbeef on 04.04.18.
 //
 
-#include "../../globals_declarations.h"
+#include "../../globals_declarations.hpp"
 #include "../../../build/gfx_blood_rock_rope_poof.h"
-#include "rope_element.h"
-#include "rope.h"
-#include "../sprite_utils.h"
+#include "rope_element.hpp"
+#include "rope.hpp"
+#include "../sprite_utils.hpp"
 
 void RopeElement::draw() {
 

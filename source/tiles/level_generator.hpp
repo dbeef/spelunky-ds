@@ -5,7 +5,7 @@
 #ifndef SPELUNKYDS_LEVEL_LAYOUT_H
 #define SPELUNKYDS_LEVEL_LAYOUT_H
 
-#include "level.h"
+#include "level.hpp"
 
 void generate_new_level_layout();
 

@@ -4,17 +4,17 @@
 
 #include <cstdlib>
 #include <cstdio>
-#include "collectibles_utils.h"
-#include "../../globals_declarations.h"
-#include "../items/jetpack.h"
-#include "mitt.h"
-#include "../items/spike_shoes.h"
-#include "shotgun.h"
-#include "glove.h"
-#include "compass.h"
-#include "../items/cape.h"
-#include "spring_shoes.h"
-#include "../items/pistol.h"
+#include "collectibles_utils.hpp"
+#include "../../globals_declarations.hpp"
+#include "../items/jetpack.hpp"
+#include "mitt.hpp"
+#include "../items/spike_shoes.hpp"
+#include "shotgun.hpp"
+#include "glove.hpp"
+#include "compass.hpp"
+#include "../items/cape.hpp"
+#include "spring_shoes.hpp"
+#include "../items/pistol.hpp"
 
 ShoppingObject * collectibles_utils::spawn_item(int x, int y, int r, bool bought) {
     //drop an item
