@@ -90,7 +90,8 @@
 <p> Full license text can be accessed under this link: </p>
 https://github.com/dbeef/spelunky-ds/blob/master/LICENSE
 <p>
-Briefly, as for my code, I distribute it under GNU General Public License, as for Spelunky game assets, I use them under Spelunky® User License v1.1b, also, libnds and tools for building .nds files are provided by devkitPro which is under GNU General Public License (GPL).
+Briefly, as for my code, I distribute it under GNU General Public License, as for Spelunky game assets, I use them under Spelunky® User License v1.1b, also, libnds and tools for building .nds files are provided by devkitARM;
+devkitARM is constructed from and contains components licensed under GPL, BSD, zlib, LGPL & MPL licenses.
 
 NintendoDS is a trademark of Nintendo and is used purely for descriptive purposes. This game is not affiliated with Nintendo.
 </p>
