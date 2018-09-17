@@ -75,7 +75,7 @@
 <ul>
   <li> C++ </li>
   <li> GNU Make </li>
-  <li> libnds - as included with devkitPro toolchain https://devkitpro.org/ </li>
+  <li> libnds - as included with devkitPro's toolchain https://devkitpro.org/ </li>
   <li> mappy - https://tilemap.co.uk/mappy.php </li>
   <li> desmume emulator </li>
   <li> R4 card for testing on a real Nintendo </li>
@@ -92,6 +92,7 @@ https://github.com/dbeef/spelunky-ds/blob/master/LICENSE
 <p>
 Briefly, as for my code, I distribute it under GNU General Public License, as for Spelunky game assets, I use them under Spelunky® User License v1.1b, also, libnds and tools for building .nds files are provided by devkitARM;
 devkitARM is constructed from and contains components licensed under GPL, BSD, zlib, LGPL & MPL licenses.
+libnds is zlib licensed.
 
 NintendoDS is a trademark of Nintendo and is used purely for descriptive purposes. This game is not affiliated with Nintendo.
 </p>
