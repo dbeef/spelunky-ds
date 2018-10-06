@@ -36,8 +36,8 @@ public:
 
     static void getNeighboringTiles(MapTile *mapTiles[32][32], int xx, int yy, MapTile *out_neighboringTiles[9]);
 
-    static void getTilesOnRightFromXY(MapTile *mapTiles[32][32], int xx, int yy, MapTile *out_neighboringTiles[9]);
-    static void getTilesOnLeftFromXY(MapTile *mapTiles[32][32], int xx, int yy, MapTile *out_neighboringTiles[9]);
+    static void getTilesOnRightFromXY(int xx, int yy, MapTile *out_neighboringTiles[9]);
+    static void getTilesOnLeftFromXY(int xx, int yy, MapTile *out_neighboringTiles[9]);
 
     static void bombNeighboringTiles(MapTile *mapTiles[32][32], int xx, int yy);
 

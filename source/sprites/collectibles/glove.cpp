@@ -149,3 +149,10 @@ void Glove::match_animation() {
     sprite_utils::update_frame(frameGfx, GLOVE_SPRITE_SIZE, mainSpriteInfo, subSpriteInfo);
 }
 
+void Glove::deleteSprite() {
+    delete mainSpriteInfo;
+    delete subSpriteInfo;
+    mainSpriteInfo = nullptr;
+    subSpriteInfo = nullptr;
+}
+

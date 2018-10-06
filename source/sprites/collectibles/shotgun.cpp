@@ -214,3 +214,9 @@ void Shotgun::handle_shooting() {
     }
 }
 
+void Shotgun::deleteSprite() {
+    delete mainSpriteInfo;
+    delete subSpriteInfo;
+    mainSpriteInfo = nullptr;
+    subSpriteInfo = nullptr;
+}

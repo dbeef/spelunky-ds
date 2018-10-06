@@ -147,3 +147,10 @@ void SpringShoes::equip() {
     }
 }
 
+void SpringShoes::deleteSprite() {
+    delete mainSpriteInfo;
+    delete subSpriteInfo;
+    mainSpriteInfo = nullptr;
+    subSpriteInfo = nullptr;
+}
+

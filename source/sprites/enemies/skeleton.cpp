@@ -194,11 +194,11 @@ void Skeleton::check_if_can_be_summoned() {
         if (diff > 0) {
             //must have been walking towards skeleton from skeleton's left side, so pointing rightwards
             main_dude_orientation_at_summoning_moment = SpriteState::W_RIGHT;
-            Collisions::getTilesOnLeftFromXY(global::current_level->map_tiles, xx, yy, tiles);
+            Collisions::getTilesOnLeftFromXY(xx, yy, tiles);
         } else {
             //must have been walking towards skeleton from skeleton's right side, so pointing leftwards
             main_dude_orientation_at_summoning_moment = SpriteState::W_LEFT;
-            Collisions::getTilesOnRightFromXY(global::current_level->map_tiles, xx, yy, tiles);
+            Collisions::getTilesOnRightFromXY(xx, yy, tiles);
         }
 
         for (int a = 0; a < 9; a++) {
@@ -317,4 +317,11 @@ void Skeleton::spawn_remnants() {
     global::sprites_to_add.push_back(b_2);
     global::sprites_to_add.push_back(s);
 
+}
+
+void Skeleton::deleteSprite() {
+    delete mainSpriteInfo;
+    delete subSpriteInfo;
+    mainSpriteInfo = nullptr;
+    subSpriteInfo = nullptr;
 }

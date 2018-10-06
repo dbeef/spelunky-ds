@@ -219,5 +219,12 @@ void Bomb::set_position() {
 
 }
 
+void Bomb::deleteSprite() {
+    delete mainSpriteInfo;
+    delete subSpriteInfo;
+    mainSpriteInfo = nullptr;
+    subSpriteInfo = nullptr;
+}
+
 
 

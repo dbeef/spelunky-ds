@@ -11,6 +11,7 @@
 //!> Sources:
 //!> C++ Primer, Fifth Edition, page 864, excellent explaining of variadic templates
 //!> https://www.reddit.com/r/C_Programming/comments/4sfcpm/are_variadic_functions_computationally_expensive/
+//TODO Use initializer_list instead of variadic templates, because we expect arguments of same type. C++ Primer p. 291.
 namespace sprite_utils {
 
     //!>variadic template function that recursively sets priority of a set of sprites

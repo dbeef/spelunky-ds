@@ -205,3 +205,10 @@ void Bat::match_animation() {
 //    printf("A");
     sprite_utils::update_frame(frameGfx, BAT_SPRITE_SIZE, mainSpriteInfo, subSpriteInfo);
 }
+
+void Bat::deleteSprite() {
+    delete mainSpriteInfo;
+    delete subSpriteInfo;
+    mainSpriteInfo = nullptr;
+    subSpriteInfo = nullptr;
+}

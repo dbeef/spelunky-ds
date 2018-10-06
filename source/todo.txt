@@ -1,0 +1,10 @@
+> Use 'const' in function parameters to indicate whether the passed argument changes
+C++ Primer p 279, 287
+> Use a refference parameter, not a pointer parameter.
+https://stackoverflow.com/questions/620604/difference-between-a-pointer-and-reference-parameter
+C++ Primer p 277
+> use std::size_t https://en.cppreference.com/w/cpp/types/size_t
+
+163
+
+287

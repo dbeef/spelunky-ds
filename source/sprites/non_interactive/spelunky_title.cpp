@@ -101,3 +101,18 @@ SpelunkyTitle::SpelunkyTitle() {
     sprite_width = SPELUNKY_TITLE_SPRITE_WIDTH;
 }
 
+void SpelunkyTitle::deleteSprite() {
+    delete mainSpriteInfo_1;
+    delete mainSpriteInfo_2;
+    delete mainSpriteInfo_3;
+    delete subSpriteInfo_1;
+    delete subSpriteInfo_2;
+    delete subSpriteInfo_3;
+    mainSpriteInfo_1 = nullptr;
+    mainSpriteInfo_2 = nullptr;
+    mainSpriteInfo_3 = nullptr;
+    subSpriteInfo_1 = nullptr;
+    subSpriteInfo_2 = nullptr;
+    subSpriteInfo_3 = nullptr;
+}
+

@@ -86,3 +86,10 @@ void Smooch::match_animation() {
     sprite_utils::update_frame(frameGfx, SMOOCH_SPRITE_SIZE, mainSpriteInfo, subSpriteInfo);
 }
 
+void Smooch::deleteSprite() {
+    delete mainSpriteInfo;
+    delete subSpriteInfo;
+    mainSpriteInfo = nullptr;
+    subSpriteInfo = nullptr;
+}
+

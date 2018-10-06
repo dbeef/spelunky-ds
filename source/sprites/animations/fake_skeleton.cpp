@@ -140,3 +140,10 @@ void FakeSkeleton::match_animation() {
     sprite_utils::update_frame(frameGfx, FAKE_SKELETON_SPRITE_SIZE, mainSpriteInfo, subSpriteInfo);
 
 }
+
+void FakeSkeleton::deleteSprite() {
+    delete mainSpriteInfo;
+    delete subSpriteInfo;
+    mainSpriteInfo = nullptr;
+    subSpriteInfo = nullptr;
+}

@@ -11,6 +11,8 @@
 #include "../../../build/soundbank.h"
 #include "moniez.hpp"
 #include "../sprite_utils.hpp"
+#include "ruby_small.h"
+#include "ruby_big.h"
 
 #define SPEED_OF_THROWING_CHEST_X 1
 #define SPEED_OF_THROWING_CHEST_Y 1
@@ -116,44 +118,38 @@ Chest::Chest() {
 void Chest::spawn_treasure() {
 
     for (int a = 0; a < 4; a++) {
-        auto *moniez = new Moniez();
 
-        int ruby_type = rand() % 6;
+        int ruby_type = rand() % 2;
 
-        switch (ruby_type) {
-            case 0:
-                moniez->sprite_type = SpriteType::S_MONIEZ_RUBY_BIG_RED;
-                break;
-            case 1:
-                moniez->sprite_type = SpriteType::S_MONIEZ_RUBY_BIG_GREEN;
-                break;
-            case 2:
-                moniez->sprite_type = SpriteType::S_MONIEZ_RUBY_BIG_BLUE;
-                break;
-            case 3:
-                moniez->sprite_type = SpriteType::S_MONIEZ_RUBY_SMALL_RED;
-                break;
-            case 4:
-                moniez->sprite_type = SpriteType::S_MONIEZ_RUBY_SMALL_GREEN;
-                break;
-            case 5:
-                moniez->sprite_type = SpriteType::S_MONIEZ_RUBY_SMALL_BLUE;
-                break;
-            default:
-                break;
+        if (ruby_type == 0) {
+            
+            auto *ruby_small = new RubySmall();
+
+            ruby_small->x = x + CHEST_PHYSICAL_WIDTH * 0.5;
+            ruby_small->y = y + CHEST_PHYSICAL_HEIGHT * 0.5;
+            ruby_small->init();
+            ruby_small->ySpeed = -1.7;
+            ruby_small->collectible_timer = 0;
+            if (rand() % 2 == 0)
+                ruby_small->xSpeed = -0.8;
+            else
+                ruby_small->xSpeed = 0.8;
+            global::sprites_to_add.push_back(ruby_small);
+
+        } else {
+            
+            auto *ruby_big = new RubyBig();
+            ruby_big->x = x + CHEST_PHYSICAL_WIDTH * 0.5;
+            ruby_big->y = y + CHEST_PHYSICAL_HEIGHT * 0.5;
+            ruby_big->init();
+            ruby_big->ySpeed = -1.7;
+            ruby_big->collectible_timer = 0;
+            if (rand() % 2 == 0)
+                ruby_big->xSpeed = -0.8;
+            else
+                ruby_big->xSpeed = 0.8;
+            global::sprites_to_add.push_back(ruby_big);
         }
-
-        moniez->initSprite();
-        global::sprites_to_add.push_back(moniez);
-        moniez->x = x + CHEST_PHYSICAL_WIDTH * 0.5;
-        moniez->y = y + CHEST_PHYSICAL_HEIGHT * 0.5;
-        moniez->ySpeed = -1.7;
-        moniez->collectible_timer = 0;
-
-        if (rand() % 2 == 0)
-            moniez->xSpeed = -0.8;
-        else
-            moniez->xSpeed = 0.8;
     }
 }
 
@@ -165,5 +161,12 @@ void Chest::match_animation() {
         frameGfx = sprite_utils::get_frame((u8 *) gfx_spike_collectibles_flameTiles, CHEST_SPRITE_SIZE, 2);
 
     sprite_utils::update_frame(frameGfx, CHEST_SPRITE_SIZE, mainSpriteInfo, subSpriteInfo);
+}
+
+void Chest::deleteSprite() {
+    delete mainSpriteInfo;
+    delete subSpriteInfo;
+    mainSpriteInfo = nullptr;
+    subSpriteInfo = nullptr;
 }
 

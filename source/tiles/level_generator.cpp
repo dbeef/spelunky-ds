@@ -22,8 +22,9 @@ void generate_new_level_layout() {
     //clean current layout
     for (auto &map_tile : global::current_level->map_tiles)
         for (auto &y : map_tile) {
-            delete y;
-            y = nullptr;
+            y->exists = false;
+//            delete y;
+//            y = nullptr;
         }
     for (auto &room_type : global::current_level->layout)
         for (RoomType &b : room_type)

@@ -586,3 +586,10 @@ Shopkeeper::Shopkeeper(int x, int y) : Shopkeeper() {
     this->x = x;
     this->y = y;
 }
+
+void Shopkeeper::deleteSprite() {
+    delete mainSpriteInfo;
+    delete subSpriteInfo;
+    mainSpriteInfo = nullptr;
+    subSpriteInfo = nullptr;
+}

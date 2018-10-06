@@ -214,3 +214,10 @@ void Rope::set_position() {
     sprite_utils::set_entry_xy(subSpriteInfo, sub_x, sub_y);
 }
 
+void Rope::deleteSprite() {
+    delete mainSpriteInfo;
+    delete subSpriteInfo;
+    mainSpriteInfo = nullptr;
+    subSpriteInfo = nullptr;
+}
+

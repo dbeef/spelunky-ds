@@ -32,23 +32,16 @@ OAMManager::initOAMTable(u16 *sprite_address, u16 *paletteAddress, u16 *oam_addr
     this->oam_address = oam_address;
     this->offset_multiplier = offset_multiplier;
 
-    clearAllSprites();
+    clear_sprite_attributes();
 
     updateOAM();
 }
 
-void OAMManager::clearAllSprites() {
+void OAMManager::clear_sprite_attributes() {
 
     current_oam_id_palette = 0;
     current_oam_id_tiles = 0;
     nextAvailableTileIdx = 0;
-
-//    for (auto &sprite_info : global::sprite_infos) {
-//        delete sprite_info;
-//        sprite_info = nullptr;
-//    }
-
-    global::sprite_infos.clear();
 
     /*
      * For all 128 sprites on the DS, disable and clear any attributes they
@@ -72,17 +65,14 @@ void OAMManager::clearAllSprites() {
     }
 
     updateOAM();
-
 }
 
 void OAMManager::updateOAM() {
     DC_FlushAll();
-    dmaCopyHalfWords(3,
-                     oam->oamBuffer,
-                     oam_address,
-                     SPRITE_COUNT * sizeof(SpriteEntry));
+    dmaCopyHalfWords(3, oam->oamBuffer, oam_address, SPRITE_COUNT * sizeof(SpriteEntry));
 }
 
+//TODO Passing spriteInfo as an argument so it could be cleaned up
 //FIXME replace int for ENUM as 'size' parameter
 SpriteInfo *
 OAMManager::initSprite(const unsigned short pallette[], int palLen, const unsigned int tiles[], int tilesLen,
@@ -96,7 +86,7 @@ OAMManager::initSprite(const unsigned short pallette[], int palLen, const unsign
 
     /* Keep track of the available tiles */
     assert(current_oam_id_palette < SPRITE_COUNT && current_oam_id_tiles < SPRITE_COUNT);
-    SpriteInfo *spriteInfo = new SpriteInfo();
+    auto *spriteInfo = new SpriteInfo(); //TODO Smart pointer?
     SpriteEntry *spriteEntry = &oam->oamBuffer[current_oam_id_tiles];
 
 //    if (global::hud->level > 6) {

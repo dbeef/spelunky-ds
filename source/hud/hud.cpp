@@ -17,6 +17,10 @@
 #include "../sprites/enemies/skeleton.hpp"
 #include "../sprites/enemies/caveman.hpp"
 #include "../sprites/enemies/shopkeeper.hpp"
+#include "../sprites/collectibles/ruby_big.h"
+#include "../sprites/collectibles/ruby_small.h"
+#include "../sprites/collectibles/triple_goldbar.h"
+#include "../sprites/collectibles/single_goldbar.hpp"
 
 #define HEART_POSITION_X 5
 #define HEART_POSITION_Y 5
@@ -37,7 +41,24 @@
 #define HUD_ICON_HEIGHT 16
 #define HUD_ICON_SIZE HUD_ICON_WIDTH * HUD_ICON_HEIGHT
 
+void Hud::delete_sprites(){
+
+    delete heartSpriteInfo;
+    delete dollarSpriteInfo;
+    delete bombSpriteInfo;
+    delete ropeSpriteInfo;
+    delete holdingItemSpriteInfo;
+
+    heartSpriteInfo = nullptr;
+    dollarSpriteInfo = nullptr;
+    bombSpriteInfo = nullptr;
+    ropeSpriteInfo = nullptr;
+    holdingItemSpriteInfo = nullptr;
+}
+
 void Hud::init_sprites() {
+
+    delete_sprites();
 
     heartSpriteInfo = global::main_oam_manager->initSprite(gfx_hudPal, gfx_hudPalLen,
                                                            nullptr, HUD_ICON_SIZE,
@@ -54,7 +75,6 @@ void Hud::init_sprites() {
     holdingItemSpriteInfo = global::main_oam_manager->initSprite(gfx_hudPal, gfx_hudPalLen,
                                                                  nullptr, HUD_ICON_SIZE,
                                                                  16, HUD, true, false, LAYER_LEVEL::TOP);
-
 
     u8 *frameGfxHeart = sprite_utils::get_frame((u8 *) gfx_hudTiles, HUD_ICON_SIZE, 0);
     u8 *frameGfxHoldingItem = sprite_utils::get_frame((u8 *) gfx_hudTiles, HUD_ICON_SIZE, 1);
@@ -316,12 +336,59 @@ void Hud::disable_all_prompts() {
 void Hud::draw_collected_loot() {
 
     for (int a = 0; a < global::collected_loot.size(); a++) {
-        auto *moniez = new Moniez(90 + (a * 4), 190, global::collected_loot.at(a));
-        moniez->init();
-        moniez->y += (16 - moniez->physical_height); //aligning to same level
-        global::sprites.push_back(moniez);
-        moniez->set_position();
-        moniez->ready_to_dispose = true;
+
+        //FIXME Pass specific moniez type
+
+        if (global::collected_loot.at(a) == S_MONIEZ_RUBY_BIG_RED ||
+            global::collected_loot.at(a) == S_MONIEZ_RUBY_BIG_GREEN ||
+            global::collected_loot.at(a) == S_MONIEZ_RUBY_BIG_BLUE) {
+
+            auto *ruby_big = new RubyBig();
+            ruby_big->x = 90 + (a * 4);
+            ruby_big->y = 190;
+            ruby_big->init();
+            ruby_big->y += (16 - ruby_big->physical_height); //aligning to same level
+            global::sprites.push_back(ruby_big);
+            ruby_big->set_position();
+            ruby_big->ready_to_dispose = true;
+
+        } else if (global::collected_loot.at(a) == S_MONIEZ_RUBY_SMALL_RED ||
+                   global::collected_loot.at(a) == S_MONIEZ_RUBY_SMALL_GREEN ||
+                   global::collected_loot.at(a) == S_MONIEZ_RUBY_SMALL_BLUE) {
+
+            auto *ruby_small = new RubySmall();
+            ruby_small->x = 90 + (a * 4);
+            ruby_small->y = 190;
+            ruby_small->init();
+            ruby_small->y += (16 - ruby_small->physical_height); //aligning to same level
+            global::sprites.push_back(ruby_small);
+            ruby_small->set_position();
+            ruby_small->ready_to_dispose = true;
+
+        } else if (global::collected_loot.at(a) == S_MONIEZ_TRIPLE_GOLDBARS) {
+
+            auto *triple_goldbars = new TripleGoldbar();
+            triple_goldbars->x = 90 + (a * 4);
+            triple_goldbars->y = 190;
+            triple_goldbars->init();
+            triple_goldbars->y += (16 - triple_goldbars->physical_height); //aligning to same level
+            global::sprites.push_back(triple_goldbars);
+            triple_goldbars->set_position();
+            triple_goldbars->ready_to_dispose = true;
+
+        } else if (global::collected_loot.at(a) == S_MONIEZ_SINGLE_GOLDBAR) {
+
+            auto *single_goldbar = new SingleGoldbar();
+            single_goldbar->x = 90 + (a * 4);
+            single_goldbar->y = 190;
+            single_goldbar->init();
+            single_goldbar->y += (16 - single_goldbar->physical_height); //aligning to same level
+            global::sprites.push_back(single_goldbar);
+            single_goldbar->set_position();
+            single_goldbar->ready_to_dispose = true;
+
+        }
+
     }
 
 }

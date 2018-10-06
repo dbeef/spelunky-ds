@@ -168,3 +168,10 @@ void Bullet::match_animation() {
     sprite_utils::update_frame(frameGfx, BULLET_SPRITE_SIZE, mainSpriteInfo, subSpriteInfo);
 }
 
+void Bullet::deleteSprite() {
+    delete mainSpriteInfo;
+    delete subSpriteInfo;
+    mainSpriteInfo = nullptr;
+    subSpriteInfo = nullptr;
+}
+

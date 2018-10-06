@@ -53,6 +53,8 @@ public:
 
     void initSprite() override;
 
+    void deleteSprite() override;
+
     double pos_inc_timer{};
 
     SpriteInfo *mainSpriteInfo{};

@@ -30,6 +30,8 @@ public:
 
     void initSprite() override;
 
+    void deleteSprite() override;
+
     void update_position() override {};
 
     void updateSpeed() override {};

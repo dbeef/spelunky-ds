@@ -196,3 +196,10 @@ void Pistol::match_animation() {
     sprite_utils::update_frame(frameGfx, PISTOL_SPRITE_SIZE, mainSpriteInfo, subSpriteInfo);
 }
 
+void Pistol::deleteSprite() {
+    delete mainSpriteInfo;
+    delete subSpriteInfo;
+    mainSpriteInfo = nullptr;
+    subSpriteInfo = nullptr;
+}
+

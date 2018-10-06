@@ -27,6 +27,7 @@ namespace global {
     GameState *game_state = nullptr;
     PrintConsole *print_console = nullptr; //initialised in console_utils.h call from main
 
+    //https://stackoverflow.com/questions/8036474/when-vectors-are-allocated-do-they-use-memory-on-the-heap-or-the-stack
     std::vector<MovingObject *> sprites;
     std::vector<MovingObject *> sprites_to_add;
     std::vector<SpriteInfo *> sprite_infos;

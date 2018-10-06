@@ -23,6 +23,7 @@
 #include "../sprite_utils.hpp"
 #include "../../../build/gfx_spelunker.h"
 #include "../items/pistol.hpp"
+#include "main_dude.hpp"
 
 
 void MainDude::throw_item() {
@@ -443,4 +444,11 @@ void MainDude::match_animation() {
     }
 
     sprite_utils::update_frame(frameGfx, MAIN_DUDE_SPRITE_SIZE, main_spelunker, sub_spelunker);
+}
+
+void MainDude::deleteSprite() {
+    delete main_spelunker;
+    delete sub_spelunker;
+    main_spelunker = nullptr;
+    sub_spelunker = nullptr;
 }

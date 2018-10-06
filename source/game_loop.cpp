@@ -4,27 +4,28 @@
 #include "tiles/populating_utils.hpp"
 #include "time/time_utils.h"
 #include "memory/oam_utils.hpp"
+#include "sprites/animations/blood.hpp"
 
 void gameloop::run() {
 
     global::main_dude->init();
+    //init positions with main menu values:
     global::camera->x = 0;
     global::camera->y = 127;
     global::main_dude->x = 224;
-    global::main_dude->y = 300;
+    global::main_dude->y = 300; //TODO Some constexpr file for these
     global::sprites.push_back(global::main_dude);
 
     global::hud->init();
+    populate_main_menu(); //TODO Game state function for matching this?
 
-    populate_main_menu();
-
+    //the game loop. If exited, SpelunkyDS returns 0 and gets back to the menu
     while (true) {
 
         time_utils::update_ms_since_last_frame();
-
         global::input_handler->updateInput();
 
-        if (global::game_state->bombed) {
+        if (global::game_state->bombed) { //TODO Can't this be done in the Bomb class?
             global::current_level->update_level();
             global::game_state->bombed = false;
             for (int a = 0; a < global::sprites.size(); a++)
@@ -42,6 +43,9 @@ void gameloop::run() {
             }
         }
 
+        if (size)
+            global::sprites_to_add.clear();
+
         for (int a = 0; a < global::sprites.size(); a++) {
             //TODO Debugging flag
 //            if (size)
@@ -49,7 +53,7 @@ void gameloop::run() {
 
             //TODO Add checking if ready to dispose here, and remove checking in MovingObject subclasses
             if (global::sprites.at(a)
-            /*&& !global::sprites.at(a)->ready_to_dispose *//*&& !global::sprites.at(a)->killed*/) {
+                /*&& !global::sprites.at(a)->ready_to_dispose *//*&& !global::sprites.at(a)->killed*/) {
 //                printf("START ");
 //                (*global::sprites.at(a)).introduce_yourself();
                 (*global::sprites.at(a)).update();
@@ -57,10 +61,8 @@ void gameloop::run() {
             }
 
         }
-//        printf("DONE ALL\n");
 
-        if (size)
-            global::sprites_to_add.clear();
+//        printf("DONE ALL\n");
 
         global::game_state->handle_transition_screen_smooch();
 
@@ -68,7 +70,6 @@ void gameloop::run() {
         global::hud->update();
 
         swiWaitForVBlank();
-
         manage_brightness();
 
         global::camera->write_current_position_to_graphics_engines();

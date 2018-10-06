@@ -26,6 +26,8 @@ public:
 
     void initSprite() override;
 
+    void deleteSprite() override;
+
     void updateOther() override {};
 
     void init() override;

@@ -121,3 +121,10 @@ void FallPoof::match_animation() {
     frameGfx = sprite_utils::get_frame((u8 *) gfx_blood_rock_rope_poofTiles, FALL_POOF_SPRITE_SIZE, animFrame + 13);
     sprite_utils::update_frame(frameGfx, FALL_POOF_SPRITE_SIZE, mainSpriteInfo, subSpriteInfo);
 }
+
+void FallPoof::deleteSprite() {
+    delete mainSpriteInfo;
+    delete subSpriteInfo;
+    mainSpriteInfo = nullptr;
+    subSpriteInfo = nullptr;
+}

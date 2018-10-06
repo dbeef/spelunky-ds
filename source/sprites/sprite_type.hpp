@@ -17,7 +17,7 @@ enum SpriteType {
     S_ROCK,                       //4
     S_JAR,                        //5
     S_MONIEZ_TRIPLE_GOLDBARS,     //6
-    S_MONIEZ_ONE_GOLDBAR,         //6
+    S_MONIEZ_SINGLE_GOLDBAR,      //6
     S_MONIEZ_RUBY_BIG_RED,        //7
     S_MONIEZ_RUBY_BIG_BLUE,       //8
     S_MONIEZ_RUBY_BIG_GREEN,      //9

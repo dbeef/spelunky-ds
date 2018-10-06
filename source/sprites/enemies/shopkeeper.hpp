@@ -60,6 +60,8 @@ public:
 
     void initSprite() override;
 
+    void deleteSprite() override;
+
     double pos_inc_timer{};
 
     ShoppingObject *shop_items[4]{};

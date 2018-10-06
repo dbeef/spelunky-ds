@@ -74,7 +74,6 @@ void Whip::update_position() {
 }
 
 void Whip::initSprite() {
-
     delete main_sprite_info;
     delete sub_sprite_info;
 
@@ -110,4 +109,11 @@ Whip::Whip() {
     physical_width = WHIP_PHYSICAL_WIDTH;
     physical_height = WHIP_PHYSICAL_HEIGHT;
     spritesheet_type = SPIKES_COLLECTIBLES;
+}
+
+void Whip::deleteSprite() {
+    delete main_sprite_info;
+    delete sub_sprite_info;
+    main_sprite_info = nullptr;
+    sub_sprite_info = nullptr;
 }

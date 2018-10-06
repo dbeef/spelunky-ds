@@ -240,3 +240,10 @@ void Arrow::set_position() {
     sprite_utils::set_entry_xy(mainSpriteInfo, main_x, main_y);
     sprite_utils::set_entry_xy(subSpriteInfo, sub_x, sub_y);
 }
+
+void Arrow::deleteSprite() {
+    delete mainSpriteInfo;
+    delete subSpriteInfo;
+    mainSpriteInfo = nullptr;
+    subSpriteInfo = nullptr;
+}

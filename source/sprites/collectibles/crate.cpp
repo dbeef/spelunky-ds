@@ -187,3 +187,10 @@ void Crate::play_collectible_animation() {
 
 }
 
+void Crate::deleteSprite() {
+    delete mainSpriteInfo;
+    delete subSpriteInfo;
+    mainSpriteInfo = nullptr;
+    subSpriteInfo = nullptr;
+}
+

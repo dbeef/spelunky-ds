@@ -112,3 +112,10 @@ void FlameElement::match_animation() {
     frameGfx = sprite_utils::get_frame((u8 *) gfx_spike_collectibles_flameTiles, FLAME_SPRITE_SIZE, 34 + currentFrame);
     sprite_utils::update_frame(frameGfx, FLAME_SPRITE_SIZE, mainSpriteInfo, subSpriteInfo);
 }
+
+void FlameElement::deleteSprite() {
+    delete mainSpriteInfo;
+    delete subSpriteInfo;
+    mainSpriteInfo = nullptr;
+    subSpriteInfo = nullptr;
+}

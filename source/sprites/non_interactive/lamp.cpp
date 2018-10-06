@@ -78,3 +78,10 @@ void Lamp::match_animation() {
     subSpriteInfo->updateFrame(frameGfx, LAMP_SPRITE_SIZE);
 
 }
+
+void Lamp::deleteSprite() {
+    delete mainSpriteInfo;
+    delete subSpriteInfo;
+    mainSpriteInfo = nullptr;
+    subSpriteInfo = nullptr;
+}

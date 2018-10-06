@@ -94,3 +94,5 @@ void ArrowTrap::spawn_arrow() {
     arrow->y = y + 4;
 
 }
+
+void ArrowTrap::deleteSprite() {}

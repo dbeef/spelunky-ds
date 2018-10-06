@@ -15,6 +15,8 @@
  * (called 'values') which will store 4 integer values that represent an index on the spritesheet, from which
  * graphics for this tile will be copied.
  * 32x32 makes a map of 3x3 rooms composed of 10x10 tiles + a frame of 1 undestroyable tile over the whole map.
+ * sizeof(MapTile) == 225, whole 32x32 map makes 225 KB! That's a big chunk of the ~850 KB RAM, which is left for
+ * allocation after the 3.1 MB game is loaded into 4 MB of RAM.
  */
 class MapTile {
 public:
@@ -22,12 +24,13 @@ public:
     u16 values[4]{};
     //index on the render space, takes values 0 to (512x512 / 8x8) = 4096
     //this index moves from the left-upper corner to the right-down corner, increments once every 8x8 tile
-    int map_index[4]{};
+    u16 map_index[4]{};
     //this x,y means position on 32x32 MapTile array
-    int x{}; //0-32
-    int y{}; //0-32
+    u8 x{}; //0-32
+    u8 y{}; //0-32
     bool collidable{};
     bool destroyable{};
+    bool exists{};
     MapTileType mapTileType{};
 
     void match_tile(MapTileType type);

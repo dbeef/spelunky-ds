@@ -330,11 +330,10 @@ void Caveman::check_if_can_be_triggered() {
 
         MapTile *tiles[9] = {};
         if (sprite_state == SpriteState::W_RIGHT && diff < 0)
-            Collisions::getTilesOnRightFromXY(global::current_level->map_tiles, xx, yy, tiles);
+            Collisions::getTilesOnRightFromXY(xx, yy, tiles);
         else if (sprite_state == SpriteState::W_LEFT && diff > 0)
-            Collisions::getTilesOnLeftFromXY(global::current_level->map_tiles, xx, yy, tiles);
+            Collisions::getTilesOnLeftFromXY(xx, yy, tiles);
         else triggered = false;
-
 
         for (int a = 0; a < 9; a++) {
 
@@ -423,4 +422,11 @@ void Caveman::match_animation() {
         apply_walking_sprites();
 
     sprite_utils::update_frame(frameGfx, CAVEMAN_SPRITE_SIZE, mainSpriteInfo, subSpriteInfo);
+}
+
+void Caveman::deleteSprite() {
+    delete mainSpriteInfo;
+    delete subSpriteInfo;
+    mainSpriteInfo = nullptr;
+    subSpriteInfo = nullptr;
 }

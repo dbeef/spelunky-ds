@@ -11,15 +11,16 @@
 
 void Blood::draw() {
 
+    //FIXME Add elements to the global sprites array
     //update all trail elements
-    for (int a = 0; a < bloodTrail.size(); a++) {
-        bloodTrail.at(a)->draw();
-        bloodTrail.at(a)->update();
-        if (bloodTrail.at(a)->finished) {
-            delete (bloodTrail.at(a));
-            bloodTrail.erase(bloodTrail.begin() + a);
-        }
-    }
+//    for (int a = 0; a < bloodTrail.size(); a++) {
+//        bloodTrail.at(a)->draw();
+//        bloodTrail.at(a)->update();
+//        if (bloodTrail.at(a)->finished) {
+//            delete (bloodTrail.at(a));
+//            bloodTrail.erase(bloodTrail.begin() + a); //FIXME this erasing is probably wrong
+//        }
+//    }
 
     if (ready_to_dispose) {
         sprite_utils::set_visibility(false, mainSpriteInfo, subSpriteInfo);
@@ -139,7 +140,7 @@ void Blood::spawn_blood() {
     element->init();
     element->draw();
     bloodTrail.push_back(element);
-
+    global::sprites_to_add.push_back(element);
 }
 
 void Blood::match_animation() {
@@ -172,4 +173,11 @@ void Blood::set_position() {
     get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
     sprite_utils::set_entry_xy(mainSpriteInfo, main_x, main_y);
     sprite_utils::set_entry_xy(subSpriteInfo, sub_x, sub_y);
+}
+
+void Blood::deleteSprite() {
+    delete mainSpriteInfo;
+    delete subSpriteInfo;
+    mainSpriteInfo = nullptr;
+    subSpriteInfo = nullptr;
 }

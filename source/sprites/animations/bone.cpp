@@ -133,3 +133,10 @@ void Bone::match_animation() {
 
     sprite_utils::update_frame(frameGfx, BONE_SPRITE_SIZE, mainSpriteInfo, subSpriteInfo);
 }
+
+void Bone::deleteSprite() {
+    delete mainSpriteInfo;
+    delete subSpriteInfo;
+    mainSpriteInfo = nullptr;
+    subSpriteInfo = nullptr;
+}

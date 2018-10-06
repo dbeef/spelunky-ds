@@ -175,6 +175,8 @@ void GameState::handle_changing_screens() {
 
         } else {
 
+            global::current_level->clean_map_layout();
+
             //splash screen; scores or level transition
 
             if (global::game_state->scores_screen) {
@@ -243,23 +245,23 @@ void GameState::handle_changing_screens() {
 //        for(int a =0;a < 1*60;a++)
 //            swiWaitForVBlank();
 
+
+        bool dead = global::main_dude->dead;
+        int temp_x = global::main_dude->x;
+        int temp_y = global::main_dude->y;
+
+        //changing scene, so delete all MovingObjects you have, and according SpriteInfos
         oam_utils::delete_all_sprites();
 
-//        printf("BEFORE MAIN DUDE INIT\n");
-//        for(int a =0;a < 1*60;a++)
-//            swiWaitForVBlank();
+        //new MainDude since we deleted it. TODO Don't push main dude to the global::sprites and update it separately
+        global::main_dude = new MainDude();
+        global::main_dude->dead = dead; //TODO Move this fields out to the game_state! or do the thing above, same result
 
-        global::main_dude->init();
+        global::main_dude->x = temp_x;
+        global::main_dude->y = temp_y;
 
-//        printf("BEFORE MAIN PUSH\n");
-//        for(int a =0;a < 1*60;a++)
-//            swiWaitForVBlank();
-
+            global::main_dude->init();
         global::sprites.push_back(global::main_dude);
-
-//        printf("AFTER MAIN PUSH\n");
-//        for(int a =0;a < 1*60;a++)
-//            swiWaitForVBlank();
 
         consoleClear();
 
@@ -271,7 +273,7 @@ void GameState::handle_changing_screens() {
                 sound::start_cave_music();
             }
 
-            global::game_state->start_next_level();
+            global::game_state->start_next_level(); //initializes hud sprites
 
         } else {
 
@@ -299,17 +301,20 @@ void GameState::handle_changing_screens() {
     }
 }
 
+/**
+ * Sets main dude's position to the first tile of given type that occurs during iteration through the map
+ */
 void GameState::set_position_to(MapTileType t) {
 
     MapTile *entrance;
     global::current_level->get_first_tile_of_given_type(t, entrance);
 
-    if (entrance != nullptr) {
+    if (entrance != nullptr && entrance->exists) {
         global::main_dude->x = entrance->x * 16;
         global::main_dude->y = entrance->y * 16;
     } else {
-        global::main_dude->x = 113;
-        global::main_dude->y = 288;
+        global::main_dude->x = 0;
+        global::main_dude->y = 144;
     }
 
     global::camera->follow_main_dude = true;
@@ -317,6 +322,9 @@ void GameState::set_position_to(MapTileType t) {
 
 }
 
+/**
+ * TODO Move this to the Damsel class.
+ */
 void GameState::handle_transition_screen_smooch() {
     if (smooching) {
         if (144 - global::main_dude->x <= 16) {
@@ -325,7 +333,7 @@ void GameState::handle_transition_screen_smooch() {
             if (!spawned_smooch) {
                 mmEffect(SFX_XKISS);
                 spawned_smooch = true;
-                Smooch *s = new Smooch();
+                auto *s = new Smooch();
                 s->x = 144;
                 s->y = 436;
                 s->init();

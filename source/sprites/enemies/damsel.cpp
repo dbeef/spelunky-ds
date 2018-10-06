@@ -517,3 +517,10 @@ Damsel::Damsel(int x, int y) : Damsel() {
     this->x = x;
     this->y = y;
 }
+
+void Damsel::deleteSprite() {
+    delete mainSpriteInfo;
+    delete subSpriteInfo;
+    mainSpriteInfo = nullptr;
+    subSpriteInfo = nullptr;
+}

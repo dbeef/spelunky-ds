@@ -98,3 +98,10 @@ void ShoppingIcon::set_ready_to_dispose() {
     if (mainSpriteInfo != nullptr && subSpriteInfo != nullptr)
         sprite_utils::set_visibility(false, mainSpriteInfo, subSpriteInfo);
 }
+
+void ShoppingIcon::deleteSprite() {
+    delete mainSpriteInfo;
+    delete subSpriteInfo;
+    mainSpriteInfo = nullptr;
+    subSpriteInfo = nullptr;
+}

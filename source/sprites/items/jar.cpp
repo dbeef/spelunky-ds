@@ -142,3 +142,10 @@ void Jar::set_sprite_attributes() {
     sprite_utils::set_horizontal_flip(false, mainSpriteInfo, subSpriteInfo);
     sprite_utils::set_priority(OBJPRIORITY_0, mainSpriteInfo, subSpriteInfo);
 }
+
+void Jar::deleteSprite() {
+    delete mainSpriteInfo;
+    delete subSpriteInfo;
+    mainSpriteInfo = nullptr;
+    subSpriteInfo = nullptr;
+}

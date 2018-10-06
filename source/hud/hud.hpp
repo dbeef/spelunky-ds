@@ -64,6 +64,7 @@ public:
     //changes every time_utils a new item is added to hud
     int items_offset_y{};
 
+    void delete_sprites();
     void update();
     void add_moniez_on_collected_loot(int value);
 

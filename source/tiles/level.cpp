@@ -52,62 +52,62 @@ void Level::generate_frame() {
 
     //upper row
     for (int a = 0; a < MAP_GAME_HEIGHT_TILES; a++) {
-        delete (map_tiles[a][0]);
-        auto *t = new MapTile();
-        t->match_tile(MapTileType::CAVE_REGULAR);
-        t->map_index[0] = a * 2;
-        t->map_index[1] = a * 2 + 1;
-        t->map_index[2] = LINE_WIDTH + a * 2;
-        t->map_index[3] = LINE_WIDTH + a * 2 + 1;
-        t->destroyable = false; //make it non-destroyable explicitly
-        t->x = a;
-        t->y = 0;
-        map_tiles[a][0] = t;
+//        delete (map_tiles[a][0]);
+//        auto *t = new MapTile();
+        map_tiles[a][0]->match_tile(MapTileType::CAVE_REGULAR);
+        map_tiles[a][0]->map_index[0] = a * 2;
+        map_tiles[a][0]->map_index[1] = a * 2 + 1;
+        map_tiles[a][0]->map_index[2] = LINE_WIDTH + a * 2;
+        map_tiles[a][0]->map_index[3] = LINE_WIDTH + a * 2 + 1;
+        map_tiles[a][0]->destroyable = false; //make it non-destroyable explicitly
+        map_tiles[a][0]->x = a;
+        map_tiles[a][0]->y = 0;
+        map_tiles[a][0]->exists = true;
     }
 
     //bottom row
     for (int a = 0; a < MAP_GAME_WIDTH_TILES; a++) {
-        delete (map_tiles[MAP_GAME_HEIGHT_TILES - 1][a]);
-        auto *t = new MapTile();
-        t->match_tile(MapTileType::CAVE_REGULAR);
-        t->map_index[0] = a * 2 * LINE_WIDTH - 2 + LINE_WIDTH;
-        t->map_index[1] = a * 2 * LINE_WIDTH - 1 + LINE_WIDTH;
-        t->map_index[2] = a * 2 * LINE_WIDTH + LINE_WIDTH - 2 + LINE_WIDTH;
-        t->map_index[3] = a * 2 * LINE_WIDTH + LINE_WIDTH - 1 + LINE_WIDTH;
-        t->destroyable = false; //make it non-destroyable explicitly
-        t->x = 31;
-        t->y = a;
-        map_tiles[31][a] = t;
+//        delete (map_tiles[31][a]);
+//        auto *t = new MapTile();
+        map_tiles[31][a]->match_tile(MapTileType::CAVE_REGULAR);
+        map_tiles[31][a]->map_index[0] = a * 2 * LINE_WIDTH - 2 + LINE_WIDTH;
+        map_tiles[31][a]->map_index[1] = a * 2 * LINE_WIDTH - 1 + LINE_WIDTH;
+        map_tiles[31][a]->map_index[2] = a * 2 * LINE_WIDTH + LINE_WIDTH - 2 + LINE_WIDTH;
+        map_tiles[31][a]->map_index[3] = a * 2 * LINE_WIDTH + LINE_WIDTH - 1 + LINE_WIDTH;
+        map_tiles[31][a]->destroyable = false; //make it non-destroyable explicitly
+        map_tiles[31][a]->x = 31;
+        map_tiles[31][a]->y = a;
+        map_tiles[31][a]->exists = true;
     }
 
     //right row
     for (int a = 0; a < MAP_GAME_HEIGHT_TILES; a++) {
-        delete (map_tiles[a][MAP_GAME_WIDTH_TILES - 1]);
-        auto *t = new MapTile();
-        t->match_tile(MapTileType::CAVE_REGULAR);
-        t->map_index[0] = 62 * LINE_WIDTH + a * 2;
-        t->map_index[1] = 62 * LINE_WIDTH + a * 2 + 1;
-        t->map_index[2] = 63 * LINE_WIDTH + a * 2;
-        t->map_index[3] = 63 * LINE_WIDTH + a * 2 + 1;
-        t->destroyable = false; //make it non-destroyable explicitly
-        t->x = a;
-        t->y = 31;
-        map_tiles[a][31] = t;
+//        delete (map_tiles[31][a]);
+//        auto *t = new MapTile();
+        map_tiles[a][31]->match_tile(MapTileType::CAVE_REGULAR);
+        map_tiles[a][31]->map_index[0] = 62 * LINE_WIDTH + a * 2;
+        map_tiles[a][31]->map_index[1] = 62 * LINE_WIDTH + a * 2 + 1;
+        map_tiles[a][31]->map_index[2] = 63 * LINE_WIDTH + a * 2;
+        map_tiles[a][31]->map_index[3] = 63 * LINE_WIDTH + a * 2 + 1;
+        map_tiles[a][31]->destroyable = false; //make it non-destroyable explicitly
+        map_tiles[a][31]->x = a;
+        map_tiles[a][31]->y = 31;
+        map_tiles[a][31]->exists = true;
     }
 
     //left row
     for (int a = 0; a < MAP_GAME_WIDTH_TILES; a++) {
-        delete (map_tiles[0][a]);
-        auto *t = new MapTile();
-        t->match_tile(MapTileType::CAVE_REGULAR);
-        t->map_index[0] = a * 2 * LINE_WIDTH + 0;
-        t->map_index[1] = a * 2 * LINE_WIDTH + 1;
-        t->map_index[2] = a * 2 * LINE_WIDTH + LINE_WIDTH;
-        t->map_index[3] = a * 2 * LINE_WIDTH + LINE_WIDTH + 1;
-        t->destroyable = false; //make it non-destroyable explicitly
-        t->x = 0;
-        t->y = a;
-        map_tiles[0][a] = t;
+//        delete (map_tiles[0][a]);
+//        auto *t = new MapTile();
+        map_tiles[0][a]->match_tile(MapTileType::CAVE_REGULAR);
+        map_tiles[0][a]->map_index[0] = a * 2 * LINE_WIDTH + 0;
+        map_tiles[0][a]->map_index[1] = a * 2 * LINE_WIDTH + 1;
+        map_tiles[0][a]->map_index[2] = a * 2 * LINE_WIDTH + LINE_WIDTH;
+        map_tiles[0][a]->map_index[3] = a * 2 * LINE_WIDTH + LINE_WIDTH + 1;
+        map_tiles[0][a]->destroyable = false; //make it non-destroyable explicitly
+        map_tiles[0][a]->x = 0;
+        map_tiles[0][a]->y = a;
+        map_tiles[0][a]->exists = true;
     }
 }
 
@@ -117,12 +117,10 @@ void Level::generate_frame() {
 void Level::write_tiles_to_map() {
     for (int x = 0; x < MAP_GAME_WIDTH_TILES; x++) {
         for (int y = 0; y < MAP_GAME_HEIGHT_TILES; y++) {
-
             MapTile *t = map_tiles[x][y];
             for (int k = 0; k < 4; k++)
-                if (t && t->values[k] != 0)
+                if (t && t->exists && t->values[k] != 0)
                     global::current_map[t->map_index[k]] = t->values[k];
-
         }
     }
 }
@@ -177,16 +175,17 @@ void Level::initialise_tiles_from_splash_screen(SplashScreenType splash_type) {
                 u16 pos_y = static_cast<u16>(
                         tab_y + ROOM_TILE_HEIGHT_SPLASH_SCREEN * ((ROOMS_Y - offset_on_upper_screen) - 1) - 4);
 
-                delete (map_tiles[pos_x][pos_y]);
-                auto *t = new MapTile();
-                t->match_tile(static_cast<MapTileType>(tab[tab_y][tab_x]));
-                t->map_index[0] = room_offset + (tab_x * 2) + (tab_y * LINE_WIDTH * 2);
-                t->map_index[1] = room_offset + (tab_x * 2) + (tab_y * LINE_WIDTH * 2) + 1;
-                t->map_index[2] = room_offset + (tab_x * 2) + (LINE_WIDTH + (tab_y * LINE_WIDTH * 2));
-                t->map_index[3] = room_offset + (tab_x * 2) + (LINE_WIDTH + (tab_y * LINE_WIDTH * 2)) + 1;
-                t->x = pos_x;
-                t->y = pos_y;
-                this->map_tiles[pos_x][pos_y] = t;
+//                delete (map_tiles[pos_x][pos_y]);
+//                auto *t = new MapTile();
+                map_tiles[pos_x][pos_y]->match_tile(static_cast<MapTileType>(tab[tab_y][tab_x]));
+                map_tiles[pos_x][pos_y]->map_index[0] = room_offset + (tab_x * 2) + (tab_y * LINE_WIDTH * 2);
+                map_tiles[pos_x][pos_y]->map_index[1] = room_offset + (tab_x * 2) + (tab_y * LINE_WIDTH * 2) + 1;
+                map_tiles[pos_x][pos_y]->map_index[2] = room_offset + (tab_x * 2) + (LINE_WIDTH + (tab_y * LINE_WIDTH * 2));
+                map_tiles[pos_x][pos_y]->map_index[3] = room_offset + (tab_x * 2) + (LINE_WIDTH + (tab_y * LINE_WIDTH * 2)) + 1;
+                map_tiles[pos_x][pos_y]->x = pos_x;
+                map_tiles[pos_x][pos_y]->y = pos_y;
+                map_tiles[pos_x][pos_y]->exists = true;
+
             }
         }
     }
@@ -269,19 +268,19 @@ void Level::initialise_tiles_from_room_layout() {
                                 2 * ROOM_TILE_WIDTH_GAME * room_x +
                                 2 * ROOM_TILE_HEIGHT_GAME * LINE_WIDTH * ((ROOMS_Y - room_y) - 1));
 
-                        delete (map_tiles[pos_x][pos_y]);
+//                        delete (map_tiles[pos_x][pos_y]);
+//
+//                        auto t = new MapTile();
+                        map_tiles[pos_x][pos_y]->match_tile(static_cast<MapTileType>(tab[tab_y][tab_x]));
 
-                        auto t = new MapTile();
-                        t->match_tile(static_cast<MapTileType>(tab[tab_y][tab_x]));
+                        map_tiles[pos_x][pos_y]->map_index[0] = room_offset + (tab_x * 2) + (tab_y * LINE_WIDTH * 2);
+                        map_tiles[pos_x][pos_y]->map_index[1] = room_offset + (tab_x * 2) + (tab_y * LINE_WIDTH * 2) + 1;
+                        map_tiles[pos_x][pos_y]->map_index[2] = room_offset + (tab_x * 2) + (LINE_WIDTH + (tab_y * LINE_WIDTH * 2));
+                        map_tiles[pos_x][pos_y]->map_index[3] = room_offset + (tab_x * 2) + (LINE_WIDTH + (tab_y * LINE_WIDTH * 2)) + 1;
 
-                        t->map_index[0] = room_offset + (tab_x * 2) + (tab_y * LINE_WIDTH * 2);
-                        t->map_index[1] = room_offset + (tab_x * 2) + (tab_y * LINE_WIDTH * 2) + 1;
-                        t->map_index[2] = room_offset + (tab_x * 2) + (LINE_WIDTH + (tab_y * LINE_WIDTH * 2));
-                        t->map_index[3] = room_offset + (tab_x * 2) + (LINE_WIDTH + (tab_y * LINE_WIDTH * 2)) + 1;
-
-                        t->x = pos_x;
-                        t->y = pos_y;
-                        this->map_tiles[pos_x][pos_y] = t;
+                        map_tiles[pos_x][pos_y]->x = pos_x;
+                        map_tiles[pos_x][pos_y]->y = pos_y;
+                        map_tiles[pos_x][pos_y]->exists = true;
 
                     }
                 }
@@ -300,10 +299,24 @@ void Level::initialise_tiles_from_room_layout() {
 void Level::get_first_tile_of_given_type(MapTileType mapTileType, MapTile *&m) {
     for (int a = 0; a < MAP_GAME_WIDTH_TILES; a++) {
         for (int b = 0; b < MAP_GAME_HEIGHT_TILES; b++) {
-            if (map_tiles[a][b] != nullptr && map_tiles[a][b]->mapTileType == mapTileType) {
+            if (map_tiles[a][b] != nullptr && map_tiles[a][b]->exists && map_tiles[a][b]->mapTileType == mapTileType) {
                 m = map_tiles[a][b];
                 break;
             }
         }
     }
+}
+
+void Level::init_map_tiles() {
+    for (int a = 0; a < 32; a++)
+        for (int b = 0; b < 32; b++)
+            map_tiles[a][b] = new MapTile();
+}
+
+void Level::clean_map_layout() {
+    //clean current layout
+    for (auto &map_tile : global::current_level->map_tiles)
+        for (auto &y : map_tile) {
+            y->exists = false;
+        }
 }

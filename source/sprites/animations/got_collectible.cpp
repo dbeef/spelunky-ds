@@ -83,3 +83,10 @@ void GotCollectible::match_animation() {
     sprite_utils::update_frame(frameGfx, GOT_COLLECTIBLE_SPRITE_SIZE, mainSpriteInfo, subSpriteInfo);
 }
 
+void GotCollectible::deleteSprite() {
+    delete mainSpriteInfo;
+    delete subSpriteInfo;
+    mainSpriteInfo = nullptr;
+    subSpriteInfo = nullptr;
+}
+

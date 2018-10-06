@@ -82,3 +82,10 @@ void RopeElement::set_sprite_attributes() {
     set_position();
     set_visibility();
 }
+
+void RopeElement::deleteSprite() {
+    delete mainSpriteInfo;
+    delete subSpriteInfo;
+    mainSpriteInfo = nullptr;
+    subSpriteInfo = nullptr;
+}

@@ -41,6 +41,8 @@ public:
 
     void initSprite() override;
 
+    void deleteSprite() override;
+
     void draw() override;
 
     void updateTimers() override {};

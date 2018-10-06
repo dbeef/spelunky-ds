@@ -27,7 +27,7 @@ bool Collisions::checkUpperCollision(MapTile *neighboringTiles[9], int *xPos, in
 
     for (int a = 0; a < 9; a++) {
 
-        if (neighboringTiles[a] == nullptr || !neighboringTiles[a]->collidable)
+        if (!neighboringTiles[a]->exists || !neighboringTiles[a]->collidable)
             continue;
 
         if (!upperCollision) {
@@ -120,16 +120,16 @@ bool Collisions::checkLeftCollision(MapTile *neighboringTiles[9], int *xPos, int
 
     for (int a = 0; a < 9; a++) {
 
-        if (neighboringTiles[a] == nullptr || !neighboringTiles[a]->collidable)
+        if (!neighboringTiles[a]->exists || !neighboringTiles[a]->collidable)
             continue;
 
 //        if (!leftCollision) {
 
         if (width == 16) {
             w2 = *xPos < (neighboringTiles[a]->x * TILE_W) - 0.75 * width &&
-                  *xPos > (neighboringTiles[a]->x * TILE_W) - width;
+                 *xPos > (neighboringTiles[a]->x * TILE_W) - width;
         } else {
-            w2 = (*xPos < (neighboringTiles[a]->x * TILE_W) - width + (TILE_W * 0.75)&&
+            w2 = (*xPos < (neighboringTiles[a]->x * TILE_W) - width + (TILE_W * 0.75) &&
                   (*xPos + width > (neighboringTiles[a]->x * TILE_W)));
         }
 
@@ -242,24 +242,24 @@ void Collisions::getNeighboringTiles(MapTile *mapTiles[32][32], int xx, int yy, 
             *right_down = nullptr;
 
     if (xx > 0)
-        left_middle = mapTiles[xx - 1][yy];
+        left_middle = mapTiles[xx - 1][yy]->exists ? mapTiles[xx - 1][yy] : nullptr;
     if (xx < 31)
-        right_middle = mapTiles[xx + 1][yy];
+        right_middle = mapTiles[xx + 1][yy]->exists ? mapTiles[xx + 1][yy] : nullptr;
     if (yy > 0)
-        up_middle = mapTiles[xx][yy - 1];
+        up_middle = mapTiles[xx][yy - 1]->exists ? mapTiles[xx][yy - 1] : nullptr;
     if (yy < 31)
-        down_middle = mapTiles[xx][yy + 1];
+        down_middle = mapTiles[xx][yy + 1]->exists ? mapTiles[xx][yy + 1] : nullptr;
 
-    center = mapTiles[xx][yy];
+    center = mapTiles[xx][yy]->exists ? mapTiles[xx][yy] : nullptr;
 
     if (xx > 0 && yy > 0)
-        left_up = mapTiles[xx - 1][yy - 1];
+        left_up = mapTiles[xx - 1][yy - 1]->exists ? mapTiles[xx - 1][yy - 1] : nullptr;
     if (xx < 31 && yy > 0)
-        right_up = mapTiles[xx + 1][yy - 1];
+        right_up = mapTiles[xx + 1][yy - 1]->exists ? mapTiles[xx + 1][yy - 1] : nullptr;
     if (xx > 0 && yy < 31)
-        left_down = mapTiles[xx - 1][yy + 1];
+        left_down = mapTiles[xx - 1][yy + 1]->exists ? mapTiles[xx - 1][yy + 1] : nullptr;
     if (xx < 31 && yy < 31)
-        right_down = mapTiles[xx + 1][yy + 1];
+        right_down = mapTiles[xx + 1][yy + 1]->exists ? mapTiles[xx + 1][yy + 1] : nullptr;
 
     out_neighboringTiles[TileOrientation::LEFT_MIDDLE] = left_middle;
     out_neighboringTiles[TileOrientation::RIGHT_MIDDLE] = right_middle;
@@ -275,26 +275,47 @@ void Collisions::getNeighboringTiles(MapTile *mapTiles[32][32], int xx, int yy, 
 
 void Collisions::bombNeighboringTiles(MapTile *mapTiles[32][32], int xx, int yy) {
 
-    if (mapTiles[xx - 1][yy]->destroyable)
+    //TODO Refactor
+    if (mapTiles[xx - 1][yy]->destroyable) {
+        delete mapTiles[xx - 1][yy];
         mapTiles[xx - 1][yy] = nullptr;
-    if (mapTiles[xx + 1][yy]->destroyable)
+    }
+    if (mapTiles[xx + 1][yy]->destroyable) {
+        delete mapTiles[xx + 1][yy];
         mapTiles[xx + 1][yy] = nullptr;
-    if (mapTiles[xx][yy - 1]->destroyable)
+    }
+    if (mapTiles[xx][yy - 1]->destroyable) {
+        delete mapTiles[xx][yy - 1];
         mapTiles[xx][yy - 1] = nullptr;
-    if (mapTiles[xx][yy + 1]->destroyable)
+    }
+    if (mapTiles[xx][yy + 1]->destroyable) {
+        delete mapTiles[xx][yy + 1];
         mapTiles[xx][yy + 1] = nullptr;
-    if (mapTiles[xx][yy]->destroyable)
+    }
+    if (mapTiles[xx][yy]->destroyable) {
+        delete mapTiles[xx][yy];
         mapTiles[xx][yy] = nullptr;
-    if (mapTiles[xx - 1][yy - 1]->destroyable)
+    }
+    if (mapTiles[xx - 1][yy - 1]->destroyable) {
+        delete mapTiles[xx - 1][yy - 1];
         mapTiles[xx - 1][yy - 1] = nullptr;
-    if (mapTiles[xx + 1][yy - 1]->destroyable)
+    }
+    if (mapTiles[xx + 1][yy - 1]->destroyable) {
+        delete mapTiles[xx + 1][yy - 1];
         mapTiles[xx + 1][yy - 1] = nullptr;
-    if (mapTiles[xx - 1][yy + 1]->destroyable)
+    }
+    if (mapTiles[xx - 1][yy + 1]->destroyable) {
+        delete mapTiles[xx - 1][yy + 1];
         mapTiles[xx - 1][yy + 1] = nullptr;
-    if (mapTiles[xx + 1][yy + 1]->destroyable)
+    }
+    if (mapTiles[xx + 1][yy + 1]->destroyable) {
+        delete mapTiles[xx + 1][yy + 1];
         mapTiles[xx + 1][yy + 1] = nullptr;
-    if (mapTiles[xx][yy + 2]->destroyable)
+    }
+    if (mapTiles[xx][yy + 2]->destroyable) {
+        delete mapTiles[xx][yy + 2];
         mapTiles[xx][yy + 2] = nullptr;
+    }
 
 }
 
@@ -308,11 +329,11 @@ bool Collisions::checkCollisionWithMainDudeWidthBoundary(int x, int y, int width
 }
 
 bool Collisions::checkCollisionWithMainDudeWhip(int x, int y, int width, int height) {
-    if (global::main_dude->sprite_state== SpriteState::W_LEFT) {
+    if (global::main_dude->sprite_state == SpriteState::W_LEFT) {
         return x + width >= global::main_dude->x - WHIP_WIDTH &&
                x + width < global::main_dude->x + MAIN_DUDE_PHYSICAL_WIDTH &&
                y + height > global::main_dude->y && y < global::main_dude->y + MAIN_DUDE_PHYSICAL_HEIGHT;
-    } else if (global::main_dude->sprite_state== SpriteState::W_RIGHT) {
+    } else if (global::main_dude->sprite_state == SpriteState::W_RIGHT) {
         return x + width >= global::main_dude->x &&
                x + width < global::main_dude->x + MAIN_DUDE_PHYSICAL_WIDTH + WHIP_WIDTH * 2 &&
                y + height > global::main_dude->y && y < global::main_dude->y + MAIN_DUDE_PHYSICAL_HEIGHT;
@@ -331,20 +352,20 @@ bool Collisions::checkCollisionBodiesLeftLowerCorner(int x1, int y1, int w1, int
 }
 
 //returns 9 tiles from given tile x/y
-void Collisions::getTilesOnRightFromXY(MapTile *(*mapTiles)[32], int xx, int yy, MapTile **out_neighboringTiles) {
+void Collisions::getTilesOnRightFromXY(int xx, int yy, MapTile **out_neighboringTiles) {
     for (int a = 0; a < 9; a++) {
         if (a + xx <= 31)
-            out_neighboringTiles[a] = mapTiles[a + xx][yy];
+            out_neighboringTiles[a] = global::current_level->map_tiles[a + xx][yy];
         else
             out_neighboringTiles[a] = nullptr;
     }
 }
 
 //returns 9 tiles from given tile x/y
-void Collisions::getTilesOnLeftFromXY(MapTile *(*mapTiles)[32], int xx, int yy, MapTile **out_neighboringTiles) {
+void Collisions::getTilesOnLeftFromXY(int xx, int yy, MapTile **out_neighboringTiles) {
     for (int a = 0; a < 9; a++) {
         if (xx - a >= 0)
-            out_neighboringTiles[a] = mapTiles[xx - a][yy];
+            out_neighboringTiles[a] = global::current_level->map_tiles[xx - a][yy];
         else
             out_neighboringTiles[a] = nullptr;
     }

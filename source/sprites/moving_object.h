@@ -45,6 +45,8 @@ public:
 
     virtual void initSprite() = 0;
 
+    virtual void deleteSprite() = 0;
+
     virtual void draw() = 0;
 
     virtual void apply_dmg(int dmg_to_apply) = 0;

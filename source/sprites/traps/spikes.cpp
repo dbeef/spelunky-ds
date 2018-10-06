@@ -116,3 +116,10 @@ void Spikes::kill_main_dude() {
 
 }
 
+void Spikes::deleteSprite() {
+    delete mainSpriteInfo;
+    delete subSpriteInfo;
+    mainSpriteInfo = nullptr;
+    subSpriteInfo = nullptr;
+}
+

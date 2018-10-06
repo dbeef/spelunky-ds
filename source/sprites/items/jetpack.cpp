@@ -234,3 +234,10 @@ void Jetpack::equip() {
     }
 }
 
+void Jetpack::deleteSprite() {
+    delete mainSpriteInfo;
+    delete subSpriteInfo;
+    mainSpriteInfo = nullptr;
+    subSpriteInfo = nullptr;
+}
+

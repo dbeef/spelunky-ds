@@ -33,6 +33,10 @@
 #include "../rooms/left_right_up_rooms.hpp"
 #include "../rooms/left_right_down_rooms.hpp"
 #include "../rooms/entrance_rooms.hpp"
+#include "../sprites/collectibles/single_goldbar.hpp"
+#include "../sprites/collectibles/triple_goldbar.h"
+#include "../sprites/collectibles/ruby_small.h"
+#include "../sprites/collectibles/ruby_big.h"
 
 void populate_cave_moniez() {
 
@@ -91,31 +95,48 @@ void populate_cave_moniez() {
 
                     if (loot_type == 1 && gold_bars_left > 0 && r == 1) {
 
-                        Moniez *moniez = new Moniez();
+                        int goldbar_type = rand() % 2;
 
-                        moniez->spritesheet_type = MONIEZ_GOLDBARS;
-                        moniez->value = 1000;
-
-                        moniez->init();
-
-                        global::sprites.push_back(moniez);
-
-                        moniez->x = pos_x * 16;
-                        moniez->y = pos_y * 16;
+                        if (goldbar_type == 0) {
+                            auto *single_goldbar = new SingleGoldbar();
+                            single_goldbar->init();
+                            single_goldbar->x = pos_x * 16;
+                            single_goldbar->y = pos_y * 16;
+                            global::sprites.push_back(single_goldbar);
+                        } else {
+                            auto *triple_goldbar = new TripleGoldbar();
+                            triple_goldbar->init();
+                            triple_goldbar->x = pos_x * 16;
+                            triple_goldbar->y = pos_y * 16;
+                            global::sprites.push_back(triple_goldbar);
+                        }
 
                         gold_bars_left--;
                         last_placement = 0;
                     }
 
                     if (loot_type == 2 && rubies_left > 0 && r == 1) {
-                        Moniez *moniez = new Moniez();
 
-                        moniez->spritesheet_type = MONIEZ_RUBY;
-                        moniez->value = 1200;
-                        moniez->init();
-                        global::sprites.push_back(moniez);
-                        moniez->x = pos_x * 16;
-                        moniez->y = pos_y * 16;
+                        int ruby_type = rand() % 2;
+
+                        if (ruby_type == 0) {
+                            auto *ruby_small = new RubySmall();
+                            ruby_small->spritesheet_type = MONIEZ_RUBY;
+                            ruby_small->value = 1200;
+                            ruby_small->init();
+                            ruby_small->x = pos_x * 16;
+                            ruby_small->y = pos_y * 16;
+                            global::sprites.push_back(ruby_small);
+                        } else {
+                            auto *ruby_big = new RubyBig();
+                            ruby_big->spritesheet_type = MONIEZ_RUBY;
+                            ruby_big->value = 1200;
+                            ruby_big->init();
+                            ruby_big->x = pos_x * 16;
+                            ruby_big->y = pos_y * 16;
+                            global::sprites.push_back(ruby_big);
+                        }
+
                         rubies_left--;
                         last_placement = 0;
 
@@ -383,28 +404,27 @@ void populate_cave_npcs() {
 
 }
 
+/** Creates all Sprites that are exlusively needed in the main menu scene */
 void populate_main_menu() {
 
     global::hud->bombs = 0;
     global::hud->ropes = 0;
 
-    SpelunkyTitle *spelunkyTitle = new SpelunkyTitle();
+    auto *spelunkyTitle = new SpelunkyTitle();
     spelunkyTitle->oamType = OamType::MAIN;
     spelunkyTitle->init();
     spelunkyTitle->x = 60;
     spelunkyTitle->y = 175;
-
-
     global::sprites.push_back(spelunkyTitle);
 
-    Copyrights *copyrights = new Copyrights();
+    auto *copyrights = new Copyrights();
     copyrights->oamType = OamType::SUB;
     copyrights->init();
     copyrights->x = 60;
     copyrights->y = 380;
     global::sprites.push_back(copyrights);
 
-    TitleMenuSign *start = new TitleMenuSign();
+    auto *start = new TitleMenuSign();
     start->oamType = OamType::MAIN;
     start->menuSignType = MenuSignType::START;
     start->init();
@@ -412,7 +432,7 @@ void populate_main_menu() {
     start->y = 272;
     global::sprites.push_back(start);
 
-    TitleMenuSign *scores = new TitleMenuSign();
+    auto *scores = new TitleMenuSign();
     scores->oamType = OamType::MAIN;
     scores->menuSignType = MenuSignType::SCORES;
     scores->init();
@@ -420,7 +440,7 @@ void populate_main_menu() {
     scores->y = 272;
     global::sprites.push_back(scores);
 
-    TitleMenuSign *tutorial = new TitleMenuSign();
+    auto *tutorial = new TitleMenuSign();
     tutorial->oamType = OamType::MAIN;
     tutorial->menuSignType = MenuSignType::TUTORIAL;
     tutorial->init();
@@ -428,7 +448,7 @@ void populate_main_menu() {
     tutorial->y = 272;
     global::sprites.push_back(tutorial);
 
-    TitleMenuSign *quit = new TitleMenuSign();
+    auto *quit = new TitleMenuSign();
     quit->oamType = OamType::MAIN;
     quit->menuSignType = MenuSignType::QUIT;
     quit->init();

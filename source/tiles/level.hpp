@@ -35,6 +35,7 @@ class Level {
 
 public:
 
+    //TODO Allocate memory on heap for the whole 32x32 tiles, never delete them later. That may help memory fragmentation.
     MapTile *map_tiles[32][32];
 
     //holds information on what room type is at specific array index
@@ -44,6 +45,11 @@ public:
     //i.e, we have 6 possible 'closed' rooms declared in the closed_rooms.hpp,
     //so this array lets us know, that we have a 'closed' room number 3 (for example) at some place.
     u16 layout_room_ids[ROOMS_X][ROOMS_Y];
+
+    //sets all tiles to !existing
+    void clean_map_layout();
+
+    void init_map_tiles();
 
     void update_level();
 

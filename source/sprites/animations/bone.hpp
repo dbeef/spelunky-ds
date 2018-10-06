@@ -35,6 +35,8 @@ public:
 
     void initSprite() override;
 
+    void deleteSprite() override;
+
     void apply_dmg(int dmg_to_apply) override {};
 
     void updateTimers() override {};

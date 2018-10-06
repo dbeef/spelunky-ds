@@ -11,6 +11,7 @@ void global::init_globals() {
     camera = new Camera();
     main_dude = new MainDude();
     current_level = new Level();
+    current_level->init_map_tiles();
     main_oam_manager = new OAMManager();
     sub_oam_manager = new OAMManager();
     hud = new Hud();

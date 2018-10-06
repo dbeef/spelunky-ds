@@ -113,3 +113,10 @@ void BloodElement::match_animation() {
     frameGfx = sprite_utils::get_frame((u8 *) gfx_blood_rock_rope_poofTiles, BLOOD_SPRITE_SIZE, currentFrame);
     sprite_utils::update_frame(frameGfx, BLOOD_SPRITE_SIZE, mainSpriteInfo, subSpriteInfo);
 }
+
+void BloodElement::deleteSprite() {
+    delete mainSpriteInfo;
+    delete subSpriteInfo;
+    mainSpriteInfo = nullptr;
+    subSpriteInfo = nullptr;
+}

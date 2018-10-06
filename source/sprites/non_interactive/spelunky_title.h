@@ -27,8 +27,9 @@ public:
 
     void apply_dmg(int dmg_to_apply) override {};
 
-
     void initSprite() override;
+
+    void deleteSprite() override;
 
     void init() override;
 

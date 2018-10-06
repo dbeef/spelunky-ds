@@ -60,6 +60,8 @@ public:
 
     void initSprite() override;
 
+    void deleteSprite() override;
+
     void updateTimers() override;
 
     void updateSpeed() override;

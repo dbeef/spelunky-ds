@@ -218,3 +218,10 @@ void Compass::equip() {
     }
 
 }
+
+void Compass::deleteSprite() {
+    delete mainSpriteInfo;
+    delete subSpriteInfo;
+    mainSpriteInfo = nullptr;
+    subSpriteInfo = nullptr;
+}

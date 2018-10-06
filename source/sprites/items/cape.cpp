@@ -211,3 +211,10 @@ void Cape::equip() {
 
 }
 
+void Cape::deleteSprite() {
+    delete mainSpriteInfo;
+    delete subSpriteInfo;
+    mainSpriteInfo = nullptr;
+    subSpriteInfo = nullptr;
+}
+
