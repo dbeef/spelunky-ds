@@ -1,0 +1,8 @@
+//
+// Created by xdbeef on 16.09.18.
+//
+
+#ifndef SPELUNKYDS_TRIPLE_GOLDBAR_H
+#define SPELUNKYDS_TRIPLE_GOLDBAR_H
+
+#endif //SPELUNKYDS_TRIPLE_GOLDBAR_H
