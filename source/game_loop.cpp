@@ -31,6 +31,7 @@ void gameloop::run() {
             global::game_state->bombed = false;
             for (int a = 0; a < global::sprites.size(); a++)
                 (*global::sprites.at(a)).bottomCollision = false;
+            global::main_dude->bottomCollision = false;
         }
 
         global::camera->update();

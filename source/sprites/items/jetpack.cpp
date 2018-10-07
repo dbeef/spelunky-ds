@@ -11,6 +11,8 @@
 
 #define JETPACK_POS_INC_DELTA 15
 
+//TODO Refactor
+
 void Jetpack::draw() {
 
 

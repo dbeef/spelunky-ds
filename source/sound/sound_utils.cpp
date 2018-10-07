@@ -2,35 +2,36 @@
 // Created by xdbeef on 22.07.18.
 //
 
-
 #include <maxmod9.h>
 #include "../../build/soundbank.h"
 #include "../globals_declarations.hpp"
 #include "sound_utils.hpp"
 
 void sound::start_menu_music() {
-//    mmLoadEffect(SFX_MTITLE);
-//    global::menu_music_handler = mmEffect(SFX_MTITLE);
+    //probably should load it only once, on start
+    mmLoadEffect(SFX_MTITLE);
+    global::menu_music_handler = mmEffect(SFX_MTITLE);
 }
 
 void sound::stop_menu_music() {
-//    mmEffectCancel(global::menu_music_handler);
-//    mmUnloadEffect(SFX_MTITLE);
+    mmEffectCancel(global::menu_music_handler);
+    //probably should not unload, due to memory fragmentation when loading/unloading every level
+    mmUnloadEffect(SFX_MTITLE);
 }
 
 void sound::start_cave_music() {
-//    mmLoadEffect(SFX_MCAVE);
-//    global::cave_music_handler = mmEffect(SFX_MCAVE);
+    //probably should load it only once, on start
+    mmLoadEffect(SFX_MCAVE);
+    global::cave_music_handler = mmEffect(SFX_MCAVE);
 }
 
 void sound::stop_cave_music() {
-//    mmEffectCancel(global::cave_music_handler);
-//    mmUnloadEffect(SFX_MCAVE);
+    mmEffectCancel(global::cave_music_handler);
+    //probably should not unload, due to memory fragmentation when loading/unloading every level
+    mmUnloadEffect(SFX_MCAVE);
 }
 
 void sound::load_sounds() {
-
-    //TODO Unload effects when not needed, aspecially MCAVE because mostly it's not needed (memory issues)
     mmInitDefaultMem((mm_addr) soundbank_bin);
     mmLoadEffect(SFX_XJUMP);
     mmLoadEffect(SFX_XBREAK);

@@ -20,12 +20,7 @@
 void generate_new_level_layout() {
 
     //clean current layout
-    for (auto &map_tile : global::current_level->map_tiles)
-        for (auto &y : map_tile) {
-            y->exists = false;
-//            delete y;
-//            y = nullptr;
-        }
+    global::current_level->clean_map_layout();
     for (auto &room_type : global::current_level->layout)
         for (RoomType &b : room_type)
             //not visited rooms are of CLOSED type by default

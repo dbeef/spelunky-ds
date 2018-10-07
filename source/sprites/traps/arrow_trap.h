@@ -48,6 +48,8 @@ public:
     u8 *frameGfx{};
 
     void spawn_arrow();
+
+    bool check_if_can_be_triggered(MovingObject *pObject);
 };
 
 

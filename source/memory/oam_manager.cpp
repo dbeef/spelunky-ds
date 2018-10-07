@@ -85,7 +85,10 @@ OAMManager::initSprite(const unsigned short pallette[], int palLen, const unsign
 //    }
 
     /* Keep track of the available tiles */
-    assert(current_oam_id_palette < SPRITE_COUNT && current_oam_id_tiles < SPRITE_COUNT);
+//    assert(current_oam_id_palette < SPRITE_COUNT && current_oam_id_tiles < SPRITE_COUNT);
+    if(!(current_oam_id_palette < SPRITE_COUNT && current_oam_id_tiles < SPRITE_COUNT))
+        printf("\n\n\nTOO MUCH SPRITES/PALETTES!");
+
     auto *spriteInfo = new SpriteInfo(); //TODO Smart pointer?
     SpriteEntry *spriteEntry = &oam->oamBuffer[current_oam_id_tiles];
 

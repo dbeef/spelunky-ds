@@ -20,46 +20,14 @@ void ArrowTrap::draw() {
     if (activated)
         return;
 
+    if (check_if_can_be_triggered(global::main_dude))
+        return;
+
     for (int a = 0; a < global::sprites.size(); a++) {
         //check if there's any moving object in 6 tiles starting from the trap at the same height
-
-        if (global::sprites.at(a)->xSpeed == 0 && global::sprites.at(a)->ySpeed == 0)
-            continue;
-
-        if (global::sprites.at(a)->y >= y && global::sprites.at(a)->y < y + ARROW_TRAP_PHYSICAL_HEIGHT) {
-
-
-            if (sprite_state == SpriteState::W_LEFT) {
-
-                if (global::sprites.at(a)->x <= x && global::sprites.at(a)->x > x - (7 * ARROW_TRAP_PHYSICAL_WIDTH)) {
-
-
-                    activated = true;
-                    spawn_arrow();
-                    mmEffect(SFX_XARROWTRAP);
-                    break;
-                }
-
-            } else if (sprite_state == SpriteState::W_RIGHT) {
-
-                if (global::sprites.at(a)->x >= x + ARROW_TRAP_PHYSICAL_WIDTH &&
-                    global::sprites.at(a)->x < x + ARROW_TRAP_PHYSICAL_WIDTH + (7 * ARROW_TRAP_PHYSICAL_WIDTH)) {
-
-                    //todo checking like in the caveman
-
-
-                    activated = true;
-                    spawn_arrow();
-                    mmEffect(SFX_XARROWTRAP);
-                    break;
-                }
-
-            }
-
-        }
-
+        if (check_if_can_be_triggered(global::sprites.at(a)))
+            return;
     }
-
 }
 
 
@@ -91,8 +59,49 @@ void ArrowTrap::spawn_arrow() {
     }
 
     arrow->init();
-    arrow->y = y + 4;
+    arrow->y = y + 7;
 
 }
 
 void ArrowTrap::deleteSprite() {}
+
+bool ArrowTrap::check_if_can_be_triggered(MovingObject *obj) {
+
+    if (obj->xSpeed == 0 && obj->ySpeed == 0)
+        return false;
+
+    if (obj->y >= y && obj->y < y + ARROW_TRAP_PHYSICAL_HEIGHT) {
+
+
+        if (sprite_state == SpriteState::W_LEFT) {
+
+            if (obj->x <= x && obj->x > x - (7 * ARROW_TRAP_PHYSICAL_WIDTH)) {
+
+
+                activated = true;
+                spawn_arrow();
+                mmEffect(SFX_XARROWTRAP);
+                return true;
+
+            }
+
+        } else if (sprite_state == SpriteState::W_RIGHT) {
+
+            if (obj->x >= x + ARROW_TRAP_PHYSICAL_WIDTH &&
+                obj->x < x + ARROW_TRAP_PHYSICAL_WIDTH + (7 * ARROW_TRAP_PHYSICAL_WIDTH)) {
+
+                //todo checking like in the caveman
+
+
+                activated = true;
+                spawn_arrow();
+                mmEffect(SFX_XARROWTRAP);
+                return true;
+            }
+
+        }
+
+    }
+    return false;
+
+}

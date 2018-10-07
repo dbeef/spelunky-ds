@@ -177,6 +177,10 @@ void GameState::handle_changing_screens() {
 
             global::current_level->clean_map_layout();
 
+            //flushing the buffer so it wouldn't update in the scores/main menu/transition screen if != 0
+            global::hud->money_on_this_level += global::hud->dollars_buffer;
+            global::hud->dollars_buffer = 0;
+
             //splash screen; scores or level transition
 
             if (global::game_state->scores_screen) {
@@ -199,6 +203,7 @@ void GameState::handle_changing_screens() {
                 global::current_level->initialise_tiles_from_splash_screen(SplashScreenType::SCORES_LOWER);
                 set_position_to(MapTileType::EXIT);
             } else {
+
                 global::current_level->initialise_tiles_from_splash_screen(SplashScreenType::ON_LEVEL_DONE_UPPER);
                 global::current_level->initialise_tiles_from_splash_screen(SplashScreenType::ON_LEVEL_DONE_LOWER);
                 set_position_to(MapTileType::ENTRANCE);

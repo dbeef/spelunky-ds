@@ -274,49 +274,16 @@ void Collisions::getNeighboringTiles(MapTile *mapTiles[32][32], int xx, int yy, 
 }
 
 void Collisions::bombNeighboringTiles(MapTile *mapTiles[32][32], int xx, int yy) {
-
-    //TODO Refactor
-    if (mapTiles[xx - 1][yy]->destroyable) {
-        delete mapTiles[xx - 1][yy];
-        mapTiles[xx - 1][yy] = nullptr;
-    }
-    if (mapTiles[xx + 1][yy]->destroyable) {
-        delete mapTiles[xx + 1][yy];
-        mapTiles[xx + 1][yy] = nullptr;
-    }
-    if (mapTiles[xx][yy - 1]->destroyable) {
-        delete mapTiles[xx][yy - 1];
-        mapTiles[xx][yy - 1] = nullptr;
-    }
-    if (mapTiles[xx][yy + 1]->destroyable) {
-        delete mapTiles[xx][yy + 1];
-        mapTiles[xx][yy + 1] = nullptr;
-    }
-    if (mapTiles[xx][yy]->destroyable) {
-        delete mapTiles[xx][yy];
-        mapTiles[xx][yy] = nullptr;
-    }
-    if (mapTiles[xx - 1][yy - 1]->destroyable) {
-        delete mapTiles[xx - 1][yy - 1];
-        mapTiles[xx - 1][yy - 1] = nullptr;
-    }
-    if (mapTiles[xx + 1][yy - 1]->destroyable) {
-        delete mapTiles[xx + 1][yy - 1];
-        mapTiles[xx + 1][yy - 1] = nullptr;
-    }
-    if (mapTiles[xx - 1][yy + 1]->destroyable) {
-        delete mapTiles[xx - 1][yy + 1];
-        mapTiles[xx - 1][yy + 1] = nullptr;
-    }
-    if (mapTiles[xx + 1][yy + 1]->destroyable) {
-        delete mapTiles[xx + 1][yy + 1];
-        mapTiles[xx + 1][yy + 1] = nullptr;
-    }
-    if (mapTiles[xx][yy + 2]->destroyable) {
-        delete mapTiles[xx][yy + 2];
-        mapTiles[xx][yy + 2] = nullptr;
-    }
-
+    mapTiles[xx - 1][yy]->exists = !mapTiles[xx - 1][yy]->destroyable;
+    mapTiles[xx + 1][yy]->exists = !mapTiles[xx + 1][yy]->destroyable;
+    mapTiles[xx][yy - 1]->exists = !mapTiles[xx][yy - 1]->destroyable;
+    mapTiles[xx][yy + 1]->exists = !mapTiles[xx][yy + 1]->destroyable;
+    mapTiles[xx][yy]->exists = !mapTiles[xx][yy]->destroyable;
+    mapTiles[xx - 1][yy - 1]->exists = !mapTiles[xx - 1][yy - 1]->destroyable;
+    mapTiles[xx + 1][yy - 1]->exists = !mapTiles[xx + 1][yy - 1]->destroyable;
+    mapTiles[xx - 1][yy + 1]->exists = !mapTiles[xx - 1][yy + 1]->destroyable;
+    mapTiles[xx + 1][yy + 1]->exists = !mapTiles[xx + 1][yy + 1]->destroyable;
+    mapTiles[xx][yy + 2]->exists = !mapTiles[xx][yy + 2]->destroyable;
 }
 
 bool Collisions::checkCollisionWithMainDude(int x, int y, int width, int height) {
@@ -370,3 +337,4 @@ void Collisions::getTilesOnLeftFromXY(int xx, int yy, MapTile **out_neighboringT
             out_neighboringTiles[a] = nullptr;
     }
 }
+

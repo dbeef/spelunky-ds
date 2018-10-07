@@ -337,7 +337,7 @@ void Caveman::check_if_can_be_triggered() {
 
         for (int a = 0; a < 9; a++) {
 
-            if (tiles[a] != nullptr && tiles[a]->collidable) {
+            if (tiles[a]->exists && tiles[a]->collidable) {
                 triggered = false;
                 break;
             }
