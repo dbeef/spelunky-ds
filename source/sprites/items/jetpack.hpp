@@ -10,21 +10,26 @@
 #include "../sprite_state.hpp"
 #include "../moving_object.h"
 #include "../shopping_object.h"
+#include "../animations/fall_poof.hpp"
 
 #define JETPACK_PHYSICAL_HEIGHT 12
 #define JETPACK_PHYSICAL_WIDTH 14
+
 #define JETPACK_SPRITE_HEIGHT 16
 #define JETPACK_SPRITE_WIDTH 16
+#define JETPACK_SPRITE_SIZE JETPACK_SPRITE_WIDTH * JETPACK_SPRITE_HEIGHT
 
 #define MAX_X_SPEED_JETPACK 4
 #define MAX_Y_SPEED_JETPACK 4
 
 //http://spelunky.wikia.com/wiki/jetpack
-class Jetpack : public MovingObject, public ShoppingObject  {
+class Jetpack : public MovingObject, public ShoppingObject {
 
 public:
 
     void introduce_yourself() override { printf("JETPACK\n"); };
+
+    ~Jetpack() override;
 
     Jetpack();
 
@@ -57,18 +62,16 @@ public:
     SpriteInfo *mainSpriteInfo{};
     SpriteInfo *subSpriteInfo{};
 
+    FallPoof *poofs[2]{};
+
     u8 *frameGfx{};
 
-    int poof_spawn_counter{};
     int poof_spawn_timer{};
 
     void set_position();
 
     void equip();
 };
-
-
-
 
 
 #endif //SPELUNKYDS_JETPACK_H

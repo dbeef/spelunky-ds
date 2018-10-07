@@ -14,7 +14,7 @@ namespace oam_utils {
 
         global::clean_unused_oam_timer += *global::timer;
 
-        if (/*global::clean_unused_oam_timer > 250 && */global::main_oam_manager->current_oam_id_tiles >= 120) {
+        if (/*global::clean_unused_oam_timer > 250 && */global::main_oam_manager->current_oam_id_tiles >= 118) {
 
 //            for (auto &sprite_info : global::sprite_infos) {
 //                sprite_info->entry = nullptr; //fixme - shouldn't this be deleted first? i guess no

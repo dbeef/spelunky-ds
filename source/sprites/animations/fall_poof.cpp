@@ -80,6 +80,7 @@ FallPoof::FallPoof() {
     physical_height = FALL_POOF_PHYSICAL_HEIGHT;
     physical_width = FALL_POOF_PHYSICAL_WIDTH;
     spritesheet_type = SpritesheetType::BLOOD_ROCK_ROPE_POOF;
+    sprite_type = SpriteType ::S_FALL_POOF;
 }
 
 void FallPoof::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {

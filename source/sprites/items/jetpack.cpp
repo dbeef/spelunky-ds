@@ -8,6 +8,7 @@
 #include "../../collisions/collisions.hpp"
 #include "jetpack.hpp"
 #include "../animations/fall_poof.hpp"
+#include "../sprite_utils.hpp"
 
 #define JETPACK_POS_INC_DELTA 15
 
@@ -15,21 +16,14 @@
 
 void Jetpack::draw() {
 
-
     if (global::main_dude->carrying_cape && collected) {
         global::main_dude->carrying_jetpack = false;
         ready_to_dispose = true;
+        sprite_utils::set_visibility(false, mainSpriteInfo, subSpriteInfo);
     }
 
-    if (ready_to_dispose) {
-        mainSpriteInfo->entry->isHidden = true;
-        subSpriteInfo->entry->isHidden = true;
+    if (ready_to_dispose)
         return;
-    } else {
-        mainSpriteInfo->entry->isHidden = false;
-        subSpriteInfo->entry->isHidden = false;
-    }
-
 
     if (bought && !collected && check_if_can_be_equipped()) {
         equip();
@@ -45,68 +39,76 @@ void Jetpack::draw() {
         }
     }
 
-
     if (collected) {
 
         if (global::main_dude->climbing || global::main_dude->exiting_level) {
-            mainSpriteInfo->entry->priority = OBJPRIORITY_0;
-            subSpriteInfo->entry->priority = OBJPRIORITY_0;
+            sprite_utils::set_priority(OBJPRIORITY_0, mainSpriteInfo, subSpriteInfo);
             set_pickuped_position_not_checking(-3, 2);
-            mainSpriteInfo->entry->hFlip = false;
-            subSpriteInfo->entry->hFlip = false;
+            sprite_utils::set_horizontal_flip(false, mainSpriteInfo, subSpriteInfo);
         } else if (global::main_dude->sprite_state == SpriteState::W_LEFT) {
-            mainSpriteInfo->entry->priority = OBJPRIORITY_1;
-            subSpriteInfo->entry->priority = OBJPRIORITY_1;
+            sprite_utils::set_priority(OBJPRIORITY_1, mainSpriteInfo, subSpriteInfo);
             set_pickuped_position_not_checking(-6, 0);
-            mainSpriteInfo->entry->hFlip = false;
-            subSpriteInfo->entry->hFlip = false;
+            sprite_utils::set_horizontal_flip(false, mainSpriteInfo, subSpriteInfo);
         } else if (global::main_dude->sprite_state == SpriteState::W_RIGHT) {
-            mainSpriteInfo->entry->priority = OBJPRIORITY_1;
-            subSpriteInfo->entry->priority = OBJPRIORITY_1;
+            sprite_utils::set_priority(OBJPRIORITY_1, mainSpriteInfo, subSpriteInfo);
             set_pickuped_position_not_checking(-3, 0);
-            mainSpriteInfo->entry->hFlip = true;
-            subSpriteInfo->entry->hFlip = true;
+            sprite_utils::set_horizontal_flip(true, mainSpriteInfo, subSpriteInfo);
         }
 
-
         if (global::main_dude->using_jetpack) {
-            poof_spawn_counter++;
             poof_spawn_timer += *global::timer;
 
             if (global::main_dude->jetpack_fuel_counter <= 0) {
                 global::main_dude->using_jetpack = false;
             }
 
-            if (poof_spawn_counter >= 2 && poof_spawn_timer > 130) {
+            if (poof_spawn_timer > 130) {
+
+                for (int a = 0; a < 2; a++) {
+                    if (poofs[a] != nullptr) {
+                        if (poofs[a]->ready_to_dispose) {
+
+                            if (poofs[a]->mainSpriteInfo == nullptr || poofs[a]->subSpriteInfo == nullptr)
+                                poofs[a]->initSprite();
+                            else
+                                sprite_utils::set_visibility(true, poofs[a]->mainSpriteInfo, poofs[a]->subSpriteInfo);
+
+                            poofs[a]->animFrame = 0;
+                            poofs[a]->animFrameTimer = 0;
+                            poofs[a]->x = x + 4;
+                            poofs[a]->y = y + 4;
+                            poofs[a]->ready_to_dispose = false;
+
+                            break;
+
+                        }
+                    } else {
+
+                        auto *f = new FallPoof();
+                        f->gravity = true;
+                        f->x = x + 4;
+                        f->y = y + 4;
+                        f->init();
+                        poofs[a] = f;
+                        break;
+
+                    }
+                }
 
                 poof_spawn_timer = 0;
-                poof_spawn_counter = 0;
-
-                FallPoof *f = new FallPoof();
-                f->gravity = true;
-                f->x = x + 4;
-                f->y = y + 4;
-                f->init();
-                global::sprites_to_add.push_back(f);
 
             }
 
         }
 
-        frameGfx = (u8 *) gfx_bat_snake_jetpackTiles + (sprite_width * sprite_height * (8) / 2);
+        frameGfx = sprite_utils::get_frame((u8 *) gfx_bat_snake_jetpackTiles, JETPACK_SPRITE_SIZE, 8);
     } else {
-        frameGfx = (u8 *) gfx_bat_snake_jetpackTiles + (sprite_width * sprite_height * (7) / 2);
+        frameGfx = sprite_utils::get_frame((u8 *) gfx_bat_snake_jetpackTiles, JETPACK_SPRITE_SIZE, 7);
     }
 
-    subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
-    mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
-
-
-    mainSpriteInfo->entry->isHidden = false;
-    subSpriteInfo->entry->isHidden = false;
-    mainSpriteInfo->entry->vFlip = false;
-    subSpriteInfo->entry->vFlip = false;
-
+    sprite_utils::update_frame(frameGfx, JETPACK_SPRITE_SIZE, mainSpriteInfo, subSpriteInfo);
+    sprite_utils::set_visibility(true, mainSpriteInfo, subSpriteInfo);
+    sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);
 
     if (global::main_dude->bottomCollision || global::main_dude->hanging_on_tile_left ||
         global::main_dude->hanging_on_tile_right) {
@@ -115,6 +117,13 @@ void Jetpack::draw() {
     }
 
     set_position();
+
+    for (int a = 0; a < 2; a++) {
+        if (poofs[a] == nullptr)
+            continue;
+        poofs[a]->update();
+        poofs[a]->draw();
+    }
 }
 
 
@@ -143,21 +152,16 @@ void Jetpack::updateSpeed() {
 
 void Jetpack::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
 
-    if (collected)
-        return;
+    if (collected) return;
 
-    MapTile *tiles[9];
-    Collisions::getNeighboringTiles(global::current_level->map_tiles, x_current_pos_in_tiles,
-                                    y_current_pos_in_tiles,
-                                    tiles);
+    MapTile *t[9];
+    Collisions::getNeighboringTiles(global::current_level->map_tiles,
+                                    x_current_pos_in_tiles, y_current_pos_in_tiles, t);
 
-    upperCollision = Collisions::checkUpperCollision(tiles, &x, &y, &ySpeed, physical_width, true, BOUNCING_FACTOR_Y);
-    bottomCollision = Collisions::checkBottomCollision(tiles, &x, &y, &ySpeed, physical_width, physical_height, true,
-                                                       BOUNCING_FACTOR_Y);
-    leftCollision = Collisions::checkLeftCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true,
-                                                   BOUNCING_FACTOR_X);
-    rightCollision = Collisions::checkRightCollision(tiles, &x, &y, &xSpeed, physical_width, physical_height, true,
-                                                     BOUNCING_FACTOR_X);
+    upperCollision = Collisions::checkUpperCollision(t, &x, &y, &ySpeed, physical_width, true, 0.35);
+    bottomCollision = Collisions::checkBottomCollision(t, &x, &y, &ySpeed, physical_width, physical_height, true, 0.35);
+    leftCollision = Collisions::checkLeftCollision(t, &x, &y, &xSpeed, physical_width, physical_height, true, 0.15);
+    rightCollision = Collisions::checkRightCollision(t, &x, &y, &xSpeed, physical_width, physical_height, true, 0.15);
 }
 
 void Jetpack::initSprite() {
@@ -166,38 +170,29 @@ void Jetpack::initSprite() {
     delete subSpriteInfo;
 
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_bat_snake_jetpackPal, gfx_bat_snake_jetpackPalLen,
-                                                        nullptr, sprite_width * sprite_height, sprite_width,
+                                                        nullptr, JETPACK_SPRITE_SIZE, sprite_width,
                                                         spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_bat_snake_jetpackPal, gfx_bat_snake_jetpackPalLen,
-                                                          nullptr, sprite_width * sprite_height, sprite_width,
+                                                          nullptr, JETPACK_SPRITE_SIZE, sprite_width,
                                                           spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
+    if (collected)
+        frameGfx = sprite_utils::get_frame((u8 *) gfx_bat_snake_jetpackTiles, JETPACK_SPRITE_SIZE, 8);
+    else
+        frameGfx = sprite_utils::get_frame((u8 *) gfx_bat_snake_jetpackTiles, JETPACK_SPRITE_SIZE, 7);
 
-    if (collected) {
-        frameGfx = (u8 *) gfx_bat_snake_jetpackTiles + (sprite_width * sprite_height * (8) / 2);
-    } else {
-        frameGfx = (u8 *) gfx_bat_snake_jetpackTiles + (sprite_width * sprite_height * (7) / 2);
-    }
-
-    subSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
-    mainSpriteInfo->updateFrame(frameGfx, sprite_width * sprite_height);
-
+    sprite_utils::update_frame(frameGfx, JETPACK_SPRITE_SIZE, mainSpriteInfo, subSpriteInfo);
 }
 
 void Jetpack::set_position() {
+
     int main_x, main_y, sub_x, sub_y;
     get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
 
-    mainSpriteInfo->entry->x = main_x;
-    mainSpriteInfo->entry->y = main_y;
+    sprite_utils::set_entry_xy(mainSpriteInfo, main_x, main_y);
+    sprite_utils::set_entry_xy(subSpriteInfo, sub_x, sub_y);
 
-    subSpriteInfo->entry->x = sub_x;
-    subSpriteInfo->entry->y = sub_y;
-
-    mainSpriteInfo->entry->vFlip = false;
-    mainSpriteInfo->entry->hFlip = false;
-
-    subSpriteInfo->entry->vFlip = false;
-    subSpriteInfo->entry->hFlip = false;
+    sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);
+    sprite_utils::set_horizontal_flip(false, mainSpriteInfo, subSpriteInfo);
 
     update_anim_icon(x, y, physical_width);
 
@@ -215,7 +210,7 @@ Jetpack::Jetpack() {
 
 void Jetpack::equip() {
 
-    GotCollectible *g = new GotCollectible();
+    auto *g = new GotCollectible();
     g->x = x - 12;
     g->y = y - 20;
     g->collectible_type = 0;
@@ -233,13 +228,33 @@ void Jetpack::equip() {
     } else {
         //we've collected an item that is already in inventory, dispose
         ready_to_dispose = true;
+        sprite_utils::set_visibility(false, mainSpriteInfo, subSpriteInfo);
     }
 }
 
 void Jetpack::deleteSprite() {
+
     delete mainSpriteInfo;
     delete subSpriteInfo;
+
     mainSpriteInfo = nullptr;
     subSpriteInfo = nullptr;
+
+    for (int a = 0; a < 2; a++) {
+
+        if (poofs[a] == nullptr)
+            continue;
+
+        poofs[a]->deleteSprite();
+    }
+
 }
 
+Jetpack::~Jetpack() {
+
+    deleteSprite();
+
+    for (auto &poof : poofs)
+        delete poof;
+
+}

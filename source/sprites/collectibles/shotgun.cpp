@@ -136,7 +136,9 @@ Shotgun::Shotgun() {
 
 void Shotgun::spawn_bullets() {
 
-    for (int a = 0; a < 4; a++) {
+    for (int a = 0; a < 3; a++) {
+//        printf("\nNEW %i", a);
+        //TODO Static pool?
         auto *b = new Bullet();
         b->x = x;
         b->y = y;
@@ -156,11 +158,8 @@ void Shotgun::spawn_bullets() {
             b->ySpeed = 1;
         if (a == 1)
             b->ySpeed = -1;
-        if (a == 3)
-            b->ySpeed = 0;
-        if (a == 4)
+        if (a == 2)
             b->ySpeed = 2;
-
     }
 }
 
@@ -219,4 +218,5 @@ void Shotgun::deleteSprite() {
     delete subSpriteInfo;
     mainSpriteInfo = nullptr;
     subSpriteInfo = nullptr;
+
 }
