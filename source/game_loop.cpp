@@ -5,6 +5,7 @@
 #include "time/time_utils.h"
 #include "memory/oam_utils.hpp"
 #include "sprites/animations/blood.hpp"
+#include "sprites/items/arrow.hpp"
 
 void gameloop::run() {
 
@@ -14,7 +15,7 @@ void gameloop::run() {
     global::camera->y = 127;
     global::main_dude->x = 224;
     global::main_dude->y = 300; //TODO Some constexpr file for these
-    global::sprites.push_back(global::main_dude);
+//    global::sprites.push_back(global::main_dude);
 
     global::hud->init();
     populate_main_menu(); //TODO Game state function for matching this?
@@ -45,6 +46,11 @@ void gameloop::run() {
 
         if (size)
             global::sprites_to_add.clear();
+
+        global::main_dude->update();
+        global::main_dude->draw();
+        global::main_dude->whip->update();
+        global::main_dude->whip->draw();
 
         for (int a = 0; a < global::sprites.size(); a++) {
             //TODO Debugging flag

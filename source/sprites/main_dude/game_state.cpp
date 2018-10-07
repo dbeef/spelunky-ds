@@ -254,14 +254,17 @@ void GameState::handle_changing_screens() {
         oam_utils::delete_all_sprites();
 
         //new MainDude since we deleted it. TODO Don't push main dude to the global::sprites and update it separately
-        global::main_dude = new MainDude();
+//        global::main_dude = new MainDude();
+        global::main_dude->initSprite();
+        global::main_dude->whip->initSprite();
+
         global::main_dude->dead = dead; //TODO Move this fields out to the game_state! or do the thing above, same result
 
         global::main_dude->x = temp_x;
         global::main_dude->y = temp_y;
 
-            global::main_dude->init();
-        global::sprites.push_back(global::main_dude);
+//        global::main_dude->init();
+//        global::sprites.push_back(global::main_dude);
 
         consoleClear();
 

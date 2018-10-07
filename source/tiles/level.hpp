@@ -35,7 +35,8 @@ class Level {
 
 public:
 
-    //TODO Allocate memory on heap for the whole 32x32 tiles, never delete them later. That may help memory fragmentation.
+    //I allocate these tiles on heap on game start, never delete them later. That helps memory fragmentation a lot.
+    //Before, I allocated/deallocated them on every level and It caused crashes on malloc after some time (~40 levels).
     MapTile *map_tiles[32][32];
 
     //holds information on what room type is at specific array index

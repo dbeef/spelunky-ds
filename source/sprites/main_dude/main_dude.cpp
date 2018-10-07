@@ -445,7 +445,7 @@ void MainDude::init() {
     initSprite();
     whip = new Whip();
     whip->init();
-    global::sprites.push_back(whip);
+//    global::sprites.push_back(whip);
 }
 
 void MainDude::draw() {
@@ -464,6 +464,7 @@ void MainDude::draw() {
     match_animation();
     reset_values_checked_every_frame();
     apply_blinking_on_damage();
+
 }
 
 void MainDude::initSprite() {

@@ -38,6 +38,7 @@
 #include "../sprites/collectibles/ruby_small.h"
 #include "../sprites/collectibles/ruby_big.h"
 
+//TODO Make main menu signs globals
 void populate_cave_moniez() {
 
     int last_placement = 3;

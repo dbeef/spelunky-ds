@@ -1,6 +1,6 @@
 //
 // Created by xdbeef on 07.04.18.
-// sizeof(MovingObject) is 80 bytes
+// sizeof(MovingObject) is 805 bytes
 //
 
 #ifndef SPELUNKYDS_MOVINGOBJECT_H

@@ -26,6 +26,8 @@ namespace oam_utils {
             global::sub_oam_manager->clear_sprite_attributes();
 
             global::hud->delete_sprites();
+            global::main_dude->deleteSprite();
+            global::main_dude->whip->deleteSprite();
 
             std::vector<MovingObject *>::iterator iter;
             for (iter = global::sprites.begin(); iter != global::sprites.end();) {
@@ -56,6 +58,10 @@ namespace oam_utils {
 //                    global::sprites.erase(global::sprites.begin() + a);
 //                }
 //            }
+
+
+            global::main_dude->initSprite();
+            global::main_dude->whip->initSprite();
 
             for (int a = 0; a < global::sprites.size(); a++) {
                 //fixme - being killed not always means it's ready for disposing!
@@ -90,6 +96,9 @@ namespace oam_utils {
 
         global::main_oam_manager->clear_sprite_attributes();
         global::sub_oam_manager->clear_sprite_attributes();
+
+        global::main_dude->deleteSprite();
+        global::main_dude->whip->deleteSprite();
 
         global::hud->delete_sprites();
 
