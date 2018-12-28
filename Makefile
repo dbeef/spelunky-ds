@@ -88,9 +88,9 @@ export VPATH	:=	$(foreach dir,$(SOURCES),$(CURDIR)/$(dir)) \
 
 export DEPSDIR	:=	$(CURDIR)/$(BUILD)
 
-ifneq ($(strip $(NITRODATA)),)
-        export NITRO_FILES := $(CURDIR)/$(NITRODATA)
-endif
+#ifneq ($(strip $(NITRODATA)),)
+#        export NITRO_FILES := $(CURDIR)/$(NITRODATA)
+#endif
 
 CFILES		:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.c)))
 CPPFILES	:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.cpp)))
