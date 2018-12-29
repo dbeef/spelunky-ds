@@ -16,7 +16,7 @@
 #include "mitt.hpp"
 #include "glove.hpp"
 #include "compass.hpp"
-#include "../animations/got_collectible.hpp"
+#include "../../decorations/got_collectible.hpp"
 #include "../items/spike_shoes.hpp"
 #include "../items/cape.hpp"
 #include "../items/jetpack.hpp"
@@ -147,22 +147,20 @@ void Crate::drop_loot() {
     int r = rand() % 3;
     //drop rope or bomb
     if (r == 0 || r == 1) {
-        auto *g = new GotCollectible();
-        g->x = x - 12;
-        g->y = y - 20;
+
+        GotCollectible *g;
 
         if (r == 0) {
             global::hud->ropes += 4;
-            g->collectible_type = 2;
+            g = new GotCollectible(x - 12, y - 20, GotCollectible::Type::ROPE);
         } else {
             global::hud->bombs += 4;
-            g->collectible_type = 1;
+            g = new GotCollectible(x - 12, y - 20, GotCollectible::Type::BOMB);
         }
 
         global::hud->draw_level_hud();
 
-        g->init();
-        global::creatures_to_add.push_back(g);
+        global::decorations_to_add.push_back(g);
     } else {
         collectibles_utils::spawn_random_item(this->x, this->y);
     }

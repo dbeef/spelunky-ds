@@ -6,7 +6,7 @@
 #include "cape.hpp"
 #include "../../../build/gfx_goldbars.h"
 #include "../../globals_declarations.hpp"
-#include "../animations/got_collectible.hpp"
+#include "../../decorations/got_collectible.hpp"
 #include "../../collisions/collisions.hpp"
 #include "../sprite_utils.hpp"
 
@@ -189,12 +189,8 @@ void Cape::match_animation() {
 
 void Cape::equip() {
 
-    auto g = new GotCollectible();
-    g->x = x - 12;
-    g->y = y - 20;
-    g->collectible_type = 0;
-    g->init();
-    global::creatures_to_add.push_back(g);
+    auto g = new GotCollectible(x - 12, y - 20, GotCollectible::Type::ITEM);
+    global::decorations_to_add.push_back(g);
 
     if (global::main_dude->carrying_jetpack)
         global::main_dude->carrying_jetpack = false;

@@ -8,7 +8,7 @@
 #include "../../globals_declarations.hpp"
 #include "../../collisions/collisions.hpp"
 #include "../../../build/gfx_saleable.h"
-#include "../animations/got_collectible.hpp"
+#include "../../decorations/got_collectible.hpp"
 #include "../sprite_utils.hpp"
 
 #define SPRING_SHOES_POS_INC_DELTA 15
@@ -127,12 +127,8 @@ SpringShoes::SpringShoes() {
 
 void SpringShoes::equip() {
 
-    auto g = new GotCollectible();
-    g->x = x - 12;
-    g->y = y - 20;
-    g->collectible_type = 0;
-    g->init();
-    global::creatures_to_add.push_back(g);
+    auto g = new GotCollectible(x - 12, y - 20, GotCollectible::Type::ITEM);
+    global::decorations_to_add.push_back(g);
 
     if (!global::main_dude->carrying_spring_shoes) {
         global::main_dude->carrying_spring_shoes = true;

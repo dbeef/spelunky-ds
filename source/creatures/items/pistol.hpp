@@ -8,7 +8,7 @@
 #include "../_base_creature.h"
 #include "../sprite_state.hpp"
 #include "../shopping_object.h"
-#include "../animations/blast.hpp"
+#include "../../decorations/blast.hpp"
 
 #define PISTOL_PHYSICAL_HEIGHT 6
 #define PISTOL_PHYSICAL_WIDTH 9

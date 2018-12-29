@@ -5,7 +5,7 @@
 #include "smooch.hpp"
 #include "../globals_declarations.hpp"
 #include "../../build/gfx_caveman_damsel.h"
-#include "../creatures/animations/got_collectible.hpp"
+#include "got_collectible.hpp"
 #include "../creatures/sprite_utils.hpp"
 
 void Smooch::update() {

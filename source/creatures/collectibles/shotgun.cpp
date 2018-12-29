@@ -11,7 +11,7 @@
 #include "../../../build/soundbank.h"
 #include "shotgun.hpp"
 #include "bullet.hpp"
-#include "../animations/got_collectible.hpp"
+#include "../../decorations/got_collectible.hpp"
 #include "../../tiles/level_rendering_utils.hpp"
 #include "../sprite_utils.hpp"
 
@@ -59,9 +59,8 @@ void Shotgun::init() {
     initSprite();
     init_anim_icon();
     update_anim_icon(x, y, physical_width);
-    blast = new Blast();
-    blast->init();
-    global::creatures.push_back(blast);
+    blast = new Blast(0, 0);
+    global::decorations_to_add.push_back(blast);
 }
 
 void Shotgun::updateSpeed() {
@@ -164,12 +163,8 @@ void Shotgun::spawn_bullets() {
 }
 
 void Shotgun::equip() {
-    auto *g = new GotCollectible();
-    g->x = x - 12;
-    g->y = y - 20;
-    g->collectible_type = 0;
-    g->init();
-    global::creatures_to_add.push_back(g);
+    auto *g = new GotCollectible(x - 12, y - 20, GotCollectible::Type::ITEM);
+    global::decorations_to_add.push_back(g);
 
 }
 
@@ -195,21 +190,21 @@ void Shotgun::handle_shooting() {
     } else
         activated = false;
 
-    if (blast->animFrame >= 9) {
+    if (blast->_anim_frame_index >= 9) {
         firing = false;
-        blast->animFrame = 0;
+        blast->_anim_frame_index = 0;
     }
 
-    blast->firing = firing;
+    blast->_firing = firing;
 
     if (!firing) {
         cooldown += *global::timer;
         if (sprite_state == SpriteState::W_LEFT)
-            blast->x = x - 10;
+            blast->_x = x - 10;
         else
-            blast->x = x + 10;
-        blast->y = y;
-        blast->sprite_state = sprite_state;
+            blast->_x = x + 10;
+        blast->_y = y;
+        blast->_sprite_state = sprite_state;
     }
 }
 
