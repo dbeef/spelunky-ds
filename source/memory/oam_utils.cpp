@@ -8,7 +8,7 @@
 
 namespace oam_utils {
 
-    //TODO Clean only the higher addresses of memory, don't clean up the hud and main dude sprites, so the blinking
+    //TODO Clean only the higher addresses of memory, don't clean up the hud and main dude creatures, so the blinking
     // that the cleaning causes would be less visible.
     bool clean_unused_oam() {
 
@@ -29,17 +29,31 @@ namespace oam_utils {
             global::main_dude->deleteSprite();
             global::main_dude->whip->deleteSprite();
 
-            std::vector<MovingObject *>::iterator iter;
-            for (iter = global::sprites.begin(); iter != global::sprites.end();) {
-
+            std::vector<BaseCreature *>::iterator iter;
+            for (iter = global::creatures.begin(); iter != global::creatures.end();) {
                 iter.operator*()->deleteSprite();
-
                 if (iter.operator*()->ready_to_dispose) {
                     delete iter.operator*();
-                    iter = global::sprites.erase(iter);
+                    iter = global::creatures.erase(iter);
                 } else
                     ++iter;
             }
+            
+            std::vector<BaseDecoration *>::iterator iter_deco;
+            for (iter_deco = global::decorations.begin(); iter_deco != global::decorations.end();) {
+                iter_deco.operator*()->delete_sprites();
+                if (iter_deco.operator*()->_ready_to_dispose) {
+                    delete iter_deco.operator*();
+                    iter_deco = global::decorations.erase(iter_deco);
+                } else
+                    ++iter_deco;
+            }
+
+//            std::vector<BaseDecoration *>::iterator iter_decorations;
+//            for (iter_decorations = global::decorations.begin(); iter_decorations != global::decorations.end();) {
+//                iter_decorations.operator*()->delete_sprites();
+//                ++iter;
+//            }
 
 
 //            for (auto &sprite_info: global::sprite_infos) {
@@ -52,10 +66,10 @@ namespace oam_utils {
 //https://stackoverflow.com/questions/2275076/is-stdvector-copying-the-objects-with-a-push-back
             global::sprite_infos.clear();
 
-//            for (int a = 0; a < global::sprites.size(); a++) {
-//                if (global::sprites.at(a)->ready_to_dispose) {
-//                    delete (global::sprites.at(a));
-//                    global::sprites.erase(global::sprites.begin() + a);
+//            for (int a = 0; a < global::creatures.size(); a++) {
+//                if (global::creatures.at(a)->ready_to_dispose) {
+//                    delete (global::creatures.at(a));
+//                    global::creatures.erase(global::creatures.begin() + a);
 //                }
 //            }
 
@@ -63,10 +77,16 @@ namespace oam_utils {
             global::main_dude->initSprite();
             global::main_dude->whip->initSprite();
 
-            for (int a = 0; a < global::sprites.size(); a++) {
+            for (unsigned long a = 0; a < global::creatures.size(); a++) {
                 //fixme - being killed not always means it's ready for disposing!
-                if (!global::sprites.at(a)->ready_to_dispose /*&& !global::sprites.at(a)->killed*/) {
-                    global::sprites.at(a)->initSprite();
+                if (!global::creatures.at(a)->ready_to_dispose /*&& !global::creatures.at(a)->killed*/) {
+                    global::creatures.at(a)->initSprite();
+                }
+            }
+            for (unsigned long a = 0; a < global::decorations.size(); a++) {
+                //fixme - being killed not always means it's ready for disposing!
+                if (!global::decorations.at(a)->_ready_to_dispose /*&& !global::creatures.at(a)->killed*/) {
+                    global::decorations.at(a)->init_sprites();
                 }
             }
 
@@ -93,27 +113,36 @@ namespace oam_utils {
 //                sprite_info = nullptr;
 //            }
 //        }
-
         global::main_oam_manager->clear_sprite_attributes();
         global::sub_oam_manager->clear_sprite_attributes();
 
         global::main_dude->deleteSprite();
         global::main_dude->whip->deleteSprite();
-
         global::hud->delete_sprites();
 
-        for (auto &sprite : global::sprites) {
+        for (auto &sprite : global::creatures) {
             sprite->deleteSprite(); //deletes its SpriteInfos and nullptrs them
             delete sprite; //deletes sprite itself
         }
 
-        for (auto &sprite : global::sprites_to_add) {
+        for (auto &sprite : global::creatures_to_add) {
             sprite->deleteSprite(); //deletes its SpriteInfos and nullptrs them
             delete sprite; //deletes sprite itself
         }
 
-        global::sprites.clear(); //deletes pointers to the sprites removed above - they're not nullptrs!
-        global::sprites_to_add.clear(); //deletes pointers to the sprites removed above - they're not nullptrs!
+        for (auto &sprite : global::decorations) {
+            sprite->delete_sprites(); //deletes its SpriteInfos and nullptrs them
+            delete sprite; //deletes sprite itself
+        }
+
+        for (auto &sprite : global::decorations_to_add) {
+            sprite->delete_sprites(); //deletes its SpriteInfos and nullptrs them
+            delete sprite; //deletes sprite itself
+        }
+
+        global::creatures.clear(); //deletes pointers to the creatures removed above - they're not nullptrs!
+
+        global::decorations.clear(); //deletes pointers to the decorations removed above - they're not nullptrs!
 
 //Assertion will always be false, pointers are copied when pushed to the vector
 //        int c =0;

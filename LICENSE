@@ -45,7 +45,7 @@ The "Game" is defined as the Spelunky game, its program, and all related files,
 including, but not limited to, the Spelunky configuration program.
 
 The "Source Code" is defined as the .gmk files for Spelunky and the Spelunky
-configuration program, and all of the objects, scripts, sprites, and tiles
+configuration program, and all of the objects, scripts, creatures, and tiles
 contained within those files.
 
 "Covered Works" are defined as the Game, the Source Code, and any modified

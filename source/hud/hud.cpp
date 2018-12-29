@@ -5,22 +5,23 @@
 #include <nds/arm9/sprite.h>
 #include <cstdio>
 #include <algorithm>
+
+#include "../../build/gfx_hud.h"
 #include "hud.hpp"
 #include "../globals_declarations.hpp"
-#include "../sprites/enemies/snake.hpp"
-#include "../sprites/enemies/bat.hpp"
-#include "../sprites/enemies/spider.hpp"
-#include "../sprites/collectibles/moniez.hpp"
-#include "../sprites/sprite_utils.hpp"
-#include "../../build/gfx_hud.h"
-#include "../sprites/enemies/damsel.hpp"
-#include "../sprites/enemies/skeleton.hpp"
-#include "../sprites/enemies/caveman.hpp"
-#include "../sprites/enemies/shopkeeper.hpp"
-#include "../sprites/collectibles/ruby_big.h"
-#include "../sprites/collectibles/ruby_small.h"
-#include "../sprites/collectibles/triple_goldbar.h"
-#include "../sprites/collectibles/single_goldbar.hpp"
+#include "../creatures/enemies/snake.hpp"
+#include "../creatures/enemies/bat.hpp"
+#include "../creatures/enemies/spider.hpp"
+#include "../creatures/collectibles/moniez.hpp"
+#include "../creatures/sprite_utils.hpp"
+#include "../creatures/enemies/damsel.hpp"
+#include "../creatures/enemies/skeleton.hpp"
+#include "../creatures/enemies/caveman.hpp"
+#include "../creatures/enemies/shopkeeper.hpp"
+#include "../creatures/collectibles/ruby_big.h"
+#include "../creatures/collectibles/ruby_small.h"
+#include "../creatures/collectibles/triple_goldbar.h"
+#include "../creatures/collectibles/single_goldbar.hpp"
 
 #define HEART_POSITION_X 5
 #define HEART_POSITION_Y 5
@@ -100,7 +101,7 @@ void Hud::init() {
 //Call only when something changed (i.e hearts counter decremented and it needs to be updated on hud)
 //otherwise, if called frequently, font blinking will occur.
 //TODO Statically sized array - printing to the buffer, then to the console, to avoid screen flickering.
-//^ other way to avoid flickering is OAM sprite for every digit (but then it would take some from the 128 sprites pool).
+//^ other way to avoid flickering is OAM sprite for every digit (but then it would take some from the 128 creatures pool).
 //^ btw, flickering is very noticable on an emulator, but not that much on a real NDS
 void Hud::draw_level_hud() {
 
@@ -335,7 +336,7 @@ void Hud::disable_all_prompts() {
 
 void Hud::draw_collected_loot() {
 
-    for (int a = 0; a < global::collected_loot.size(); a++) {
+    for (unsigned long a = 0; a < global::collected_loot.size(); a++) {
 
         //FIXME Pass specific moniez type
 
@@ -348,7 +349,7 @@ void Hud::draw_collected_loot() {
             ruby_big->y = 190;
             ruby_big->init();
             ruby_big->y += (16 - ruby_big->physical_height); //aligning to same level
-            global::sprites.push_back(ruby_big);
+            global::creatures.push_back(ruby_big);
             ruby_big->set_position();
             ruby_big->ready_to_dispose = true;
 
@@ -361,7 +362,7 @@ void Hud::draw_collected_loot() {
             ruby_small->y = 190;
             ruby_small->init();
             ruby_small->y += (16 - ruby_small->physical_height); //aligning to same level
-            global::sprites.push_back(ruby_small);
+            global::creatures.push_back(ruby_small);
             ruby_small->set_position();
             ruby_small->ready_to_dispose = true;
 
@@ -372,7 +373,7 @@ void Hud::draw_collected_loot() {
             triple_goldbars->y = 190;
             triple_goldbars->init();
             triple_goldbars->y += (16 - triple_goldbars->physical_height); //aligning to same level
-            global::sprites.push_back(triple_goldbars);
+            global::creatures.push_back(triple_goldbars);
             triple_goldbars->set_position();
             triple_goldbars->ready_to_dispose = true;
 
@@ -383,7 +384,7 @@ void Hud::draw_collected_loot() {
             single_goldbar->y = 190;
             single_goldbar->init();
             single_goldbar->y += (16 - single_goldbar->physical_height); //aligning to same level
-            global::sprites.push_back(single_goldbar);
+            global::creatures.push_back(single_goldbar);
             single_goldbar->set_position();
             single_goldbar->ready_to_dispose = true;
 
@@ -395,7 +396,7 @@ void Hud::draw_collected_loot() {
 
 void Hud::draw_killed_npcs() {
 
-    for (int a = 0; a < global::killed_npcs.size(); a++) {
+    for (unsigned long a = 0; a < global::killed_npcs.size(); a++) {
 
         switch (global::killed_npcs.at(a)) {
 
@@ -403,7 +404,7 @@ void Hud::draw_killed_npcs() {
                 auto *spider = new Spider(95 + (a * 8), 208);
                 spider->init();
                 //deliberately not aligning to same level - already aligned
-                global::sprites.push_back(spider);
+                global::creatures.push_back(spider);
                 spider->ready_to_dispose = true;
                 spider->set_sprite_falling();
                 spider->set_position();
@@ -417,7 +418,7 @@ void Hud::draw_killed_npcs() {
                 bat->set_sprite_flying_left();
                 bat->set_position();
                 bat->ready_to_dispose = true;
-                global::sprites.push_back(bat);
+                global::creatures.push_back(bat);
                 break;
             }
             case SpriteType::S_SNAKE: {
@@ -425,7 +426,7 @@ void Hud::draw_killed_npcs() {
                 snake->sprite_state = SpriteState::W_LEFT;
                 snake->initSprite();
                 snake->y += (16 - snake->physical_height); //aligning to same level
-                global::sprites.push_back(snake);
+                global::creatures.push_back(snake);
                 snake->ready_to_dispose = true;
                 snake->set_position();
                 snake->set_sprite_left();
@@ -438,7 +439,7 @@ void Hud::draw_killed_npcs() {
                 damsel->match_animation();
                 damsel->draw();
                 damsel->y += (16 - damsel->physical_height); //aligning to same level
-                global::sprites.push_back(damsel);
+                global::creatures.push_back(damsel);
                 damsel->ready_to_dispose = true;
                 damsel->set_position();
                 break;
@@ -451,7 +452,7 @@ void Hud::draw_killed_npcs() {
                 skeleton->initSprite();
                 skeleton->set_sprite_walking();
                 skeleton->y += (16 - skeleton->physical_height); //aligning to same level
-                global::sprites.push_back(skeleton);
+                global::creatures.push_back(skeleton);
                 skeleton->ready_to_dispose = true;
                 skeleton->set_position();
                 break;
@@ -464,7 +465,7 @@ void Hud::draw_killed_npcs() {
                 caveman->init();
                 caveman->draw();
                 caveman->y += (16 - caveman->physical_height); //aligning to same level
-                global::sprites.push_back(caveman);
+                global::creatures.push_back(caveman);
                 caveman->ready_to_dispose = true;
                 caveman->set_position();
                 break;
@@ -478,7 +479,7 @@ void Hud::draw_killed_npcs() {
                 shopkeeper->sprite_state = SpriteState::W_LEFT;
                 shopkeeper->draw();
                 shopkeeper->y += (16 - shopkeeper->physical_height); //aligning to same level
-                global::sprites.push_back(shopkeeper);
+                global::creatures.push_back(shopkeeper);
                 shopkeeper->ready_to_dispose = true;
                 shopkeeper->set_position();
                 break;

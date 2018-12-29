@@ -78,6 +78,7 @@ SpriteInfo *
 OAMManager::initSprite(const unsigned short pallette[], int palLen, const unsigned int tiles[], int tilesLen,
                        int size, SpritesheetType type, bool reuse_palette, bool reuse_tiles, LAYER_LEVEL l) {
 
+
 //    if (global::hud->level > 6) {
 //        printf("NEW SPRITE INFO\n");
 //        for (int a = 0; a < 60; a++)
@@ -87,7 +88,7 @@ OAMManager::initSprite(const unsigned short pallette[], int palLen, const unsign
     /* Keep track of the available tiles */
 //    assert(current_oam_id_palette < SPRITE_COUNT && current_oam_id_tiles < SPRITE_COUNT);
     if (!(current_oam_id_palette < SPRITE_COUNT && current_oam_id_tiles < SPRITE_COUNT)) {
-        printf("\n\n\nTOO MUCH SPRITES/PALETTES! %i %i", current_oam_id_palette, current_oam_id_tiles);
+        printf("\n\n\nTOO MUCH creatures/PALETTES! %i %i", current_oam_id_palette, current_oam_id_tiles);
         for (int a = 0; a < 120; a++) swiWaitForVBlank();
         return nullptr;
     }
@@ -187,7 +188,7 @@ OAMManager::initSprite(const unsigned short pallette[], int palLen, const unsign
      */
     if (reuse_palette || reuse_tiles) {
         //Re-using already loaded palletes / tiles
-        for (int a = 0; a < global::sprite_infos.size(); a++) {
+        for (unsigned long a = 0; a < global::sprite_infos.size(); a++) {
             if (global::sprite_infos.at(a)) {
 
                 if ((*global::sprite_infos.at(a)).spriteType == type &&

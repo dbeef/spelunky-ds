@@ -9,26 +9,26 @@
 
 void sound::start_menu_music() {
     //probably should load it only once, on start
-    mmLoadEffect(SFX_MTITLE);
-    global::menu_music_handler = mmEffect(SFX_MTITLE);
+//    mmLoadEffect(SFX_MTITLE);
+//    global::menu_music_handler = mmEffect(SFX_MTITLE);
 }
 
 void sound::stop_menu_music() {
-    mmEffectCancel(global::menu_music_handler);
+//    mmEffectCancel(global::menu_music_handler);
     //probably should not unload, due to memory fragmentation when loading/unloading every level
-    mmUnloadEffect(SFX_MTITLE);
+//    mmUnloadEffect(SFX_MTITLE);
 }
 
 void sound::start_cave_music() {
     //probably should load it only once, on start
-    mmLoadEffect(SFX_MCAVE);
-    global::cave_music_handler = mmEffect(SFX_MCAVE);
+//    mmLoadEffect(SFX_MCAVE);
+//    global::cave_music_handler = mmEffect(SFX_MCAVE);
 }
 
 void sound::stop_cave_music() {
-    mmEffectCancel(global::cave_music_handler);
+//    mmEffectCancel(global::cave_music_handler);
     //probably should not unload, due to memory fragmentation when loading/unloading every level
-    mmUnloadEffect(SFX_MCAVE);
+//    mmUnloadEffect(SFX_MCAVE);
 }
 
 void sound::load_sounds() {

@@ -23,10 +23,10 @@ include $(DEVKITARM)/ds_rules
 TARGET		:=	$(notdir $(CURDIR))
 BUILD		:=	build
 SOURCES		:=	source source/tiles source/console source/input  \
-                source/collisions source/sprites source/sprites/enemies  source/sprites/collectibles \
-                source/sprites/items source/sprites/non_interactive source/time \
-                source/hud source/rooms source/memory source/camera source/sprites/animations \
-                source/sprites/main_dude source/sound source/sprites/traps
+                source/collisions source/creatures source/creatures/enemies  source/creatures/collectibles \
+                source/creatures/items source/decorations source/time \
+                source/hud source/rooms source/memory source/camera source/creatures/animations \
+                source/creatures/main_dude source/sound source/creatures/traps
 DATA		:=	data
 INCLUDES	:=	include
 FONTS   	:=	gfx/fonts

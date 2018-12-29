@@ -7,13 +7,14 @@
 
 #include <mm_types.h>
 #include <nds/arm9/console.h>
-#include "sprites/spritesheet_type.hpp"
-#include "sprites/sprite_type.hpp"
-#include "sprites/sprite_info.h"
+#include "creatures/spritesheet_type.hpp"
+#include "creatures/sprite_type.hpp"
+#include "creatures/sprite_info.h"
 #include "hud/hud.hpp"
 #include "tiles/level.hpp"
-#include "sprites/main_dude/main_dude.hpp"
-#include "sprites/main_dude/game_state.hpp"
+#include "creatures/main_dude/main_dude.hpp"
+#include "creatures/main_dude/game_state.hpp"
+#include "decorations/_base_decoration.h"
 
 namespace global {
 
@@ -28,8 +29,10 @@ namespace global {
     PrintConsole *print_console = nullptr; //initialised in console_utils.h call from main
 
     //https://stackoverflow.com/questions/8036474/when-vectors-are-allocated-do-they-use-memory-on-the-heap-or-the-stack
-    std::vector<MovingObject *> sprites;
-    std::vector<MovingObject *> sprites_to_add;
+    std::vector<BaseCreature *> creatures;
+    std::vector<BaseCreature *> creatures_to_add;
+    std::vector<BaseDecoration *> decorations;
+    std::vector<BaseDecoration *> decorations_to_add;
     std::vector<SpriteInfo *> sprite_infos;
     std::vector<SpriteType> killed_npcs;
     std::vector<SpriteType> collected_loot;

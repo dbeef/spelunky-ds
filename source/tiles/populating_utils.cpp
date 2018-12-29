@@ -8,23 +8,22 @@
 #include "populating_utils.hpp"
 #include "../game_loop.hpp"
 
-#include "../sprites/non_interactive/spelunky_title.h"
-#include "../sprites/non_interactive/copyrights.h"
-#include "../sprites/non_interactive/title_menu_sign.h"
-#include "../sprites/items/rope.hpp"
-#include "../sprites/enemies/bat.hpp"
-#include "../sprites/enemies/spider.hpp"
-#include "../sprites/traps/spikes.h"
-#include "../sprites/collectibles/chest.hpp"
-#include "../sprites/collectibles/crate.hpp"
-#include "../sprites/enemies/caveman.hpp"
-#include "../sprites/enemies/damsel.hpp"
-#include "../sprites/non_interactive/lamp.h"
-#include "../sprites/enemies/shopkeeper.hpp"
-#include "../sprites/traps/arrow_trap.h"
-#include "../sprites/collectibles/collectibles_utils.hpp"
-#include "../sprites/animations/fake_skeleton.hpp"
-#include "../sprites/enemies/skeleton.hpp"
+#include "../decorations/spelunky_title.h"
+#include "../decorations/copyrights.h"
+#include "../creatures/items/rope.hpp"
+#include "../creatures/enemies/bat.hpp"
+#include "../creatures/enemies/spider.hpp"
+#include "../creatures/traps/spikes.h"
+#include "../creatures/collectibles/chest.hpp"
+#include "../creatures/collectibles/crate.hpp"
+#include "../creatures/enemies/caveman.hpp"
+#include "../creatures/enemies/damsel.hpp"
+#include "../decorations/lamp.h"
+#include "../creatures/enemies/shopkeeper.hpp"
+#include "../creatures/traps/arrow_trap.h"
+#include "../creatures/collectibles/collectibles_utils.hpp"
+#include "../creatures/animations/fake_skeleton.hpp"
+#include "../creatures/enemies/skeleton.hpp"
 
 #include "../rooms/shops.hpp"
 #include "../rooms/closed_rooms.hpp"
@@ -33,10 +32,12 @@
 #include "../rooms/left_right_up_rooms.hpp"
 #include "../rooms/left_right_down_rooms.hpp"
 #include "../rooms/entrance_rooms.hpp"
-#include "../sprites/collectibles/single_goldbar.hpp"
-#include "../sprites/collectibles/triple_goldbar.h"
-#include "../sprites/collectibles/ruby_small.h"
-#include "../sprites/collectibles/ruby_big.h"
+#include "../creatures/collectibles/single_goldbar.hpp"
+#include "../creatures/collectibles/triple_goldbar.h"
+#include "../creatures/collectibles/ruby_small.h"
+#include "../creatures/collectibles/ruby_big.h"
+#include "../decorations/rock_sign.h"
+#include "../decorations/arch_sign.h"
 
 //TODO Make main menu signs globals
 void populate_cave_moniez() {
@@ -103,13 +104,13 @@ void populate_cave_moniez() {
                             single_goldbar->init();
                             single_goldbar->x = pos_x * 16;
                             single_goldbar->y = pos_y * 16;
-                            global::sprites.push_back(single_goldbar);
+                            global::creatures.push_back(single_goldbar);
                         } else {
                             auto *triple_goldbar = new TripleGoldbar();
                             triple_goldbar->init();
                             triple_goldbar->x = pos_x * 16;
                             triple_goldbar->y = pos_y * 16;
-                            global::sprites.push_back(triple_goldbar);
+                            global::creatures.push_back(triple_goldbar);
                         }
 
                         gold_bars_left--;
@@ -127,7 +128,7 @@ void populate_cave_moniez() {
                             ruby_small->init();
                             ruby_small->x = pos_x * 16;
                             ruby_small->y = pos_y * 16;
-                            global::sprites.push_back(ruby_small);
+                            global::creatures.push_back(ruby_small);
                         } else {
                             auto *ruby_big = new RubyBig();
                             ruby_big->spritesheet_type = MONIEZ_RUBY;
@@ -135,7 +136,7 @@ void populate_cave_moniez() {
                             ruby_big->init();
                             ruby_big->x = pos_x * 16;
                             ruby_big->y = pos_y * 16;
-                            global::sprites.push_back(ruby_big);
+                            global::creatures.push_back(ruby_big);
                         }
 
                         rubies_left--;
@@ -146,7 +147,7 @@ void populate_cave_moniez() {
                     if (loot_type == 3 && jars_left > 0 && r == 1) {
                         Jar *jar = new Jar();
                         jar->init();
-                        global::sprites.push_back(jar);
+                        global::creatures.push_back(jar);
                         jar->x = pos_x * 16;
                         jar->y = pos_y * 16;
                         jars_left--;
@@ -156,7 +157,7 @@ void populate_cave_moniez() {
 /*                    if (loot_type == 0 && rocks_left > 0 && r == 1) {
                         Arrow *arrow = new Arrow();
                         arrow->init();
-                        global::sprites.push_back(arrow);
+                        global::creatures.push_back(arrow);
                         arrow->x = pos_x * 16;
                         arrow->y = pos_y * 16;
                         rocks_left--;
@@ -166,7 +167,7 @@ void populate_cave_moniez() {
                     if (loot_type == 0 && rocks_left > 0 && r == 1) {
                         Rock *rock = new Rock();
                         rock->init();
-                        global::sprites.push_back(rock);
+                        global::creatures.push_back(rock);
                         rock->x = pos_x * 16;
                         rock->y = pos_y * 16;
                         rocks_left--;
@@ -177,7 +178,7 @@ void populate_cave_moniez() {
                     if (loot_type == 4 && chests_left > 0 && r == 1) {
                         Chest *chest = new Chest();
                         chest->init();
-                        global::sprites.push_back(chest);
+                        global::creatures.push_back(chest);
                         chest->x = pos_x * 16;
                         chest->y = pos_y * 16;
                         chests_left--;
@@ -188,7 +189,7 @@ void populate_cave_moniez() {
                     if (loot_type == 5 && crates_left > 0 && r == 1) {
                         Crate *crate = new Crate();
                         crate->init();
-                        global::sprites.push_back(crate);
+                        global::creatures.push_back(crate);
                         crate->x = pos_x * 16;
                         crate->y = pos_y * 16;
                         crates_left--;
@@ -276,7 +277,7 @@ void populate_cave_npcs() {
                             arrowTrap->sprite_state = SpriteState::W_LEFT;
                         else if (npc == 10)
                             arrowTrap->sprite_state = SpriteState::W_RIGHT;
-                        global::sprites.push_back(arrowTrap);
+                        global::creatures.push_back(arrowTrap);
                     }
 
                     if (npc == 13 && skeletons_left > 0 && r == 1) {
@@ -284,7 +285,7 @@ void populate_cave_npcs() {
                         if (rand() % 2 == 0) {
                             auto *skeleton = new Skeleton();
                             skeleton->init();
-                            global::sprites.push_back(skeleton);
+                            global::creatures.push_back(skeleton);
                             skeleton->x = pos_x * 16;
                             skeleton->y = pos_y * 16;
                             skeletons_left--;
@@ -293,7 +294,7 @@ void populate_cave_npcs() {
 
                             auto *fakeSkeleton = new FakeSkeleton();
                             fakeSkeleton->init();
-                            global::sprites.push_back(fakeSkeleton);
+                            global::creatures.push_back(fakeSkeleton);
                             fakeSkeleton->x = pos_x * 16;
                             fakeSkeleton->y = pos_y * 16;
                             skeletons_left--;
@@ -306,7 +307,7 @@ void populate_cave_npcs() {
                     if (npc == 1 && snakes_left > 0 && r == 1) {
                         Snake *snake = new Snake();
                         snake->init();
-                        global::sprites.push_back(snake);
+                        global::creatures.push_back(snake);
                         snake->x = pos_x * 16;
                         snake->y = pos_y * 16;
                         snakes_left--;
@@ -316,7 +317,7 @@ void populate_cave_npcs() {
                     if (npc == 2 && bats_left > 0 && r == 1) {
                         Bat *bat = new Bat();
                         bat->init();
-                        global::sprites.push_back(bat);
+                        global::creatures.push_back(bat);
                         bats_left--;
                         bat->x = pos_x * 16;
                         bat->y = pos_y * 16;
@@ -326,7 +327,7 @@ void populate_cave_npcs() {
                     if (npc == 3 && spiders_left > 0 && r == 1) {
                         Spider *spider = new Spider();
                         spider->init();
-                        global::sprites.push_back(spider);
+                        global::creatures.push_back(spider);
                         spider->x = pos_x * 16;
                         spider->y = pos_y * 16;
                         spiders_left--;
@@ -336,7 +337,7 @@ void populate_cave_npcs() {
                     if (npc == 4 && spikes_left > 0 && r == 1) {
                         Spikes *spikes = new Spikes();
                         spikes->init();
-                        global::sprites.push_back(spikes);
+                        global::creatures.push_back(spikes);
                         spikes->x = pos_x * 16;
                         spikes->y = (pos_y * 16) + 3;
                         spikes_left--;
@@ -347,7 +348,7 @@ void populate_cave_npcs() {
                     if (npc == 5 && cavemen_left > 0 && r == 1) {
                         Caveman *caveman = new Caveman();
                         caveman->init();
-                        global::sprites.push_back(caveman);
+                        global::creatures.push_back(caveman);
                         caveman->x = pos_x * 16;
                         caveman->y = pos_y * 16;
                         cavemen_left--;
@@ -357,7 +358,7 @@ void populate_cave_npcs() {
                     if (npc == 6 && damsels_left > 0) {
                         Damsel *damsel = new Damsel();
                         damsel->init();
-                        global::sprites.push_back(damsel);
+                        global::creatures.push_back(damsel);
                         damsel->x = pos_x * 16;
                         damsel->y = pos_y * 16;
                         damsels_left--;
@@ -365,17 +366,14 @@ void populate_cave_npcs() {
                     }
 
                     if (npc == 7) {
-                        Lamp *lamp = new Lamp();
-                        lamp->init();
-                        global::sprites.push_back(lamp);
-                        lamp->x = pos_x * 16;
-                        lamp->y = pos_y * 16;
+                        Lamp *lamp = new Lamp(pos_x * 16, pos_y * 16);
+                        global::decorations_to_add.push_back(lamp);
                     }
 
                     if (npc == 8) {
                         shopkeeper = new Shopkeeper();
                         shopkeeper->init();
-                        global::sprites.push_back(shopkeeper);
+                        global::creatures.push_back(shopkeeper);
                         shopkeeper->x = pos_x * 16;
                         shopkeeper->y = pos_y * 16;
                         shopkeeper->set_shop_bounds();
@@ -411,51 +409,23 @@ void populate_main_menu() {
     global::hud->bombs = 0;
     global::hud->ropes = 0;
 
-    auto *spelunkyTitle = new SpelunkyTitle();
-    spelunkyTitle->oamType = OamType::MAIN;
-    spelunkyTitle->init();
-    spelunkyTitle->x = 60;
-    spelunkyTitle->y = 175;
-    global::sprites.push_back(spelunkyTitle);
+    auto *spelunkyTitle = new SpelunkyTitle(60, 175);
+    global::decorations_to_add.push_back(spelunkyTitle);
 
-    auto *copyrights = new Copyrights();
-    copyrights->oamType = OamType::SUB;
-    copyrights->init();
-    copyrights->x = 60;
-    copyrights->y = 380;
-    global::sprites.push_back(copyrights);
+    auto *copyrights = new Copyrights(60, 380);
+    global::decorations_to_add.push_back(copyrights);
 
-    auto *start = new TitleMenuSign();
-    start->oamType = OamType::MAIN;
-    start->menuSignType = MenuSignType::START;
-    start->init();
-    start->x = 50;
-    start->y = 272;
-    global::sprites.push_back(start);
+    auto *start = new ArchSign(50, 272, ArchSign::Type::START);
+    global::decorations_to_add.push_back(start);
 
-    auto *scores = new TitleMenuSign();
-    scores->oamType = OamType::MAIN;
-    scores->menuSignType = MenuSignType::SCORES;
-    scores->init();
-    scores->x = 98;
-    scores->y = 272;
-    global::sprites.push_back(scores);
+    auto *scores = new ArchSign(98, 272, ArchSign::Type::SCORES);
+    global::decorations_to_add.push_back(scores);
 
-    auto *tutorial = new TitleMenuSign();
-    tutorial->oamType = OamType::MAIN;
-    tutorial->menuSignType = MenuSignType::TUTORIAL;
-    tutorial->init();
-    tutorial->x = 0;
-    tutorial->y = 272;
-    global::sprites.push_back(tutorial);
+    auto *tutorial = new RockSign(0, 272, RockSign::Type::TUTORIAL);
+    global::decorations_to_add.push_back(tutorial);
 
-    auto *quit = new TitleMenuSign();
-    quit->oamType = OamType::MAIN;
-    quit->menuSignType = MenuSignType::QUIT;
-    quit->init();
-    quit->x = 192;
-    quit->y = 143;
-    global::sprites.push_back(quit);
+    auto *quit = new RockSign(192, 143, RockSign::Type::QUIT);
+    global::decorations_to_add.push_back(quit);
 
     Rope *rope = new Rope();
     rope->init();
@@ -469,6 +439,6 @@ void populate_main_menu() {
     rope->activated = false;
     rope->thrown = true;
 
-    global::sprites.push_back(rope);
+    global::creatures.push_back(rope);
 
 }

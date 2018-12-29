@@ -7,14 +7,16 @@
 
 #include <mm_types.h>
 #include <nds/arm9/console.h>
+
 #include "input/input_handler.hpp"
 #include "hud/hud.hpp"
 #include "camera/camera.hpp"
-#include "sprites/main_dude/main_dude.hpp"
-#include "sprites/sprite_type.hpp"
+#include "creatures/main_dude/main_dude.hpp"
+#include "creatures/sprite_type.hpp"
 #include "tiles/level.hpp"
-#include "sprites/sprite_info.h"
-#include "sprites/main_dude/game_state.hpp"
+#include "creatures/sprite_info.h"
+#include "creatures/main_dude/game_state.hpp"
+#include "decorations/_base_decoration.h"
 
 #define GRAVITY_DELTA_SPEED 0.22 //FIXME isn't it mob-specific?
 #define DEFAULT_DMA_CHANNEL 3
@@ -35,8 +37,12 @@ namespace global {
     extern GameState *game_state;
     extern PrintConsole *print_console; //in-game console
 
-    extern std::vector<MovingObject *> sprites; //technically list of logical structures called MovingObject FIXME naming
-    extern std::vector<MovingObject *> sprites_to_add;
+    extern std::vector<BaseCreature *> creatures;
+    extern std::vector<BaseCreature *> creatures_to_add;
+
+    extern std::vector<BaseDecoration *> decorations;
+    extern std::vector<BaseDecoration *> decorations_to_add;
+
     extern std::vector<SpriteInfo *> sprite_infos; //technically list of wrappers around OAM entries FIXME naming
     extern std::vector<SpriteType> killed_npcs; //list of NPCs killed in current level //FIXME should be SpriteType
     extern std::vector<SpriteType> collected_loot; //list of loot collected in current level
@@ -44,7 +50,7 @@ namespace global {
     extern int bg_main_address; //technically, it's an id returned by oam init FIXME naming
     extern int bg_sub_address; //technically, it's an id returned by oam init FIXME naming
     extern double *timer; //global timer, updated in game loop FIXME can be int, /delta time/ is in milliseconds anyway
-    extern double clean_unused_oam_timer; //every arbitrary amount of time OAM is checked for unused sprites and cleaned off
+    extern double clean_unused_oam_timer; //every arbitrary amount of time OAM is checked for unused creatures and cleaned off
     extern u16 current_map[4096]; //cave background with tiles rendered on it
     extern u16 base_map[4096]; //cave background only
     extern u16 *temp_map; //cave background only
