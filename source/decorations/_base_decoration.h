@@ -64,7 +64,7 @@ public:
 
     int _x;
     int _y;
-    bool _ready_to_dispose{}; //TODO Check that flag when disposing memory.
+    bool _ready_to_dispose{};
     const u16 _sprite_width;
     const u16 _sprite_height;
     const u16 _sprite_size;
