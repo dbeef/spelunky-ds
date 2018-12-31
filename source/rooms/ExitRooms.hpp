@@ -5,7 +5,7 @@
 #ifndef SPELUNKYDS_EXITROOMS_H
 #define SPELUNKYDS_EXITROOMS_H
 
-static int exit_room[6][10][10] =
+static const int exit_room[6][10][10] =
         {
 
                 {
@@ -100,7 +100,7 @@ static int exit_room[6][10][10] =
 //9 arrow trap left oriented (12 tile type)
 //10 arrow trap right oriented (13 tile type)
 
-static int exit_room_npcs[6][10][10] =
+static const int exit_room_npcs[6][10][10] =
         {
 
                 {
@@ -183,7 +183,7 @@ static int exit_room_npcs[6][10][10] =
         };
 
 
-static int exit_room_loot[6][10][10] =
+static const int exit_room_loot[6][10][10] =
         {
 
                 {

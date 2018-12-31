@@ -6,7 +6,7 @@
 #define SPELUNKYDS_SHOPS_H
 
 //shop(s) for different level themes (cave/jungle/etc) and for different orientations (left/right)
-static int shops[2][10][10] = {
+static const int shops[2][10][10] = {
         //cave left
         {
                 {1, 1, 1, 1, 1, 1, 1, 1, 5, 1},
@@ -36,7 +36,7 @@ static int shops[2][10][10] = {
 };
 
 //shop(s) for different level themes (cave/jungle/etc) and for different orientations (left/right)
-static int shops_mugshots[2][10][10] = {
+static const int shops_mugshots[2][10][10] = {
         //cave left
         {
                 {1, 1, 1, 1, 1, 1, 1, 1, 5, 1},
@@ -67,7 +67,7 @@ static int shops_mugshots[2][10][10] = {
 
 //only shopkeeper[8] + lamp[7]
 //12 is random item
-static int shops_npcs[3][10][10] = {
+static const int shops_npcs[3][10][10] = {
         {
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -108,7 +108,7 @@ static int shops_npcs[3][10][10] = {
 };
 
 //items to be bought
-static int shops_loot[3][10][10] = {
+static const int shops_loot[3][10][10] = {
 
         {
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},

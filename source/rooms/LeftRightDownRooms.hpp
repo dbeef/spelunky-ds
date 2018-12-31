@@ -5,7 +5,7 @@
 #ifndef SPELUNKYDS_LEFTRIGHTDOWNROOMS_H
 #define SPELUNKYDS_LEFTRIGHTDOWNROOMS_H
 
-static int left_right_down_rooms[6][10][10] = {
+static const int left_right_down_rooms[6][10][10] = {
         {
                 {3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
                 {0, 9, 0, 5, 0, 0, 0, 0, 0, 0},
@@ -84,7 +84,7 @@ static int left_right_down_rooms[6][10][10] = {
 //9 arrow trap left oriented (12 tile type)
 //10 arrow trap right oriented (13 tile type)
 
-static int left_right_down_npcs[6][10][10] = {
+static const int left_right_down_npcs[6][10][10] = {
         {
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0,},
                 {0, 0, 0, 0, 0, 2, 0, 2, 3, 0,},
@@ -157,7 +157,7 @@ static int left_right_down_npcs[6][10][10] = {
 };
 
 //1 if loot can be placed
-static int left_right_down_loot[6][10][10] = {
+static const int left_right_down_loot[6][10][10] = {
         {
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0,},
                 {1, 0, 1, 0, 0, 0, 0, 0, 0, 0,},

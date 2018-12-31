@@ -6,7 +6,7 @@
 #define SPELUNKYDS_ENTRANCEROOMS_H
 
 
-static int entrance_room[6][10][10] = {
+static const int entrance_room[6][10][10] = {
         {
                 {3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
                 {0, 0, 0, 0, 0, 0, 0, 9, 0, 0},
@@ -95,7 +95,7 @@ static int entrance_room[6][10][10] = {
         },*/
 
 //1 if loot can be placed
-static int entrance_room_loot[6][10][10] = {
+static const int entrance_room_loot[6][10][10] = {
         {
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                 {0, 0, 1, 1, 1, 1, 1, 0, 0, 0},

@@ -321,12 +321,13 @@ void Hud::increment_offset_on_grabbed_item() {
 }
 
 void Hud::debug_oam() {
-    printf("\n \n \n  IPM: %d\n IPS: %d\n ITM: %d\n ITS: %d\n N: %d",
-           global::main_oam_manager->current_oam_id_palette,
-           global::sub_oam_manager->current_oam_id_palette,
-           global::main_oam_manager->current_oam_id_tiles,
-           global::sub_oam_manager->current_oam_id_tiles,
-           global::sub_oam_manager->nextAvailableTileIdx);
+    printf("\n \n \n  IPM: %lu\n IPS: %lu\n ITM: %lu\n ITS: %lu\n NS: %d NM: %d",
+           static_cast<unsigned long>(global::main_oam_manager->current_oam_id_palette),
+           static_cast<unsigned long>(global::sub_oam_manager->current_oam_id_palette),
+           static_cast<unsigned long>(global::main_oam_manager->current_oam_id_tiles),
+           static_cast<unsigned long>(global::sub_oam_manager->current_oam_id_tiles),
+           global::sub_oam_manager->nextAvailableTileIdx,
+           global::main_oam_manager->nextAvailableTileIdx);
 }
 
 void Hud::disable_all_prompts() {
