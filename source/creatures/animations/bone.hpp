@@ -9,61 +9,66 @@
 #include "../sprite_state.hpp"
 #include "../_base_creature.h"
 
-#define BONE_SPRITE_HEIGHT 16
-#define BONE_SPRITE_WIDTH 16
-#define BONE_SPRITE_SIZE BONE_SPRITE_WIDTH * BONE_SPRITE_HEIGHT
-
-#define BONE_PHYSICAL_HEIGHT 8
-#define BONE_PHYSICAL_WIDTH 8
-
-#define MAX_X_SPEED_BONE 4
-#define MAX_Y_SPEED_BONE 4
-
 class Bone : public BaseCreature {
 
 public:
 
-    void introduce_yourself() override { printf("BONE\n"); };
+    static constexpr u8 bone_sprite_width = 16;
+    static constexpr u8 bone_sprite_height = 16;
+    static constexpr u16 bone_physical_width = 8;
+    static constexpr u16 bone_physical_height = 8;
+    static constexpr SpritesheetType bone_spritesheet_type = SpritesheetType::SKELETON_SPIDER;
 
-    Bone();
+    Bone(int x, int y) : BaseCreature(
+            x,
+            y,
+            bone_sprite_width,
+            bone_sprite_height,
+            bone_spritesheet_type,
+            bone_physical_width,
+            bone_physical_height
+    ) {
+        init_sprites();
+    }
 
-    void updateOther() override {};
+    // Base creature overrides
 
-    void init() override;
+    void update_creature_specific() override;
 
-    void draw() override;
-
-    void initSprite() override;
-
-    void deleteSprite() override;
+    void introduce_yourself() override { printf("WHIP\n"); };
 
     void apply_dmg(int dmg_to_apply) override {};
 
-    void updateTimers() override {};
-
-    void updateSpeed() override;
-
-    void updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) override;
-
-    void updateCollisionsOtherMoving() override {};
-
     void onCollisionWithMainCharacter() override {};
+
+    // IRenderable overrides
+
+    void init_sprites() override;
+
+    void delete_sprites() override;
+
+    void update_sprites_position() override;
+
+    // ICollidable overrides
+
+    bool can_update_collidable() override { return true; }
+
+    bool can_apply_friction() override { return true; }
+
+    bool can_apply_gravity() override { return true; }
+
+    // Other, creature specific
+
+    void match_animation();
 
     bool collided{};
     double animFrameTimer{};
     int animFrame{};
     double pos_inc_timer{};
-
     SpriteInfo *mainSpriteInfo{};
     SpriteInfo *subSpriteInfo{};
-
     u8 *frameGfx{};
-
-    void set_position();
-
-    void match_animation();
 };
-
 
 
 #endif //SPELUNKYDS_BONE_H

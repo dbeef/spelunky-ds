@@ -6,7 +6,7 @@
 #define SPELUNKYDS_COLLECTIBLES_UTILS_H
 
 #include "../_base_creature.h"
-#include "../shopping_object.h"
+#include "../../interfaces/shopping_object.h"
 
 namespace collectibles_utils {
     void spawn_random_item(int x, int y);

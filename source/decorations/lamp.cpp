@@ -12,7 +12,7 @@ Lamp::Lamp(int x, int y) :
     init_sprites();
 }
 
-void Lamp::update() {
+void Lamp::update_decoration_specific() {
 
     _anim_frame_timer += *global::timer;
 

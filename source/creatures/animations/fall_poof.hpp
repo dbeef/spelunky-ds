@@ -23,45 +23,59 @@ class FallPoof : public BaseCreature {
 
 public:
 
-    void introduce_yourself() override { printf("FALL_POOF\n"); };
+    static constexpr u8 fall_poof_sprite_width = 16;
+    static constexpr u8 fall_poof_sprite_height = 16;
+    static constexpr u16 fall_poof_physical_width = 8;
+    static constexpr u16 fall_poof_physical_height = 8;
+    static constexpr SpritesheetType fall_poof_spritesheet_type = SpritesheetType::BLOOD_ROCK_ROPE_POOF;
 
-    FallPoof();
+    FallPoof(int x, int y) : BaseCreature(
+            x,
+            y,
+            fall_poof_sprite_width,
+            fall_poof_sprite_height,
+            fall_poof_spritesheet_type,
+            fall_poof_physical_width,
+            fall_poof_physical_height
+    ) {
+        init_sprites();
+    }
 
-    void updateOther() override {};
+    // Base creature overrides
 
-    void init() override;
+    void update_creature_specific() override;
 
-    void draw() override;
-
-    void initSprite() override;
-
-    void deleteSprite() override;
+    void introduce_yourself() override { printf("WHIP\n"); };
 
     void apply_dmg(int dmg_to_apply) override {};
 
-    void updateTimers() override {};
-
-    void updateSpeed() override;
-
-    void updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) override;
-
-    void updateCollisionsOtherMoving() override {};
-
     void onCollisionWithMainCharacter() override {};
 
+    // IRenderable overrides
+
+    void init_sprites() override;
+
+    void delete_sprites() override;
+
+    void update_sprites_position() override;
+
+    // ICollidable overrides
+
+    bool can_update_collidable() override { return false; }
+
+    bool can_apply_friction() override { return false; }
+
+    bool can_apply_gravity() override { return false; }
+
+    // Other, creature specific
+    
     double animFrameTimer{};
     int animFrame{};
     double pos_inc_timer{};
-
     SpriteInfo *mainSpriteInfo{};
     SpriteInfo *subSpriteInfo{};
-
     u8 *frameGfx{};
-
     bool gravity{};
-
-    void set_position();
-
     void match_animation();
 };
 

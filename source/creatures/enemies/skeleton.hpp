@@ -1,19 +1,8 @@
 //
 // Created by xdbeef on 22.07.18.
-// http://spelunky.wikia.com/wiki/Skeleton
 //
 #ifndef SPELUNKYDS_SKELETON_H
 #define SPELUNKYDS_SKELETON_H
-
-#define SKELETON_PHYSICAL_HEIGHT 16
-#define SKELETON_PHYSICAL_WIDTH 16
-
-#define SKELETON_SPRITE_HEIGHT 16
-#define SKELETON_SPRITE_WIDTH 16
-#define SKELETON_SPRITE_SIZE SKELETON_SPRITE_HEIGHT * SKELETON_SPRITE_WIDTH
-
-#define MAX_X_SPEED_SKELETON 4
-#define MAX_Y_SPEED_SKELETON 4
 
 #include "../_base_creature.h"
 #include "../sprite_state.hpp"
@@ -24,49 +13,54 @@ class Skeleton : public BaseCreature {
 
 public:
 
-    void introduce_yourself() override { printf("SKELETON\n"); };
+    static constexpr u8 skeleton_sprite_width = 16;
+    static constexpr u8 skeleton_sprite_height = 16;
+    static constexpr u16 skeleton_physical_width = 16;
+    static constexpr u16 skeleton_physical_height = 16;
+    static constexpr SpritesheetType skeleton_spritesheet_type = SpritesheetType::SKELETON_SPIDER;
 
-    Skeleton();
-    Skeleton(int x, int y);
+    Skeleton(int x, int y) : BaseCreature(
+            x,
+            y,
+            skeleton_sprite_width,
+            skeleton_sprite_height,
+            skeleton_spritesheet_type,
+            skeleton_physical_width,
+            skeleton_physical_height
+    ) {
+        hitpoints = 1;
+        sprite_type = SpriteType::S_SKELETON;
+        sprite_state = SpriteState::W_LEFT;
+        init_sprites();
+    }
 
-    void updateOther() override {};
+    // Base creature overrides
 
-    void init() override;
+    void update_creature_specific() override;
 
-    void draw() override;
+    void introduce_yourself() override { printf("WHIP\n"); };
 
     void apply_dmg(int dmg_to_apply) override;
 
-    void updateTimers() override {};
-
-    void updateSpeed() override;
-
-    void updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) override;
-
-    void updateCollisionsOtherMoving() override {};
-
     void onCollisionWithMainCharacter() override {};
 
-    void initSprite() override;
+    // IRenderable overrides
 
-    void deleteSprite() override;
+    void init_sprites() override;
 
-    double pos_inc_timer{};
+    void delete_sprites() override;
 
-    SpriteInfo *mainSpriteInfo{};
-    SpriteInfo *subSpriteInfo{};
-    u8 *frameGfx{};
+    void update_sprites_position() override;
 
-    double change_turn_timer{};
-    double summoning_delay_timer{};
-    int anim_frame_counter{};
-    double anim_frame_timer{};
-    bool set_up{};
-    bool summoned{};
-    bool can_be_summoned{};
-    SpriteState main_dude_orientation_at_summoning_moment{};
+    // ICollidable overrides
 
-    void set_position();
+    bool can_update_collidable() override { return !_ready_to_dispose; }
+
+    bool can_apply_friction() override { return true; }
+
+    bool can_apply_gravity() override { return true; }
+
+    // Other, creature specific
 
     void set_sprite_walking();
 
@@ -79,6 +73,21 @@ public:
     void match_animation();
 
     void spawn_remnants();
+    
+    bool death_speed{};
+    double pos_inc_timer{};
+    SpriteInfo *mainSpriteInfo{};
+    SpriteInfo *subSpriteInfo{};
+    u8 *frameGfx{};
+    double change_turn_timer{};
+    double summoning_delay_timer{};
+    int anim_frame_counter{};
+    double anim_frame_timer{};
+    bool set_up{};
+    bool summoned{};
+    bool can_be_summoned{};
+    SpriteState main_dude_orientation_at_summoning_moment{};
+    
 };
 
 

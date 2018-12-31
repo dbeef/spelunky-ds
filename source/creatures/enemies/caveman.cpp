@@ -21,9 +21,9 @@
 #define CAVEMAN_ANIM_FRAME_DELTA 80
 #define CAVEMAN_INVERT_SPEED_DELTA 400
 
-void Caveman::draw() {
+void Caveman::update_creature_specific() {
 
-    if (ready_to_dispose)
+    if (_ready_to_dispose)
         return;
 
     invert_speed_timer += *global::timer;
@@ -47,11 +47,7 @@ void Caveman::draw() {
         kill_mobs_if_thrown(1);
     }
 
-    if (bottomCollision && (stunned || killed)) {
-        apply_friction(0.5f);
-    }
-
-    set_position();
+    update_sprites_position();
 
     if (!stunned && !killed) {
         if (hold_by_main_dude) {
@@ -94,17 +90,53 @@ void Caveman::draw() {
         if (stunned_timer > CAVEMAN_STUN_TIME) {
             stunned = false;
             stunned_timer = 0;
+            _bouncing_factor_x = 0;
+            _bouncing_factor_y = 0;
         }
     }
 
-}
+    if(_map_collisions_checked){
+
+        if (!_bottom_collision) {
+
+            if ((_neighboring_tiles[TileOrientation::RIGHT_MIDDLE] == nullptr || !_neighboring_tiles[TileOrientation::RIGHT_MIDDLE]->collidable) &&
+                (_neighboring_tiles[TileOrientation::RIGHT_UP] != nullptr && _neighboring_tiles[TileOrientation::RIGHT_DOWN] != nullptr)) {
+                //if there's no collidable tile on right-mid, but there are on right-up and right-down,
+                //add extra x-pos to ease going through a hole
+                if (_x_speed > 0)
+                    _x += 2;
+            }
+
+            if ((_neighboring_tiles[TileOrientation::LEFT_MIDDLE] == nullptr || !_neighboring_tiles[TileOrientation::LEFT_MIDDLE]->collidable) &&
+                (_neighboring_tiles[TileOrientation::LEFT_UP] != nullptr && _neighboring_tiles[TileOrientation::LEFT_DOWN] != nullptr)) {
+                //same but for left side
+                if (_x_speed < 0)
+                    _x -= 2;
+            }
+
+        }
+
+        bool bounce = (stunned || killed);
+        
+        standingOnLeftEdge = Collisions::isStandingOnLeftEdge(_neighboring_tiles, _x, _physical_width, _current_x_in_tiles);
+        standingOnRightEdge = Collisions::isStandingOnRightEdge(_neighboring_tiles, _x, _physical_width, _current_x_in_tiles);
+
+        if (bounce)
+            return;
+
+        if (_bottom_collision && _neighboring_tiles[TileOrientation::RIGHT_MIDDLE] != nullptr &&
+            _neighboring_tiles[TileOrientation::RIGHT_MIDDLE]->collidable &&
+            _neighboring_tiles[TileOrientation::LEFT_MIDDLE] != nullptr && _neighboring_tiles[TileOrientation::LEFT_MIDDLE]->collidable) {
+            //high jump if damsel's surrounded by tiles
+            _y_speed = -3.6 - ((rand() % 10) / 5);
+            landlocked = true;
+        } else
+            landlocked = false;
 
 
-void Caveman::init() {
-    activated = true;
-    initSprite();
-    spritesheet_type = SpritesheetType::CAVEMAN_DAMSEL;
-    randomizeMovement();
+        _map_collisions_checked = false;
+    }
+
 }
 
 void Caveman::randomizeMovement() {
@@ -118,81 +150,6 @@ void Caveman::randomizeMovement() {
     waitTimer = rand() % 1500;
 }
 
-void Caveman::updateSpeed() {
-
-    limit_speed(MAX_X_SPEED_CAVEMAN, MAX_Y_SPEED_CAVEMAN);
-
-    pos_inc_timer += *global::timer;
-
-    if (pos_inc_timer > CAVEMAN_POS_INC_DELTA) {
-        update_position();
-        apply_gravity(GRAVITY_DELTA_SPEED * 1.5);
-        pos_inc_timer = 0;
-    }
-
-}
-
-void Caveman::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
-
-    MapTile *t[9] = {};
-    Collisions::getNeighboringTiles(global::current_level->map_tiles, x_current_pos_in_tiles,
-                                    y_current_pos_in_tiles, t);
-
-    bool bounce = (stunned || killed);
-
-
-    standingOnLeftEdge = Collisions::isStandingOnLeftEdge(t, x, physical_width, x_current_pos_in_tiles);
-    standingOnRightEdge = Collisions::isStandingOnRightEdge(t, x, physical_width, x_current_pos_in_tiles);
-
-    if (bounce) {
-        //if bounce then reversing sequence of collision detection calls
-        upperCollision = Collisions::checkUpperCollision(t, &x, &y, &ySpeed, physical_width, false, 0);
-        bottomCollision = Collisions::checkBottomCollision(t, &x, &y, &ySpeed, physical_width, physical_height,
-                                                           bounce, BOUNCING_FACTOR_Y);
-    } else {
-        bottomCollision = Collisions::checkBottomCollision(t, &x, &y, &ySpeed, physical_width, physical_height,
-                                                           bounce, BOUNCING_FACTOR_Y);
-        leftCollision = Collisions::checkLeftCollision(t, &x, &y, &xSpeed, physical_width, physical_height, bounce,
-                                                       BOUNCING_FACTOR_X);
-    }
-
-    rightCollision = Collisions::checkRightCollision(t, &x, &y, &xSpeed, physical_width, physical_height,
-                                                     bounce, BOUNCING_FACTOR_X);
-    upperCollision = Collisions::checkUpperCollision(t, &x, &y, &ySpeed, physical_width, false, 0);
-
-    if (bounce)
-        return;
-
-    if (bottomCollision && t[TileOrientation::RIGHT_MIDDLE] != nullptr &&
-        t[TileOrientation::RIGHT_MIDDLE]->collidable &&
-        t[TileOrientation::LEFT_MIDDLE] != nullptr && t[TileOrientation::LEFT_MIDDLE]->collidable) {
-        //high jump if damsel's surrounded by tiles
-        ySpeed = -3.6 - ((rand() % 10) / 5);
-        landlocked = true;
-    } else
-        landlocked = false;
-
-    if (!bottomCollision) {
-
-        if ((t[TileOrientation::RIGHT_MIDDLE] == nullptr || !t[TileOrientation::RIGHT_MIDDLE]->collidable) &&
-            (t[TileOrientation::RIGHT_UP] != nullptr && t[TileOrientation::RIGHT_DOWN] != nullptr)) {
-            //if there's no collidable tile on right-mid, but there are on right-up and right-down,
-            //add extra x-pos to ease going through a hole
-            if (xSpeed > 0)
-                x += 2;
-        }
-
-        if ((t[TileOrientation::LEFT_MIDDLE] == nullptr || !t[TileOrientation::LEFT_MIDDLE]->collidable) &&
-            (t[TileOrientation::LEFT_UP] != nullptr && t[TileOrientation::LEFT_DOWN] != nullptr)) {
-            //same but for left side
-            if (xSpeed < 0)
-                x -= 2;
-        }
-
-    }
-
-}
-
 void Caveman::apply_dmg(int dmg_to_apply) {
 
     if (dmg_to_apply == 1 && (stunned))
@@ -202,7 +159,7 @@ void Caveman::apply_dmg(int dmg_to_apply) {
     hitpoints -= dmg_to_apply;
     if (blood_spawn_timer > 1000) {
         blood_spawn_timer = 0;
-        ySpeed = -2.5; //jump a little bit on receiving dmg, even if dead
+        _y_speed = -2.5; //jump a little bit on receiving dmg, even if dead
         if (!killed)
             spawn_blood();
     }
@@ -214,46 +171,40 @@ void Caveman::apply_dmg(int dmg_to_apply) {
         killed = true;
         stunned = false;
         global::killed_npcs.push_back(SpriteType::S_CAVEMAN);
+        _bouncing_factor_x = 0;
+        _bouncing_factor_y = 0;
     } else {
+        _bouncing_factor_x = ICollidable::default_bouncing_factor_x;
+        _bouncing_factor_y = ICollidable::default_bouncing_factor_y;
         stunned = true;
     }
 
 }
 
-void Caveman::initSprite() {
+void Caveman::init_sprites() {
 
-    delete subSpriteInfo;
-    delete mainSpriteInfo;
+    delete_sprites();
 
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_caveman_damselPal, gfx_caveman_damselPalLen,
-                                                        nullptr, CAVEMAN_SPRITE_SIZE, 16, CAVEMAN_DAMSEL,
+                                                        nullptr, _sprite_size, 16, CAVEMAN_DAMSEL,
                                                         true, false, LAYER_LEVEL::MIDDLE_BOT);
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_caveman_damselPal, gfx_caveman_damselPalLen,
-                                                          nullptr, CAVEMAN_SPRITE_SIZE, 16, CAVEMAN_DAMSEL,
+                                                          nullptr, _sprite_size, 16, CAVEMAN_DAMSEL,
                                                           true, false, LAYER_LEVEL::MIDDLE_BOT);
     match_animation();
-    set_position();
+    update_sprites_position();
     sprite_utils::set_horizontal_flip(sprite_state == SpriteState::W_RIGHT, mainSpriteInfo, subSpriteInfo);
     sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);
     sprite_utils::set_visibility(true, mainSpriteInfo, subSpriteInfo);
 
 }
 
-void Caveman::set_position() {
+void Caveman::update_sprites_position() {
     int main_x, main_y, sub_x, sub_y;
     get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
     sprite_utils::set_entry_xy(mainSpriteInfo, main_x, main_y);
     sprite_utils::set_entry_xy(subSpriteInfo, sub_x, sub_y);
 }
-
-Caveman::Caveman() {
-    physical_height = CAVEMAN_PHYSICAL_HEIGHT;
-    physical_width = CAVEMAN_PHYSICAL_WIDTH;
-    sprite_height = CAVEMAN_SPRITE_HEIGHT;
-    sprite_width = CAVEMAN_SPRITE_WIDTH;
-    hitpoints = CAVEMAN_HITPOINTS;
-}
-
 
 void Caveman::make_some_movement() {
 
@@ -269,20 +220,20 @@ void Caveman::make_some_movement() {
 
         if (triggered) {
             if (sprite_state == SpriteState::W_RIGHT)
-                xSpeed = CAVEMAN_TRIGGERED_SPEED;
+                _x_speed = CAVEMAN_TRIGGERED_SPEED;
             else
-                xSpeed = -CAVEMAN_TRIGGERED_SPEED;
+                _x_speed = -CAVEMAN_TRIGGERED_SPEED;
         } else {
             if (sprite_state == SpriteState::W_RIGHT)
-                xSpeed = CAVEMAN_NORMAL_SPEED;
+                _x_speed = CAVEMAN_NORMAL_SPEED;
             else
-                xSpeed = -CAVEMAN_NORMAL_SPEED;
+                _x_speed = -CAVEMAN_NORMAL_SPEED;
         }
 
 
         if (goTimer <= 0 && !triggered) {
             randomizeMovement();
-            xSpeed = 0;
+            _x_speed = 0;
         }
 
         if (invert_speed_timer < CAVEMAN_INVERT_SPEED_DELTA)
@@ -294,20 +245,20 @@ void Caveman::make_some_movement() {
             if (rand() % 2 == 0) {
                 goTimer = 0;
             } else
-                xSpeed *= -1;
+                _x_speed *= -1;
 
         }
 
-        if ((leftCollision || rightCollision) && !landlocked) {
+        if ((_left_collision || _right_collision) && !landlocked) {
 
             if (sprite_state == SpriteState::W_LEFT)
                 sprite_state = SpriteState::W_RIGHT;
             else
                 sprite_state = SpriteState::W_LEFT;
 
-            xSpeed *= -1;
-            rightCollision = false;
-            leftCollision = false;
+            _x_speed *= -1;
+            _right_collision = false;
+            _left_collision = false;
         }
 
     }
@@ -316,15 +267,15 @@ void Caveman::make_some_movement() {
 
 void Caveman::check_if_can_be_triggered() {
 
-    int diff = x - global::main_dude->x;
+    int diff = _x - global::main_dude->_x;
     int diff_abs = abs(diff);
 
-    if (!triggered && diff_abs < 9 * TILE_W && abs(y - global::main_dude->y) < 0.8 * TILE_H) {
+    if (!triggered && diff_abs < 9 * TILE_W && abs(_y - global::main_dude->_y) < 0.8 * TILE_H) {
 
-        int xx = floor_div(this->x + 0.5 * physical_width, TILE_W);
-        int yy = floor_div(this->y + 0.5 * physical_height, TILE_H);
+        int xx = floor_div(this->_x + 0.5 * _physical_width, TILE_W);
+        int yy = floor_div(this->_y + 0.5 * _physical_height, TILE_H);
 
-        int dude_xx = floor_div(global::main_dude->x + 0.5 * MAIN_DUDE_PHYSICAL_WIDTH, TILE_W);
+        int dude_xx = floor_div(global::main_dude->_x + 0.5 * MainDude::main_dude_physical_width, TILE_W);
 
         triggered = true;
 
@@ -355,24 +306,24 @@ void Caveman::apply_stunned_carried_sprites() {
 
     if (animFrame >= 4)
         animFrame = 0;
-    frameGfx = sprite_utils::get_frame((u8 *) gfx_caveman_damselTiles, CAVEMAN_SPRITE_SIZE, 6 + animFrame);
+    frameGfx = sprite_utils::get_frame((u8 *) gfx_caveman_damselTiles, _sprite_size, 6 + animFrame);
 }
 
 //!> after calling this function, call sprite_utils::update_frame to update OAM with current frameGfx
 void Caveman::apply_dead_carried_sprites() {
     animFrame = 0;
-    frameGfx = sprite_utils::get_frame((u8 *) gfx_caveman_damselTiles, CAVEMAN_SPRITE_SIZE, 0);
+    frameGfx = sprite_utils::get_frame((u8 *) gfx_caveman_damselTiles, _sprite_size, 0);
 }
 
 //!> after calling this function, call sprite_utils::update_frame to update OAM with current frameGfx
 void Caveman::apply_dead_sprites() {
     animFrame = 0;
-    if (ySpeed == 0)
-        frameGfx = sprite_utils::get_frame((u8 *) gfx_caveman_damselTiles, CAVEMAN_SPRITE_SIZE, 1);
-    else if (ySpeed > 0)
-        frameGfx = sprite_utils::get_frame((u8 *) gfx_caveman_damselTiles, CAVEMAN_SPRITE_SIZE, 4);
+    if (_x_speed == 0)
+        frameGfx = sprite_utils::get_frame((u8 *) gfx_caveman_damselTiles, _sprite_size, 1);
+    else if (_y_speed > 0)
+        frameGfx = sprite_utils::get_frame((u8 *) gfx_caveman_damselTiles, _sprite_size, 4);
     else
-        frameGfx = sprite_utils::get_frame((u8 *) gfx_caveman_damselTiles, CAVEMAN_SPRITE_SIZE, 2);
+        frameGfx = sprite_utils::get_frame((u8 *) gfx_caveman_damselTiles, _sprite_size, 2);
 
 }
 
@@ -382,10 +333,10 @@ void Caveman::apply_walking_sprites() {
     if (animFrame >= 4)
         animFrame = 0;
 
-    if (xSpeed == 0 && ySpeed == 0)
-        frameGfx = sprite_utils::get_frame((u8 *) gfx_caveman_damselTiles, CAVEMAN_SPRITE_SIZE, 10);
+    if (_x_speed == 0 && _y_speed == 0)
+        frameGfx = sprite_utils::get_frame((u8 *) gfx_caveman_damselTiles, _sprite_size, 10);
     else
-        frameGfx = sprite_utils::get_frame((u8 *) gfx_caveman_damselTiles, CAVEMAN_SPRITE_SIZE, 11 + animFrame);
+        frameGfx = sprite_utils::get_frame((u8 *) gfx_caveman_damselTiles, _sprite_size, 11 + animFrame);
 
 }
 
@@ -394,18 +345,12 @@ void Caveman::apply_stunned_sprites() {
     if (animFrame >= 5)
         animFrame = 0;
 
-    if (ySpeed == 0)
-        frameGfx = sprite_utils::get_frame((u8 *) gfx_caveman_damselTiles, CAVEMAN_SPRITE_SIZE, 15 + animFrame);
-    else if (ySpeed > 0)
-        frameGfx = sprite_utils::get_frame((u8 *) gfx_caveman_damselTiles, CAVEMAN_SPRITE_SIZE, 4);
+    if (_y_speed == 0)
+        frameGfx = sprite_utils::get_frame((u8 *) gfx_caveman_damselTiles, _sprite_size, 15 + animFrame);
+    else if (_x_speed > 0)
+        frameGfx = sprite_utils::get_frame((u8 *) gfx_caveman_damselTiles, _sprite_size, 4);
     else
-        frameGfx = sprite_utils::get_frame((u8 *) gfx_caveman_damselTiles, CAVEMAN_SPRITE_SIZE, 2);
-}
-
-
-Caveman::Caveman(int x, int y) : Caveman() {
-    this->x = x;
-    this->y = y;
+        frameGfx = sprite_utils::get_frame((u8 *) gfx_caveman_damselTiles, _sprite_size, 2);
 }
 
 void Caveman::match_animation() {
@@ -421,10 +366,10 @@ void Caveman::match_animation() {
     else
         apply_walking_sprites();
 
-    sprite_utils::update_frame(frameGfx, CAVEMAN_SPRITE_SIZE, mainSpriteInfo, subSpriteInfo);
+    sprite_utils::update_frame(frameGfx, _sprite_size, mainSpriteInfo, subSpriteInfo);
 }
 
-void Caveman::deleteSprite() {
+void Caveman::delete_sprites() {
     delete mainSpriteInfo;
     delete subSpriteInfo;
     mainSpriteInfo = nullptr;

@@ -32,6 +32,7 @@ enum SpritesheetType{
     GOT_COLLECTIBLE,            //21
     CAVEMAN_DAMSEL,             //22
     ARROW,             //23
+    NONE
 };
 
 #endif //SPELUNKYDS_SPRITETYPES_H

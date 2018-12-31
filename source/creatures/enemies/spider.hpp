@@ -6,16 +6,6 @@
 #ifndef SPELUNKYDS_SPIDER_H
 #define SPELUNKYDS_SPIDER_H
 
-#define MAX_X_SPEED_SPIDER 4
-#define MAX_Y_SPEED_SPIDER 4
-
-#define SPIDER_PHYSICAL_HEIGHT 8
-#define SPIDER_PHYSICAL_WIDTH 16
-
-#define SPIDER_SPRITE_HEIGHT 16
-#define SPIDER_SPRITE_WIDTH 16
-#define SPIDER_SPRITE_SIZE SPIDER_SPRITE_WIDTH * SPIDER_SPRITE_HEIGHT
-
 #include "../_base_creature.h"
 #include "../sprite_state.hpp"
 #include "../sprite_info.h"
@@ -25,34 +15,68 @@ class Spider : public BaseCreature {
 
 public:
 
-    void introduce_yourself() override { printf("SPIDER\n"); };
+    static constexpr u8 spider_sprite_width = 16;
+    static constexpr u8 spider_sprite_height = 16;
+    static constexpr u16 spider_physical_width = 16;
+    static constexpr u16 spider_physical_height = 8;
+    static constexpr SpritesheetType spider_spritesheet_type = SpritesheetType::SKELETON_SPIDER;
+    
+    Spider(int x, int y) : BaseCreature(
+            x,
+            y,
+            spider_sprite_width,
+            spider_sprite_height,
+            spider_spritesheet_type,
+            spider_physical_width,
+            spider_physical_height
+    ) {
+        sprite_type = SpriteType::S_SPIDER;
+        hitpoints = 1;
+        hanging = true;
+        init_sprites();
+        _pos_update_delta = 30;
+    }
 
-    Spider();
+    // Base creature overrides
 
-    Spider(int x, int y);
+    void update_creature_specific() override;
 
-    void initSprite() override;
-
-    void deleteSprite() override;
-
-    void updateOther() override {};
-
-    void init() override;
-
-    void draw() override;
+    void introduce_yourself() override { printf("WHIP\n"); };
 
     void apply_dmg(int dmg_to_apply) override;
 
-    void updateTimers() override {};
-
-    void updateSpeed() override;
-
-    void updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) override;
-
-    void updateCollisionsOtherMoving() override {};
-
     void onCollisionWithMainCharacter() override {};
 
+    // IRenderable overrides
+
+    void init_sprites() override;
+
+    void delete_sprites() override;
+
+    void update_sprites_position() override;
+
+    // ICollidable overrides
+
+    bool can_update_collidable() override { return !hold_by_main_dude; }
+
+    bool can_apply_friction() override { return true; }
+
+    bool can_apply_gravity() override { return hunting; }
+
+    // Other, creature specific
+
+    void set_sprite_hanging();
+
+    void set_sprite_flipping();
+
+    void set_sprite_jumping();
+
+    void set_sprite_falling();
+
+    void jump_to_main_dude();
+
+    void match_animation();
+    
     double pos_inc_timer{};
 
     SpriteInfo *mainSpriteInfo {};
@@ -73,19 +97,6 @@ public:
     bool hunting{};
     bool jumping{};
 
-    void set_sprite_hanging();
-
-    void set_sprite_flipping();
-
-    void set_sprite_jumping();
-
-    void set_sprite_falling();
-
-    void set_position();
-
-    void jump_to_main_dude();
-
-    void match_animation();
 };
 
 

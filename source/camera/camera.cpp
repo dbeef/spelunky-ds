@@ -18,16 +18,16 @@ constexpr u16 BOUNDARY_Y = 16;
 
 //Instant camera focus with main dude in center.
 void Camera::instant_focus() {
-    x = global::main_dude->x - (SCREEN_WIDTH / 2);
-    y = global::main_dude->y - (SCREEN_HEIGHT / 2);
+    x = global::main_dude->_x - (SCREEN_WIDTH / 2);
+    y = global::main_dude->_y - (SCREEN_HEIGHT / 2);
     apply_map_boundaries();
 }
 
 //Camera focus with main dude in center, applied incrementally every function call
 void Camera::incremental_focus(int camera_speed) {
 
-    int center_x = global::main_dude->x - (SCREEN_WIDTH / 2);
-    int center_y = global::main_dude->y - (SCREEN_HEIGHT / 2);
+    int center_x = global::main_dude->_x - (SCREEN_WIDTH / 2);
+    int center_y = global::main_dude->_y - (SCREEN_HEIGHT / 2);
 
     if (abs(center_x - this->x) > BOUNDARY_X) {
         if (center_x > this->x)

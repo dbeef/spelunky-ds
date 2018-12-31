@@ -10,10 +10,9 @@
 #include "flame.hpp"
 #include "../sprite_utils.hpp"
 
-void Flame::draw() {
+void Flame::update_creature_specific() {
 
     for (unsigned long a = 0; a < flame_trail.size(); a++) {
-        flame_trail.at(a)->draw();
         flame_trail.at(a)->update();
         if (flame_trail.at(a)->finished) {
             //FIXME Possible leaks in global::sprite_infos? Same with blood trails.
@@ -22,17 +21,17 @@ void Flame::draw() {
         }
     }
 
-    if (ready_to_dispose)
+    if (_ready_to_dispose)
         return;
 
-    set_position();
+    update_sprites_position();
     sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);
     sprite_utils::set_horizontal_flip(false, mainSpriteInfo, subSpriteInfo);
     sprite_utils::set_visibility(true, mainSpriteInfo, subSpriteInfo);
 
     time_since_last_spawn += *global::timer;
 
-    if (bottomCollision)
+    if (_bottom_collision)
         living_timer += 4 * *global::timer;
     else
         living_timer += *global::timer;
@@ -51,7 +50,7 @@ void Flame::draw() {
         }
 
         if (chain_finished) {
-            ready_to_dispose = true;
+            _ready_to_dispose = true;
             sprite_utils::set_visibility(false, mainSpriteInfo, subSpriteInfo);
         }
 
@@ -74,78 +73,36 @@ void Flame::draw() {
     }
 }
 
+void Flame::init_sprites() {
 
-void Flame::init() {
-    initSprite();
-}
-
-void Flame::updateSpeed() {
-
-    pos_inc_timer += *global::timer;
-    limit_speed(MAX_X_SPEED_FLAME, MAX_Y_SPEED_FLAME);
-
-    bool change_pos = (pos_inc_timer > change_pos_delta_offset) && !finished;
-
-    if (change_pos) {
-        apply_gravity(GRAVITY_DELTA_SPEED * 0.15f);
-        pos_inc_timer = 0;
-        update_position();
-    }
-
-}
-
-void Flame::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
-    MapTile *t[9];
-    Collisions::getNeighboringTiles(global::current_level->map_tiles,
-                                    x_current_pos_in_tiles, y_current_pos_in_tiles, t);
-    upperCollision = Collisions::checkUpperCollision(t, &x, &y, &ySpeed, physical_width, true, 0.55);
-    bottomCollision = Collisions::checkBottomCollision(t, &x, &y, &ySpeed, physical_width, physical_height, true, 0.55);
-    leftCollision = Collisions::checkLeftCollision(t, &x, &y, &xSpeed, physical_width, physical_height, true, 0.55);
-    rightCollision = Collisions::checkRightCollision(t, &x, &y, &xSpeed, physical_width, physical_height, true, 0.55);
-
-}
-
-void Flame::initSprite() {
-
-    delete mainSpriteInfo;
-    delete subSpriteInfo;
-
+    delete_sprites();
+    
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
-                                                        gfx_spike_collectibles_flamePalLen, nullptr, FLAME_SPRITE_SIZE,
+                                                        gfx_spike_collectibles_flamePalLen, nullptr, _sprite_size,
                                                         8, SPIKES_COLLECTIBLES, true, false, LAYER_LEVEL::MIDDLE_TOP);
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
                                                           gfx_spike_collectibles_flamePalLen, nullptr,
-                                                          FLAME_SPRITE_SIZE, 8, SPIKES_COLLECTIBLES, true, false,
+                                                          _sprite_size, 8, SPIKES_COLLECTIBLES, true, false,
                                                           LAYER_LEVEL::MIDDLE_TOP);
     match_animation();
-    set_position();
+    update_sprites_position();
     sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);
     sprite_utils::set_horizontal_flip(false, mainSpriteInfo, subSpriteInfo);
     sprite_utils::set_visibility(true, mainSpriteInfo, subSpriteInfo);
 }
 
-Flame::Flame() {
-    physical_width = FLAME_PHYSICAL_WIDTH;
-    physical_height = FLAME_PHYSICAL_HEIGHT;
-    sprite_width = FLAME_SPRITE_WIDTH;
-    sprite_height = FLAME_SPRITE_HEIGHT;
-    change_pos_delta_offset = FLAME_CHANGE_POS_DELTA + (rand() % 5);
-}
 
 void Flame::spawn_flame() {
-    auto *element = new FlameElement();
-    element->x = x;
-    element->y = y;
-    element->xSpeed = xSpeed;
-    element->ySpeed = ySpeed;
+    auto *element = new FlameElement(_x, _y);
+    element->_x_speed = _x_speed;
+    element->_y_speed = _y_speed;
     element->currentFrame = currentFrame;
-    element->init();
-    element->draw();
+    element->update();
     element->pos_inc_delta_offset = change_pos_delta_offset;
     flame_trail.push_back(element);
 }
 
-void Flame::set_position() {
+void Flame::update_sprites_position() {
     int main_x, main_y, sub_x, sub_y;
     get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
     sprite_utils::set_entry_xy(mainSpriteInfo, main_x, main_y);
@@ -155,7 +112,7 @@ void Flame::set_position() {
 void Flame::match_animation() {
 
     if (living_timer <= 1200)
-        frameGfx = sprite_utils::get_frame((u8 *) gfx_spike_collectibles_flameTiles, FLAME_SPRITE_SIZE, 39);
+        frameGfx = sprite_utils::get_frame((u8 *) gfx_spike_collectibles_flameTiles, _sprite_size, 39);
     else if (living_timer > 1200) {
 
         currentFrame++;
@@ -164,15 +121,15 @@ void Flame::match_animation() {
             finished = true;
             sprite_utils::set_visibility(false, mainSpriteInfo, subSpriteInfo);
         } else
-            frameGfx = sprite_utils::get_frame((u8 *) gfx_spike_collectibles_flameTiles, FLAME_SPRITE_SIZE,
+            frameGfx = sprite_utils::get_frame((u8 *) gfx_spike_collectibles_flameTiles, _sprite_size,
                                                currentFrame + 34);
 
     }
 
-    sprite_utils::update_frame(frameGfx, FLAME_SPRITE_SIZE, mainSpriteInfo, subSpriteInfo);
+    sprite_utils::update_frame(frameGfx, _sprite_size, mainSpriteInfo, subSpriteInfo);
 }
 
-void Flame::deleteSprite() {
+void Flame::delete_sprites() {
     delete mainSpriteInfo;
     delete subSpriteInfo;
     mainSpriteInfo = nullptr;

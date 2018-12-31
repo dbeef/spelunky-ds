@@ -9,62 +9,70 @@
 #include "../sprite_state.hpp"
 #include "../_base_creature.h"
 
-#define FAKE_SKELETON_SPRITE_HEIGHT 16
-#define FAKE_SKELETON_SPRITE_WIDTH 16
-#define FAKE_SKELETON_SPRITE_SIZE FAKE_SKELETON_SPRITE_WIDTH * FAKE_SKELETON_SPRITE_HEIGHT
-
 #define FAKE_SKELETON_PHYSICAL_HEIGHT_WOUT_SKULL 4
 #define FAKE_SKELETON_PHYSICAL_HEIGHT_WITH_SKULL 7
 #define FAKE_SKELETON_PHYSICAL_WIDTH 8
-
-#define MAX_X_SPEED_FAKE_SKELETON 4
-#define MAX_Y_SPEED_FAKE_SKELETON 4
 
 class FakeSkeleton : public BaseCreature {
 
 public:
 
-    void introduce_yourself() override { printf("FAKE_SKELETON\n"); };
+    static constexpr u8 fake_skeleton_sprite_width = 16;
+    static constexpr u8 fake_skeleton_sprite_height = 16;
+    static constexpr u16 fake_skeleton_physical_width = 8;
+    static constexpr u16 fake_skeleton_physical_height = 7;
+    static constexpr SpritesheetType fake_skeleton_spritesheet_type = SpritesheetType::SKELETON_SPIDER;
 
-    FakeSkeleton();
+    FakeSkeleton(int x, int y) : BaseCreature(
+            x,
+            y,
+            fake_skeleton_sprite_width,
+            fake_skeleton_sprite_height,
+            fake_skeleton_spritesheet_type,
+            fake_skeleton_physical_width,
+            fake_skeleton_physical_height
+    ) {
+        init_sprites();
+    }
 
-    void updateOther() override {};
+    // Base creature overrides
 
-    void init() override;
+    void update_creature_specific() override;
 
-    void draw() override;
-
-    void initSprite() override;
-
-    void deleteSprite() override;
+    void introduce_yourself() override { printf("WHIP\n"); };
 
     void apply_dmg(int dmg_to_apply) override {};
 
-    void updateTimers() override {};
-
-    void updateSpeed() override;
-
-    void updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) override;
-
-    void updateCollisionsOtherMoving() override {};
-
     void onCollisionWithMainCharacter() override {};
 
-    bool tried_to_pickup{};
-    int animFrameTimer{};
-    int animFrame{};
-    double pos_inc_timer{};
+    // IRenderable overrides
 
-    SpriteInfo *mainSpriteInfo{};
-    SpriteInfo *subSpriteInfo{};
+    void init_sprites() override;
 
-    u8 *frameGfx{};
+    void delete_sprites() override;
 
-    void set_position();
+    void update_sprites_position() override;
+
+    // ICollidable overrides
+
+    bool can_update_collidable() override { return true; }
+    
+    bool can_apply_friction() override { return true; }
+
+    bool can_apply_gravity() override { return true; }
+
+    // Other, creature specific
 
     void spawn_skull();
 
     void match_animation();
+    
+    bool tried_to_pickup{};
+    int animFrameTimer{};
+    int animFrame{};
+    SpriteInfo *mainSpriteInfo{};
+    SpriteInfo *subSpriteInfo{};
+    u8 *frameGfx{};
 };
 
 

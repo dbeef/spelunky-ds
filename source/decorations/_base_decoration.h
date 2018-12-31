@@ -38,25 +38,18 @@ public:
         set_xy(x, y);
     }
 
+    inline void update(){
+        update_sprites_position();
+        update_decoration_specific();
+    }
+
     virtual ~BaseDecoration()  = default;
 
     // Will be called every frame in game loop.
-    virtual void update() = 0;
+    virtual void update_decoration_specific() = 0;
 
     // Should print its name upper-cased with newline character.
     virtual void introduce_yourself() const = 0;
-
-    // Should obtain sprites via OAM manager.
-    // Will be called on object initialization and every OAM clean.
-    // Should call update_sprites_position.
-    virtual void init_sprites() = 0;
-
-    // Should call delete on its SpriteInfo pointers and nullptr them.
-    virtual void delete_sprites() = 0;
-
-    // Should set sprites' position to _x/_y values, with applied viewport.
-    // Will be called every frame, since both viewport and _x/_y can change.
-    virtual void update_sprites_position() = 0;
 
 };
 

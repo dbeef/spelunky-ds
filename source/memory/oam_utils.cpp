@@ -26,13 +26,13 @@ namespace oam_utils {
             global::sub_oam_manager->clear_sprite_attributes();
 
             global::hud->delete_sprites();
-            global::main_dude->deleteSprite();
-            global::main_dude->whip->deleteSprite();
+            global::main_dude->delete_sprites();
+            global::main_dude->whip->delete_sprites();
 
             std::vector<BaseCreature *>::iterator iter;
             for (iter = global::creatures.begin(); iter != global::creatures.end();) {
-                iter.operator*()->deleteSprite();
-                if (iter.operator*()->ready_to_dispose) {
+                iter.operator*()->delete_sprites();
+                if (iter.operator*()->_ready_to_dispose) {
                     delete iter.operator*();
                     iter = global::creatures.erase(iter);
                 } else
@@ -74,13 +74,13 @@ namespace oam_utils {
 //            }
 
 
-            global::main_dude->initSprite();
-            global::main_dude->whip->initSprite();
+            global::main_dude->init_sprites();
+            global::main_dude->whip->init_sprites();
 
             for (unsigned long a = 0; a < global::creatures.size(); a++) {
                 //fixme - being killed not always means it's ready for disposing!
-                if (!global::creatures.at(a)->ready_to_dispose /*&& !global::creatures.at(a)->killed*/) {
-                    global::creatures.at(a)->initSprite();
+                if (!global::creatures.at(a)->_ready_to_dispose /*&& !global::creatures.at(a)->killed*/) {
+                    global::creatures.at(a)->init_sprites();
                 }
             }
             for (unsigned long a = 0; a < global::decorations.size(); a++) {
@@ -116,17 +116,17 @@ namespace oam_utils {
         global::main_oam_manager->clear_sprite_attributes();
         global::sub_oam_manager->clear_sprite_attributes();
 
-        global::main_dude->deleteSprite();
-        global::main_dude->whip->deleteSprite();
+        global::main_dude->delete_sprites();
+        global::main_dude->whip->delete_sprites();
         global::hud->delete_sprites();
 
         for (auto &sprite : global::creatures) {
-            sprite->deleteSprite(); //deletes its SpriteInfos and nullptrs them
+            sprite->delete_sprites(); //deletes its SpriteInfos and nullptrs them
             delete sprite; //deletes sprite itself
         }
 
         for (auto &sprite : global::creatures_to_add) {
-            sprite->deleteSprite(); //deletes its SpriteInfos and nullptrs them
+            sprite->delete_sprites(); //deletes its SpriteInfos and nullptrs them
             delete sprite; //deletes sprite itself
         }
 

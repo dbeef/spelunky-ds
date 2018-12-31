@@ -5,64 +5,71 @@
 #ifndef SPELUNKYDS_JAR_H
 #define SPELUNKYDS_JAR_H
 
-#define JAR_PHYSICAL_HEIGHT 9
-#define JAR_PHYSICAL_WIDTH 10
-
-#define JAR_SPRITE_HEIGHT 16
-#define JAR_SPRITE_WIDTH 16
-#define JAR_SPRITE_SIZE JAR_SPRITE_WIDTH * JAR_SPRITE_HEIGHT
-
-#define MAX_X_SPEED_JAR 4
-#define MAX_Y_SPEED_JAR 4
-
 #include "../_base_creature.h"
+#include "../sprite_info.h"
 
 //http://spelunky.wikia.com/wiki/Pot
 class Jar : public BaseCreature {
 
 public:
 
-    void introduce_yourself() override { printf("JAR\n"); };
+    static constexpr u8 jar_sprite_width = 16;
+    static constexpr u8 jar_sprite_height = 16;
+    static constexpr u16 jar_physical_width = 10;
+    static constexpr u16 jar_physical_height = 9;
+    static constexpr SpritesheetType jar_spritesheet_type = SpritesheetType::JAR;
 
-    Jar();
+    Jar(int x, int y) : BaseCreature(
+            x,
+            y,
+            jar_sprite_width,
+            jar_sprite_height,
+            jar_spritesheet_type,
+            jar_physical_width,
+            jar_physical_height
+    ) {
+        init_sprites();
+        activated = true;
+        hitpoints = 1;
+    }
 
-    void updateOther() override {};
+    // Base creature overrides
 
-    void init() override;
+    void update_creature_specific() override;
 
-    void draw() override;
+    void introduce_yourself() override { printf("WHIP\n"); };
 
     void apply_dmg(int dmg_to_apply) override;
 
-    void updateTimers() override {};
-
-    void updateSpeed() override;
-
-    void initSprite() override;
-
-    void deleteSprite() override;
-
-    void updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) override;
-
-    void updateCollisionsOtherMoving() override {};
-
     void onCollisionWithMainCharacter() override {};
 
+    // IRenderable overrides
 
-    double pos_inc_timer{};
+    void init_sprites() override;
 
-    SpriteInfo *mainSpriteInfo {};
-    SpriteInfo *subSpriteInfo {};
-    u8 * frameGfx{};
+    void delete_sprites() override;
 
-    int frame{};
-    int frameTimer{};
+    void update_sprites_position() override;
+
+    // ICollidable overrides
+
+    bool can_update_collidable() override { return !hold_by_main_dude; }
+
+    bool can_apply_friction() override { return true; }
+
+    bool can_apply_gravity() override { return true; }
+
+    // Other, creature specific
 
     void match_animation();
 
-    void set_position();
-
     void set_sprite_attributes();
+    
+    SpriteInfo *_main_sprite_info {};
+    SpriteInfo *_sub_sprite_info {};
+    u8 * _frame_gfx{};
+    u16 _anim_frame_index{};
+    double _anim_frame_timer{};
 };
 
 

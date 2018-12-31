@@ -9,7 +9,7 @@ void global::init_globals() {
 
     input_handler = new InputHandler();
     camera = new Camera();
-    main_dude = new MainDude();
+    main_dude = nullptr;
     current_level = new Level();
     current_level->init_map_tiles();
     main_oam_manager = new OAMManager();

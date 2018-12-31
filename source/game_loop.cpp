@@ -33,13 +33,12 @@ static void update_decorations_to_add() {
 
 void gameloop::run() {
 
-    global::main_dude->init();
     //init positions with main menu values:
     global::camera->x = 0;
     global::camera->y = 127;
-    global::main_dude->x = 224;
-    global::main_dude->y = 300; //TODO Some constexpr file for these
 //    global::creatures.push_back(global::main_dude);
+
+    global::main_dude = new MainDude(224, 300); //TODO Some constexpr file for xy
 
     global::hud->init();
     populate_main_menu(); //TODO Game state function for matching this?
@@ -54,8 +53,8 @@ void gameloop::run() {
             global::current_level->update_level();
             global::game_state->bombed = false;
             for (unsigned long a = 0; a < global::creatures.size(); a++)
-                (*global::creatures.at(a)).bottomCollision = false;
-            global::main_dude->bottomCollision = false;
+                (*global::creatures.at(a))._bottom_collision = false;
+            global::main_dude->_bottom_collision = false;
         }
 
         global::camera->update();
@@ -64,27 +63,22 @@ void gameloop::run() {
         update_decorations_to_add();
 
         global::main_dude->update();
-        global::main_dude->draw();
         global::main_dude->whip->update();
-        global::main_dude->whip->draw();
 
         for (auto &creature : global::creatures) {
             if (creature) {
                 creature->update();
-                creature->draw();
             }
         }
 
         for (auto &decoration : global::decorations) {
             if (decoration) {
                 decoration->update();
-                decoration->update_sprites_position();
             }
         }
 
 
         global::game_state->handle_transition_screen_smooch();
-
         global::main_dude->handle_key_input();
         global::hud->update();
 

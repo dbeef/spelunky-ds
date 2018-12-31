@@ -20,16 +20,16 @@ public:
 
     //TODO Make equivalent functions that won't make x/y speed = 0 when collision == true (actually, just fix these)
 
-    static bool checkUpperCollision(MapTile *neighboringTiles[9], int *xPos, int *yPos, double *ySpeed, int width, bool bounce, float bouncing_factor);
+    static bool checkUpperCollision(MapTile *neighboringTiles[9], int *xPos, int *yPos, double *ySpeed, int width, float bouncing_factor);
 
     static bool
-    checkBottomCollision(MapTile *neighboringTiles[9], int *xPos, int *yPos, double *ySpeed, int width, int height, bool bounce, float bouncing_factor);
+    checkBottomCollision(MapTile *neighboringTiles[9], int *xPos, int *yPos, double *ySpeed, int width, int height, float bouncing_factor);
 
     static bool
-    checkLeftCollision(MapTile *neighboringTiles[9], int *xPos, int *yPos, double *xSpeed, int width, int height, bool bounce, float bouncing_factor);
+    checkLeftCollision(MapTile *neighboringTiles[9], int *xPos, int *yPos, double *xSpeed, int width, int height, float bouncing_factor);
 
     static bool
-    checkRightCollision(MapTile *neighboringTiles[9], int *xPos, int *yPos, double *xSpeed, int width, int height, bool bounce, float bouncing_factor);
+    checkRightCollision(MapTile *neighboringTiles[9], int *xPos, int *yPos, double *xSpeed, int width, int height, float bouncing_factor);
 
     static bool isStandingOnLeftEdge(MapTile *neighboringTiles[9], int x, int width, int tileX);
     static bool isStandingOnRightEdge(MapTile *neighboringTiles[9], int x, int width, int tileX);

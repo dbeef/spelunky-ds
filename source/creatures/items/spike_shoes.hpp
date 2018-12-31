@@ -8,63 +8,71 @@
 #include "../sprite_info.h"
 #include "../sprite_state.hpp"
 #include "../_base_creature.h"
-#include "../shopping_object.h"
-
-#define SPIKE_SHOES_PHYSICAL_HEIGHT 11
-#define SPIKE_SHOES_PHYSICAL_WIDTH 14
-
-#define SPIKE_SHOES_SPRITE_HEIGHT 16
-#define SPIKE_SHOES_SPRITE_WIDTH 16
-#define SPIKE_SHOES_SPRITE_SIZE SPIKE_SHOES_SPRITE_WIDTH * SPIKE_SHOES_SPRITE_HEIGHT
-
-#define MAX_X_SPEED_SPIKE_SHOES 4
-#define MAX_Y_SPEED_SPIKE_SHOES 4
+#include "../../interfaces/shopping_object.h"
 
 //http://spelunky.wikia.com/wiki/Spike_Shoes
 class SpikeShoes : public BaseCreature, public ShoppingObject {
 
+    static constexpr u8 spike_shoes_sprite_width = 16;
+    static constexpr u8 spike_shoes_sprite_height = 16;
+    static constexpr u16 spike_shoes_physical_width = 14;
+    static constexpr u16 spike_shoes_physical_height = 11;
+    static constexpr u16 spike_shoes_cost = 4000;
+    static constexpr const char *spike_shoes_name = "SPIKE SHOES";
+    static constexpr SpritesheetType spike_shoes_spritesheet_type = SpritesheetType::SALEABLE;
+
 public:
 
-    void introduce_yourself() override { printf("SPIKE_SHOES\n"); };
+    SpikeShoes(int x, int y) : BaseCreature(
+            x,
+            y,
+            spike_shoes_sprite_width,
+            spike_shoes_sprite_height,
+            spike_shoes_spritesheet_type,
+            spike_shoes_physical_width,
+            spike_shoes_physical_height
+    ), ShoppingObject(spike_shoes_cost, spike_shoes_name) {
+        init_anim_icon();
+        update_anim_icon(x, y, _physical_width);
+        init_sprites();
+    }
 
-    SpikeShoes();
+    // Base creature overrides
 
-    void updateOther() override {};
+    void update_creature_specific() override;
 
-    void init() override;
-
-    void draw() override;
-
-    void initSprite() override;
-
-    void deleteSprite() override;
+    void introduce_yourself() override { printf("WHIP\n"); };
 
     void apply_dmg(int dmg_to_apply) override {};
 
-    void updateTimers() override {};
-
-    void updateSpeed() override;
-
-    void updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) override;
-
-    void updateCollisionsOtherMoving() override {};
-
     void onCollisionWithMainCharacter() override {};
 
-    double pos_inc_timer{};
+    // IRenderable overrides
 
-    bool collected{};
+    void init_sprites() override;
 
-    SpriteInfo *mainSpriteInfo{};
-    SpriteInfo *subSpriteInfo{};
+    void delete_sprites() override;
 
-    u8 *frameGfx{};
+    void update_sprites_position() override;
 
-    void set_position();
+    // ICollidable overrides
+
+    bool can_update_collidable() override { return !_collected; }
+
+    bool can_apply_friction() override { return true; }
+
+    bool can_apply_gravity() override { return true; }
+
+    // Other, creature specific
 
     void equip();
 
-    void set_sprite_attributes();
+    // if collected, then drawn in HUD
+    bool _collected{};
+    SpriteInfo *_main_sprite_info{};
+    SpriteInfo *_sub_sprite_info{};
+    u8 *_frame_gfx{};
+
 };
 
 

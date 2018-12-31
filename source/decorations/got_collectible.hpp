@@ -30,7 +30,7 @@ public:
 
     void introduce_yourself() const override { printf("GOT COLLECTIBLE\n"); };
 
-    void update() override;
+    void update_decoration_specific() override;
 
     void init_sprites() override;
 

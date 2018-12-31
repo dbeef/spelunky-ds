@@ -6,57 +6,63 @@
 #define SPELUNKYDS_SPIKES_H
 
 #include "../_base_creature.h"
-
-#define SPIKES_PHYSICAL_HEIGHT 13
-#define SPIKES_PHYSICAL_WIDTH 16
-
-#define SPIKES_SPRITE_HEIGHT 16
-#define SPIKES_SPRITE_WIDTH 16
-#define SPIKES_SPRITE_SIZE SPIKES_SPRITE_WIDTH * SPIKES_SPRITE_HEIGHT
+#include "../sprite_info.h"
 
 //http://spelunky.wikia.com/wiki/Spikes
-class Spikes: public BaseCreature {
+class Spikes : public BaseCreature {
+    
+    static constexpr u8 spikes_sprite_width = 16;
+    static constexpr u8 spikes_sprite_height = 16;
+    static constexpr u8 spikes_physical_width = 16;
+    static constexpr u8 spikes_physical_height = 13;
+    static constexpr SpritesheetType spikes_spritesheet_type = SpritesheetType::SPIKES_COLLECTIBLES;
 
 public:
 
-    void introduce_yourself() override { printf("SPIKES\n"); };
+    Spikes(int x, int y) : BaseCreature(
+            x,
+            y,
+            spikes_sprite_width,
+            spikes_sprite_height,
+            spikes_spritesheet_type,
+            spikes_physical_width,
+            spikes_physical_height
+    ) {
+        init_sprites();
+    }
+    
+    // Base creature overrides
 
-    Spikes();
+    void update_creature_specific() override;
 
-    void updateOther() override {};
-
-    void init() override;
-
-    void draw() override;
-
-    void initSprite() override;
-
-    void deleteSprite() override;
+    void introduce_yourself() override { printf("WHIP\n"); };
 
     void apply_dmg(int dmg_to_apply) override {};
 
-    void updateTimers() override {};
-
-    void updateSpeed() override {};
-
-    void updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) override {};
-
-    void updateCollisionsOtherMoving() override {};
-
     void onCollisionWithMainCharacter() override {};
 
+    // IRenderable overrides
 
-    double pos_inc_timer{};
+    void init_sprites() override;
 
-    SpriteInfo *mainSpriteInfo {};
-    SpriteInfo *subSpriteInfo {};
-    u8 * frameGfx{};
+    void delete_sprites() override;
 
-    bool blood{};
-    SpritesheetType  spriteType{};
-    void set_position();
+    void update_sprites_position() override;
 
-    void kill_main_dude();
+    // ICollidable overrides
+
+    // Spikes are completely static.
+    bool can_apply_friction() override { return false; }
+    bool can_update_collidable() override { return false; }
+    bool can_apply_gravity() override { return false; }
+
+    // Other, creature specific
+
+    bool _blood{};
+    SpriteInfo *_main_sprite_info{};
+    SpriteInfo *_sub_sprite_info{};
+    u8 *_frame_gfx{};
+
 };
 
 

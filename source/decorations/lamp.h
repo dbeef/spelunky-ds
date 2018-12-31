@@ -22,7 +22,7 @@ public:
 
     void introduce_yourself() const override { printf("LAMP\n"); };
 
-    void update() override;
+    void update_decoration_specific() override;
 
     void init_sprites() override;
 

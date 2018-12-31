@@ -19,9 +19,9 @@
 #define DAMSEL_ANIM_FRAME_DELTA 65
 #define DAMSEL_INVERT_SPEED_DELTA 400
 
-void Damsel::draw() {
+void Damsel::update_creature_specific() {
 
-    if (ready_to_dispose)
+    if (_ready_to_dispose)
         return;
 
     if (rescued) {
@@ -56,8 +56,14 @@ void Damsel::draw() {
             hold_by_main_dude = false;
             stunned = true;
             stunned_timer = 0;
-        } else
+            stunned = true;
+            _bouncing_factor_x = ICollidable::default_bouncing_factor_x;
+            _bouncing_factor_y = ICollidable::default_bouncing_factor_y;
+        } else {
             stunned = false;
+            _bouncing_factor_x = 0;
+            _bouncing_factor_y = 0;
+        }
 
         sprite_state = global::main_dude->sprite_state;
         sprite_utils::set_priority(OBJPRIORITY_0, mainSpriteInfo, subSpriteInfo);
@@ -68,17 +74,16 @@ void Damsel::draw() {
     if (!hold_by_main_dude)
         kill_mobs_if_thrown(1);
 
-    if (bottomCollision && (stunned || killed)) {
-        apply_friction(0.5f);
-    }
-
-    set_position();
+    update_sprites_position();
 
     if (!hold_by_main_dude && global::main_dude->carrying_damsel) {
         global::main_dude->carrying_damsel = false;
         stunned = true;
         stunned_timer = 0;
         triggered = true;
+        stunned = true;
+        _bouncing_factor_x = ICollidable::default_bouncing_factor_x;
+        _bouncing_factor_y = ICollidable::default_bouncing_factor_y;
     }
 
     animFrameTimer += *global::timer;
@@ -119,6 +124,8 @@ void Damsel::draw() {
         if (stunned_timer > DAMSEL_STUN_TIME) {
             stunned = false;
             stunned_timer = 0;
+            _bouncing_factor_x = 0;
+            _bouncing_factor_y = 0;
         }
     }
 
@@ -131,10 +138,10 @@ void Damsel::draw() {
 
         exiting_level = tiles[CENTER] != nullptr && tiles[CENTER]->mapTileType == MapTileType::EXIT;
         if (exiting_level) {
-            xSpeed = 0;
-            ySpeed = 0;
-            x = tiles[CENTER]->x * 16;
-            y = tiles[CENTER]->y * 16;
+            _x_speed = 0;
+            _y_speed = 0;
+            _x = tiles[CENTER]->x * 16;
+            _y = tiles[CENTER]->y * 16;
             hold_by_main_dude = false;
             mmEffect(SFX_XSTEPS);
             if (global::main_dude->carrying_damsel) {
@@ -144,15 +151,49 @@ void Damsel::draw() {
         }
     }
 
-}
+    if(_map_collisions_checked){
+
+        bool bounce = (stunned || killed);
+
+        standingOnLeftEdge = Collisions::isStandingOnLeftEdge(_neighboring_tiles, _x, _physical_width, _current_x_in_tiles);
+        standingOnRightEdge = Collisions::isStandingOnRightEdge(_neighboring_tiles, _x, _physical_width, _current_y_in_tiles);
+
+        if (bounce || exiting_level) return;
+
+        //TODO This piece of code should be shared between shopkeeper/damsel/caveman in some utils file
+
+        if (_bottom_collision && _neighboring_tiles[TileOrientation::RIGHT_MIDDLE] != nullptr &&
+            _neighboring_tiles[TileOrientation::RIGHT_MIDDLE]->collidable &&
+            _neighboring_tiles[TileOrientation::LEFT_MIDDLE] != nullptr && _neighboring_tiles[TileOrientation::LEFT_MIDDLE]->collidable) {
+            //high jump if damsel's surrounded by tiles
+            _y_speed = -2.6 - ((rand() % 10) / 5);
+            landlocked = true;
+        } else
+            landlocked = false;
+
+        if (!_bottom_collision) {
+
+            if ((_neighboring_tiles[TileOrientation::RIGHT_MIDDLE] == nullptr || !_neighboring_tiles[TileOrientation::RIGHT_MIDDLE]->collidable) &&
+                (_neighboring_tiles[TileOrientation::RIGHT_UP] != nullptr && _neighboring_tiles[TileOrientation::RIGHT_DOWN] != nullptr)) {
+                //if there's no collidable tile on right-mid, but there are on right-up and right-down,
+                //add extra x-pos to ease going through a hole
+                if (_x_speed > 0)
+                    _x += 2;
+            }
+
+            if ((_neighboring_tiles[TileOrientation::LEFT_MIDDLE] == nullptr || !_neighboring_tiles[TileOrientation::LEFT_MIDDLE]->collidable) &&
+                (_neighboring_tiles[TileOrientation::LEFT_UP] != nullptr && _neighboring_tiles[TileOrientation::LEFT_DOWN] != nullptr)) {
+                //same but for left side
+                if (_x_speed < 0)
+                    _x -= 2;
+            }
+
+        }
 
 
-void Damsel::init() {
-    sprite_state = SpriteState::W_LEFT;
-    activated = true;
-    initSprite();
-    spritesheet_type = SpritesheetType::CAVEMAN_DAMSEL;
-    randomizeMovement();
+        _map_collisions_checked = false;
+    }
+    
 }
 
 void Damsel::randomizeMovement() {
@@ -171,75 +212,6 @@ void Damsel::randomizeMovement() {
     waitTimer = rand() % 1500;
 }
 
-void Damsel::updateSpeed() {
-
-    limit_speed(MAX_X_SPEED_DAMSEL, MAX_Y_SPEED_DAMSEL);
-
-    pos_inc_timer += *global::timer;
-
-    if (pos_inc_timer > DAMSEL_POS_INC_DELTA) {
-        update_position();
-        apply_gravity(GRAVITY_DELTA_SPEED * 1.5);
-        pos_inc_timer = 0;
-    }
-
-}
-
-void Damsel::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
-
-    MapTile *t[9] = {};
-    Collisions::getNeighboringTiles(global::current_level->map_tiles, x_current_pos_in_tiles,
-                                    y_current_pos_in_tiles, t);
-
-
-    bool bounce = (stunned || killed);
-
-    standingOnLeftEdge = Collisions::isStandingOnLeftEdge(t, x, physical_width, x_current_pos_in_tiles);
-    standingOnRightEdge = Collisions::isStandingOnRightEdge(t, x, physical_width, x_current_pos_in_tiles);
-    upperCollision = Collisions::checkUpperCollision(t, &x, &y, &ySpeed, physical_width, false, 0);
-    bottomCollision = Collisions::checkBottomCollision(t, &x, &y, &ySpeed, physical_width, physical_height,
-                                                       bounce, BOUNCING_FACTOR_Y);
-    leftCollision = Collisions::checkLeftCollision(t, &x, &y, &xSpeed, physical_width, physical_height, bounce,
-                                                   BOUNCING_FACTOR_X);
-    rightCollision = Collisions::checkRightCollision(t, &x, &y, &xSpeed, physical_width, physical_height,
-                                                     bounce, BOUNCING_FACTOR_X);
-
-
-    if (bounce || exiting_level)
-        return;
-
-    //TODO This piece of code should be shared between shopkeeper/damsel/caveman in some utils file
-
-    if (bottomCollision && t[TileOrientation::RIGHT_MIDDLE] != nullptr &&
-        t[TileOrientation::RIGHT_MIDDLE]->collidable &&
-        t[TileOrientation::LEFT_MIDDLE] != nullptr && t[TileOrientation::LEFT_MIDDLE]->collidable) {
-        //high jump if damsel's surrounded by tiles
-        ySpeed = -2.6 - ((rand() % 10) / 5);
-        landlocked = true;
-    } else
-        landlocked = false;
-
-    if (!bottomCollision) {
-
-        if ((t[TileOrientation::RIGHT_MIDDLE] == nullptr || !t[TileOrientation::RIGHT_MIDDLE]->collidable) &&
-            (t[TileOrientation::RIGHT_UP] != nullptr && t[TileOrientation::RIGHT_DOWN] != nullptr)) {
-            //if there's no collidable tile on right-mid, but there are on right-up and right-down,
-            //add extra x-pos to ease going through a hole
-            if (xSpeed > 0)
-                x += 2;
-        }
-
-        if ((t[TileOrientation::LEFT_MIDDLE] == nullptr || !t[TileOrientation::LEFT_MIDDLE]->collidable) &&
-            (t[TileOrientation::LEFT_UP] != nullptr && t[TileOrientation::LEFT_DOWN] != nullptr)) {
-            //same but for left side
-            if (xSpeed < 0)
-                x -= 2;
-        }
-
-    }
-
-}
-
 void Damsel::apply_dmg(int dmg_to_apply) {
 
     if (dmg_to_apply == 0 || dmg_to_apply == 1) {
@@ -250,7 +222,7 @@ void Damsel::apply_dmg(int dmg_to_apply) {
     hitpoints -= dmg_to_apply;
     if (blood_spawn_timer > 1000) {
         blood_spawn_timer = 0;
-        ySpeed = -2.5; //jump a little bit on receiving dmg, even if dead
+        _y_speed = -2.5; //jump a little bit on receiving dmg, even if dead
         if (!killed)
             spawn_blood();
     }
@@ -262,37 +234,40 @@ void Damsel::apply_dmg(int dmg_to_apply) {
         killed = true;
         stunned = false;
         global::killed_npcs.push_back(SpriteType::S_DAMSEL);
-    } else
+
+        _bouncing_factor_x = 0;
+        _bouncing_factor_y = 0;
+    } else {
         stunned = true;
+        _bouncing_factor_x = ICollidable::default_bouncing_factor_x;
+        _bouncing_factor_y = ICollidable::default_bouncing_factor_y;
+    }
 
 }
 
-void Damsel::initSprite() {
+void Damsel::init_sprites() {
 
-    delete subSpriteInfo;
-    delete mainSpriteInfo;
-    delete yell_subSpriteInfo;
-    delete yell_mainSpriteInfo;
+    delete_sprites();
 
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_caveman_damselPal, gfx_caveman_damselPalLen,
-                                                        nullptr, DAMSEL_SPRITE_SIZE, 16, CAVEMAN_DAMSEL,
+                                                        nullptr, _sprite_size, 16, CAVEMAN_DAMSEL,
                                                         true, false, LAYER_LEVEL::MIDDLE_BOT);
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_caveman_damselPal, gfx_caveman_damselPalLen,
-                                                          nullptr, DAMSEL_SPRITE_SIZE, 16, CAVEMAN_DAMSEL,
+                                                          nullptr, _sprite_size, 16, CAVEMAN_DAMSEL,
                                                           true, false, LAYER_LEVEL::MIDDLE_BOT);
     yell_subSpriteInfo = global::sub_oam_manager->initSprite(gfx_caveman_damselPal, gfx_caveman_damselPalLen,
-                                                             nullptr, DAMSEL_SPRITE_SIZE, 16, CAVEMAN_DAMSEL,
+                                                             nullptr, _sprite_size, 16, CAVEMAN_DAMSEL,
                                                              true, false, LAYER_LEVEL::MIDDLE_BOT);
     yell_mainSpriteInfo = global::main_oam_manager->initSprite(gfx_caveman_damselPal, gfx_caveman_damselPalLen,
-                                                               nullptr, DAMSEL_SPRITE_SIZE, 16,
+                                                               nullptr, _sprite_size, 16,
                                                                CAVEMAN_DAMSEL, true, false, LAYER_LEVEL::MIDDLE_BOT);
 
     match_animation();
 
     //set yell sprite frame here - it won't change later
     frameGfx = sprite_utils::get_frame((u8 *) gfx_caveman_damselTiles,
-                                       DAMSEL_SPRITE_SIZE, DAMSEL_SPRITESHEET_OFFSET + 31);
-    sprite_utils::update_frame(frameGfx, DAMSEL_SPRITE_SIZE, yell_mainSpriteInfo, yell_subSpriteInfo);
+                                       _sprite_size, DAMSEL_SPRITESHEET_OFFSET + 31);
+    sprite_utils::update_frame(frameGfx, _sprite_size, yell_mainSpriteInfo, yell_subSpriteInfo);
 
     if (rescued) {
         sprite_utils::set_visibility(false, mainSpriteInfo, subSpriteInfo, yell_mainSpriteInfo, yell_subSpriteInfo);
@@ -305,10 +280,10 @@ void Damsel::initSprite() {
     sprite_utils::set_visibility(true, mainSpriteInfo, subSpriteInfo);
     sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);
 
-    set_position();
+    update_sprites_position();
 }
 
-void Damsel::set_position() {
+void Damsel::update_sprites_position() {
 
     int main_x, main_y, sub_x, sub_y;
 
@@ -319,26 +294,16 @@ void Damsel::set_position() {
     sprite_utils::set_entry_xy(subSpriteInfo, sub_x, sub_y);
 
     //viewporting 'help' prompt
-    int temp_y = y;
-    y -= 13 + (animFrame * 0.5);
+    int temp_y = _y;
+    _y -= 13 + (animFrame * 0.5);
 
     get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
 
     sprite_utils::set_entry_xy(yell_mainSpriteInfo, main_x, main_y);
     sprite_utils::set_entry_xy(yell_subSpriteInfo, sub_x, sub_y);
 
-    y = temp_y;
+    _y = temp_y;
 }
-
-Damsel::Damsel() {
-    physical_height = DAMSEL_PHYSICAL_HEIGHT;
-    physical_width = DAMSEL_PHYSICAL_WIDTH;
-    sprite_height = DAMSEL_SPRITE_HEIGHT;
-    sprite_width = DAMSEL_SPRITE_WIDTH;
-    hitpoints = DAMSEL_HITPOINTS;
-    call_for_help = true;
-}
-
 
 void Damsel::make_some_movement() {
 
@@ -354,14 +319,14 @@ void Damsel::make_some_movement() {
 
         if (triggered) {
             if (sprite_state == SpriteState::W_RIGHT)
-                xSpeed = DAMSEL_TRIGGERED_SPEED;
+                _x_speed = DAMSEL_TRIGGERED_SPEED;
             else
-                xSpeed = -DAMSEL_TRIGGERED_SPEED;
+                _x_speed = -DAMSEL_TRIGGERED_SPEED;
         }
 
         if (goTimer <= 0 && !triggered) {
             randomizeMovement();
-            xSpeed = 0;
+            _x_speed = 0;
         }
 
         if (invert_speed_timer < DAMSEL_INVERT_SPEED_DELTA)
@@ -373,20 +338,20 @@ void Damsel::make_some_movement() {
             if (rand() % 2 == 0) {
                 goTimer = 0;
             } else
-                xSpeed *= -1;
+                _x_speed *= -1;
 
         }
 
-        if ((leftCollision || rightCollision) && !landlocked) {
+        if ((_left_collision || _right_collision) && !landlocked) {
 
             if (sprite_state == SpriteState::W_LEFT)
                 sprite_state = SpriteState::W_RIGHT;
             else
                 sprite_state = SpriteState::W_LEFT;
 
-            xSpeed *= -1;
-            rightCollision = false;
-            leftCollision = false;
+            _x_speed *= -1;
+            _right_collision = false;
+            _left_collision = false;
         }
 
     }
@@ -396,29 +361,29 @@ void Damsel::make_some_movement() {
 //!> after calling this function, call sprite_utils::update_frame to update OAM with current frameGfx
 void Damsel::apply_stunned_carried_sprites() {
     animFrame = 0;
-    frameGfx = sprite_utils::get_frame((u8 *) gfx_caveman_damselTiles, DAMSEL_SPRITE_SIZE,
+    frameGfx = sprite_utils::get_frame((u8 *) gfx_caveman_damselTiles, _sprite_size,
                                        DAMSEL_SPRITESHEET_OFFSET + 4);
 }
 
 //!> after calling this function, call sprite_utils::update_frame to update OAM with current frameGfx
 void Damsel::apply_dead_carried_sprites() {
     animFrame = 0;
-    frameGfx = sprite_utils::get_frame((u8 *) gfx_caveman_damselTiles, DAMSEL_SPRITE_SIZE,
+    frameGfx = sprite_utils::get_frame((u8 *) gfx_caveman_damselTiles, _sprite_size,
                                        DAMSEL_SPRITESHEET_OFFSET + 4);
 }
 
 //!> after calling this function, call sprite_utils::update_frame to update OAM with current frameGfx
 void Damsel::apply_dead_sprites() {
     animFrame = 0;
-    if (ySpeed == 0)
-        frameGfx = sprite_utils::get_frame((u8 *) gfx_caveman_damselTiles, DAMSEL_SPRITE_SIZE,
+    if (_y_speed == 0)
+        frameGfx = sprite_utils::get_frame((u8 *) gfx_caveman_damselTiles, _sprite_size,
                                            DAMSEL_SPRITESHEET_OFFSET);
-    else if (ySpeed > 0)
+    else if (_y_speed > 0)
         frameGfx =
-                sprite_utils::get_frame((u8 *) gfx_caveman_damselTiles, DAMSEL_SPRITE_SIZE,
+                sprite_utils::get_frame((u8 *) gfx_caveman_damselTiles, _sprite_size,
                                         DAMSEL_SPRITESHEET_OFFSET + 3);
     else
-        frameGfx = sprite_utils::get_frame((u8 *) gfx_caveman_damselTiles, DAMSEL_SPRITE_SIZE,
+        frameGfx = sprite_utils::get_frame((u8 *) gfx_caveman_damselTiles, _sprite_size,
                                            DAMSEL_SPRITESHEET_OFFSET + 1);
 
 }
@@ -429,14 +394,14 @@ void Damsel::apply_walking_sprites() {
     if (animFrame >= 4)
         animFrame = 0;
 
-    if (xSpeed == 0 && ySpeed == 0)
-        frameGfx = sprite_utils::get_frame((u8 *) gfx_caveman_damselTiles, DAMSEL_SPRITE_SIZE,
+    if (_x_speed == 0 && _y_speed == 0)
+        frameGfx = sprite_utils::get_frame((u8 *) gfx_caveman_damselTiles, _sprite_size,
                                            DAMSEL_SPRITESHEET_OFFSET + 5);
-    else if (xSpeed != 0 && ySpeed == 0)
-        frameGfx = sprite_utils::get_frame((u8 *) gfx_caveman_damselTiles, DAMSEL_SPRITE_SIZE,
+    else if (_x_speed != 0 && _y_speed == 0)
+        frameGfx = sprite_utils::get_frame((u8 *) gfx_caveman_damselTiles, _sprite_size,
                                            DAMSEL_SPRITESHEET_OFFSET + 6 + animFrame);
     else
-        frameGfx = sprite_utils::get_frame((u8 *) gfx_caveman_damselTiles, DAMSEL_SPRITE_SIZE,
+        frameGfx = sprite_utils::get_frame((u8 *) gfx_caveman_damselTiles, _sprite_size,
                                            DAMSEL_SPRITESHEET_OFFSET + 3);
 }
 
@@ -445,14 +410,14 @@ void Damsel::apply_stunned_sprites() {
     if (animFrame >= 5)
         animFrame = 0;
 
-    if (ySpeed == 0)
-        frameGfx = sprite_utils::get_frame((u8 *) gfx_caveman_damselTiles, DAMSEL_SPRITE_SIZE,
+    if (_y_speed == 0)
+        frameGfx = sprite_utils::get_frame((u8 *) gfx_caveman_damselTiles, _sprite_size,
                                            DAMSEL_SPRITESHEET_OFFSET + 10 + animFrame);
-    else if (ySpeed > 0)
-        frameGfx = sprite_utils::get_frame((u8 *) gfx_caveman_damselTiles, DAMSEL_SPRITE_SIZE,
+    else if (_y_speed > 0)
+        frameGfx = sprite_utils::get_frame((u8 *) gfx_caveman_damselTiles, _sprite_size,
                                            DAMSEL_SPRITESHEET_OFFSET + 4);
     else
-        frameGfx = sprite_utils::get_frame((u8 *) gfx_caveman_damselTiles, DAMSEL_SPRITE_SIZE,
+        frameGfx = sprite_utils::get_frame((u8 *) gfx_caveman_damselTiles, _sprite_size,
                                            DAMSEL_SPRITESHEET_OFFSET + 2);
 }
 
@@ -462,7 +427,7 @@ void Damsel::apply_exiting_level_sprites() {
         rescued = true;
         global::game_state->damsels_rescued_this_level++;
     } else
-        frameGfx = sprite_utils::get_frame((u8 *) gfx_caveman_damselTiles, DAMSEL_SPRITE_SIZE,
+        frameGfx = sprite_utils::get_frame((u8 *) gfx_caveman_damselTiles, _sprite_size,
                                            DAMSEL_SPRITESHEET_OFFSET + 14 + animFrame);
 }
 
@@ -474,7 +439,7 @@ void Damsel::apply_yelling_sprites() {
         yell_mainSpriteInfo->entry->isHidden = true;
         yell_subSpriteInfo->entry->isHidden = true;
     } else
-        frameGfx = sprite_utils::get_frame((u8 *) gfx_caveman_damselTiles, DAMSEL_SPRITE_SIZE,
+        frameGfx = sprite_utils::get_frame((u8 *) gfx_caveman_damselTiles, _sprite_size,
                                            DAMSEL_SPRITESHEET_OFFSET + 31 + animFrame);
 
 }
@@ -497,7 +462,7 @@ void Damsel::match_animation() {
     else
         apply_walking_sprites();
 
-    sprite_utils::update_frame(frameGfx, DAMSEL_SPRITE_SIZE, mainSpriteInfo, subSpriteInfo);
+    sprite_utils::update_frame(frameGfx, _sprite_size, mainSpriteInfo, subSpriteInfo);
 }
 
 //!> after calling this function, call sprite_utils::update_frame to update OAM with current frameGfx
@@ -510,17 +475,16 @@ void Damsel::apply_smooching_sprites() {
         global::input_handler->right_key_held = true;
     } else
         frameGfx = (u8 *) gfx_caveman_damselTiles +
-                   ((DAMSEL_SPRITE_SIZE * (DAMSEL_SPRITESHEET_OFFSET + animFrame + 43)) / 2);
+                   ((_sprite_size * (DAMSEL_SPRITESHEET_OFFSET + animFrame + 43)) / 2);
 }
 
-Damsel::Damsel(int x, int y) : Damsel() {
-    this->x = x;
-    this->y = y;
-}
-
-void Damsel::deleteSprite() {
+void Damsel::delete_sprites() {
     delete mainSpriteInfo;
     delete subSpriteInfo;
+    delete yell_mainSpriteInfo;
+    delete yell_subSpriteInfo;
     mainSpriteInfo = nullptr;
     subSpriteInfo = nullptr;
+    yell_mainSpriteInfo= nullptr;
+    yell_subSpriteInfo = nullptr;
 }

@@ -24,9 +24,9 @@
 //4) If shopkeeper is on ~same y-height as main dude it does not jump
 //fixme Main dude field dead duplicates field killed
 
-void Shopkeeper::draw() {
+void Shopkeeper::update_creature_specific() {
 
-    if (ready_to_dispose)
+    if (_ready_to_dispose)
         return;
 
     kill_if_whip(1);
@@ -58,8 +58,8 @@ void Shopkeeper::draw() {
             if (sprite->sprite_type == SpriteType::S_SHOTGUN) {
 
                 auto *sh = (Shotgun *) sprite;
-                if (Collisions::checkCollisionBodies(x, y, physical_width, physical_height,
-                                                     sh->x, sh->y, sh->physical_width, sh->physical_height)) {
+                if (Collisions::checkCollisionBodies(_x, _y, _physical_width, _physical_height, sh->_x, sh->_y,
+                                                     sh->_physical_width, sh->_physical_height)) {
                     holding_shotgun = true;
                     shotgun = sh;
                     break;
@@ -77,9 +77,9 @@ void Shopkeeper::draw() {
 
         set_pickuped_position_on_another_moving_obj(5, 3, shotgun);
 
-        if (xSpeed > 0) {
+        if (_x_speed > 0) {
             shotgun->sprite_state = SpriteState::W_RIGHT;
-        } else if (xSpeed < 0) {
+        } else if (_x_speed < 0) {
             shotgun->sprite_state = SpriteState::W_LEFT;
         }
 
@@ -96,9 +96,14 @@ void Shopkeeper::draw() {
         if (global::main_dude->killed) {
             hold_by_main_dude = false;
             stunned = true;
+            _bouncing_factor_x = ICollidable::default_bouncing_factor_x;
+            _bouncing_factor_y = ICollidable::default_bouncing_factor_y;
             stunned_timer = 0;
-        } else
+        } else {
             stunned = false;
+            _bouncing_factor_x = 0;
+            _bouncing_factor_y = 0;
+        }
 
         sprite_state = global::main_dude->sprite_state;
         sprite_utils::set_priority(OBJPRIORITY_0, mainSpriteInfo, subSpriteInfo);
@@ -109,13 +114,7 @@ void Shopkeeper::draw() {
     if (!hold_by_main_dude)
         kill_mobs_if_thrown(1);
 
-    if (bottomCollision) {
-        if (!triggered || killed || stunned) {
-            apply_friction(0.5f);
-        }
-    }
-
-    set_position();
+    update_sprites_position();
 
     if (anim_frame_timer > SHOPKEEPER_ANIM_FRAME_DELTA) {
         anim_frame++;
@@ -139,20 +138,50 @@ void Shopkeeper::draw() {
             standby = true;
         }
     }
-}
 
-void Shopkeeper::init() {
+    if (_map_collisions_checked) {
 
-    if (global::game_state->robbed_killed_shopkeeper && !no_shotgun) {
-        standby = true;
-        spawn_shotgun();
+        if (!killed && !stunned) {
+
+            if (_bottom_collision && _neighboring_tiles[TileOrientation::RIGHT_MIDDLE] != nullptr &&
+                _neighboring_tiles[TileOrientation::RIGHT_MIDDLE]->collidable &&
+                _neighboring_tiles[TileOrientation::LEFT_MIDDLE] != nullptr &&
+                _neighboring_tiles[TileOrientation::LEFT_MIDDLE]->collidable) {
+                //high jump if shopkeeper's surrounded by tiles
+                _y_speed = -5 - ((rand() % 10) / 5);
+                landlocked = true;
+            } else
+                landlocked = false;
+
+            if (!_bottom_collision) {
+
+                if ((_neighboring_tiles[TileOrientation::RIGHT_MIDDLE] == nullptr ||
+                     !_neighboring_tiles[TileOrientation::RIGHT_MIDDLE]->collidable) &&
+                    (_neighboring_tiles[TileOrientation::RIGHT_UP] != nullptr &&
+                     _neighboring_tiles[TileOrientation::RIGHT_DOWN] != nullptr)) {
+                    //if there's no collidable tile on right-mid, but there are on right-up and right-down,
+                    //add extra x-pos to ease going through a hole
+                    if (_x_speed > 0)
+                        _x += 2;
+                }
+
+                if ((_neighboring_tiles[TileOrientation::LEFT_MIDDLE] == nullptr ||
+                     !_neighboring_tiles[TileOrientation::LEFT_MIDDLE]->collidable) &&
+                    (_neighboring_tiles[TileOrientation::LEFT_UP] != nullptr &&
+                     _neighboring_tiles[TileOrientation::LEFT_DOWN] != nullptr)) {
+                    //same but for left side
+                    if (_x_speed < 0)
+                        _x -= 2;
+                }
+
+            }
+
+        }
+
+        _map_collisions_checked = false;
     }
-
-    activated = true;
-    initSprite();
-    spritesheet_type = SpritesheetType::SHOPKEEPER;
-    randomizeMovement();
 }
+
 
 void Shopkeeper::randomizeMovement() {
 
@@ -180,73 +209,6 @@ void Shopkeeper::randomizeMovement() {
 
 }
 
-void Shopkeeper::updateSpeed() {
-
-    limit_speed(MAX_X_SPEED_SHOPKEEPER, MAX_Y_SPEED_SHOPKEEPER);
-
-    pos_inc_timer += *global::timer;
-
-    if (pos_inc_timer > SHOPKEEPER_POS_INC_DELTA) {
-        update_position();
-        apply_gravity(GRAVITY_DELTA_SPEED * 1.5);
-        pos_inc_timer = 0;
-    }
-
-}
-
-void Shopkeeper::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
-
-    MapTile *t[9] = {};
-    Collisions::getNeighboringTiles(global::current_level->map_tiles,
-                                    x_current_pos_in_tiles, y_current_pos_in_tiles, t);
-
-    bool bounce = (stunned || killed);
-
-    standingOnLeftEdge = Collisions::isStandingOnLeftEdge(t, x, physical_width, x_current_pos_in_tiles);
-    standingOnRightEdge = Collisions::isStandingOnRightEdge(t, x, physical_width, x_current_pos_in_tiles);
-    upperCollision = Collisions::checkUpperCollision(t, &x, &y, &ySpeed, physical_width, false, 0);
-    bottomCollision = Collisions::checkBottomCollision(t, &x, &y, &ySpeed, physical_width,
-                                                       physical_height, bounce, BOUNCING_FACTOR_Y);
-    leftCollision = Collisions::checkLeftCollision(t, &x, &y, &xSpeed, physical_width,
-                                                   physical_height, bounce, BOUNCING_FACTOR_X);
-    rightCollision = Collisions::checkRightCollision(t, &x, &y, &xSpeed, physical_width,
-                                                     physical_height, bounce, BOUNCING_FACTOR_X);
-
-
-    if (bounce)
-        return;
-
-    if (bottomCollision && t[TileOrientation::RIGHT_MIDDLE] != nullptr &&
-        t[TileOrientation::RIGHT_MIDDLE]->collidable &&
-        t[TileOrientation::LEFT_MIDDLE] != nullptr &&
-        t[TileOrientation::LEFT_MIDDLE]->collidable) {
-        //high jump if shopkeeper's surrounded by tiles
-        ySpeed = -5 - ((rand() % 10) / 5);
-        landlocked = true;
-    } else
-        landlocked = false;
-
-    if (!bottomCollision) {
-
-        if ((t[TileOrientation::RIGHT_MIDDLE] == nullptr || !t[TileOrientation::RIGHT_MIDDLE]->collidable) &&
-            (t[TileOrientation::RIGHT_UP] != nullptr && t[TileOrientation::RIGHT_DOWN] != nullptr)) {
-            //if there's no collidable tile on right-mid, but there are on right-up and right-down,
-            //add extra x-pos to ease going through a hole
-            if (xSpeed > 0)
-                x += 2;
-        }
-
-        if ((t[TileOrientation::LEFT_MIDDLE] == nullptr || !t[TileOrientation::LEFT_MIDDLE]->collidable) &&
-            (t[TileOrientation::LEFT_UP] != nullptr && t[TileOrientation::LEFT_DOWN] != nullptr)) {
-            //same but for left side
-            if (xSpeed < 0)
-                x -= 2;
-        }
-
-    }
-
-}
-
 void Shopkeeper::apply_dmg(int dmg_to_apply) {
 
     if (dmg_to_apply == 0) {
@@ -256,7 +218,7 @@ void Shopkeeper::apply_dmg(int dmg_to_apply) {
     hitpoints -= dmg_to_apply;
     if (blood_spawn_timer > 1000) {
         blood_spawn_timer = 0;
-        ySpeed = -2.5; //jump a little bit on receiving dmg, even if dead
+        _y_speed = -2.5; //jump a little bit on receiving dmg, even if dead
         if (!killed)
             spawn_blood();
     }
@@ -267,35 +229,36 @@ void Shopkeeper::apply_dmg(int dmg_to_apply) {
         global::game_state->robbed_killed_shopkeeper = true;
         global::killed_npcs.push_back(SpriteType::S_SHOPKEEPER);
         killed = true;
+        _bouncing_factor_x = ICollidable::default_bouncing_factor_x;
+        _bouncing_factor_y = ICollidable::default_bouncing_factor_y;
         stunned = false;
     }
 
 }
 
-void Shopkeeper::initSprite() {
+void Shopkeeper::init_sprites() {
 
-    delete mainSpriteInfo;
-    delete subSpriteInfo;
+    delete_sprites();
 
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_shopkeeperPal, gfx_shopkeeperPalLen,
-                                                        nullptr, SHOPKEEPER_SPRITE_SIZE, 16, SHOPKEEPER,
+                                                        nullptr, _sprite_size, 16, SHOPKEEPER,
                                                         true, false, LAYER_LEVEL::MIDDLE_BOT);
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_shopkeeperPal, gfx_shopkeeperPalLen,
-                                                          nullptr, SHOPKEEPER_SPRITE_SIZE, 16, SHOPKEEPER,
+                                                          nullptr, _sprite_size, 16, SHOPKEEPER,
                                                           true, false, LAYER_LEVEL::MIDDLE_BOT);
 
-    set_position();
+    update_sprites_position();
     match_animation();
     sprite_utils::set_horizontal_flip(sprite_state == SpriteState::W_RIGHT, mainSpriteInfo, subSpriteInfo);
     sprite_utils::set_visibility(true, mainSpriteInfo, subSpriteInfo);
     sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);
 }
 
-void Shopkeeper::set_position() {
+void Shopkeeper::update_sprites_position() {
     int main_x, main_y, sub_x, sub_y;
     get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
 
-    if (killed && ySpeed == 0 && xSpeed == 0) {
+    if (killed && _y_speed == 0 && _x_speed == 0) {
         main_y += 4;
         sub_y += 4;
     }
@@ -304,15 +267,6 @@ void Shopkeeper::set_position() {
     sprite_utils::set_entry_xy(subSpriteInfo, sub_x, sub_y);
 
 }
-
-Shopkeeper::Shopkeeper() {
-    physical_height = SHOPKEEPER_PHYSICAL_HEIGHT;
-    physical_width = SHOPKEEPER_PHYSICAL_WIDTH;
-    sprite_height = SHOPKEEPER_SPRITE_HEIGHT;
-    sprite_width = SHOPKEEPER_SPRITE_WIDTH;
-    hitpoints = SHOPKEEPER_HITPOINTS;
-}
-
 
 void Shopkeeper::make_some_movement() {
 
@@ -328,19 +282,19 @@ void Shopkeeper::make_some_movement() {
 
         if (triggered) {
             if (sprite_state == SpriteState::W_RIGHT)
-                xSpeed = SHOPKEEPER_TRIGGERED_SPEED;
+                _x_speed = SHOPKEEPER_TRIGGERED_SPEED;
             else
-                xSpeed = -SHOPKEEPER_TRIGGERED_SPEED;
+                _x_speed = -SHOPKEEPER_TRIGGERED_SPEED;
         } else if (standby) {
             if (sprite_state == SpriteState::W_RIGHT)
-                xSpeed = 1;
+                _x_speed = 1;
             else
-                xSpeed = -1;
+                _x_speed = -1;
         }
 
         if (go_timer <= 0 && (!triggered && standby)) {
             randomizeMovement();
-            xSpeed = 0;
+            _x_speed = 0;
         }
 
         if (invert_speed_timer < SHOPKEEPER_INVERT_SPEED_DELTA)
@@ -352,20 +306,20 @@ void Shopkeeper::make_some_movement() {
             if (rand() % 2 == 0) {
                 go_timer = 0;
             } else
-                xSpeed *= -1;
+                _x_speed *= -1;
 
         }
 
-        if ((leftCollision || rightCollision) && !landlocked) {
+        if ((_left_collision || _right_collision) && !landlocked) {
 
             if (sprite_state == SpriteState::W_LEFT)
                 sprite_state = SpriteState::W_RIGHT;
             else
                 sprite_state = SpriteState::W_LEFT;
 
-            xSpeed *= -1;
-            rightCollision = false;
-            leftCollision = false;
+            _x_speed *= -1;
+            _right_collision = false;
+            _left_collision = false;
         }
 
     }
@@ -376,14 +330,14 @@ void Shopkeeper::make_some_movement() {
 //!> after calling this function, call sprite_utils::update_frame to update OAM with current frameGfx
 void Shopkeeper::apply_stunned_carried_sprites() {
     anim_frame = 0;
-    frameGfx = sprite_utils::get_frame((u8 *) gfx_shopkeeperTiles, SHOPKEEPER_SPRITE_SIZE,
+    frameGfx = sprite_utils::get_frame((u8 *) gfx_shopkeeperTiles, _sprite_size,
                                        SHOPKEEPER_SPRITESHEET_OFFSET + 4);
 }
 
 //!> after calling this function, call sprite_utils::update_frame to update OAM with current frameGfx
 void Shopkeeper::apply_dead_carried_sprites() {
     anim_frame = 0;
-    frameGfx = sprite_utils::get_frame((u8 *) gfx_shopkeeperTiles, SHOPKEEPER_SPRITE_SIZE,
+    frameGfx = sprite_utils::get_frame((u8 *) gfx_shopkeeperTiles, _sprite_size,
                                        SHOPKEEPER_SPRITESHEET_OFFSET);
 }
 
@@ -391,11 +345,11 @@ void Shopkeeper::apply_dead_carried_sprites() {
 void Shopkeeper::apply_dead_sprites() {
     anim_frame = 0;
 
-    if (ySpeed == 0)
-        frameGfx = sprite_utils::get_frame((u8 *) gfx_shopkeeperTiles, SHOPKEEPER_SPRITE_SIZE,
+    if (_y_speed == 0)
+        frameGfx = sprite_utils::get_frame((u8 *) gfx_shopkeeperTiles, _sprite_size,
                                            SHOPKEEPER_SPRITESHEET_OFFSET);
     else
-        frameGfx = sprite_utils::get_frame((u8 *) gfx_shopkeeperTiles, SHOPKEEPER_SPRITE_SIZE,
+        frameGfx = sprite_utils::get_frame((u8 *) gfx_shopkeeperTiles, _sprite_size,
                                            SHOPKEEPER_SPRITESHEET_OFFSET + 3);
 }
 
@@ -406,11 +360,11 @@ void Shopkeeper::apply_walking_sprites() {
     if (anim_frame >= 6)
         anim_frame = 0;
 
-    if (xSpeed == 0 && ySpeed == 0)
-        frameGfx = sprite_utils::get_frame((u8 *) gfx_shopkeeperTiles, SHOPKEEPER_SPRITE_SIZE,
+    if (_x_speed == 0 && _y_speed == 0)
+        frameGfx = sprite_utils::get_frame((u8 *) gfx_shopkeeperTiles, _sprite_size,
                                            SHOPKEEPER_SPRITESHEET_OFFSET + 24);
     else
-        frameGfx = sprite_utils::get_frame((u8 *) gfx_shopkeeperTiles, SHOPKEEPER_SPRITE_SIZE,
+        frameGfx = sprite_utils::get_frame((u8 *) gfx_shopkeeperTiles, _sprite_size,
                                            SHOPKEEPER_SPRITESHEET_OFFSET + 12 + anim_frame);
 
 }
@@ -421,14 +375,14 @@ void Shopkeeper::apply_stunned_sprites() {
     if (anim_frame >= 6)
         anim_frame = 0;
 
-    if (ySpeed == 0)
-        frameGfx = sprite_utils::get_frame((u8 *) gfx_shopkeeperTiles, SHOPKEEPER_SPRITE_SIZE,
+    if (_y_speed == 0)
+        frameGfx = sprite_utils::get_frame((u8 *) gfx_shopkeeperTiles, _sprite_size,
                                            SHOPKEEPER_SPRITESHEET_OFFSET + 18 + anim_frame);
-    else if (ySpeed > 0)
-        frameGfx = sprite_utils::get_frame((u8 *) gfx_shopkeeperTiles, SHOPKEEPER_SPRITE_SIZE,
+    else if (_y_speed > 0)
+        frameGfx = sprite_utils::get_frame((u8 *) gfx_shopkeeperTiles, _sprite_size,
                                            SHOPKEEPER_SPRITESHEET_OFFSET + 4);
     else
-        frameGfx = sprite_utils::get_frame((u8 *) gfx_shopkeeperTiles, SHOPKEEPER_SPRITE_SIZE,
+        frameGfx = sprite_utils::get_frame((u8 *) gfx_shopkeeperTiles, _sprite_size,
                                            SHOPKEEPER_SPRITESHEET_OFFSET + 2);
 }
 
@@ -444,7 +398,7 @@ void Shopkeeper::match_animation() {
     else
         apply_walking_sprites();
 
-    sprite_utils::update_frame(frameGfx, SHOPKEEPER_SPRITE_SIZE, mainSpriteInfo, subSpriteInfo);
+    sprite_utils::update_frame(frameGfx, _sprite_size, mainSpriteInfo, subSpriteInfo);
 }
 
 void Shopkeeper::set_shop_bounds() {
@@ -461,25 +415,25 @@ void Shopkeeper::set_shop_bounds() {
 
     int tile_x = shop_sign->x * TILE_W;
 
-    shop_bounds_up_y_px = y - (8 * TILE_H);
-    shop_bounds_down_y_px = y + (2 * TILE_H);
+    shop_bounds_up_y_px = _y - (8 * TILE_H);
+    shop_bounds_down_y_px = _y + (2 * TILE_H);
 
-    if (x - tile_x > 0) {
+    if (_x - tile_x > 0) {
         //left oriented shop (exit/entrance is on the left side)
         sprite_state = SpriteState::W_LEFT;
-        shop_bounds_right_x_px = x + (3 * TILE_W);
+        shop_bounds_right_x_px = _x + (3 * TILE_W);
         if (standby)
-            shop_bounds_left_x_px = x - (9 * TILE_W);
+            shop_bounds_left_x_px = _x - (9 * TILE_W);
         else
-            shop_bounds_left_x_px = x - (6 * TILE_W);
+            shop_bounds_left_x_px = _x - (6 * TILE_W);
 
     } else {
         sprite_state = SpriteState::W_RIGHT;
-        shop_bounds_left_x_px = x - (3 * TILE_W);
+        shop_bounds_left_x_px = _x - (3 * TILE_W);
         if (standby)
-            shop_bounds_right_x_px = x + (9 * TILE_W);
+            shop_bounds_right_x_px = _x + (9 * TILE_W);
         else
-            shop_bounds_right_x_px = x + (6 * TILE_W);
+            shop_bounds_right_x_px = _x + (6 * TILE_W);
     }
 
 }
@@ -491,8 +445,8 @@ void Shopkeeper::check_if_dude_in_shop_bounds() {
     if (killed)
         return;
 
-    if (global::main_dude->x < shop_bounds_right_x_px && global::main_dude->x > shop_bounds_left_x_px &&
-        global::main_dude->y > shop_bounds_up_y_px && global::main_dude->y < shop_bounds_down_y_px) {
+    if (global::main_dude->_x < shop_bounds_right_x_px && global::main_dude->_x > shop_bounds_left_x_px &&
+        global::main_dude->_y > shop_bounds_up_y_px && global::main_dude->_y < shop_bounds_down_y_px) {
 
         if (standby) {
             trigger();
@@ -506,7 +460,7 @@ void Shopkeeper::check_if_dude_in_shop_bounds() {
             introduced_shop_name = true;
         }
 
-        int diff = x - global::main_dude->x;
+        int diff = _x - global::main_dude->_x;
 
         if (!triggered) {
 
@@ -522,9 +476,9 @@ void Shopkeeper::check_if_dude_in_shop_bounds() {
                 if (abs_diff > 1.5 * TILE_W) {
 
                     if (diff > 0)
-                        xSpeed = -2.5f;
+                        _x_speed = -2.5f;
                     else
-                        xSpeed = 2.5f;
+                        _x_speed = 2.5f;
 
                 }
 
@@ -537,12 +491,12 @@ void Shopkeeper::check_if_dude_in_shop_bounds() {
         trigger();
     } else {
 
-        bool shopkeeper_in_shop = x < shop_bounds_right_x_px && x > shop_bounds_left_x_px &&
-                                  y > shop_bounds_up_y_px && y < shop_bounds_down_y_px;
+        bool shopkeeper_in_shop = _x < shop_bounds_right_x_px && _x > shop_bounds_left_x_px &&
+                                  _y > shop_bounds_up_y_px && _y < shop_bounds_down_y_px;
 
-        if ((bottomCollision && (leftCollision || rightCollision)) ||
-            (!shopkeeper_in_shop && jumping_timer > staying_on_ground && bottomCollision && !(killed || stunned))) {
-            ySpeed = -5 - ((rand() % 10) / 5);
+        if ((_bottom_collision && (_left_collision || _right_collision)) ||
+            (!shopkeeper_in_shop && jumping_timer > staying_on_ground && _bottom_collision && !(killed || stunned))) {
+            _y_speed = -5 - ((rand() % 10) / 5);
             jumping_timer = 0;
             staying_on_ground = 250 + (rand() % 1250);
         }
@@ -550,23 +504,21 @@ void Shopkeeper::check_if_dude_in_shop_bounds() {
 }
 
 void Shopkeeper::de_shopify_all_items() {
-    for (int a = 0; a < 4; a++) {
+    for (auto &shop_item : shop_items) {
 
-        if (shop_items[a] == nullptr)
+        if (shop_item == nullptr)
             continue;
 
-        shop_items[a]->bought = true;
-        shop_items[a]->shopping_icon->set_ready_to_dispose();
-
+        shop_item->_bought = true;
+        shop_item->_shopping_icon->set_ready_to_dispose();
     }
     global::game_state->robbed_killed_shopkeeper = true;
 }
 
 void Shopkeeper::spawn_shotgun() {
-    shotgun = new Shotgun();
+    shotgun = new Shotgun(0, 0);
     shotgun->hold_by_main_dude = false;
-    shotgun->bought = true;
-    shotgun->init();
+    shotgun->_bought = true;
     shotgun->cooldown = 250;
     global::creatures_to_add.push_back(shotgun);
     holding_shotgun = true;
@@ -586,15 +538,32 @@ void Shopkeeper::trigger() {
     }
 }
 
-
-Shopkeeper::Shopkeeper(int x, int y) : Shopkeeper() {
-    this->x = x;
-    this->y = y;
-}
-
-void Shopkeeper::deleteSprite() {
+void Shopkeeper::delete_sprites() {
     delete mainSpriteInfo;
     delete subSpriteInfo;
     mainSpriteInfo = nullptr;
     subSpriteInfo = nullptr;
 }
+
+Shopkeeper::Shopkeeper(int x, int y) : BaseCreature(
+        x,
+        y,
+        shopkeeper_sprite_width,
+        shopkeeper_sprite_height,
+        shopkeeper_spritesheet_type,
+        shopkeeper_physical_width,
+        shopkeeper_physical_height
+    ) {
+    hitpoints = 3;
+
+    if (global::game_state->robbed_killed_shopkeeper && !no_shotgun) {
+        standby = true;
+        spawn_shotgun();
+    }
+    init_sprites();
+    activated = true;
+    randomizeMovement();
+    _pos_update_delta = 18;
+    _friction = 0.5f;
+}
+

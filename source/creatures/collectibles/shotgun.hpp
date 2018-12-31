@@ -5,66 +5,52 @@
 #ifndef SPELUNKYDS_SHOTGUN_H
 #define SPELUNKYDS_SHOTGUN_H
 
-
 #include "../_base_creature.h"
-#include "../shopping_object.h"
+#include "../../interfaces/shopping_object.h"
 #include "../../decorations/blast.hpp"
-
-#define SHOTGUN_PHYSICAL_HEIGHT 7
-#define SHOTGUN_PHYSICAL_WIDTH 13
-
-#define SHOTGUN_SPRITE_HEIGHT 16
-#define SHOTGUN_SPRITE_WIDTH 16
-#define SHOTGUN_SPRITE_SIZE SHOTGUN_SPRITE_WIDTH * SHOTGUN_SPRITE_HEIGHT
-
-#define MAX_X_SPEED_SHOTGUN 4
-#define MAX_Y_SPEED_SHOTGUN 4
 
 //http://spelunky.wikia.com/wiki/Shotgun
 class Shotgun: public BaseCreature, public ShoppingObject {
 
 public:
 
-    void introduce_yourself() override { printf("SHOTGUN\n"); };
+    static constexpr u16 shotgun_cost = 13500;
+    static constexpr const char *shotgun_name = "SHOTGUN";
+    static constexpr u8 shotgun_sprite_width = 16;
+    static constexpr u8 shotgun_sprite_height = 16;
+    static constexpr u16 shotgun_physical_width = 13;
+    static constexpr u16 shotgun_physical_height = 7;
+    static constexpr SpritesheetType shotgun_spritesheet_type = SpritesheetType::SPIKES_COLLECTIBLES;
 
-    Shotgun();
+    Shotgun(int x, int y);
 
-    void updateOther() override {};
+    // Base creature overrides
 
-    void init() override;
+    void update_creature_specific() override;
 
-    void draw() override;
-
-    void initSprite() override;
-
-    void deleteSprite() override;
+    void introduce_yourself() override { printf("WHIP\n"); };
 
     void apply_dmg(int dmg_to_apply) override {};
 
-    void updateTimers() override {};
-
-    void updateSpeed() override;
-
-    void updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) override;
-
-    void updateCollisionsOtherMoving() override {};
-
     void onCollisionWithMainCharacter() override {};
 
-    bool hold_by_anyone{};
+    // IRenderable overrides
 
-    double pos_inc_timer{};
+    void init_sprites() override;
 
-    SpriteInfo *mainSpriteInfo {};
-    SpriteInfo *subSpriteInfo {};
+    void delete_sprites() override;
 
-    Blast *blast{};
+    void update_sprites_position() override;
 
-    double cooldown{};
-    bool firing{};
-    u8 * frameGfx{};
+    // ICollidable overrides
 
-    void set_position();
+    bool can_update_collidable() override { return !hold_by_main_dude || hold_by_anyone; }
+
+    bool can_apply_friction() override { return true; }
+
+    bool can_apply_gravity() override { return true; }
+
+    // Other, creature specific
 
     void spawn_bullets();
 
@@ -73,11 +59,17 @@ public:
     void match_animation();
 
     void handle_shooting();
+    
+    bool hold_by_anyone{};
+    double pos_inc_timer{};
+    SpriteInfo *mainSpriteInfo {};
+    SpriteInfo *subSpriteInfo {};
+    Blast *blast{};
+    double cooldown{};
+    bool firing{};
+    u8 * frameGfx{};
+
+
 };
-
-
-
-
-
 
 #endif //SPELUNKYDS_SHOTGUN_H

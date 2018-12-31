@@ -6,13 +6,11 @@
 #ifndef SPELUNKYDS_MOVINGOBJECT_H
 #define SPELUNKYDS_MOVINGOBJECT_H
 
-#include <cstdio>
-
-#include "../memory/oam_manager.hpp"
-#include "../camera/camera.hpp"
 #include "spritesheet_type.hpp"
 #include "sprite_state.hpp"
 #include "sprite_type.hpp"
+#include "../interfaces/IRenderable.h"
+#include "../interfaces/ICollidable.h"
 
 /**
  *  https://en.wikibooks.org/wiki/C%2B%2B_Programming/Classes/Abstract_Classes
@@ -22,95 +20,57 @@
  *  https://en.wikibooks.org/wiki/C%2B%2B_Programming/Classes#Virtual_member_functions
  *  https://stackoverflow.com/questions/121162/what-does-the-explicit-keyword-mean
  */
-class BaseCreature {
+class BaseCreature : public IRenderable, public ICollidable {
+
 public:
+
+    // Constructor of inheriting class should call init_sprites.
+    BaseCreature(
+            int x,
+            int y,
+            const u16 sprite_width,
+            const u16 sprite_height,
+            const SpritesheetType spritesheet_type,
+            u16 physical_width,
+            u16 physical_height
+    ) :
+            IRenderable(sprite_width, sprite_height, spritesheet_type),
+            ICollidable(physical_width, physical_height) {
+        set_xy(x, y);
+    }
+
+    virtual ~BaseCreature() = default;
+
+    inline void update() {
+        if (can_update_collidable()) update_collidable();
+        update_creature_specific();
+    };
 
     //for debugging purposes
     //https://stackoverflow.com/questions/3649278/how-can-i-get-the-class-name-from-a-c-object
     //https://stackoverflow.com/questions/32016809/using-typeid-to-get-name-of-derived-class
     virtual void introduce_yourself() = 0;
 
-    virtual ~BaseCreature() = default;
-
-    void update() {
-        updateOther();
-        updateSpeed();
-        updateTimers();
-    };
-
-    void set_sprite_state_basing_on_speed();
-
-    void limit_speed(int max_x, int max_y);
-
-    void apply_friction(float friction_delta_speed);
-
-    virtual void initSprite() = 0;
-
-    virtual void deleteSprite() = 0;
-
-    virtual void draw() = 0;
+    virtual void update_creature_specific() = 0;
 
     virtual void apply_dmg(int dmg_to_apply) = 0;
 
-    virtual void init() = 0;
-
-    virtual void updateTimers() = 0;
-
-    virtual void update_position();
-
-    virtual void updateSpeed() = 0;
-
-    virtual void updateOther() = 0;
-
-    virtual void updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) = 0;
-
-    virtual void updateCollisionsOtherMoving() = 0;
-
     virtual void onCollisionWithMainCharacter() = 0;
 
-    //TODO Make x,y as float, cast (floor) to int when drawn.
-    int x{};
-    int y{};
+    virtual bool can_update_collidable() = 0;
 
     int hitpoints{};
-
-    //for rendering
-    int sprite_width{};
-    int sprite_height{};
-
-    //for collisions
-    int physical_width{};
-    int physical_height{};
-
-    double xSpeed{};
-    double ySpeed{};
-
     bool standingOnLeftEdge{};
     bool standingOnRightEdge{};
-    bool bottomCollision{};
-    bool upperCollision{};
-    bool leftCollision{};
-    bool rightCollision{};
-
     bool hold_by_main_dude{};
     bool activated{}; //ex. shooting shotgun, or arming bomb
-
     bool killed{};
-    bool ready_to_dispose{};
 
     SpriteState sprite_state{};
-
-    SpritesheetType spritesheet_type{};
-
     SpriteType sprite_type{};
 
-    //todo apply this
-    double speed_of_throwing_x{};
-    double speed_of_throwing_y{};
-
-    void get_x_y_viewported(int *out_main_x, int *out_main_y, int *out_sub_x, int *out_sub_y);
-
-    void apply_gravity(double acceleration);
+    // TODO Distribute these utils between ICollidable/IRenderable, some may stay here as they are creature-specific.
+    // Some can be moved to other class / namespace, like spawn_blood.
 
     bool kill_mobs_if_thrown(int dmg_to_apply);
 

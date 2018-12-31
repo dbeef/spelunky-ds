@@ -8,63 +8,74 @@
 #include "../sprite_info.h"
 #include "../sprite_state.hpp"
 #include "../_base_creature.h"
-#include "../shopping_object.h"
-
-#define COMPASS_PHYSICAL_HEIGHT 12
-#define COMPASS_PHYSICAL_WIDTH 12
-
-#define COMPASS_SPRITE_HEIGHT 16
-#define COMPASS_SPRITE_WIDTH 16
-#define COMPASS_SPRITE_SIZE COMPASS_SPRITE_WIDTH * COMPASS_SPRITE_HEIGHT
-
-#define MAX_X_SPEED_COMPASS 4
-#define MAX_Y_SPEED_COMPASS 4
+#include "../../interfaces/shopping_object.h"
 
 //http://spelunky.wikia.com/wiki/Compass
 class Compass : public BaseCreature , public ShoppingObject {
 
 public:
 
-    void introduce_yourself() override { printf("COMPASS\n"); };
+    static constexpr u8 compas_sprite_width = 16;
+    static constexpr u8 compas_sprite_height = 16;
+    static constexpr u16 compas_physical_width = 12;
+    static constexpr u16 compas_physical_height = 12;
+    static constexpr u16 compas_cost = 3000;
+    static constexpr const char *compas_name = "COMPASS";
+    static constexpr SpritesheetType compas_spritesheet_type = SpritesheetType::SALEABLE;
 
-    Compass();
+public:
 
-    void updateOther() override {};
+    Compass(int x, int y) : BaseCreature(
+            x,
+            y,
+            compas_sprite_width,
+            compas_sprite_height,
+            compas_spritesheet_type,
+            compas_physical_width,
+            compas_physical_height
+    ), ShoppingObject(compas_cost, compas_name) {
+        init_anim_icon();
+        update_anim_icon(x, y, _physical_width);
+        init_sprites();
+    }
 
-    void init() override;
+    // Base creature overrides
 
-    void draw() override;
+    void update_creature_specific() override;
 
-    void initSprite() override;
-
-    void deleteSprite() override;
+    void introduce_yourself() override { printf("WHIP\n"); };
 
     void apply_dmg(int dmg_to_apply) override {};
 
-    void updateTimers() override {};
-
-    void updateSpeed() override;
-
-    void updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) override;
-
-    void updateCollisionsOtherMoving() override {};
-
     void onCollisionWithMainCharacter() override {};
 
-    double pos_inc_timer{};
+    // IRenderable overrides
 
-    bool collected{};
+    void init_sprites() override;
 
-    SpriteInfo *mainSpriteInfo{};
-    SpriteInfo *subSpriteInfo{};
+    void delete_sprites() override;
 
-    u8 *frameGfx{};
+    void update_sprites_position() override;
 
-    void set_position();
+    // ICollidable overrides
+
+    bool can_update_collidable() override { return true; }
+
+    bool can_apply_friction() override { return true; }
+
+    bool can_apply_gravity() override { return true; }
+
+    // Other, creature specific
 
     void draw_arrow_to_exit();
 
     void equip();
+
+    double pos_inc_timer{};
+    bool collected{};
+    SpriteInfo *mainSpriteInfo{};
+    SpriteInfo *subSpriteInfo{};
+    u8 *frameGfx{};
 };
 
 

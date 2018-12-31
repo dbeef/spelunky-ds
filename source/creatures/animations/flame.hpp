@@ -8,80 +8,85 @@
 #define MAX_X_SPEED_FLAME 1.5
 #define MAX_Y_SPEED_FLAME 1.5
 
-#define FLAME_PHYSICAL_HEIGHT 6
-#define FLAME_PHYSICAL_WIDTH 6
-
-#define FLAME_SPRITE_HEIGHT 16
-#define FLAME_SPRITE_WIDTH 16
-#define FLAME_SPRITE_SIZE FLAME_SPRITE_WIDTH * FLAME_SPRITE_HEIGHT
-
 #define FLAME_CHANGE_POS_DELTA 16
 #define FLAME_ANIM_FRAME_DELTA 90
 
 #include <vector>
+#include <cstdlib>
+
+#define flame_sprite_width 16
+#define flame_sprite_height 16
+#define flame_physical_width 6
+#define flame_physical_height 6
+#define flame_spritesheet_type SpritesheetType::SPIKES_COLLECTIBLES
+
 #include "../_base_creature.h"
 #include "../sprite_info.h"
 #include "flame_element.hpp"
 
 //almost same as blood animation
-
 class Flame : public BaseCreature {
 
 public:
+    
+    Flame(int x, int y) : BaseCreature(
+            x,
+            y,
+            flame_sprite_width,
+            flame_sprite_height,
+            flame_spritesheet_type,
+            flame_physical_width,
+            flame_physical_height
+    ) {
+        _pos_update_delta = 30;
+        change_pos_delta_offset = FLAME_CHANGE_POS_DELTA + (rand() % 5);
+        init_sprites();
+    }
 
-    void introduce_yourself() override { printf("FLAME\n"); };
+    // Base creature overrides
 
-    Flame();
+    void update_creature_specific() override;
 
-    void updateOther() override {};
-
-    void init() override;
+    void introduce_yourself() override { printf("WHIP\n"); }
 
     void apply_dmg(int dmg_to_apply) override {};
 
-    void initSprite() override;
-
-    void deleteSprite() override;
-
-    void draw() override;
-
-    void updateTimers() override {};
-
-    void updateSpeed() override;
-
-    void updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) override;
-
-    void updateCollisionsOtherMoving() override {};
-
     void onCollisionWithMainCharacter() override {};
 
+    // IRenderable overrides
 
-    double *timer {};
-    double pos_inc_timer{};
+    void init_sprites() override;
 
-    SpriteInfo *mainSpriteInfo {};
-    SpriteInfo *subSpriteInfo {};
+    void delete_sprites() override;
 
-    u8 *frameGfx{};
+    void update_sprites_position() override;
 
-    bool finished{};
-    int currentFrame{};
-    double animFrameTimer{};
+    // ICollidable overrides
 
-    std::vector<FlameElement *> flame_trail;
+    bool can_update_collidable() override { return !finished && !_ready_to_dispose; }
 
-    double living_timer{};
-    double time_since_last_spawn{};
+    bool can_apply_friction() override { return true; }
 
-    int change_pos_delta_offset{};
+    bool can_apply_gravity() override { return true; }
+
+    // Other, creature specific
 
     void spawn_flame();
 
-    void set_position();
-
     void match_animation();
+
+    double *timer {};
+    SpriteInfo *mainSpriteInfo {};
+    SpriteInfo *subSpriteInfo {};
+    u8 *frameGfx{};
+    bool finished{};
+    int currentFrame{};
+    double animFrameTimer{};
+    std::vector<FlameElement *> flame_trail;
+    double living_timer{};
+    double time_since_last_spawn{};
+    int change_pos_delta_offset{};
+
 };
-
-
 
 #endif //SPELUNKYDS_FLAME_H

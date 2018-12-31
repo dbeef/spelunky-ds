@@ -7,64 +7,71 @@
 
 
 #include "../_base_creature.h"
-#include "../shopping_object.h"
-
-#define CRATE_PHYSICAL_HEIGHT 10
-#define CRATE_PHYSICAL_WIDTH 12
-
-#define CRATE_SPRITE_HEIGHT 16
-#define CRATE_SPRITE_WIDTH 16
-#define CRATE_SPRITE_SIZE CRATE_SPRITE_WIDTH * CRATE_SPRITE_HEIGHT
-
-#define MAX_X_SPEED_CRATE 4
-#define MAX_Y_SPEED_CRATE 4
+#include "../../interfaces/shopping_object.h"
 
 //http://spelunky.wikia.com/wiki/Crate
 class Crate: public BaseCreature {
 
 public:
 
-    void introduce_yourself() override { printf("CRATE\n"); };
+    static constexpr u8 crate_sprite_width = 16;
+    static constexpr u8 crate_sprite_height = 16;
+    static constexpr u16 crate_physical_width = 12;
+    static constexpr u16 crate_physical_height = 10;
+    static constexpr SpritesheetType crate_spritesheet_type = SpritesheetType::SPIKES_COLLECTIBLES;
 
-    Crate();
+    Crate(int x, int y) : BaseCreature(
+            x,
+            y,
+            crate_sprite_width,
+            crate_sprite_height,
+            crate_spritesheet_type,
+            crate_physical_width,
+            crate_physical_height
+    ) {
+        init_sprites();
+    }
 
-    void updateOther() override {};
+    // Base creature overrides
 
-    void init() override;
+    void update_creature_specific() override;
 
-    void draw() override;
-
-    void initSprite() override;
-
-    void deleteSprite() override;
+    void introduce_yourself() override { printf("WHIP\n"); };
 
     void apply_dmg(int dmg_to_apply) override {};
 
-    void updateTimers() override {};
-
-    void updateSpeed() override;
-
-    void updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) override;
-
-    void updateCollisionsOtherMoving() override {};
-
     void onCollisionWithMainCharacter() override {};
 
-    double pos_inc_timer{};
+    // IRenderable overrides
 
-    SpriteInfo *mainSpriteInfo {};
-    SpriteInfo *subSpriteInfo {};
-    u8 * frameGfx{};
+    void init_sprites() override;
 
-    bool dropped_loot{};
-    int animFrame{};
-    double animFrameTimer{};
+    void delete_sprites() override;
 
-    void set_position();
+    void update_sprites_position() override;
+
+    // ICollidable overrides
+
+    bool can_update_collidable() override { return true; }
+
+    bool can_apply_friction() override { return true; }
+
+    bool can_apply_gravity() override { return true; }
+
+    // Other, creature specific
 
     void drop_loot();
 
     void play_collectible_animation();
+    
+    double pos_inc_timer{};
+    SpriteInfo *mainSpriteInfo {};
+    SpriteInfo *subSpriteInfo {};
+    u8 * frameGfx{};
+    bool dropped_loot{};
+    int animFrame{};
+    double animFrameTimer{};
+    
 };
 
 

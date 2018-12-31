@@ -13,113 +13,84 @@
 #include "../../sound/sound_utils.hpp"
 #include "../sprite_utils.hpp"
 
-void Spikes::draw() {
+void Spikes::update_creature_specific() {
 
-    if (ready_to_dispose)
-        return;
+    if (_ready_to_dispose) return;
 
     if (!global::main_dude->dead && !global::main_dude->using_cape
         && Collisions::checkCollisionBodiesLeftLowerCorner
-                (x, y + 16, physical_width, physical_height, global::main_dude->x, global::main_dude->y + 16, 16, 16) &&
+                (_x, _y + 16, _physical_width, _physical_height, global::main_dude->_x, global::main_dude->_y + 16, 16, 16) &&
         /*global::main_dude->time_since_last_damage > 1000 &&*/
-        !global::main_dude->bottomCollision && global::main_dude->ySpeed > 1) {
+        !global::main_dude->_bottom_collision && global::main_dude->_y_speed > 1) {
 
-        kill_main_dude();
+        global::main_dude->set_dead();
         spawn_blood();
-        blood = true;
-        frameGfx = (u8 *) gfx_spike_collectibles_flameTiles + (SPIKES_SPRITE_SIZE * (1) / 2);
-        sprite_utils::update_frame(frameGfx, SPIKES_SPRITE_SIZE, mainSpriteInfo, subSpriteInfo);
+        _blood = true;
+        _frame_gfx = (u8 *) gfx_spike_collectibles_flameTiles + (_sprite_size * (1) / 2);
+        sprite_utils::update_frame(_frame_gfx, _sprite_size, _main_sprite_info, _sub_sprite_info);
     }
 
     for (unsigned long a = 0; a < global::creatures.size(); a++) {
-        if ((global::creatures.at(a)->sprite_type == SpriteType ::S_SPIDER ||
-             global::creatures.at(a)->spritesheet_type == SpritesheetType::CAVEMAN_DAMSEL ||
-             global::creatures.at(a)->spritesheet_type == SpritesheetType::SHOPKEEPER)
-            && !global::creatures.at(a)->ready_to_dispose && !global::creatures.at(a)->killed) {
+        if ((global::creatures.at(a)->sprite_type == SpriteType::S_SPIDER ||
+             global::creatures.at(a)->_spritesheet_type == SpritesheetType::CAVEMAN_DAMSEL ||
+             global::creatures.at(a)->_spritesheet_type == SpritesheetType::SHOPKEEPER)
+            && !global::creatures.at(a)->_ready_to_dispose && !global::creatures.at(a)->killed) {
 
-            if (Collisions::checkCollisionBodies(x, y, physical_width, physical_height,
-                                                 global::creatures.at(a)->x,
-                                                 global::creatures.at(a)->y,
-                                                 global::creatures.at(a)->physical_width,
-                                                 global::creatures.at(a)->physical_height)) {
+            if (Collisions::checkCollisionBodies(_x, _y, _physical_width, _physical_height,
+                                                 global::creatures.at(a)->_x,
+                                                 global::creatures.at(a)->_y,
+                                                 global::creatures.at(a)->_physical_width,
+                                                 global::creatures.at(a)->_physical_height)) {
 
-                if (!global::creatures.at(a)->bottomCollision && global::creatures.at(a)->ySpeed > 0 && !global::creatures.at(a)->hold_by_main_dude) {
+                if (!global::creatures.at(a)->_bottom_collision && global::creatures.at(a)->_y_speed> 0 && !global::creatures.at(a)->hold_by_main_dude) {
                     global::creatures.at(a)->apply_dmg(8);
-                    global::creatures.at(a)->xSpeed = 0;
-                    blood = true;
-                    frameGfx = (u8 *) gfx_spike_collectibles_flameTiles + (SPIKES_SPRITE_SIZE * (1) / 2);
-                    sprite_utils::update_frame(frameGfx, SPIKES_SPRITE_SIZE, mainSpriteInfo, subSpriteInfo);
+                    global::creatures.at(a)->_x_speed = 0;
+                    _blood = true;
+                    _frame_gfx = (u8 *) gfx_spike_collectibles_flameTiles + (_sprite_size * (1) / 2);
+                    sprite_utils::update_frame(_frame_gfx, _sprite_size, _main_sprite_info, _sub_sprite_info);
                 }
             }
 
         }
     }
 
-    set_position();
-    sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);
-    sprite_utils::set_horizontal_flip(false, mainSpriteInfo, subSpriteInfo);
+    update_sprites_position();
 }
 
+void Spikes::init_sprites() {
 
-void Spikes::init() {
-    initSprite();
-    activated = true;
-}
-
-void Spikes::initSprite() {
-
-    delete mainSpriteInfo;
-    delete subSpriteInfo;
-
-    if (blood)
-        frameGfx = (u8 *) gfx_spike_collectibles_flameTiles + (SPIKES_SPRITE_SIZE * (1) / 2);
+    delete_sprites();
+    
+    if (_blood)
+        _frame_gfx = (u8 *) gfx_spike_collectibles_flameTiles + (_sprite_size * (1) / 2);
     else
-        frameGfx = (u8 *) gfx_spike_collectibles_flameTiles;
+        _frame_gfx = (u8 *) gfx_spike_collectibles_flameTiles;
 
-    subSpriteInfo = global::sub_oam_manager->initSprite(gfx_spike_collectibles_flamePal, gfx_spike_collectibles_flamePalLen,
-                                                        nullptr, SPIKES_SPRITE_SIZE, sprite_width,
-                                                        spriteType, true, false, LAYER_LEVEL::MIDDLE_BOT);
-    mainSpriteInfo = global::main_oam_manager->initSprite(gfx_spike_collectibles_flamePal, gfx_spike_collectibles_flamePalLen,
-                                                          nullptr, SPIKES_SPRITE_SIZE, sprite_width,
-                                                          spriteType, true, false, LAYER_LEVEL::MIDDLE_BOT);
+    _sub_sprite_info = global::sub_oam_manager->initSprite(gfx_spike_collectibles_flamePal, gfx_spike_collectibles_flamePalLen,
+                                                        nullptr, _sprite_size, _sprite_width,
+                                                        _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_BOT);
+    _main_sprite_info = global::main_oam_manager->initSprite(gfx_spike_collectibles_flamePal, gfx_spike_collectibles_flamePalLen,
+                                                          nullptr, _sprite_size, _sprite_width,
+                                                          _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_BOT);
 
-    sprite_utils::update_frame(frameGfx, SPIKES_SPRITE_SIZE, mainSpriteInfo, subSpriteInfo);
+    sprite_utils::update_frame(_frame_gfx, _sprite_size, _main_sprite_info, _sub_sprite_info);
+
+    sprite_utils::set_vertical_flip(false, _main_sprite_info, _sub_sprite_info);
+    sprite_utils::set_horizontal_flip(false, _main_sprite_info, _sub_sprite_info);
 }
 
-void Spikes::set_position() {
+void Spikes::update_sprites_position() {
     int main_x, main_y, sub_x, sub_y;
     get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
-    sprite_utils::set_entry_xy(mainSpriteInfo, main_x, main_y);
-    sprite_utils::set_entry_xy(subSpriteInfo, sub_x, sub_y);
+    sprite_utils::set_entry_xy(_main_sprite_info, static_cast<u16>(main_x), static_cast<u16>(main_y));
+    sprite_utils::set_entry_xy(_sub_sprite_info, static_cast<u16>(sub_x), static_cast<u16>(sub_y));
 }
 
-Spikes::Spikes() {
-    this->sprite_height = SPIKES_SPRITE_HEIGHT;
-    this->sprite_width = SPIKES_SPRITE_WIDTH;
-    this->physical_height = SPIKES_PHYSICAL_HEIGHT;
-    this->physical_width = SPIKES_PHYSICAL_WIDTH;
-    spriteType = SpritesheetType::SPIKES_COLLECTIBLES;
-}
 
-void Spikes::kill_main_dude() {
-
-    mmEffect(SFX_XDIE);
-    sound::stop_cave_music();
-
-    global::main_dude->time_since_last_damage = 0;
-    global::hud->hearts = 0;
-    global::hud->draw_level_hud();
-
-    global::main_dude->ySpeed = -MAIN_DUDE_JUMP_SPEED * 0.25;
-    global::main_dude->dead = true;
-    consoleClear();
-
-}
-
-void Spikes::deleteSprite() {
-    delete mainSpriteInfo;
-    delete subSpriteInfo;
-    mainSpriteInfo = nullptr;
-    subSpriteInfo = nullptr;
+void Spikes::delete_sprites() {
+    delete _main_sprite_info;
+    delete _sub_sprite_info;
+    _main_sprite_info = nullptr;
+    _sub_sprite_info = nullptr;
 }
 

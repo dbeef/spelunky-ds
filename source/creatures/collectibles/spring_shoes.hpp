@@ -9,61 +9,71 @@
 #include "../sprite_info.h"
 #include "../sprite_state.hpp"
 #include "../_base_creature.h"
-#include "../shopping_object.h"
-
-#define SPRING_SHOES_PHYSICAL_HEIGHT 12
-#define SPRING_SHOES_PHYSICAL_WIDTH 14
-
-#define SPRING_SHOES_SPRITE_HEIGHT 16
-#define SPRING_SHOES_SPRITE_WIDTH 16
-#define SPRING_SHOES_SPRITE_SIZE SPRING_SHOES_SPRITE_WIDTH * SPRING_SHOES_SPRITE_HEIGHT
-
-#define MAX_X_SPEED_SPRING_SHOES 4
-#define MAX_Y_SPEED_SPRING_SHOES 4
+#include "../../interfaces/shopping_object.h"
 
 //http://spelunky.wikia.com/wiki/Spring_Shoes
-class SpringShoes : public BaseCreature , public ShoppingObject {
+class SpringShoes : public BaseCreature, public ShoppingObject {
+
+    static constexpr u8 spring_shoes_sprite_width = 16;
+    static constexpr u8 spring_shoes_sprite_height = 16;
+    static constexpr u16 spring_shoes_physical_width = 14;
+    static constexpr u16 spring_shoes_physical_height = 12;
+    static constexpr u16 spring_shoes_cost = 5000;
+    static constexpr const char *spring_shoes_name = "SPRING SHOES";
+    static constexpr SpritesheetType spring_shoes_spritesheet_type = SpritesheetType::SALEABLE;
 
 public:
 
-    void introduce_yourself() override { printf("SPRING_SHOES\n"); };
+    SpringShoes(int x, int y) : BaseCreature(
+            x,
+            y,
+            spring_shoes_sprite_width,
+            spring_shoes_sprite_height,
+            spring_shoes_spritesheet_type,
+            spring_shoes_physical_width,
+            spring_shoes_physical_height
+    ), ShoppingObject(spring_shoes_cost, spring_shoes_name) {
+        init_anim_icon();
+        update_anim_icon(x, y, _physical_width);
+        init_sprites();
+    }
 
-    SpringShoes();
+    // Base creature overrides
 
-    void updateOther() override {};
+    void update_creature_specific() override;
 
-    void init() override;
-
-    void draw() override;
-
-    void initSprite() override;
-
-    void deleteSprite() override;
+    void introduce_yourself() override { printf("WHIP\n"); };
 
     void apply_dmg(int dmg_to_apply) override {};
 
-    void updateTimers() override {};
-
-    void updateSpeed() override;
-
-    void updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) override;
-
-    void updateCollisionsOtherMoving() override {};
-
     void onCollisionWithMainCharacter() override {};
 
-    double pos_inc_timer{};
+    // IRenderable overrides
 
-    bool collected{};
+    void init_sprites() override;
 
-    SpriteInfo *mainSpriteInfo{};
-    SpriteInfo *subSpriteInfo{};
+    void delete_sprites() override;
 
-    u8 *frameGfx{};
+    void update_sprites_position() override;
 
-    void set_position();
+    // ICollidable overrides
+
+    bool can_update_collidable() override { return !collected; }
+
+    bool can_apply_friction() override { return true; }
+
+    bool can_apply_gravity() override { return true; }
+
+    // Other, creature specific
 
     void equip();
+
+    double pos_inc_timer{};
+    bool collected{};
+    SpriteInfo *mainSpriteInfo{};
+    SpriteInfo *subSpriteInfo{};
+    u8 *frameGfx{};
+
 };
 
 

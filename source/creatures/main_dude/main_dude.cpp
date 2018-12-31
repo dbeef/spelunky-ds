@@ -6,6 +6,7 @@
 #include <nds/arm9/sprite.h>
 #include <maxmod9.h>
 #include <cstdlib>
+
 #include "main_dude.hpp"
 #include "../../globals_declarations.hpp"
 #include "../../collisions/collisions.hpp"
@@ -16,17 +17,24 @@
 #include "../animations/fall_poof.hpp"
 #include "../../sound/sound_utils.hpp"
 #include "../sprite_utils.hpp"
+#include "../../tiles/map_tile.hpp"
+#include "../../tiles/level.hpp"
+#include "../../camera/camera.hpp"
+#include "../sprite_info.h"
+#include "../items/bomb.hpp"
+#include "../../input/input_handler.hpp"
 
+// Called externally in game loop
 void MainDude::handle_key_input() {
 
     if (!stunned && !exiting_level && !dead) {
         if (global::input_handler->b_key_down && time_since_last_jump > 100) {
 
-            if (bottomCollision || climbing) {
+            if (_bottom_collision || climbing) {
                 if (carrying_spring_shoes)
-                    ySpeed = -MAIN_DUDE_JUMP_SPEED * 1.65;
+                    _y_speed = -MAIN_DUDE_JUMP_SPEED * 1.65;
                 else
-                    ySpeed = -MAIN_DUDE_JUMP_SPEED;
+                    _y_speed = -MAIN_DUDE_JUMP_SPEED;
                 climbing = false;
                 started_climbing_rope = false;
                 started_climbing_ladder = false;
@@ -34,7 +42,7 @@ void MainDude::handle_key_input() {
                 time_since_last_jump = 0;
 
                 mmEffect(SFX_XJUMP);
-            } else if (ySpeed > 0 && carrying_cape) {
+            } else if (_y_speed > 0 && carrying_cape) {
                 using_cape = true;
             }
             if ((hanging_on_tile_left || hanging_on_tile_right) && hanging_timer > MAIN_DUDE_MIN_HANGING_TIME &&
@@ -42,7 +50,7 @@ void MainDude::handle_key_input() {
 
                 mmEffect(SFX_XJUMP);
 
-                ySpeed = -MAIN_DUDE_JUMP_SPEED;
+                _y_speed = -MAIN_DUDE_JUMP_SPEED;
                 hanging_on_tile_left = false;
                 hanging_on_tile_right = false;
                 hanging_timer = 0;
@@ -56,7 +64,7 @@ void MainDude::handle_key_input() {
             if (!climbing && carrying_jetpack && jetpack_fuel_counter > 0) {
                 jumping_timer = 0;
                 using_jetpack = true;
-                ySpeed -= MAIN_DUDE_JUMP_SPEED;
+                _y_speed -= MAIN_DUDE_JUMP_SPEED;
                 jetpack_fuel_counter--;
                 mmEffect(SFX_XJETPACK);
                 time_since_last_jump = 0;
@@ -91,7 +99,7 @@ void MainDude::handle_key_input() {
             hanging_on_tile_left = false;
             if (!(hanging_on_tile_right || hanging_on_tile_left) && !climbing)
                 if (speed_inc_timer > MAIN_DUDE_X_SPEED_DELTA_TIME_MS) {
-                    xSpeed -= MAIN_DUDE_X_SPEED_DELTA_VALUE;
+                    _x_speed -= MAIN_DUDE_X_SPEED_DELTA_VALUE;
                     speed_inc_timer = 0;
                 }
 
@@ -103,15 +111,15 @@ void MainDude::handle_key_input() {
             hanging_on_tile_right = false;
             if (!(hanging_on_tile_right || hanging_on_tile_left) && !climbing) {
                 if (speed_inc_timer > MAIN_DUDE_X_SPEED_DELTA_TIME_MS) {
-                    xSpeed += MAIN_DUDE_X_SPEED_DELTA_VALUE;
+                    _x_speed += MAIN_DUDE_X_SPEED_DELTA_VALUE;
                     speed_inc_timer = 0;
                 }
             }
 
         }
 
-        int xx = floor_div(this->x + 0.5 * MAIN_DUDE_PHYSICAL_WIDTH, TILE_W);
-        int yy = floor_div(this->y + 0.5 * MAIN_DUDE_PHYSICAL_HEIGHT, TILE_H);
+        int xx = floor_div(this->_x + 0.5 * _physical_width, TILE_W);
+        int yy = floor_div(this->_y + 0.5 * _physical_height, TILE_H);
 
         current_x_in_tiles = xx;
         current_y_in_tiles = yy;
@@ -122,7 +130,7 @@ void MainDude::handle_key_input() {
             if (climbing) {
 
                 if (global::game_state->in_main_menu && !global::game_state->exiting_game) {
-                    if (y <= 100) {
+                    if (_y <= 100) {
                         global::game_state->exiting_game = true;
                     }
                 }
@@ -161,13 +169,13 @@ void MainDude::handle_key_input() {
 
                 sound::stop_cave_music();
 
-                x = neighboringTiles[CENTER]->x * 16;
-                y = neighboringTiles[CENTER]->y * 16;
+                _x = neighboringTiles[CENTER]->x * 16;
+                _y = neighboringTiles[CENTER]->y * 16;
 
                 animFrame = 0;
                 animation_frame_timer = 0;
-                xSpeed = 0;
-                ySpeed = 0;
+                _x_speed = 0;
+                _y_speed = 0;
 
             }
 
@@ -176,17 +184,17 @@ void MainDude::handle_key_input() {
                                         neighboringTiles[UP_MIDDLE]->collidable);
 
             if (can_climb_ladder) {
-                x = neighboringTiles[CENTER]->x * 16;
+                _x = neighboringTiles[CENTER]->x * 16;
             }
 
             if (can_climb_rope || can_climb_ladder) {
 
                 climbing = true;
                 jumping_timer = 0;
-                xSpeed = 0;
+                _x_speed = 0;
 
                 if (global::input_handler->up_key_held)
-                    ySpeed = -1;
+                    _y_speed = -1;
 
                 if (can_climb_rope)
                     started_climbing_rope = true;
@@ -195,13 +203,13 @@ void MainDude::handle_key_input() {
             }
 
             if (!can_climb_rope && climbing && on_top_of_climbing_space && !can_climb_ladder) {
-                ySpeed = 0;
+                _y_speed = 0;
                 jumping_timer = 0;
-                xSpeed = 0;
+                _x_speed = 0;
             }
 
         } else if (climbing) {
-            ySpeed = 0;
+            _y_speed = 0;
         }
 
         if (global::input_handler->down_key_held) {
@@ -221,7 +229,7 @@ void MainDude::handle_key_input() {
             }
 
             if (climbing) {
-                ySpeed = 1;
+                _y_speed = 1;
             }
 
             if ((!can_climb_rope && climbing && !on_top_of_climbing_space) || (!can_climb_ladder && climbing)) {
@@ -233,20 +241,83 @@ void MainDude::handle_key_input() {
 
             hanging_on_tile_left = false;
             hanging_on_tile_right = false;
-            if (bottomCollision)
+            if (_bottom_collision) {
                 crawling = true;
-        } else
+                _pos_update_delta = main_dude_pos_update_delta_crawling;
+                _max_x_speed = main_dude_max_x_crawling;
+            }
+        } else {
             crawling = false;
+            if (!global::input_handler->r_bumper_held) {
+                _max_x_speed = main_dude_max_x_speed_walking;
+                _pos_update_delta = main_dude_pos_update_delta_walking_running;
+            }
+        }
 
 
-    } else
+    } else {
         crawling = false;
+        if (!global::input_handler->r_bumper_held) {
+            _max_x_speed = main_dude_max_x_speed_walking;
+            _pos_update_delta = main_dude_pos_update_delta_walking_running;
+        }
+    }
 
+    update_sprites_position();
 
 }
 
+void MainDude::boost_going_through_map_holes(MapTile **const t) {
+    if (!_bottom_collision) {
+        if ((t[TileOrientation::RIGHT_MIDDLE] == nullptr || !t[TileOrientation::RIGHT_MIDDLE]->collidable) &&
+            (t[TileOrientation::RIGHT_UP] != nullptr && t[TileOrientation::RIGHT_DOWN] != nullptr)) {
+            //if there's no collidable tile on right-mid, but there are on right-up and right-down,
+            //add extra x-pos to ease going through a hole
+            if (_x_speed > 0)
+                _x += 2;
+        }
 
-void MainDude::updateTimers() {
+        if ((t[TileOrientation::LEFT_MIDDLE] == nullptr || !t[TileOrientation::LEFT_MIDDLE]->collidable) &&
+            (t[TileOrientation::LEFT_UP] != nullptr && t[TileOrientation::LEFT_DOWN] != nullptr)) {
+            //same but for left side
+            if (_x_speed < 0)
+                _x -= 2;
+        }
+    }
+}
+
+void MainDude::update_creature_specific() {
+    match_animation();
+    reset_values_checked_every_frame();
+    apply_blinking_on_damage();
+
+    // update max speed
+    if (crawling) {
+        _max_x_speed = MAIN_DUDE_MAX_X_SPEED_CRAWLING;
+        _max_y_speed = MAIN_DUDE_MAX_Y_SPEED;
+    } else if (global::input_handler->r_bumper_held) {
+        // running fast
+        _max_x_speed = main_dude_max_x_speed_running;
+        _max_y_speed = MAIN_DUDE_MAX_Y_SPEED;
+    } else if (using_cape) {
+        // falling, but with cape
+        _max_x_speed = MAIN_DUDE_MAX_X_SPEED;
+        _max_y_speed = MAIN_DUDE_MAX_Y_SPEED_USING_CAPE;
+    } else {
+        // default values
+        _max_x_speed = MAIN_DUDE_MAX_X_SPEED;
+        _max_y_speed = MAIN_DUDE_MAX_Y_SPEED;
+    }
+
+    if (crawling) {
+        _pos_update_delta = main_dude_pos_update_delta_crawling;
+        _max_x_speed = main_dude_max_x_crawling;
+    } else {
+        if (!global::input_handler->r_bumper_held)
+            _pos_update_delta = main_dude_pos_update_delta_walking_running;
+    }
+    // "Update timers"
+
 
     pos_inc_timer += *global::timer;
     speed_inc_timer += *global::timer;
@@ -271,11 +342,11 @@ void MainDude::updateTimers() {
         pushing_timer = 0;
     }
 
-    if ((leftCollision || rightCollision) && !crawling && !hanging_on_tile_left && !hanging_on_tile_right &&
+    if ((_left_collision || _right_collision) && !crawling && !hanging_on_tile_left && !hanging_on_tile_right &&
         (global::input_handler->left_key_held || global::input_handler->right_key_held)) {
         pushing_timer += *global::timer;
         if (pushing_timer > MAIN_DUDE_PUSHING_TIME) {
-            if (leftCollision) {
+            if (_left_collision) {
                 pushing_right = true;
                 pushing_timer = 0;
             } else {
@@ -300,10 +371,10 @@ void MainDude::updateTimers() {
         animFrame = 0;
 
 
-    if (!bottomCollision && !hanging_on_tile_left && !hanging_on_tile_right && !climbing)
+    if (!_bottom_collision && !hanging_on_tile_left && !hanging_on_tile_right && !climbing)
         jumping_timer += *global::timer;
 
-    if (bottomCollision && jumping_timer > MAIN_DUDE_STUN_FALLING_TIME) {
+    if (_bottom_collision && jumping_timer > MAIN_DUDE_STUN_FALLING_TIME) {
 
 
         if (global::hud->hearts > 0) {
@@ -313,38 +384,26 @@ void MainDude::updateTimers() {
 
         stunned = true;
 
-        auto *f_left = new FallPoof();
-        auto *f_right = new FallPoof();
+        auto *f_left = new FallPoof(_x, _y);
+        auto *f_right = new FallPoof(_x, _y);
 
-        f_left->x = x - 4;
-        f_right->x = x + MAIN_DUDE_PHYSICAL_WIDTH - 6;
+        f_left->_x = _x - 4;
+        f_right->_x = _x + MainDude::main_dude_physical_width - 6;
 
-        f_left->y = y + 8;
-        f_right->y = y + 8;
-
-        f_left->init();
-        f_right->init();
+        f_left->_y = _y + 8;
+        f_right->_y = _y + 8;
 
         global::creatures.push_back(f_left);
         global::creatures.push_back(f_right);
 
         if (global::hud->hearts == 0) {
-            global::main_dude->ySpeed = -MAIN_DUDE_JUMP_SPEED * 0.25;
-            global::main_dude->dead = true;
-            consoleClear();
-
-            mmEffect(SFX_XDIE);
-            sound::stop_cave_music();
-
-            global::hud->ropes = 0;
-            global::hud->bombs = 0;
-
+            global::main_dude->set_dead();
         }
 
         mmEffect(SFX_XLAND);
 
         jumping_timer = 0;
-    } else if (bottomCollision && jumping_timer < MAIN_DUDE_STUN_FALLING_TIME) {
+    } else if (_bottom_collision && jumping_timer < MAIN_DUDE_STUN_FALLING_TIME) {
         jumping_timer = 0;
     }
 
@@ -356,137 +415,50 @@ void MainDude::updateTimers() {
     }
 
 
-    if (xSpeed != 0 || stunned || using_whip || (pushing_left || pushing_right) || (climbing && ySpeed != 0) ||
+    if (_x_speed != 0 || stunned || using_whip || (pushing_left || pushing_right) || (climbing && _y_speed != 0) ||
         exiting_level)
         animation_frame_timer += *global::timer;
 
 
-    if (!bottomCollision)
+    if (!_bottom_collision) {
         crawling = false;
+        if (!global::input_handler->r_bumper_held) {
+            _max_x_speed = main_dude_max_x_speed_walking;
+            _pos_update_delta = main_dude_pos_update_delta_walking_running;
+        }
+    }
 
     time_since_last_jump += *global::timer;
     time_since_last_damage += *global::timer;
-}
 
+    // Map collisions
 
-void MainDude::updateSpeed() {
-
-    if (crawling)
-        limit_speed(MAIN_DUDE_MAX_X_SPEED_CRAWLING, MAIN_DUDE_MAX_Y_SPEED);
-    else if (global::input_handler->r_bumper_held)
-        limit_speed(MAIN_DUDE_MAX_X_SPEED_RUNNING, MAIN_DUDE_MAX_Y_SPEED);
-    else if (using_cape)
-        limit_speed(MAIN_DUDE_MAX_X_SPEED, MAIN_DUDE_MAX_Y_SPEED_USING_CAPE);
-    else
-        limit_speed(MAIN_DUDE_MAX_X_SPEED, MAIN_DUDE_MAX_Y_SPEED);
-
-    bool change_pos = (crawling && pos_inc_timer > 20) || (!crawling && pos_inc_timer > 1);
-
-    if (change_pos) {
-
-        apply_friction(MAIN_DUDE_FRICTION_DELTA_SPEED * 0.9f);
-        update_position();
-        pos_inc_timer = 0;
-
-        if (!bottomCollision && !(hanging_on_tile_left || hanging_on_tile_right) && !climbing) {
-            ySpeed += GRAVITY_DELTA_SPEED;
-        }
-    }
-
-
-}
-
-
-void MainDude::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
-
-    MapTile *t[9];
-    Collisions::getNeighboringTiles(global::current_level->map_tiles,
-                                    x_current_pos_in_tiles, y_current_pos_in_tiles, t);
-
-    bottomCollision = Collisions::checkBottomCollision(t, &this->x, &this->y, &ySpeed, 16, 16, dead, BOUNCING_FACTOR_Y);
-    leftCollision = Collisions::checkLeftCollision(t, &this->x, &this->y, &xSpeed, 16, 16, dead, BOUNCING_FACTOR_X);
-    rightCollision = Collisions::checkRightCollision(t, &this->x, &this->y, &xSpeed, 16, 16, dead, BOUNCING_FACTOR_X);
-    upperCollision = Collisions::checkUpperCollision(t, &this->x, &this->y, &ySpeed, 16, dead, BOUNCING_FACTOR_Y);
-
-    can_hang_on_tile(t);
-
-    if (hanging_on_tile_right || hanging_on_tile_left) {
-        using_cape = false;
-        using_jetpack = false;
-    }
-
-    if (upperCollision || bottomCollision) {
-        hanging_on_tile_left = false;
-        hanging_on_tile_right = false;
-        if (using_cape)
-            jumping_timer = 0;
-    }
-
-    if (!bottomCollision) {
-        if ((t[TileOrientation::RIGHT_MIDDLE] == nullptr || !t[TileOrientation::RIGHT_MIDDLE]->collidable) &&
-            (t[TileOrientation::RIGHT_UP] != nullptr && t[TileOrientation::RIGHT_DOWN] != nullptr)) {
-            //if there's no collidable tile on right-mid, but there are on right-up and right-down,
-            //add extra x-pos to ease going through a hole
-            if (xSpeed > 0)
-                x += 2;
-        }
-
-        if ((t[TileOrientation::LEFT_MIDDLE] == nullptr || !t[TileOrientation::LEFT_MIDDLE]->collidable) &&
-            (t[TileOrientation::LEFT_UP] != nullptr && t[TileOrientation::LEFT_DOWN] != nullptr)) {
-            //same but for left side
-            if (xSpeed < 0)
-                x -= 2;
-        }
+    if (_map_collisions_checked) {
+        can_hang_on_tile(_neighboring_tiles);
+        boost_going_through_map_holes(_neighboring_tiles);
+        _map_collisions_checked = false;
     }
 
 }
 
-void MainDude::init() {
-    initSprite();
-    whip = new Whip();
-    whip->init();
-//    global::creatures.push_back(whip);
-}
+void MainDude::init_sprites() {
 
-void MainDude::draw() {
+    delete_sprites();
 
-    //todo split this function into utils
-    //todo use moving_object->get_x_y in every moving_object
-    //todo use moving_object->update_position in every moving_object
-    //todo make class static_object for copyrights sign, whip and other non-moving things
-    //todo make file input/output class for savegames
-
-    int main_x, main_y, sub_x, sub_y;
-    get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
-    sprite_utils::set_entry_xy(main_spelunker, main_x, main_y);
-    sprite_utils::set_entry_xy(sub_spelunker, sub_x, sub_y);
-
-    match_animation();
-    reset_values_checked_every_frame();
-    apply_blinking_on_damage();
-
-}
-
-void MainDude::initSprite() {
-
-    delete main_spelunker;
-    delete sub_spelunker;
+    main_sprite_info = global::main_oam_manager->initSprite(gfx_spelunkerPal, gfx_spelunkerPalLen, nullptr,
+                                                            _sprite_size, 16, _spritesheet_type, true, false,
+                                                            LAYER_LEVEL::MIDDLE_TOP);
 
 
-    main_spelunker = global::main_oam_manager->initSprite(gfx_spelunkerPal, gfx_spelunkerPalLen, nullptr,
-                                                          sprite_width * sprite_height, 16, MAIN_DUDE, true, false,
+    sub_sprite_info = global::sub_oam_manager->initSprite(gfx_spelunkerPal, gfx_spelunkerPalLen, nullptr,
+                                                          _sprite_size, 16, _spritesheet_type, true, false,
                                                           LAYER_LEVEL::MIDDLE_TOP);
 
+    sprite_utils::set_vertical_flip(false, main_sprite_info, sub_sprite_info);
+    sprite_utils::set_horizontal_flip(false, main_sprite_info, sub_sprite_info);
 
-    sub_spelunker = global::sub_oam_manager->initSprite(gfx_spelunkerPal, gfx_spelunkerPalLen, nullptr,
-                                                        sprite_width * sprite_height, 16, MAIN_DUDE, true, false,
-                                                        LAYER_LEVEL::MIDDLE_TOP);
-
-    int main_x, main_y, sub_x, sub_y;
-    get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
-    sprite_utils::set_entry_xy(main_spelunker, main_x, main_y);
-    sprite_utils::set_entry_xy(sub_spelunker, sub_x, sub_y);
-
+    update_sprites_position();
+    match_animation();
 }
 
 
@@ -495,10 +467,3 @@ void MainDude::reset_values_checked_every_frame() {
     can_climb_ladder = false;
 }
 
-MainDude::MainDude() {
-    physical_height = MAIN_DUDE_PHYSICAL_HEIGHT;
-    physical_width = MAIN_DUDE_PHYSICAL_WIDTH;
-    sprite_height = MAIN_DUDE_SPRITE_HEIGHT;
-    sprite_width = MAIN_DUDE_SPRITE_WIDTH;
-    hitpoints = MAIN_DUDE_HITPOINTS;
-}

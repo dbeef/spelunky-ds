@@ -25,45 +25,53 @@ class Bat : public BaseCreature {
 
 public:
 
-    void introduce_yourself() override { printf("BAT\n"); };
+    static constexpr u8 bat_sprite_width = 16;
+    static constexpr u8 bat_sprite_height = 16;
+    static constexpr u16 bat_physical_width = 16;
+    static constexpr u16 bat_physical_height = 16;
+    static constexpr SpritesheetType bat_spritesheet_type = SpritesheetType::BAT_JETPACK;
 
-    Bat();
+    Bat(int x, int y) : BaseCreature(
+            x,
+            y,
+            bat_sprite_width,
+            bat_sprite_height,
+            bat_spritesheet_type,
+            bat_physical_width,
+            bat_physical_height
+    ) {
+        _pos_update_delta = 30;
+        hitpoints = 1;
+        init_sprites();
+    }
 
-    Bat(int x, int y);
+    // Base creature overrides
 
-    void updateOther() override {};
+    void update_creature_specific() override;
 
-    void init() override;
+    void introduce_yourself() override { printf("WHIP\n"); };
 
-    void draw() override;
-
-    void apply_dmg(int dmg_to_apply) override ;
-
-    void updateTimers() override {};
-
-    void updateSpeed() override;
-
-    void updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) override;
-
-    void updateCollisionsOtherMoving() override {};
+    void apply_dmg(int dmg_to_apply) override;
 
     void onCollisionWithMainCharacter() override {};
 
-    void initSprite() override;
+    // IRenderable overrides
 
-    void deleteSprite() override;
+    void init_sprites() override;
 
-    double pos_inc_timer{};
+    void delete_sprites() override;
 
-    SpriteInfo *mainSpriteInfo {};
-    SpriteInfo *subSpriteInfo {};
-    u8 *frameGfx{};
+    void update_sprites_position() override;
 
-    int animFrame{};
-    double animFrameTimer{};
+    // ICollidable overrides
 
-    bool hanging{};
-    bool hunting{};
+    bool can_update_collidable() override { return true; }
+
+    bool can_apply_friction() override { return false; }
+
+    bool can_apply_gravity() override { return false; }
+
+    // Other, creature specific
 
     void set_sprite_hanging();
 
@@ -71,13 +79,18 @@ public:
 
     void set_sprite_flying_left();
 
-    void set_position();
-
     void follow_main_dude();
 
     void match_animation();
+    
+    SpriteInfo *mainSpriteInfo {};
+    SpriteInfo *subSpriteInfo {};
+    u8 *frameGfx{};
+    int animFrame{};
+    double animFrameTimer{};
+    bool hanging{};
+    bool hunting{};
+
 };
-
-
 
 #endif //SPELUNKYDS_BAT_H

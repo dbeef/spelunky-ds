@@ -9,59 +9,65 @@
 #include "../sprite_state.hpp"
 #include "../_base_creature.h"
 
-#define SKULL_SPRITE_HEIGHT 16
-#define SKULL_SPRITE_WIDTH 16
-#define SKULL_SPRITE_SIZE SKULL_SPRITE_WIDTH * SKULL_SPRITE_HEIGHT
-
-#define SKULL_PHYSICAL_HEIGHT 8
-#define SKULL_PHYSICAL_WIDTH 8
-
-#define MAX_X_SPEED_SKULL 4
-#define MAX_Y_SPEED_SKULL 4
-
 class Skull : public BaseCreature {
 
 public:
 
-    void introduce_yourself() override { printf("SKULL\n"); };
+    static constexpr u8 skull_sprite_width = 16;
+    static constexpr u8 skull_sprite_height = 16;
+    static constexpr u16 skull_physical_width = 8;
+    static constexpr u16 skull_physical_height = 8;
+    static constexpr SpritesheetType skull_spritesheet_type = SpritesheetType::SKELETON_SPIDER;
 
-    Skull();
+    Skull(int x, int y) : BaseCreature(
+            x,
+            y,
+            skull_sprite_width,
+            skull_sprite_height,
+            skull_spritesheet_type,
+            skull_physical_width,
+            skull_physical_height
+    ) {
+        init_sprites();
+    }
 
-    void updateOther() override {};
+    // Base creature overrides
 
-    void init() override;
+    void update_creature_specific() override;
 
-    void draw() override;
-
-    void initSprite() override;
-
-    void deleteSprite() override;
+    void introduce_yourself() override { printf("WHIP\n"); };
 
     void apply_dmg(int dmg_to_apply) override {};
 
-    void updateTimers() override {};
-
-    void updateSpeed() override;
-
-    void updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) override;
-
-    void updateCollisionsOtherMoving() override {};
-
     void onCollisionWithMainCharacter() override {};
 
+    // IRenderable overrides
+
+    void init_sprites() override;
+
+    void delete_sprites() override;
+
+    void update_sprites_position() override;
+
+    // ICollidable overrides
+
+    bool can_update_collidable() override { return !hold_by_main_dude && !collided; }
+
+    bool can_apply_friction() override { return !collided; }
+
+    bool can_apply_gravity() override { return !collided; }
+
+    // Other, creature specific
+
+    void match_animation();
+    
     bool collided{};
     double animFrameTimer{};
     int animFrame{};
     double  pos_inc_timer{};
-
     SpriteInfo *mainSpriteInfo{};
     SpriteInfo *subSpriteInfo{};
-
     u8 *frameGfx{};
-
-    void set_position();
-
-    void match_animation();
 };
 
 

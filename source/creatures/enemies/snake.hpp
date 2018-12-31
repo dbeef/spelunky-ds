@@ -6,71 +6,67 @@
 #ifndef SPELUNKYDS_SNAKE_H
 #define SPELUNKYDS_SNAKE_H
 
-#define SNAKE_PHYSICAL_HEIGHT 16
-#define SNAKE_PHYSICAL_WIDTH 16
-
-#define SNAKE_SPRITE_HEIGHT 16
-#define SNAKE_SPRITE_WIDTH 16
-#define SNAKE_SPRITE_SIZE SNAKE_SPRITE_HEIGHT * SNAKE_SPRITE_WIDTH
-
-#define MAX_X_SPEED_SNAKE 4
-#define MAX_Y_SPEED_SNAKE 4
-
 #include "../_base_creature.h"
 #include "../sprite_state.hpp"
 #include "../sprite_info.h"
 
 //http://spelunky.wikia.com/wiki/Snake
 class Snake : public BaseCreature {
-
+    
 public:
 
-    void introduce_yourself() override { printf("SNAKE\n"); };
+    static constexpr u8 snake_sprite_width = 16;
+    static constexpr u8 snake_sprite_height = 16;
+    static constexpr u16 snake_physical_width = 16;
+    static constexpr u16 snake_physical_height = 16;
+    static constexpr SpritesheetType snake_spritesheet_type = SpritesheetType::SNAKE;
 
-    Snake();
+    Snake(int x, int y) : BaseCreature(
+            x,
+            y,
+            snake_sprite_width,
+            snake_sprite_height,
+            snake_spritesheet_type,
+            snake_physical_width,
+            snake_physical_height
+    ) {
+        sprite_type = SpriteType::S_SNAKE;
+        init_sprites();
+        hitpoints = 1;
+        randomizeMovement();
+        _pos_update_delta = 35;
 
-    Snake(int x, int y);
+    }
 
-    void updateOther() override {};
+    // Base creature overrides
 
-    void init() override;
+    void update_creature_specific() override;
 
-    void draw() override;
+    void introduce_yourself() override { printf("WHIP\n"); };
 
     void apply_dmg(int dmg_to_apply) override;
 
-    void updateTimers() override {};
-
-    void updateSpeed() override;
-
-    void updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) override;
-
-    void updateCollisionsOtherMoving() override {};
-
     void onCollisionWithMainCharacter() override {};
 
-    void initSprite() override;
+    // IRenderable overrides
 
-    void deleteSprite() override;
+    void init_sprites() override;
 
-    double pos_inc_timer{};
+    void delete_sprites() override;
 
-    SpriteInfo *mainSpriteInfo{};
-    SpriteInfo *subSpriteInfo{};
-    u8 *frameGfx{};
-    int sameDirectionInRow{};
+    void update_sprites_position() override;
 
-    //Snake goes for random amount of time_utils on random direction, then waits random time_utils and the cycle goes again
-    SpriteState spriteState{};
-    double waitTimer{};
-    double goTimer{};
+    // ICollidable overrides
 
-    int animFrame{};
-    double animFrameTimer{};
+    bool can_update_collidable() override { return true; }
 
+    bool can_apply_friction() override { return true; }
+
+    bool can_apply_gravity() override { return true; }
+    
+    // Other, creature specific
+    
     void randomizeMovement();
-
-    void set_position();
 
     void set_sprite_left();
 
@@ -78,6 +74,18 @@ public:
 
     void match_animation();
 
+    double pos_inc_timer{};
+    SpriteInfo *mainSpriteInfo{};
+    SpriteInfo *subSpriteInfo{};
+    u8 *frameGfx{};
+    int sameDirectionInRow{};
+    //Snake goes for random amount of time_utils on random direction, then waits random time_utils and the cycle goes again
+    SpriteState spriteState{};
+    double waitTimer{};
+    double goTimer{};
+    int animFrame{};
+    double animFrameTimer{};
+    
 };
 
 

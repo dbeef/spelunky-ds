@@ -7,57 +7,70 @@
 
 #include <nds/arm9/sprite.h>
 #include <vector>
+
+#include "rope.hpp"
 #include "../../camera/camera.hpp"
 #include "../_base_creature.h"
+#include "../sprite_info.h"
 
+// Represents a single 16x16 element in rope chain. 
 class RopeElement : public BaseCreature {
-
+    
 public:
 
-    void introduce_yourself() override { printf("ROPE_ELEMENT\n"); };
+    RopeElement(int x, int y) : BaseCreature(
+            x,
+            y,
+            rope_sprite_width,
+            rope_sprite_height,
+            rope_spritesheet_type,
+            rope_physical_width,
+            rope_physical_height
+    ) {
+        init_sprites();
+    }
 
-    RopeElement();
+    // Base creature overrides
 
-    void updateOther() override {};
+    void update_creature_specific() override;
+
+    void introduce_yourself() override { printf("WHIP\n"); };
 
     void apply_dmg(int dmg_to_apply) override {};
 
-    void init() override;
-
-    void draw() override;
-
-    void updateTimers() override {};
-
-    void initSprite() override;
-
-    void deleteSprite() override;
-
-    void update_position() override {};
-
-    void updateSpeed() override {};
-
-    void updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) override {};
-
-    void updateCollisionsOtherMoving() override {};
-
     void onCollisionWithMainCharacter() override {};
 
-    int active_timer{};
-    bool active{};
+    // IRenderable overrides
 
-    SpriteInfo *mainSpriteInfo {};
-    SpriteInfo *subSpriteInfo {};
+    void init_sprites() override;
 
-    SpriteInfo *mainSpriteInfo_2 {};
-    SpriteInfo *subSpriteInfo_2 {};
+    void delete_sprites() override;
 
-    u8 * frameGfx{};
+    void update_sprites_position() override;
 
-    void set_position();
+    // ICollidable overrides
 
-    void set_visibility();
+    bool can_update_collidable() override { return false; }
 
-    void set_sprite_attributes();
+    bool can_apply_friction() override { return false; }
+
+    bool can_apply_gravity() override { return false; }
+
+    // Other, creature specific
+
+    void update_visibility();
+
+    double _active_timer{};
+    bool _active{};
+
+    // To make creating rope chain smoother, instead of 16x16 rope chunks,
+    // there are 8x8 chunks, two per RopeElement, created separately in delay.
+    SpriteInfo *_main_sprite_info{};
+    SpriteInfo *_sub_sprite_info{};
+    SpriteInfo *_main_sprite_info_2{};
+    SpriteInfo *_sub_sprite_info_2{};
+    u8 *_frame_gfx{};
+
 };
 
 

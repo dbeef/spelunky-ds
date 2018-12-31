@@ -25,9 +25,9 @@
 
 #define CRATE_POS_INC_DELTA 15
 
-void Crate::draw() {
+void Crate::update_creature_specific() {
 
-    if (ready_to_dispose)
+    if (_ready_to_dispose)
         return;
 
     sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);
@@ -63,82 +63,40 @@ void Crate::draw() {
         sprite_utils::set_visibility(true, mainSpriteInfo, subSpriteInfo);
 
     kill_mobs_if_thrown(1);
-    set_position();
+    update_sprites_position();
 
 }
 
+void Crate::init_sprites() {
 
-void Crate::init() {
-    initSprite();
-}
-
-void Crate::updateSpeed() {
-
-    limit_speed(MAX_X_SPEED_CRATE, MAX_Y_SPEED_CRATE);
-
-    pos_inc_timer += *global::timer;
-
-    bool change_pos = (pos_inc_timer > CRATE_POS_INC_DELTA) && !hold_by_main_dude;
-
-    if (change_pos) {
-        update_position();
-        apply_friction(0.055);
-        apply_gravity(GRAVITY_DELTA_SPEED);
-        pos_inc_timer = 0;
-    }
-
-}
-
-void Crate::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
-    MapTile *t[9];
-    Collisions::getNeighboringTiles(global::current_level->map_tiles,
-                                    x_current_pos_in_tiles, y_current_pos_in_tiles, t);
-
-    upperCollision = Collisions::checkUpperCollision(t, &x, &y, &ySpeed, physical_width, true, 0.35);
-    bottomCollision = Collisions::checkBottomCollision(t, &x, &y, &ySpeed, physical_width, physical_height, true, 0.35);
-    leftCollision = Collisions::checkLeftCollision(t, &x, &y, &xSpeed, physical_width, physical_height, true, 0.15);
-    rightCollision = Collisions::checkRightCollision(t, &x, &y, &xSpeed, physical_width, physical_height, true, 0.15);
-}
-
-void Crate::initSprite() {
-
-    delete mainSpriteInfo;
-    delete subSpriteInfo;
+    delete_sprites();
 
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
                                                         gfx_spike_collectibles_flamePalLen,
-                                                        nullptr, CRATE_SPRITE_SIZE, sprite_width,
-                                                        spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
+                                                        nullptr, _sprite_size, _sprite_width,
+                                                        _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
                                                           gfx_spike_collectibles_flamePalLen,
-                                                          nullptr, CRATE_SPRITE_SIZE, sprite_width,
-                                                          spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
+                                                          nullptr, _sprite_size, _sprite_width,
+                                                          _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
     if (!activated) {
-        frameGfx = sprite_utils::get_frame((u8 *) gfx_spike_collectibles_flameTiles, CRATE_SPRITE_SIZE, 4);
-        sprite_utils::update_frame(frameGfx, CRATE_SPRITE_SIZE, mainSpriteInfo, subSpriteInfo);
+        frameGfx = sprite_utils::get_frame((u8 *) gfx_spike_collectibles_flameTiles, _sprite_size, 4);
+        sprite_utils::update_frame(frameGfx, _sprite_size, mainSpriteInfo, subSpriteInfo);
     } else
         play_collectible_animation();
 
     sprite_utils::set_visibility(true, mainSpriteInfo, subSpriteInfo);
     sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);
     sprite_utils::set_horizontal_flip(false, mainSpriteInfo, subSpriteInfo);
-    set_position();
+    update_sprites_position();
 
 }
 
-void Crate::set_position() {
+void Crate::update_sprites_position() {
     int main_x, main_y, sub_x, sub_y;
     get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
     sprite_utils::set_entry_xy(mainSpriteInfo, main_x, main_y);
     sprite_utils::set_entry_xy(subSpriteInfo, sub_x, sub_y);
-}
-
-Crate::Crate() {
-    physical_height = CRATE_PHYSICAL_HEIGHT;
-    physical_width = CRATE_PHYSICAL_WIDTH;
-    sprite_height = CRATE_SPRITE_HEIGHT;
-    sprite_width = CRATE_SPRITE_WIDTH;
-    spritesheet_type = SpritesheetType::SPIKES_COLLECTIBLES;
 }
 
 //TODO lower chances for good items
@@ -152,17 +110,17 @@ void Crate::drop_loot() {
 
         if (r == 0) {
             global::hud->ropes += 4;
-            g = new GotCollectible(x - 12, y - 20, GotCollectible::Type::ROPE);
+            g = new GotCollectible(_x - 12, _y - 20, GotCollectible::Type::ROPE);
         } else {
             global::hud->bombs += 4;
-            g = new GotCollectible(x - 12, y - 20, GotCollectible::Type::BOMB);
+            g = new GotCollectible(_x - 12, _y - 20, GotCollectible::Type::BOMB);
         }
 
         global::hud->draw_level_hud();
 
         global::decorations_to_add.push_back(g);
     } else {
-        collectibles_utils::spawn_random_item(this->x, this->y);
+        collectibles_utils::spawn_random_item(this->_x, this->_y);
     }
 
     dropped_loot = true;
@@ -176,16 +134,16 @@ void Crate::play_collectible_animation() {
     }
 
     if (animFrame >= 6) {
-        ready_to_dispose = true;
+        _ready_to_dispose = true;
         sprite_utils::set_visibility(false, mainSpriteInfo, subSpriteInfo);
     } else {
-        frameGfx = sprite_utils::get_frame((u8 *) gfx_spike_collectibles_flameTiles, CRATE_SPRITE_SIZE, 5 + animFrame);
-        sprite_utils::update_frame(frameGfx, CRATE_SPRITE_SIZE, mainSpriteInfo, subSpriteInfo);
+        frameGfx = sprite_utils::get_frame((u8 *) gfx_spike_collectibles_flameTiles, _sprite_size, 5 + animFrame);
+        sprite_utils::update_frame(frameGfx, _sprite_size, mainSpriteInfo, subSpriteInfo);
     }
 
 }
 
-void Crate::deleteSprite() {
+void Crate::delete_sprites() {
     delete mainSpriteInfo;
     delete subSpriteInfo;
     mainSpriteInfo = nullptr;

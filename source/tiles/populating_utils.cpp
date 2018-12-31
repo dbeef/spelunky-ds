@@ -20,7 +20,7 @@
 #include "../creatures/enemies/damsel.hpp"
 #include "../decorations/lamp.h"
 #include "../creatures/enemies/shopkeeper.hpp"
-#include "../creatures/traps/arrow_trap.h"
+#include "../decorations/arrow_trap.h"
 #include "../creatures/collectibles/collectibles_utils.hpp"
 #include "../creatures/animations/fake_skeleton.hpp"
 #include "../creatures/enemies/skeleton.hpp"
@@ -100,16 +100,10 @@ void populate_cave_moniez() {
                         int goldbar_type = rand() % 2;
 
                         if (goldbar_type == 0) {
-                            auto *single_goldbar = new SingleGoldbar();
-                            single_goldbar->init();
-                            single_goldbar->x = pos_x * 16;
-                            single_goldbar->y = pos_y * 16;
+                            auto *single_goldbar = new SingleGoldbar(pos_x * 16, pos_y * 16);
                             global::creatures.push_back(single_goldbar);
                         } else {
-                            auto *triple_goldbar = new TripleGoldbar();
-                            triple_goldbar->init();
-                            triple_goldbar->x = pos_x * 16;
-                            triple_goldbar->y = pos_y * 16;
+                            auto *triple_goldbar = new TripleGoldbar(pos_x * 16, pos_y * 16);
                             global::creatures.push_back(triple_goldbar);
                         }
 
@@ -122,20 +116,12 @@ void populate_cave_moniez() {
                         int ruby_type = rand() % 2;
 
                         if (ruby_type == 0) {
-                            auto *ruby_small = new RubySmall();
-                            ruby_small->spritesheet_type = MONIEZ_RUBY;
-                            ruby_small->value = 1200;
-                            ruby_small->init();
-                            ruby_small->x = pos_x * 16;
-                            ruby_small->y = pos_y * 16;
+                            auto *ruby_small = new RubySmall(pos_x * 16, pos_y * 16);
+                            ruby_small->_value = 1200;
                             global::creatures.push_back(ruby_small);
                         } else {
-                            auto *ruby_big = new RubyBig();
-                            ruby_big->spritesheet_type = MONIEZ_RUBY;
-                            ruby_big->value = 1200;
-                            ruby_big->init();
-                            ruby_big->x = pos_x * 16;
-                            ruby_big->y = pos_y * 16;
+                            auto *ruby_big = new RubyBig(pos_x * 16, pos_y * 16);
+                            ruby_big->_value = 1200;
                             global::creatures.push_back(ruby_big);
                         }
 
@@ -145,11 +131,8 @@ void populate_cave_moniez() {
                     }
 
                     if (loot_type == 3 && jars_left > 0 && r == 1) {
-                        Jar *jar = new Jar();
-                        jar->init();
+                        Jar *jar = new Jar(pos_x * 16, pos_y * 16);
                         global::creatures.push_back(jar);
-                        jar->x = pos_x * 16;
-                        jar->y = pos_y * 16;
                         jars_left--;
                         last_placement = 0;
                     }
@@ -165,33 +148,24 @@ void populate_cave_moniez() {
                     }*/
 
                     if (loot_type == 0 && rocks_left > 0 && r == 1) {
-                        Rock *rock = new Rock();
-                        rock->init();
+                        Rock *rock = new Rock(pos_x * 16, pos_y * 16);
                         global::creatures.push_back(rock);
-                        rock->x = pos_x * 16;
-                        rock->y = pos_y * 16;
                         rocks_left--;
                         last_placement = 0;
                     }
 
 
                     if (loot_type == 4 && chests_left > 0 && r == 1) {
-                        Chest *chest = new Chest();
-                        chest->init();
+                        Chest *chest = new Chest(pos_x * 16, pos_y * 16);
                         global::creatures.push_back(chest);
-                        chest->x = pos_x * 16;
-                        chest->y = pos_y * 16;
                         chests_left--;
                         last_placement = 0;
                     }
 
 
                     if (loot_type == 5 && crates_left > 0 && r == 1) {
-                        Crate *crate = new Crate();
-                        crate->init();
+                        Crate *crate = new Crate(pos_x * 16, pos_y * 16);
                         global::creatures.push_back(crate);
-                        crate->x = pos_x * 16;
-                        crate->y = pos_y * 16;
                         crates_left--;
                         last_placement = 0;
                     }
@@ -269,34 +243,25 @@ void populate_cave_npcs() {
                     u16 pos_y = (OFFSET_X + tab_y * 2 + 2 * ROOM_TILE_HEIGHT_GAME * ((ROOMS_Y - b) - 1)) / 2;
 
                     if (npc == 9 || npc == 10) {
-                        ArrowTrap *arrowTrap = new ArrowTrap();
-                        arrowTrap->init();
-                        arrowTrap->x = pos_x * 16;
-                        arrowTrap->y = pos_y * 16;
+                        ArrowTrap *arrowTrap = nullptr;
                         if (npc == 9)
-                            arrowTrap->sprite_state = SpriteState::W_LEFT;
+                            arrowTrap = new ArrowTrap(pos_x * 16, pos_y * 16, SpriteState::W_LEFT);
                         else if (npc == 10)
-                            arrowTrap->sprite_state = SpriteState::W_RIGHT;
-                        global::creatures.push_back(arrowTrap);
+                            arrowTrap = new ArrowTrap(pos_x * 16, pos_y * 16, SpriteState::W_RIGHT);
+                        global::decorations_to_add.push_back(arrowTrap);
                     }
 
                     if (npc == 13 && skeletons_left > 0 && r == 1) {
 
                         if (rand() % 2 == 0) {
-                            auto *skeleton = new Skeleton();
-                            skeleton->init();
+                            auto *skeleton = new Skeleton(pos_x * 16, pos_y * 16);
                             global::creatures.push_back(skeleton);
-                            skeleton->x = pos_x * 16;
-                            skeleton->y = pos_y * 16;
                             skeletons_left--;
                             last_placement = 0;
                         } else {
 
-                            auto *fakeSkeleton = new FakeSkeleton();
-                            fakeSkeleton->init();
+                            auto *fakeSkeleton = new FakeSkeleton(pos_x * 16, pos_y * 16);
                             global::creatures.push_back(fakeSkeleton);
-                            fakeSkeleton->x = pos_x * 16;
-                            fakeSkeleton->y = pos_y * 16;
                             skeletons_left--;
                             last_placement = 0;
 
@@ -305,62 +270,44 @@ void populate_cave_npcs() {
 
 
                     if (npc == 1 && snakes_left > 0 && r == 1) {
-                        Snake *snake = new Snake();
-                        snake->init();
+                        Snake *snake = new Snake(pos_x * 16, pos_y * 16);
                         global::creatures.push_back(snake);
-                        snake->x = pos_x * 16;
-                        snake->y = pos_y * 16;
                         snakes_left--;
                         last_placement = 0;
                     }
 
                     if (npc == 2 && bats_left > 0 && r == 1) {
-                        Bat *bat = new Bat();
-                        bat->init();
+                        Bat *bat = new Bat(pos_x * 16, pos_y * 16);
                         global::creatures.push_back(bat);
                         bats_left--;
-                        bat->x = pos_x * 16;
-                        bat->y = pos_y * 16;
                         last_placement = 0;
                     }
 
                     if (npc == 3 && spiders_left > 0 && r == 1) {
-                        Spider *spider = new Spider();
-                        spider->init();
+                        Spider *spider = new Spider(pos_x * 16, pos_y * 16);
                         global::creatures.push_back(spider);
-                        spider->x = pos_x * 16;
-                        spider->y = pos_y * 16;
                         spiders_left--;
                         last_placement = 0;
                     }
 
                     if (npc == 4 && spikes_left > 0 && r == 1) {
-                        Spikes *spikes = new Spikes();
-                        spikes->init();
+                        Spikes *spikes = new Spikes(pos_x * 16, (pos_y * 16) + 3);
                         global::creatures.push_back(spikes);
-                        spikes->x = pos_x * 16;
-                        spikes->y = (pos_y * 16) + 3;
                         spikes_left--;
                         last_placement = 0;
                     }
 
 
                     if (npc == 5 && cavemen_left > 0 && r == 1) {
-                        Caveman *caveman = new Caveman();
-                        caveman->init();
+                        Caveman *caveman = new Caveman(pos_x * 16, pos_y * 16);
                         global::creatures.push_back(caveman);
-                        caveman->x = pos_x * 16;
-                        caveman->y = pos_y * 16;
                         cavemen_left--;
                         last_placement = 0;
                     }
 
                     if (npc == 6 && damsels_left > 0) {
-                        Damsel *damsel = new Damsel();
-                        damsel->init();
+                        Damsel *damsel = new Damsel(pos_x * 16, pos_y * 16);
                         global::creatures.push_back(damsel);
-                        damsel->x = pos_x * 16;
-                        damsel->y = pos_y * 16;
                         damsels_left--;
                         last_placement = 0;
                     }
@@ -371,11 +318,8 @@ void populate_cave_npcs() {
                     }
 
                     if (npc == 8) {
-                        shopkeeper = new Shopkeeper();
-                        shopkeeper->init();
+                        shopkeeper = new Shopkeeper(pos_x * 16, pos_y * 16);
                         global::creatures.push_back(shopkeeper);
-                        shopkeeper->x = pos_x * 16;
-                        shopkeeper->y = pos_y * 16;
                         shopkeeper->set_shop_bounds();
                     }
 
@@ -427,17 +371,12 @@ void populate_main_menu() {
     auto *quit = new RockSign(192, 143, RockSign::Type::QUIT);
     global::decorations_to_add.push_back(quit);
 
-    Rope *rope = new Rope();
-    rope->init();
-    rope->x = 227;
-    rope->y = 272;
-    rope->ySpeed = -4;
-
-    rope->instant_rope = true;
-    rope->extended_rope = true;
+    Rope *rope = new Rope(227, 272);
+    rope->_y_speed = -4;
+    rope->_extended_rope = true;
     rope->hold_by_main_dude = false;
     rope->activated = false;
-    rope->thrown = true;
+    rope->_thrown = true;
 
     global::creatures.push_back(rope);
 

@@ -6,58 +6,67 @@
 #define SPELUNKYDS_ROCK_H
 
 #include <nds/arm9/sprite.h>
+
 #include "../_base_creature.h"
-
-#define MAX_X_SPEED_ROCK 4
-#define MAX_Y_SPEED_ROCK 4
-
-#define ROCK_PHYSICAL_HEIGHT 7
-#define ROCK_PHYSICAL_WIDTH 7
-
-#define ROCK_SPRITE_HEIGHT 8
-#define ROCK_SPRITE_WIDTH 8
-#define ROCK_SPRITE_SIZE ROCK_SPRITE_WIDTH * ROCK_SPRITE_HEIGHT
+#include "../sprite_info.h"
 
 //http://spelunky.wikia.com/wiki/Rock
 class Rock : public BaseCreature {
 
 public:
 
-    void introduce_yourself() override { printf("ROCK\n"); };
+    static constexpr u8 rock_sprite_width = 8;
+    static constexpr u8 rock_sprite_height = 8;
+    static constexpr u16 rock_physical_width = 7;
+    static constexpr u16 rock_physical_height = 7;
+    static constexpr SpritesheetType rock_spritesheet_type = SpritesheetType::BLOOD_ROCK_ROPE_POOF;
 
-    Rock();
-    
-    void updateOther() override {};
+    Rock(int x, int y) : BaseCreature(
+            x,
+            y,
+            rock_sprite_width,
+            rock_sprite_height,
+            rock_spritesheet_type,
+            rock_physical_width,
+            rock_physical_height
+    ) {
+        _friction = ICollidable::default_friction * 12;
+        init_sprites();
+        activated = true;
+    }
 
-    void initSprite() override;
+    // Base creature overrides
 
-    void deleteSprite() override;
+    void update_creature_specific() override;
 
-    void init() override;
+    void introduce_yourself() override { printf("WHIP\n"); };
 
     void apply_dmg(int dmg_to_apply) override {};
 
-    void draw() override;
-
-    void updateTimers() override {};
-
-    void updateSpeed() override;
-
-    void updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) override;
-
-    void updateCollisionsOtherMoving() override {};
-
     void onCollisionWithMainCharacter() override {};
 
-    double pos_inc_timer{};
+    // IRenderable overrides
 
-    SpriteInfo *mainSpriteInfo {};
-    SpriteInfo *subSpriteInfo {};
-    u8 * frameGfx{};
+    void init_sprites() override;
 
-    void set_position();
+    void delete_sprites() override;
 
-    void set_sprite_attributes();
+    void update_sprites_position() override;
+
+    // ICollidable overrides
+
+    bool can_update_collidable() override { return !hold_by_main_dude; }
+
+    bool can_apply_friction() override { return _bottom_collision; }
+
+    bool can_apply_gravity() override { return true; }
+
+    // Other, creature specific
+    
+    SpriteInfo *_main_sprite_info{};
+    SpriteInfo *_sub_sprite_info{};
+    u8 *_frame_gfx{};
+
 };
 
 

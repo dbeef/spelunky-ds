@@ -28,7 +28,7 @@ public:
 
     void introduce_yourself() const override { printf("ARCH SIGN\n"); };
 
-    void update() override {};
+    void update_decoration_specific() override {};
 
     void init_sprites() override;
 

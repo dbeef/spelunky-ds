@@ -6,13 +6,7 @@
 #ifndef SPELUNKYDS_MAINDUDE_H
 #define SPELUNKYDS_MAINDUDE_H
 
-#define MAIN_DUDE_PHYSICAL_WIDTH 16
-#define MAIN_DUDE_PHYSICAL_HEIGHT 16
-
-#define MAIN_DUDE_SPRITE_WIDTH 16
-#define MAIN_DUDE_SPRITE_HEIGHT 16
-#define MAIN_DUDE_SPRITE_SIZE MAIN_DUDE_SPRITE_WIDTH * MAIN_DUDE_SPRITE_HEIGHT
-
+//TODO Make it constexpr
 #define MAIN_DUDE_MAX_X_SPEED 2
 #define MAIN_DUDE_MAX_X_SPEED_CRAWLING 1.5f
 #define MAIN_DUDE_MAX_X_SPEED_RUNNING 3
@@ -33,14 +27,9 @@
 
 #include <nds.h>
 #include <vector>
+
 #include "../sprite_state.hpp"
-#include "../../tiles/map_tile.hpp"
-#include "../../tiles/level.hpp"
-#include "../../camera/camera.hpp"
-#include "../sprite_info.h"
-#include "../items/bomb.hpp"
 #include "../_base_creature.h"
-#include "../../input/input_handler.hpp"
 #include "whip.hpp"
 
 //http://spelunky.wikia.com/wiki/Spelunky_Guy
@@ -48,34 +37,108 @@ class MainDude : public BaseCreature {
 
 public:
 
-    MainDude();
+    static constexpr u8 main_dude_sprite_width = 16;
+    static constexpr u8 main_dude_sprite_height = 16;
+    static constexpr u16 main_dude_physical_width = 16;
+    static constexpr u16 main_dude_physical_height = 16;
+    static constexpr SpritesheetType main_dude_spritesheet_type = SpritesheetType::MAIN_DUDE;
+
+    static constexpr u16 main_dude_pos_update_delta_walking_running = 15;
+    static constexpr u16 main_dude_pos_update_delta_crawling = 30;
+    static constexpr float main_dude_max_x_speed_walking = 1.50f;
+    static constexpr float main_dude_max_x_speed_running = 3.0f;
+    static constexpr float main_dude_max_x_crawling = 0.55f;
+
+    MainDude(int x, int y) : BaseCreature(
+            x,
+            y,
+            main_dude_sprite_width,
+            main_dude_sprite_height,
+            main_dude_spritesheet_type,
+            main_dude_physical_width,
+            main_dude_physical_height
+    ) {
+        _friction = ICollidable::default_friction * 5.0f;
+        _bouncing_factor_y = 0;
+        _bouncing_factor_x = 0;
+        init_sprites();
+        whip = new Whip(0, 0);
+        _gravity = ICollidable::default_gravity * 1.15f;
+    }
+
+    // Base creature overrides
+    void update_creature_specific() override;
 
     void introduce_yourself() override { printf("MAIN_DUDE\n"); };
 
-    void updateOther() override {};
-
     void apply_dmg(int dmg_to_apply) override;
-
-    void draw() override;
-
-    void initSprite() override;
-
-    void deleteSprite() override;
-
-    void updateTimers() override;
-
-    void updateSpeed() override;
-
-    void updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) override;
-
-    void updateCollisionsOtherMoving() override {};
 
     void onCollisionWithMainCharacter() override {};
 
-    void init() override;
+    // IRenderable overrides
 
-    SpriteInfo *main_spelunker{};
-    SpriteInfo *sub_spelunker{};
+    void init_sprites() override;
+
+    void delete_sprites() override;
+
+    void update_sprites_position() override;
+
+    // ICollidable overrides
+
+    bool can_update_collidable() override { return true; }
+
+    bool can_apply_friction() override { return true; }
+
+    bool can_apply_gravity() override;
+
+    // Other, creature specific
+
+    // Updates sprites' graphics according to current animation frame index.
+    void match_animation();
+
+    // Sets dead as true and effecively launches game summary.
+    void set_dead();
+
+    void boost_going_through_map_holes(MapTile **const t);
+
+    void handle_key_input();
+
+    void can_hang_on_tile(MapTile **neighboringTiles);
+
+    void set_sprite_crawling();
+
+    void set_sprite_hanging_on_tile();
+
+    void set_sprite_whiping();
+
+    void set_sprite_pushing();
+
+    void set_sprite_stunned();
+
+    void set_sprite_climbing();
+
+    void set_sprite_dead();
+
+    void set_sprite_walking_when_in_air();
+
+    void set_sprite_falling();
+
+    void set_sprite_exiting_level();
+
+    void apply_blinking_on_damage();
+
+    void reset_values_checked_every_frame();
+
+    void throw_item();
+
+    void take_out_bomb();
+
+    void throw_rope();
+
+    void spawn_carried_items();
+
+    SpriteInfo *main_sprite_info{};
+    SpriteInfo *sub_sprite_info{};
 
     int current_x_in_tiles{};
     int current_y_in_tiles{};
@@ -134,44 +197,6 @@ public:
     int jetpack_fuel_counter{};
 
     bool carrying_damsel{};
-
-    void handle_key_input();
-
-    void can_hang_on_tile(MapTile **neighboringTiles);
-
-    void set_sprite_crawling();
-
-    void set_sprite_hanging_on_tile();
-
-    void set_sprite_whiping();
-
-    void set_sprite_pushing();
-
-    void set_sprite_stunned();
-
-    void set_sprite_climbing();
-
-    void set_sprite_dead();
-
-    void set_sprite_walking_when_in_air();
-
-    void set_sprite_falling();
-
-    void set_sprite_exiting_level();
-
-    void apply_blinking_on_damage();
-
-    void reset_values_checked_every_frame();
-
-    void throw_item();
-
-    void take_out_bomb();
-
-    void throw_rope();
-
-    void spawn_carried_items();
-
-    void match_animation();
 };
 
 

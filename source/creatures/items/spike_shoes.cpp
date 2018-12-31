@@ -3,155 +3,110 @@
 //
 
 #include <cstdio>
+
+#include "spike_shoes.hpp"
 #include "../spritesheet_type.hpp"
 #include "../../globals_declarations.hpp"
 #include "../../collisions/collisions.hpp"
 #include "../../../build/gfx_saleable.h"
 #include "../../decorations/got_collectible.hpp"
 #include "../_base_creature.h"
-#include "spike_shoes.hpp"
 #include "../sprite_utils.hpp"
 
 #define SPIKE_SHOES_POS_INC_DELTA 15
 
-void SpikeShoes::draw() {
+void SpikeShoes::update_creature_specific() {
 
-    if (ready_to_dispose) return;
+    if (_ready_to_dispose) return;
 
-    if (!collected) {
+    if (!_collected) {
 
-        if (bought && check_if_can_be_equipped()) {
+        if (_bought && check_if_can_be_equipped()) {
             equip();
-        } else if (!bought && !hold_by_main_dude) {
+        } else if (!_bought && !hold_by_main_dude) {
             check_if_can_be_pickuped();
         }
 
         if (hold_by_main_dude) {
             set_pickuped_position(4, -4);
             if (shopping_transaction(this)) {
-                collected = true;
+                _collected = true;
+                _main_sprite_info->entry->priority = OBJPRIORITY_0;
+                _sub_sprite_info->entry->isHidden = true;
+                _main_sprite_info->entry->isHidden = false;
                 equip();
             }
         }
     }
 
-    set_sprite_attributes();
-    update_anim_icon(x, y, physical_width);
+    update_anim_icon(_x, _y, _physical_width);
+    update_sprites_position();
 }
 
+void SpikeShoes::init_sprites() {
 
-void SpikeShoes::init() {
-    initSprite();
-    init_anim_icon();
+    delete_sprites();
+
+    _sub_sprite_info = global::sub_oam_manager->initSprite(gfx_saleablePal, gfx_saleablePalLen,
+                                                           nullptr, _sprite_size, _sprite_width,
+                                                           _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
+    _main_sprite_info = global::main_oam_manager->initSprite(gfx_saleablePal, gfx_saleablePalLen,
+                                                             nullptr, _sprite_size, _sprite_width,
+                                                             _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
+
+    _frame_gfx = sprite_utils::get_frame((u8 *) gfx_saleableTiles, _sprite_size, 12);
+    sprite_utils::update_frame(_frame_gfx, _sprite_size, _main_sprite_info, _sub_sprite_info);
+
+    update_sprites_position();
+    sprite_utils::set_vertical_flip(false, _main_sprite_info, _sub_sprite_info);
+    sprite_utils::set_horizontal_flip(false, _main_sprite_info, _sub_sprite_info);
+
+    if (_collected) {
+        _main_sprite_info->entry->priority = OBJPRIORITY_0;
+        _sub_sprite_info->entry->isHidden = true;
+        _main_sprite_info->entry->isHidden = false;
+    } else
+        sprite_utils::set_visibility(true, _main_sprite_info, _sub_sprite_info);
+
 }
 
-void SpikeShoes::updateSpeed() {
+void SpikeShoes::update_sprites_position() {
 
-    if (collected) return;
-
-    limit_speed(MAX_X_SPEED_SPIKE_SHOES, MAX_Y_SPEED_SPIKE_SHOES);
-
-    pos_inc_timer += *global::timer;
-
-    bool change_pos = (pos_inc_timer > SPIKE_SHOES_POS_INC_DELTA) && !hold_by_main_dude;
-
-    if (change_pos) {
-        update_position();
-        apply_friction(0.055);
-        apply_gravity(GRAVITY_DELTA_SPEED);
-        pos_inc_timer = 0;
-    }
-
-}
-
-void SpikeShoes::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
-
-    if (collected) return;
-
-    MapTile *t[9];
-    Collisions::getNeighboringTiles(global::current_level->map_tiles,
-                                    x_current_pos_in_tiles, y_current_pos_in_tiles, t);
-
-    upperCollision = Collisions::checkUpperCollision(t, &x, &y, &ySpeed, physical_width, true, 0.35);
-    bottomCollision = Collisions::checkBottomCollision(t, &x, &y, &ySpeed, physical_width, physical_height, true, 0.35);
-    leftCollision = Collisions::checkLeftCollision(t, &x, &y, &xSpeed, physical_width, physical_height, true, 0.15);
-    rightCollision = Collisions::checkRightCollision(t, &x, &y, &xSpeed, physical_width, physical_height, true, 0.15);
-}
-
-void SpikeShoes::initSprite() {
-
-    delete mainSpriteInfo;
-    delete subSpriteInfo;
-
-    subSpriteInfo = global::sub_oam_manager->initSprite(gfx_saleablePal, gfx_saleablePalLen,
-                                                        nullptr, SPIKE_SHOES_SPRITE_SIZE, sprite_width,
-                                                        spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
-    mainSpriteInfo = global::main_oam_manager->initSprite(gfx_saleablePal, gfx_saleablePalLen,
-                                                          nullptr, SPIKE_SHOES_SPRITE_SIZE, sprite_width,
-                                                          spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
-
-    frameGfx = sprite_utils::get_frame((u8 *) gfx_saleableTiles, SPIKE_SHOES_SPRITE_SIZE, 12);
-    sprite_utils::update_frame(frameGfx, SPIKE_SHOES_SPRITE_SIZE, mainSpriteInfo, subSpriteInfo);
-    set_sprite_attributes();
-}
-
-void SpikeShoes::set_position() {
-
-    if (collected) {
-        sprite_utils::set_entry_xy(mainSpriteInfo, x, y);
-        mainSpriteInfo->entry->priority = OBJPRIORITY_0;
-        subSpriteInfo->entry->isHidden = true;
-        mainSpriteInfo->entry->isHidden = false;
-
+    if (_collected) {
+        //no viewporting, draw on HUD
+        sprite_utils::set_entry_xy(_main_sprite_info, static_cast<u16>(_x), static_cast<u16>(_y));
     } else {
-        sprite_utils::set_visibility(true, mainSpriteInfo, subSpriteInfo);
         int main_x, main_y, sub_x, sub_y;
         get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
-        sprite_utils::set_entry_xy(mainSpriteInfo, main_x, main_y);
-        sprite_utils::set_entry_xy(subSpriteInfo, sub_x, sub_y);
+        sprite_utils::set_entry_xy(_main_sprite_info, static_cast<u16>(main_x), static_cast<u16>(main_y));
+        sprite_utils::set_entry_xy(_sub_sprite_info, static_cast<u16>(sub_x), static_cast<u16>(sub_y));
     }
 
-}
-
-SpikeShoes::SpikeShoes() {
-    cost = 4 * 1000;
-    name = "SPIKE SHOES";
-    physical_height = SPIKE_SHOES_PHYSICAL_HEIGHT;
-    physical_width = SPIKE_SHOES_PHYSICAL_WIDTH;
-    sprite_height = SPIKE_SHOES_SPRITE_HEIGHT;
-    sprite_width = SPIKE_SHOES_SPRITE_WIDTH;
-    spritesheet_type = SpritesheetType::SALEABLE;
 }
 
 void SpikeShoes::equip() {
 
-    auto *g = new GotCollectible(x - 12, y - 20, GotCollectible::Type::ITEM);
+    auto *g = new GotCollectible(_x - 12, _y - 20, GotCollectible::Type::ITEM);
     global::decorations_to_add.push_back(g);
 
     if (!global::main_dude->carrying_spike_shoes) {
         global::main_dude->carrying_spike_shoes = true;
-        set_position();
-        collected = true;
-        x = HUD_ITEMS_ROW_X;
-        y = global::hud->items_offset_y;
+        update_sprites_position();
+        _collected = true;
+        _x = HUD_ITEMS_ROW_X;
+        _y = global::hud->items_offset_y;
         global::hud->increment_offset_on_grabbed_item();
     } else {
-        sprite_utils::set_visibility(false, mainSpriteInfo, subSpriteInfo);
-        ready_to_dispose = true;
+        sprite_utils::set_visibility(false, _main_sprite_info, _sub_sprite_info);
+        _ready_to_dispose = true;
     }
 
 }
 
-void SpikeShoes::set_sprite_attributes() {
-    set_position();
-    sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);
-    sprite_utils::set_horizontal_flip(false, mainSpriteInfo, subSpriteInfo);
-}
-
-void SpikeShoes::deleteSprite() {
-    delete mainSpriteInfo;
-    delete subSpriteInfo;
-    mainSpriteInfo = nullptr;
-    subSpriteInfo = nullptr;
+void SpikeShoes::delete_sprites() {
+    delete _main_sprite_info;
+    delete _sub_sprite_info;
+    _main_sprite_info = nullptr;
+    _sub_sprite_info = nullptr;
 }
 

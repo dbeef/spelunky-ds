@@ -18,13 +18,13 @@
 #define PISTOL_POS_INC_DELTA 15
 #define PISTOL_COOLDOWN 750
 
-void Pistol::draw() {
+void Pistol::update_creature_specific() {
 
-    if (ready_to_dispose) return;
+    if (_ready_to_dispose) return;
 
-    sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);
-    sprite_utils::set_horizontal_flip(false, mainSpriteInfo, subSpriteInfo);
-    update_anim_icon(x, y, physical_width);
+    sprite_utils::set_vertical_flip(false, _main_sprite_info, _sub_sprite_info);
+    sprite_utils::set_horizontal_flip(false, _main_sprite_info, _sub_sprite_info);
+    update_anim_icon(_x, _y, _physical_width);
     match_animation();
 
     check_if_can_be_pickuped();
@@ -36,147 +36,96 @@ void Pistol::draw() {
         global::main_dude->carrying_pistol = true;
         sprite_state = global::main_dude->sprite_state;
 
-        y = global::main_dude->y + 7;
+        _y = global::main_dude->_y + 7;
         if (global::main_dude->sprite_state == SpriteState::W_LEFT)
-            x = global::main_dude->x - 4;
+            _x = global::main_dude->_x - 4;
         else
-            x = global::main_dude->x + 10;
+            _x = global::main_dude->_x + 10;
 
     } else
         global::main_dude->carrying_pistol = false;
 
-    set_position(); //set position must be called here, after position is offsetted if pistol carried
+    update_sprites_position(); //must be called here, after position is offsetted if pistol carried
     handle_shooting();
     kill_mobs_if_thrown(1);
 }
 
+void Pistol::init_sprites() {
 
-void Pistol::init() {
-    initSprite();
-    init_anim_icon();
-    update_anim_icon(x, y, physical_width);
-    blast = new Blast(0, 0);
-    global::decorations_to_add.push_back(blast);
-}
-
-void Pistol::updateSpeed() {
-
-    limit_speed(MAX_X_SPEED_PISTOL, MAX_Y_SPEED_PISTOL);
-
-    pos_inc_timer += *global::timer;
-
-    bool change_pos = (pos_inc_timer > PISTOL_POS_INC_DELTA) && !hold_by_main_dude;
-
-    if (change_pos) {
-        update_position();
-        apply_friction(0.055);
-        apply_gravity(GRAVITY_DELTA_SPEED);
-        pos_inc_timer = 0;
-    }
-
-}
-
-void Pistol::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
-    MapTile *t[9];
-    Collisions::getNeighboringTiles(global::current_level->map_tiles,
-                                    x_current_pos_in_tiles, y_current_pos_in_tiles, t);
-
-    upperCollision = Collisions::checkUpperCollision(t, &x, &y, &ySpeed, physical_width, true, 0.35);
-    bottomCollision = Collisions::checkBottomCollision(t, &x, &y, &ySpeed, physical_width, physical_height, true, 0.35);
-    leftCollision = Collisions::checkLeftCollision(t, &x, &y, &xSpeed, physical_width, physical_height, true, 0.15);
-    rightCollision = Collisions::checkRightCollision(t, &x, &y, &xSpeed, physical_width, physical_height, true, 0.15);
-}
-
-void Pistol::initSprite() {
-
-    delete mainSpriteInfo;
-    delete subSpriteInfo;
-
-    mainSpriteInfo = global::main_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
+    delete_sprites();
+    
+    _main_sprite_info = global::main_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
                                                           gfx_spike_collectibles_flamePalLen,
-                                                          nullptr, PISTOL_SPRITE_SIZE, sprite_width,
-                                                          spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
-    subSpriteInfo = global::sub_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
+                                                          nullptr, _sprite_size, _sprite_width,
+                                                          _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
+    _sub_sprite_info = global::sub_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
                                                         gfx_spike_collectibles_flamePalLen,
-                                                        nullptr, PISTOL_SPRITE_SIZE, sprite_width,
-                                                        spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
+                                                        nullptr, _sprite_size, _sprite_width,
+                                                        _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
 
-    sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);
-    sprite_utils::set_horizontal_flip(false, mainSpriteInfo, subSpriteInfo);
+    sprite_utils::set_vertical_flip(false, _main_sprite_info, _sub_sprite_info);
+    sprite_utils::set_horizontal_flip(false, _main_sprite_info, _sub_sprite_info);
     match_animation();
-    set_position();
+    update_sprites_position();
 }
 
-void Pistol::set_position() {
+void Pistol::update_sprites_position() {
     int main_x, main_y, sub_x, sub_y;
     get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
-    sprite_utils::set_entry_xy(mainSpriteInfo, main_x, main_y);
-    sprite_utils::set_entry_xy(subSpriteInfo, sub_x, sub_y);
-}
-
-Pistol::Pistol() {
-    cost = 10 * 1000;
-    name = "PISTOL";
-    physical_height = PISTOL_PHYSICAL_HEIGHT;
-    physical_width = PISTOL_PHYSICAL_WIDTH;
-    sprite_height = PISTOL_SPRITE_HEIGHT;
-    sprite_width = PISTOL_SPRITE_WIDTH;
-    spritesheet_type = SpritesheetType::SPIKES_COLLECTIBLES;
+    sprite_utils::set_entry_xy(_main_sprite_info, static_cast<u16>(main_x), static_cast<u16>(main_y));
+    sprite_utils::set_entry_xy(_sub_sprite_info, static_cast<u16>(sub_x), static_cast<u16>(sub_y));
 }
 
 void Pistol::equip() {
-    auto *g = new GotCollectible(x - 12, y - 20, GotCollectible::Type::ITEM);
+    auto *g = new GotCollectible(_x - 12, _y - 20, GotCollectible::Type::ITEM);
     global::decorations_to_add.push_back(g);
 }
 
 void Pistol::spawn_bullet() {
 
-    auto *b = new Bullet();
-    b->x = x;
-    b->y = y;
+    auto *b = new Bullet(_x, _y);
 
     if (global::main_dude->sprite_state == SpriteState::W_LEFT) {
-        b->xSpeed = -5.0;
-        b->x -= 2;
+        b->_x_speed = -5.0;
+        b->_x -= 2;
     } else if (global::main_dude->sprite_state == SpriteState::W_RIGHT) {
-        b->xSpeed = 5.0;
-        b->x += 2;
+        b->_x_speed = 5.0;
+        b->_x += 2;
     }
 
-    b->init();
     global::creatures_to_add.push_back(b);
-    b->ySpeed = 0;
+    b->_y_speed = 0;
 }
 
 //TODO Share this function between pistol / shotgun, similiar behaviour besides cooldown time / spawn bullet callback
 void Pistol::handle_shooting() {
 
-    if (activated && !firing && cooldown > PISTOL_COOLDOWN) {
+    if (activated && !_firing && _cooldown > PISTOL_COOLDOWN) {
 
         mmEffect(SFX_XSHOTGUN);
-        firing = true;
-        cooldown = 0;
+        _firing = true;
+        _cooldown = 0;
         activated = false;
         spawn_bullet();
 
     } else
         activated = false;
 
-    if (blast->_anim_frame_index >= 9) {
-        firing = false;
-        blast->_anim_frame_index = 0;
+    if (_blast->_anim_frame_index >= 9) {
+        _firing = false;
+        _blast->_anim_frame_index = 0;
     }
 
-    blast->_firing = firing;
+    _blast->_firing = _firing;
 
-    if (!firing) {
-        cooldown += *global::timer;
+    if (!_firing) {
+        _cooldown += *global::timer;
         if (sprite_state == SpriteState::W_LEFT)
-            blast->_x = x - 10;
+            _blast->_x = _x - 10;
         else
-            blast->_x = x + 10;
-        blast->_y = y;
-        blast->_sprite_state = sprite_state;
+            _blast->_x = _x + 10;
+        _blast->_y = _y;
+        _blast->_sprite_state = sprite_state;
     }
 
 }
@@ -184,17 +133,17 @@ void Pistol::handle_shooting() {
 void Pistol::match_animation() {
 
     if (sprite_state == SpriteState::W_LEFT)
-        frameGfx = sprite_utils::get_frame((u8 *) gfx_spike_collectibles_flameTiles, PISTOL_SPRITE_SIZE, 32);
+        _frame_gfx = sprite_utils::get_frame((u8 *) gfx_spike_collectibles_flameTiles, _sprite_size, 32);
     else
-        frameGfx = sprite_utils::get_frame((u8 *) gfx_spike_collectibles_flameTiles, PISTOL_SPRITE_SIZE, 33);
+        _frame_gfx = sprite_utils::get_frame((u8 *) gfx_spike_collectibles_flameTiles, _sprite_size, 33);
 
-    sprite_utils::update_frame(frameGfx, PISTOL_SPRITE_SIZE, mainSpriteInfo, subSpriteInfo);
+    sprite_utils::update_frame(_frame_gfx, _sprite_size, _main_sprite_info, _sub_sprite_info);
 }
 
-void Pistol::deleteSprite() {
-    delete mainSpriteInfo;
-    delete subSpriteInfo;
-    mainSpriteInfo = nullptr;
-    subSpriteInfo = nullptr;
+void Pistol::delete_sprites() {
+    delete _main_sprite_info;
+    delete _sub_sprite_info;
+    _main_sprite_info = nullptr;
+    _sub_sprite_info = nullptr;
 }
 

@@ -7,65 +7,68 @@
 
 #include "../_base_creature.h"
 #include "../sprite_state.hpp"
-#include "../shopping_object.h"
+#include "../../interfaces/shopping_object.h"
 #include "../../decorations/blast.hpp"
-
-#define PISTOL_PHYSICAL_HEIGHT 6
-#define PISTOL_PHYSICAL_WIDTH 9
-
-#define PISTOL_SPRITE_HEIGHT 16
-#define PISTOL_SPRITE_WIDTH 16
-#define PISTOL_SPRITE_SIZE PISTOL_SPRITE_WIDTH * PISTOL_SPRITE_HEIGHT
-
-#define MAX_X_SPEED_PISTOL 4
-#define MAX_Y_SPEED_PISTOL 4
+#include "../../globals_declarations.hpp"
 
 //http://spelunky.wikia.com/wiki/Pistol
 class Pistol : public BaseCreature, public ShoppingObject {
 
 public:
 
-    void introduce_yourself() override { printf("PISTOL\n"); };
+    static constexpr u16 pistol_cost = 4000;
+    static constexpr const char *pistol_name = "PISTOL";
+    static constexpr u8 pistol_sprite_width = 16;
+    static constexpr u8 pistol_sprite_height = 16;
+    static constexpr u16 pistol_physical_width = 9;
+    static constexpr u16 pistol_physical_height = 6;
+    static constexpr SpritesheetType pistol_spritesheet_type = SpritesheetType::SPIKES_COLLECTIBLES;
 
-    Pistol();
+    Pistol(int x, int y) : BaseCreature(
+            x,
+            y,
+            pistol_sprite_width,
+            pistol_sprite_height,
+            pistol_spritesheet_type,
+            pistol_physical_width,
+            pistol_physical_height
+    ), ShoppingObject(pistol_cost, pistol_name) {
 
-    void updateOther() override {};
+        init_anim_icon();
+        update_anim_icon(x, y, _physical_width);
+        init_sprites();
 
-    void init() override;
+        _blast = new Blast(0, 0);
+        global::decorations_to_add.push_back(_blast);
+    }
 
-    void draw() override;
+    // Base creature overrides
 
-    void initSprite() override;
+    void update_creature_specific() override;
 
-    void deleteSprite() override;
+    void introduce_yourself() override { printf("WHIP\n"); };
 
     void apply_dmg(int dmg_to_apply) override {};
 
-    void updateTimers() override {};
-
-    void updateSpeed() override;
-
-    void updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) override;
-
-    void updateCollisionsOtherMoving() override {};
-
     void onCollisionWithMainCharacter() override {};
 
-    double pos_inc_timer{};
+    // IRenderable overrides
 
-    SpriteInfo *mainSpriteInfo{};
-    SpriteInfo *subSpriteInfo{};
+    void init_sprites() override;
 
-    Blast *blast{};
+    void delete_sprites() override;
 
-    double cooldown{};
-    bool firing{};
-    int animFrame{};
-    int animFrameTimer{};
+    void update_sprites_position() override;
 
-    u8 *frameGfx{};
+    // ICollidable overrides
 
-    void set_position();
+    bool can_update_collidable() override { return !hold_by_main_dude; }
+
+    bool can_apply_friction() override { return true; }
+
+    bool can_apply_gravity() override { return true; }
+
+    // Other, creature specific
 
     void equip();
 
@@ -74,6 +77,17 @@ public:
     void handle_shooting();
 
     void match_animation();
+
+    SpriteInfo *_main_sprite_info{};
+    SpriteInfo *_sub_sprite_info{};
+    u8 *_frame_gfx{};
+
+    Blast *_blast{};
+    double _cooldown{};
+    bool _firing{};
+
+    u8 _anim_frame_index{};
+    double _anim_frame_timer{};
 };
 
 

@@ -5,78 +5,82 @@
 #ifndef SPELUNKYDS_ROPE_H
 #define SPELUNKYDS_ROPE_H
 
+#define max_rope_chain_size 8
+#define max_rope_chain_size_extended 12
+#define rope_sprite_width 8
+#define rope_sprite_height 8
+#define rope_physical_width 8
+#define rope_physical_height 8
+#define rope_spritesheet_type SpritesheetType::BLOOD_ROCK_ROPE_POOF
+
 #include <nds/arm9/sprite.h>
 #include <vector>
 #include "rope_element.hpp"
-
-#define MAX_Y_SPEED_ROPE 4
-#define MAX_X_SPEED_ROPE 4
-
-#define ROPE_PHYSICAL_HEIGHT 8
-#define ROPE_PHYSICAL_WIDTH 8
-
-#define ROPE_SPRITE_HEIGHT 8
-#define ROPE_SPRITE_WIDTH 8
-#define ROPE_SPRITE_SIZE ROPE_SPRITE_WIDTH * ROPE_SPRITE_HEIGHT
 
 //http://spelunky.wikia.com/wiki/Rope
 class Rope : public BaseCreature {
 
 public:
 
-    void introduce_yourself() override { printf("ROPE\n"); };
+    Rope(int x, int y) : BaseCreature(
+            x,
+            y,
+            rope_sprite_width,
+            rope_sprite_height,
+            rope_spritesheet_type,
+            rope_physical_width,
+            rope_physical_height
+    ) {
+        _bouncing_factor_y = 0;
+        _bouncing_factor_x = 0;
+        init_sprites();
+    }
 
-    Rope();
+    // Base creature overrides
 
-    void updateOther() override {};
+    void update_creature_specific() override;
 
-    void init() override;
+    void introduce_yourself() override { printf("WHIP\n"); };
 
     void apply_dmg(int dmg_to_apply) override {};
 
-    void draw() override;
-
-    void initSprite() override;
-
-    void deleteSprite() override;
-
-    void updateTimers() override {};
-
-    void updateSpeed() override;
-
-    void updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) override;
-
-    void updateCollisionsOtherMoving() override {};
-
     void onCollisionWithMainCharacter() override {};
 
+    // IRenderable overrides
 
-    double pos_inc_timer{};
+    void init_sprites() override;
 
-    SpriteInfo *mainSpriteInfo{};
-    SpriteInfo *subSpriteInfo{};
+    void delete_sprites() override;
 
-    u8 *frameGfx{};
+    void update_sprites_position() override;
 
-    bool instant_rope{}; //todo, for main menu rope
-    bool extended_rope{};
-    bool thrown{};
-    bool finished{};
-    int expand_timer{};
+    // ICollidable overrides
 
-    int throwingTimer{};
-    std::vector<RopeElement *> ropeChain{};
+    bool can_update_collidable() override { return !hold_by_main_dude && !_finished; }
 
-    void throwingFinished();
+    bool can_apply_friction() override { return false; }
+    bool can_apply_gravity() override { return false; }
 
-    void notThrown();
+    // Other, creature specific
 
+    void set_sprite_throwing_finished();
+
+    void set_sprite_throwing();
 
     bool isThereChainForThisTile(int rope_y_tiles);
 
     void add_rope_if_needed();
 
-    void set_position();
+    SpriteInfo *_main_sprite_info{};
+    SpriteInfo *_sub_sprite_info{};
+    u8 *_frame_gfx{};
+    bool _extended_rope{};
+    bool _thrown{};
+    bool _finished{};
+    double _expand_timer{};
+    double _throwing_timer{};
+    std::vector<RopeElement *> _rope_chain{};
+
 };
 
 

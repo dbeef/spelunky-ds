@@ -6,6 +6,7 @@
 #define SPELUNKYDS_IRENDERABLE_H
 
 #include <nds.h>
+
 #include "../creatures/spritesheet_type.hpp"
 #include "IBase.h"
 
@@ -32,6 +33,18 @@ public:
     }
 
     virtual ~IRenderable() = default;
+
+    // Should obtain sprites via OAM manager.
+    // Will be called on object initialization and every OAM clean.
+    // Should call update_sprites_position.
+    virtual void init_sprites() = 0;
+
+    // Should call delete on its SpriteInfo pointers and nullptr them.
+    virtual void delete_sprites() = 0;
+
+    // Should set sprites' position to _x/_y values, with applied viewport.
+    // Will be called every frame, since both viewport and _x/_y can change.
+    virtual void update_sprites_position() = 0;
 
     const u16 _sprite_width;
     const u16 _sprite_height;

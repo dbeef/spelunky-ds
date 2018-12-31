@@ -19,8 +19,8 @@ int main() {
 
     global::init_globals();
 
-    swiWaitForVBlank(); //waiting for a next frame so it would be allowed to change the brightness
-    setBrightness(3, global::game_state->brightness_level); //setting brightness to max to smooth transition from menu
+//    swiWaitForVBlank(); //waiting for a next frame so it would be allowed to change the brightness
+//    setBrightness(3, global::game_state->brightness_level); //setting brightness to max to smooth transition from menu
 
     global::game_state->in_main_menu = true;
 

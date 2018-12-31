@@ -6,62 +6,72 @@
 #define SPELUNKYDS_CHEST_H
 
 #include "../_base_creature.h"
-
-#define CHEST_PHYSICAL_HEIGHT 8
-#define CHEST_PHYSICAL_WIDTH 12
-
-#define CHEST_SPRITE_HEIGHT 16
-#define CHEST_SPRITE_WIDTH 16
-#define CHEST_SPRITE_SIZE CHEST_SPRITE_WIDTH * CHEST_SPRITE_HEIGHT
-
-#define MAX_X_SPEED_CHEST 6
-#define MAX_Y_SPEED_CHEST 4
+#include "../sprite_info.h"
 
 //http://spelunky.wikia.com/wiki/Chest
-class Chest: public BaseCreature {
+class Chest : public BaseCreature {
 
 public:
 
-    void introduce_yourself() override { printf("CHEST\n"); };
+    static constexpr u8 chest_sprite_width = 16;
+    static constexpr u8 chest_sprite_height = 16;
+    static constexpr u16 chest_physical_width = 12;
+    static constexpr u16 chest_physical_height = 8;
+    static constexpr SpritesheetType chest_spritesheet_type = SpritesheetType::SPIKES_COLLECTIBLES;
 
-    Chest();
+    Chest(int x, int y) : BaseCreature(
+            x,
+            y,
+            chest_sprite_width,
+            chest_sprite_height,
+            chest_spritesheet_type,
+            chest_physical_width,
+            chest_physical_height
+    ) {
+        _friction = 0.1f;
+        _bouncing_factor_y = ICollidable::default_bouncing_factor_y * 0.5f;
+        _max_x_speed = 1.25f;
+        _pos_update_delta = 15;
+        init_sprites();
+    }
 
-    void updateOther() override {};
+    // Base creature overrides
 
-    void init() override;
+    void update_creature_specific() override;
 
-    void draw() override;
-
-    void initSprite() override;
-
-    void deleteSprite() override;
+    void introduce_yourself() override { printf("WHIP\n"); };
 
     void apply_dmg(int dmg_to_apply) override {};
 
-    void updateTimers() override {};
-
-    void updateSpeed() override;
-
-    void updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) override;
-
-    void updateCollisionsOtherMoving() override {};
-
     void onCollisionWithMainCharacter() override {};
-    
-    double pos_inc_timer{};
 
-    SpriteInfo *mainSpriteInfo {};
-    SpriteInfo *subSpriteInfo {};
-    u8 * frameGfx{};
+    // IRenderable overrides
 
-    void set_position();
+    void init_sprites() override;
+
+    void delete_sprites() override;
+
+    void update_sprites_position() override;
+
+    // ICollidable overrides
+
+    bool can_update_collidable() override { return true; }
+
+    bool can_apply_friction() override { return _bottom_collision; }
+
+    bool can_apply_gravity() override { return true; }
+
+    // Other, creature specific
 
     void spawn_treasure();
 
     void match_animation();
+
+    // Other, creature specific
+
+    SpriteInfo *mainSpriteInfo{};
+    SpriteInfo *subSpriteInfo{};
+    u8 *frameGfx{};
 };
-
-
-
 
 #endif //SPELUNKYDS_CHEST_H

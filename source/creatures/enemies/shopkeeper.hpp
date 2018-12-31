@@ -1,20 +1,9 @@
 //
 // Created by xdbeef on 25.05.18.
-// http://spelunky.wikia.com/wiki/Shopkeeper
 //
 
 #ifndef SPELUNKYDS_SHOPKEEPER_H
 #define SPELUNKYDS_SHOPKEEPER_H
-
-#define MAX_X_SPEED_SHOPKEEPER 4
-#define MAX_Y_SPEED_SHOPKEEPER 5
-
-#define SHOPKEEPER_PHYSICAL_HEIGHT 16
-#define SHOPKEEPER_PHYSICAL_WIDTH 16
-
-#define SHOPKEEPER_SPRITE_HEIGHT 16
-#define SHOPKEEPER_SPRITE_WIDTH 16
-#define SHOPKEEPER_SPRITE_SIZE SHOPKEEPER_SPRITE_HEIGHT * SHOPKEEPER_SPRITE_WIDTH
 
 #define SHOPKEEPER_STUN_TIME 7000
 #define SHOPKEEPER_HITPOINTS 3
@@ -22,7 +11,7 @@
 #include "../_base_creature.h"
 #include "../sprite_state.hpp"
 #include "../sprite_info.h"
-#include "../shopping_object.h"
+#include "../../interfaces/shopping_object.h"
 #include "../collectibles/shotgun.hpp"
 
 //http://spelunky.wikia.com/wiki/Shopkeeper
@@ -30,76 +19,43 @@ class Shopkeeper : public BaseCreature {
 
 public:
 
-    void introduce_yourself() override { printf("SHOPKEEPER\n"); };
+    static constexpr u8 shopkeeper_sprite_width = 16;
+    static constexpr u8 shopkeeper_sprite_height = 16;
+    static constexpr u16 shopkeeper_physical_width = 16;
+    static constexpr u16 shopkeeper_physical_height = 16;
+    static constexpr SpritesheetType shopkeeper_spritesheet_type = SpritesheetType::SHOPKEEPER;
 
-    //todo shopkeeper's name
     Shopkeeper(int x, int y);
 
-    Shotgun *shotgun{};
-    bool holding_shotgun{};
+    // Base creature overrides
 
-    Shopkeeper();
+    void update_creature_specific() override;
 
-    void updateOther() override {};
-
-    void init() override;
-
-    void draw() override;
+    void introduce_yourself() override { printf("WHIP\n"); };
 
     void apply_dmg(int dmg_to_apply) override;
 
-    void updateTimers() override {};
-
-    void updateSpeed() override;
-
-    void updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) override;
-
-    void updateCollisionsOtherMoving() override {};
-
     void onCollisionWithMainCharacter() override {};
 
-    void initSprite() override;
+    // IRenderable overrides
 
-    void deleteSprite() override;
+    void init_sprites() override;
 
-    double pos_inc_timer{};
+    void delete_sprites() override;
 
-    ShoppingObject *shop_items[4]{};
+    void update_sprites_position() override;
 
-    SpriteInfo *mainSpriteInfo{};
-    SpriteInfo *subSpriteInfo{};
+    // ICollidable overrides
 
-    u8 *frameGfx{};
+    bool can_update_collidable() override { return !hold_by_main_dude && !_ready_to_dispose; }
 
-    double waitTimer{};
-    double go_timer{};
+    bool can_apply_friction() override { return !hold_by_main_dude && _bottom_collision && (!triggered || killed || stunned); }
 
-    int anim_frame{};
-    double anim_frame_timer{};
+    bool can_apply_gravity() override { return !hold_by_main_dude; }
 
-    double invert_speed_timer{};
-    double blood_spawn_timer{};
-
-    bool no_shotgun{};
-    bool landlocked{};
-    bool triggered{};
-    bool standby{};
-    bool stunned{};
-    double stunned_timer{};
-
-    int shop_bounds_left_x_px{};
-    int shop_bounds_right_x_px{};
-    int shop_bounds_up_y_px{};
-    int shop_bounds_down_y_px{};
-    double jumping_timer{};
-
-    int staying_on_ground{};
-
-    bool introduced_shop_name{};
+    // Other, creature specific
 
     void randomizeMovement();
-
-    void set_position();
 
     void apply_walking_sprites();
 
@@ -124,6 +80,32 @@ public:
     void spawn_shotgun();
 
     void trigger();
+
+    Shotgun *shotgun{};
+    bool holding_shotgun{};
+    ShoppingObject *shop_items[4]{};
+    SpriteInfo *mainSpriteInfo{};
+    SpriteInfo *subSpriteInfo{};
+    u8 *frameGfx{};
+    double waitTimer{};
+    double go_timer{};
+    int anim_frame{};
+    double anim_frame_timer{};
+    double invert_speed_timer{};
+    double blood_spawn_timer{};
+    bool no_shotgun{};
+    bool landlocked{};
+    bool triggered{};
+    bool standby{};
+    bool stunned{};
+    double stunned_timer{};
+    int shop_bounds_left_x_px{};
+    int shop_bounds_right_x_px{};
+    int shop_bounds_up_y_px{};
+    int shop_bounds_down_y_px{};
+    double jumping_timer{};
+    int staying_on_ground{};
+    bool introduced_shop_name{};
 };
 
 

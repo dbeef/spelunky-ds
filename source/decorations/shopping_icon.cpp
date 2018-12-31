@@ -14,7 +14,7 @@ ShoppingIcon::ShoppingIcon(int x, int y) :
     init_sprites();
 }
 
-void ShoppingIcon::update() {
+void ShoppingIcon::update_decoration_specific() {
 
     if (_ready_to_dispose) return;
 

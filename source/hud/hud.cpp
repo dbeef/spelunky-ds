@@ -12,7 +12,7 @@
 #include "../creatures/enemies/snake.hpp"
 #include "../creatures/enemies/bat.hpp"
 #include "../creatures/enemies/spider.hpp"
-#include "../creatures/collectibles/moniez.hpp"
+#include "../interfaces/moniez.hpp"
 #include "../creatures/sprite_utils.hpp"
 #include "../creatures/enemies/damsel.hpp"
 #include "../creatures/enemies/skeleton.hpp"
@@ -344,49 +344,37 @@ void Hud::draw_collected_loot() {
             global::collected_loot.at(a) == S_MONIEZ_RUBY_BIG_GREEN ||
             global::collected_loot.at(a) == S_MONIEZ_RUBY_BIG_BLUE) {
 
-            auto *ruby_big = new RubyBig();
-            ruby_big->x = 90 + (a * 4);
-            ruby_big->y = 190;
-            ruby_big->init();
-            ruby_big->y += (16 - ruby_big->physical_height); //aligning to same level
+            auto *ruby_big = new RubyBig(90 + (a * 4), 190);
+            ruby_big->_y += (16 - ruby_big->_physical_height); //aligning to same level
             global::creatures.push_back(ruby_big);
-            ruby_big->set_position();
-            ruby_big->ready_to_dispose = true;
+            ruby_big->update_sprites_position();
+            ruby_big->_ready_to_dispose = true;
 
         } else if (global::collected_loot.at(a) == S_MONIEZ_RUBY_SMALL_RED ||
                    global::collected_loot.at(a) == S_MONIEZ_RUBY_SMALL_GREEN ||
                    global::collected_loot.at(a) == S_MONIEZ_RUBY_SMALL_BLUE) {
 
-            auto *ruby_small = new RubySmall();
-            ruby_small->x = 90 + (a * 4);
-            ruby_small->y = 190;
-            ruby_small->init();
-            ruby_small->y += (16 - ruby_small->physical_height); //aligning to same level
+            auto *ruby_small = new RubySmall(90 + (a * 4), 190);
+            ruby_small->_y += (16 - ruby_small->_physical_height); //aligning to same level
             global::creatures.push_back(ruby_small);
-            ruby_small->set_position();
-            ruby_small->ready_to_dispose = true;
+            ruby_small->update_sprites_position();
+            ruby_small->_ready_to_dispose = true;
 
         } else if (global::collected_loot.at(a) == S_MONIEZ_TRIPLE_GOLDBARS) {
 
-            auto *triple_goldbars = new TripleGoldbar();
-            triple_goldbars->x = 90 + (a * 4);
-            triple_goldbars->y = 190;
-            triple_goldbars->init();
-            triple_goldbars->y += (16 - triple_goldbars->physical_height); //aligning to same level
+            auto *triple_goldbars = new TripleGoldbar(90 + (a * 4), 190);
+            triple_goldbars->_y += (16 - triple_goldbars->_physical_height); //aligning to same level
             global::creatures.push_back(triple_goldbars);
-            triple_goldbars->set_position();
-            triple_goldbars->ready_to_dispose = true;
+            triple_goldbars->update_sprites_position();
+            triple_goldbars->_ready_to_dispose = true;
 
         } else if (global::collected_loot.at(a) == S_MONIEZ_SINGLE_GOLDBAR) {
 
-            auto *single_goldbar = new SingleGoldbar();
-            single_goldbar->x = 90 + (a * 4);
-            single_goldbar->y = 190;
-            single_goldbar->init();
-            single_goldbar->y += (16 - single_goldbar->physical_height); //aligning to same level
+            auto *single_goldbar = new SingleGoldbar(90 + (a * 4), 190);
+            single_goldbar->_y += (16 - single_goldbar->_physical_height); //aligning to same level
             global::creatures.push_back(single_goldbar);
-            single_goldbar->set_position();
-            single_goldbar->ready_to_dispose = true;
+            single_goldbar->update_sprites_position();
+            single_goldbar->_ready_to_dispose = true;
 
         }
 
@@ -402,46 +390,42 @@ void Hud::draw_killed_npcs() {
 
             case SpriteType::S_SPIDER: {
                 auto *spider = new Spider(95 + (a * 8), 208);
-                spider->init();
                 //deliberately not aligning to same level - already aligned
                 global::creatures.push_back(spider);
-                spider->ready_to_dispose = true;
+                spider->_ready_to_dispose = true;
                 spider->set_sprite_falling();
-                spider->set_position();
+                spider->update_sprites_position();
                 break;
             }
             case SpriteType::S_BAT: {
                 auto *bat = new Bat(95 + (a * 8), 208);
-                bat->xSpeed = -1; //so it would face leftwards
-                bat->y += (16 - bat->physical_height); //aligning to same level
-                bat->init();
+                bat->_x_speed = -1; //so it would face leftwards
+                bat->_y += (16 - bat->_physical_height); //aligning to same level
                 bat->set_sprite_flying_left();
-                bat->set_position();
-                bat->ready_to_dispose = true;
+                bat->update_sprites_position();
+                bat->_ready_to_dispose = true;
                 global::creatures.push_back(bat);
                 break;
             }
             case SpriteType::S_SNAKE: {
                 auto *snake = new Snake(95 + (a * 8), 208);
                 snake->sprite_state = SpriteState::W_LEFT;
-                snake->initSprite();
-                snake->y += (16 - snake->physical_height); //aligning to same level
+                snake->_y += (16 - snake->_physical_height); //aligning to same level
                 global::creatures.push_back(snake);
-                snake->ready_to_dispose = true;
-                snake->set_position();
+                snake->_ready_to_dispose = true;
+                snake->update_sprites_position();
                 snake->set_sprite_left();
                 break;
             }
 
             case SpriteType::S_DAMSEL: {
                 auto *damsel = new Damsel(95 + (a * 8), 208);
-                damsel->init();
                 damsel->match_animation();
-                damsel->draw();
-                damsel->y += (16 - damsel->physical_height); //aligning to same level
+                damsel->update();
+                damsel->_y += (16 - damsel->_physical_height); //aligning to same level
                 global::creatures.push_back(damsel);
-                damsel->ready_to_dispose = true;
-                damsel->set_position();
+                damsel->_ready_to_dispose = true;
+                damsel->update_sprites_position();
                 break;
             }
 
@@ -449,12 +433,11 @@ void Hud::draw_killed_npcs() {
                 auto *skeleton = new Skeleton(95 + (a * 8), 208);
                 skeleton->summoned = true;
                 skeleton->main_dude_orientation_at_summoning_moment = SpriteState::W_RIGHT;
-                skeleton->initSprite();
                 skeleton->set_sprite_walking();
-                skeleton->y += (16 - skeleton->physical_height); //aligning to same level
+                skeleton->_y += (16 - skeleton->_physical_height); //aligning to same level
                 global::creatures.push_back(skeleton);
-                skeleton->ready_to_dispose = true;
-                skeleton->set_position();
+                skeleton->_ready_to_dispose = true;
+                skeleton->update_sprites_position();
                 break;
             }
 
@@ -462,12 +445,11 @@ void Hud::draw_killed_npcs() {
                 auto *caveman = new Caveman(95 + (a * 8), 208);
                 caveman->sprite_state = SpriteState::W_LEFT;
                 caveman->animFrameTimer = 1000;
-                caveman->init();
-                caveman->draw();
-                caveman->y += (16 - caveman->physical_height); //aligning to same level
+                caveman->update();
+                caveman->_y += (16 - caveman->_physical_height); //aligning to same level
                 global::creatures.push_back(caveman);
-                caveman->ready_to_dispose = true;
-                caveman->set_position();
+                caveman->_ready_to_dispose = true;
+                caveman->update_sprites_position();
                 break;
             }
 
@@ -475,13 +457,11 @@ void Hud::draw_killed_npcs() {
                 auto *shopkeeper = new Shopkeeper(95 + (a * 8), 208);
                 shopkeeper->no_shotgun = true;
                 shopkeeper->anim_frame_timer = 1000;
-                shopkeeper->init();
                 shopkeeper->sprite_state = SpriteState::W_LEFT;
-                shopkeeper->draw();
-                shopkeeper->y += (16 - shopkeeper->physical_height); //aligning to same level
+                shopkeeper->_y += (16 - shopkeeper->_physical_height); //aligning to same level
+                shopkeeper->_ready_to_dispose = true;
+                shopkeeper->update();
                 global::creatures.push_back(shopkeeper);
-                shopkeeper->ready_to_dispose = true;
-                shopkeeper->set_position();
                 break;
             }
 

@@ -9,16 +9,6 @@
 #define DAMSEL_STUN_TIME 7000
 #define DAMSEL_HITPOINTS 3
 
-#define DAMSEL_PHYSICAL_HEIGHT 16
-#define DAMSEL_PHYSICAL_WIDTH 16
-
-#define DAMSEL_SPRITE_HEIGHT 16
-#define DAMSEL_SPRITE_WIDTH 16
-#define DAMSEL_SPRITE_SIZE DAMSEL_SPRITE_WIDTH * DAMSEL_SPRITE_HEIGHT
-
-#define MAX_X_SPEED_DAMSEL 5
-#define MAX_Y_SPEED_DAMSEL 4
-
 #include "../_base_creature.h"
 #include "../sprite_state.hpp"
 #include "../sprite_info.h"
@@ -28,32 +18,84 @@ class Damsel : public BaseCreature {
 
 public:
 
-    void introduce_yourself() override { printf("DAMSEL\n"); };
+    static constexpr u8 damsel_sprite_width = 16;
+    static constexpr u8 damsel_sprite_height = 16;
+    static constexpr u16 damsel_physical_width = 16;
+    static constexpr u16 damsel_physical_height = 16;
+    static constexpr SpritesheetType damsel_spritesheet_type = SpritesheetType::CAVEMAN_DAMSEL;
 
-    Damsel();
-    Damsel(int x, int y);
+    Damsel(int x, int y) : BaseCreature(
+            x,
+            y,
+            damsel_sprite_width,
+            damsel_sprite_height,
+            damsel_spritesheet_type,
+            damsel_physical_width,
+            damsel_physical_height
+    ) {
+        _max_x_speed = 1.5f;
+        hitpoints = DAMSEL_HITPOINTS;
+        call_for_help = true;
+        sprite_state = SpriteState::W_LEFT;
+        activated = true;
+        randomizeMovement();
+        _bouncing_factor_x = 0;
+        _bouncing_factor_y = 0;
+        init_sprites();
+        _friction = 0.5f;
+        _pos_update_delta = 16;
+//        _gravity = 0.75f * ICollidable::default_gravity;
+    }
 
-    void updateOther() override {};
+    // Base creature overrides
 
-    void init() override;
+    void update_creature_specific() override;
 
-    void draw() override;
+    void introduce_yourself() override { printf("WHIP\n"); };
 
     void apply_dmg(int dmg_to_apply) override;
 
-    void updateTimers() override {};
-
-    void updateSpeed() override;
-
-    void updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) override;
-
-    void updateCollisionsOtherMoving() override {};
-
     void onCollisionWithMainCharacter() override {};
 
-    void initSprite() override;
+    // IRenderable overrides
 
-    void deleteSprite() override;
+    void init_sprites() override;
+
+    void delete_sprites() override;
+
+    void update_sprites_position() override;
+
+    // ICollidable overrides
+
+    bool can_update_collidable() override { return !_ready_to_dispose && !hold_by_main_dude; }
+
+    bool can_apply_friction() override { return !hold_by_main_dude && _bottom_collision /*&& (stunned || killed)*/; }
+
+    bool can_apply_gravity() override { return !hold_by_main_dude; }
+
+    // Other, creature specific
+    
+    void randomizeMovement();
+
+    void apply_walking_sprites();
+
+    void apply_stunned_sprites();
+
+    void make_some_movement();
+
+    void apply_stunned_carried_sprites();
+
+    void apply_dead_carried_sprites();
+
+    void apply_dead_sprites();
+
+    void apply_exiting_level_sprites();
+
+    void apply_yelling_sprites();
+
+    void match_animation();
+
+    void apply_smooching_sprites();
 
     double pos_inc_timer{};
 
@@ -85,29 +127,6 @@ public:
 
     double stunned_timer{};
 
-    void randomizeMovement();
-
-    void set_position();
-
-    void apply_walking_sprites();
-
-    void apply_stunned_sprites();
-
-    void make_some_movement();
-
-    void apply_stunned_carried_sprites();
-
-    void apply_dead_carried_sprites();
-
-    void apply_dead_sprites();
-
-    void apply_exiting_level_sprites();
-
-    void apply_yelling_sprites();
-
-    void match_animation();
-
-    void apply_smooching_sprites();
 };
 
 

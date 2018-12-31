@@ -9,68 +9,75 @@
 #include "../sprite_info.h"
 #include "../sprite_state.hpp"
 #include "../_base_creature.h"
-#include "../shopping_object.h"
+#include "../../interfaces/shopping_object.h"
 #include "../animations/fall_poof.hpp"
-
-#define JETPACK_PHYSICAL_HEIGHT 12
-#define JETPACK_PHYSICAL_WIDTH 14
-
-#define JETPACK_SPRITE_HEIGHT 16
-#define JETPACK_SPRITE_WIDTH 16
-#define JETPACK_SPRITE_SIZE JETPACK_SPRITE_WIDTH * JETPACK_SPRITE_HEIGHT
-
-#define MAX_X_SPEED_JETPACK 4
-#define MAX_Y_SPEED_JETPACK 4
 
 //http://spelunky.wikia.com/wiki/jetpack
 class Jetpack : public BaseCreature, public ShoppingObject {
 
 public:
+    
+    static constexpr u16 jetpack_cost = 16000;
+    static constexpr const char *jetpack_name = "JETPACK";
+    static constexpr u8 jetpack_sprite_width = 16;
+    static constexpr u8 jetpack_sprite_height = 16;
+    static constexpr u16 jetpack_physical_width = 14;
+    static constexpr u16 jetpack_physical_height = 12;
+    static constexpr SpritesheetType jetpack_spritesheet_type = SpritesheetType::BAT_JETPACK;
 
-    void introduce_yourself() override { printf("JETPACK\n"); };
+    Jetpack(int x, int y) : BaseCreature(
+            x,
+            y,
+            jetpack_sprite_width,
+            jetpack_sprite_height,
+            jetpack_spritesheet_type,
+            jetpack_physical_width,
+            jetpack_physical_height
+    ), ShoppingObject(jetpack_cost, jetpack_name) {
+        init_sprites();
+        init_anim_icon();
+        update_anim_icon(x, y, _physical_width);
+    }
 
-    ~Jetpack() override;
+    ~Jetpack();
 
-    Jetpack();
+    // Base creature overrides
 
-    void updateOther() override {};
+    void update_creature_specific() override;
 
-    void init() override;
-
-    void draw() override;
-
-    void initSprite() override;
-
-    void deleteSprite() override;
+    void introduce_yourself() override { printf("WHIP\n"); };
 
     void apply_dmg(int dmg_to_apply) override {};
 
-    void updateTimers() override {};
-
-    void updateSpeed() override;
-
-    void updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) override;
-
-    void updateCollisionsOtherMoving() override {};
-
     void onCollisionWithMainCharacter() override {};
 
-    double pos_inc_timer{};
+    // IRenderable overrides
 
-    bool collected{};
+    void init_sprites() override;
 
-    SpriteInfo *mainSpriteInfo{};
-    SpriteInfo *subSpriteInfo{};
+    void delete_sprites() override;
 
-    FallPoof *poofs[2]{};
+    void update_sprites_position() override;
 
-    u8 *frameGfx{};
+    // ICollidable overrides
 
-    int poof_spawn_timer{};
+    bool can_update_collidable() override { return !collected; }
 
-    void set_position();
+    bool can_apply_friction() override { return true; }
+
+    bool can_apply_gravity() override { return true; }
+
+    // Other, creature specific
 
     void equip();
+
+    double _poof_spawn_timer{};
+    bool collected{};
+    SpriteInfo *_main_sprite_info{};
+    SpriteInfo *_sub_sprite_info{};
+    FallPoof *_poofs[2]{};
+    u8 *_frame_gfx{};
+
 };
 
 

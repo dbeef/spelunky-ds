@@ -8,7 +8,7 @@
 #include <nds/arm9/sprite.h>
 #include "tiles/level.hpp"
 #include "creatures/sprite_info.h"
-#include "creatures/collectibles/moniez.hpp"
+#include "interfaces/moniez.hpp"
 #include "globals_declarations.hpp"
 #include "creatures/enemies/snake.hpp"
 #include "creatures/items/jar.hpp"

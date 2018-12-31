@@ -8,7 +8,7 @@
 #include "got_collectible.hpp"
 #include "../creatures/sprite_utils.hpp"
 
-void Smooch::update() {
+void Smooch::update_decoration_specific() {
     
     if (_ready_to_dispose) return;
 

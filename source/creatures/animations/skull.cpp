@@ -17,15 +17,14 @@
 #define FRAME_OFFSET_SKULL 24
 #define FRAME_OFFSET_COLLIDED 33
 
-void Skull::draw() {
+void Skull::update_creature_specific() {
 
-    if (ready_to_dispose)
-        return;
+    if (_ready_to_dispose) return;
 
     sprite_utils::set_visibility(true, mainSpriteInfo, subSpriteInfo);
     sprite_utils::set_priority(OBJPRIORITY_0, mainSpriteInfo, subSpriteInfo);
     sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);
-    set_position();
+    update_sprites_position();
 
     if (hold_by_main_dude)
         sprite_utils::set_horizontal_flip(global::main_dude->sprite_state == SpriteState::W_RIGHT,
@@ -43,30 +42,43 @@ void Skull::draw() {
 
         match_animation();
     }
+    
+    if(_map_collisions_checked) {
 
+
+        if (((_upper_collision || _bottom_collision || _left_collision || _right_collision)
+             && (fabs(_x_speed) > 0 || fabs(_y_speed) > 0)) && !collided) {
+
+            collided = true;
+            animFrame = 0;
+
+            auto b = new Bone(_x, _y - 5);
+            b->_x_speed = 0;
+            b->_y_speed = -1.4f;
+            b->animFrame = 2;
+            global::creatures_to_add.push_back(b);
+        }
+
+        _map_collisions_checked = false;
+    }
 }
 
-
-void Skull::init() {
-    initSprite();
-}
-
-void Skull::initSprite() {
+void Skull::init_sprites() {
 
     delete mainSpriteInfo;
     delete subSpriteInfo;
 
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_spider_skeletonPal, gfx_spider_skeletonPalLen,
-                                                        nullptr, SKULL_SPRITE_SIZE, sprite_width,
-                                                        spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
+                                                        nullptr, _sprite_size, _sprite_width,
+                                                        _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_spider_skeletonPal, gfx_spider_skeletonPalLen,
-                                                          nullptr, SKULL_SPRITE_SIZE, sprite_width,
-                                                          spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
+                                                          nullptr, _sprite_size, _sprite_width,
+                                                          _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
     match_animation();
     sprite_utils::set_visibility(true, mainSpriteInfo, subSpriteInfo);
     sprite_utils::set_priority(OBJPRIORITY_0, mainSpriteInfo, subSpriteInfo);
     sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);
-    set_position();
+    update_sprites_position();
 
     if (hold_by_main_dude)
         sprite_utils::set_horizontal_flip(global::main_dude->sprite_state == SpriteState::W_RIGHT,
@@ -74,90 +86,33 @@ void Skull::initSprite() {
 
 }
 
-void Skull::set_position() {
+void Skull::update_sprites_position() {
     int main_x, main_y, sub_x, sub_y;
     get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
     sprite_utils::set_entry_xy(mainSpriteInfo, main_x, main_y);
     sprite_utils::set_entry_xy(subSpriteInfo, sub_x, sub_y);
 }
 
-Skull::Skull() {
-    sprite_height = SKULL_SPRITE_HEIGHT;
-    sprite_width = SKULL_SPRITE_WIDTH;
-    physical_height = SKULL_PHYSICAL_HEIGHT;
-    physical_width = SKULL_PHYSICAL_WIDTH;
-    spritesheet_type = SpritesheetType::SKELETON_SPIDER;
-}
-
-void Skull::updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
-
-    MapTile *t[9];
-    Collisions::getNeighboringTiles(global::current_level->map_tiles,
-                                    x_current_pos_in_tiles, y_current_pos_in_tiles, t);
-
-    upperCollision = Collisions::checkUpperCollision(t, &x, &y, &ySpeed, physical_width, true, 0.35);
-    bottomCollision = Collisions::checkBottomCollision(t, &x, &y, &ySpeed, physical_width, physical_height, true, 0.35);
-    leftCollision = Collisions::checkLeftCollision(t, &x, &y, &xSpeed, physical_width, physical_height, true, 0.15);
-    rightCollision = Collisions::checkRightCollision(t, &x, &y, &xSpeed, physical_width, physical_height, true, 0.15);
-
-    if (((upperCollision || bottomCollision || leftCollision || rightCollision)
-         && (fabs(xSpeed) > 0 || fabs(ySpeed) > 0)) && !collided) {
-
-        collided = true;
-        animFrame = 0;
-
-        auto b = new Bone();
-        b->x = x;
-        b->y = y - 5;
-        b->xSpeed = 0;
-        b->ySpeed = -1.4f;
-        b->animFrame = 2;
-        b->init();
-        global::creatures_to_add.push_back(b);
-    }
-
-}
-
-void Skull::updateSpeed() {
-
-    if (collided)
-        return;
-
-    limit_speed(MAX_X_SPEED_SKULL, MAX_Y_SPEED_SKULL);
-    pos_inc_timer += *global::timer;
-
-    bool change_pos = (pos_inc_timer > SKULL_POS_INC_DELTA) && !hold_by_main_dude;
-
-    if (change_pos) {
-        update_position();
-        apply_friction(0.055);
-        apply_gravity(GRAVITY_DELTA_SPEED * 3);
-        pos_inc_timer = 0;
-    }
-
-}
-
 void Skull::match_animation() {
-
 
     if (collided) {
 
         if (animFrame >= COLLIDED_FRAMES) {
-            ready_to_dispose = true;
+            _ready_to_dispose = true;
             sprite_utils::set_visibility(false, mainSpriteInfo, subSpriteInfo);
         }
 
-        frameGfx = sprite_utils::get_frame((u8 *) gfx_spider_skeletonTiles, SKULL_SPRITE_SIZE,
+        frameGfx = sprite_utils::get_frame((u8 *) gfx_spider_skeletonTiles, _sprite_size,
                                            animFrame + FRAME_OFFSET_COLLIDED);
 
     } else
-        frameGfx = sprite_utils::get_frame((u8 *) gfx_spider_skeletonTiles, SKULL_SPRITE_SIZE,
+        frameGfx = sprite_utils::get_frame((u8 *) gfx_spider_skeletonTiles, _sprite_size,
                                            FRAME_OFFSET_SKULL);
 
-    sprite_utils::update_frame(frameGfx, SKULL_SPRITE_SIZE, mainSpriteInfo, subSpriteInfo);
+    sprite_utils::update_frame(frameGfx, _sprite_size, mainSpriteInfo, subSpriteInfo);
 }
 
-void Skull::deleteSprite() {
+void Skull::delete_sprites() {
     delete mainSpriteInfo;
     delete subSpriteInfo;
     mainSpriteInfo = nullptr;

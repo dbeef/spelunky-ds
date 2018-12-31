@@ -2,90 +2,80 @@
 // Created by xdbeef on 04.04.18.
 //
 
+#include "rope.hpp"
+#include "rope_element.hpp"
 #include "../../globals_declarations.hpp"
 #include "../../../build/gfx_blood_rock_rope_poof.h"
-#include "rope_element.hpp"
-#include "rope.hpp"
 #include "../sprite_utils.hpp"
 
-void RopeElement::draw() {
+void RopeElement::update_creature_specific() {
 
-    if (ready_to_dispose) return;
+    if (_ready_to_dispose) return;
 
-    if (!active)
-        sprite_utils::set_visibility(false, mainSpriteInfo, mainSpriteInfo_2, subSpriteInfo, subSpriteInfo_2);
-    else {
-        if (active_timer < 50)
-            active_timer += *global::timer;
-        set_sprite_attributes();
+    if (_active) {
+        if (_active_timer < 50)
+            _active_timer += *global::timer;
+        else {
+            update_visibility();
+        }
     }
+
+    update_sprites_position();
+
 }
 
+void RopeElement::init_sprites() {
 
-void RopeElement::init() {
-    initSprite();
+    delete_sprites();
+
+    _sub_sprite_info = global::sub_oam_manager->initSprite(gfx_blood_rock_rope_poofPal, gfx_blood_rock_rope_poofPalLen,
+                                                           nullptr, _sprite_size, 8, BLOOD_ROCK_ROPE_POOF, true,
+                                                           false, LAYER_LEVEL::MIDDLE_TOP);
+    _main_sprite_info = global::main_oam_manager->initSprite(gfx_blood_rock_rope_poofPal,
+                                                             gfx_blood_rock_rope_poofPalLen,
+                                                             nullptr, _sprite_size, 8, BLOOD_ROCK_ROPE_POOF,
+                                                             true, false, LAYER_LEVEL::MIDDLE_TOP);
+    _sub_sprite_info_2 = global::sub_oam_manager->initSprite(gfx_blood_rock_rope_poofPal,
+                                                             gfx_blood_rock_rope_poofPalLen,
+                                                             nullptr, _sprite_size, 8, BLOOD_ROCK_ROPE_POOF,
+                                                             true, false, LAYER_LEVEL::MIDDLE_TOP);
+    _main_sprite_info_2 = global::main_oam_manager->initSprite(gfx_blood_rock_rope_poofPal,
+                                                               gfx_blood_rock_rope_poofPalLen,
+                                                               nullptr, _sprite_size, 8, BLOOD_ROCK_ROPE_POOF,
+                                                               true, false, LAYER_LEVEL::MIDDLE_TOP);
+
+    _frame_gfx = sprite_utils::get_frame((u8 *) gfx_blood_rock_rope_poofTiles, _sprite_size, 8);
+    sprite_utils::update_frame(_frame_gfx, _sprite_size, _main_sprite_info,
+                               _main_sprite_info_2, _sub_sprite_info, _sub_sprite_info_2);
+
+    sprite_utils::set_horizontal_flip(false, _main_sprite_info, _main_sprite_info_2, _sub_sprite_info,
+                                      _sub_sprite_info_2);
+    sprite_utils::set_vertical_flip(false, _main_sprite_info, _main_sprite_info_2, _sub_sprite_info,
+                                    _sub_sprite_info_2);
+
+    update_visibility();
+
 }
 
-void RopeElement::initSprite() {
-
-    delete mainSpriteInfo;
-    delete subSpriteInfo;
-    delete mainSpriteInfo_2;
-    delete subSpriteInfo_2;
-
-    subSpriteInfo = global::sub_oam_manager->initSprite(gfx_blood_rock_rope_poofPal, gfx_blood_rock_rope_poofPalLen,
-                                                        nullptr, ROPE_SPRITE_SIZE, 8, BLOOD_ROCK_ROPE_POOF, true,
-                                                        false, LAYER_LEVEL::MIDDLE_TOP);
-    mainSpriteInfo = global::main_oam_manager->initSprite(gfx_blood_rock_rope_poofPal, gfx_blood_rock_rope_poofPalLen,
-                                                          nullptr, ROPE_SPRITE_SIZE, 8, BLOOD_ROCK_ROPE_POOF,
-                                                          true, false, LAYER_LEVEL::MIDDLE_TOP);
-    subSpriteInfo_2 = global::sub_oam_manager->initSprite(gfx_blood_rock_rope_poofPal, gfx_blood_rock_rope_poofPalLen,
-                                                          nullptr, ROPE_SPRITE_SIZE, 8, BLOOD_ROCK_ROPE_POOF,
-                                                          true, false, LAYER_LEVEL::MIDDLE_TOP);
-    mainSpriteInfo_2 = global::main_oam_manager->initSprite(gfx_blood_rock_rope_poofPal, gfx_blood_rock_rope_poofPalLen,
-                                                            nullptr, ROPE_SPRITE_SIZE, 8, BLOOD_ROCK_ROPE_POOF,
-                                                            true, false, LAYER_LEVEL::MIDDLE_TOP);
-
-    frameGfx = sprite_utils::get_frame((u8 *) gfx_blood_rock_rope_poofTiles, ROPE_SPRITE_SIZE, 8);
-    sprite_utils::update_frame(frameGfx, ROPE_SPRITE_SIZE, mainSpriteInfo,
-                               mainSpriteInfo_2, subSpriteInfo, subSpriteInfo_2);
-    set_sprite_attributes();
-}
-
-RopeElement::RopeElement() {
-    physical_height = ROPE_PHYSICAL_HEIGHT;
-    physical_width = ROPE_PHYSICAL_WIDTH;
-    sprite_height = ROPE_SPRITE_HEIGHT;
-    sprite_width = ROPE_SPRITE_WIDTH;
-}
-
-void RopeElement::set_position() {
+void RopeElement::update_sprites_position() {
     int main_x, main_y, sub_x, sub_y;
     get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
-    sprite_utils::set_entry_xy(mainSpriteInfo, main_x, main_y);
-    sprite_utils::set_entry_xy(subSpriteInfo, sub_x, sub_y);
-    sprite_utils::set_entry_xy(mainSpriteInfo_2, main_x, main_y + ROPE_SPRITE_HEIGHT);
-    sprite_utils::set_entry_xy(subSpriteInfo_2, sub_x, sub_y + ROPE_SPRITE_HEIGHT);
+    sprite_utils::set_entry_xy(_main_sprite_info, static_cast<u16>(main_x), static_cast<u16>(main_y));
+    sprite_utils::set_entry_xy(_sub_sprite_info, static_cast<u16>(sub_x), static_cast<u16>(sub_y));
+    sprite_utils::set_entry_xy(_main_sprite_info_2, static_cast<u16>(main_x),
+                               static_cast<u16>(main_y + _sprite_height));
+    sprite_utils::set_entry_xy(_sub_sprite_info_2, static_cast<u16>(sub_x), static_cast<u16>(sub_y + _sprite_height));
 }
 
-void RopeElement::set_visibility() {
-
-    if (active_timer > 20)
-        sprite_utils::set_visibility(true, mainSpriteInfo_2, subSpriteInfo_2);
-
-    sprite_utils::set_visibility(true, mainSpriteInfo, subSpriteInfo);
+void RopeElement::delete_sprites() {
+    delete _main_sprite_info;
+    delete _sub_sprite_info;
+    _main_sprite_info = nullptr;
+    _sub_sprite_info = nullptr;
 }
 
-void RopeElement::set_sprite_attributes() {
-    sprite_utils::set_horizontal_flip(false, mainSpriteInfo, mainSpriteInfo_2, subSpriteInfo, subSpriteInfo_2);
-    sprite_utils::set_vertical_flip(false, mainSpriteInfo, mainSpriteInfo_2, subSpriteInfo, subSpriteInfo_2);
-    set_position();
-    set_visibility();
-}
-
-void RopeElement::deleteSprite() {
-    delete mainSpriteInfo;
-    delete subSpriteInfo;
-    mainSpriteInfo = nullptr;
-    subSpriteInfo = nullptr;
+void RopeElement::update_visibility() {
+    if (_active_timer > 20)
+        sprite_utils::set_visibility(true, _main_sprite_info_2, _sub_sprite_info_2);
+    sprite_utils::set_visibility(true, _main_sprite_info, _sub_sprite_info);
 }

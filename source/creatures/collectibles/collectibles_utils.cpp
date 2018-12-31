@@ -30,48 +30,48 @@ ShoppingObject * collectibles_utils::spawn_item(int x, int y, int r, bool bought
 
     switch (r) {
         case 0:
-            pistol = new Pistol();
-            pistol->bought = bought;
+            pistol = new Pistol(0, 0);
+            pistol->_bought = bought;
             spawn_set_up(x, y, pistol);
             break;
         case 1:
-            springShoes = new SpringShoes();
-            springShoes->bought = bought;
+            springShoes = new SpringShoes(0, 0);
+            springShoes->_bought = bought;
             spawn_set_up(x, y, springShoes);
             break;
         case 2:
-            cape = new Cape();
-            cape->bought = bought;
+            cape = new Cape(0, 0);
+            cape->_bought = bought;
             spawn_set_up(x, y, cape);
             break;
         case 3:
-            compass = new Compass();
-            compass->bought = bought;
+            compass = new Compass(0, 0);
+            compass->_bought = bought;
             spawn_set_up(x, y, compass);
             break;
         case 4:
-            glove = new Glove();
-            glove->bought = bought;
+            glove = new Glove(0, 0);
+            glove->_bought = bought;
             spawn_set_up(x, y, glove);
             break;
         case 5:
-            shotgun = new Shotgun();
-            shotgun->bought = bought;
+            shotgun = new Shotgun(0, 0);
+            shotgun->_bought = bought;
             spawn_set_up(x, y, shotgun);
             break;
         case 6:
-            spikeShoes = new SpikeShoes();
-            spikeShoes->bought = bought;
+            spikeShoes = new SpikeShoes(0, 0);
+            spikeShoes->_bought = bought;
             spawn_set_up(x, y, spikeShoes);
             break;
         case 7:
-            mitt = new Mitt();
-            mitt->bought = bought;
+            mitt = new Mitt(0, 0);
+            mitt->_bought = bought;
             spawn_set_up(x, y, mitt);
             break;
         case 8:
-            jetpack = new Jetpack();
-            jetpack->bought = bought;
+            jetpack = new Jetpack(0, 0);
+            jetpack->_bought = bought;
             spawn_set_up(x, y, jetpack);
             break;
         default:
@@ -88,9 +88,8 @@ ShoppingObject * collectibles_utils::spawn_item(int x, int y, int r, bool bought
 }
 
 void collectibles_utils::spawn_set_up(int x, int y, BaseCreature *m) {
-    m->init();
-    m->x = x + (int) (0.5 * (16 - m->physical_width));
-    m->y = y;
+    m->_x = x + (int) (0.5 * (16 - m->_physical_width));
+    m->_y = y;
     global::creatures_to_add.push_back(m);
 }
 

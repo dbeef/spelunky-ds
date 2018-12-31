@@ -1,6 +1,5 @@
 //
 // Created by xdbeef on 31.05.18.
-// http://spelunky.wikia.com/wiki/Caveman
 //
 
 #ifndef SPELUNKYDS_CAVEMAN_H
@@ -8,16 +7,6 @@
 
 #define CAVEMAN_STUN_TIME 7000
 #define CAVEMAN_HITPOINTS 3
-
-#define CAVEMAN_PHYSICAL_HEIGHT 16
-#define CAVEMAN_PHYSICAL_WIDTH 16
-
-#define CAVEMAN_SPRITE_HEIGHT 16
-#define CAVEMAN_SPRITE_WIDTH 16
-#define CAVEMAN_SPRITE_SIZE CAVEMAN_SPRITE_WIDTH * CAVEMAN_SPRITE_HEIGHT
-
-#define MAX_X_SPEED_CAVEMAN 4
-#define MAX_Y_SPEED_CAVEMAN 4
 
 #include "../_base_creature.h"
 #include "../sprite_state.hpp"
@@ -28,59 +17,62 @@ class Caveman : public BaseCreature {
 
 public:
 
-    void introduce_yourself() override { printf("CAVEMAN\n"); };
+    static constexpr u8 caveman_sprite_width = 16;
+    static constexpr u8 caveman_sprite_height = 16;
+    static constexpr u16 caveman_physical_width = 16;
+    static constexpr u16 caveman_physical_height = 16;
+    static constexpr SpritesheetType caveman_spritesheet_type = SpritesheetType::CAVEMAN_DAMSEL;
 
-    Caveman();
+    Caveman(int x, int y) : BaseCreature(
+            x,
+            y,
+            caveman_sprite_width,
+            caveman_sprite_height,
+            caveman_spritesheet_type,
+            caveman_physical_width,
+            caveman_physical_height
+    ) {
+        _max_x_speed = 1.5f;
+        _pos_update_delta = 15;
+        hitpoints = CAVEMAN_HITPOINTS;
+        activated = true;
+        randomizeMovement();
+        _bouncing_factor_x = 0;
+        _bouncing_factor_y = 0;
+        init_sprites();
+        _friction = 0.5f;
+//        _gravity = 0.75f * ICollidable::default_gravity;
+    }
 
-    Caveman(int x, int y);
+    // Base creature overrides
 
-    void updateOther() override {};
+    void update_creature_specific() override;
 
-    void init() override;
-
-    void draw() override;
+    void introduce_yourself() override { printf("WHIP\n"); };
 
     void apply_dmg(int dmg_to_apply) override;
 
-    void updateTimers() override {};
-
-    void updateSpeed() override;
-
-    void updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) override;
-
-    void updateCollisionsOtherMoving() override {};
-
     void onCollisionWithMainCharacter() override {};
 
-    void initSprite() override;
+    // IRenderable overrides
 
-    void deleteSprite() override;
+    void init_sprites() override;
 
-    double pos_inc_timer{};
+    void delete_sprites() override;
 
-    SpriteInfo *mainSpriteInfo{};
-    SpriteInfo *subSpriteInfo{};
-    u8 *frameGfx{};
+    void update_sprites_position() override;
 
-    double waitTimer{};
-    double goTimer{};
+    // ICollidable overrides
 
-    int animFrame{};
-    double animFrameTimer{};
+    bool can_update_collidable() override { return !_ready_to_dispose && !hold_by_main_dude; }
 
-    double invert_speed_timer{};
+    bool can_apply_friction() override { return !hold_by_main_dude && _bottom_collision && (stunned || killed); }
 
-    double blood_spawn_timer{};
+    bool can_apply_gravity() override { return !hold_by_main_dude; }
 
-    bool landlocked{};
-    bool triggered{};
-    bool stunned{};
-
-    double stunned_timer{};
+    // Other, creature specific
 
     void randomizeMovement();
-
-    void set_position();
 
     void apply_walking_sprites();
 
@@ -97,6 +89,21 @@ public:
     void apply_dead_sprites();
 
     void match_animation();
+
+    double pos_inc_timer{};
+    SpriteInfo *mainSpriteInfo{};
+    SpriteInfo *subSpriteInfo{};
+    u8 *frameGfx{};
+    double waitTimer{};
+    double goTimer{};
+    int animFrame{};
+    double animFrameTimer{};
+    double invert_speed_timer{};
+    double blood_spawn_timer{};
+    bool landlocked{};
+    bool triggered{};
+    bool stunned{};
+    double stunned_timer{};
 };
 
 

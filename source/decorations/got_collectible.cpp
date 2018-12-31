@@ -7,7 +7,7 @@
 #include "../../build/gfx_got_collectible.h"
 #include "../creatures/sprite_utils.hpp"
 
-void GotCollectible::update() {
+void GotCollectible::update_decoration_specific() {
 
     if (_ready_to_dispose) return;
 

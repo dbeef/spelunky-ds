@@ -15,7 +15,7 @@ Blast::Blast(int x, int y) :
     init_sprites();
 }
 
-void Blast::update() {
+void Blast::update_decoration_specific() {
 
     if (_ready_to_dispose) return;
 

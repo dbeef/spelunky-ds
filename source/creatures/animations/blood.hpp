@@ -5,16 +5,6 @@
 #ifndef SPELUNKYDS_BLOOD_H
 #define SPELUNKYDS_BLOOD_H
 
-#define MAX_X_SPEED_BLOOD 1.5
-#define MAX_Y_SPEED_BLOOD 1.5
-
-#define BLOOD_PHYSICAL_HEIGHT 5
-#define BLOOD_PHYSICAL_WIDTH 5
-
-#define BLOOD_SPRITE_HEIGHT 8
-#define BLOOD_SPRITE_WIDTH 8
-#define BLOOD_SPRITE_SIZE BLOOD_SPRITE_WIDTH * BLOOD_SPRITE_HEIGHT
-
 #define BLOOD_CHANGE_POS_DELTA 17
 #define BLOOD_ANIM_FRAME_DELTA 90
 
@@ -22,7 +12,6 @@
 #include "../_base_creature.h"
 #include "blood_element.hpp"
 #include "../sprite_info.h"
-
 
 //blood trail animation:
 //spawn 3-4 creatures with sBlood animation (3 frames)
@@ -33,55 +22,63 @@ class Blood : public BaseCreature {
 
 public:
 
-    void introduce_yourself() override { printf("BLOOD\n"); };
+    Blood(int x, int y) : BaseCreature(
+            x,
+            y,
+            blood_sprite_width,
+            blood_sprite_height,
+            blood_spritesheet_type,
+            blood_physical_width,
+            blood_physical_height
+    ) {
+        _pos_update_delta = 30;
+        init_sprites();
+    }
 
-    Blood();
+    // Base creature overrides
 
-    void updateOther() override {};
+    void update_creature_specific() override;
 
-    void init() override;
+    void introduce_yourself() override { printf("WHIP\n"); };
 
     void apply_dmg(int dmg_to_apply) override {};
 
-    void initSprite() override;
-
-    void deleteSprite() override;
-
-    void draw() override;
-
-    void updateTimers() override {};
-
-    void updateSpeed() override;
-
-    void updateCollisionsMap(int x_current_pos_in_tiles, int y_current_pos_in_tiles) override;
-
-    void updateCollisionsOtherMoving() override {};
-
     void onCollisionWithMainCharacter() override {};
 
+    // IRenderable overrides
 
-    double *timer {};
-    double pos_inc_timer{};
+    void init_sprites() override;
 
-    SpriteInfo *mainSpriteInfo {};
-    SpriteInfo *subSpriteInfo {};
+    void delete_sprites() override;
 
-    u8 *frameGfx{};
+    void update_sprites_position() override;
 
-    bool finished{};
-    int currentFrame{};
-    double animFrameTimer{};
+    // ICollidable overrides
 
-    std::vector<BloodElement *> bloodTrail;
+    bool can_update_collidable() override { return !finished; }
 
-    double living_timer{};
-    double time_since_last_spawn{};
+    bool can_apply_friction() override { return true; }
+
+    bool can_apply_gravity() override { return true; }
+
+    // Other, creature specific
 
     void spawn_blood();
 
     void match_animation();
 
-    void set_position();
+    double *timer {};
+    double pos_inc_timer{};
+    SpriteInfo *mainSpriteInfo {};
+    SpriteInfo *subSpriteInfo {};
+    u8 *frameGfx{};
+    bool finished{};
+    int currentFrame{};
+    double animFrameTimer{};
+    std::vector<BloodElement *> bloodTrail;
+    double living_timer{};
+    double time_since_last_spawn{};
+
 };
 
 
