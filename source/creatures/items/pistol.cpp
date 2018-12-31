@@ -9,10 +9,10 @@
 #include "../../collisions/collisions.hpp"
 #include "../../../build/gfx_spike_collectibles_flame.h"
 #include "../../../build/soundbank.h"
-#include "../../decorations/got_collectible.hpp"
+#include "../../decorations/GotCollectible.hpp"
 #include "../../tiles/level_rendering_utils.hpp"
 #include "../sprite_utils.hpp"
-#include "../../decorations/blast.hpp"
+#include "../../decorations/Blast.hpp"
 #include "../collectibles/bullet.hpp"
 
 #define PISTOL_POS_INC_DELTA 15

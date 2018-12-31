@@ -9,7 +9,7 @@
 #include "../../collisions/collisions.hpp"
 #include "../../../build/gfx_saleable.h"
 #include "mitt.hpp"
-#include "../../decorations/got_collectible.hpp"
+#include "../../decorations/GotCollectible.hpp"
 #include "../sprite_utils.hpp"
 
 #define MITT_POS_INC_DELTA 15

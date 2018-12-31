@@ -8,7 +8,7 @@
 #include "../_base_creature.h"
 #include "../sprite_state.hpp"
 #include "../../interfaces/shopping_object.h"
-#include "../../decorations/blast.hpp"
+#include "../../decorations/Blast.hpp"
 #include "../../globals_declarations.hpp"
 
 //http://spelunky.wikia.com/wiki/Pistol

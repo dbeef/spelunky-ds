@@ -13,7 +13,7 @@
 #include "../globals_declarations.hpp"
 #include "../creatures/animations/blood.hpp"
 #include "../creatures/items/arrow.hpp"
-#include "arrow_trap.h"
+#include "ArrowTrap.h"
 
 void ArrowTrap::update_decoration_specific() {
 

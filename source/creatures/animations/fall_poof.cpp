@@ -2,7 +2,7 @@
 // Created by xdbeef on 01.06.18.
 //
 
-#include "../../decorations/got_collectible.hpp"
+#include "../../decorations/GotCollectible.hpp"
 #include "../../globals_declarations.hpp"
 #include "../../../build/gfx_blood_rock_rope_poof.h"
 #include "../_base_creature.h"

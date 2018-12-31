@@ -6,7 +6,7 @@
 #define SPELUNKYDS_SPELUNKY_TITLE_H
 
 #include "../creatures/sprite_info.h"
-#include "_base_decoration.h"
+#include "_BaseDecoration.h"
 
 // Represents spelunky_title graphic that is rendered in the main menu's upper screen.
 class SpelunkyTitle : public BaseDecoration {

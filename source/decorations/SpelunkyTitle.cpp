@@ -5,7 +5,7 @@
 #include "../../build/gfx_spelunky_title.h"
 #include "../globals_declarations.hpp"
 #include "../creatures/sprite_utils.hpp"
-#include "spelunky_title.h"
+#include "SpelunkyTitle.h"
 
 SpelunkyTitle::SpelunkyTitle(int x, int y) :
         BaseDecoration(x, y, spelunky_title_sprite_width, spelunky_title_sprite_height,

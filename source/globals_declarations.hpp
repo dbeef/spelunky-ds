@@ -16,7 +16,7 @@
 #include "tiles/level.hpp"
 #include "creatures/sprite_info.h"
 #include "creatures/main_dude/game_state.hpp"
-#include "decorations/_base_decoration.h"
+#include "decorations/_BaseDecoration.h"
 
 #define GRAVITY_DELTA_SPEED 0.22 //FIXME isn't it mob-specific?
 #define DEFAULT_DMA_CHANNEL 3

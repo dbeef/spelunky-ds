@@ -16,7 +16,7 @@
 #include "mitt.hpp"
 #include "glove.hpp"
 #include "compass.hpp"
-#include "../../decorations/got_collectible.hpp"
+#include "../../decorations/GotCollectible.hpp"
 #include "../items/spike_shoes.hpp"
 #include "../items/cape.hpp"
 #include "../items/jetpack.hpp"

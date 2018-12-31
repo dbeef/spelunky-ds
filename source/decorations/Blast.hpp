@@ -7,7 +7,7 @@
 
 #include "../creatures/sprite_info.h"
 #include "../creatures/sprite_state.hpp"
-#include "_base_decoration.h"
+#include "_BaseDecoration.h"
 
 // Represents blast that occurs on shooting pistol/shotgun.
 // Pistol & shotgun have their instances of blast.

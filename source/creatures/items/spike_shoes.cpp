@@ -9,7 +9,7 @@
 #include "../../globals_declarations.hpp"
 #include "../../collisions/collisions.hpp"
 #include "../../../build/gfx_saleable.h"
-#include "../../decorations/got_collectible.hpp"
+#include "../../decorations/GotCollectible.hpp"
 #include "../_base_creature.h"
 #include "../sprite_utils.hpp"
 

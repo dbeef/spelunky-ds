@@ -7,7 +7,7 @@
 
 #include "../creatures/_base_creature.h"
 #include "../creatures/sprite_info.h"
-#include "_base_decoration.h"
+#include "_BaseDecoration.h"
 
 // http://spelunky.wikia.com/wiki/Arrow_Trap
 // Arrow trap's graphical representation does not base on a sprite,

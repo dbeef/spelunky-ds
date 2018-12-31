@@ -6,7 +6,7 @@
 #include "cape.hpp"
 #include "../../../build/gfx_goldbars.h"
 #include "../../globals_declarations.hpp"
-#include "../../decorations/got_collectible.hpp"
+#include "../../decorations/GotCollectible.hpp"
 #include "../../collisions/collisions.hpp"
 #include "../sprite_utils.hpp"
 

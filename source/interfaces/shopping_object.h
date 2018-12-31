@@ -6,7 +6,7 @@
 #define SPELUNKYDS_SHOPPING_OBJECT_H
 
 #include "../creatures/_base_creature.h"
-#include "../decorations/shopping_icon.h"
+#include "../decorations/ShoppingIcon.h"
 
 class ShoppingObject {
 

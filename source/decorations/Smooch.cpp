@@ -1,43 +1,56 @@
 //
-// Created by xdbeef on 14.06.18.
+// Created by xdbeef on 10.06.18.
 //
 
-#include "../../build/gfx_shopkeeper.h"
+#include "../../build/gfx_caveman_damsel.h"
 #include "../globals_declarations.hpp"
 #include "../creatures/sprite_utils.hpp"
-#include "lamp.h"
+#include "Smooch.hpp"
 
-Lamp::Lamp(int x, int y) :
-        BaseDecoration(x, y, lamp_sprite_width, lamp_sprite_height, lamp_spritesheet_type) {
-    init_sprites();
-}
+void Smooch::update_decoration_specific() {
 
-void Lamp::update_decoration_specific() {
+    if (_ready_to_dispose) return;
+
+    update_sprites_position();
 
     _anim_frame_timer += *global::timer;
 
-    if (_anim_frame_timer > lamp_anim_frame_delta) {
+    // Animate and go upwards gradually
+    if (_anim_frame_timer > smooch_anim_frame_delta) {
 
         _anim_frame_timer = 0;
         _anim_frame_index++;
+        _cycle_counter++;
 
-        if (_anim_frame_index >= 3)
+        _y--;
+
+        if (_anim_frame_index == 2)
             _anim_frame_index = 0;
+
+        if (_cycle_counter > smooch_cycles_to_hide) {
+            _ready_to_dispose = true;
+            sprite_utils::set_visibility(false, _main_sprite_info, _sub_sprite_info);
+        }
 
         match_animation();
     }
 
 }
 
-void Lamp::init_sprites() {
+Smooch::Smooch(int x, int y) :
+        BaseDecoration(x, y, smooch_sprite_width, smooch_sprite_height, smooch_spritesheet_type) {
+    init_sprites();
+}
+
+void Smooch::init_sprites() {
 
     delete_sprites();
 
-    _main_sprite_info = global::main_oam_manager->initSprite(gfx_shopkeeperPal, gfx_shopkeeperPalLen, nullptr,
+    _main_sprite_info = global::main_oam_manager->initSprite(gfx_caveman_damselPal, gfx_caveman_damselPalLen, nullptr,
                                                              _sprite_size, 16, _spritesheet_type, true,
                                                              false, LAYER_LEVEL::MIDDLE_TOP);
 
-    _sub_sprite_info = global::sub_oam_manager->initSprite(gfx_shopkeeperPal, gfx_shopkeeperPalLen, nullptr,
+    _sub_sprite_info = global::sub_oam_manager->initSprite(gfx_caveman_damselPal, gfx_caveman_damselPalLen, nullptr,
                                                            _sprite_size, 16, _spritesheet_type, true,
                                                            false, LAYER_LEVEL::MIDDLE_TOP);
 
@@ -49,25 +62,25 @@ void Lamp::init_sprites() {
     match_animation();
 }
 
-void Lamp::match_animation() {
-    _frame_gfx = sprite_utils::get_frame((u8 *) gfx_shopkeeperTiles, _sprite_size, 25 + _anim_frame_index);
+void Smooch::match_animation() {
+    _frame_gfx = sprite_utils::get_frame((u8 *) gfx_caveman_damselTiles, _sprite_size, _anim_frame_index + 67);
     sprite_utils::update_frame(_frame_gfx, _sprite_size, _main_sprite_info, _sub_sprite_info);
 }
 
-void Lamp::delete_sprites() {
+void Smooch::delete_sprites() {
     delete _main_sprite_info;
     delete _sub_sprite_info;
     _main_sprite_info = nullptr;
     _sub_sprite_info = nullptr;
 }
 
-void Lamp::update_sprites_position() {
+void Smooch::update_sprites_position() {
     int main_x, main_y, sub_x, sub_y;
     get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
     sprite_utils::set_entry_xy(_main_sprite_info, static_cast<u16>(main_x), static_cast<u16>(main_y));
     sprite_utils::set_entry_xy(_sub_sprite_info, static_cast<u16>(sub_x), static_cast<u16>(sub_y));
 }
 
-void Lamp::introduce_yourself() const {
-    printf("LAMP\n");
+void Smooch::introduce_yourself() const {
+    printf("SMOOCH\n");
 }

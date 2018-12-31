@@ -14,7 +14,7 @@
 #include "tiles/level.hpp"
 #include "creatures/main_dude/main_dude.hpp"
 #include "creatures/main_dude/game_state.hpp"
-#include "decorations/_base_decoration.h"
+#include "decorations/_BaseDecoration.h"
 
 namespace global {
 

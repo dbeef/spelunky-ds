@@ -5,7 +5,7 @@
 #ifndef SPELUNKYDS_LAMP_H
 #define SPELUNKYDS_LAMP_H
 
-#include "_base_decoration.h"
+#include "_BaseDecoration.h"
 #include "../creatures/sprite_info.h"
 
 // http://spelunky.wikia.com/wiki/Lantern

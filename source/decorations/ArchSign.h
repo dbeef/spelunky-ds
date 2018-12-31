@@ -6,7 +6,7 @@
 #define SPELUNKYDS_MENU_ARCH_SIGN_H
 
 #include "../creatures/sprite_info.h"
-#include "_base_decoration.h"
+#include "_BaseDecoration.h"
 
 // Represents arch sign graphic that is rendered in the main menu's upper screen,
 // may take form of 'START' or 'SCORES'.

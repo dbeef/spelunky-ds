@@ -11,7 +11,7 @@
 #include "../../../build/soundbank.h"
 #include "shotgun.hpp"
 #include "bullet.hpp"
-#include "../../decorations/got_collectible.hpp"
+#include "../../decorations/GotCollectible.hpp"
 #include "../../tiles/level_rendering_utils.hpp"
 #include "../sprite_utils.hpp"
 

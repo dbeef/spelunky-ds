@@ -6,7 +6,7 @@
 #define SPELUNKYDS_SMOOCH_H
 
 #include "../creatures/sprite_info.h"
-#include "_base_decoration.h"
+#include "_BaseDecoration.h"
 
 class Smooch : public BaseDecoration {
 

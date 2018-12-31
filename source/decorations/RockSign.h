@@ -5,7 +5,7 @@
 #ifndef SPELUNKYDS_MENU_ROCK_SIGN_H
 #define SPELUNKYDS_MENU_ROCK_SIGN_H
 
-#include "_base_decoration.h"
+#include "_BaseDecoration.h"
 #include "../creatures/sprite_info.h"
 
 // Represents rock sign graphic that is rendered in the main menu's upper screen,

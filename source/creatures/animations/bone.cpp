@@ -2,7 +2,7 @@
 // Created by xdbeef on 29.07.18.
 //
 
-#include "../../decorations/got_collectible.hpp"
+#include "../../decorations/GotCollectible.hpp"
 #include "../../globals_declarations.hpp"
 #include "../../../build/gfx_spider_skeleton.h"
 #include "../../collisions/collisions.hpp"

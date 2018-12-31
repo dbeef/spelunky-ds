@@ -7,7 +7,7 @@
 
 #include "../_base_creature.h"
 #include "../../interfaces/shopping_object.h"
-#include "../../decorations/blast.hpp"
+#include "../../decorations/Blast.hpp"
 
 //http://spelunky.wikia.com/wiki/Shotgun
 class Shotgun: public BaseCreature, public ShoppingObject {

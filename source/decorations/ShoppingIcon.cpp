@@ -7,7 +7,7 @@
 #include "../../build/gfx_goldbars.h"
 #include "../globals_declarations.hpp"
 #include "../creatures/sprite_utils.hpp"
-#include "shopping_icon.h"
+#include "ShoppingIcon.h"
 
 ShoppingIcon::ShoppingIcon(int x, int y) :
         BaseDecoration(x, y, shopping_icon_sprite_width, shopping_icon_sprite_height, shopping_icon_spritesheet_type) {

@@ -5,7 +5,7 @@
 #include "../../build/gfx_copyrights.h"
 #include "../globals_declarations.hpp"
 #include "../creatures/sprite_utils.hpp"
-#include "copyrights.h"
+#include "Copyrights.h"
 
 Copyrights::Copyrights(int x, int y) :
         BaseDecoration(x, y, copyrights_sprite_width, copyrights_sprite_height, copyrights_spritesheet_type) {

@@ -6,7 +6,7 @@
 #define SPELUNKYDS_COPYRIGHTS_H
 
 #include "../creatures/sprite_info.h"
-#include "_base_decoration.h"
+#include "_BaseDecoration.h"
 
 // Represents copyrights graphic that is rendered in the main menu's lower screen.
 class Copyrights : public BaseDecoration {

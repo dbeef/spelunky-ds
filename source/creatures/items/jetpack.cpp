@@ -5,7 +5,7 @@
 #include "jetpack.hpp"
 #include "../../../build/gfx_bat_snake_jetpack.h"
 #include "../../globals_declarations.hpp"
-#include "../../decorations/got_collectible.hpp"
+#include "../../decorations/GotCollectible.hpp"
 #include "../../collisions/collisions.hpp"
 #include "../animations/fall_poof.hpp"
 #include "../sprite_utils.hpp"
