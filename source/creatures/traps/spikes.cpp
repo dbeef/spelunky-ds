@@ -2,34 +2,38 @@
 // Created by xdbeef on 15.05.18.
 //
 
-#include "../../../build/gfx_spike_collectibles_flame.h"
 #include <cstdlib>
 #include <maxmod9.h>
-#include "spikes.h"
+
+#include "../../../build/gfx_spike_collectibles_flame.h"
+#include "../../../build/soundbank.h"
+
 #include "../../collisions/collisions.hpp"
 #include "../../globals_declarations.hpp"
-#include "../../../build/soundbank.h"
-#include "../animations/blood.hpp"
 #include "../../sound/sound_utils.hpp"
+#include "../animations/blood.hpp"
 #include "../sprite_utils.hpp"
+#include "spikes.h"
 
 void Spikes::update_creature_specific() {
 
     if (_ready_to_dispose) return;
 
-    if (!global::main_dude->dead && !global::main_dude->using_cape
-        && Collisions::checkCollisionBodiesLeftLowerCorner
-                (_x, _y + 16, _physical_width, _physical_height, global::main_dude->_x, global::main_dude->_y + 16, 16, 16) &&
-        /*global::main_dude->time_since_last_damage > 1000 &&*/
+    // check whether main dude can be killed by this spikes
+    if (!global::main_dude->dead && !global::main_dude->using_cape &&
+        Collisions::checkCollisionBodiesLeftLowerCorner(_x, _y + 16, _physical_width, _physical_height,
+                                                        global::main_dude->_x, global::main_dude->_y + 16, 16, 16) &&
         !global::main_dude->_bottom_collision && global::main_dude->_y_speed > 1) {
 
         global::main_dude->set_dead();
         spawn_blood();
+
         _blood = true;
         _frame_gfx = (u8 *) gfx_spike_collectibles_flameTiles + (_sprite_size * (1) / 2);
         sprite_utils::update_frame(_frame_gfx, _sprite_size, _main_sprite_info, _sub_sprite_info);
     }
 
+    // check whether any creature can be killed by this spikes
     for (unsigned long a = 0; a < global::creatures.size(); a++) {
         if ((global::creatures.at(a)->sprite_type == SpriteType::S_SPIDER ||
              global::creatures.at(a)->_spritesheet_type == SpritesheetType::CAVEMAN_DAMSEL ||
@@ -42,7 +46,8 @@ void Spikes::update_creature_specific() {
                                                  global::creatures.at(a)->_physical_width,
                                                  global::creatures.at(a)->_physical_height)) {
 
-                if (!global::creatures.at(a)->_bottom_collision && global::creatures.at(a)->_y_speed> 0 && !global::creatures.at(a)->hold_by_main_dude) {
+                if (!global::creatures.at(a)->_bottom_collision && global::creatures.at(a)->_y_speed > 0 &&
+                    !global::creatures.at(a)->hold_by_main_dude) {
                     global::creatures.at(a)->apply_dmg(8);
                     global::creatures.at(a)->_x_speed = 0;
                     _blood = true;
@@ -50,7 +55,6 @@ void Spikes::update_creature_specific() {
                     sprite_utils::update_frame(_frame_gfx, _sprite_size, _main_sprite_info, _sub_sprite_info);
                 }
             }
-
         }
     }
 
@@ -60,23 +64,25 @@ void Spikes::update_creature_specific() {
 void Spikes::init_sprites() {
 
     delete_sprites();
-    
+
+    _sub_sprite_info = global::sub_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
+                                                           gfx_spike_collectibles_flamePalLen,
+                                                           nullptr, _sprite_size, _sprite_width,
+                                                           _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_BOT);
+    _main_sprite_info = global::main_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
+                                                             gfx_spike_collectibles_flamePalLen,
+                                                             nullptr, _sprite_size, _sprite_width,
+                                                             _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_BOT);
+
     if (_blood)
         _frame_gfx = (u8 *) gfx_spike_collectibles_flameTiles + (_sprite_size * (1) / 2);
     else
         _frame_gfx = (u8 *) gfx_spike_collectibles_flameTiles;
-
-    _sub_sprite_info = global::sub_oam_manager->initSprite(gfx_spike_collectibles_flamePal, gfx_spike_collectibles_flamePalLen,
-                                                        nullptr, _sprite_size, _sprite_width,
-                                                        _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_BOT);
-    _main_sprite_info = global::main_oam_manager->initSprite(gfx_spike_collectibles_flamePal, gfx_spike_collectibles_flamePalLen,
-                                                          nullptr, _sprite_size, _sprite_width,
-                                                          _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_BOT);
-
     sprite_utils::update_frame(_frame_gfx, _sprite_size, _main_sprite_info, _sub_sprite_info);
 
     sprite_utils::set_vertical_flip(false, _main_sprite_info, _sub_sprite_info);
     sprite_utils::set_horizontal_flip(false, _main_sprite_info, _sub_sprite_info);
+    sprite_utils::set_visibility(true, _main_sprite_info, _sub_sprite_info);
 }
 
 void Spikes::update_sprites_position() {
@@ -93,4 +99,3 @@ void Spikes::delete_sprites() {
     _main_sprite_info = nullptr;
     _sub_sprite_info = nullptr;
 }
-

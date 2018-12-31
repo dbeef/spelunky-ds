@@ -6,10 +6,9 @@
 #define SPELUNKYDS_GOT_COLLECTIBLE_H
 
 #include "../creatures/sprite_info.h"
-#include "../creatures/sprite_state.hpp"
 #include "_base_decoration.h"
 
-//Represents animation that is launched on collecting new item/bombs/ropes.
+// Represents animation that is launched on collecting new item/bombs/ropes.
 class GotCollectible : public BaseDecoration {
 
     static constexpr u8 got_collectible_sprite_width = 32;
@@ -28,15 +27,21 @@ public:
 
     GotCollectible(int x, int y, Type type);
 
-    void introduce_yourself() const override { printf("GOT COLLECTIBLE\n"); };
+    // BaseDecoration overrides
+
+    void introduce_yourself() const override;
 
     void update_decoration_specific() override;
+
+    // IRenderable overrides
 
     void init_sprites() override;
 
     void delete_sprites() override;
 
     void update_sprites_position() override;
+
+    // Other, decoration specific
 
     double _anim_frame_timer{};
     u8 _anim_frame_index{};
@@ -48,7 +53,7 @@ public:
 
 private:
 
-    //Updates sprites' graphics according to current animation frame index.
+    // Updates sprites' graphics according to current animation frame index.
     void match_animation();
 
 };

@@ -2,11 +2,10 @@
 // Created by xdbeef on 29.04.18.
 //
 
-#include "copyrights.h"
-#include "spelunky_title.h"
+#include "../../build/gfx_copyrights.h"
 #include "../globals_declarations.hpp"
 #include "../creatures/sprite_utils.hpp"
-#include "../../build/gfx_copyrights.h"
+#include "copyrights.h"
 
 Copyrights::Copyrights(int x, int y) :
         BaseDecoration(x, y, copyrights_sprite_width, copyrights_sprite_height, copyrights_spritesheet_type) {
@@ -52,4 +51,12 @@ void Copyrights::update_sprites_position() {
     for (int a = 0; a < copyrights_graphics; a++)
         sprite_utils::set_entry_xy(_subSpriteInfos[a],
                                    static_cast<u16>(sub_x + (_sprite_width * a)), static_cast<u16>(sub_y));
+}
+
+void Copyrights::introduce_yourself() const {
+    printf("COPYRIGHTS\n");
+}
+
+void Copyrights::update_decoration_specific() {
+    // Does nothing besides displaying sprites.
 }

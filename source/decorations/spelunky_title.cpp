@@ -2,10 +2,10 @@
 // Created by xdbeef on 29.04.18.
 //
 
-#include "spelunky_title.h"
-#include "../globals_declarations.hpp"
 #include "../../build/gfx_spelunky_title.h"
+#include "../globals_declarations.hpp"
 #include "../creatures/sprite_utils.hpp"
+#include "spelunky_title.h"
 
 SpelunkyTitle::SpelunkyTitle(int x, int y) :
         BaseDecoration(x, y, spelunky_title_sprite_width, spelunky_title_sprite_height,
@@ -52,4 +52,12 @@ void SpelunkyTitle::update_sprites_position() {
     for (int a = 0; a < spelunky_title_graphics; a++)
         sprite_utils::set_entry_xy(_mainSpriteInfos[a],
                                    static_cast<u16>(main_x + (_sprite_width * a)), static_cast<u16>(main_y));
+}
+
+void SpelunkyTitle::introduce_yourself() const {
+    printf("SPELUNKY TITLE\n");
+}
+
+void SpelunkyTitle::update_decoration_specific() {
+    // Does nothing besides displaying sprites.
 }

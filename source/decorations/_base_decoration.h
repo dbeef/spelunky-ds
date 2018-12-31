@@ -5,13 +5,6 @@
 #ifndef SPELUNKYDS_BASE_DECORATION_H
 #define SPELUNKYDS_BASE_DECORATION_H
 
-#include <cstdio>
-
-#include "../memory/oam_manager.hpp"
-#include "../camera/camera.hpp"
-#include "../creatures/spritesheet_type.hpp"
-#include "../creatures/sprite_state.hpp"
-#include "../creatures/sprite_type.hpp"
 #include "../interfaces/IRenderable.h"
 
 // Base class for decorations, by which I mean entities with graphical representation, that:
@@ -43,7 +36,7 @@ public:
         update_decoration_specific();
     }
 
-    virtual ~BaseDecoration()  = default;
+    virtual ~BaseDecoration() = default;
 
     // Will be called every frame in game loop.
     virtual void update_decoration_specific() = 0;

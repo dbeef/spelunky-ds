@@ -5,6 +5,7 @@
 #ifndef SPELUNKYDS_SHOPPING_ICON_H
 #define SPELUNKYDS_SHOPPING_ICON_H
 
+#include "../creatures/sprite_info.h"
 #include "_base_decoration.h"
 
 class ShoppingIcon : public BaseDecoration {
@@ -19,15 +20,21 @@ public:
 
     ShoppingIcon(int x, int y);
 
-    void introduce_yourself() const override { printf("LAMP\n"); };
+    // BaseDecoration overrides
+
+    void introduce_yourself() const override;
 
     void update_decoration_specific() override;
+
+    // IRenderable overrides
 
     void init_sprites() override;
 
     void delete_sprites() override;
 
     void update_sprites_position() override;
+
+    // Other, decoration specific
 
     // Hides sprites and sets as ready to dispose.
     void set_ready_to_dispose();
@@ -39,11 +46,10 @@ public:
     double _trigger_timer{};
 
 private:
+
     // Updates sprites' graphics according to current animation frame index.
     void match_animation();
 };
-
-
 
 
 #endif //SPELUNKYDS_SHOPPING_ICON_H

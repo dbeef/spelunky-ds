@@ -59,4 +59,12 @@ void ArchSign::update_sprites_position() {
                                    static_cast<u16>(main_x + (_sprite_width * a)), static_cast<u16>(main_y));
 }
 
+void ArchSign::introduce_yourself() const {
+    printf("ARCH SIGN\n");
+}
+
+void ArchSign::update_decoration_specific() {
+    // Does nothing besides displaying sprites.
+}
+
 

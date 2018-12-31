@@ -2,13 +2,10 @@
 // Created by xdbeef on 23.06.18.
 //
 
-#include <cstdio>
-
-#include "blast.hpp"
-#include "../../build/gfx_got_collectible.h"
-#include "../globals_declarations.hpp"
 #include "../../build/gfx_spike_collectibles_flame.h"
+#include "../globals_declarations.hpp"
 #include "../creatures/sprite_utils.hpp"
+#include "blast.hpp"
 
 Blast::Blast(int x, int y) :
         BaseDecoration(x, y, blast_sprite_width, blast_sprite_height, blast_spritesheet_type) {
@@ -19,7 +16,7 @@ void Blast::update_decoration_specific() {
 
     if (_ready_to_dispose) return;
 
-    //'_firing' property is set by the owner of a blast instance, by default a pistol/shotgun
+    //'_firing' property is set by the owner of a blast instance when firing, a pistol or shotgun.
     if (_firing) {
 
         _anim_frame_timer += *global::timer;
@@ -45,7 +42,7 @@ void Blast::update_decoration_specific() {
 void Blast::init_sprites() {
 
     delete_sprites();
-    
+
     _sub_sprite_info = global::sub_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
                                                            gfx_spike_collectibles_flamePalLen,
                                                            nullptr, _sprite_size, _sprite_width,
@@ -97,5 +94,9 @@ void Blast::delete_sprites() {
     delete _sub_sprite_info;
     _main_sprite_info = nullptr;
     _sub_sprite_info = nullptr;
+}
+
+void Blast::introduce_yourself() const {
+    printf("BLAST\n");
 }
 

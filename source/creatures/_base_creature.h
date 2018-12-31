@@ -53,6 +53,7 @@ public:
 
     virtual void update_creature_specific() = 0;
 
+    //
     virtual void apply_dmg(int dmg_to_apply) = 0;
 
     virtual bool can_update_collidable() = 0;

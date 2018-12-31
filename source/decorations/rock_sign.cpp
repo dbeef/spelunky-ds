@@ -2,11 +2,10 @@
 // Created by xdbeef on 28.12.18.
 //
 
-#include "rock_sign.h"
-
-#include "../globals_declarations.hpp"
 #include "../../build/gfx_menu_signs_tutorial_quit.h"
+#include "../globals_declarations.hpp"
 #include "../creatures/sprite_utils.hpp"
+#include "rock_sign.h"
 
 RockSign::RockSign(int x, int y, RockSign::Type type) :
         BaseDecoration(x, y, rock_sign_sprite_width, rock_sign_sprite_height,
@@ -57,5 +56,13 @@ void RockSign::update_sprites_position() {
     for (int a = 0; a < rock_sign_graphics; a++)
         sprite_utils::set_entry_xy(_mainSpriteInfos[a],
                                    static_cast<u16>(main_x + (_sprite_width * a)), static_cast<u16>(main_y));
+}
+
+void RockSign::introduce_yourself() const {
+    printf("ROCK SIGN\n");
+}
+
+void RockSign::update_decoration_specific() {
+    // Does nothing besides displaying sprites.
 }
 

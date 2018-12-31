@@ -4,10 +4,10 @@
 
 #include <cstdlib>
 
-#include "../globals_declarations.hpp"
 #include "../../build/gfx_goldbars.h"
-#include "shopping_icon.h"
+#include "../globals_declarations.hpp"
 #include "../creatures/sprite_utils.hpp"
+#include "shopping_icon.h"
 
 ShoppingIcon::ShoppingIcon(int x, int y) :
         BaseDecoration(x, y, shopping_icon_sprite_width, shopping_icon_sprite_height, shopping_icon_spritesheet_type) {
@@ -22,6 +22,7 @@ void ShoppingIcon::update_decoration_specific() {
 
     _trigger_timer += *global::timer;
 
+    // Launch animation every time _trigger_timer overflows
     if (_trigger_timer > shopping_icon_trigger_delta)
         _anim_frame_timer += *global::timer;
 
@@ -79,4 +80,8 @@ void ShoppingIcon::delete_sprites() {
     delete _sub_sprite_info;
     _main_sprite_info = nullptr;
     _sub_sprite_info = nullptr;
+}
+
+void ShoppingIcon::introduce_yourself() const {
+    printf("SHOPPING ICON\n");
 }

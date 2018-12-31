@@ -5,11 +5,11 @@
 #ifndef SPELUNKYDS_ARROW_TRAP_H
 #define SPELUNKYDS_ARROW_TRAP_H
 
-#include "_base_decoration.h"
 #include "../creatures/_base_creature.h"
 #include "../creatures/sprite_info.h"
+#include "_base_decoration.h"
 
-//http://spelunky.wikia.com/wiki/Arrow_Trap
+// http://spelunky.wikia.com/wiki/Arrow_Trap
 // Arrow trap's graphical representation does not base on a sprite,
 // it's created in places where tile map has a tile of arrow trap.
 // That way sprites are saved (which are limited on NDS), and arrow traps
@@ -23,21 +23,31 @@ public:
 
     ArrowTrap(int x, int y, SpriteState sprite_state);
 
-    void introduce_yourself() const override { printf("LAMP\n"); };
+    // BaseDecoration overrides
+
+    void introduce_yourself() const override;
 
     void update_decoration_specific() override;
 
-    // Since arrow trap has no sprites.
-    void init_sprites() override {};
-    void delete_sprites() override {};
-    void update_sprites_position() override {};
+    // IRenderable overrides
+
+    void init_sprites() override;
+
+    void delete_sprites() override;
+
+    void update_sprites_position() override;
 
     // Other, creature specific
 
-    void spawn_arrow();
+private:
 
+    void spawn_arrow() const;
+
+    // Check if there's any moving object in 6 tiles starting from the trap at the same height,
+    // if so, then spawn arrow and set as activated.
     bool check_if_can_be_triggered(BaseCreature *pObject);
 
+    // true, if already thrown arrow
     bool _activated{};
     SpriteInfo *_main_sprite_info{};
     SpriteInfo *_sub_sprite_info{};

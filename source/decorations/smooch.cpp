@@ -2,23 +2,20 @@
 // Created by xdbeef on 10.06.18.
 //
 
-#include "smooch.hpp"
-#include "../globals_declarations.hpp"
 #include "../../build/gfx_caveman_damsel.h"
-#include "got_collectible.hpp"
+#include "../globals_declarations.hpp"
 #include "../creatures/sprite_utils.hpp"
+#include "smooch.hpp"
 
 void Smooch::update_decoration_specific() {
-    
+
     if (_ready_to_dispose) return;
 
     update_sprites_position();
-    sprite_utils::set_vertical_flip(false, _main_sprite_info, _sub_sprite_info);
-    sprite_utils::set_horizontal_flip(false, _main_sprite_info, _sub_sprite_info);
-    sprite_utils::set_visibility(true, _main_sprite_info, _sub_sprite_info);
 
     _anim_frame_timer += *global::timer;
 
+    // Animate and go upwards gradually
     if (_anim_frame_timer > smooch_anim_frame_delta) {
 
         _anim_frame_timer = 0;
@@ -34,7 +31,7 @@ void Smooch::update_decoration_specific() {
             _ready_to_dispose = true;
             sprite_utils::set_visibility(false, _main_sprite_info, _sub_sprite_info);
         }
-            
+
         match_animation();
     }
 
@@ -82,4 +79,8 @@ void Smooch::update_sprites_position() {
     get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
     sprite_utils::set_entry_xy(_main_sprite_info, static_cast<u16>(main_x), static_cast<u16>(main_y));
     sprite_utils::set_entry_xy(_sub_sprite_info, static_cast<u16>(sub_x), static_cast<u16>(sub_y));
+}
+
+void Smooch::introduce_yourself() const {
+    printf("SMOOCH\n");
 }

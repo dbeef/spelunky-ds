@@ -5,10 +5,10 @@
 #ifndef SPELUNKYDS_LAMP_H
 #define SPELUNKYDS_LAMP_H
 
-#include "../creatures/_base_creature.h"
 #include "_base_decoration.h"
+#include "../creatures/sprite_info.h"
 
-//http://spelunky.wikia.com/wiki/Lantern
+// http://spelunky.wikia.com/wiki/Lantern
 class Lamp : public BaseDecoration {
 
     static constexpr u8 lamp_sprite_width = 16;
@@ -20,15 +20,21 @@ public:
 
     Lamp(int x, int y);
 
-    void introduce_yourself() const override { printf("LAMP\n"); };
+    // BaseDecoration overrides
+
+    void introduce_yourself() const override;
 
     void update_decoration_specific() override;
+
+    // IRenderable overrides
 
     void init_sprites() override;
 
     void delete_sprites() override;
 
     void update_sprites_position() override;
+
+    // Other, decoration specific
 
     SpriteInfo *_main_sprite_info{};
     SpriteInfo *_sub_sprite_info{};
@@ -38,7 +44,7 @@ public:
 
 private:
 
-    //Updates sprites' graphics according to current animation frame index.
+    // Updates sprites' graphics according to current animation frame index.
     void match_animation();
 };
 

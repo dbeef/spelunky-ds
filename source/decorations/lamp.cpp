@@ -2,10 +2,10 @@
 // Created by xdbeef on 14.06.18.
 //
 
-#include "lamp.h"
-#include "../globals_declarations.hpp"
 #include "../../build/gfx_shopkeeper.h"
+#include "../globals_declarations.hpp"
 #include "../creatures/sprite_utils.hpp"
+#include "lamp.h"
 
 Lamp::Lamp(int x, int y) :
         BaseDecoration(x, y, lamp_sprite_width, lamp_sprite_height, lamp_spritesheet_type) {
@@ -66,4 +66,8 @@ void Lamp::update_sprites_position() {
     get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
     sprite_utils::set_entry_xy(_main_sprite_info, static_cast<u16>(main_x), static_cast<u16>(main_y));
     sprite_utils::set_entry_xy(_sub_sprite_info, static_cast<u16>(sub_x), static_cast<u16>(sub_y));
+}
+
+void Lamp::introduce_yourself() const {
+    printf("LAMP\n");
 }

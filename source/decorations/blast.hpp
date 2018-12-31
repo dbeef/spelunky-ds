@@ -9,8 +9,8 @@
 #include "../creatures/sprite_state.hpp"
 #include "_base_decoration.h"
 
-//Represents blast that occurs on shooting pistol/shotgun.
-//Pistol & shotgun have their instances of blast.
+// Represents blast that occurs on shooting pistol/shotgun.
+// Pistol & shotgun have their instances of blast.
 class Blast : public BaseDecoration {
 
     static constexpr u8 blast_anim_frame_delta = 30;
@@ -24,15 +24,21 @@ public:
 
     Blast(int x, int y);
 
-    void introduce_yourself() const override { printf("BLAST\n"); };
+    // BaseDecoration overrides
+
+    void introduce_yourself() const override;
 
     void update_decoration_specific() override;
+
+    // IRenderable overrides
 
     void init_sprites() override;
 
     void delete_sprites() override;
 
     void update_sprites_position() override;
+
+    // Other, decoration specific
 
     SpriteInfo *_sub_sprite_info{};
     SpriteInfo *_main_sprite_info{};
@@ -44,7 +50,7 @@ public:
 
 private:
 
-    //Updates sprites' graphics according to current animation frame index.
+    // Updates sprites' graphics according to current animation frame index.
     void match_animation();
 
 };

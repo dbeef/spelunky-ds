@@ -2,10 +2,10 @@
 // Created by xdbeef on 19.05.18.
 //
 
-#include "got_collectible.hpp"
-#include "../globals_declarations.hpp"
 #include "../../build/gfx_got_collectible.h"
+#include "../globals_declarations.hpp"
 #include "../creatures/sprite_utils.hpp"
+#include "got_collectible.hpp"
 
 void GotCollectible::update_decoration_specific() {
 
@@ -15,6 +15,7 @@ void GotCollectible::update_decoration_specific() {
 
     _anim_frame_timer += *global::timer;
 
+    // Blink a few times and disappear
     if (_anim_frame_timer > got_collectible_anim_frame_delta) {
 
         _anim_frame_timer = 0;
@@ -57,7 +58,6 @@ void GotCollectible::init_sprites() {
 }
 
 void GotCollectible::match_animation() {
-
     //It will be two 32x32 chunks later every incrementation of _type.
     u8 offset = static_cast<u8>(_type) * static_cast<u8>(2);
 
@@ -78,4 +78,8 @@ void GotCollectible::update_sprites_position() {
     get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
     sprite_utils::set_entry_xy(_main_sprite_info, static_cast<u16>(main_x), static_cast<u16>(main_y));
     sprite_utils::set_entry_xy(_sub_sprite_info, static_cast<u16>(sub_x), static_cast<u16>(sub_y));
+}
+
+void GotCollectible::introduce_yourself() const {
+    printf("GOT COLLECTIBLE\n");
 }
