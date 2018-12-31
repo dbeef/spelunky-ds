@@ -54,8 +54,6 @@ public:
 
     void apply_dmg(int dmg_to_apply) override {};
 
-    void onCollisionWithMainCharacter() override {};
-
     // IRenderable overrides
 
     void init_sprites() override;

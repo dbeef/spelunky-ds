@@ -30,6 +30,7 @@ public:
             rock_physical_width,
             rock_physical_height
     ) {
+        _max_x_speed = 3.5f;
         _friction = ICollidable::default_friction * 12;
         init_sprites();
         activated = true;
@@ -42,8 +43,6 @@ public:
     void introduce_yourself() override { printf("WHIP\n"); };
 
     void apply_dmg(int dmg_to_apply) override {};
-
-    void onCollisionWithMainCharacter() override {};
 
     // IRenderable overrides
 

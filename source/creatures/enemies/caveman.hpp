@@ -40,7 +40,7 @@ public:
         _bouncing_factor_x = 0;
         _bouncing_factor_y = 0;
         init_sprites();
-        _friction = 0.5f;
+        _friction = ICollidable::default_friction * 5;
 //        _gravity = 0.75f * ICollidable::default_gravity;
     }
 
@@ -51,8 +51,6 @@ public:
     void introduce_yourself() override { printf("WHIP\n"); };
 
     void apply_dmg(int dmg_to_apply) override;
-
-    void onCollisionWithMainCharacter() override {};
 
     // IRenderable overrides
 

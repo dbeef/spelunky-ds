@@ -89,7 +89,7 @@ void MainDude::throw_item() {
                     {
 
                         if (global::input_handler->up_key_held)
-                            (*global::creatures.at(a))._y_speed = -3 - abs(_y_speed);
+                            (*global::creatures.at(a))._y_speed = -2.55 - abs(_y_speed);
                         else {
 
 //                        if (global::creatures.at(a)->speed_of_throwing_y != 0) {

@@ -55,8 +55,6 @@ public:
 
     virtual void apply_dmg(int dmg_to_apply) = 0;
 
-    virtual void onCollisionWithMainCharacter() = 0;
-
     virtual bool can_update_collidable() = 0;
 
     int hitpoints{};

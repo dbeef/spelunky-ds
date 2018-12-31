@@ -39,8 +39,6 @@ public:
 
     void apply_dmg(int dmg_to_apply) override {};
 
-    void onCollisionWithMainCharacter() override {};
-
     // IRenderable overrides
 
     void init_sprites() override;
@@ -58,6 +56,8 @@ public:
 
     // Other, creature specific
 
+    // True, if spikes killed anything.
+    // Then, graphical representation of spikes becomes red.
     bool _blood{};
     SpriteInfo *_main_sprite_info{};
     SpriteInfo *_sub_sprite_info{};
