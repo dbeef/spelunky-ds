@@ -1,6 +1,5 @@
 //
 // Created by xdbeef on 07.04.18.
-// sizeof(BaseCreature) is 805 bytes
 //
 
 #ifndef SPELUNKYDS_MOVINGOBJECT_H
@@ -56,7 +55,7 @@ public:
     //
     virtual void apply_dmg(int dmg_to_apply) = 0;
 
-    virtual bool can_update_collidable() = 0;
+    virtual bool can_update_collidable() const = 0;
 
     int hitpoints{};
     bool standingOnLeftEdge{};
@@ -71,7 +70,7 @@ public:
     // TODO Distribute these utils between ICollidable/IRenderable, some may stay here as they are creature-specific.
     // Some can be moved to other class / namespace, like spawn_blood.
 
-    bool kill_mobs_if_thrown(int dmg_to_apply);
+    bool kill_mobs_if_thrown(int dmg_to_apply) const;
 
     void check_if_can_be_pickuped();
 
@@ -89,15 +88,15 @@ public:
 
     void kill_if_whip(int dmg_to_apply);
 
-    void deal_damage_main_dude_on_collision(int dmg_to_apply);
+    void deal_damage_main_dude_on_collision(int dmg_to_apply) const;
 
-    void spawn_blood();
+    void spawn_blood() const;
 
     void set_pickuped_position_not_checking(int pickup_offset_x, int pickup_offset_y);
 
-    bool kill_main_dude_if_thrown(int dmg_to_apply);
+    bool kill_main_dude_if_thrown(int dmg_to_apply) const;
 
-    void set_pickuped_position_on_another_moving_obj(int pickup_offset_x, int pickup_offset_y, BaseCreature *m);
+    void set_pickuped_position_on_another_moving_obj(int pickup_offset_x, int pickup_offset_y, BaseCreature *m) const;
 };
 
 #endif //SPELUNKYDS_MOVINGOBJECT_H

@@ -51,6 +51,8 @@ public:
 
     void apply_dmg(int dmg_to_apply) override {};
 
+    bool can_update_collidable() const override { return !finished && !_ready_to_dispose; }
+
     // IRenderable overrides
 
     void init_sprites() override;
@@ -61,11 +63,9 @@ public:
 
     // ICollidable overrides
 
-    bool can_update_collidable() override { return !finished && !_ready_to_dispose; }
+    bool can_apply_friction() const override { return true; }
 
-    bool can_apply_friction() override { return true; }
-
-    bool can_apply_gravity() override { return true; }
+    bool can_apply_gravity() const override { return true; }
 
     // Other, creature specific
 

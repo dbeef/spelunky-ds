@@ -17,7 +17,7 @@
 #include "../sound/SoundUtils.hpp"
 #include "animations/Blood.hpp"
 
-void BaseCreature::spawn_blood() {
+void BaseCreature::spawn_blood() const {
     for (int a = 0; a < 4; a++) {
         auto *blood = new Blood(_x, _y);
 
@@ -31,7 +31,7 @@ void BaseCreature::spawn_blood() {
     }
 }
 
-void BaseCreature::deal_damage_main_dude_on_collision(int dmg_to_apply) {
+void BaseCreature::deal_damage_main_dude_on_collision(int dmg_to_apply) const {
     if (!killed && !global::main_dude->dead && Collisions::checkCollisionWithMainDude(_x, _y, 16, 16) &&
         global::main_dude->time_since_last_damage > 1000 && !global::main_dude->exiting_level) {
 
@@ -165,7 +165,7 @@ void BaseCreature::set_pickuped_position(int pickup_offset_x_left, int pickup_of
 
 //this should be applied, when item is being carried by another moving object
 void
-BaseCreature::set_pickuped_position_on_another_moving_obj(int pickup_offset_x, int pickup_offset_y, BaseCreature *m) {
+BaseCreature::set_pickuped_position_on_another_moving_obj(int pickup_offset_x, int pickup_offset_y, BaseCreature *m) const {
 
     m->_y = _y + pickup_offset_y;
 
@@ -190,7 +190,7 @@ void BaseCreature::set_pickuped_position_not_checking(int pickup_offset_x, int p
 }
 
 //when applied, item kills mobs if it boths travels and collides them
-bool BaseCreature::kill_mobs_if_thrown(int dmg_to_apply) {
+bool BaseCreature::kill_mobs_if_thrown(int dmg_to_apply) const {
 
     bool killed = false;
 
@@ -204,8 +204,10 @@ bool BaseCreature::kill_mobs_if_thrown(int dmg_to_apply) {
                 && !global::creatures.at(a)->killed) {
                 if (Collisions::checkCollisionBodies(_x, _y, 16, 16, global::creatures.at(a)->_x,
                                                      global::creatures.at(a)->_y, _physical_width, _physical_height)) {
+
                     global::creatures.at(a)->apply_dmg(dmg_to_apply);
                     killed = true;
+
                 }
             }
         }
@@ -215,7 +217,7 @@ bool BaseCreature::kill_mobs_if_thrown(int dmg_to_apply) {
 
 }
 
-bool BaseCreature::kill_main_dude_if_thrown(int dmg_to_apply) {
+bool BaseCreature::kill_main_dude_if_thrown(int dmg_to_apply) const {
 
     if (abs(_x_speed) > 0 || abs(_y_speed) > 0) {
 

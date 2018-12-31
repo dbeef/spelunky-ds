@@ -6,6 +6,7 @@
 #define SPELUNKYDS_ICOLLIDABLE_H
 
 #include <nds.h>
+
 #include "IBase.h"
 #include "../tiles/MapTile.hpp"
 
@@ -51,9 +52,9 @@ public:
 
     virtual ~ICollidable() = default;
 
-    virtual bool can_apply_friction() = 0;
+    virtual bool can_apply_friction() const = 0;
 
-    virtual bool can_apply_gravity() = 0;
+    virtual bool can_apply_gravity() const = 0;
 
     // updated every _pos_update_delta overflow.
     MapTile *_neighboring_tiles[9]{};
@@ -97,7 +98,7 @@ public:
 private:
 
     // True if two collidables overlap.
-    bool check_collision(ICollidable const &other_collidable);
+    bool check_collision(ICollidable const &other_collidable) const;
 
     // Changes xy position according to current xy speed, checks collisions with map every moved pixel.
     void update_position();

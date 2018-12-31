@@ -53,9 +53,9 @@ public:
     // ICollidable overrides
 
     // Whip's position depends on main dude's position. No collision checking.
-    bool can_update_collidable() override { return false; }
-    bool can_apply_friction() override { return false; }
-    bool can_apply_gravity() override { return false; }
+    bool can_update_collidable() const override { return false; }
+    bool can_apply_friction() const override { return false; }
+    bool can_apply_gravity() const override { return false; }
 
     // Other, creature specific
 

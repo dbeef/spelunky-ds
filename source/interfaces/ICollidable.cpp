@@ -3,10 +3,11 @@
 //
 
 #include <cmath>
-#include "ICollidable.h"
+
 #include "../collisions/Collisions.hpp"
 #include "../tiles/LevelRenderingUtils.hpp"
 #include "../GlobalsDeclarations.hpp"
+#include "ICollidable.h"
 
 void ICollidable::update_collisions_with_map(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
     Collisions::getNeighboringTiles(global::current_level->map_tiles, x_current_pos_in_tiles,
@@ -110,7 +111,7 @@ void ICollidable::limit_speed() {
         _x_speed = -_max_x_speed;
 }
 
-bool ICollidable::check_collision(ICollidable const &other) {
+bool ICollidable::check_collision(ICollidable const &other) const {
     return Collisions::checkCollisionBodies(_x, _y, _physical_width, _physical_height,
                                             other._x, other._y, other._physical_width, other._physical_height);
 }

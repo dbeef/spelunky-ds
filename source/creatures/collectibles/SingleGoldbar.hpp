@@ -42,6 +42,8 @@ public:
 
     void apply_dmg(int dmg_to_apply) override {};
 
+    bool can_update_collidable() const override { return true; }
+
     // IRenderable overrides
 
     void init_sprites() override;
@@ -52,11 +54,9 @@ public:
 
     // ICollidable overrides
 
-    bool can_update_collidable() override { return true; }
+    bool can_apply_friction() const override { return true; }
 
-    bool can_apply_friction() override { return true; }
-
-    bool can_apply_gravity() override { return true; }
+    bool can_apply_gravity() const override { return true; }
 
     //rename to vectors_update_timer?
     double pos_inc_timer{};

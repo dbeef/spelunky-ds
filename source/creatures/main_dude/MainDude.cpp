@@ -909,7 +909,7 @@ void MainDude::update_sprites_position() {
     sprite_utils::set_entry_xy(sub_sprite_info, static_cast<u16>(sub_x), static_cast<u16>(sub_y));
 }
 
-bool MainDude::can_apply_gravity() {
+bool MainDude::can_apply_gravity() const {
     return !_bottom_collision && !climbing && !(hanging_on_tile_left || hanging_on_tile_right);
 }
 
