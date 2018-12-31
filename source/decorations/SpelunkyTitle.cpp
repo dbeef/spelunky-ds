@@ -3,8 +3,8 @@
 //
 
 #include "../../build/gfx_spelunky_title.h"
-#include "../globals_declarations.hpp"
-#include "../creatures/sprite_utils.hpp"
+#include "../GlobalsDeclarations.hpp"
+#include "../creatures/SpriteUtils.hpp"
 #include "SpelunkyTitle.h"
 
 SpelunkyTitle::SpelunkyTitle(int x, int y) :

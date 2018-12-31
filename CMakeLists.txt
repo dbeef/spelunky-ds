@@ -17,45 +17,45 @@ add_executable(spelunkyds
         gfx/fonts/font.grit
         gfx/sprites/16x16/sprite.grit
         source/decorations/_BaseDecoration.h
-        source/creatures/main_dude/main_dude.cpp
-        source/creatures/main_dude/main_dude.hpp
-        source/creatures/items/bomb.cpp
-        source/creatures/items/rock.cpp
-        source/creatures/items/arrow.cpp
-        source/creatures/items/bomb.hpp
-        source/creatures/items/rope.hpp
+        source/creatures/main_dude/MainDude.cpp
+        source/creatures/main_dude/MainDude.hpp
+        source/creatures/items/Bomb.cpp
+        source/creatures/items/Rock.cpp
+        source/creatures/items/Arrow.cpp
+        source/creatures/items/Bomb.hpp
+        source/creatures/items/Rope.hpp
         source/decorations/Copyrights.cpp
         source/decorations/Copyrights.h
-        source/creatures/items/rope_element.hpp
-        source/creatures/items/rope_element.cpp
-        source/creatures/items/pistol.hpp
-        source/creatures/items/pistol.cpp
-        source/creatures/items/rope.cpp
-        source/creatures/_base_creature.h
-        source/creatures/_base_creature.cpp
-        source/main.cpp
-        source/tiles/level.cpp
-        source/tiles/level.hpp
-        source/tiles/level_generator.cpp
-        source/tiles/level_generator.hpp
-        source/tiles/map_tile.cpp
-        source/tiles/map_tile.hpp
-        source/game_loop.cpp
-        source/game_loop.hpp
+        source/creatures/items/RopeElement.hpp
+        source/creatures/items/RopeElement.cpp
+        source/creatures/items/Pistol.hpp
+        source/creatures/items/Pistol.cpp
+        source/creatures/items/Rope.cpp
+        source/creatures/_BaseCreature.h
+        source/creatures/_BaseCreature.cpp
+        source/Main.cpp
+        source/tiles/Level.cpp
+        source/tiles/Level.hpp
+        source/tiles/LevelGenerator.cpp
+        source/tiles/LevelGenerator.hpp
+        source/tiles/MapTile.cpp
+        source/tiles/MapTile.hpp
+        source/GameLoop.cpp
+        source/GameLoop.hpp
         Makefile
         README.md
-        source/creatures/main_dude/main_dude.cpp
-        source/creatures/main_dude/main_dude.hpp
-        source/creatures/sprite_state.hpp
-        source/globals_declarations.hpp
-        source/game_loop.hpp
-        source/tiles/level.cpp
-        source/tiles/level.hpp
-        source/tiles/level_rendering_utils.cpp
-        source/tiles/level_rendering_utils.hpp
-        source/tiles/map_tile.cpp
-        source/tiles/map_tile.hpp
-        source/collisions/collisions.cpp
-        source/collisions/collisions.hpp
-        source/hud/hud.cpp source/hud/hud.hpp
-        source/creatures/sprite_info.cpp source/creatures/sprite_info.h source/camera/camera.cpp source/camera/camera.hpp source/memory/oam_manager.cpp source/memory/oam_manager.hpp source/input/input_handler.cpp source/input/input_handler.hpp source/creatures/spritesheet_type.hpp source/memory/oam_type.hpp source/creatures/items/rock.hpp source/creatures/items/jar.cpp source/creatures/items/jar.hpp source/creatures/enemies/snake.cpp source/creatures/enemies/snake.hpp source/interfaces/moniez.cpp source/interfaces/moniez.hpp source/tiles/map_tile_type.hpp source/creatures/animations/blood.cpp source/creatures/animations/blood.hpp source/creatures/animations/blood_element.cpp source/creatures/animations/blood_element.hpp source/decorations/SpelunkyTitle.cpp source/decorations/SpelunkyTitle.h source/tiles/tile_orientation.hpp source/creatures/menu_sign_type.hpp source/tiles/splash_screen_type.hpp source/rooms/left_right_rooms.hpp source/rooms/left_right_down_rooms.hpp source/rooms/left_right_up_rooms.hpp source/rooms/closed_rooms.hpp source/rooms/splash_screens.hpp source/rooms/entrance_rooms.hpp source/rooms/exit_rooms.hpp source/rooms/RoomType.hpp source/creatures/enemies/bat.cpp source/creatures/enemies/bat.hpp source/creatures/enemies/spider.cpp source/creatures/enemies/spider.hpp source/creatures/sprite_type.hpp source/globals_definitions.hpp source/sound/sound_utils.hpp source/console/console_utils.hpp source/time/time_utils.h source/time/time_utils.cpp source/memory/oam_utils.cpp source/memory/oam_utils.hpp source/creatures/main_dude/whip.cpp source/creatures/main_dude/whip.hpp source/creatures/traps/spikes.cpp source/creatures/traps/spikes.h source/creatures/collectibles/chest.cpp source/creatures/collectibles/chest.hpp source/creatures/collectibles/crate.hpp source/creatures/collectibles/crate.cpp source/creatures/collectibles/shotgun.hpp source/creatures/collectibles/shotgun.cpp source/creatures/collectibles/bullet.hpp source/creatures/collectibles/bullet.cpp source/creatures/collectibles/spring_shoes.hpp source/creatures/collectibles/spring_shoes.cpp source/creatures/collectibles/mitt.hpp source/creatures/collectibles/mitt.cpp source/creatures/collectibles/glove.hpp source/creatures/collectibles/glove.cpp source/creatures/collectibles/compass.hpp source/creatures/collectibles/compass.cpp source/decorations/GotCollectible.hpp source/decorations/GotCollectible.cpp source/camera/layer_level.hpp source/creatures/enemies/shopkeeper.hpp source/creatures/enemies/shopkeeper.cpp source/creatures/main_dude/dude_utils.cpp source/creatures/main_dude/game_state.hpp source/creatures/main_dude/game_state.cpp source/creatures/enemies/caveman.hpp source/creatures/enemies/caveman.cpp source/creatures/animations/fall_poof.hpp source/creatures/animations/fall_poof.cpp source/creatures/items/cape.hpp source/creatures/items/cape.cpp source/creatures/items/spike_shoes.hpp source/creatures/items/spike_shoes.cpp source/creatures/items/pick.hpp source/creatures/items/pick.cpp source/creatures/items/jetpack.hpp source/creatures/items/jetpack.cpp source/creatures/items/parachute.hpp source/creatures/items/parachute.cpp source/creatures/items/rope_pile.hpp source/creatures/items/rope_pile.cpp source/creatures/items/bomb_bag.hpp source/creatures/items/bomb_bag.cpp source/creatures/items/bomb_box.hpp source/creatures/items/bomb_box.cpp source/creatures/animations/flame.hpp source/creatures/animations/flame_element.cpp source/creatures/animations/flame.cpp source/creatures/animations/flame_element.hpp source/creatures/enemies/damsel.hpp source/creatures/enemies/damsel.cpp source/decorations/Smooch.hpp source/decorations/Smooch.cpp source/rooms/shops.hpp source/decorations/Lamp.h source/decorations/Lamp.cpp source/tiles/direction.hpp source/creatures/collectibles/collectibles_utils.hpp source/creatures/collectibles/collectibles_utils.cpp source/interfaces/shopping_object.h source/decorations/ShoppingIcon.h source/decorations/ShoppingIcon.cpp source/interfaces/shopping_object.cpp source/decorations/ArrowTrap.h source/decorations/ArrowTrap.cpp source/decorations/Blast.hpp source/decorations/Blast.cpp source/rooms/snake_well.hpp source/creatures/enemies/skeleton.cpp source/creatures/enemies/skeleton.hpp source/sound/sound_utils.cpp source/creatures/animations/bone.hpp source/creatures/animations/bone.cpp source/creatures/animations/skull.hpp source/creatures/animations/skull.cpp source/creatures/animations/fake_skeleton.hpp source/creatures/animations/fake_skeleton.cpp source/globals_definitions.cpp source/base_map.hpp source/creatures/sprite_utils.cpp source/creatures/sprite_utils.hpp source/tiles/level_generator.hpp source/tiles/level_generator.cpp source/creatures/simple_sprite_wrapper.h source/creatures/simple_sprite_wrapper.cpp source/tiles/populating_utils.hpp source/tiles/populating_utils.cpp source/creatures/collectibles/ruby_big.h source/creatures/collectibles/ruby_small.h source/creatures/collectibles/triple_goldbar.h source/creatures/collectibles/triple_goldbar.cpp source/creatures/collectibles/single_goldbar.hpp source/creatures/collectibles/single_goldbar.cpp source/creatures/collectibles/ruby_small.cpp source/creatures/collectibles/ruby_big.cpp source/collisions/collisions_utils.h source/collisions/collisions_utils.cpp source/decorations/_BaseDecoration.h source/decorations/RockSign.h source/decorations/RockSign.cpp source/decorations/ArchSign.h source/decorations/ArchSign.cpp source/interfaces/IRenderable.cpp source/interfaces/IRenderable.h source/interfaces/ICollidable.cpp source/interfaces/ICollidable.h source/interfaces/IBase.cpp source/interfaces/IBase.h source/treasures/BaseTreasure.cpp source/treasures/BaseTreasure.h)
+        source/creatures/main_dude/MainDude.cpp
+        source/creatures/main_dude/MainDude.hpp
+        source/creatures/SpriteState.hpp
+        source/GlobalsDeclarations.hpp
+        source/GameLoop.hpp
+        source/tiles/Level.cpp
+        source/tiles/Level.hpp
+        source/tiles/LevelRenderingUtils.cpp
+        source/tiles/LevelRenderingUtils.hpp
+        source/tiles/MapTile.cpp
+        source/tiles/MapTile.hpp
+        source/collisions/Collisions.cpp
+        source/collisions/Collisions.hpp
+        source/hud/Hud.cpp source/hud/Hud.hpp
+        source/creatures/SpriteInfo.cpp source/creatures/SpriteInfo.h source/camera/Camera.cpp source/camera/Camera.hpp source/memory/OamManager.cpp source/memory/OamManager.hpp source/input/InputHandler.cpp source/input/InputHandler.hpp source/creatures/SpritesheetType.hpp source/memory/OamType.hpp source/creatures/items/Rock.hpp source/creatures/items/Jar.cpp source/creatures/items/Jar.hpp source/creatures/enemies/Snake.cpp source/creatures/enemies/Snake.hpp source/interfaces/Moniez.cpp source/interfaces/Moniez.hpp source/tiles/MapTileType.hpp source/creatures/animations/Blood.cpp source/creatures/animations/Blood.hpp source/creatures/animations/BloodElement.cpp source/creatures/animations/BloodElement.hpp source/decorations/SpelunkyTitle.cpp source/decorations/SpelunkyTitle.h source/tiles/TileOrientation.hpp source/tiles/SplashScreenType.hpp source/rooms/LeftRightRooms.hpp source/rooms/LeftRightDownRooms.hpp source/rooms/LeftRightUpRooms.hpp source/rooms/ClosedRooms.hpp source/rooms/SplashScreenRooms.hpp source/rooms/EntranceRooms.hpp source/rooms/ExitRooms.hpp source/rooms/RoomType.hpp source/creatures/enemies/Bat.cpp source/creatures/enemies/Bat.hpp source/creatures/enemies/Spider.cpp source/creatures/enemies/Spider.hpp source/creatures/SpriteType.hpp source/GlobalsDefinitions.hpp source/sound/SoundUtils.hpp source/console/ConsoleUtils.hpp source/time/TimeUtils.h source/time/TimeUtils.cpp source/memory/OamUtils.cpp source/memory/OamUtils.hpp source/creatures/main_dude/Whip.cpp source/creatures/main_dude/Whip.hpp source/creatures/traps/Spikes.cpp source/creatures/traps/Spikes.h source/creatures/collectibles/Chest.cpp source/creatures/collectibles/Chest.hpp source/creatures/collectibles/Crate.hpp source/creatures/collectibles/Crate.cpp source/creatures/collectibles/Shotgun.hpp source/creatures/collectibles/Shotgun.cpp source/creatures/collectibles/Bullet.hpp source/creatures/collectibles/Bullet.cpp source/creatures/collectibles/SpringShoes.hpp source/creatures/collectibles/SpringShoes.cpp source/creatures/collectibles/Mitt.hpp source/creatures/collectibles/Mitt.cpp source/creatures/collectibles/Glove.hpp source/creatures/collectibles/Glove.cpp source/creatures/collectibles/Compass.hpp source/creatures/collectibles/Compass.cpp source/decorations/GotCollectible.hpp source/decorations/GotCollectible.cpp source/camera/LayerLevel.hpp source/creatures/enemies/Shopkeeper.hpp source/creatures/enemies/Shopkeeper.cpp source/creatures/main_dude/GameState.hpp source/creatures/main_dude/GameState.cpp source/creatures/enemies/Caveman.hpp source/creatures/enemies/Caveman.cpp source/creatures/animations/FallPoof.hpp source/creatures/animations/FallPoof.cpp source/creatures/items/Cape.hpp source/creatures/items/Cape.cpp source/creatures/items/SpikeShoes.hpp source/creatures/items/SpikeShoes.cpp source/creatures/items/Pick.hpp source/creatures/items/Pick.cpp source/creatures/items/Jetpack.hpp source/creatures/items/Jetpack.cpp source/creatures/items/Parachute.hpp source/creatures/items/Parachute.cpp source/creatures/items/RopePile.hpp source/creatures/items/RopePile.cpp source/creatures/items/BombBag.hpp source/creatures/items/BombBag.cpp source/creatures/items/BombBox.hpp source/creatures/items/BombBox.cpp source/creatures/animations/Flame.hpp source/creatures/animations/FlameElement.cpp source/creatures/animations/Flame.cpp source/creatures/animations/FlameElement.hpp source/creatures/enemies/Damsel.hpp source/creatures/enemies/Damsel.cpp source/decorations/Smooch.hpp source/decorations/Smooch.cpp source/rooms/ShopRooms.hpp source/decorations/Lamp.h source/decorations/Lamp.cpp source/tiles/Direction.hpp source/creatures/collectibles/_CollectiblesUtils.hpp source/creatures/collectibles/_CollectiblesUtils.cpp source/interfaces/ShoppingObject.h source/decorations/ShoppingIcon.h source/decorations/ShoppingIcon.cpp source/interfaces/ShoppingObject.cpp source/decorations/ArrowTrap.h source/decorations/ArrowTrap.cpp source/decorations/Blast.hpp source/decorations/Blast.cpp source/rooms/SnakeWellRoom.hpp source/creatures/enemies/Skeleton.cpp source/creatures/enemies/Skeleton.hpp source/sound/SoundUtils.cpp source/creatures/animations/Bone.hpp source/creatures/animations/Bone.cpp source/creatures/animations/Skull.hpp source/creatures/animations/Skull.cpp source/creatures/animations/FakeSkeleton.hpp source/creatures/animations/FakeSkeleton.cpp source/GlobalsDefinitions.cpp source/BaseMap.hpp source/creatures/SpriteUtils.cpp source/creatures/SpriteUtils.hpp source/tiles/LevelGenerator.hpp source/tiles/LevelGenerator.cpp source/tiles/PopulatingUtils.hpp source/tiles/PopulatingUtils.cpp source/creatures/collectibles/RubyBig.h source/creatures/collectibles/RubySmall.h source/creatures/collectibles/TripleGoldbar.h source/creatures/collectibles/TripleGoldbar.cpp source/creatures/collectibles/SingleGoldbar.hpp source/creatures/collectibles/SingleGoldbar.cpp source/creatures/collectibles/RubySmall.cpp source/creatures/collectibles/RubyBig.cpp source/collisions/CollisionsUtils.h source/collisions/CollisionsUtils.cpp source/decorations/_BaseDecoration.h source/decorations/RockSign.h source/decorations/RockSign.cpp source/decorations/ArchSign.h source/decorations/ArchSign.cpp source/interfaces/IRenderable.cpp source/interfaces/IRenderable.h source/interfaces/ICollidable.cpp source/interfaces/ICollidable.h source/interfaces/IBase.cpp source/interfaces/IBase.h source/treasures/BaseTreasure.cpp source/treasures/BaseTreasure.h)

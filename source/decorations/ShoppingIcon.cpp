@@ -5,8 +5,8 @@
 #include <cstdlib>
 
 #include "../../build/gfx_goldbars.h"
-#include "../globals_declarations.hpp"
-#include "../creatures/sprite_utils.hpp"
+#include "../GlobalsDeclarations.hpp"
+#include "../creatures/SpriteUtils.hpp"
 #include "ShoppingIcon.h"
 
 ShoppingIcon::ShoppingIcon(int x, int y) :

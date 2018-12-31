@@ -3,8 +3,8 @@
 //
 
 #include "../../build/gfx_shopkeeper.h"
-#include "../globals_declarations.hpp"
-#include "../creatures/sprite_utils.hpp"
+#include "../GlobalsDeclarations.hpp"
+#include "../creatures/SpriteUtils.hpp"
 #include "Lamp.h"
 
 Lamp::Lamp(int x, int y) :

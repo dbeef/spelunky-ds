@@ -3,8 +3,8 @@
 //
 
 #include "../../build/gfx_copyrights.h"
-#include "../globals_declarations.hpp"
-#include "../creatures/sprite_utils.hpp"
+#include "../GlobalsDeclarations.hpp"
+#include "../creatures/SpriteUtils.hpp"
 #include "Copyrights.h"
 
 Copyrights::Copyrights(int x, int y) :

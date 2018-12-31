@@ -5,7 +5,7 @@
 #ifndef SPELUNKYDS_SHOPPING_ICON_H
 #define SPELUNKYDS_SHOPPING_ICON_H
 
-#include "../creatures/sprite_info.h"
+#include "../creatures/SpriteInfo.h"
 #include "_BaseDecoration.h"
 
 class ShoppingIcon : public BaseDecoration {

@@ -3,8 +3,8 @@
 //
 
 #include "../../build/gfx_caveman_damsel.h"
-#include "../globals_declarations.hpp"
-#include "../creatures/sprite_utils.hpp"
+#include "../GlobalsDeclarations.hpp"
+#include "../creatures/SpriteUtils.hpp"
 #include "Smooch.hpp"
 
 void Smooch::update_decoration_specific() {

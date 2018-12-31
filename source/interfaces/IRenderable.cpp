@@ -3,7 +3,7 @@
 //
 
 #include "IRenderable.h"
-#include "../globals_declarations.hpp"
+#include "../GlobalsDeclarations.hpp"
 
 void IRenderable::get_x_y_viewported(int *out_main_x, int *out_main_y, int *out_sub_x, int *out_sub_y) const {
 

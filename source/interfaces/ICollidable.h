@@ -7,7 +7,7 @@
 
 #include <nds.h>
 #include "IBase.h"
-#include "../tiles/map_tile.hpp"
+#include "../tiles/MapTile.hpp"
 
 // Collidable provides fields and functions neccessary to:
 // * check collisions between two Collidable objects

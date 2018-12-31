@@ -4,9 +4,9 @@
 
 #include "ArchSign.h"
 
-#include "../globals_declarations.hpp"
+#include "../GlobalsDeclarations.hpp"
 #include "../../build/gfx_menu_signs_start_scores.h"
-#include "../creatures/sprite_utils.hpp"
+#include "../creatures/SpriteUtils.hpp"
 
 ArchSign::ArchSign(int x, int y, ArchSign::Type type) :
         BaseDecoration(x, y, rock_sign_sprite_width, rock_sign_sprite_height,

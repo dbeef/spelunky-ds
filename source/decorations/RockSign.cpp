@@ -3,8 +3,8 @@
 //
 
 #include "../../build/gfx_menu_signs_tutorial_quit.h"
-#include "../globals_declarations.hpp"
-#include "../creatures/sprite_utils.hpp"
+#include "../GlobalsDeclarations.hpp"
+#include "../creatures/SpriteUtils.hpp"
 #include "RockSign.h"
 
 RockSign::RockSign(int x, int y, RockSign::Type type) :

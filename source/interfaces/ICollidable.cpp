@@ -4,9 +4,9 @@
 
 #include <cmath>
 #include "ICollidable.h"
-#include "../collisions/collisions.hpp"
-#include "../tiles/level_rendering_utils.hpp"
-#include "../globals_declarations.hpp"
+#include "../collisions/Collisions.hpp"
+#include "../tiles/LevelRenderingUtils.hpp"
+#include "../GlobalsDeclarations.hpp"
 
 void ICollidable::update_collisions_with_map(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
     Collisions::getNeighboringTiles(global::current_level->map_tiles, x_current_pos_in_tiles,

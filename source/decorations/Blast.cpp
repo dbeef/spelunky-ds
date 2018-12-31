@@ -3,8 +3,8 @@
 //
 
 #include "../../build/gfx_spike_collectibles_flame.h"
-#include "../globals_declarations.hpp"
-#include "../creatures/sprite_utils.hpp"
+#include "../GlobalsDeclarations.hpp"
+#include "../creatures/SpriteUtils.hpp"
 #include "Blast.hpp"
 
 Blast::Blast(int x, int y) :

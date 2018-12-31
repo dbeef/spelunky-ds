@@ -3,8 +3,8 @@
 //
 
 #include "../../build/gfx_got_collectible.h"
-#include "../globals_declarations.hpp"
-#include "../creatures/sprite_utils.hpp"
+#include "../GlobalsDeclarations.hpp"
+#include "../creatures/SpriteUtils.hpp"
 #include "GotCollectible.hpp"
 
 void GotCollectible::update_decoration_specific() {
