@@ -32,7 +32,8 @@ public:
             jetpack_sprite_height,
             jetpack_spritesheet_type,
             jetpack_physical_width,
-            jetpack_physical_height
+            jetpack_physical_height,
+            CreatureType::JETPACK
     ), ShoppingObject(jetpack_cost, jetpack_name) {
         init_sprites();
         init_anim_icon();

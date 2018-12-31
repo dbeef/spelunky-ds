@@ -165,7 +165,8 @@ Shotgun::Shotgun(int x, int y) : BaseCreature(
         shotgun_sprite_height,
         shotgun_spritesheet_type,
         shotgun_physical_width,
-        shotgun_physical_height
+        shotgun_physical_height,
+        CreatureType::SHOTGUN
 ), ShoppingObject(shotgun_cost, shotgun_name) {
 
     init_anim_icon();

@@ -38,7 +38,8 @@ public:
             bat_sprite_height,
             bat_spritesheet_type,
             bat_physical_width,
-            bat_physical_height
+            bat_physical_height,
+            CreatureType::BAT
     ) {
         _pos_update_delta = 30;
         hitpoints = 1;

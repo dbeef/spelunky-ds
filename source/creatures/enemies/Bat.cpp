@@ -89,7 +89,7 @@ void Bat::apply_dmg(int dmg_to_apply) {
     killed = true;
     _ready_to_dispose = true;
     spawn_blood();
-    global::killed_npcs.push_back(SpriteType::S_BAT);
+    global::killed_npcs.push_back(_creature_type);
 
 }
 

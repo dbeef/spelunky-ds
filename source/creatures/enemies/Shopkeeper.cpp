@@ -54,10 +54,10 @@ void Shopkeeper::update_creature_specific() {
     } else if (triggered && !holding_shotgun) {
 
         //searching for lost shotgun
-        for (auto &sprite : global::creatures) {
-            if (sprite->sprite_type == SpriteType::S_SHOTGUN) {
+        for (auto &creature : global::creatures) {
+            if (creature->_creature_type == CreatureType::SHOTGUN) {
 
-                auto *sh = (Shotgun *) sprite;
+                auto *sh = (Shotgun *) creature;
                 if (Collisions::checkCollisionBodies(_x, _y, _physical_width, _physical_height, sh->_x, sh->_y,
                                                      sh->_physical_width, sh->_physical_height)) {
                     holding_shotgun = true;
@@ -227,7 +227,7 @@ void Shopkeeper::apply_dmg(int dmg_to_apply) {
         global::hud->disable_all_prompts();
         de_shopify_all_items();
         global::game_state->robbed_killed_shopkeeper = true;
-        global::killed_npcs.push_back(SpriteType::S_SHOPKEEPER);
+        global::killed_npcs.push_back(_creature_type);
         killed = true;
         _bouncing_factor_x = ICollidable::default_bouncing_factor_x;
         _bouncing_factor_y = ICollidable::default_bouncing_factor_y;
@@ -552,7 +552,8 @@ Shopkeeper::Shopkeeper(int x, int y) : BaseCreature(
         shopkeeper_sprite_height,
         shopkeeper_spritesheet_type,
         shopkeeper_physical_width,
-        shopkeeper_physical_height
+        shopkeeper_physical_height,
+        CreatureType::SHOPKEEPER
     ) {
     hitpoints = 3;
 

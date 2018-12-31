@@ -119,7 +119,7 @@ void Snake::apply_dmg(int dmg_to_apply) {
     //    mainSpriteInfo = nullptr;
 
     spawn_blood();
-    global::killed_npcs.push_back(SpriteType::S_SNAKE);
+    global::killed_npcs.push_back(_creature_type);
     sprite_utils::set_visibility(false, mainSpriteInfo, subSpriteInfo);
     killed = true;
     _ready_to_dispose = true;

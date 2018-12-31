@@ -37,14 +37,14 @@ public:
             arrow_sprite_height,
             arrow_spritesheet_type,
             arrow_physical_width,
-            arrow_physical_height
+            arrow_physical_height,
+            CreatureType::ARROW
     ) {
         init_sprites();
         thrown = true;
         activated = true;
         angle = 90;
         _max_x_speed = 5.0f;
-        sprite_type = SpriteType::S_ARROW;
         _friction = 0.085f;
     }
 

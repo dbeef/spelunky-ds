@@ -341,9 +341,7 @@ void Hud::draw_collected_loot() {
 
         //FIXME Pass specific moniez type
 
-        if (global::collected_loot.at(a) == S_MONIEZ_RUBY_BIG_RED ||
-            global::collected_loot.at(a) == S_MONIEZ_RUBY_BIG_GREEN ||
-            global::collected_loot.at(a) == S_MONIEZ_RUBY_BIG_BLUE) {
+        if (global::collected_loot.at(a) == CreatureType::RUBY_BIG) {
 
             auto *ruby_big = new RubyBig(90 + (a * 4), 190);
             ruby_big->_y += (16 - ruby_big->_physical_height); //aligning to same level
@@ -351,9 +349,7 @@ void Hud::draw_collected_loot() {
             ruby_big->update_sprites_position();
             ruby_big->_ready_to_dispose = true;
 
-        } else if (global::collected_loot.at(a) == S_MONIEZ_RUBY_SMALL_RED ||
-                   global::collected_loot.at(a) == S_MONIEZ_RUBY_SMALL_GREEN ||
-                   global::collected_loot.at(a) == S_MONIEZ_RUBY_SMALL_BLUE) {
+        } else if (global::collected_loot.at(a) == CreatureType::RUBY_SMALL) {
 
             auto *ruby_small = new RubySmall(90 + (a * 4), 190);
             ruby_small->_y += (16 - ruby_small->_physical_height); //aligning to same level
@@ -361,7 +357,7 @@ void Hud::draw_collected_loot() {
             ruby_small->update_sprites_position();
             ruby_small->_ready_to_dispose = true;
 
-        } else if (global::collected_loot.at(a) == S_MONIEZ_TRIPLE_GOLDBARS) {
+        } else if (global::collected_loot.at(a) == CreatureType::TRIPLE_GOLDBAR) {
 
             auto *triple_goldbars = new TripleGoldbar(90 + (a * 4), 190);
             triple_goldbars->_y += (16 - triple_goldbars->_physical_height); //aligning to same level
@@ -369,7 +365,7 @@ void Hud::draw_collected_loot() {
             triple_goldbars->update_sprites_position();
             triple_goldbars->_ready_to_dispose = true;
 
-        } else if (global::collected_loot.at(a) == S_MONIEZ_SINGLE_GOLDBAR) {
+        } else if (global::collected_loot.at(a) == CreatureType::SINGLE_GOLDBAR) {
 
             auto *single_goldbar = new SingleGoldbar(90 + (a * 4), 190);
             single_goldbar->_y += (16 - single_goldbar->_physical_height); //aligning to same level
@@ -389,7 +385,7 @@ void Hud::draw_killed_npcs() {
 
         switch (global::killed_npcs.at(a)) {
 
-            case SpriteType::S_SPIDER: {
+            case CreatureType::SPIDER: {
                 auto *spider = new Spider(95 + (a * 8), 208);
                 //deliberately not aligning to same level - already aligned
                 global::creatures.push_back(spider);
@@ -398,7 +394,7 @@ void Hud::draw_killed_npcs() {
                 spider->update_sprites_position();
                 break;
             }
-            case SpriteType::S_BAT: {
+            case CreatureType::BAT: {
                 auto *bat = new Bat(95 + (a * 8), 208);
                 bat->_x_speed = -1; //so it would face leftwards
                 bat->_y += (16 - bat->_physical_height); //aligning to same level
@@ -408,7 +404,7 @@ void Hud::draw_killed_npcs() {
                 global::creatures.push_back(bat);
                 break;
             }
-            case SpriteType::S_SNAKE: {
+            case CreatureType::SNAKE: {
                 auto *snake = new Snake(95 + (a * 8), 208);
                 snake->sprite_state = SpriteState::W_LEFT;
                 snake->_y += (16 - snake->_physical_height); //aligning to same level
@@ -419,7 +415,7 @@ void Hud::draw_killed_npcs() {
                 break;
             }
 
-            case SpriteType::S_DAMSEL: {
+            case CreatureType::DAMSEL: {
                 auto *damsel = new Damsel(95 + (a * 8), 208);
                 damsel->match_animation();
                 damsel->update();
@@ -430,7 +426,7 @@ void Hud::draw_killed_npcs() {
                 break;
             }
 
-            case SpriteType::S_SKELETON: {
+            case CreatureType::SKELETON: {
                 auto *skeleton = new Skeleton(95 + (a * 8), 208);
                 skeleton->summoned = true;
                 skeleton->main_dude_orientation_at_summoning_moment = SpriteState::W_RIGHT;
@@ -442,7 +438,7 @@ void Hud::draw_killed_npcs() {
                 break;
             }
 
-            case SpriteType::S_CAVEMAN: {
+            case CreatureType::CAVEMAN: {
                 auto *caveman = new Caveman(95 + (a * 8), 208);
                 caveman->sprite_state = SpriteState::W_LEFT;
                 caveman->animFrameTimer = 1000;
@@ -454,7 +450,7 @@ void Hud::draw_killed_npcs() {
                 break;
             }
 
-            case SpriteType::S_SHOPKEEPER: {
+            case CreatureType::SHOPKEEPER: {
                 auto *shopkeeper = new Shopkeeper(95 + (a * 8), 208);
                 shopkeeper->no_shotgun = true;
                 shopkeeper->anim_frame_timer = 1000;

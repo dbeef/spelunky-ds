@@ -30,7 +30,8 @@ public:
             cape_sprite_height,
             cape_spritesheet_type,
             cape_physical_width,
-            cape_physical_height
+            cape_physical_height,
+            CreatureType::CAPE
     ), ShoppingObject(cape_cost, cape_name) {
         init_sprites();
         init_anim_icon();

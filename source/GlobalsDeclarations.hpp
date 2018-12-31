@@ -12,7 +12,7 @@
 #include "hud/Hud.hpp"
 #include "camera/Camera.hpp"
 #include "creatures/main_dude/MainDude.hpp"
-#include "creatures/SpriteType.hpp"
+#include "creatures/CreatureType.hpp"
 #include "tiles/Level.hpp"
 #include "creatures/SpriteInfo.h"
 #include "creatures/main_dude/GameState.hpp"
@@ -44,8 +44,8 @@ namespace global {
     extern std::vector<BaseDecoration *> decorations_to_add;
 
     extern std::vector<SpriteInfo *> sprite_infos; //technically list of wrappers around OAM entries FIXME naming
-    extern std::vector<SpriteType> killed_npcs; //list of NPCs killed in current level //FIXME should be SpriteType
-    extern std::vector<SpriteType> collected_loot; //list of loot collected in current level
+    extern std::vector<CreatureType> killed_npcs; //list of NPCs killed in current level //FIXME should be SpriteType
+    extern std::vector<CreatureType> collected_loot; //list of loot collected in current level
 
     extern int bg_main_address; //technically, it's an id returned by oam init FIXME naming
     extern int bg_sub_address; //technically, it's an id returned by oam init FIXME naming

@@ -30,7 +30,8 @@ public:
             caveman_sprite_height,
             caveman_spritesheet_type,
             caveman_physical_width,
-            caveman_physical_height
+            caveman_physical_height,
+            CreatureType::CAVEMAN
     ) {
         _max_x_speed = 1.5f;
         _pos_update_delta = 15;

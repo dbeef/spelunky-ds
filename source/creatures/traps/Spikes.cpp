@@ -35,7 +35,7 @@ void Spikes::update_creature_specific() {
 
     // check whether any creature can be killed by this spikes
     for (unsigned long a = 0; a < global::creatures.size(); a++) {
-        if ((global::creatures.at(a)->sprite_type == SpriteType::S_SPIDER ||
+        if ((global::creatures.at(a)->_creature_type == CreatureType::SPIDER ||
              global::creatures.at(a)->_spritesheet_type == SpritesheetType::CAVEMAN_DAMSEL ||
              global::creatures.at(a)->_spritesheet_type == SpritesheetType::SHOPKEEPER)
             && !global::creatures.at(a)->_ready_to_dispose && !global::creatures.at(a)->killed) {

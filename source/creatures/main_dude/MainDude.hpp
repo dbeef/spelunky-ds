@@ -56,7 +56,8 @@ public:
             main_dude_sprite_height,
             main_dude_spritesheet_type,
             main_dude_physical_width,
-            main_dude_physical_height
+            main_dude_physical_height,
+            CreatureType::MAIN_DUDE
     ) {
         _friction = ICollidable::default_friction * 5.0f;
         _bouncing_factor_y = 0;

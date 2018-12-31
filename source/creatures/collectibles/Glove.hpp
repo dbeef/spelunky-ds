@@ -31,7 +31,8 @@ public:
             glove_sprite_height,
             glove_spritesheet_type,
             glove_physical_width,
-            glove_physical_height
+            glove_physical_height,
+            CreatureType::GLOVE
     ), ShoppingObject(glove_cost, glove_name) {
         init_anim_icon();
         update_anim_icon(x, y, _physical_width);

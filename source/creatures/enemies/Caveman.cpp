@@ -170,7 +170,7 @@ void Caveman::apply_dmg(int dmg_to_apply) {
     if (hitpoints <= 0) {
         killed = true;
         stunned = false;
-        global::killed_npcs.push_back(SpriteType::S_CAVEMAN);
+        global::killed_npcs.push_back(_creature_type);
         _bouncing_factor_x = 0;
         _bouncing_factor_y = 0;
     } else {

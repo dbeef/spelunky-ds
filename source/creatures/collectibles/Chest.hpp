@@ -26,7 +26,8 @@ public:
             chest_sprite_height,
             chest_spritesheet_type,
             chest_physical_width,
-            chest_physical_height
+            chest_physical_height,
+            CreatureType::CHEST
     ) {
         _friction = 0.1f;
         _bouncing_factor_y = ICollidable::default_bouncing_factor_y * 0.5f;

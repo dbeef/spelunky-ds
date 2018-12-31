@@ -26,10 +26,10 @@ public:
             skeleton_sprite_height,
             skeleton_spritesheet_type,
             skeleton_physical_width,
-            skeleton_physical_height
+            skeleton_physical_height,
+            CreatureType::SKELETON
     ) {
         hitpoints = 1;
-        sprite_type = SpriteType::S_SKELETON;
         sprite_state = SpriteState::W_LEFT;
         init_sprites();
     }

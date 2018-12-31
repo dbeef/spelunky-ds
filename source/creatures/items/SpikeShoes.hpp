@@ -30,7 +30,8 @@ public:
             spike_shoes_sprite_height,
             spike_shoes_spritesheet_type,
             spike_shoes_physical_width,
-            spike_shoes_physical_height
+            spike_shoes_physical_height,
+            CreatureType::SPIKE_SHOES
     ), ShoppingObject(spike_shoes_cost, spike_shoes_name) {
         init_anim_icon();
         update_anim_icon(x, y, _physical_width);

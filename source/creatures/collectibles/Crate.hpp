@@ -27,7 +27,8 @@ public:
             crate_sprite_height,
             crate_spritesheet_type,
             crate_physical_width,
-            crate_physical_height
+            crate_physical_height,
+            CreatureType::CRATE
     ) {
         init_sprites();
     }

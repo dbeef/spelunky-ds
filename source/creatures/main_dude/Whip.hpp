@@ -29,7 +29,8 @@ public:
             whip_sprite_height,
             whip_spritesheet_type,
             whip_physical_width,
-            whip_physical_height
+            whip_physical_height,
+            CreatureType::WHIP
     ) {
         init_sprites();
     }

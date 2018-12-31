@@ -28,7 +28,8 @@ public:
             rock_sprite_height,
             rock_spritesheet_type,
             rock_physical_width,
-            rock_physical_height
+            rock_physical_height,
+            CreatureType::ROCK
     ) {
         _max_x_speed = 3.5f;
         _friction = ICollidable::default_friction * 12;

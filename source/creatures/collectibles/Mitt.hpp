@@ -30,7 +30,8 @@ public:
             mitt_sprite_height,
             mitt_spritesheet_type,
             mitt_physical_width,
-            mitt_physical_height
+            mitt_physical_height,
+            CreatureType::MITT
     ), ShoppingObject(mitt_cost, mitt_name) {
         init_anim_icon();
         update_anim_icon(x, y, _physical_width);

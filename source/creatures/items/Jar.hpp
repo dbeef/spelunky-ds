@@ -26,7 +26,8 @@ public:
             jar_sprite_height,
             jar_spritesheet_type,
             jar_physical_width,
-            jar_physical_height
+            jar_physical_height,
+            CreatureType::JAR
     ) {
         init_sprites();
         activated = true;

@@ -31,7 +31,8 @@ public:
             bomb_sprite_height,
             bomb_spritesheet_type,
             bomb_physical_width,
-            bomb_physical_height
+            bomb_physical_height,
+            CreatureType::BOMB
     ) {
         init_sprites();
         set_sprite_disarmed();

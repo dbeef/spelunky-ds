@@ -5,25 +5,39 @@
 #ifndef SPELUNKYDS_MONIEZ_H
 #define SPELUNKYDS_MONIEZ_H
 
-#define MAX_X_SPEED_MONIEZ 4
-#define MAX_Y_SPEED_MONIEZ 4
-
-#define VALUE_SINGLE_GOLDBAR 500
-#define VALUE_TRIPLE_GOLDBAR 1000
-#define VALUE_RUBY_SMALL 1000
-#define VALUE_RUBY_BIG 1200
+#include <nds.h>
+#include "../creatures/CreatureType.hpp"
 
 class Moniez {
 
 public:
 
-    Moniez(int value) : _value(value) {
-        // do nothing
+    Moniez() : _collectible_timer(500) {
+        //do nothing
     }
 
-    int _value{};
-    double _collectible_timer{};
-    bool _collected{};
+    enum class RubyColor {
+        RED,
+        GREEN,
+        BLUE
+    };
+
+    u16 get_value(CreatureType creature_type) {
+        switch (creature_type) {
+            case CreatureType::RUBY_BIG:
+                return 1200;
+            case CreatureType::RUBY_SMALL:
+                return 1000;
+            case CreatureType::TRIPLE_GOLDBAR:
+                return 1000;
+            case CreatureType::SINGLE_GOLDBAR:
+                return 500;
+            default:
+                return 0;
+        }
+    }
+
+    double _collectible_timer;
 
 };
 

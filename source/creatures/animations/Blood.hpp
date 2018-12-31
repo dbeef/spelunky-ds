@@ -29,7 +29,8 @@ public:
             blood_sprite_height,
             blood_spritesheet_type,
             blood_physical_width,
-            blood_physical_height
+            blood_physical_height,
+            CreatureType::BLOOD
     ) {
         _pos_update_delta = 30;
         init_sprites();

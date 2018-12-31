@@ -26,7 +26,8 @@ public:
             skull_sprite_height,
             skull_spritesheet_type,
             skull_physical_width,
-            skull_physical_height
+            skull_physical_height,
+            CreatureType::SKULL
     ) {
         init_sprites();
     }

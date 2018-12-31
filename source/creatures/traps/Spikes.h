@@ -26,7 +26,8 @@ public:
             spikes_sprite_height,
             spikes_spritesheet_type,
             spikes_physical_width,
-            spikes_physical_height
+            spikes_physical_height,
+            CreatureType::SPIKES
     ) {
         init_sprites();
     }

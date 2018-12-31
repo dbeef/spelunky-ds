@@ -30,7 +30,8 @@ public:
             fake_skeleton_sprite_height,
             fake_skeleton_spritesheet_type,
             fake_skeleton_physical_width,
-            fake_skeleton_physical_height
+            fake_skeleton_physical_height,
+            CreatureType::FAKE_SKELETON
     ) {
         init_sprites();
     }

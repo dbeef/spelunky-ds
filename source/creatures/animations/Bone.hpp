@@ -26,7 +26,8 @@ public:
             bone_sprite_height,
             bone_spritesheet_type,
             bone_physical_width,
-            bone_physical_height
+            bone_physical_height,
+            CreatureType::BONE
     ) {
         init_sprites();
     }

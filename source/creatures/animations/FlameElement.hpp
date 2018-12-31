@@ -25,7 +25,8 @@ public:
             flame_sprite_height,
             flame_spritesheet_type,
             flame_physical_width,
-            flame_physical_height
+            flame_physical_height,
+            CreatureType::FLAME
     ) {
         _pos_update_delta = 30;
     //        change_pos_delta_offset = FLAME_CHANGE_POS_DELTA + (rand() % 5);

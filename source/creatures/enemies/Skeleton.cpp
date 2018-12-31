@@ -110,7 +110,7 @@ void Skeleton::apply_dmg(int dmg_to_apply) {
 
     killed = true;
     _ready_to_dispose = true;
-    global::killed_npcs.push_back(SpriteType::S_SKELETON);
+    global::killed_npcs.push_back(_creature_type);
     mmEffect(SFX_XBREAK);
     spawn_remnants();
 }

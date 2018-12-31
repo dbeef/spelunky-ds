@@ -28,9 +28,9 @@ public:
             spider_sprite_height,
             spider_spritesheet_type,
             spider_physical_width,
-            spider_physical_height
+            spider_physical_height,
+            CreatureType::SPIDER
     ) {
-        sprite_type = SpriteType::S_SPIDER;
         hitpoints = 1;
         hanging = true;
         init_sprites();

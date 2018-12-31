@@ -7,14 +7,14 @@
 #include <cmath>
 #include <cstdio>
 
+#include "../../build/soundbank.h"
 #include "../memory/OamManager.hpp"
 #include "../camera/Camera.hpp"
-#include "_BaseCreature.h"
 #include "../GlobalsDeclarations.hpp"
 #include "../tiles/LevelRenderingUtils.hpp"
 #include "../collisions/Collisions.hpp"
-#include "../../build/soundbank.h"
 #include "../sound/SoundUtils.hpp"
+#include "_BaseCreature.h"
 #include "animations/Blood.hpp"
 
 void BaseCreature::spawn_blood() const {

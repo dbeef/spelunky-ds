@@ -14,7 +14,7 @@
 class RubySmall : public BaseCreature, public Moniez {
 
 public:
-    
+
     static constexpr u8 ruby_small_sprite_width = 8;
     static constexpr u8 ruby_small_sprite_height = 8;
     static constexpr u16 ruby_small_physical_width = 4;
@@ -28,31 +28,10 @@ public:
             ruby_small_sprite_height,
             ruby_small_spritesheet_type,
             ruby_small_physical_width,
-            ruby_small_physical_height
-    ), Moniez(VALUE_RUBY_SMALL) {
-        activated = true;
-        _collected = false;
-        _collectible_timer = 500;
-
-        //randomly select ruby color
-        int type = rand() % 3;
-
-        switch (type) {
-            case 0:
-                sprite_type = SpriteType::S_MONIEZ_RUBY_SMALL_RED;
-                break;
-            case 1:
-                sprite_type = SpriteType::S_MONIEZ_RUBY_SMALL_GREEN;
-                break;
-            case 2:
-                sprite_type = SpriteType::S_MONIEZ_RUBY_SMALL_BLUE;
-                break;
-            default:
-                break;
-        }
-
-        activated = true;
-        _collected = false;
+            ruby_small_physical_height,
+            CreatureType::RUBY_SMALL
+    ) {
+        _ruby_color = static_cast<RubyColor>(rand() % 3);
         init_sprites();
     }
 
@@ -86,6 +65,7 @@ public:
     double pos_inc_timer{};
     SpriteInfo *mainSpriteInfo{};
     SpriteInfo *subSpriteInfo{};
+    RubyColor _ruby_color;
     u8 *frameGfx{};
 
 };

@@ -31,7 +31,8 @@ public:
             damsel_sprite_height,
             damsel_spritesheet_type,
             damsel_physical_width,
-            damsel_physical_height
+            damsel_physical_height,
+            CreatureType::DAMSEL
     ) {
         _max_x_speed = 1.5f;
         hitpoints = DAMSEL_HITPOINTS;

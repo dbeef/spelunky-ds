@@ -28,7 +28,8 @@ public:
             bullet_sprite_height,
             bullet_spritesheet_type,
             bullet_physical_width,
-            bullet_physical_height
+            bullet_physical_height,
+            CreatureType::BULLET
     ) {
         //checking this in case of firing just in front of a wall
         int xx = floor_div(this->_x + 0.5 * _physical_width, TILE_W);

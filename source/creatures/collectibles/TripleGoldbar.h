@@ -27,11 +27,9 @@ public:
             triple_goldbar_sprite_height,
             triple_goldbar_spritesheet_type,
             triple_goldbar_physical_width,
-            triple_goldbar_physical_height
-    ), Moniez(VALUE_TRIPLE_GOLDBAR) {
-        activated = true;
-        _collected = false;
-        _collectible_timer = 500;
+            triple_goldbar_physical_height,
+            CreatureType::TRIPLE_GOLDBAR
+    ) {
         init_sprites();
     }
 

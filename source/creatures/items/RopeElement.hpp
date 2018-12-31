@@ -25,7 +25,8 @@ public:
             rope_sprite_height,
             rope_spritesheet_type,
             rope_physical_width,
-            rope_physical_height
+            rope_physical_height,
+            CreatureType::ROPE_ELEMENT
     ) {
         init_sprites();
     }

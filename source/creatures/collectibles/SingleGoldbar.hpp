@@ -26,11 +26,9 @@ public:
             single_goldbar_sprite_height,
             single_goldbar_spritesheet_type,
             single_goldbar_physical_width,
-            single_goldbar_physical_height
-    ), Moniez(VALUE_SINGLE_GOLDBAR) {
-        activated = true;
-        _collected = false;
-        _collectible_timer = 500;
+            single_goldbar_physical_height,
+            CreatureType ::SINGLE_GOLDBAR
+    ) {
         init_sprites();
     }
 

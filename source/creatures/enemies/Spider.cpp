@@ -100,7 +100,7 @@ void Spider::update_creature_specific() {
 //!>spider has only 1 dmg point, always kill if any dmg_apply
 void Spider::apply_dmg(int dmg_to_apply) {
     sprite_utils::set_visibility(false, mainSpriteInfo, subSpriteInfo);
-    global::killed_npcs.push_back(SpriteType::S_SPIDER);
+    global::killed_npcs.push_back(_creature_type);
     spawn_blood();
     killed = true;
     _ready_to_dispose = true;

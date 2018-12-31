@@ -14,7 +14,7 @@
 #include "../../../build/gfx_rubies.h"
 #include "../items/Rock.hpp"
 #include "../../../build/soundbank.h"
-#include "../SpriteType.hpp"
+#include "../CreatureType.hpp"
 #include "../../collisions/Collisions.hpp"
 #include "../../tiles/LevelRenderingUtils.hpp"
 #include "../SpriteUtils.hpp"
@@ -27,7 +27,7 @@ void RubySmall::update_creature_specific() {
     sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);
     sprite_utils::set_horizontal_flip(false, mainSpriteInfo, subSpriteInfo);
 
-    if (!_collected && _collectible_timer >= 500 &&
+    if (_collectible_timer >= 500 &&
         Collisions::checkCollisionWithMainDudeWidthBoundary(_x, _y, _physical_width, _physical_height, 8)) {
 
         if (_spritesheet_type == SpritesheetType::MONIEZ_RUBY)
@@ -35,16 +35,13 @@ void RubySmall::update_creature_specific() {
         else if (_spritesheet_type == SpritesheetType::MONIEZ_GOLDBARS)
             mmEffect(SFX_XCOIN);
 
-        global::hud->add_moniez_on_collected_loot(_value);
-        _collected = true;
+        global::hud->add_moniez_on_collected_loot(get_value(_creature_type));
         sprite_utils::set_visibility(false, mainSpriteInfo, subSpriteInfo);
-        global::collected_loot.push_back(sprite_type);
+        global::collected_loot.push_back(_creature_type);
         _ready_to_dispose = true;
-    }
-
-    if (_collectible_timer < 500)
+    } else if (_collectible_timer < 500) {
         _collectible_timer += *global::timer;
-
+    }
 }
 
 void RubySmall::init_sprites() {
@@ -58,16 +55,24 @@ void RubySmall::init_sprites() {
                                                           _sprite_size, 8, _spritesheet_type, true,
                                                           false, LAYER_LEVEL::MIDDLE_TOP);
 
-    int ruby_type{};
+    int offset;
 
-    if (sprite_type == SpriteType::S_MONIEZ_RUBY_SMALL_RED)
-        ruby_type = 3;
-    else if (sprite_type == SpriteType::S_MONIEZ_RUBY_SMALL_GREEN)
-        ruby_type = 4;
-    else if (sprite_type == SpriteType::S_MONIEZ_RUBY_SMALL_BLUE)
-        ruby_type = 5;
+    switch (_ruby_color) {
+        case RubyColor::RED:
+            offset = 3;
+            break;
+        case RubyColor::GREEN:
+            offset = 4;
+            break;
+        case RubyColor::BLUE:
+            offset = 5;
+            break;
+        default:
+            offset = 3;
+            break;
+    }
 
-    frameGfx = (u8 *) gfx_rubiesTiles + 8 * 8 * (ruby_type) / 2;
+    frameGfx = sprite_utils::get_frame((u8 *) gfx_rubiesTiles, _sprite_size, offset);
 
     sprite_utils::update_frame(frameGfx, _sprite_size, mainSpriteInfo, subSpriteInfo);
 

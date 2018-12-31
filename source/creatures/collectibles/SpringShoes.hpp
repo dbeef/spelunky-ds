@@ -31,7 +31,8 @@ public:
             spring_shoes_sprite_height,
             spring_shoes_spritesheet_type,
             spring_shoes_physical_width,
-            spring_shoes_physical_height
+            spring_shoes_physical_height,
+            CreatureType::SPRING_SHOES
     ), ShoppingObject(spring_shoes_cost, spring_shoes_name) {
         init_anim_icon();
         update_anim_icon(x, y, _physical_width);

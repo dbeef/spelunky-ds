@@ -103,7 +103,7 @@ add_executable(spelunkyds
         source/creatures/enemies/Bat.hpp
         source/creatures/enemies/Spider.cpp
         source/creatures/enemies/Spider.hpp
-        source/creatures/SpriteType.hpp
+        source/creatures/CreatureType.hpp
         source/GlobalsDefinitions.hpp
         source/sound/SoundUtils.hpp
         source/console/ConsoleUtils.hpp

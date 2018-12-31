@@ -31,7 +31,8 @@ public:
             pistol_sprite_height,
             pistol_spritesheet_type,
             pistol_physical_width,
-            pistol_physical_height
+            pistol_physical_height,
+            CreatureType::PISTOL
     ), ShoppingObject(pistol_cost, pistol_name) {
 
         init_anim_icon();

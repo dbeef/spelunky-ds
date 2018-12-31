@@ -36,7 +36,8 @@ public:
             fall_poof_sprite_height,
             fall_poof_spritesheet_type,
             fall_poof_physical_width,
-            fall_poof_physical_height
+            fall_poof_physical_height,
+            CreatureType::FALL_POOF
     ) {
         init_sprites();
     }

@@ -28,9 +28,9 @@ public:
             snake_sprite_height,
             snake_spritesheet_type,
             snake_physical_width,
-            snake_physical_height
+            snake_physical_height,
+            CreatureType::SNAKE
     ) {
-        sprite_type = SpriteType::S_SNAKE;
         init_sprites();
         hitpoints = 1;
         randomizeMovement();

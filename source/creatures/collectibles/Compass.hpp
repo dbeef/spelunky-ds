@@ -32,7 +32,8 @@ public:
             compas_sprite_height,
             compas_spritesheet_type,
             compas_physical_width,
-            compas_physical_height
+            compas_physical_height,
+            CreatureType::COMPASS
     ), ShoppingObject(compas_cost, compas_name) {
         init_anim_icon();
         update_anim_icon(x, y, _physical_width);

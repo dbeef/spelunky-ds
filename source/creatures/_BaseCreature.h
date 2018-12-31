@@ -7,7 +7,7 @@
 
 #include "SpritesheetType.hpp"
 #include "SpriteState.hpp"
-#include "SpriteType.hpp"
+#include "CreatureType.hpp"
 #include "../interfaces/IRenderable.h"
 #include "../interfaces/ICollidable.h"
 
@@ -31,10 +31,12 @@ public:
             const u16 sprite_height,
             const SpritesheetType spritesheet_type,
             u16 physical_width,
-            u16 physical_height
+            u16 physical_height,
+            CreatureType creature_type
     ) :
             IRenderable(sprite_width, sprite_height, spritesheet_type),
-            ICollidable(physical_width, physical_height) {
+            ICollidable(physical_width, physical_height),
+            _creature_type(creature_type) {
         set_xy(x, y);
     }
 
@@ -52,7 +54,6 @@ public:
 
     virtual void update_creature_specific() = 0;
 
-    //
     virtual void apply_dmg(int dmg_to_apply) = 0;
 
     virtual bool can_update_collidable() const = 0;
@@ -65,12 +66,17 @@ public:
     bool killed{};
 
     SpriteState sprite_state{};
-    SpriteType sprite_type{};
-
-    // TODO Distribute these utils between ICollidable/IRenderable, some may stay here as they are creature-specific.
-    // Some can be moved to other class / namespace, like spawn_blood.
+    CreatureType _creature_type;
 
     bool kill_mobs_if_thrown(int dmg_to_apply) const;
+
+    void deal_damage_main_dude_on_collision(int dmg_to_apply) const;
+
+    void spawn_blood() const;
+
+    bool kill_main_dude_if_thrown(int dmg_to_apply) const;
+
+    void set_pickuped_position_on_another_moving_obj(int pickup_offset_x, int pickup_offset_y, BaseCreature *m) const;
 
     void check_if_can_be_pickuped();
 
@@ -88,15 +94,7 @@ public:
 
     void kill_if_whip(int dmg_to_apply);
 
-    void deal_damage_main_dude_on_collision(int dmg_to_apply) const;
-
-    void spawn_blood() const;
-
     void set_pickuped_position_not_checking(int pickup_offset_x, int pickup_offset_y);
-
-    bool kill_main_dude_if_thrown(int dmg_to_apply) const;
-
-    void set_pickuped_position_on_another_moving_obj(int pickup_offset_x, int pickup_offset_y, BaseCreature *m) const;
 };
 
 #endif //SPELUNKYDS_MOVINGOBJECT_H

@@ -8,7 +8,7 @@
 #include <mm_types.h>
 #include <nds/arm9/console.h>
 #include "creatures/SpritesheetType.hpp"
-#include "creatures/SpriteType.hpp"
+#include "creatures/CreatureType.hpp"
 #include "creatures/SpriteInfo.h"
 #include "hud/Hud.hpp"
 #include "tiles/Level.hpp"
@@ -34,8 +34,8 @@ namespace global {
     std::vector<BaseDecoration *> decorations;
     std::vector<BaseDecoration *> decorations_to_add;
     std::vector<SpriteInfo *> sprite_infos;
-    std::vector<SpriteType> killed_npcs;
-    std::vector<SpriteType> collected_loot;
+    std::vector<CreatureType> killed_npcs;
+    std::vector<CreatureType> collected_loot;
 
     int bg_main_address{};
     int bg_sub_address{};

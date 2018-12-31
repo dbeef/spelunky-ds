@@ -7,8 +7,8 @@
 
 #include <cstdlib>
 
-#include "../_BaseCreature.h"
 #include "../../interfaces/Moniez.hpp"
+#include "../_BaseCreature.h"
 #include "../SpriteInfo.h"
 
 class RubyBig : public BaseCreature, public Moniez {
@@ -28,30 +28,10 @@ public:
             ruby_big_sprite_height,
             ruby_big_spritesheet_type,
             ruby_big_physical_width,
-            ruby_big_physical_height
-    ), Moniez(VALUE_RUBY_BIG) {
-        activated = true;
-        _collected = false;
-        _collectible_timer = 500;
-
-        int type = rand() % 3;
-        //randomly select ruby color
-        switch (type) {
-            case 0:
-                sprite_type = SpriteType::S_MONIEZ_RUBY_BIG_RED;
-                break;
-            case 1:
-                sprite_type = SpriteType::S_MONIEZ_RUBY_BIG_GREEN;
-                break;
-            case 2:
-                sprite_type = SpriteType::S_MONIEZ_RUBY_BIG_BLUE;
-                break;
-            default:
-                break;
-        }
-
-        activated = true;
-        _collected = false;
+            ruby_big_physical_height,
+            CreatureType::RUBY_BIG
+    ) {
+        _ruby_color = static_cast<RubyColor>(rand() % 3);
         init_sprites();
     }
 
@@ -85,6 +65,7 @@ public:
     double pos_inc_timer{};
     SpriteInfo *mainSpriteInfo{};
     SpriteInfo *subSpriteInfo{};
+    RubyColor _ruby_color;
     u8 *frameGfx{};
 };
 

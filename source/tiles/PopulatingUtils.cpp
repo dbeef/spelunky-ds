@@ -117,11 +117,9 @@ void populate_cave_moniez() {
 
                         if (ruby_type == 0) {
                             auto *ruby_small = new RubySmall(pos_x * 16, pos_y * 16);
-                            ruby_small->_value = 1200;
                             global::creatures.push_back(ruby_small);
                         } else {
                             auto *ruby_big = new RubyBig(pos_x * 16, pos_y * 16);
-                            ruby_big->_value = 1200;
                             global::creatures.push_back(ruby_big);
                         }
 
