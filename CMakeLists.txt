@@ -1,17 +1,24 @@
+# That file is here only to make IDE's happy so they could index all source files.
+# Real building happens through Makefile.
+
 cmake_minimum_required(VERSION 3.9)
 project(spelunkyds)
 
 set(CMAKE_CXX_STANDARD 14)
 
-include_directories(/opt/devkitpro/libnds/lib)
-include_directories(/opt/devkitpro/libnds/include)
-include_directories(/opt/devkitpro/libnds/include/nds)
-include_directories(/opt/devkitpro/libnds/include/nds/arm9)
-include_directories(/opt/devkitpro/devkitARM)
-link_directories(/opt/devkitpro/libnds/lib)
-link_directories(/opt/devkitpro/libnds/include)
-link_directories(/opt/devkitpro/libnds/include/nds)
-link_directories(/opt/devkitpro/libnds/include/nds/arm9)
+# Set to your devkitPro's installation dir if environment variable does not exist.
+set(DEVKITPRO $ENV{DEVKITPRO})
+
+include_directories(${DEVKITPRO}/libnds/lib)
+include_directories(${DEVKITPRO}/libnds/include)
+include_directories(${DEVKITPRO}/libnds/include/nds)
+include_directories(${DEVKITPRO}/libnds/include/nds/arm9)
+include_directories(${DEVKITPRO}/devkitARM)
+
+link_directories(${DEVKITPRO}/libnds/lib)
+link_directories(${DEVKITPRO}/libnds/include)
+link_directories(${DEVKITPRO}/libnds/include/nds)
+link_directories(${DEVKITPRO}/libnds/include/nds/arm9)
 
 add_executable(spelunkyds
         gfx/fonts/font.grit
@@ -58,4 +65,160 @@ add_executable(spelunkyds
         source/collisions/Collisions.cpp
         source/collisions/Collisions.hpp
         source/hud/Hud.cpp source/hud/Hud.hpp
-        source/creatures/SpriteInfo.cpp source/creatures/SpriteInfo.h source/camera/Camera.cpp source/camera/Camera.hpp source/memory/OamManager.cpp source/memory/OamManager.hpp source/input/InputHandler.cpp source/input/InputHandler.hpp source/creatures/SpritesheetType.hpp source/memory/OamType.hpp source/creatures/items/Rock.hpp source/creatures/items/Jar.cpp source/creatures/items/Jar.hpp source/creatures/enemies/Snake.cpp source/creatures/enemies/Snake.hpp source/interfaces/Moniez.cpp source/interfaces/Moniez.hpp source/tiles/MapTileType.hpp source/creatures/animations/Blood.cpp source/creatures/animations/Blood.hpp source/creatures/animations/BloodElement.cpp source/creatures/animations/BloodElement.hpp source/decorations/SpelunkyTitle.cpp source/decorations/SpelunkyTitle.h source/tiles/TileOrientation.hpp source/tiles/SplashScreenType.hpp source/rooms/LeftRightRooms.hpp source/rooms/LeftRightDownRooms.hpp source/rooms/LeftRightUpRooms.hpp source/rooms/ClosedRooms.hpp source/rooms/SplashScreenRooms.hpp source/rooms/EntranceRooms.hpp source/rooms/ExitRooms.hpp source/rooms/RoomType.hpp source/creatures/enemies/Bat.cpp source/creatures/enemies/Bat.hpp source/creatures/enemies/Spider.cpp source/creatures/enemies/Spider.hpp source/creatures/SpriteType.hpp source/GlobalsDefinitions.hpp source/sound/SoundUtils.hpp source/console/ConsoleUtils.hpp source/time/TimeUtils.h source/time/TimeUtils.cpp source/memory/OamUtils.cpp source/memory/OamUtils.hpp source/creatures/main_dude/Whip.cpp source/creatures/main_dude/Whip.hpp source/creatures/traps/Spikes.cpp source/creatures/traps/Spikes.h source/creatures/collectibles/Chest.cpp source/creatures/collectibles/Chest.hpp source/creatures/collectibles/Crate.hpp source/creatures/collectibles/Crate.cpp source/creatures/collectibles/Shotgun.hpp source/creatures/collectibles/Shotgun.cpp source/creatures/collectibles/Bullet.hpp source/creatures/collectibles/Bullet.cpp source/creatures/collectibles/SpringShoes.hpp source/creatures/collectibles/SpringShoes.cpp source/creatures/collectibles/Mitt.hpp source/creatures/collectibles/Mitt.cpp source/creatures/collectibles/Glove.hpp source/creatures/collectibles/Glove.cpp source/creatures/collectibles/Compass.hpp source/creatures/collectibles/Compass.cpp source/decorations/GotCollectible.hpp source/decorations/GotCollectible.cpp source/camera/LayerLevel.hpp source/creatures/enemies/Shopkeeper.hpp source/creatures/enemies/Shopkeeper.cpp source/creatures/main_dude/GameState.hpp source/creatures/main_dude/GameState.cpp source/creatures/enemies/Caveman.hpp source/creatures/enemies/Caveman.cpp source/creatures/animations/FallPoof.hpp source/creatures/animations/FallPoof.cpp source/creatures/items/Cape.hpp source/creatures/items/Cape.cpp source/creatures/items/SpikeShoes.hpp source/creatures/items/SpikeShoes.cpp source/creatures/items/Pick.hpp source/creatures/items/Pick.cpp source/creatures/items/Jetpack.hpp source/creatures/items/Jetpack.cpp source/creatures/items/Parachute.hpp source/creatures/items/Parachute.cpp source/creatures/items/RopePile.hpp source/creatures/items/RopePile.cpp source/creatures/items/BombBag.hpp source/creatures/items/BombBag.cpp source/creatures/items/BombBox.hpp source/creatures/items/BombBox.cpp source/creatures/animations/Flame.hpp source/creatures/animations/FlameElement.cpp source/creatures/animations/Flame.cpp source/creatures/animations/FlameElement.hpp source/creatures/enemies/Damsel.hpp source/creatures/enemies/Damsel.cpp source/decorations/Smooch.hpp source/decorations/Smooch.cpp source/rooms/ShopRooms.hpp source/decorations/Lamp.h source/decorations/Lamp.cpp source/tiles/Direction.hpp source/creatures/collectibles/_CollectiblesUtils.hpp source/creatures/collectibles/_CollectiblesUtils.cpp source/interfaces/ShoppingObject.h source/decorations/ShoppingIcon.h source/decorations/ShoppingIcon.cpp source/interfaces/ShoppingObject.cpp source/decorations/ArrowTrap.h source/decorations/ArrowTrap.cpp source/decorations/Blast.hpp source/decorations/Blast.cpp source/rooms/SnakeWellRoom.hpp source/creatures/enemies/Skeleton.cpp source/creatures/enemies/Skeleton.hpp source/sound/SoundUtils.cpp source/creatures/animations/Bone.hpp source/creatures/animations/Bone.cpp source/creatures/animations/Skull.hpp source/creatures/animations/Skull.cpp source/creatures/animations/FakeSkeleton.hpp source/creatures/animations/FakeSkeleton.cpp source/GlobalsDefinitions.cpp source/BaseMap.hpp source/creatures/SpriteUtils.cpp source/creatures/SpriteUtils.hpp source/tiles/LevelGenerator.hpp source/tiles/LevelGenerator.cpp source/tiles/PopulatingUtils.hpp source/tiles/PopulatingUtils.cpp source/creatures/collectibles/RubyBig.h source/creatures/collectibles/RubySmall.h source/creatures/collectibles/TripleGoldbar.h source/creatures/collectibles/TripleGoldbar.cpp source/creatures/collectibles/SingleGoldbar.hpp source/creatures/collectibles/SingleGoldbar.cpp source/creatures/collectibles/RubySmall.cpp source/creatures/collectibles/RubyBig.cpp source/collisions/CollisionsUtils.h source/collisions/CollisionsUtils.cpp source/decorations/_BaseDecoration.h source/decorations/RockSign.h source/decorations/RockSign.cpp source/decorations/ArchSign.h source/decorations/ArchSign.cpp source/interfaces/IRenderable.cpp source/interfaces/IRenderable.h source/interfaces/ICollidable.cpp source/interfaces/ICollidable.h source/interfaces/IBase.cpp source/interfaces/IBase.h source/treasures/BaseTreasure.cpp source/treasures/BaseTreasure.h)
+        source/creatures/SpriteInfo.cpp
+        source/creatures/SpriteInfo.h
+        source/camera/Camera.cpp
+        source/camera/Camera.hpp
+        source/memory/OamManager.cpp
+        source/memory/OamManager.hpp
+        source/input/InputHandler.cpp
+        source/input/InputHandler.hpp
+        source/creatures/SpritesheetType.hpp
+        source/memory/OamType.hpp
+        source/creatures/items/Rock.hpp
+        source/creatures/items/Jar.cpp
+        source/creatures/items/Jar.hpp
+        source/creatures/enemies/Snake.cpp
+        source/creatures/enemies/Snake.hpp
+        source/interfaces/Moniez.cpp
+        source/interfaces/Moniez.hpp
+        source/tiles/MapTileType.hpp
+        source/creatures/animations/Blood.cpp
+        source/creatures/animations/Blood.hpp
+        source/creatures/animations/BloodElement.cpp
+        source/creatures/animations/BloodElement.hpp
+        source/decorations/SpelunkyTitle.cpp
+        source/decorations/SpelunkyTitle.h
+        source/tiles/TileOrientation.hpp
+        source/tiles/SplashScreenType.hpp
+        source/rooms/LeftRightRooms.hpp
+        source/rooms/LeftRightDownRooms.hpp
+        source/rooms/LeftRightUpRooms.hpp
+        source/rooms/ClosedRooms.hpp
+        source/rooms/SplashScreenRooms.hpp
+        source/rooms/EntranceRooms.hpp
+        source/rooms/ExitRooms.hpp
+        source/rooms/RoomType.hpp
+        source/creatures/enemies/Bat.cpp
+        source/creatures/enemies/Bat.hpp
+        source/creatures/enemies/Spider.cpp
+        source/creatures/enemies/Spider.hpp
+        source/creatures/SpriteType.hpp
+        source/GlobalsDefinitions.hpp
+        source/sound/SoundUtils.hpp
+        source/console/ConsoleUtils.hpp
+        source/time/TimeUtils.h
+        source/time/TimeUtils.cpp
+        source/memory/OamUtils.cpp
+        source/memory/OamUtils.hpp
+        source/creatures/main_dude/Whip.cpp
+        source/creatures/main_dude/Whip.hpp
+        source/creatures/traps/Spikes.cpp
+        source/creatures/traps/Spikes.h
+        source/creatures/collectibles/Chest.cpp
+        source/creatures/collectibles/Chest.hpp
+        source/creatures/collectibles/Crate.hpp
+        source/creatures/collectibles/Crate.cpp
+        source/creatures/collectibles/Shotgun.hpp
+        source/creatures/collectibles/Shotgun.cpp
+        source/creatures/collectibles/Bullet.hpp
+        source/creatures/collectibles/Bullet.cpp
+        source/creatures/collectibles/SpringShoes.hpp
+        source/creatures/collectibles/SpringShoes.cpp
+        source/creatures/collectibles/Mitt.hpp
+        source/creatures/collectibles/Mitt.cpp
+        source/creatures/collectibles/Glove.hpp
+        source/creatures/collectibles/Glove.cpp
+        source/creatures/collectibles/Compass.hpp
+        source/creatures/collectibles/Compass.cpp
+        source/decorations/GotCollectible.hpp
+        source/decorations/GotCollectible.cpp
+        source/camera/LayerLevel.hpp
+        source/creatures/enemies/Shopkeeper.hpp
+        source/creatures/enemies/Shopkeeper.cpp
+        source/creatures/main_dude/GameState.hpp
+        source/creatures/main_dude/GameState.cpp
+        source/creatures/enemies/Caveman.hpp
+        source/creatures/enemies/Caveman.cpp
+        source/creatures/animations/FallPoof.hpp
+        source/creatures/animations/FallPoof.cpp
+        source/creatures/items/Cape.hpp
+        source/creatures/items/Cape.cpp
+        source/creatures/items/SpikeShoes.hpp
+        source/creatures/items/SpikeShoes.cpp
+        source/creatures/items/Pick.hpp
+        source/creatures/items/Pick.cpp
+        source/creatures/items/Jetpack.hpp
+        source/creatures/items/Jetpack.cpp
+        source/creatures/items/Parachute.hpp
+        source/creatures/items/Parachute.cpp
+        source/creatures/items/RopePile.hpp
+        source/creatures/items/RopePile.cpp
+        source/creatures/items/BombBag.hpp
+        source/creatures/items/BombBag.cpp
+        source/creatures/items/BombBox.hpp
+        source/creatures/items/BombBox.cpp
+        source/creatures/animations/Flame.hpp
+        source/creatures/animations/FlameElement.cpp
+        source/creatures/animations/Flame.cpp
+        source/creatures/animations/FlameElement.hpp
+        source/creatures/enemies/Damsel.hpp
+        source/creatures/enemies/Damsel.cpp
+        source/decorations/Smooch.hpp
+        source/decorations/Smooch.cpp
+        source/rooms/ShopRooms.hpp
+        source/decorations/Lamp.h
+        source/decorations/Lamp.cpp
+        source/tiles/Direction.hpp
+        source/creatures/collectibles/_CollectiblesUtils.hpp
+        source/creatures/collectibles/_CollectiblesUtils.cpp
+        source/interfaces/ShoppingObject.h
+        source/decorations/ShoppingIcon.h
+        source/decorations/ShoppingIcon.cpp
+        source/interfaces/ShoppingObject.cpp
+        source/decorations/ArrowTrap.h
+        source/decorations/ArrowTrap.cpp
+        source/decorations/Blast.hpp
+        source/decorations/Blast.cpp
+        source/rooms/SnakeWellRoom.hpp
+        source/creatures/enemies/Skeleton.cpp
+        source/creatures/enemies/Skeleton.hpp
+        source/sound/SoundUtils.cpp
+        source/creatures/animations/Bone.hpp
+        source/creatures/animations/Bone.cpp
+        source/creatures/animations/Skull.hpp
+        source/creatures/animations/Skull.cpp
+        source/creatures/animations/FakeSkeleton.hpp
+        source/creatures/animations/FakeSkeleton.cpp
+        source/GlobalsDefinitions.cpp
+        source/BaseMap.hpp
+        source/creatures/SpriteUtils.cpp
+        source/creatures/SpriteUtils.hpp
+        source/tiles/LevelGenerator.hpp
+        source/tiles/LevelGenerator.cpp
+        source/tiles/PopulatingUtils.hpp
+        source/tiles/PopulatingUtils.cpp
+        source/creatures/collectibles/RubyBig.h
+        source/creatures/collectibles/RubySmall.h
+        source/creatures/collectibles/TripleGoldbar.h
+        source/creatures/collectibles/TripleGoldbar.cpp
+        source/creatures/collectibles/SingleGoldbar.hpp
+        source/creatures/collectibles/SingleGoldbar.cpp
+        source/creatures/collectibles/RubySmall.cpp
+        source/creatures/collectibles/RubyBig.cpp
+        source/collisions/CollisionsUtils.h
+        source/collisions/CollisionsUtils.cpp
+        source/decorations/_BaseDecoration.h
+        source/decorations/RockSign.h
+        source/decorations/RockSign.cpp
+        source/decorations/ArchSign.h
+        source/decorations/ArchSign.cpp
+        source/interfaces/IRenderable.cpp
+        source/interfaces/IRenderable.h
+        source/interfaces/ICollidable.cpp
+        source/interfaces/ICollidable.h
+        source/interfaces/IBase.cpp
+        source/interfaces/IBase.h
+        source/treasures/BaseTreasure.cpp
+        source/treasures/BaseTreasure.h
+        )

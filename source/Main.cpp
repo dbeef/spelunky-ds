@@ -78,9 +78,7 @@ int main() {
                                           OamType::SUB);
 
     gameloop::run();
-
     time_utils::stop();
-    //TODO Cleanup
 
     return 0;
 }
