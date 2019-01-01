@@ -37,7 +37,7 @@ void Jar::update_creature_specific() {
 
     }
 
-    if (kill_mobs_if_thrown(1))
+    if (kill_creatures_if_have_speed(1))
         apply_dmg(1);
 
     set_sprite_attributes();

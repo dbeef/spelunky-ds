@@ -95,6 +95,18 @@ public:
     // Updates _neighboring_tiles.
     void update_collisions_with_map(int x_current_pos_in_tiles, int y_current_pos_in_tiles);
 
+    // TODO Some enum to specify what can be killed (creatures / jars)
+
+    // I.e rocks/jars can kill creatures, but no jars
+    bool kill_creatures_if_have_speed(u8 dmg_to_apply) const;
+
+    // I.e bullets, they can harm both creatures and jars
+    bool kill_creatures_jars(u8 dmg_to_apply) const;
+
+    bool kill_main_dude_if_have_speed(u8 dmg_to_apply) const;
+
+    void deal_damage_main_dude_on_collision(int dmg_to_apply) const;
+
 private:
 
     // True if two collidables overlap.

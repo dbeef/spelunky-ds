@@ -69,17 +69,20 @@ void Bat::update_creature_specific() {
 
 //    printf("6");
 //here
+
     kill_if_whip(1);
     kill_if_main_dude_jumped_on_you(1);
     deal_damage_main_dude_on_collision(1);
 
-    if(_map_collisions_checked){
-        standingOnLeftEdge = Collisions::isStandingOnLeftEdge(_neighboring_tiles, _x, _physical_width, _current_x_in_tiles);
-        standingOnRightEdge = Collisions::isStandingOnRightEdge(_neighboring_tiles, _x, _physical_width, _current_x_in_tiles);
+    if (_map_collisions_checked) {
+        standingOnLeftEdge = Collisions::isStandingOnLeftEdge(_neighboring_tiles, _x, _physical_width,
+                                                              _current_x_in_tiles);
+        standingOnRightEdge = Collisions::isStandingOnRightEdge(_neighboring_tiles, _x, _physical_width,
+                                                                _current_x_in_tiles);
         hanging = _upper_collision && !hunting;
         _map_collisions_checked = false;
     }
-    
+
 }
 
 //!>bat has only 1 dmg point, always kill if any dmg_apply
@@ -98,10 +101,12 @@ void Bat::init_sprites() {
     delete_sprites();
 
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_bat_snake_jetpackPal, gfx_bat_snake_jetpackPalLen,
-                                                        nullptr, BAT_SPRITE_SIZE, ObjSize::OBJSIZE_16, BAT_JETPACK, true,
+                                                        nullptr, BAT_SPRITE_SIZE, ObjSize::OBJSIZE_16, BAT_JETPACK,
+                                                        true,
                                                         false, LAYER_LEVEL::MIDDLE_TOP);
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_bat_snake_jetpackPal, gfx_bat_snake_jetpackPalLen,
-                                                          nullptr, BAT_SPRITE_SIZE, ObjSize::OBJSIZE_16, BAT_JETPACK, true,
+                                                          nullptr, BAT_SPRITE_SIZE, ObjSize::OBJSIZE_16, BAT_JETPACK,
+                                                          true,
                                                           false, LAYER_LEVEL::MIDDLE_TOP);
 
     match_animation();

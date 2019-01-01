@@ -47,7 +47,7 @@ void Pistol::update_creature_specific() {
 
     update_sprites_position(); //must be called here, after position is offsetted if pistol carried
     handle_shooting();
-    kill_mobs_if_thrown(1);
+    kill_creatures_if_have_speed(1);
 }
 
 void Pistol::init_sprites() {

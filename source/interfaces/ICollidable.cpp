@@ -3,11 +3,13 @@
 //
 
 #include <cmath>
+#include <maxmod9.h>
 
 #include "../collisions/Collisions.hpp"
 #include "../tiles/LevelRenderingUtils.hpp"
 #include "../GlobalsDeclarations.hpp"
 #include "ICollidable.h"
+#include "../../build/soundbank.h"
 
 void ICollidable::update_collisions_with_map(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
     Collisions::getNeighboringTiles(global::current_level->map_tiles, x_current_pos_in_tiles,
@@ -114,4 +116,95 @@ void ICollidable::limit_speed() {
 bool ICollidable::check_collision(ICollidable const &other) const {
     return Collisions::checkCollisionBodies(_x, _y, _physical_width, _physical_height,
                                             other._x, other._y, other._physical_width, other._physical_height);
+}
+
+bool ICollidable::kill_creatures_if_have_speed(u8 dmg_to_apply) const {
+
+        bool killed = false;
+
+        if (abs(_x_speed) > 0 || abs(_y_speed) > 0) {
+            for (unsigned long a = 0; a < global::creatures.size(); a++) {
+
+                if ((global::creatures.at(a)->_spritesheet_type == SpritesheetType::SNAKE ||
+                     global::creatures.at(a)->_spritesheet_type == SpritesheetType::BAT_JETPACK ||
+                     global::creatures.at(a)->_spritesheet_type == SpritesheetType::CAVEMAN_DAMSEL ||
+                     global::creatures.at(a)->_spritesheet_type == SpritesheetType::SKELETON_SPIDER)
+                    && !global::creatures.at(a)->killed) {
+                    if (Collisions::checkCollisionBodies(_x, _y, 16, 16, global::creatures.at(a)->_x,
+                                                         global::creatures.at(a)->_y, _physical_width, _physical_height)) {
+
+                        global::creatures.at(a)->apply_dmg(dmg_to_apply);
+                        killed = true;
+
+                    }
+                }
+            }
+        }
+
+        return killed;
+}
+
+//when applied, item kills mobs and destroys items (like jars), if it both travels and collides them
+bool ICollidable::kill_creatures_jars(u8 dmg_to_apply) const {
+
+    bool killed = false;
+
+    if (abs(_x_speed) > 0 || abs(_y_speed) > 0) {
+        for (unsigned long a = 0; a < global::creatures.size(); a++) {
+            //FIXME Change spritesheet type to sprite_type, so jetpack wouldn't be affected
+            if ((global::creatures.at(a)->_spritesheet_type == SpritesheetType::SNAKE ||
+                 global::creatures.at(a)->_spritesheet_type == SpritesheetType::BAT_JETPACK ||
+                 global::creatures.at(a)->_spritesheet_type == SpritesheetType::SHOPKEEPER ||
+                 global::creatures.at(a)->_spritesheet_type == SpritesheetType::SKELETON_SPIDER ||
+                 global::creatures.at(a)->_spritesheet_type == SpritesheetType::CAVEMAN_DAMSEL ||
+                 global::creatures.at(a)->_spritesheet_type == SpritesheetType::JAR)
+                && !global::creatures.at(a)->_ready_to_dispose) {
+
+                if (Collisions::checkCollisionBodies(_x, _y, _physical_width, _physical_height,
+                                                     global::creatures.at(a)->_x,
+                                                     global::creatures.at(a)->_y,
+                                                     global::creatures.at(a)->_physical_width,
+                                                     global::creatures.at(a)->_physical_height)) {
+                    global::creatures.at(a)->_x_speed += this->_x_speed * 0.3f;
+
+                    global::creatures.at(a)->apply_dmg(dmg_to_apply);
+                    killed = true;
+                }
+            }
+        }
+    }
+
+    return killed;
+}
+
+bool ICollidable::kill_main_dude_if_have_speed(u8 dmg_to_apply) const {
+
+    if (abs(_x_speed) > 0 || abs(_y_speed) > 0) {
+
+        if (Collisions::checkCollisionBodies(_x, _y, _physical_width, _physical_height, global::main_dude->_x,
+                                             global::main_dude->_y,
+                                             global::main_dude->_physical_width,
+                                             global::main_dude->_physical_height)) {
+            global::main_dude->_x_speed += this->_x_speed * 0.3f;
+            global::main_dude->apply_dmg(dmg_to_apply);
+            return true;
+        }
+
+    }
+    return false;
+}
+
+void ICollidable::deal_damage_main_dude_on_collision(int dmg_to_apply) const {
+    if (!global::main_dude->dead && Collisions::checkCollisionWithMainDude(_x, _y, 16, 16) &&
+        global::main_dude->time_since_last_damage > 1000 && !global::main_dude->exiting_level) {
+
+        global::main_dude->time_since_last_damage = 0;
+        global::hud->hearts -= dmg_to_apply;
+        global::hud->draw_level_hud();
+
+        if (global::hud->hearts <= 0) {
+            global::main_dude->set_dead();
+        } else
+            mmEffect(SFX_XHIT);
+    }
 }

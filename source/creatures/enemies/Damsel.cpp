@@ -72,7 +72,7 @@ void Damsel::update_creature_specific() {
         sprite_utils::set_priority(OBJPRIORITY_2, mainSpriteInfo, subSpriteInfo);
 
     if (!hold_by_main_dude)
-        kill_mobs_if_thrown(1);
+        kill_creatures_if_have_speed(1);
 
     update_sprites_position();
 

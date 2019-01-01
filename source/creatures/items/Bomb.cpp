@@ -77,7 +77,7 @@ void Bomb::update_creature_specific() {
     }
 
     update_sprites_position();
-    kill_mobs_if_thrown(1);
+    kill_creatures_if_have_speed(1);
 }
 
 

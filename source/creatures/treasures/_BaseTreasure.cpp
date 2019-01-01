@@ -69,12 +69,9 @@ u16 _BaseTreasure::get_dollars_value() const {
     }
 }
 
-_BaseTreasure::_BaseTreasure(
-        int x, int y,
-        const u16 sprite_width, const u16 sprite_height, const SpritesheetType spritesheet_type,
-        u16 physical_width, u16 physical_height,
-        TreasureType treasure_type
-) :
+_BaseTreasure::_BaseTreasure(int x, int y, const u16 sprite_width, const u16 sprite_height,
+                           const SpritesheetType spritesheet_type, u16 physical_width, u16 physical_height,
+                           TreasureType treasure_type) :
         IRenderable(sprite_width, sprite_height, spritesheet_type),
         ICollidable(physical_width, physical_height),
         _collectible_timer(500),

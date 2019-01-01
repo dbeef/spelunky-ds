@@ -68,33 +68,29 @@ public:
     Orientation sprite_state{};
     const CreatureType _creature_type;
 
-    bool kill_mobs_if_thrown(int dmg_to_apply) const;
-
-    void deal_damage_main_dude_on_collision(int dmg_to_apply) const;
 
     void spawn_blood() const;
 
-    bool kill_main_dude_if_thrown(int dmg_to_apply) const;
-
-    void set_pickuped_position_on_another_moving_obj(int pickup_offset_x, int pickup_offset_y, BaseCreature *m) const;
-
-    void check_if_can_be_pickuped();
-
-    void set_pickuped_position(int pickup_offset_x, int pickup_offset_y);
-
-    void set_pickuped_position(int pickup_offset_x_left, int pickup_offset_x_right, int pickup_offset_y);
-
-    bool check_if_can_be_opened();
-
-    bool kill_mobs_items_if_thrown(int dmg_to_apply);
-
-    bool check_if_can_be_equipped();
 
     void kill_if_main_dude_jumped_on_you(int dmg_to_apply);
 
     void kill_if_whip(int dmg_to_apply);
 
+
+    bool check_if_can_be_opened();
+
+    void check_if_can_be_pickuped();
+
+    bool check_if_can_be_equipped();
+
+
+    void set_pickuped_position(int pickup_offset_x, int pickup_offset_y);
+
+    void set_pickuped_position(int pickup_offset_x_left, int pickup_offset_x_right, int pickup_offset_y);
+
     void set_pickuped_position_not_checking(int pickup_offset_x, int pickup_offset_y);
+
+    void set_pickuped_position_on_another_moving_obj(int pickup_offset_x, int pickup_offset_y, BaseCreature *m) const;
 };
 
 #endif //SPELUNKYDS_MOVINGOBJECT_H

@@ -35,6 +35,8 @@ namespace global {
     std::vector<BaseDecoration *> decorations_to_add;
     std::vector<_BaseTreasure *> treasures;
     std::vector<_BaseTreasure *> treasures_to_add;
+    std::vector<BaseItem *> items;
+    std::vector<BaseItem *> items_to_add;
 
     std::vector<SpriteInfo *> sprite_infos;
 

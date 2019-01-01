@@ -16,7 +16,7 @@ void Rock::update_creature_specific() {
 
     check_if_can_be_pickuped();
     set_pickuped_position(0, 10, 6);
-    kill_mobs_if_thrown(1);
+    kill_creatures_if_have_speed(1);
     update_sprites_position();
 }
 

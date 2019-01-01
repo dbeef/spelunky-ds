@@ -51,7 +51,7 @@ void Shotgun::update_creature_specific() {
 
     update_sprites_position();
     handle_shooting();
-    kill_mobs_if_thrown(1);
+    kill_creatures_if_have_speed(1);
 }
 
 void Shotgun::init_sprites() {

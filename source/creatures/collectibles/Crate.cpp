@@ -62,7 +62,7 @@ void Crate::update_creature_specific() {
     } else
         sprite_utils::set_visibility(true, mainSpriteInfo, subSpriteInfo);
 
-    kill_mobs_if_thrown(1);
+    kill_creatures_if_have_speed(1);
     update_sprites_position();
 
 }

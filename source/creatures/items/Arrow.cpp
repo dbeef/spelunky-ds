@@ -45,10 +45,10 @@ void Arrow::update_creature_specific() {
 
     update_sprites_position();
 
-    if (kill_mobs_if_thrown(3)) {
+    if (kill_creatures_if_have_speed(3)) {
         sprite_utils::set_visibility(false, mainSpriteInfo, subSpriteInfo);
         _ready_to_dispose = true;
-    } else if (thrown && (fabs(_x_speed) > 1.5f || fabs(_y_speed) > 1.5) && kill_main_dude_if_thrown(3)) {
+    } else if (thrown && (fabs(_x_speed) > 1.5f || fabs(_y_speed) > 1.5) && kill_main_dude_if_have_speed(3)) {
         sprite_utils::set_visibility(false, mainSpriteInfo, subSpriteInfo);
         _ready_to_dispose = true;
 
