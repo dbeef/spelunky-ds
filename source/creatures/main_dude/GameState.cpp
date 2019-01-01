@@ -117,7 +117,7 @@ void GameState::start_next_level() {
     global::game_state->levels_transition_screen = false;
     global::game_state->in_main_menu = false;
     global::killed_npcs.clear();
-    global::collected_loot.clear();
+    global::collected_treasures.clear();
     global::hud->money_on_this_level = 0;
     global::hud->draw_level_hud();
 

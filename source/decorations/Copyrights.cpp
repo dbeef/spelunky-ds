@@ -27,7 +27,7 @@ void Copyrights::init_sprites() {
 
     for (int a = 0; a < copyrights_graphics; a++) {
         _subSpriteInfos[a] = global::sub_oam_manager->initSprite(gfx_copyrightsPal, gfx_copyrightsPalLen, nullptr,
-                                                                 _sprite_size, 32, _spritesheet_type,
+                                                                 _sprite_size, ObjSize::OBJSIZE_32, _spritesheet_type,
                                                                  true, false, LAYER_LEVEL::MIDDLE_TOP);
 
         u8 *frame_gfx = sprite_utils::get_frame((u8 *) gfx_copyrightsTiles, _sprite_size, a);

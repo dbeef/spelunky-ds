@@ -79,10 +79,10 @@ void Flame::init_sprites() {
     
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
                                                         gfx_spike_collectibles_flamePalLen, nullptr, _sprite_size,
-                                                        8, SPIKES_COLLECTIBLES, true, false, LAYER_LEVEL::MIDDLE_TOP);
+                                                        ObjSize::OBJSIZE_8, SPIKES_COLLECTIBLES, true, false, LAYER_LEVEL::MIDDLE_TOP);
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
                                                           gfx_spike_collectibles_flamePalLen, nullptr,
-                                                          _sprite_size, 8, SPIKES_COLLECTIBLES, true, false,
+                                                          _sprite_size, ObjSize::OBJSIZE_8, SPIKES_COLLECTIBLES, true, false,
                                                           LAYER_LEVEL::MIDDLE_TOP);
     match_animation();
     update_sprites_position();

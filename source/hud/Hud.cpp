@@ -62,19 +62,19 @@ void Hud::init_sprites() {
 
     heartSpriteInfo = global::main_oam_manager->initSprite(gfx_hudPal, gfx_hudPalLen,
                                                            nullptr, HUD_ICON_SIZE,
-                                                           16, HUD, true, false, LAYER_LEVEL::TOP);
+                                                           ObjSize::OBJSIZE_16, HUD, true, false, LAYER_LEVEL::TOP);
     dollarSpriteInfo = global::main_oam_manager->initSprite(gfx_hudPal, gfx_hudPalLen,
                                                             nullptr, HUD_ICON_SIZE,
-                                                            16, HUD, true, false, LAYER_LEVEL::TOP);
+                                                            ObjSize::OBJSIZE_16, HUD, true, false, LAYER_LEVEL::TOP);
     bombSpriteInfo = global::main_oam_manager->initSprite(gfx_hudPal, gfx_hudPalLen,
                                                           nullptr, HUD_ICON_SIZE,
-                                                          16, HUD, true, false, LAYER_LEVEL::TOP);
+                                                          ObjSize::OBJSIZE_16, HUD, true, false, LAYER_LEVEL::TOP);
     ropeSpriteInfo = global::main_oam_manager->initSprite(gfx_hudPal, gfx_hudPalLen,
                                                           nullptr, HUD_ICON_SIZE,
-                                                          16, HUD, true, false, LAYER_LEVEL::TOP);
+                                                          ObjSize::OBJSIZE_16, HUD, true, false, LAYER_LEVEL::TOP);
     holdingItemSpriteInfo = global::main_oam_manager->initSprite(gfx_hudPal, gfx_hudPalLen,
                                                                  nullptr, HUD_ICON_SIZE,
-                                                                 16, HUD, true, false, LAYER_LEVEL::TOP);
+                                                                 ObjSize::OBJSIZE_16, HUD, true, false, LAYER_LEVEL::TOP);
 
     u8 *frameGfxHeart = sprite_utils::get_frame((u8 *) gfx_hudTiles, HUD_ICON_SIZE, 0);
     u8 *frameGfxHoldingItem = sprite_utils::get_frame((u8 *) gfx_hudTiles, HUD_ICON_SIZE, 1);
@@ -163,7 +163,7 @@ void Hud::draw_on_level_done() {
     printf("\n\n     LOOT : \n\n     KILLS : \n\n     MONEY : %d - %d\n\n", money_on_this_level, money);
 
     std::sort(global::killed_npcs.begin(), global::killed_npcs.end());
-    std::sort(global::collected_loot.begin(), global::collected_loot.end());
+    std::sort(global::collected_treasures.begin(), global::collected_treasures.end());
 
     draw_killed_npcs();
     draw_collected_loot();
@@ -336,11 +336,11 @@ void Hud::disable_all_prompts() {
 
 void Hud::draw_collected_loot() {
 
-    for (unsigned long a = 0; a < global::collected_loot.size(); a++) {
+    for (unsigned long a = 0; a < global::collected_treasures.size(); a++) {
 
         //FIXME Pass specific moniez type
 
-        if (global::collected_loot.at(a) == TreasureType::RUBY_BIG) {
+        if (global::collected_treasures.at(a) == TreasureType::RUBY_BIG) {
 
             auto *ruby_big = new RubyBig(90 + (a * 4), 190);
             ruby_big->_y += (16 - ruby_big->_physical_height); //aligning to same level
@@ -348,7 +348,7 @@ void Hud::draw_collected_loot() {
             ruby_big->update_sprites_position();
             ruby_big->_ready_to_dispose = true;
 
-        } else if (global::collected_loot.at(a) == TreasureType::RUBY_SMALL) {
+        } else if (global::collected_treasures.at(a) == TreasureType::RUBY_SMALL) {
 
             auto *ruby_small = new RubySmall(90 + (a * 4), 190);
             ruby_small->_y += (16 - ruby_small->_physical_height); //aligning to same level
@@ -356,7 +356,7 @@ void Hud::draw_collected_loot() {
             ruby_small->update_sprites_position();
             ruby_small->_ready_to_dispose = true;
 
-        } else if (global::collected_loot.at(a) == TreasureType::TRIPLE_GOLDBAR) {
+        } else if (global::collected_treasures.at(a) == TreasureType::TRIPLE_GOLDBAR) {
 
             auto *triple_goldbars = new TripleGoldbar(90 + (a * 4), 190);
             triple_goldbars->_y += (16 - triple_goldbars->_physical_height); //aligning to same level
@@ -364,7 +364,7 @@ void Hud::draw_collected_loot() {
             triple_goldbars->update_sprites_position();
             triple_goldbars->_ready_to_dispose = true;
 
-        } else if (global::collected_loot.at(a) == TreasureType::SINGLE_GOLDBAR) {
+        } else if (global::collected_treasures.at(a) == TreasureType::SINGLE_GOLDBAR) {
 
             auto *single_goldbar = new SingleGoldbar(90 + (a * 4), 190);
             single_goldbar->_y += (16 - single_goldbar->_physical_height); //aligning to same level

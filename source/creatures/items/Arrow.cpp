@@ -165,10 +165,10 @@ void Arrow::init_sprites() {
     delete_sprites();
 
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_arrowPal, gfx_arrowPalLen,
-                                                        nullptr, ARROW_SPRITE_SIZE, 8, SpritesheetType::ARROW,
+                                                        nullptr, ARROW_SPRITE_SIZE, ObjSize::OBJSIZE_8, SpritesheetType::ARROW,
                                                         true, false, LAYER_LEVEL::MIDDLE_TOP);
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_arrowPal, gfx_arrowPalLen, nullptr,
-                                                          ARROW_SPRITE_SIZE, 8, SpritesheetType::ARROW,
+                                                          ARROW_SPRITE_SIZE, ObjSize::OBJSIZE_8, SpritesheetType::ARROW,
                                                           true, false, LAYER_LEVEL::MIDDLE_TOP);
     update_frame((int) floor(angle / 22.5f));
     update_sprites_position();

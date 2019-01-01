@@ -63,11 +63,11 @@ void Bullet::init_sprites() {
 
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
                                                         gfx_spike_collectibles_flamePalLen,
-                                                        nullptr, _sprite_size, _sprite_width,
+                                                        nullptr, _sprite_size, ObjSize::OBJSIZE_8,
                                                         _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
                                                           gfx_spike_collectibles_flamePalLen,
-                                                          nullptr, _sprite_size, _sprite_width,
+                                                          nullptr, _sprite_size, ObjSize::OBJSIZE_8,
                                                           _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
 
     sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);

@@ -29,7 +29,7 @@ void RockSign::init_sprites() {
     for (int a = 0; a < rock_sign_graphics; a++) {
         _mainSpriteInfos[a] = global::main_oam_manager->initSprite(gfx_menu_signs_tutorial_quitPal,
                                                                    gfx_menu_signs_tutorial_quitPalLen,
-                                                                   nullptr, _sprite_size, 16, _spritesheet_type,
+                                                                   nullptr, _sprite_size, ObjSize::OBJSIZE_16, _spritesheet_type,
                                                                    true, false, LAYER_LEVEL::MIDDLE_TOP);
 
         //will start two 16x16 chunks further if type == 1 (QUIT)

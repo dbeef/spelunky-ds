@@ -72,11 +72,9 @@ void OAMManager::updateOAM() {
     dmaCopyHalfWords(3, oam->oamBuffer, oam_address, SPRITE_COUNT * sizeof(SpriteEntry));
 }
 
-//TODO Passing spriteInfo as an argument so it could be cleaned up
-//FIXME replace int for ENUM as 'size' parameter
 SpriteInfo *
 OAMManager::initSprite(const unsigned short pallette[], int palLen, const unsigned int tiles[], int tilesLen,
-                       int size, SpritesheetType type, bool reuse_palette, bool reuse_tiles, LAYER_LEVEL l) {
+                       ObjSize size, SpritesheetType type, bool reuse_palette, bool reuse_tiles, LAYER_LEVEL l) {
 
 
 //    if (global::hud->level > 6) {
@@ -169,16 +167,7 @@ OAMManager::initSprite(const unsigned short pallette[], int palLen, const unsign
 
     spriteEntry->x = 50;
     spriteEntry->rotationIndex = spriteInfo->oamId_tiles;
-
-    if (size == 8)
-        spriteEntry->size = OBJSIZE_8;
-    else if (size == 16)
-        spriteEntry->size = OBJSIZE_16;
-    else if (size == 32)
-        spriteEntry->size = OBJSIZE_32;
-    else
-        spriteEntry->size = OBJSIZE_64;
-
+    spriteEntry->size = size;
 
     /*
      *  Configure attribute 2.

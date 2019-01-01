@@ -46,7 +46,7 @@ void BaseTreasure::update() {
 
         global::hud->add_moniez_on_collected_loot(get_dollars_value());
         sprite_utils::set_visibility(false, _main_sprite_info, _sub_sprite_info);
-        global::collected_loot.push_back(_treasure_type);
+        global::collected_treasures.push_back(_treasure_type);
         _ready_to_dispose = true;
     } else if (_collectible_timer < 500) {
         _collectible_timer += *global::timer;

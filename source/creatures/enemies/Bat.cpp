@@ -98,10 +98,10 @@ void Bat::init_sprites() {
     delete_sprites();
 
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_bat_snake_jetpackPal, gfx_bat_snake_jetpackPalLen,
-                                                        nullptr, BAT_SPRITE_SIZE, 16, BAT_JETPACK, true,
+                                                        nullptr, BAT_SPRITE_SIZE, ObjSize::OBJSIZE_16, BAT_JETPACK, true,
                                                         false, LAYER_LEVEL::MIDDLE_TOP);
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_bat_snake_jetpackPal, gfx_bat_snake_jetpackPalLen,
-                                                          nullptr, BAT_SPRITE_SIZE, 16, BAT_JETPACK, true,
+                                                          nullptr, BAT_SPRITE_SIZE, ObjSize::OBJSIZE_16, BAT_JETPACK, true,
                                                           false, LAYER_LEVEL::MIDDLE_TOP);
 
     match_animation();

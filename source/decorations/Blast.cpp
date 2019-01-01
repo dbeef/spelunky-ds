@@ -45,11 +45,11 @@ void Blast::init_sprites() {
 
     _sub_sprite_info = global::sub_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
                                                            gfx_spike_collectibles_flamePalLen,
-                                                           nullptr, _sprite_size, _sprite_width,
+                                                           nullptr, _sprite_size, ObjSize::OBJSIZE_16,
                                                            _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
     _main_sprite_info = global::main_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
                                                              gfx_spike_collectibles_flamePalLen,
-                                                             nullptr, _sprite_size, _sprite_width,
+                                                             nullptr, _sprite_size, ObjSize::OBJSIZE_16,
                                                              _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
 
     sprite_utils::set_visibility(true, _main_sprite_info, _sub_sprite_info);

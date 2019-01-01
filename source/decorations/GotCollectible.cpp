@@ -44,10 +44,10 @@ void GotCollectible::init_sprites() {
     delete_sprites();
 
     _sub_sprite_info = global::sub_oam_manager->initSprite(gfx_got_collectiblePal, gfx_got_collectiblePalLen,
-                                                           nullptr, _sprite_size, _sprite_width,
+                                                           nullptr, _sprite_size, ObjSize::OBJSIZE_32,
                                                            _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
     _main_sprite_info = global::main_oam_manager->initSprite(gfx_got_collectiblePal, gfx_got_collectiblePalLen,
-                                                             nullptr, _sprite_size, _sprite_width,
+                                                             nullptr, _sprite_size, ObjSize::OBJSIZE_32,
                                                              _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
 
     sprite_utils::set_vertical_flip(false, _main_sprite_info, _sub_sprite_info);

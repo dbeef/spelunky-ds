@@ -241,10 +241,10 @@ void Shopkeeper::init_sprites() {
     delete_sprites();
 
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_shopkeeperPal, gfx_shopkeeperPalLen,
-                                                        nullptr, _sprite_size, 16, SHOPKEEPER,
+                                                        nullptr, _sprite_size, ObjSize::OBJSIZE_16, SHOPKEEPER,
                                                         true, false, LAYER_LEVEL::MIDDLE_BOT);
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_shopkeeperPal, gfx_shopkeeperPalLen,
-                                                          nullptr, _sprite_size, 16, SHOPKEEPER,
+                                                          nullptr, _sprite_size, ObjSize::OBJSIZE_16, SHOPKEEPER,
                                                           true, false, LAYER_LEVEL::MIDDLE_BOT);
 
     update_sprites_position();

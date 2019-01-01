@@ -25,10 +25,10 @@ void Rock::init_sprites() {
     delete_sprites();
 
     _sub_sprite_info = global::sub_oam_manager->initSprite(gfx_blood_rock_rope_poofPal, gfx_blood_rock_rope_poofPalLen,
-                                                        nullptr, _sprite_size, 8, BLOOD_ROCK_ROPE_POOF, true, false,
+                                                        nullptr, _sprite_size, ObjSize::OBJSIZE_8, BLOOD_ROCK_ROPE_POOF, true, false,
                                                         LAYER_LEVEL::MIDDLE_TOP);
     _main_sprite_info = global::main_oam_manager->initSprite(gfx_blood_rock_rope_poofPal, gfx_blood_rock_rope_poofPalLen,
-                                                          nullptr, _sprite_size, 8, BLOOD_ROCK_ROPE_POOF, true,
+                                                          nullptr, _sprite_size, ObjSize::OBJSIZE_8, BLOOD_ROCK_ROPE_POOF, true,
                                                           false, LAYER_LEVEL::MIDDLE_TOP);
 
     _frame_gfx = sprite_utils::get_frame((u8 *) gfx_blood_rock_rope_poofTiles, _sprite_size, 7);

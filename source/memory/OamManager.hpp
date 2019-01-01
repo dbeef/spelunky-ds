@@ -34,7 +34,7 @@ public:
     void updateOAM();
 
     SpriteInfo *initSprite(const unsigned short pallette[], int palLen, const unsigned int tiles[], int tilesLen,
-                           int size, SpritesheetType spriteType, bool reuse_palette, bool reuse_tiles, LAYER_LEVEL l);
+                           ObjSize size, SpritesheetType spriteType, bool reuse_palette, bool reuse_tiles, LAYER_LEVEL l);
 
     void clear_sprite_attributes();
 };

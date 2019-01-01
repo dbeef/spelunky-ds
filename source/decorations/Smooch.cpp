@@ -47,11 +47,11 @@ void Smooch::init_sprites() {
     delete_sprites();
 
     _main_sprite_info = global::main_oam_manager->initSprite(gfx_caveman_damselPal, gfx_caveman_damselPalLen, nullptr,
-                                                             _sprite_size, 16, _spritesheet_type, true,
+                                                             _sprite_size, ObjSize::OBJSIZE_16, _spritesheet_type, true,
                                                              false, LAYER_LEVEL::MIDDLE_TOP);
 
     _sub_sprite_info = global::sub_oam_manager->initSprite(gfx_caveman_damselPal, gfx_caveman_damselPalLen, nullptr,
-                                                           _sprite_size, 16, _spritesheet_type, true,
+                                                           _sprite_size, ObjSize::OBJSIZE_16, _spritesheet_type, true,
                                                            false, LAYER_LEVEL::MIDDLE_TOP);
 
     sprite_utils::set_horizontal_flip(false, _main_sprite_info, _sub_sprite_info);

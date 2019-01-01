@@ -49,7 +49,7 @@ namespace global {
 
     extern std::vector<SpriteInfo *> sprite_infos; //technically list of wrappers around OAM entries FIXME naming
     extern std::vector<CreatureType> killed_npcs; //list of NPCs killed in current level //FIXME should be SpriteType
-    extern std::vector<TreasureType> collected_loot; //list of loot collected in current level
+    extern std::vector<TreasureType> collected_treasures; //list of loot collected in current level
 
     extern int bg_main_address; //technically, it's an id returned by oam init FIXME naming
     extern int bg_sub_address; //technically, it's an id returned by oam init FIXME naming

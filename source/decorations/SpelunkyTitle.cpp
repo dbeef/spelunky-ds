@@ -28,7 +28,7 @@ void SpelunkyTitle::init_sprites() {
 
     for (int a = 0; a < spelunky_title_graphics; a++) {
         _mainSpriteInfos[a] = global::main_oam_manager->initSprite(gfx_spelunky_titlePal, gfx_spelunky_titlePalLen,
-                                                                   nullptr, _sprite_size, 64, _spritesheet_type,
+                                                                   nullptr, _sprite_size, ObjSize::OBJSIZE_64, _spritesheet_type,
                                                                    true, false, LAYER_LEVEL::MIDDLE_TOP);
 
         u8 *frame_gfx = sprite_utils::get_frame((u8 *) gfx_spelunky_titleTiles, _sprite_size, a);

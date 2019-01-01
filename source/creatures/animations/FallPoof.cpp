@@ -48,10 +48,10 @@ void FallPoof::init_sprites() {
     delete_sprites();
 
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_blood_rock_rope_poofPal, gfx_blood_rock_rope_poofPalLen,
-                                                        nullptr, FALL_POOF_SPRITE_SIZE, _sprite_width,
+                                                        nullptr, FALL_POOF_SPRITE_SIZE, ObjSize::OBJSIZE_16,
                                                         _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_blood_rock_rope_poofPal, gfx_blood_rock_rope_poofPalLen,
-                                                          nullptr, FALL_POOF_SPRITE_SIZE, _sprite_width,
+                                                          nullptr, FALL_POOF_SPRITE_SIZE, ObjSize::OBJSIZE_16,
                                                           _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
 
     sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);

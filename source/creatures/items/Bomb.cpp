@@ -96,10 +96,10 @@ void Bomb::init_sprites() {
     delete_sprites();
 
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_explosionPal, gfx_explosionPalLen,
-                                                        nullptr, _sprite_size, 64, BOMB, true, false,
+                                                        nullptr, _sprite_size, ObjSize::OBJSIZE_64, BOMB, true, false,
                                                         LAYER_LEVEL::MIDDLE_TOP);
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_explosionPal, gfx_explosionPalLen,
-                                                          nullptr, _sprite_size, 64, BOMB, true, false,
+                                                          nullptr, _sprite_size, ObjSize::OBJSIZE_64, BOMB, true, false,
                                                           LAYER_LEVEL::MIDDLE_TOP);
     if (armed) {
         if (armedTimer < ARMED_TIME_BLINK_SLOW) {

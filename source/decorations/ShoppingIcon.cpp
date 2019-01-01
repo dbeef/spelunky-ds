@@ -45,11 +45,11 @@ void ShoppingIcon::init_sprites() {
     delete_sprites();
 
     _main_sprite_info = global::main_oam_manager->initSprite(gfx_goldbarsPal, gfx_goldbarsPalLen, nullptr,
-                                                             _sprite_size, 16, SpritesheetType::MONIEZ_GOLDBARS, true,
+                                                             _sprite_size, ObjSize::OBJSIZE_16, SpritesheetType::MONIEZ_GOLDBARS, true,
                                                              false, LAYER_LEVEL::MIDDLE_TOP);
 
     _sub_sprite_info = global::sub_oam_manager->initSprite(gfx_goldbarsPal, gfx_goldbarsPalLen, nullptr,
-                                                           _sprite_size, 16, SpritesheetType::MONIEZ_GOLDBARS, true,
+                                                           _sprite_size, ObjSize::OBJSIZE_16, SpritesheetType::MONIEZ_GOLDBARS, true,
                                                            false, LAYER_LEVEL::MIDDLE_TOP);
     match_animation();
     sprite_utils::set_visibility(true, _main_sprite_info, _sub_sprite_info);

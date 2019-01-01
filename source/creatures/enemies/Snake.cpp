@@ -130,10 +130,10 @@ void Snake::init_sprites() {
     delete_sprites();
     
     subSpriteInfo = global::sub_oam_manager->initSprite(gfx_bat_snake_jetpackPal, gfx_bat_snake_jetpackPalLen,
-                                                        nullptr, _sprite_size, 16, SNAKE, true, false,
+                                                        nullptr, _sprite_size, ObjSize::OBJSIZE_16, SNAKE, true, false,
                                                         LAYER_LEVEL::MIDDLE_TOP);
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_bat_snake_jetpackPal, gfx_bat_snake_jetpackPalLen,
-                                                          nullptr, _sprite_size, 16, SNAKE, true, false,
+                                                          nullptr, _sprite_size, ObjSize::OBJSIZE_16, SNAKE, true, false,
                                                           LAYER_LEVEL::MIDDLE_TOP);
     
     sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);

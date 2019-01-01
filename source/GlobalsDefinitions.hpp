@@ -39,7 +39,7 @@ namespace global {
     std::vector<SpriteInfo *> sprite_infos;
 
     std::vector<CreatureType> killed_npcs;
-    std::vector<TreasureType > collected_loot;
+    std::vector<TreasureType > collected_treasures;
 
     int bg_main_address{};
     int bg_sub_address{};

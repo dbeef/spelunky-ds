@@ -14,10 +14,10 @@ void RubySmall::init_sprites() {
     delete_sprites();
 
     _sub_sprite_info = global::sub_oam_manager->initSprite(gfx_rubiesPal, gfx_rubiesPalLen,
-                                                           nullptr, _sprite_size, 8,
+                                                           nullptr, _sprite_size, ObjSize::OBJSIZE_8,
                                                            _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
     _main_sprite_info = global::main_oam_manager->initSprite(gfx_rubiesPal, gfx_rubiesPalLen, nullptr,
-                                                             _sprite_size, 8, _spritesheet_type, true,
+                                                             _sprite_size, ObjSize::OBJSIZE_8, _spritesheet_type, true,
                                                              false, LAYER_LEVEL::MIDDLE_TOP);
 
     u8 offset;
