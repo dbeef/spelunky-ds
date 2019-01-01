@@ -6,6 +6,7 @@
 #define SPELUNKYDS_SOUND_UTILS_H
 
 #include <maxmod9.h>
+#include <nds.h>
 #include "../../build/soundbank_bin.h"
 #include "../../build/soundbank.h"
 

@@ -108,11 +108,13 @@ void Cape::update_sprites_position() {
 
 void Cape::match_animation() {
 
+    u8 *frame_gfx;
+    
     if (!_collected) {
-        _frame_gfx = sprite_utils::get_frame((u8 *) gfx_goldbarsTiles, _sprite_size, 2);
+        frame_gfx = sprite_utils::get_frame((u8 *) gfx_goldbarsTiles, _sprite_size, 2);
     } else if (global::main_dude->climbing) {
         //climbing
-        _frame_gfx = sprite_utils::get_frame((u8 *) gfx_goldbarsTiles, _sprite_size, 3);
+        frame_gfx = sprite_utils::get_frame((u8 *) gfx_goldbarsTiles, _sprite_size, 3);
     } else if (global::input_handler->down_key_held || global::main_dude->dead || global::main_dude->stunned ||
                (!global::main_dude->using_cape && !global::main_dude->stunned &&
                 (global::main_dude->_x_speed != 0 || global::main_dude->_y_speed != 0))) {
@@ -120,21 +122,21 @@ void Cape::match_animation() {
         if (_anim_frame_index >= 5)
             _anim_frame_index = 0;
 
-        _frame_gfx = sprite_utils::get_frame((u8 *) gfx_goldbarsTiles, _sprite_size, 5 + _anim_frame_index);
+        frame_gfx = sprite_utils::get_frame((u8 *) gfx_goldbarsTiles, _sprite_size, 5 + _anim_frame_index);
 
     } else if (global::main_dude->_x_speed == 0 && global::main_dude->_y_speed == 0) {
         //staying still
-        _frame_gfx = sprite_utils::get_frame((u8 *) gfx_goldbarsTiles, _sprite_size, 4);
+        frame_gfx = sprite_utils::get_frame((u8 *) gfx_goldbarsTiles, _sprite_size, 4);
     } else {
 
         //falling
         if (_anim_frame_index >= 2)
             _anim_frame_index = 0;
 
-        _frame_gfx = sprite_utils::get_frame((u8 *) gfx_goldbarsTiles, _sprite_size, 10 + _anim_frame_index);
+        frame_gfx = sprite_utils::get_frame((u8 *) gfx_goldbarsTiles, _sprite_size, 10 + _anim_frame_index);
     }
 
-    sprite_utils::update_frame(_frame_gfx, _sprite_size, _main_sprite_info, _sub_sprite_info);
+    sprite_utils::update_frame(frame_gfx, _sprite_size, _main_sprite_info, _sub_sprite_info);
 
 }
 

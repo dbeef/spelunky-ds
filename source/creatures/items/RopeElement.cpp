@@ -44,8 +44,8 @@ void RopeElement::init_sprites() {
                                                                nullptr, _sprite_size, ObjSize::OBJSIZE_8, BLOOD_ROCK_ROPE_POOF,
                                                                true, false, LAYER_LEVEL::MIDDLE_TOP);
 
-    _frame_gfx = sprite_utils::get_frame((u8 *) gfx_blood_rock_rope_poofTiles, _sprite_size, 8);
-    sprite_utils::update_frame(_frame_gfx, _sprite_size, _main_sprite_info,
+    u8 *frame_gfx = sprite_utils::get_frame((u8 *) gfx_blood_rock_rope_poofTiles, _sprite_size, 8);
+    sprite_utils::update_frame(frame_gfx, _sprite_size, _main_sprite_info,
                                _main_sprite_info_2, _sub_sprite_info, _sub_sprite_info_2);
 
     sprite_utils::set_horizontal_flip(false, _main_sprite_info, _main_sprite_info_2, _sub_sprite_info,

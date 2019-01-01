@@ -68,8 +68,8 @@ void Bomb::update_creature_specific() {
                     _ready_to_dispose = true;
                     sprite_utils::set_visibility(false, mainSpriteInfo, subSpriteInfo);
                 } else {
-                    frameGfx = sprite_utils::get_frame((u8 *) gfx_explosionTiles, _sprite_size, 2 + explosionFrame);
-                    sprite_utils::update_frame(frameGfx, _sprite_size, mainSpriteInfo, subSpriteInfo);
+                    u8 *frame_gfx = sprite_utils::get_frame((u8 *) gfx_explosionTiles, _sprite_size, 2 + explosionFrame);
+                    sprite_utils::update_frame(frame_gfx, _sprite_size, mainSpriteInfo, subSpriteInfo);
                 }
             }
         }
@@ -82,13 +82,13 @@ void Bomb::update_creature_specific() {
 
 
 void Bomb::set_sprite_armed() {
-    frameGfx = sprite_utils::get_frame((u8 *) gfx_explosionTiles, _sprite_size, 1);
-    sprite_utils::update_frame(frameGfx, _sprite_size, mainSpriteInfo, subSpriteInfo);
+    u8 *frame_gfx = sprite_utils::get_frame((u8 *) gfx_explosionTiles, _sprite_size, 1);
+    sprite_utils::update_frame(frame_gfx, _sprite_size, mainSpriteInfo, subSpriteInfo);
 }
 
 void Bomb::set_sprite_disarmed() {
-    frameGfx = sprite_utils::get_frame((u8 *) gfx_explosionTiles, _sprite_size, 0);
-    sprite_utils::update_frame(frameGfx, _sprite_size, mainSpriteInfo, subSpriteInfo);
+    u8 *frame_gfx = sprite_utils::get_frame((u8 *) gfx_explosionTiles, _sprite_size, 0);
+    sprite_utils::update_frame(frame_gfx, _sprite_size, mainSpriteInfo, subSpriteInfo);
 }
 
 void Bomb::init_sprites() {

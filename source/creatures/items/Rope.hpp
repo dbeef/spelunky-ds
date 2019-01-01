@@ -73,7 +73,6 @@ public:
 
     SpriteInfo *_main_sprite_info{};
     SpriteInfo *_sub_sprite_info{};
-    u8 *_frame_gfx{};
     bool _extended_rope{};
     bool _thrown{};
     bool _finished{};

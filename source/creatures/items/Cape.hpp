@@ -73,7 +73,6 @@ public:
     SpriteInfo *_sub_sprite_info{};
     double _anim_frame_timer{};
     u16 _anim_frame_index{};
-    u8 *_frame_gfx{};
 
 };
 

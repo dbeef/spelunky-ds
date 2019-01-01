@@ -75,7 +75,6 @@ public:
     SpriteInfo *_main_sprite_info{};
     SpriteInfo *_sub_sprite_info{};
     FallPoof *_poofs[2]{};
-    u8 *_frame_gfx{};
 
 };
 

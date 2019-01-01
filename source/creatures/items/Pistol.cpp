@@ -132,12 +132,14 @@ void Pistol::handle_shooting() {
 
 void Pistol::match_animation() {
 
-    if (sprite_state == Orientation::LEFT)
-        _frame_gfx = sprite_utils::get_frame((u8 *) gfx_spike_collectibles_flameTiles, _sprite_size, 32);
-    else
-        _frame_gfx = sprite_utils::get_frame((u8 *) gfx_spike_collectibles_flameTiles, _sprite_size, 33);
+    u8 *frame_gfx;
 
-    sprite_utils::update_frame(_frame_gfx, _sprite_size, _main_sprite_info, _sub_sprite_info);
+    if (sprite_state == Orientation::LEFT)
+        frame_gfx = sprite_utils::get_frame((u8 *) gfx_spike_collectibles_flameTiles, _sprite_size, 32);
+    else
+        frame_gfx = sprite_utils::get_frame((u8 *) gfx_spike_collectibles_flameTiles, _sprite_size, 33);
+
+    sprite_utils::update_frame(frame_gfx, _sprite_size, _main_sprite_info, _sub_sprite_info);
 }
 
 void Pistol::delete_sprites() {

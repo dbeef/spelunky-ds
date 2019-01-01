@@ -68,7 +68,6 @@ public:
     SpriteInfo *_sub_sprite_info{};
     SpriteInfo *_main_sprite_info_2{};
     SpriteInfo *_sub_sprite_info_2{};
-    u8 *_frame_gfx{};
 
 };
 

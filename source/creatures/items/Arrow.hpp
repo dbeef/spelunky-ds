@@ -78,7 +78,6 @@ public:
 
     SpriteInfo *mainSpriteInfo{};
     SpriteInfo *subSpriteInfo{};
-    u8 *frameGfx{};
     double angle{};
     bool thrown{};
     double armed_timer{};

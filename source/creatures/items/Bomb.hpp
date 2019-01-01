@@ -72,7 +72,6 @@ public:
 
     SpriteInfo *mainSpriteInfo{};
     SpriteInfo *subSpriteInfo{};
-    u8 *frameGfx{};
     bool armed{};
     u16 armedTimer{};
     double explosionTimer{};

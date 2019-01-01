@@ -4,19 +4,20 @@
 
 #include <cmath>
 #include <maxmod9.h>
-#include "../../GlobalsDeclarations.hpp"
-#include "../main_dude/MainDude.hpp"
+
 #include "../../../build/gfx_arrow.h"
-#include "Rock.hpp"
-#include "../../collisions/Collisions.hpp"
-#include "../../tiles/LevelRenderingUtils.hpp"
-#include "Arrow.hpp"
 #include "../../../build/soundbank.h"
 #include "../../sound/SoundUtils.hpp"
+#include "../../GlobalsDeclarations.hpp"
+#include "../../collisions/Collisions.hpp"
+#include "../../tiles/LevelRenderingUtils.hpp"
+#include "../main_dude/MainDude.hpp"
 #include "../SpriteUtils.hpp"
+#include "Arrow.hpp"
 
 void Arrow::update_creature_specific() {
 
+    // TODO Isn't this checked in game loop when iterating? If so, remove because redundancy.
     if (_ready_to_dispose) return;
 
     check_if_can_be_pickuped();
@@ -43,9 +44,6 @@ void Arrow::update_creature_specific() {
     }
 
     update_sprites_position();
-    sprite_utils::set_priority(OBJPRIORITY_0, mainSpriteInfo, subSpriteInfo);
-    sprite_utils::set_horizontal_flip(false, mainSpriteInfo, subSpriteInfo);
-    sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);
 
     if (kill_mobs_if_thrown(3)) {
         sprite_utils::set_visibility(false, mainSpriteInfo, subSpriteInfo);
@@ -56,7 +54,8 @@ void Arrow::update_creature_specific() {
 
         spawn_blood();
 
-        //TODO Make an util function for this
+        // TODO Make an util function for this;
+        // settings those flags causes main dude to fall off whatever he is hanging on.
         global::main_dude->can_climb_rope = false;
         global::main_dude->started_climbing_rope = false;
         global::main_dude->can_climb_ladder = false;
@@ -154,10 +153,10 @@ void Arrow::update_creature_specific() {
             }
 
         }
+        _map_collisions_checked = false;
     }
 
 
-    _map_collisions_checked = false;
 }
 
 void Arrow::init_sprites() {
@@ -170,23 +169,24 @@ void Arrow::init_sprites() {
     mainSpriteInfo = global::main_oam_manager->initSprite(gfx_arrowPal, gfx_arrowPalLen, nullptr,
                                                           ARROW_SPRITE_SIZE, ObjSize::OBJSIZE_8, SpritesheetType::ARROW,
                                                           true, false, LAYER_LEVEL::MIDDLE_TOP);
-    update_frame((int) floor(angle / 22.5f));
+    update_frame(static_cast<u16>(floor(angle / 22.5f)));
     update_sprites_position();
     sprite_utils::set_priority(OBJPRIORITY_0, mainSpriteInfo, subSpriteInfo);
     sprite_utils::set_horizontal_flip(false, mainSpriteInfo, subSpriteInfo);
     sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);
+    sprite_utils::set_visibility(true, mainSpriteInfo, subSpriteInfo);
 }
 
 void Arrow::update_frame(int frame_num) {
-    frameGfx = sprite_utils::get_frame((u8 *) gfx_arrowTiles, ARROW_SPRITE_SIZE, frame_num);
-    sprite_utils::update_frame(frameGfx, ARROW_SPRITE_SIZE, mainSpriteInfo, subSpriteInfo);
+    u8 *frame_gfx = sprite_utils::get_frame((u8 *) gfx_arrowTiles, ARROW_SPRITE_SIZE, frame_num);
+    sprite_utils::update_frame(frame_gfx, ARROW_SPRITE_SIZE, mainSpriteInfo, subSpriteInfo);
 }
 
 void Arrow::update_sprites_position() {
     int main_x, main_y, sub_x, sub_y;
     get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
-    sprite_utils::set_entry_xy(mainSpriteInfo, main_x, main_y);
-    sprite_utils::set_entry_xy(subSpriteInfo, sub_x, sub_y);
+    sprite_utils::set_entry_xy(mainSpriteInfo, static_cast<u16>(main_x), static_cast<u16>(main_y));
+    sprite_utils::set_entry_xy(subSpriteInfo, static_cast<u16>(sub_x), static_cast<u16>(sub_y));
 }
 
 void Arrow::delete_sprites() {

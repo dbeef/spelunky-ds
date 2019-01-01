@@ -63,7 +63,6 @@ public:
     bool _blood{};
     SpriteInfo *_main_sprite_info{};
     SpriteInfo *_sub_sprite_info{};
-    u8 *_frame_gfx{};
 
 };
 

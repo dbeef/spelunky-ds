@@ -29,8 +29,8 @@ void Spikes::update_creature_specific() {
         spawn_blood();
 
         _blood = true;
-        _frame_gfx = (u8 *) gfx_spike_collectibles_flameTiles + (_sprite_size * (1) / 2);
-        sprite_utils::update_frame(_frame_gfx, _sprite_size, _main_sprite_info, _sub_sprite_info);
+        u8 *frame_gfx = (u8 *) gfx_spike_collectibles_flameTiles + (_sprite_size * (1) / 2);
+        sprite_utils::update_frame(frame_gfx, _sprite_size, _main_sprite_info, _sub_sprite_info);
     }
 
     // check whether any creature can be killed by this spikes
@@ -51,8 +51,8 @@ void Spikes::update_creature_specific() {
                     global::creatures.at(a)->apply_dmg(8);
                     global::creatures.at(a)->_x_speed = 0;
                     _blood = true;
-                    _frame_gfx = (u8 *) gfx_spike_collectibles_flameTiles + (_sprite_size * (1) / 2);
-                    sprite_utils::update_frame(_frame_gfx, _sprite_size, _main_sprite_info, _sub_sprite_info);
+                    u8 *frame_gfx = (u8 *) gfx_spike_collectibles_flameTiles + (_sprite_size * (1) / 2);
+                    sprite_utils::update_frame(frame_gfx, _sprite_size, _main_sprite_info, _sub_sprite_info);
                 }
             }
         }
@@ -74,11 +74,13 @@ void Spikes::init_sprites() {
                                                              nullptr, _sprite_size, ObjSize::OBJSIZE_16,
                                                              _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_BOT);
 
+    u8 *frame_gfx;
+
     if (_blood)
-        _frame_gfx = (u8 *) gfx_spike_collectibles_flameTiles + (_sprite_size * (1) / 2);
+        frame_gfx = (u8 *) gfx_spike_collectibles_flameTiles + (_sprite_size * (1) / 2);
     else
-        _frame_gfx = (u8 *) gfx_spike_collectibles_flameTiles;
-    sprite_utils::update_frame(_frame_gfx, _sprite_size, _main_sprite_info, _sub_sprite_info);
+        frame_gfx = (u8 *) gfx_spike_collectibles_flameTiles;
+    sprite_utils::update_frame(frame_gfx, _sprite_size, _main_sprite_info, _sub_sprite_info);
 
     sprite_utils::set_vertical_flip(false, _main_sprite_info, _sub_sprite_info);
     sprite_utils::set_horizontal_flip(false, _main_sprite_info, _sub_sprite_info);

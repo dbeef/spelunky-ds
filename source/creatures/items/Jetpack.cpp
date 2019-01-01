@@ -51,6 +51,7 @@ void Jetpack::update_creature_specific() {
             sprite_utils::set_horizontal_flip(true, _main_sprite_info, _sub_sprite_info);
         }
 
+
         if (global::main_dude->using_jetpack) {
             _poof_spawn_timer += *global::timer;
 
@@ -92,15 +93,7 @@ void Jetpack::update_creature_specific() {
             }
 
         }
-
-        _frame_gfx = sprite_utils::get_frame((u8 *) gfx_bat_snake_jetpackTiles, _sprite_size, 8);
-    } else {
-        _frame_gfx = sprite_utils::get_frame((u8 *) gfx_bat_snake_jetpackTiles, _sprite_size, 7);
     }
-
-    sprite_utils::update_frame(_frame_gfx, _sprite_size, _main_sprite_info, _sub_sprite_info);
-    sprite_utils::set_visibility(true, _main_sprite_info, _sub_sprite_info);
-    sprite_utils::set_vertical_flip(false, _main_sprite_info, _sub_sprite_info);
 
     if (global::main_dude->_bottom_collision || global::main_dude->hanging_on_tile_left ||
         global::main_dude->hanging_on_tile_right) {
@@ -122,17 +115,23 @@ void Jetpack::init_sprites() {
     delete_sprites();
 
     _sub_sprite_info = global::sub_oam_manager->initSprite(gfx_bat_snake_jetpackPal, gfx_bat_snake_jetpackPalLen,
-                                                        nullptr, _sprite_size, ObjSize::OBJSIZE_16,
-                                                        _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
+                                                           nullptr, _sprite_size, ObjSize::OBJSIZE_16,
+                                                           _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
     _main_sprite_info = global::main_oam_manager->initSprite(gfx_bat_snake_jetpackPal, gfx_bat_snake_jetpackPalLen,
-                                                          nullptr, _sprite_size, ObjSize::OBJSIZE_16,
-                                                          _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
-    if (collected)
-        _frame_gfx = sprite_utils::get_frame((u8 *) gfx_bat_snake_jetpackTiles, _sprite_size, 8);
-    else
-        _frame_gfx = sprite_utils::get_frame((u8 *) gfx_bat_snake_jetpackTiles, _sprite_size, 7);
+                                                             nullptr, _sprite_size, ObjSize::OBJSIZE_16,
+                                                             _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
 
-    sprite_utils::update_frame(_frame_gfx, _sprite_size, _main_sprite_info, _sub_sprite_info);
+    sprite_utils::set_visibility(true, _main_sprite_info, _sub_sprite_info);
+    sprite_utils::set_vertical_flip(false, _main_sprite_info, _sub_sprite_info);
+
+    u8 *frame_gfx;
+
+    if (collected)
+        frame_gfx = sprite_utils::get_frame((u8 *) gfx_bat_snake_jetpackTiles, _sprite_size, 8);
+    else
+        frame_gfx = sprite_utils::get_frame((u8 *) gfx_bat_snake_jetpackTiles, _sprite_size, 7);
+
+    sprite_utils::update_frame(frame_gfx, _sprite_size, _main_sprite_info, _sub_sprite_info);
 }
 
 void Jetpack::update_sprites_position() {
@@ -163,6 +162,8 @@ void Jetpack::equip() {
         global::main_dude->carrying_jetpack = true;
         update_sprites_position();
         collected = true;
+        u8 *frame_gfx = sprite_utils::get_frame((u8 *) gfx_bat_snake_jetpackTiles, _sprite_size, 8);
+        sprite_utils::update_frame(frame_gfx, _sprite_size, _main_sprite_info, _sub_sprite_info);
     } else {
         //we've collected an item that is already in inventory, dispose
         _ready_to_dispose = true;
