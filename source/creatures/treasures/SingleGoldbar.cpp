@@ -27,7 +27,6 @@ void SingleGoldbar::init_sprites() {
     sprite_utils::set_horizontal_flip(false, _main_sprite_info, _sub_sprite_info);
     sprite_utils::set_visibility(true, _main_sprite_info, _sub_sprite_info);
     sprite_utils::set_priority(OBJPRIORITY_0, _main_sprite_info, _sub_sprite_info);
-
 }
 
 SingleGoldbar::SingleGoldbar(int x, int y) : BaseTreasure(

@@ -32,8 +32,8 @@ void BaseTreasure::update() {
 
     update_sprites_position();
 
-    //TODO Call checking this not every frame, but:
-    // when collisions with map checked on collectible OR
+    // TODO Call checking this not every frame, but:
+    // when collisions with map checked on treasure OR
     // when collisions with map checked on main dude
 
     if (_collectible_timer >= 500 &&
