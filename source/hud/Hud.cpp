@@ -12,16 +12,15 @@
 #include "../creatures/enemies/Snake.hpp"
 #include "../creatures/enemies/Bat.hpp"
 #include "../creatures/enemies/Spider.hpp"
-#include "../interfaces/Moniez.hpp"
 #include "../creatures/SpriteUtils.hpp"
 #include "../creatures/enemies/Damsel.hpp"
 #include "../creatures/enemies/Skeleton.hpp"
 #include "../creatures/enemies/Caveman.hpp"
 #include "../creatures/enemies/Shopkeeper.hpp"
-#include "../creatures/collectibles/RubyBig.h"
-#include "../creatures/collectibles/RubySmall.h"
-#include "../creatures/collectibles/TripleGoldbar.h"
-#include "../creatures/collectibles/SingleGoldbar.hpp"
+#include "../creatures/treasures/RubyBig.h"
+#include "../creatures/treasures/RubySmall.h"
+#include "../creatures/treasures/TripleGoldbar.h"
+#include "../creatures/treasures/SingleGoldbar.hpp"
 
 #define HEART_POSITION_X 5
 #define HEART_POSITION_Y 5
@@ -341,35 +340,35 @@ void Hud::draw_collected_loot() {
 
         //FIXME Pass specific moniez type
 
-        if (global::collected_loot.at(a) == CreatureType::RUBY_BIG) {
+        if (global::collected_loot.at(a) == TreasureType::RUBY_BIG) {
 
             auto *ruby_big = new RubyBig(90 + (a * 4), 190);
             ruby_big->_y += (16 - ruby_big->_physical_height); //aligning to same level
-            global::creatures.push_back(ruby_big);
+            global::treasures_to_add.push_back(ruby_big);
             ruby_big->update_sprites_position();
             ruby_big->_ready_to_dispose = true;
 
-        } else if (global::collected_loot.at(a) == CreatureType::RUBY_SMALL) {
+        } else if (global::collected_loot.at(a) == TreasureType::RUBY_SMALL) {
 
             auto *ruby_small = new RubySmall(90 + (a * 4), 190);
             ruby_small->_y += (16 - ruby_small->_physical_height); //aligning to same level
-            global::creatures.push_back(ruby_small);
+            global::treasures_to_add.push_back(ruby_small);
             ruby_small->update_sprites_position();
             ruby_small->_ready_to_dispose = true;
 
-        } else if (global::collected_loot.at(a) == CreatureType::TRIPLE_GOLDBAR) {
+        } else if (global::collected_loot.at(a) == TreasureType::TRIPLE_GOLDBAR) {
 
             auto *triple_goldbars = new TripleGoldbar(90 + (a * 4), 190);
             triple_goldbars->_y += (16 - triple_goldbars->_physical_height); //aligning to same level
-            global::creatures.push_back(triple_goldbars);
+            global::treasures_to_add.push_back(triple_goldbars);
             triple_goldbars->update_sprites_position();
             triple_goldbars->_ready_to_dispose = true;
 
-        } else if (global::collected_loot.at(a) == CreatureType::SINGLE_GOLDBAR) {
+        } else if (global::collected_loot.at(a) == TreasureType::SINGLE_GOLDBAR) {
 
             auto *single_goldbar = new SingleGoldbar(90 + (a * 4), 190);
             single_goldbar->_y += (16 - single_goldbar->_physical_height); //aligning to same level
-            global::creatures.push_back(single_goldbar);
+            global::treasures_to_add.push_back(single_goldbar);
             single_goldbar->update_sprites_position();
             single_goldbar->_ready_to_dispose = true;
 

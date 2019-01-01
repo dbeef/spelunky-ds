@@ -80,8 +80,6 @@ add_executable(spelunkyds
         source/creatures/items/Jar.hpp
         source/creatures/enemies/Snake.cpp
         source/creatures/enemies/Snake.hpp
-        source/interfaces/Moniez.cpp
-        source/interfaces/Moniez.hpp
         source/tiles/MapTileType.hpp
         source/creatures/animations/Blood.cpp
         source/creatures/animations/Blood.hpp
@@ -198,14 +196,14 @@ add_executable(spelunkyds
         source/tiles/LevelGenerator.cpp
         source/tiles/PopulatingUtils.hpp
         source/tiles/PopulatingUtils.cpp
-        source/creatures/collectibles/RubyBig.h
-        source/creatures/collectibles/RubySmall.h
-        source/creatures/collectibles/TripleGoldbar.h
-        source/creatures/collectibles/TripleGoldbar.cpp
-        source/creatures/collectibles/SingleGoldbar.hpp
-        source/creatures/collectibles/SingleGoldbar.cpp
-        source/creatures/collectibles/RubySmall.cpp
-        source/creatures/collectibles/RubyBig.cpp
+        source/creatures/treasures/RubyBig.h
+        source/creatures/treasures/RubySmall.h
+        source/creatures/treasures/TripleGoldbar.h
+        source/creatures/treasures/TripleGoldbar.cpp
+        source/creatures/treasures/SingleGoldbar.hpp
+        source/creatures/treasures/SingleGoldbar.cpp
+        source/creatures/treasures/RubySmall.cpp
+        source/creatures/treasures/RubyBig.cpp
         source/collisions/CollisionsUtils.h
         source/collisions/CollisionsUtils.cpp
         source/decorations/_BaseDecoration.h
@@ -219,6 +217,4 @@ add_executable(spelunkyds
         source/interfaces/ICollidable.h
         source/interfaces/IBase.cpp
         source/interfaces/IBase.h
-        source/treasures/BaseTreasure.cpp
-        source/treasures/BaseTreasure.h
-        )
+        source/creatures/treasures/BaseTreasure.cpp source/creatures/treasures/BaseTreasure.h)

@@ -28,4 +28,7 @@ void global::init_globals() {
     global::decorations.reserve(64);
     global::decorations_to_add.reserve(64);
 
+    global::treasures.reserve(8);
+    global::treasures_to_add.reserve(8);
+
 }

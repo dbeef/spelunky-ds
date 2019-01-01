@@ -8,7 +8,6 @@
 #include <nds/arm9/sprite.h>
 #include "tiles/Level.hpp"
 #include "creatures/SpriteInfo.h"
-#include "interfaces/Moniez.hpp"
 #include "GlobalsDeclarations.hpp"
 #include "creatures/enemies/Snake.hpp"
 #include "creatures/items/Jar.hpp"

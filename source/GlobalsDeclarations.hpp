@@ -17,6 +17,7 @@
 #include "creatures/SpriteInfo.h"
 #include "creatures/main_dude/GameState.hpp"
 #include "decorations/_BaseDecoration.h"
+#include "creatures/treasures/BaseTreasure.h"
 
 #define GRAVITY_DELTA_SPEED 0.22 //FIXME isn't it mob-specific?
 #define DEFAULT_DMA_CHANNEL 3
@@ -43,9 +44,12 @@ namespace global {
     extern std::vector<BaseDecoration *> decorations;
     extern std::vector<BaseDecoration *> decorations_to_add;
 
+    extern std::vector<BaseTreasure *> treasures;
+    extern std::vector<BaseTreasure *> treasures_to_add;
+
     extern std::vector<SpriteInfo *> sprite_infos; //technically list of wrappers around OAM entries FIXME naming
     extern std::vector<CreatureType> killed_npcs; //list of NPCs killed in current level //FIXME should be SpriteType
-    extern std::vector<CreatureType> collected_loot; //list of loot collected in current level
+    extern std::vector<TreasureType> collected_loot; //list of loot collected in current level
 
     extern int bg_main_address; //technically, it's an id returned by oam init FIXME naming
     extern int bg_sub_address; //technically, it's an id returned by oam init FIXME naming

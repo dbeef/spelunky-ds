@@ -32,10 +32,10 @@
 #include "../rooms/LeftRightUpRooms.hpp"
 #include "../rooms/LeftRightDownRooms.hpp"
 #include "../rooms/EntranceRooms.hpp"
-#include "../creatures/collectibles/SingleGoldbar.hpp"
-#include "../creatures/collectibles/TripleGoldbar.h"
-#include "../creatures/collectibles/RubySmall.h"
-#include "../creatures/collectibles/RubyBig.h"
+#include "../creatures/treasures/SingleGoldbar.hpp"
+#include "../creatures/treasures/TripleGoldbar.h"
+#include "../creatures/treasures/RubySmall.h"
+#include "../creatures/treasures/RubyBig.h"
 #include "../decorations/RockSign.h"
 #include "../decorations/ArchSign.h"
 
@@ -101,10 +101,10 @@ void populate_cave_moniez() {
 
                         if (goldbar_type == 0) {
                             auto *single_goldbar = new SingleGoldbar(pos_x * 16, pos_y * 16);
-                            global::creatures.push_back(single_goldbar);
+                            global::treasures_to_add.push_back(single_goldbar);
                         } else {
                             auto *triple_goldbar = new TripleGoldbar(pos_x * 16, pos_y * 16);
-                            global::creatures.push_back(triple_goldbar);
+                            global::treasures_to_add.push_back(triple_goldbar);
                         }
 
                         gold_bars_left--;
@@ -117,10 +117,10 @@ void populate_cave_moniez() {
 
                         if (ruby_type == 0) {
                             auto *ruby_small = new RubySmall(pos_x * 16, pos_y * 16);
-                            global::creatures.push_back(ruby_small);
+                            global::treasures_to_add.push_back(ruby_small);
                         } else {
                             auto *ruby_big = new RubyBig(pos_x * 16, pos_y * 16);
-                            global::creatures.push_back(ruby_big);
+                            global::treasures_to_add.push_back(ruby_big);
                         }
 
                         rubies_left--;

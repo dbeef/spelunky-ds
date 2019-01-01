@@ -33,9 +33,13 @@ namespace global {
     std::vector<BaseCreature *> creatures_to_add;
     std::vector<BaseDecoration *> decorations;
     std::vector<BaseDecoration *> decorations_to_add;
+    std::vector<BaseTreasure *> treasures;
+    std::vector<BaseTreasure *> treasures_to_add;
+
     std::vector<SpriteInfo *> sprite_infos;
+
     std::vector<CreatureType> killed_npcs;
-    std::vector<CreatureType> collected_loot;
+    std::vector<TreasureType > collected_loot;
 
     int bg_main_address{};
     int bg_sub_address{};

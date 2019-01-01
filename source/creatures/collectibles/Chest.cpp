@@ -9,10 +9,9 @@
 #include "../../collisions/Collisions.hpp"
 #include "../../GlobalsDeclarations.hpp"
 #include "../../../build/soundbank.h"
-#include "../../interfaces/Moniez.hpp"
 #include "../SpriteUtils.hpp"
-#include "RubySmall.h"
-#include "RubyBig.h"
+#include "../treasures/RubySmall.h"
+#include "../treasures/RubyBig.h"
 
 #define SPEED_OF_THROWING_CHEST_X 1
 #define SPEED_OF_THROWING_CHEST_Y 1
@@ -84,7 +83,7 @@ void Chest::spawn_treasure() {
                 ruby_small->_x_speed = -0.8;
             else
                 ruby_small->_x_speed = 0.8;
-            global::creatures_to_add.push_back(ruby_small);
+            global::treasures_to_add.push_back(ruby_small);
 
         } else {
             
@@ -95,7 +94,7 @@ void Chest::spawn_treasure() {
                 ruby_big->_x_speed = -0.8;
             else
                 ruby_big->_x_speed = 0.8;
-            global::creatures_to_add.push_back(ruby_big);
+            global::treasures_to_add.push_back(ruby_big);
         }
     }
 }

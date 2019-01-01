@@ -48,6 +48,16 @@ namespace oam_utils {
                 } else
                     ++iter_deco;
             }
+            
+            std::vector<BaseTreasure *>::iterator iter_treasure;
+            for (iter_treasure = global::treasures.begin(); iter_treasure != global::treasures.end();) {
+                iter_treasure.operator*()->delete_sprites();
+                if (iter_treasure.operator*()->_ready_to_dispose) {
+                    delete iter_treasure.operator*();
+                    iter_treasure = global::treasures.erase(iter_treasure);
+                } else
+                    ++iter_treasure;
+            }
 
 //            std::vector<BaseDecoration *>::iterator iter_decorations;
 //            for (iter_decorations = global::decorations.begin(); iter_decorations != global::decorations.end();) {
@@ -77,16 +87,19 @@ namespace oam_utils {
             global::main_dude->init_sprites();
             global::main_dude->whip->init_sprites();
 
-            for (unsigned long a = 0; a < global::creatures.size(); a++) {
-                //fixme - being killed not always means it's ready for disposing!
-                if (!global::creatures.at(a)->_ready_to_dispose /*&& !global::creatures.at(a)->killed*/) {
-                    global::creatures.at(a)->init_sprites();
+            for (auto &creature : global::creatures) {
+                if (!creature->_ready_to_dispose) {
+                    creature->init_sprites();
                 }
             }
-            for (unsigned long a = 0; a < global::decorations.size(); a++) {
-                //fixme - being killed not always means it's ready for disposing!
-                if (!global::decorations.at(a)->_ready_to_dispose /*&& !global::creatures.at(a)->killed*/) {
-                    global::decorations.at(a)->init_sprites();
+            for (auto &decoration : global::decorations) {
+                if (!decoration->_ready_to_dispose) {
+                    decoration->init_sprites();
+                }
+            }
+            for (auto &treasure : global::treasures) {
+                if (!treasure->_ready_to_dispose) {
+                    treasure->init_sprites();
                 }
             }
 
@@ -140,9 +153,19 @@ namespace oam_utils {
             delete sprite; //deletes sprite itself
         }
 
-        global::creatures.clear(); //deletes pointers to the creatures removed above - they're not nullptrs!
+        for (auto &sprite : global::treasures) {
+            sprite->delete_sprites(); //deletes its SpriteInfos and nullptrs them
+            delete sprite; //deletes sprite itself
+        }
 
+        for (auto &sprite : global::treasures_to_add) {
+            sprite->delete_sprites(); //deletes its SpriteInfos and nullptrs them
+            delete sprite; //deletes sprite itself
+        }
+
+        global::creatures.clear(); //deletes pointers to the creatures removed above - they're not nullptrs!
         global::decorations.clear(); //deletes pointers to the decorations removed above - they're not nullptrs!
+        global::treasures.clear(); //deletes pointers to the treasures removed above - they're not nullptrs!
 
 //Assertion will always be false, pointers are copied when pushed to the vector
 //        int c =0;
