@@ -5,9 +5,9 @@
 #ifndef SPELUNKYDS_ONE_GOLDBAR_H
 #define SPELUNKYDS_ONE_GOLDBAR_H
 
-#include "BaseTreasure.h"
+#include "_BaseTreasure.h"
 
-class SingleGoldbar : public BaseTreasure {
+class SingleGoldbar : public _BaseTreasure {
 
 public:
 
@@ -19,7 +19,7 @@ public:
 
     SingleGoldbar(int x, int y);
 
-    // IRenderable overrides (rest of overrrides are in BaseTreasure)
+    // IRenderable overrides (rest of overrrides are in _BaseTreasure)
 
     void init_sprites() override;
 

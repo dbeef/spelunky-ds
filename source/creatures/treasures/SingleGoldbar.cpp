@@ -29,7 +29,7 @@ void SingleGoldbar::init_sprites() {
     sprite_utils::set_priority(OBJPRIORITY_0, _main_sprite_info, _sub_sprite_info);
 }
 
-SingleGoldbar::SingleGoldbar(int x, int y) : BaseTreasure(
+SingleGoldbar::SingleGoldbar(int x, int y) : _BaseTreasure(
         x,
         y,
         single_goldbar_sprite_width,

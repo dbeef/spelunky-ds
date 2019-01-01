@@ -66,7 +66,7 @@ public:
     bool killed{};
 
     SpriteState sprite_state{};
-    CreatureType _creature_type;
+    const CreatureType _creature_type;
 
     bool kill_mobs_if_thrown(int dmg_to_apply) const;
 

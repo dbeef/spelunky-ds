@@ -47,7 +47,7 @@ void RubySmall::init_sprites() {
     sprite_utils::set_priority(OBJPRIORITY_0, _main_sprite_info, _sub_sprite_info);
 }
 
-RubySmall::RubySmall(int x, int y) : BaseTreasure(
+RubySmall::RubySmall(int x, int y) : _BaseTreasure(
         x,
         y,
         ruby_small_sprite_width,

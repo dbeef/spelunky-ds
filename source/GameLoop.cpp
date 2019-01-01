@@ -35,7 +35,7 @@ static void update_treasures_to_add() {
     unsigned long size = global::treasures_to_add.size();
     for (unsigned long a = 0; a < size; a++) {
         if (global::treasures_to_add.at(a)) {
-            BaseTreasure *o = global::treasures_to_add.at(a);
+            _BaseTreasure *o = global::treasures_to_add.at(a);
             global::treasures.push_back(o);
         }
     }

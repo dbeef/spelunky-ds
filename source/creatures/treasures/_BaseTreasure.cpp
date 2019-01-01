@@ -3,28 +3,28 @@
 //
 
 #include <maxmod9.h>
-#include "BaseTreasure.h"
+#include "_BaseTreasure.h"
 
 #include "../SpriteUtils.hpp"
 #include "../../GlobalsDeclarations.hpp"
 #include "../../collisions/Collisions.hpp"
 #include "../../../build/soundbank.h"
 
-void BaseTreasure::update_sprites_position() {
+void _BaseTreasure::update_sprites_position() {
     int main_x, main_y, sub_x, sub_y;
     get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
     sprite_utils::set_entry_xy(_main_sprite_info, static_cast<u16>(main_x), static_cast<u16>(main_y));
     sprite_utils::set_entry_xy(_sub_sprite_info, static_cast<u16>(sub_x), static_cast<u16>(sub_y));
 }
 
-void BaseTreasure::delete_sprites() {
+void _BaseTreasure::delete_sprites() {
     delete _main_sprite_info;
     delete _sub_sprite_info;
     _main_sprite_info = nullptr;
     _sub_sprite_info = nullptr;
 }
 
-void BaseTreasure::update() {
+void _BaseTreasure::update() {
 
     if (_ready_to_dispose) return;
 
@@ -54,7 +54,7 @@ void BaseTreasure::update() {
 
 }
 
-u16 BaseTreasure::get_dollars_value() const {
+u16 _BaseTreasure::get_dollars_value() const {
     switch (_treasure_type) {
         case TreasureType::RUBY_BIG:
             return 1200;
@@ -69,7 +69,7 @@ u16 BaseTreasure::get_dollars_value() const {
     }
 }
 
-BaseTreasure::BaseTreasure(int x, int y, const u16 sprite_width, const u16 sprite_height,
+_BaseTreasure::_BaseTreasure(int x, int y, const u16 sprite_width, const u16 sprite_height,
                            const SpritesheetType spritesheet_type, u16 physical_width, u16 physical_height,
                            TreasureType treasure_type) :
         IRenderable(sprite_width, sprite_height, spritesheet_type),

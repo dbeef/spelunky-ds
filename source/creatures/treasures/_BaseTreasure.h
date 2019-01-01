@@ -24,12 +24,12 @@ enum class RubyColor {
     BLUE
 };
 
-class BaseTreasure : public IRenderable, public ICollidable {
+class _BaseTreasure : public IRenderable, public ICollidable {
 
 public:
 
     // Constructor of inheriting class should call init_sprites.
-    BaseTreasure(
+    _BaseTreasure(
             int x,
             int y,
             u16 sprite_width,
@@ -56,12 +56,12 @@ public:
 
     bool can_apply_gravity() const override { return true; }
 
-    virtual ~BaseTreasure() = default;
+    virtual ~_BaseTreasure() = default;
 
     u16 get_dollars_value() const;
 
     double _collectible_timer;
-    TreasureType  _treasure_type;
+    const TreasureType  _treasure_type;
     SpriteInfo *_main_sprite_info{};
     SpriteInfo *_sub_sprite_info{};
 };

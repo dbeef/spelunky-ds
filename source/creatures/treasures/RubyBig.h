@@ -5,9 +5,9 @@
 #ifndef SPELUNKYDS_RUBY_BIG_H
 #define SPELUNKYDS_RUBY_BIG_H
 
-#include "BaseTreasure.h"
+#include "_BaseTreasure.h"
 
-class RubyBig : public BaseTreasure {
+class RubyBig : public _BaseTreasure {
 
 public:
 
@@ -19,7 +19,7 @@ public:
 
     RubyBig(int x, int y);
 
-    // IRenderable overrides (rest of overrrides are in BaseTreasure)
+    // IRenderable overrides (rest of overrrides are in _BaseTreasure)
 
     void init_sprites() override;
 

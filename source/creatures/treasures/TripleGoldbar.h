@@ -5,9 +5,9 @@
 #ifndef SPELUNKYDS_TRIPLE_GOLDBAR_H
 #define SPELUNKYDS_TRIPLE_GOLDBAR_H
 
-#include "BaseTreasure.h"
+#include "_BaseTreasure.h"
 
-class TripleGoldbar : public BaseTreasure{
+class TripleGoldbar : public _BaseTreasure{
 
 public:
 
@@ -17,7 +17,7 @@ public:
     static constexpr u16 triple_goldbar_physical_height = 10;
     static constexpr SpritesheetType triple_goldbar_spritesheet_type = SpritesheetType::MONIEZ_GOLDBARS;
 
-    TripleGoldbar(int x, int y) : BaseTreasure(
+    TripleGoldbar(int x, int y) : _BaseTreasure(
             x,
             y,
             triple_goldbar_sprite_width,
@@ -30,7 +30,7 @@ public:
         init_sprites();
     }
 
-    // IRenderable overrides (rest of overrrides are in BaseTreasure)
+    // IRenderable overrides (rest of overrrides are in _BaseTreasure)
 
     void init_sprites() override;
 
