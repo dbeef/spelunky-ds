@@ -15,10 +15,14 @@ void ICollidable::update_collisions_with_map(int x_current_pos_in_tiles, int y_c
     Collisions::getNeighboringTiles(global::current_level->map_tiles, x_current_pos_in_tiles,
                                     y_current_pos_in_tiles, _neighboring_tiles);
 
-    _bottom_collision = Collisions::checkBottomCollision(_neighboring_tiles, &_x, &_y, &_y_speed, _physical_width, _physical_height, _bouncing_factor_y);
-    _left_collision = Collisions::checkLeftCollision(_neighboring_tiles, &_x, &_y, &_x_speed, _physical_width, _physical_height, _bouncing_factor_x);
-    _right_collision = Collisions::checkRightCollision(_neighboring_tiles, &_x, &_y, &_x_speed, _physical_width, _physical_height, _bouncing_factor_x);
-    _upper_collision = Collisions::checkUpperCollision(_neighboring_tiles, &_x, &_y, &_y_speed, _physical_width, _bouncing_factor_y);
+    _bottom_collision = Collisions::checkBottomCollision(_neighboring_tiles, &_x, &_y, &_y_speed, _physical_width,
+                                                         _physical_height, _bouncing_factor_y);
+    _left_collision = Collisions::checkLeftCollision(_neighboring_tiles, &_x, &_y, &_x_speed, _physical_width,
+                                                     _physical_height, _bouncing_factor_x);
+    _right_collision = Collisions::checkRightCollision(_neighboring_tiles, &_x, &_y, &_x_speed, _physical_width,
+                                                       _physical_height, _bouncing_factor_x);
+    _upper_collision = Collisions::checkUpperCollision(_neighboring_tiles, &_x, &_y, &_y_speed, _physical_width,
+                                                       _bouncing_factor_y);
 
     _map_collisions_checked = true;
     _current_x_in_tiles = x_current_pos_in_tiles;
@@ -118,46 +122,49 @@ bool ICollidable::check_collision(ICollidable const &other) const {
                                             other._x, other._y, other._physical_width, other._physical_height);
 }
 
-bool ICollidable::kill_creatures_if_have_speed(u8 dmg_to_apply) const {
-
-        bool killed = false;
-
-        if (abs(_x_speed) > 0 || abs(_y_speed) > 0) {
-            for (unsigned long a = 0; a < global::creatures.size(); a++) {
-
-                if ((global::creatures.at(a)->_spritesheet_type == SpritesheetType::SNAKE ||
-                     global::creatures.at(a)->_spritesheet_type == SpritesheetType::BAT_JETPACK ||
-                     global::creatures.at(a)->_spritesheet_type == SpritesheetType::CAVEMAN_DAMSEL ||
-                     global::creatures.at(a)->_spritesheet_type == SpritesheetType::SKELETON_SPIDER)
-                    && !global::creatures.at(a)->killed) {
-                    if (Collisions::checkCollisionBodies(_x, _y, 16, 16, global::creatures.at(a)->_x,
-                                                         global::creatures.at(a)->_y, _physical_width, _physical_height)) {
-
-                        global::creatures.at(a)->apply_dmg(dmg_to_apply);
-                        killed = true;
-
-                    }
-                }
-            }
-        }
-
-        return killed;
+static bool is_killable_creature(BaseCreature *creature) {
+    CreatureType type = creature->_creature_type;
+    return
+            type == CreatureType::SNAKE ||
+            type == CreatureType::BAT ||
+            type == CreatureType::SHOPKEEPER ||
+            type == CreatureType::CAVEMAN ||
+            type == CreatureType::DAMSEL ||
+            type == CreatureType::SKELETON ||
+            type == CreatureType::SPIDER;
 }
 
-//when applied, item kills mobs and destroys items (like jars), if it both travels and collides them
-bool ICollidable::kill_creatures_jars(u8 dmg_to_apply) const {
+bool ICollidable::kill_creatures_if_have_speed(u8 dmg_to_apply) const {
 
     bool killed = false;
 
     if (abs(_x_speed) > 0 || abs(_y_speed) > 0) {
         for (unsigned long a = 0; a < global::creatures.size(); a++) {
-            //FIXME Change spritesheet type to sprite_type, so jetpack wouldn't be affected
-            if ((global::creatures.at(a)->_spritesheet_type == SpritesheetType::SNAKE ||
-                 global::creatures.at(a)->_spritesheet_type == SpritesheetType::BAT_JETPACK ||
-                 global::creatures.at(a)->_spritesheet_type == SpritesheetType::SHOPKEEPER ||
-                 global::creatures.at(a)->_spritesheet_type == SpritesheetType::SKELETON_SPIDER ||
-                 global::creatures.at(a)->_spritesheet_type == SpritesheetType::CAVEMAN_DAMSEL ||
-                 global::creatures.at(a)->_spritesheet_type == SpritesheetType::JAR)
+            if (is_killable_creature(global::creatures.at(a))
+                && !global::creatures.at(a)->killed) {
+                if (Collisions::checkCollisionBodies(_x, _y, 16, 16, global::creatures.at(a)->_x,
+                                                     global::creatures.at(a)->_y, _physical_width, _physical_height)) {
+
+                    global::creatures.at(a)->apply_dmg(dmg_to_apply);
+                    killed = true;
+
+                }
+            }
+        }
+    }
+
+    return killed;
+}
+
+//when applied, item kills mobs and destroys items (like jars), if it both travels and collides them
+bool ICollidable::kill_creatures_jars_if_have_speed_recoil(u8 dmg_to_apply) const {
+
+    bool killed = false;
+
+    if (abs(_x_speed) > 0 || abs(_y_speed) > 0) {
+        for (unsigned long a = 0; a < global::creatures.size(); a++) {
+            if ((is_killable_creature(global::creatures.at(a)) ||
+                 global::creatures.at(a)->_creature_type == CreatureType::JAR)
                 && !global::creatures.at(a)->_ready_to_dispose) {
 
                 if (Collisions::checkCollisionBodies(_x, _y, _physical_width, _physical_height,
@@ -165,15 +172,15 @@ bool ICollidable::kill_creatures_jars(u8 dmg_to_apply) const {
                                                      global::creatures.at(a)->_y,
                                                      global::creatures.at(a)->_physical_width,
                                                      global::creatures.at(a)->_physical_height)) {
-                    global::creatures.at(a)->_x_speed += this->_x_speed * 0.3f;
 
+                    global::creatures.at(a)->_x_speed += this->_x_speed * 0.3f;
                     global::creatures.at(a)->apply_dmg(dmg_to_apply);
                     killed = true;
+
                 }
             }
         }
     }
-
     return killed;
 }
 

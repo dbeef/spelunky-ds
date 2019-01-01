@@ -52,7 +52,7 @@ void Bullet::update_creature_specific() {
             sprite_utils::set_visibility(false, mainSpriteInfo, subSpriteInfo);
         }
 
-    } else if (kill_creatures_jars(4) || kill_main_dude_if_have_speed(4))
+    } else if (kill_creatures_jars_if_have_speed_recoil(4) || kill_main_dude_if_have_speed(4))
         killed = true;
 
 }

@@ -90,21 +90,29 @@ public:
     void update_collidable();
 
     // Updates bottom/upper/left/right collision flags and xy speed.
+    //
     // public access since must be called on every creature when bomb explodes,
-    // so things would fall if there's no more ground under them.
+    // so things would fall instantly if there's no more ground under them.
+    // TODO Check if calling is really needed when bombed.
     // Updates _neighboring_tiles.
     void update_collisions_with_map(int x_current_pos_in_tiles, int y_current_pos_in_tiles);
 
-    // TODO Some enum to specify what can be killed (creatures / jars)
-
-    // I.e rocks/jars can kill creatures, but no jars
+    // If speed exceeds some constant, iterates through all creatures and checks whether collision
+    // with them exist. If so, kills them and returns true when finished iterating.
+    // Does not kill jars and does not cause recoil on creatures that it hits;
+    // i.e rocks/jars can kill creatures, but no jars
     bool kill_creatures_if_have_speed(u8 dmg_to_apply) const;
 
-    // I.e bullets, they can harm both creatures and jars
-    bool kill_creatures_jars(u8 dmg_to_apply) const;
+    // If speed exceeds some constant, iterates through all creatures and checks whether collision
+    // with them exist. If so, kills them and returns true when finished iterating.
+    // I.e bullets, they can harm both creatures and jars and do cause recoil on creatures they hit.
+    bool kill_creatures_jars_if_have_speed_recoil(u8 dmg_to_apply) const;
 
+    // If speed exceeds some constant, checks whether collision with main dude exists.
+    // When that happens, applies damage to it and checks if that was fatal.
     bool kill_main_dude_if_have_speed(u8 dmg_to_apply) const;
 
+    // Checks whether collision with main dude exists, if so, applies damage.
     void deal_damage_main_dude_on_collision(int dmg_to_apply) const;
 
 private:
