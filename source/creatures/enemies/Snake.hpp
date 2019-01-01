@@ -7,7 +7,7 @@
 #define SPELUNKYDS_SNAKE_H
 
 #include "../_BaseCreature.h"
-#include "../SpriteState.hpp"
+#include "../Orientation.hpp"
 #include "../SpriteInfo.h"
 
 //http://spelunky.wikia.com/wiki/Snake
@@ -78,7 +78,7 @@ public:
     u8 *frameGfx{};
     int sameDirectionInRow{};
     //Snake goes for random amount of time_utils on random direction, then waits random time_utils and the cycle goes again
-    SpriteState spriteState{};
+    Orientation spriteState{};
     double waitTimer{};
     double goTimer{};
     int animFrame{};

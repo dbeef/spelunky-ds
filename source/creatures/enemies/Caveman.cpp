@@ -29,7 +29,7 @@ void Caveman::update_creature_specific() {
     invert_speed_timer += *global::timer;
     blood_spawn_timer += *global::timer;
 
-    sprite_utils::set_horizontal_flip(sprite_state == SpriteState::W_RIGHT, mainSpriteInfo, subSpriteInfo);
+    sprite_utils::set_horizontal_flip(sprite_state == Orientation::RIGHT, mainSpriteInfo, subSpriteInfo);
     sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);
     sprite_utils::set_visibility(true, mainSpriteInfo, subSpriteInfo);
 
@@ -143,7 +143,7 @@ void Caveman::randomizeMovement() {
 
     int r = rand() % 2;
     if (r == 0)
-        sprite_state = SpriteState::W_LEFT;
+        sprite_state = Orientation::LEFT;
     //else keep the current side
 
     goTimer = (rand() % (1 * 2000)) + 1000;
@@ -193,7 +193,7 @@ void Caveman::init_sprites() {
                                                           true, false, LAYER_LEVEL::MIDDLE_BOT);
     match_animation();
     update_sprites_position();
-    sprite_utils::set_horizontal_flip(sprite_state == SpriteState::W_RIGHT, mainSpriteInfo, subSpriteInfo);
+    sprite_utils::set_horizontal_flip(sprite_state == Orientation::RIGHT, mainSpriteInfo, subSpriteInfo);
     sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);
     sprite_utils::set_visibility(true, mainSpriteInfo, subSpriteInfo);
 
@@ -219,12 +219,12 @@ void Caveman::make_some_movement() {
             goTimer -= *global::timer;
 
         if (triggered) {
-            if (sprite_state == SpriteState::W_RIGHT)
+            if (sprite_state == Orientation::RIGHT)
                 _x_speed = CAVEMAN_TRIGGERED_SPEED;
             else
                 _x_speed = -CAVEMAN_TRIGGERED_SPEED;
         } else {
-            if (sprite_state == SpriteState::W_RIGHT)
+            if (sprite_state == Orientation::RIGHT)
                 _x_speed = CAVEMAN_NORMAL_SPEED;
             else
                 _x_speed = -CAVEMAN_NORMAL_SPEED;
@@ -251,10 +251,10 @@ void Caveman::make_some_movement() {
 
         if ((_left_collision || _right_collision) && !landlocked) {
 
-            if (sprite_state == SpriteState::W_LEFT)
-                sprite_state = SpriteState::W_RIGHT;
+            if (sprite_state == Orientation::LEFT)
+                sprite_state = Orientation::RIGHT;
             else
-                sprite_state = SpriteState::W_LEFT;
+                sprite_state = Orientation::LEFT;
 
             _x_speed *= -1;
             _right_collision = false;
@@ -280,9 +280,9 @@ void Caveman::check_if_can_be_triggered() {
         triggered = true;
 
         MapTile *tiles[9] = {};
-        if (sprite_state == SpriteState::W_RIGHT && diff < 0)
+        if (sprite_state == Orientation::RIGHT && diff < 0)
             Collisions::getTilesOnRightFromXY(xx, yy, tiles);
-        else if (sprite_state == SpriteState::W_LEFT && diff > 0)
+        else if (sprite_state == Orientation::LEFT && diff > 0)
             Collisions::getTilesOnLeftFromXY(xx, yy, tiles);
         else triggered = false;
 

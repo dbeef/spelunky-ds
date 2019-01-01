@@ -6,7 +6,7 @@
 #define SPELUNKYDS_MOVINGOBJECT_H
 
 #include "SpritesheetType.hpp"
-#include "SpriteState.hpp"
+#include "Orientation.hpp"
 #include "CreatureType.hpp"
 #include "../interfaces/IRenderable.h"
 #include "../interfaces/ICollidable.h"
@@ -65,7 +65,7 @@ public:
     bool activated{}; //ex. shooting shotgun, or arming bomb
     bool killed{};
 
-    SpriteState sprite_state{};
+    Orientation sprite_state{};
     const CreatureType _creature_type;
 
     bool kill_mobs_if_thrown(int dmg_to_apply) const;

@@ -10,7 +10,7 @@
 #define DAMSEL_HITPOINTS 3
 
 #include "../_BaseCreature.h"
-#include "../SpriteState.hpp"
+#include "../Orientation.hpp"
 #include "../SpriteInfo.h"
 
 //http://spelunky.wikia.com/wiki/Damsel
@@ -37,7 +37,7 @@ public:
         _max_x_speed = 1.5f;
         hitpoints = DAMSEL_HITPOINTS;
         call_for_help = true;
-        sprite_state = SpriteState::W_LEFT;
+        sprite_state = Orientation::LEFT;
         activated = true;
         randomizeMovement();
         _bouncing_factor_x = 0;

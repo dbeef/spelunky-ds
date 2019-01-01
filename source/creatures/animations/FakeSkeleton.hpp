@@ -6,7 +6,7 @@
 #define SPELUNKYDS_FAKE_SKELETON_H
 
 #include "../SpriteInfo.h"
-#include "../SpriteState.hpp"
+#include "../Orientation.hpp"
 #include "../_BaseCreature.h"
 
 #define FAKE_SKELETON_PHYSICAL_HEIGHT_WOUT_SKULL 4

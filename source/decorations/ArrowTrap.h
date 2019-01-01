@@ -21,7 +21,7 @@ class ArrowTrap : public BaseDecoration {
 
 public:
 
-    ArrowTrap(int x, int y, SpriteState sprite_state);
+    ArrowTrap(int x, int y, Orientation sprite_state);
 
     // BaseDecoration overrides
 
@@ -52,7 +52,7 @@ private:
     SpriteInfo *_main_sprite_info{};
     SpriteInfo *_sub_sprite_info{};
     u8 *_frame_gfx{};
-    SpriteState _sprite_state;
+    Orientation _sprite_state;
 
 };
 

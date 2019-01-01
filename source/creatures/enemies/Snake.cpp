@@ -47,10 +47,10 @@ void Snake::update_creature_specific() {
         if (goTimer > 0) {
             goTimer -= *global::timer;
 
-            if ((standingOnLeftEdge && spriteState == SpriteState::W_LEFT) ||
-                (standingOnRightEdge && spriteState == SpriteState::W_RIGHT))
+            if ((standingOnLeftEdge && spriteState == Orientation::LEFT) ||
+                (standingOnRightEdge && spriteState == Orientation::RIGHT))
                 _x_speed = 0; //stop if standing on an edge and facing towards it
-            else if (spriteState == SpriteState::W_RIGHT)
+            else if (spriteState == Orientation::RIGHT)
                 _x_speed = 0.5; //if not standing on an edge and facing towards it, go where you're facing
             else
                 _x_speed = -0.5;
@@ -83,31 +83,31 @@ void Snake::randomizeMovement() {
 
     goTimer = (rand() % 1000) + 1000;
     waitTimer = (rand() % 500) + 500;
-    int r = rand() % 2;
+    auto r = static_cast<Orientation>(rand() % 2);
 
-    if (r == SpriteState::W_LEFT) {
+    if (r == Orientation::LEFT) {
 
-        if (spriteState == SpriteState::W_LEFT)
+        if (spriteState == Orientation::LEFT)
             sameDirectionInRow++;
         else
             sameDirectionInRow = 0;
 
         if (sameDirectionInRow == 2)
-            spriteState = SpriteState::W_RIGHT;
+            spriteState = Orientation::RIGHT;
         else
-            spriteState = SpriteState::W_LEFT;
+            spriteState = Orientation::LEFT;
 
-    } else if (r == SpriteState::W_RIGHT) {
+    } else if (r == Orientation::RIGHT) {
 
-        if (spriteState == SpriteState::W_RIGHT)
+        if (spriteState == Orientation::RIGHT)
             sameDirectionInRow++;
         else
             sameDirectionInRow = 0;
 
         if (sameDirectionInRow == 2)
-            spriteState = SpriteState::W_LEFT;
+            spriteState = Orientation::LEFT;
         else
-            spriteState = SpriteState::W_RIGHT;
+            spriteState = Orientation::RIGHT;
     }
 }
 
@@ -162,9 +162,9 @@ void Snake::set_sprite_right() {
 }
 
 void Snake::match_animation() {
-    if (spriteState == SpriteState::W_LEFT)
+    if (spriteState == Orientation::LEFT)
         set_sprite_left();
-    else if (spriteState == SpriteState::W_RIGHT)
+    else if (spriteState == Orientation::RIGHT)
         set_sprite_right();
 
     sprite_utils::update_frame(frameGfx, _sprite_size, mainSpriteInfo, subSpriteInfo);

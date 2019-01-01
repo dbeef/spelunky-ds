@@ -405,7 +405,7 @@ void Hud::draw_killed_npcs() {
             }
             case CreatureType::SNAKE: {
                 auto *snake = new Snake(95 + (a * 8), 208);
-                snake->sprite_state = SpriteState::W_LEFT;
+                snake->sprite_state = Orientation::LEFT;
                 snake->_y += (16 - snake->_physical_height); //aligning to same level
                 global::creatures.push_back(snake);
                 snake->_ready_to_dispose = true;
@@ -428,7 +428,7 @@ void Hud::draw_killed_npcs() {
             case CreatureType::SKELETON: {
                 auto *skeleton = new Skeleton(95 + (a * 8), 208);
                 skeleton->summoned = true;
-                skeleton->main_dude_orientation_at_summoning_moment = SpriteState::W_RIGHT;
+                skeleton->main_dude_orientation_at_summoning_moment = Orientation::RIGHT;
                 skeleton->set_sprite_walking();
                 skeleton->_y += (16 - skeleton->_physical_height); //aligning to same level
                 global::creatures.push_back(skeleton);
@@ -439,7 +439,7 @@ void Hud::draw_killed_npcs() {
 
             case CreatureType::CAVEMAN: {
                 auto *caveman = new Caveman(95 + (a * 8), 208);
-                caveman->sprite_state = SpriteState::W_LEFT;
+                caveman->sprite_state = Orientation::LEFT;
                 caveman->animFrameTimer = 1000;
                 caveman->update();
                 caveman->_y += (16 - caveman->_physical_height); //aligning to same level
@@ -453,7 +453,7 @@ void Hud::draw_killed_npcs() {
                 auto *shopkeeper = new Shopkeeper(95 + (a * 8), 208);
                 shopkeeper->no_shotgun = true;
                 shopkeeper->anim_frame_timer = 1000;
-                shopkeeper->sprite_state = SpriteState::W_LEFT;
+                shopkeeper->sprite_state = Orientation::LEFT;
                 shopkeeper->_y += (16 - shopkeeper->_physical_height); //aligning to same level
                 shopkeeper->_ready_to_dispose = true;
                 shopkeeper->update();

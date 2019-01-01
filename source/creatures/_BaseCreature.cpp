@@ -134,7 +134,7 @@ void BaseCreature::set_pickuped_position(int pickup_offset_x, int pickup_offset_
 
         _y = global::main_dude->_y + pickup_offset_y;
 
-        if (global::main_dude->sprite_state == SpriteState::W_LEFT) {
+        if (global::main_dude->sprite_state == Orientation::LEFT) {
             _x = global::main_dude->_x - pickup_offset_x;
         } else
             _x = global::main_dude->_x + pickup_offset_x;
@@ -152,7 +152,7 @@ void BaseCreature::set_pickuped_position(int pickup_offset_x_left, int pickup_of
 
         _y = global::main_dude->_y + pickup_offset_y;
 
-        if (global::main_dude->sprite_state == SpriteState::W_LEFT) {
+        if (global::main_dude->sprite_state == Orientation::LEFT) {
             _x = global::main_dude->_x - pickup_offset_x_left;
         } else
             _x = global::main_dude->_x + pickup_offset_x_right;
@@ -169,7 +169,7 @@ BaseCreature::set_pickuped_position_on_another_moving_obj(int pickup_offset_x, i
 
     m->_y = _y + pickup_offset_y;
 
-    if (sprite_state == SpriteState::W_LEFT) {
+    if (sprite_state == Orientation::LEFT) {
         m->_x = _x - pickup_offset_x;
     } else
         m->_x = _x + pickup_offset_x;
@@ -182,7 +182,7 @@ void BaseCreature::set_pickuped_position_not_checking(int pickup_offset_x, int p
 
     _y = global::main_dude->_y + pickup_offset_y;
 
-    if (global::main_dude->sprite_state == SpriteState::W_LEFT) {
+    if (global::main_dude->sprite_state == Orientation::LEFT) {
         _x = global::main_dude->_x - pickup_offset_x;
     } else
         _x = global::main_dude->_x + pickup_offset_x;

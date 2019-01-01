@@ -6,7 +6,7 @@
 #define SPELUNKYDS_BULLET_H
 
 #include "../_BaseCreature.h"
-#include "../SpriteState.hpp"
+#include "../Orientation.hpp"
 #include "../../collisions/Collisions.hpp"
 #include "../../tiles/LevelRenderingUtils.hpp"
 #include "../SpriteUtils.hpp"

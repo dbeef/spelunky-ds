@@ -5,7 +5,7 @@
 #define SPELUNKYDS_SKELETON_H
 
 #include "../_BaseCreature.h"
-#include "../SpriteState.hpp"
+#include "../Orientation.hpp"
 #include "../SpriteInfo.h"
 
 //http://spelunky.wikia.com/wiki/Skeleton
@@ -30,7 +30,7 @@ public:
             CreatureType::SKELETON
     ) {
         hitpoints = 1;
-        sprite_state = SpriteState::W_LEFT;
+        sprite_state = Orientation::LEFT;
         init_sprites();
     }
 
@@ -84,7 +84,7 @@ public:
     bool set_up{};
     bool summoned{};
     bool can_be_summoned{};
-    SpriteState main_dude_orientation_at_summoning_moment{};
+    Orientation main_dude_orientation_at_summoning_moment{};
     
 };
 

@@ -27,7 +27,7 @@ void Arrow::update_creature_specific() {
 
         set_pickuped_position(1, 10, 6);
 
-        if (global::main_dude->sprite_state == SpriteState::W_RIGHT)
+        if (global::main_dude->sprite_state == Orientation::RIGHT)
             angle = 90;
         else
             angle = 270;
@@ -68,9 +68,9 @@ void Arrow::update_creature_specific() {
         global::main_dude->stunned_timer = 0;
         global::main_dude->stunned = true;
 
-        if (sprite_state == SpriteState::W_LEFT)
+        if (sprite_state == Orientation::LEFT)
             global::main_dude->_x_speed = -3;
-        else if (sprite_state == SpriteState::W_RIGHT)
+        else if (sprite_state == Orientation::RIGHT)
             global::main_dude->_x_speed = 3;
 
         global::main_dude->time_since_last_damage = 0;

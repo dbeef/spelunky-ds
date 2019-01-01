@@ -243,9 +243,9 @@ void populate_cave_npcs() {
                     if (npc == 9 || npc == 10) {
                         ArrowTrap *arrowTrap = nullptr;
                         if (npc == 9)
-                            arrowTrap = new ArrowTrap(pos_x * 16, pos_y * 16, SpriteState::W_LEFT);
+                            arrowTrap = new ArrowTrap(pos_x * 16, pos_y * 16, Orientation::LEFT);
                         else if (npc == 10)
-                            arrowTrap = new ArrowTrap(pos_x * 16, pos_y * 16, SpriteState::W_RIGHT);
+                            arrowTrap = new ArrowTrap(pos_x * 16, pos_y * 16, Orientation::RIGHT);
                         global::decorations_to_add.push_back(arrowTrap);
                     }
 

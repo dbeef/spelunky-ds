@@ -7,7 +7,7 @@
 
 
 #include "../SpriteInfo.h"
-#include "../SpriteState.hpp"
+#include "../Orientation.hpp"
 #include "../_BaseCreature.h"
 #include "../../interfaces/ShoppingObject.h"
 

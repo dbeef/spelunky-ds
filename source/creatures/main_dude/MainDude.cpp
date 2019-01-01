@@ -95,7 +95,7 @@ void MainDude::handle_key_input() {
 
         if (global::input_handler->left_key_held) {
 
-            sprite_state = W_LEFT;
+            sprite_state =Orientation::LEFT;
             hanging_on_tile_left = false;
             if (!(hanging_on_tile_right || hanging_on_tile_left) && !climbing)
                 if (speed_inc_timer > MAIN_DUDE_X_SPEED_DELTA_TIME_MS) {
@@ -107,7 +107,7 @@ void MainDude::handle_key_input() {
 
         if (global::input_handler->right_key_held) {
 
-            sprite_state = W_RIGHT;
+            sprite_state =Orientation::RIGHT;
             hanging_on_tile_right = false;
             if (!(hanging_on_tile_right || hanging_on_tile_left) && !climbing) {
                 if (speed_inc_timer > MAIN_DUDE_X_SPEED_DELTA_TIME_MS) {
@@ -513,7 +513,7 @@ void MainDude::throw_item() {
                     if (!global::input_handler->down_key_held) {
 
                         if (carrying_mitt) {
-                            if (sprite_state == SpriteState::W_LEFT)
+                            if (sprite_state == Orientation::LEFT)
                                 (*global::creatures.at(a))._x_speed = -6 - abs(_x_speed);
                             else
                                 (*global::creatures.at(a))._x_speed = 6 + abs(_x_speed);
@@ -528,7 +528,7 @@ void MainDude::throw_item() {
 //                                    (*global::creatures.at(a))._x_speed =
 //                                            global::creatures.at(a)->speed_of_throwing_x + abs(_x_speed);
 //                            } else {
-                            if (sprite_state == SpriteState::W_LEFT)
+                            if (sprite_state == Orientation::LEFT)
                                 (*global::creatures.at(a))._x_speed = -4 - abs(_x_speed);
                             else
                                 (*global::creatures.at(a))._x_speed = 4 + abs(_x_speed);
@@ -539,7 +539,7 @@ void MainDude::throw_item() {
 
                     } else {
 
-                        if (sprite_state == SpriteState::W_LEFT)
+                        if (sprite_state == Orientation::LEFT)
                             (*global::creatures.at(a))._x_speed = -0.04f;
                         else
                             (*global::creatures.at(a))._x_speed = 0.04f;
@@ -701,7 +701,7 @@ void MainDude::spawn_carried_items() {
 
 void MainDude::set_sprite_crawling() {
 
-    if (sprite_state == SpriteState::W_LEFT)
+    if (sprite_state == Orientation::LEFT)
         frameGfx = sprite_utils::get_frame((u8 *) gfx_spelunkerTiles, _sprite_size,
                                            animFrame + 24);
     else
@@ -720,9 +720,9 @@ void MainDude::set_sprite_hanging_on_tile() {
 
 void MainDude::set_sprite_whiping() {
 
-    if (sprite_state == SpriteState::W_LEFT)
+    if (sprite_state == Orientation::LEFT)
         frameGfx = sprite_utils::get_frame((u8 *) gfx_spelunkerTiles, _sprite_size, 56 + animFrame);
-    else if (sprite_state == 0)
+    else if (sprite_state == Orientation::RIGHT)
         frameGfx = sprite_utils::get_frame((u8 *) gfx_spelunkerTiles, _sprite_size, 62 + animFrame);
 
 }
@@ -769,17 +769,17 @@ void MainDude::set_sprite_dead() {
 }
 
 void MainDude::set_sprite_walking_when_in_air() {
-    frameGfx = sprite_utils::get_frame((u8 *) gfx_spelunkerTiles, _sprite_size, sprite_state * 6);
+    frameGfx = sprite_utils::get_frame((u8 *) gfx_spelunkerTiles, _sprite_size, static_cast<u16>(sprite_state) * 6);
 }
 
 void MainDude::set_sprite_falling() {
 
     if (fabs(_x_speed) != 0)
         frameGfx = sprite_utils::get_frame((u8 *) gfx_spelunkerTiles, _sprite_size,
-                                           animFrame + (sprite_state * MAIN_DUDE_FRAMES_PER_ANIMATION));
-    else if (sprite_state == SpriteState::W_LEFT)
+                                           animFrame + (static_cast<u16>(sprite_state) * MAIN_DUDE_FRAMES_PER_ANIMATION));
+    else if (sprite_state == Orientation::LEFT)
         frameGfx = sprite_utils::get_frame((u8 *) gfx_spelunkerTiles, _sprite_size, 14);
-    else if (sprite_state == SpriteState::W_RIGHT)
+    else if (sprite_state == Orientation::RIGHT)
         frameGfx = sprite_utils::get_frame((u8 *) gfx_spelunkerTiles, _sprite_size, 15);
 }
 
@@ -812,7 +812,7 @@ void MainDude::can_hang_on_tile(MapTile **neighboringTiles) {
     bool y_bound = false;
     bool x_bound = false;
 
-    if (_right_collision && sprite_state == W_LEFT) {
+    if (_right_collision && sprite_state ==Orientation::LEFT) {
 
         if (!carrying_glove && (neighboringTiles[LEFT_UP] != nullptr && neighboringTiles[LEFT_UP]->collidable))
             return;
@@ -821,7 +821,7 @@ void MainDude::can_hang_on_tile(MapTile **neighboringTiles) {
                    (this->_x >= (neighboringTiles[LEFT_MIDDLE]->x * 16) + 12));
         y_bound = (this->_y > (neighboringTiles[LEFT_MIDDLE]->y * 16) - 2) &&
                   (this->_y < (neighboringTiles[LEFT_MIDDLE]->y * 16) + 8);
-    } else if (_left_collision && sprite_state == W_RIGHT) {
+    } else if (_left_collision && sprite_state ==Orientation::RIGHT) {
 
         if (!carrying_glove && (neighboringTiles[RIGHT_UP] != nullptr && neighboringTiles[RIGHT_UP]->collidable))
             return;

@@ -28,7 +28,7 @@
 #include <nds.h>
 #include <vector>
 
-#include "../SpriteState.hpp"
+#include "../Orientation.hpp"
 #include "../_BaseCreature.h"
 #include "Whip.hpp"
 

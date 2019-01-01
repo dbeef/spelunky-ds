@@ -53,7 +53,7 @@ add_executable(spelunkyds
         README.md
         source/creatures/main_dude/MainDude.cpp
         source/creatures/main_dude/MainDude.hpp
-        source/creatures/SpriteState.hpp
+        source/creatures/Orientation.hpp
         source/GlobalsDeclarations.hpp
         source/GameLoop.hpp
         source/tiles/Level.cpp

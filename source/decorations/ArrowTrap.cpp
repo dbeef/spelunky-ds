@@ -34,10 +34,10 @@ void ArrowTrap::spawn_arrow() const {
     global::creatures_to_add.push_back(arrow);
     arrow->sprite_state = _sprite_state;
 
-    if (_sprite_state == SpriteState::W_LEFT) {
+    if (_sprite_state == Orientation::LEFT) {
         arrow->_x = _x - 9;
         arrow->_x_speed = -4;
-    } else if (_sprite_state == SpriteState::W_RIGHT) {
+    } else if (_sprite_state == Orientation::RIGHT) {
         arrow->_x = _x + arrow_trap_physical_width + 7;
         arrow->_x_speed = 4;
     }
@@ -56,7 +56,7 @@ bool ArrowTrap::check_if_can_be_triggered(BaseCreature *obj) {
 
     if (obj->_y >= _y && obj->_y < _y + arrow_trap_physical_height) {
 
-        if (_sprite_state == SpriteState::W_LEFT) {
+        if (_sprite_state == Orientation::LEFT) {
 
             if (obj->_x <= _x && obj->_x > _x - (7 * arrow_trap_physical_width)) {
 
@@ -67,7 +67,7 @@ bool ArrowTrap::check_if_can_be_triggered(BaseCreature *obj) {
 
             }
 
-        } else if (_sprite_state == SpriteState::W_RIGHT) {
+        } else if (_sprite_state == Orientation::RIGHT) {
 
             if (obj->_x >= _x + arrow_trap_physical_width &&
                 obj->_x < _x + arrow_trap_physical_width + (7 * arrow_trap_physical_width)) {
@@ -86,7 +86,7 @@ bool ArrowTrap::check_if_can_be_triggered(BaseCreature *obj) {
     return false;
 }
 
-ArrowTrap::ArrowTrap(int x, int y, SpriteState sprite_state) :
+ArrowTrap::ArrowTrap(int x, int y, Orientation sprite_state) :
         BaseDecoration(x, y, 0, 0, SpritesheetType::NONE),
         _sprite_state(sprite_state) {
     init_sprites();

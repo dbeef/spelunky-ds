@@ -17,7 +17,7 @@
 #define BAT_SPRITE_SIZE BAT_SPRITE_HEIGHT * BAT_SPRITE_WIDTH
 
 #include "../_BaseCreature.h"
-#include "../SpriteState.hpp"
+#include "../Orientation.hpp"
 #include "../SpriteInfo.h"
 
 //http://spelunky.wikia.com/wiki/Bat

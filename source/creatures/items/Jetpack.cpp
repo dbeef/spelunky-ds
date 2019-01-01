@@ -41,11 +41,11 @@ void Jetpack::update_creature_specific() {
             sprite_utils::set_priority(OBJPRIORITY_0, _main_sprite_info, _sub_sprite_info);
             set_pickuped_position_not_checking(-3, 2);
             sprite_utils::set_horizontal_flip(false, _main_sprite_info, _sub_sprite_info);
-        } else if (global::main_dude->sprite_state == SpriteState::W_LEFT) {
+        } else if (global::main_dude->sprite_state == Orientation::LEFT) {
             sprite_utils::set_priority(OBJPRIORITY_1, _main_sprite_info, _sub_sprite_info);
             set_pickuped_position_not_checking(-6, 0);
             sprite_utils::set_horizontal_flip(false, _main_sprite_info, _sub_sprite_info);
-        } else if (global::main_dude->sprite_state == SpriteState::W_RIGHT) {
+        } else if (global::main_dude->sprite_state == Orientation::RIGHT) {
             sprite_utils::set_priority(OBJPRIORITY_1, _main_sprite_info, _sub_sprite_info);
             set_pickuped_position_not_checking(-3, 0);
             sprite_utils::set_horizontal_flip(true, _main_sprite_info, _sub_sprite_info);

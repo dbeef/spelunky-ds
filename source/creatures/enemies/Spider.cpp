@@ -86,9 +86,9 @@ void Spider::update_creature_specific() {
             previously_collided = true;
 
             if (_left_collision)
-                previous_collision_side = SpriteState::W_LEFT;
+                previous_collision_side = Orientation::LEFT;
             else
-                previous_collision_side = SpriteState::W_RIGHT;
+                previous_collision_side = Orientation::RIGHT;
 
         }
 
@@ -173,7 +173,7 @@ void Spider::jump_to_main_dude() {
 
         if (previously_collided && time_since_last_big_jump > 2500) {
 
-            if (previous_collision_side == SpriteState::W_RIGHT) {
+            if (previous_collision_side == Orientation::RIGHT) {
                 random_speed = 0.3f;
                 _x_speed = 0.3f;
             } else {
@@ -194,7 +194,7 @@ void Spider::jump_to_main_dude() {
     } else {
         if (previously_collided && time_since_last_big_jump > 2500) {
 
-            if (previous_collision_side == SpriteState::W_RIGHT) {
+            if (previous_collision_side == Orientation::RIGHT) {
                 random_speed = 0.3f;
                 _x_speed = 0.3f;
             } else {

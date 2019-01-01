@@ -9,7 +9,7 @@
 #define CAVEMAN_HITPOINTS 3
 
 #include "../_BaseCreature.h"
-#include "../SpriteState.hpp"
+#include "../Orientation.hpp"
 #include "../SpriteInfo.h"
 
 //http://spelunky.wikia.com/wiki/Caveman

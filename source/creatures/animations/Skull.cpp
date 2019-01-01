@@ -27,7 +27,7 @@ void Skull::update_creature_specific() {
     update_sprites_position();
 
     if (hold_by_main_dude)
-        sprite_utils::set_horizontal_flip(global::main_dude->sprite_state == SpriteState::W_RIGHT,
+        sprite_utils::set_horizontal_flip(global::main_dude->sprite_state == Orientation::RIGHT,
                                           mainSpriteInfo, subSpriteInfo);
 
     set_pickuped_position(0, 3);
@@ -81,7 +81,7 @@ void Skull::init_sprites() {
     update_sprites_position();
 
     if (hold_by_main_dude)
-        sprite_utils::set_horizontal_flip(global::main_dude->sprite_state == SpriteState::W_RIGHT,
+        sprite_utils::set_horizontal_flip(global::main_dude->sprite_state == Orientation::RIGHT,
                                           mainSpriteInfo, subSpriteInfo);
 
 }

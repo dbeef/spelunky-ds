@@ -38,7 +38,7 @@ void Damsel::update_creature_specific() {
     invert_speed_timer += *global::timer;
     blood_spawn_timer += *global::timer;
 
-    sprite_utils::set_horizontal_flip(sprite_state == SpriteState::W_RIGHT, mainSpriteInfo, subSpriteInfo);
+    sprite_utils::set_horizontal_flip(sprite_state == Orientation::RIGHT, mainSpriteInfo, subSpriteInfo);
     sprite_utils::set_visibility(true, mainSpriteInfo, subSpriteInfo);
     sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);
 
@@ -201,11 +201,11 @@ void Damsel::randomizeMovement() {
     int r = rand() % 2;
 
     if (r == 0) {
-        sprite_state = SpriteState::W_LEFT;
+        sprite_state = Orientation::LEFT;
 
     } else if (r == 1) {
-        if (sprite_state == SpriteState::W_RIGHT)
-            sprite_state = SpriteState::W_RIGHT;
+        if (sprite_state == Orientation::RIGHT)
+            sprite_state = Orientation::RIGHT;
     }
 
     goTimer = (rand() % (1 * 2000)) + 1000;
@@ -276,7 +276,7 @@ void Damsel::init_sprites() {
 
     sprite_utils::set_vertical_flip(false, yell_mainSpriteInfo, yell_subSpriteInfo);
     sprite_utils::set_horizontal_flip(false, yell_mainSpriteInfo, yell_subSpriteInfo);
-    sprite_utils::set_horizontal_flip(sprite_state == SpriteState::W_RIGHT, mainSpriteInfo, subSpriteInfo);
+    sprite_utils::set_horizontal_flip(sprite_state == Orientation::RIGHT, mainSpriteInfo, subSpriteInfo);
     sprite_utils::set_visibility(true, mainSpriteInfo, subSpriteInfo);
     sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);
 
@@ -318,7 +318,7 @@ void Damsel::make_some_movement() {
             goTimer -= *global::timer;
 
         if (triggered) {
-            if (sprite_state == SpriteState::W_RIGHT)
+            if (sprite_state == Orientation::RIGHT)
                 _x_speed = DAMSEL_TRIGGERED_SPEED;
             else
                 _x_speed = -DAMSEL_TRIGGERED_SPEED;
@@ -344,10 +344,10 @@ void Damsel::make_some_movement() {
 
         if ((_left_collision || _right_collision) && !landlocked) {
 
-            if (sprite_state == SpriteState::W_LEFT)
-                sprite_state = SpriteState::W_RIGHT;
+            if (sprite_state == Orientation::LEFT)
+                sprite_state = Orientation::RIGHT;
             else
-                sprite_state = SpriteState::W_LEFT;
+                sprite_state = Orientation::LEFT;
 
             _x_speed *= -1;
             _right_collision = false;

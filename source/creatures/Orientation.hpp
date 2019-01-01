@@ -8,10 +8,9 @@
 /**
  * Indicates state of a sprite - is it facing right, left, or else.
  */
-enum SpriteState {
-    W_RIGHT = 0,
-    W_LEFT = 1,
-    HANGING = 3,
+enum class  Orientation {
+    RIGHT,
+    LEFT,
 };
 
 #endif //SPELUNKYDS_SPRITESTATE_H

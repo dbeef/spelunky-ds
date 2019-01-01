@@ -68,7 +68,7 @@ void Cape::update_creature_specific() {
             match_animation();
         }
 
-        sprite_utils::set_horizontal_flip(global::main_dude->sprite_state == SpriteState::W_RIGHT,
+        sprite_utils::set_horizontal_flip(global::main_dude->sprite_state == Orientation::RIGHT,
                                           _main_sprite_info, _sub_sprite_info);
 
         if (global::main_dude->_bottom_collision)
@@ -93,7 +93,7 @@ void Cape::init_sprites() {
     sprite_utils::set_vertical_flip(false, _main_sprite_info, _sub_sprite_info);
 
     if (_collected)
-        sprite_utils::set_horizontal_flip(global::main_dude->sprite_state == SpriteState::W_RIGHT,
+        sprite_utils::set_horizontal_flip(global::main_dude->sprite_state == Orientation::RIGHT,
                                           _main_sprite_info, _sub_sprite_info);
     else
         sprite_utils::set_horizontal_flip(false, _main_sprite_info, _sub_sprite_info);

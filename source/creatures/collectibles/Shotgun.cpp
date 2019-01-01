@@ -39,7 +39,7 @@ void Shotgun::update_creature_specific() {
         sprite_utils::set_priority(OBJPRIORITY_0, mainSpriteInfo, subSpriteInfo);
 
         _y = global::main_dude->_y + 7;
-        if (sprite_state == SpriteState::W_LEFT)
+        if (sprite_state == Orientation::LEFT)
             _x = global::main_dude->_x - 4;
         else
             _x = global::main_dude->_x + 7;
@@ -86,7 +86,7 @@ void Shotgun::spawn_bullets() {
         //TODO Static pool?
         auto *b = new Bullet(_x, _y - 2);
 
-        if (sprite_state == SpriteState::W_LEFT) {
+        if (sprite_state == Orientation::LEFT) {
             b->_x_speed = -4.3 - ((rand() % 20) / 10.0);
             b->_x -= 5;
         } else {
@@ -113,7 +113,7 @@ void Shotgun::equip() {
 
 void Shotgun::match_animation() {
 
-    if (sprite_state == SpriteState::W_LEFT)
+    if (sprite_state == Orientation::LEFT)
         frameGfx = sprite_utils::get_frame((u8 *) gfx_spike_collectibles_flameTiles, _sprite_size, 12);
     else
         frameGfx = sprite_utils::get_frame((u8 *) gfx_spike_collectibles_flameTiles, _sprite_size, 11);
@@ -142,7 +142,7 @@ void Shotgun::handle_shooting() {
 
     if (!firing) {
         cooldown += *global::timer;
-        if (sprite_state == SpriteState::W_LEFT)
+        if (sprite_state == Orientation::LEFT)
             blast->_x = _x - 10;
         else
             blast->_x = _x + 10;

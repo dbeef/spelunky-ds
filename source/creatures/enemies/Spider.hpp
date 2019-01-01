@@ -7,7 +7,7 @@
 #define SPELUNKYDS_SPIDER_H
 
 #include "../_BaseCreature.h"
-#include "../SpriteState.hpp"
+#include "../Orientation.hpp"
 #include "../SpriteInfo.h"
 
 //http://spelunky.wikia.com/wiki/Spider
@@ -89,7 +89,7 @@ public:
     double time_since_last_big_jump{};
 
     bool previously_collided{};
-    SpriteState previous_collision_side{};
+    Orientation previous_collision_side{};
 
     bool hanging{};
     bool hunting{};

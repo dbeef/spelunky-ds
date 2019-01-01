@@ -6,7 +6,7 @@
 #define SPELUNKYDS_BONE_H
 
 #include "../SpriteInfo.h"
-#include "../SpriteState.hpp"
+#include "../Orientation.hpp"
 #include "../_BaseCreature.h"
 
 class Bone : public BaseCreature {

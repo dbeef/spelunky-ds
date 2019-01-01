@@ -6,7 +6,7 @@
 #define SPELUNKYDS_PISTOL_H
 
 #include "../_BaseCreature.h"
-#include "../SpriteState.hpp"
+#include "../Orientation.hpp"
 #include "../../interfaces/ShoppingObject.h"
 #include "../../decorations/Blast.hpp"
 #include "../../GlobalsDeclarations.hpp"

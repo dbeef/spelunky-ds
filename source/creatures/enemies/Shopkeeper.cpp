@@ -41,7 +41,7 @@ void Shopkeeper::update_creature_specific() {
     anim_frame_timer += *global::timer;
     jumping_timer += *global::timer;
 
-    sprite_utils::set_horizontal_flip(sprite_state == SpriteState::W_RIGHT, mainSpriteInfo, subSpriteInfo);
+    sprite_utils::set_horizontal_flip(sprite_state == Orientation::RIGHT, mainSpriteInfo, subSpriteInfo);
     sprite_utils::set_visibility(true, mainSpriteInfo, subSpriteInfo);
     sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);
 
@@ -78,9 +78,9 @@ void Shopkeeper::update_creature_specific() {
         set_pickuped_position_on_another_moving_obj(5, 3, shotgun);
 
         if (_x_speed > 0) {
-            shotgun->sprite_state = SpriteState::W_RIGHT;
+            shotgun->sprite_state = Orientation::RIGHT;
         } else if (_x_speed < 0) {
-            shotgun->sprite_state = SpriteState::W_LEFT;
+            shotgun->sprite_state = Orientation::LEFT;
         }
 
         if (!global::main_dude->dead && triggered) {
@@ -188,15 +188,15 @@ void Shopkeeper::randomizeMovement() {
     int r = rand() % 2;
 
     if (r == 0) {
-        sprite_state = SpriteState::W_LEFT;
+        sprite_state = Orientation::LEFT;
         if (shotgun != nullptr)
-            shotgun->sprite_state = SpriteState::W_LEFT;
+            shotgun->sprite_state = Orientation::LEFT;
     } else if (r == 1) {
 
-        sprite_state = SpriteState::W_RIGHT;
+        sprite_state = Orientation::RIGHT;
 
         if (shotgun != nullptr)
-            shotgun->sprite_state = SpriteState::W_RIGHT;
+            shotgun->sprite_state = Orientation::RIGHT;
     }
 
     if (standby) {
@@ -249,7 +249,7 @@ void Shopkeeper::init_sprites() {
 
     update_sprites_position();
     match_animation();
-    sprite_utils::set_horizontal_flip(sprite_state == SpriteState::W_RIGHT, mainSpriteInfo, subSpriteInfo);
+    sprite_utils::set_horizontal_flip(sprite_state == Orientation::RIGHT, mainSpriteInfo, subSpriteInfo);
     sprite_utils::set_visibility(true, mainSpriteInfo, subSpriteInfo);
     sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);
 }
@@ -281,12 +281,12 @@ void Shopkeeper::make_some_movement() {
             go_timer -= *global::timer;
 
         if (triggered) {
-            if (sprite_state == SpriteState::W_RIGHT)
+            if (sprite_state == Orientation::RIGHT)
                 _x_speed = SHOPKEEPER_TRIGGERED_SPEED;
             else
                 _x_speed = -SHOPKEEPER_TRIGGERED_SPEED;
         } else if (standby) {
-            if (sprite_state == SpriteState::W_RIGHT)
+            if (sprite_state == Orientation::RIGHT)
                 _x_speed = 1;
             else
                 _x_speed = -1;
@@ -312,10 +312,10 @@ void Shopkeeper::make_some_movement() {
 
         if ((_left_collision || _right_collision) && !landlocked) {
 
-            if (sprite_state == SpriteState::W_LEFT)
-                sprite_state = SpriteState::W_RIGHT;
+            if (sprite_state == Orientation::LEFT)
+                sprite_state = Orientation::RIGHT;
             else
-                sprite_state = SpriteState::W_LEFT;
+                sprite_state = Orientation::LEFT;
 
             _x_speed *= -1;
             _right_collision = false;
@@ -420,7 +420,7 @@ void Shopkeeper::set_shop_bounds() {
 
     if (_x - tile_x > 0) {
         //left oriented shop (exit/entrance is on the left side)
-        sprite_state = SpriteState::W_LEFT;
+        sprite_state = Orientation::LEFT;
         shop_bounds_right_x_px = _x + (3 * TILE_W);
         if (standby)
             shop_bounds_left_x_px = _x - (9 * TILE_W);
@@ -428,7 +428,7 @@ void Shopkeeper::set_shop_bounds() {
             shop_bounds_left_x_px = _x - (6 * TILE_W);
 
     } else {
-        sprite_state = SpriteState::W_RIGHT;
+        sprite_state = Orientation::RIGHT;
         shop_bounds_left_x_px = _x - (3 * TILE_W);
         if (standby)
             shop_bounds_right_x_px = _x + (9 * TILE_W);
@@ -465,9 +465,9 @@ void Shopkeeper::check_if_dude_in_shop_bounds() {
         if (!triggered) {
 
             if (diff > 0)
-                sprite_state = SpriteState::W_LEFT;
+                sprite_state = Orientation::LEFT;
             else
-                sprite_state = SpriteState::W_RIGHT;
+                sprite_state = Orientation::RIGHT;
 
             if (global::hud->holding_item_shopping) {
 

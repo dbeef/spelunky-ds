@@ -6,7 +6,7 @@
 #define SPELUNKYDS_SKULL_H
 
 #include "../SpriteInfo.h"
-#include "../SpriteState.hpp"
+#include "../Orientation.hpp"
 #include "../_BaseCreature.h"
 
 class Skull : public BaseCreature {

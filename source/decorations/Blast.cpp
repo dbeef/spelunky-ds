@@ -32,7 +32,7 @@ void Blast::update_decoration_specific() {
 
     } else {
         sprite_utils::set_visibility(false, _main_sprite_info, _sub_sprite_info);
-        sprite_utils::set_horizontal_flip(_sprite_state == SpriteState::W_LEFT, _main_sprite_info, _sub_sprite_info);
+        sprite_utils::set_horizontal_flip(_sprite_state == Orientation::LEFT, _main_sprite_info, _sub_sprite_info);
     }
 
     update_sprites_position();
@@ -54,7 +54,7 @@ void Blast::init_sprites() {
 
     sprite_utils::set_visibility(true, _main_sprite_info, _sub_sprite_info);
     sprite_utils::set_vertical_flip(false, _main_sprite_info, _sub_sprite_info);
-    sprite_utils::set_horizontal_flip(_sprite_state == SpriteState::W_LEFT, _main_sprite_info, _sub_sprite_info);
+    sprite_utils::set_horizontal_flip(_sprite_state == Orientation::LEFT, _main_sprite_info, _sub_sprite_info);
     sprite_utils::set_priority(OBJPRIORITY_0, _main_sprite_info, _sub_sprite_info);
 
     match_animation();
@@ -71,7 +71,7 @@ void Blast::update_sprites_position() {
     int main_x, main_y, sub_x, sub_y;
     get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
 
-    if (_sprite_state == SpriteState::W_LEFT)
+    if (_sprite_state == Orientation::LEFT)
         _x -= blast_firing_offset_x;
     else
         _x += blast_firing_offset_x;

@@ -9,7 +9,7 @@
 #define SHOPKEEPER_HITPOINTS 3
 
 #include "../_BaseCreature.h"
-#include "../SpriteState.hpp"
+#include "../Orientation.hpp"
 #include "../SpriteInfo.h"
 #include "../../interfaces/ShoppingObject.h"
 #include "../collectibles/Shotgun.hpp"

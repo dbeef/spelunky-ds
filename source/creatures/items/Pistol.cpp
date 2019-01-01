@@ -37,7 +37,7 @@ void Pistol::update_creature_specific() {
         sprite_state = global::main_dude->sprite_state;
 
         _y = global::main_dude->_y + 7;
-        if (global::main_dude->sprite_state == SpriteState::W_LEFT)
+        if (global::main_dude->sprite_state == Orientation::LEFT)
             _x = global::main_dude->_x - 4;
         else
             _x = global::main_dude->_x + 10;
@@ -85,10 +85,10 @@ void Pistol::spawn_bullet() {
 
     auto *b = new Bullet(_x, _y);
 
-    if (global::main_dude->sprite_state == SpriteState::W_LEFT) {
+    if (global::main_dude->sprite_state == Orientation::LEFT) {
         b->_x_speed = -5.0;
         b->_x -= 2;
-    } else if (global::main_dude->sprite_state == SpriteState::W_RIGHT) {
+    } else if (global::main_dude->sprite_state == Orientation::RIGHT) {
         b->_x_speed = 5.0;
         b->_x += 2;
     }
@@ -120,7 +120,7 @@ void Pistol::handle_shooting() {
 
     if (!_firing) {
         _cooldown += *global::timer;
-        if (sprite_state == SpriteState::W_LEFT)
+        if (sprite_state == Orientation::LEFT)
             _blast->_x = _x - 10;
         else
             _blast->_x = _x + 10;
@@ -132,7 +132,7 @@ void Pistol::handle_shooting() {
 
 void Pistol::match_animation() {
 
-    if (sprite_state == SpriteState::W_LEFT)
+    if (sprite_state == Orientation::LEFT)
         _frame_gfx = sprite_utils::get_frame((u8 *) gfx_spike_collectibles_flameTiles, _sprite_size, 32);
     else
         _frame_gfx = sprite_utils::get_frame((u8 *) gfx_spike_collectibles_flameTiles, _sprite_size, 33);

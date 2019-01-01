@@ -6,7 +6,7 @@
 #define SPELUNKYDS_BLAST_H
 
 #include "../creatures/SpriteInfo.h"
-#include "../creatures/SpriteState.hpp"
+#include "../creatures/Orientation.hpp"
 #include "_BaseDecoration.h"
 
 // Represents blast that occurs on shooting pistol/shotgun.
@@ -46,7 +46,7 @@ public:
     u8 _anim_frame_index{};
     double _anim_frame_timer{};
     bool _firing{};
-    SpriteState _sprite_state{};
+    Orientation _sprite_state{};
 
 private:
 

@@ -82,7 +82,7 @@ void Whip::match_animation() {
         assign_pre_whip_sprite();
         sprite_utils::set_visibility(true, _main_sprite_info, _sub_sprite_info);
 
-        if (global::main_dude->sprite_state == SpriteState::W_LEFT) {
+        if (global::main_dude->sprite_state == Orientation::LEFT) {
             _x += 8;
             sprite_utils::set_horizontal_flip(true, _main_sprite_info, _sub_sprite_info);
         } else {
@@ -96,7 +96,7 @@ void Whip::match_animation() {
         assign_whip_sprite();
         sprite_utils::set_visibility(true, _main_sprite_info, _sub_sprite_info);
 
-        if (global::main_dude->sprite_state == SpriteState::W_LEFT) {
+        if (global::main_dude->sprite_state == Orientation::LEFT) {
             _x -= 16;
             sprite_utils::set_horizontal_flip(false, _main_sprite_info, _sub_sprite_info);
         } else {

@@ -6,7 +6,7 @@
 #define SPELUNKYDS_SPIKE_SHOES_H
 
 #include "../SpriteInfo.h"
-#include "../SpriteState.hpp"
+#include "../Orientation.hpp"
 #include "../_BaseCreature.h"
 #include "../../interfaces/ShoppingObject.h"
 

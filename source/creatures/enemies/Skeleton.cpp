@@ -27,7 +27,7 @@ void Skeleton::update_creature_specific() {
     update_sprites_position();
     sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);
     sprite_utils::set_visibility(true, mainSpriteInfo, subSpriteInfo);
-    sprite_utils::set_horizontal_flip(!(sprite_state == SpriteState::W_LEFT), mainSpriteInfo, subSpriteInfo);
+    sprite_utils::set_horizontal_flip(!(sprite_state == Orientation::LEFT), mainSpriteInfo, subSpriteInfo);
 
     if (summoned || can_be_summoned) {
         if (summoning_delay_timer > 350) {
@@ -36,10 +36,10 @@ void Skeleton::update_creature_specific() {
             if (can_be_summoned && !set_up) {
 
                 set_up = true;
-                if (main_dude_orientation_at_summoning_moment == SpriteState::W_LEFT) {
-                    sprite_state = SpriteState::W_RIGHT;
+                if (main_dude_orientation_at_summoning_moment == Orientation::LEFT) {
+                    sprite_state = Orientation::RIGHT;
                 } else {
-                    sprite_state = SpriteState::W_LEFT;
+                    sprite_state = Orientation::LEFT;
                 }
 
             }
@@ -76,7 +76,7 @@ void Skeleton::update_creature_specific() {
                 apply_dmg(1);
 
             if (summoned && _x_speed == 0) {
-                if (sprite_state == SpriteState::W_RIGHT)
+                if (sprite_state == Orientation::RIGHT)
                     _x_speed = 1;
                 else
                     _x_speed = -1;
@@ -85,12 +85,12 @@ void Skeleton::update_creature_specific() {
             if (change_turn_timer > 650) {
                 if (_left_collision) {
                     _x_speed = -1;
-                    sprite_state = SpriteState::W_LEFT;
+                    sprite_state = Orientation::LEFT;
                     change_turn_timer = 0;
 
                 } else if (_right_collision) {
                     _x_speed = 1;
-                    sprite_state = SpriteState::W_RIGHT;
+                    sprite_state = Orientation::RIGHT;
                     change_turn_timer = 0;
                 }
             }
@@ -129,7 +129,7 @@ void Skeleton::init_sprites() {
     update_sprites_position();
     sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);
     sprite_utils::set_visibility(true, mainSpriteInfo, subSpriteInfo);
-    sprite_utils::set_horizontal_flip(!(sprite_state == SpriteState::W_LEFT), mainSpriteInfo, subSpriteInfo);
+    sprite_utils::set_horizontal_flip(!(sprite_state == Orientation::LEFT), mainSpriteInfo, subSpriteInfo);
     match_animation();
 
 }
@@ -161,11 +161,11 @@ void Skeleton::check_if_can_be_summoned() {
 
         if (diff > 0) {
             //must have been walking towards skeleton from skeleton's left side, so pointing rightwards
-            main_dude_orientation_at_summoning_moment = SpriteState::W_RIGHT;
+            main_dude_orientation_at_summoning_moment = Orientation::RIGHT;
             Collisions::getTilesOnLeftFromXY(xx, yy, tiles);
         } else {
             //must have been walking towards skeleton from skeleton's right side, so pointing leftwards
-            main_dude_orientation_at_summoning_moment = SpriteState::W_LEFT;
+            main_dude_orientation_at_summoning_moment = Orientation::LEFT;
             Collisions::getTilesOnRightFromXY(xx, yy, tiles);
         }
 
@@ -212,12 +212,12 @@ void Skeleton::set_sprite_summoning() {
         summoned = true;
 
         //turn the skeleton upwards main dude
-        if (main_dude_orientation_at_summoning_moment == SpriteState::W_LEFT) {
+        if (main_dude_orientation_at_summoning_moment == Orientation::LEFT) {
             _x_speed = 1;
-            sprite_state = SpriteState::W_RIGHT;
+            sprite_state = Orientation::RIGHT;
         } else {
             _x_speed = -1;
-            sprite_state = SpriteState::W_LEFT;
+            sprite_state = Orientation::LEFT;
         }
 
     } else {
