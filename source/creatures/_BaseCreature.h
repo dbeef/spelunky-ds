@@ -74,6 +74,7 @@ public:
 
     void kill_if_main_dude_jumped_on_you(int dmg_to_apply);
 
+
     void kill_if_whip(int dmg_to_apply);
 
 

@@ -30,6 +30,7 @@
 
 #include "../Orientation.hpp"
 #include "../_BaseCreature.h"
+#include "../items/_BaseItem.h"
 #include "Whip.hpp"
 
 //http://spelunky.wikia.com/wiki/Spelunky_Guy
@@ -135,6 +136,9 @@ public:
     void throw_rope();
 
     void spawn_carried_items();
+
+    BaseItem* _currently_held_item{};
+    BaseCreature* _currently_held_creature{};
 
     SpriteInfo *main_sprite_info{};
     SpriteInfo *sub_sprite_info{};

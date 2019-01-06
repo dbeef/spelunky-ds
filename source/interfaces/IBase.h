@@ -26,6 +26,8 @@ public:
     int _y;
     bool _ready_to_dispose{};
 
+    void set_pickuped_position_not_checking(int pickup_offset_x_left, int pickup_offset_x_right, int pickup_offset_y);
+
 };
 
 

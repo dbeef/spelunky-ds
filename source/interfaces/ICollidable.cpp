@@ -122,6 +122,11 @@ bool ICollidable::check_collision(ICollidable const &other) const {
                                             other._x, other._y, other._physical_width, other._physical_height);
 }
 
+bool ICollidable::check_collision(ICollidable const *other) const {
+    return Collisions::checkCollisionBodies(_x, _y, _physical_width, _physical_height,
+                                            other->_x, other->_y, other->_physical_width, other->_physical_height);
+}
+
 static bool is_killable_creature(BaseCreature *creature) {
     CreatureType type = creature->_creature_type;
     return

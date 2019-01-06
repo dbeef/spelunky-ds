@@ -95,7 +95,7 @@ void MainDude::handle_key_input() {
 
         if (global::input_handler->left_key_held) {
 
-            sprite_state =Orientation::LEFT;
+            sprite_state = Orientation::LEFT;
             hanging_on_tile_left = false;
             if (!(hanging_on_tile_right || hanging_on_tile_left) && !climbing)
                 if (speed_inc_timer > MAIN_DUDE_X_SPEED_DELTA_TIME_MS) {
@@ -107,7 +107,7 @@ void MainDude::handle_key_input() {
 
         if (global::input_handler->right_key_held) {
 
-            sprite_state =Orientation::RIGHT;
+            sprite_state = Orientation::RIGHT;
             hanging_on_tile_right = false;
             if (!(hanging_on_tile_right || hanging_on_tile_left) && !climbing) {
                 if (speed_inc_timer > MAIN_DUDE_X_SPEED_DELTA_TIME_MS) {
@@ -446,12 +446,14 @@ void MainDude::init_sprites() {
     delete_sprites();
 
     main_sprite_info = global::main_oam_manager->initSprite(gfx_spelunkerPal, gfx_spelunkerPalLen, nullptr,
-                                                            _sprite_size, ObjSize::OBJSIZE_16, _spritesheet_type, true, false,
+                                                            _sprite_size, ObjSize::OBJSIZE_16, _spritesheet_type, true,
+                                                            false,
                                                             LAYER_LEVEL::MIDDLE_TOP);
 
 
     sub_sprite_info = global::sub_oam_manager->initSprite(gfx_spelunkerPal, gfx_spelunkerPalLen, nullptr,
-                                                          _sprite_size, ObjSize::OBJSIZE_16, _spritesheet_type, true, false,
+                                                          _sprite_size, ObjSize::OBJSIZE_16, _spritesheet_type, true,
+                                                          false,
                                                           LAYER_LEVEL::MIDDLE_TOP);
 
     sprite_utils::set_vertical_flip(false, main_sprite_info, sub_sprite_info);
@@ -466,8 +468,6 @@ void MainDude::reset_values_checked_every_frame() {
     can_climb_rope = false;
     can_climb_ladder = false;
 }
-
-
 
 #include <maxmod9.h>
 #include <cstdlib>
@@ -504,103 +504,88 @@ void MainDude::throw_item() {
     //throw holding item
     //if holding bomb, arm it only
 
-    for (unsigned long a = 0; a < global::creatures.size(); a++) {
-        if (global::creatures.at(a)) {
-            if ((*global::creatures.at(a)).hold_by_main_dude) {
+    if (_currently_held_item || _currently_held_creature) {
 
-                if ((*global::creatures.at(a)).activated /*&& !carrying_pistol && !carrying_shotgun*/) {
+        bool activated;
+        ICollidable *held;
+        if (_currently_held_item) {
+            held = dynamic_cast<ICollidable *>(_currently_held_item);
+            activated = _currently_held_item->_activated;
+        } else {
+            held = dynamic_cast<ICollidable *>(_currently_held_creature);
+            activated = _currently_held_creature->activated;
+        }
 
-                    if (!global::input_handler->down_key_held) {
-
-                        if (carrying_mitt) {
-                            if (sprite_state == Orientation::LEFT)
-                                (*global::creatures.at(a))._x_speed = -6 - abs(_x_speed);
-                            else
-                                (*global::creatures.at(a))._x_speed = 6 + abs(_x_speed);
-
-                        } else {
-
-//                            if (global::creatures.at(a)->speed_of_throwing_x != 0) {
-//                                if (sprite_state == SpriteState::W_LEFT)
-//                                    (*global::creatures.at(a))._x_speed =
-//                                            -global::creatures.at(a)->speed_of_throwing_x - abs(_x_speed);
-//                                else
-//                                    (*global::creatures.at(a))._x_speed =
-//                                            global::creatures.at(a)->speed_of_throwing_x + abs(_x_speed);
-//                            } else {
-                            if (sprite_state == Orientation::LEFT)
-                                (*global::creatures.at(a))._x_speed = -4 - abs(_x_speed);
-                            else
-                                (*global::creatures.at(a))._x_speed = 4 + abs(_x_speed);
-//                            }
+        if (activated) {
 
 
-                        }
 
-                    } else {
+            if (!global::input_handler->down_key_held) {
 
-                        if (sprite_state == Orientation::LEFT)
-                            (*global::creatures.at(a))._x_speed = -0.04f;
-                        else
-                            (*global::creatures.at(a))._x_speed = 0.04f;
-
-                    }
-
-
-                    if(_neighboring_tiles[TileOrientation::UP_MIDDLE]->exists &&
-                       _neighboring_tiles[TileOrientation::UP_MIDDLE]->collidable) {
-                        (*global::creatures.at(a))._y_speed = 0.0f;
-                        (*global::creatures.at(a))._x_speed *= 2;
-                    }
+                if (carrying_mitt) {
+                    if (sprite_state == Orientation::LEFT)
+                        held->_x_speed = -6 - abs(_x_speed);
                     else
-                    {
-
-                        if (global::input_handler->up_key_held)
-                            (*global::creatures.at(a))._y_speed = -2.55 - abs(_y_speed);
-                        else {
-
-//                        if (global::creatures.at(a)->speed_of_throwing_y != 0) {
-//                            (*global::creatures.at(a))._y_speed = -global::creatures.at(a)->speed_of_throwing_y;
-//                        } else
-                            (*global::creatures.at(a))._y_speed = -1;
-
-                        }
-
-                    }
-
-//                    if (global::creatures.at(a)->_sprite_width >= 8) {
-//
-//                        int xx = floor_div(global::creatures.at(a)->_x + 0.5 * global::creatures.at(a)->_physical_width,
-//                                           TILE_W);
-//                        int yy = floor_div(global::creatures.at(a)->_y + 0.5 * global::creatures.at(a)->_physical_height,
-//                                           TILE_H);
-//
-//                        MapTile *t = nullptr;
-//                        if (xx >= 0 && xx <= 31 && yy > 0 && yy <= 31) {
-//                            t = global::current_level->map_tiles[xx][yy];
-//                            if (t != nullptr && !t->collidable) {
-//                                global::creatures.at(a)->_x = xx * TILE_W;
-//                                global::creatures.at(a)->_y = yy * TILE_H;
-//                                global::creatures.at(a)->update_collisions_with_map(xx, yy);
-//                            }
-//                        }
-//
-//                    }
-
-                    (*global::creatures.at(a)).hold_by_main_dude = false;
-                    holding_item = false;
-
-                    global::hud->disable_all_prompts();
-                    global::hud->draw_level_hud();
-
-                    mmEffect(SFX_XTHROW);
+                        held->_x_speed = 6 + abs(_x_speed);
 
                 } else {
-                    (*global::creatures.at(a)).activated = true;
+                    if (sprite_state == Orientation::LEFT)
+                        held->_x_speed = -4 - abs(_x_speed);
+                    else
+                        held->_x_speed = 4 + abs(_x_speed);
+                }
+
+            } else {
+
+                if (sprite_state == Orientation::LEFT)
+                    held->_x_speed = -0.04f;
+                else
+                    held->_x_speed = 0.04f;
+
+            }
+
+
+            if (_neighboring_tiles[TileOrientation::UP_MIDDLE]->exists &&
+                _neighboring_tiles[TileOrientation::UP_MIDDLE]->collidable) {
+                held->_y_speed = 0.0f;
+                held->_x_speed *= 2;
+            } else {
+
+                if (global::input_handler->up_key_held)
+                    held->_y_speed = -2.55 - abs(_y_speed);
+                else {
+                    held->_y_speed = -1;
                 }
 
             }
+
+            // it's not held anymore, so update flags
+            if (_currently_held_item) {
+                _currently_held_item->_hold_by_main_dude = false;
+                _currently_held_item = nullptr;
+            }
+            else {
+                _currently_held_creature->hold_by_main_dude = false;
+                _currently_held_creature = nullptr;
+            }
+
+
+            holding_item = false;
+
+            global::hud->disable_all_prompts();
+            global::hud->draw_level_hud();
+
+            mmEffect(SFX_XTHROW);
+
+        } else {
+
+            // activate item because it's not activated yet
+            if (_currently_held_item)
+                _currently_held_item->_activated = true;
+            else
+                _currently_held_creature->activated = true;
         }
+
     }
 }
 
@@ -776,7 +761,8 @@ void MainDude::set_sprite_falling() {
 
     if (fabs(_x_speed) != 0)
         frameGfx = sprite_utils::get_frame((u8 *) gfx_spelunkerTiles, _sprite_size,
-                                           animFrame + (static_cast<u16>(sprite_state) * MAIN_DUDE_FRAMES_PER_ANIMATION));
+                                           animFrame +
+                                           (static_cast<u16>(sprite_state) * MAIN_DUDE_FRAMES_PER_ANIMATION));
     else if (sprite_state == Orientation::LEFT)
         frameGfx = sprite_utils::get_frame((u8 *) gfx_spelunkerTiles, _sprite_size, 14);
     else if (sprite_state == Orientation::RIGHT)
@@ -812,7 +798,7 @@ void MainDude::can_hang_on_tile(MapTile **neighboringTiles) {
     bool y_bound = false;
     bool x_bound = false;
 
-    if (_right_collision && sprite_state ==Orientation::LEFT) {
+    if (_right_collision && sprite_state == Orientation::LEFT) {
 
         if (!carrying_glove && (neighboringTiles[LEFT_UP] != nullptr && neighboringTiles[LEFT_UP]->collidable))
             return;
@@ -821,7 +807,7 @@ void MainDude::can_hang_on_tile(MapTile **neighboringTiles) {
                    (this->_x >= (neighboringTiles[LEFT_MIDDLE]->x * 16) + 12));
         y_bound = (this->_y > (neighboringTiles[LEFT_MIDDLE]->y * 16) - 2) &&
                   (this->_y < (neighboringTiles[LEFT_MIDDLE]->y * 16) + 8);
-    } else if (_left_collision && sprite_state ==Orientation::RIGHT) {
+    } else if (_left_collision && sprite_state == Orientation::RIGHT) {
 
         if (!carrying_glove && (neighboringTiles[RIGHT_UP] != nullptr && neighboringTiles[RIGHT_UP]->collidable))
             return;

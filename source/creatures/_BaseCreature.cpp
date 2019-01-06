@@ -80,6 +80,7 @@ void BaseCreature::check_if_can_be_pickuped() {
         global::main_dude->holding_item = false;
         global::input_handler->y_key_down = false;
         _bottom_collision = false;
+        global::main_dude->_currently_held_creature = nullptr;
 
     } else if (global::input_handler->y_key_down &&
                global::input_handler->down_key_held &&
@@ -89,6 +90,7 @@ void BaseCreature::check_if_can_be_pickuped() {
         //pickup item from the ground
 
         global::main_dude->holding_item = true;
+        global::main_dude->_currently_held_creature = this;
         hold_by_main_dude = true;
         global::input_handler->y_key_down = false;
 
@@ -166,12 +168,10 @@ BaseCreature::set_pickuped_position_on_another_moving_obj(int pickup_offset_x, i
 void BaseCreature::set_pickuped_position_not_checking(int pickup_offset_x, int pickup_offset_y) {
 
     _y = global::main_dude->_y + pickup_offset_y;
-
     if (global::main_dude->sprite_state == Orientation::LEFT) {
         _x = global::main_dude->_x - pickup_offset_x;
     } else
         _x = global::main_dude->_x + pickup_offset_x;
-
 }
 
 

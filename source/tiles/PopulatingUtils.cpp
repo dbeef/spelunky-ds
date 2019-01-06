@@ -130,7 +130,7 @@ void populate_cave_moniez() {
 
                     if (loot_type == 3 && jars_left > 0 && r == 1) {
                         Jar *jar = new Jar(pos_x * 16, pos_y * 16);
-                        global::creatures.push_back(jar);
+                        global::items.push_back(jar);
                         jars_left--;
                         last_placement = 0;
                     }

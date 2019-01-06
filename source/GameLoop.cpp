@@ -84,6 +84,12 @@ void gameloop::run() {
             }
         }
 
+        for (auto &item : global::items) {
+            if (item) {
+                item->update();
+            }
+        }
+
         for (auto &decoration : global::decorations) {
             if (decoration) {
                 decoration->update();

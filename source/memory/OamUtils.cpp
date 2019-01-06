@@ -58,6 +58,15 @@ namespace oam_utils {
                 } else
                     ++iter_treasure;
             }
+            std::vector<BaseItem *>::iterator iter_item;
+            for (iter_item = global::items.begin(); iter_item != global::items.end();) {
+                iter_item.operator*()->delete_sprites();
+                if (iter_item.operator*()->_ready_to_dispose) {
+                    delete iter_item.operator*();
+                    iter_item = global::items.erase(iter_item);
+                } else
+                    ++iter_item;
+            }
 
 //            std::vector<BaseDecoration *>::iterator iter_decorations;
 //            for (iter_decorations = global::decorations.begin(); iter_decorations != global::decorations.end();) {
@@ -98,6 +107,11 @@ namespace oam_utils {
                 }
             }
             for (auto &treasure : global::treasures) {
+                if (!treasure->_ready_to_dispose) {
+                    treasure->init_sprites();
+                }
+            }
+            for (auto &treasure : global::items) {
                 if (!treasure->_ready_to_dispose) {
                     treasure->init_sprites();
                 }
@@ -163,9 +177,20 @@ namespace oam_utils {
             delete sprite; //deletes sprite itself
         }
 
+        for (auto &sprite : global::items) {
+            sprite->delete_sprites(); //deletes its SpriteInfos and nullptrs them
+            delete sprite; //deletes sprite itself
+        }
+
+        for (auto &sprite : global::items_to_add) {
+            sprite->delete_sprites(); //deletes its SpriteInfos and nullptrs them
+            delete sprite; //deletes sprite itself
+        }
+
         global::creatures.clear(); //deletes pointers to the creatures removed above - they're not nullptrs!
         global::decorations.clear(); //deletes pointers to the decorations removed above - they're not nullptrs!
         global::treasures.clear(); //deletes pointers to the treasures removed above - they're not nullptrs!
+        global::items.clear(); //deletes pointers to the items removed above - they're not nullptrs!
 
 //Assertion will always be false, pointers are copied when pushed to the vector
 //        int c =0;

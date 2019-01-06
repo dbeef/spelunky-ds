@@ -5,21 +5,25 @@
 #ifndef SPELUNKYDS_JAR_H
 #define SPELUNKYDS_JAR_H
 
-#include "../_BaseCreature.h"
+#include "_BaseItem.h"
 #include "../SpriteInfo.h"
+#include "../CreatureType.hpp"
 
 //http://spelunky.wikia.com/wiki/Pot
-class Jar : public BaseCreature {
+class Jar : public BaseItem {
 
 public:
 
+    static constexpr int jar_x_pickuped_offset_left = 2;
+    static constexpr int jar_x_pickuped_offset_right = 6;
+    static constexpr int jar_y_pickuped_offset = 8;
     static constexpr u8 jar_sprite_width = 16;
     static constexpr u8 jar_sprite_height = 16;
     static constexpr u16 jar_physical_width = 10;
     static constexpr u16 jar_physical_height = 9;
     static constexpr SpritesheetType jar_spritesheet_type = SpritesheetType::JAR;
 
-    Jar(int x, int y) : BaseCreature(
+    Jar(int x, int y) : BaseItem(
             x,
             y,
             jar_sprite_width,
@@ -27,49 +31,32 @@ public:
             jar_spritesheet_type,
             jar_physical_width,
             jar_physical_height,
-            CreatureType::JAR
+            jar_x_pickuped_offset_left,
+            jar_x_pickuped_offset_right,
+            jar_y_pickuped_offset
     ) {
         init_sprites();
-        activated = true;
-        hitpoints = 1;
+        _activated = false;
     }
 
-    // Base creature overrides
+    // BaseItem overrides
 
-    void update_creature_specific() override;
-
-    void introduce_yourself() override { printf("WHIP\n"); };
-
-    void apply_dmg(int dmg_to_apply) override;
-
-    bool can_update_collidable() const override { return !hold_by_main_dude; }
+    void update_item_specific() override;
 
     // IRenderable overrides
 
     void init_sprites() override;
 
-    void delete_sprites() override;
-
-    void update_sprites_position() override;
-
-    // ICollidable overrides
-
-    bool can_apply_friction() const override { return true; }
-
-    bool can_apply_gravity() const override { return true; }
-
     // Other, creature specific
 
     void match_animation();
 
-    void set_sprite_attributes();
-    
-    SpriteInfo *_main_sprite_info {};
-    SpriteInfo *_sub_sprite_info {};
+    void kill();
+
+    bool _killed{}; // Jar's an item but it's killable
     u16 _anim_frame_index{};
     double _anim_frame_timer{};
 };
-
 
 
 #endif //SPELUNKYDS_JAR_H

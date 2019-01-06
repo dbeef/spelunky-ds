@@ -115,10 +115,12 @@ public:
     // Checks whether collision with main dude exists, if so, applies damage.
     void deal_damage_main_dude_on_collision(int dmg_to_apply) const;
 
-private:
+protected:
 
     // True if two collidables overlap.
     bool check_collision(ICollidable const &other_collidable) const;
+
+    bool check_collision(ICollidable const *other_collidable) const;
 
     // Changes xy position according to current xy speed, checks collisions with map every moved pixel.
     void update_position();
