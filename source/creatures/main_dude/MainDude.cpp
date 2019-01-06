@@ -474,11 +474,11 @@ void MainDude::reset_values_checked_every_frame() {
 #include <cmath>
 #include <cstdio>
 #include "../../GlobalsDeclarations.hpp"
-#include "../collectibles/Shotgun.hpp"
-#include "../collectibles/Mitt.hpp"
-#include "../collectibles/Glove.hpp"
-#include "../collectibles/Compass.hpp"
-#include "../collectibles/SpringShoes.hpp"
+#include "../items/Shotgun.hpp"
+#include "../items/Mitt.hpp"
+#include "../items/Glove.hpp"
+#include "../items/Compass.hpp"
+#include "../items/SpringShoes.hpp"
 #include "../items/Rope.hpp"
 #include "../../collisions/Collisions.hpp"
 #include "../../tiles/LevelRenderingUtils.hpp"
@@ -592,11 +592,9 @@ void MainDude::throw_item() {
 void MainDude::take_out_bomb() {
     global::hud->bombs--;
     global::hud->draw_level_hud();
-
     Bomb *bomb = new Bomb(_x, _y);
     bomb->hold_by_main_dude = true;
-
-    global::creatures_to_add.push_back(bomb);
+    global::creatures.push_back(bomb);
     holding_item = true;
 }
 
@@ -605,11 +603,11 @@ void MainDude::throw_rope() {
     global::hud->ropes--;
     global::hud->draw_level_hud();
 
-    int ROPE_PHYSICAL_WIDTH = 16;
-    Rope *rope = new Rope(_y + 6, floor_div(_x + 0.5 * _physical_width, TILE_W) * TILE_W + ROPE_PHYSICAL_WIDTH * 0.5);
-    rope->activated = true;
+    u8 ROPE_PHYSICAL_WIDTH = 16;
+    Rope *rope = new Rope((floor_div(_x + (0.5 * _physical_width), TILE_W) * TILE_W) + (ROPE_PHYSICAL_WIDTH * 0.5), _y + 6);
+    rope->_activated = true;
     rope->_y_speed = -4;
-    global::creatures_to_add.push_back(rope);
+    global::items.push_back(rope);
 
 }
 
@@ -649,14 +647,14 @@ void MainDude::spawn_carried_items() {
         auto cape = new Cape(HUD_ITEMS_ROW_X, global::hud->items_offset_y);
         cape->_collected = true;
         cape->_bought = true;
-        global::creatures_to_add.push_back(cape);
+        global::items_to_add.push_back(cape);
         global::hud->increment_offset_on_grabbed_item();
     }
     if (carrying_jetpack) {
         auto *jetpack = new Jetpack(HUD_ITEMS_ROW_X, global::hud->items_offset_y);
         jetpack->collected = true;
         jetpack->_bought = true;
-        global::creatures_to_add.push_back(jetpack);
+        global::items_to_add.push_back(jetpack);
         global::hud->increment_offset_on_grabbed_item();
     }
     if (carrying_mitt) {
@@ -678,8 +676,8 @@ void MainDude::spawn_carried_items() {
         holding_item = true;
         auto *pistol = new Pistol(_x, _y);
         pistol->_bought = true;
-        pistol->hold_by_main_dude = true;
-        global::creatures_to_add.push_back(pistol);
+        pistol->_hold_by_main_dude = true;
+        global::items.push_back(pistol);
     }
 }
 

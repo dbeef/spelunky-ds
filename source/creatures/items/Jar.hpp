@@ -51,9 +51,9 @@ public:
 
     void match_animation();
 
-    void kill();
+    void destroy();
 
-    bool _killed{}; // Jar's an item but it's killable
+    bool _destroyed{};
     u16 _anim_frame_index{};
     double _anim_frame_timer{};
 };

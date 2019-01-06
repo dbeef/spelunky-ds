@@ -7,14 +7,17 @@
 
 #include "../SpriteInfo.h"
 #include "../Orientation.hpp"
-#include "../_BaseCreature.h"
+#include "../items/_BaseItem.h"
 #include "../../interfaces/ShoppingObject.h"
 
 //http://spelunky.wikia.com/wiki/Cape
-class Cape : public BaseCreature , public ShoppingObject {
+class Cape : public BaseItem , public ShoppingObject {
     
 public:
-    
+
+    static constexpr int cape_x_pickuped_offset_left = 4;
+    static constexpr int cape_x_pickuped_offset_right = 4;
+    static constexpr int cape_y_pickuped_offset = -4;
     static constexpr u16 cape_cost = 13000;
     static constexpr const char *cape_name = "CAPE";
     static constexpr u8 cape_sprite_width = 16;
@@ -23,7 +26,7 @@ public:
     static constexpr u16 cape_physical_height = 15;
     static constexpr SpritesheetType cape_spritesheet_type = SpritesheetType::MONIEZ_GOLDBARS;
 
-    Cape(int x, int y) : BaseCreature(
+    Cape(int x, int y) : BaseItem(
             x,
             y,
             cape_sprite_width,
@@ -31,36 +34,22 @@ public:
             cape_spritesheet_type,
             cape_physical_width,
             cape_physical_height,
-            CreatureType::CAPE
+            cape_x_pickuped_offset_left,
+            cape_x_pickuped_offset_right,
+            cape_y_pickuped_offset
     ), ShoppingObject(cape_cost, cape_name) {
         init_sprites();
         init_anim_icon();
         update_anim_icon(x, y, _physical_width);
     }
 
-    // Base creature overrides
+    // BaseItem overrides
 
-    void update_creature_specific() override;
-
-    void introduce_yourself() override { printf("WHIP\n"); };
-
-    void apply_dmg(int dmg_to_apply) override {};
-
-    bool can_update_collidable() const override { return !_collected; }
+    void update_item_specific() override;
 
     // IRenderable overrides
 
     void init_sprites() override;
-
-    void delete_sprites() override;
-
-    void update_sprites_position() override;
-
-    // ICollidable overrides
-
-    bool can_apply_friction() const override { return true; }
-
-    bool can_apply_gravity() const override { return true; }
 
     // Other, creature specific
 
@@ -69,8 +58,6 @@ public:
     void equip();
 
     bool _collected{};
-    SpriteInfo *_main_sprite_info{};
-    SpriteInfo *_sub_sprite_info{};
     double _anim_frame_timer{};
     u16 _anim_frame_index{};
 

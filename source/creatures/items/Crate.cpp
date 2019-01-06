@@ -17,10 +17,10 @@
 #include "Glove.hpp"
 #include "Compass.hpp"
 #include "../../decorations/GotCollectible.hpp"
-#include "../items/SpikeShoes.hpp"
-#include "../items/Cape.hpp"
-#include "../items/Jetpack.hpp"
-#include "_CollectiblesUtils.hpp"
+#include "SpikeShoes.hpp"
+#include "Cape.hpp"
+#include "Jetpack.hpp"
+#include "../collectibles/_CollectiblesUtils.hpp"
 #include "../SpriteUtils.hpp"
 
 #define CRATE_POS_INC_DELTA 15

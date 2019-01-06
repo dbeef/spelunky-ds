@@ -10,7 +10,7 @@
 #include "../../GlobalsDeclarations.hpp"
 #include "../../../build/soundbank.h"
 #include "Shotgun.hpp"
-#include "Bullet.hpp"
+#include "../collectibles/Bullet.hpp"
 #include "../../decorations/GotCollectible.hpp"
 #include "../../tiles/LevelRenderingUtils.hpp"
 #include "../SpriteUtils.hpp"

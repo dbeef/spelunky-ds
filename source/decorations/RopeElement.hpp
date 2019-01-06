@@ -8,38 +8,31 @@
 #include <nds/arm9/sprite.h>
 #include <vector>
 
-#include "Rope.hpp"
-#include "../../camera/Camera.hpp"
-#include "../_BaseCreature.h"
-#include "../SpriteInfo.h"
+#include "../creatures/items/Rope.hpp"
+#include "../camera/Camera.hpp"
+#include "../creatures/SpriteInfo.h"
+#include "_BaseDecoration.h"
 
-// Represents a single 16x16 element in rope chain. 
-class RopeElement : public BaseCreature {
+// Represents a single 16x16 element in rope chain.
+class RopeElement : public BaseDecoration {
     
 public:
 
-    RopeElement(int x, int y) : BaseCreature(
+    RopeElement(int x, int y) : BaseDecoration(
             x,
             y,
             rope_sprite_width,
             rope_sprite_height,
-            rope_spritesheet_type,
-            rope_physical_width,
-            rope_physical_height,
-            CreatureType::ROPE_ELEMENT
+            rope_spritesheet_type
     ) {
         init_sprites();
     }
 
-    // Base creature overrides
+    // BaseDecoration overrides
 
-    void update_creature_specific() override;
+    void introduce_yourself() const override;
 
-    void introduce_yourself() override { printf("WHIP\n"); };
-
-    void apply_dmg(int dmg_to_apply) override {};
-
-    bool can_update_collidable() const override { return false; }
+    void update_decoration_specific() override;
 
     // IRenderable overrides
 
@@ -48,12 +41,6 @@ public:
     void delete_sprites() override;
 
     void update_sprites_position() override;
-
-    // ICollidable overrides
-
-    bool can_apply_friction() const override { return false; }
-
-    bool can_apply_gravity() const override { return false; }
 
     // Other, creature specific
 

@@ -171,8 +171,8 @@ void Caveman::apply_dmg(int dmg_to_apply) {
         killed = true;
         stunned = false;
         global::killed_npcs.push_back(_creature_type);
-        _bouncing_factor_x = 0;
-        _bouncing_factor_y = 0;
+        _bouncing_factor_x = ICollidable::default_bouncing_factor_x;
+        _bouncing_factor_y = ICollidable::default_bouncing_factor_y;
     } else {
         _bouncing_factor_x = ICollidable::default_bouncing_factor_x;
         _bouncing_factor_y = ICollidable::default_bouncing_factor_y;

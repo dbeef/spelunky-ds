@@ -68,6 +68,10 @@ public:
         _gravity = ICollidable::default_gravity * 1.15f;
     }
 
+    ~MainDude() {
+        delete whip;
+    }
+
     // Base creature overrides
     void update_creature_specific() override;
 
@@ -137,8 +141,8 @@ public:
 
     void spawn_carried_items();
 
-    BaseItem* _currently_held_item{};
-    BaseCreature* _currently_held_creature{};
+    BaseItem *_currently_held_item{};
+    BaseCreature *_currently_held_creature{};
 
     SpriteInfo *main_sprite_info{};
     SpriteInfo *sub_sprite_info{};

@@ -12,7 +12,7 @@
 #include "../Orientation.hpp"
 #include "../SpriteInfo.h"
 #include "../../interfaces/ShoppingObject.h"
-#include "../collectibles/Shotgun.hpp"
+#include "../items/Shotgun.hpp"
 
 //http://spelunky.wikia.com/wiki/Shopkeeper
 class Shopkeeper : public BaseCreature {

@@ -5,17 +5,21 @@
 #ifndef SPELUNKYDS_PISTOL_H
 #define SPELUNKYDS_PISTOL_H
 
-#include "../_BaseCreature.h"
+#include "../items/_BaseItem.h"
 #include "../Orientation.hpp"
 #include "../../interfaces/ShoppingObject.h"
 #include "../../decorations/Blast.hpp"
 #include "../../GlobalsDeclarations.hpp"
 
 //http://spelunky.wikia.com/wiki/Pistol
-class Pistol : public BaseCreature, public ShoppingObject {
+class Pistol : public BaseItem, public ShoppingObject {
 
 public:
-
+    
+    static constexpr u16 pistol_cooldown = 750;
+    static constexpr int pistol_x_pickuped_offset_left = 4;
+    static constexpr int pistol_x_pickuped_offset_right = 10;
+    static constexpr int pistol_y_pickuped_offset = 7;
     static constexpr u16 pistol_cost = 4000;
     static constexpr const char *pistol_name = "PISTOL";
     static constexpr u8 pistol_sprite_width = 16;
@@ -24,7 +28,7 @@ public:
     static constexpr u16 pistol_physical_height = 6;
     static constexpr SpritesheetType pistol_spritesheet_type = SpritesheetType::SPIKES_COLLECTIBLES;
 
-    Pistol(int x, int y) : BaseCreature(
+    Pistol(int x, int y) : BaseItem(
             x,
             y,
             pistol_sprite_width,
@@ -32,7 +36,9 @@ public:
             pistol_spritesheet_type,
             pistol_physical_width,
             pistol_physical_height,
-            CreatureType::PISTOL
+            pistol_x_pickuped_offset_left,
+            pistol_x_pickuped_offset_right,
+            pistol_y_pickuped_offset
     ), ShoppingObject(pistol_cost, pistol_name) {
 
         init_anim_icon();
@@ -43,29 +49,13 @@ public:
         global::decorations_to_add.push_back(_blast);
     }
 
-    // Base creature overrides
+    // BaseItem overrides
 
-    void update_creature_specific() override;
-
-    void introduce_yourself() override { printf("WHIP\n"); };
-
-    void apply_dmg(int dmg_to_apply) override {};
-
-    bool can_update_collidable() const override { return !hold_by_main_dude; }
+    void update_item_specific() override;
 
     // IRenderable overrides
 
     void init_sprites() override;
-
-    void delete_sprites() override;
-
-    void update_sprites_position() override;
-
-    // ICollidable overrides
-
-    bool can_apply_friction() const override { return true; }
-
-    bool can_apply_gravity() const override { return true; }
 
     // Other, creature specific
 
@@ -77,13 +67,10 @@ public:
 
     void match_animation();
 
-    SpriteInfo *_main_sprite_info{};
-    SpriteInfo *_sub_sprite_info{};
-
     Blast *_blast{};
     double _cooldown{};
     bool _firing{};
-
+    Orientation _orientation;
     u8 _anim_frame_index{};
     double _anim_frame_timer{};
 };

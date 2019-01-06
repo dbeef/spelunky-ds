@@ -30,20 +30,18 @@ void ArrowTrap::update_decoration_specific() {
 
 void ArrowTrap::spawn_arrow() const {
 
-    auto *arrow = new Arrow(0, 0);
-    global::creatures_to_add.push_back(arrow);
-    arrow->sprite_state = _sprite_state;
+    auto *arrow = new Arrow(0, 0, _orientation);
+    arrow->_y = _y + 7;
 
-    if (_sprite_state == Orientation::LEFT) {
+    if (_orientation == Orientation::LEFT) {
         arrow->_x = _x - 9;
         arrow->_x_speed = -4;
-    } else if (_sprite_state == Orientation::RIGHT) {
+    } else if (_orientation == Orientation::RIGHT) {
         arrow->_x = _x + arrow_trap_physical_width + 7;
         arrow->_x_speed = 4;
     }
 
-    arrow->_y = _y + 7;
-
+    global::items.push_back(arrow);
 }
 
 // TODO Exclude blood/fire particles from triggering traps.
@@ -56,7 +54,7 @@ bool ArrowTrap::check_if_can_be_triggered(BaseCreature *obj) {
 
     if (obj->_y >= _y && obj->_y < _y + arrow_trap_physical_height) {
 
-        if (_sprite_state == Orientation::LEFT) {
+        if (_orientation == Orientation::LEFT) {
 
             if (obj->_x <= _x && obj->_x > _x - (7 * arrow_trap_physical_width)) {
 
@@ -67,7 +65,7 @@ bool ArrowTrap::check_if_can_be_triggered(BaseCreature *obj) {
 
             }
 
-        } else if (_sprite_state == Orientation::RIGHT) {
+        } else if (_orientation == Orientation::RIGHT) {
 
             if (obj->_x >= _x + arrow_trap_physical_width &&
                 obj->_x < _x + arrow_trap_physical_width + (7 * arrow_trap_physical_width)) {
@@ -86,9 +84,9 @@ bool ArrowTrap::check_if_can_be_triggered(BaseCreature *obj) {
     return false;
 }
 
-ArrowTrap::ArrowTrap(int x, int y, Orientation sprite_state) :
+ArrowTrap::ArrowTrap(int x, int y, Orientation orientation) :
         BaseDecoration(x, y, 0, 0, SpritesheetType::NONE),
-        _sprite_state(sprite_state) {
+        _orientation(orientation) {
     init_sprites();
 }
 

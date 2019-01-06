@@ -8,15 +8,18 @@
 
 #include "../SpriteInfo.h"
 #include "../Orientation.hpp"
-#include "../_BaseCreature.h"
+#include "../items/_BaseItem.h"
 #include "../../interfaces/ShoppingObject.h"
 #include "../animations/FallPoof.hpp"
 
 //http://spelunky.wikia.com/wiki/jetpack
-class Jetpack : public BaseCreature, public ShoppingObject {
+class Jetpack : public BaseItem, public ShoppingObject {
 
 public:
     
+    static constexpr int jetpack_x_pickuped_offset_left = 4;
+    static constexpr int jetpack_x_pickuped_offset_right = 4;
+    static constexpr int jetpack_y_pickuped_offset = -4;
     static constexpr u16 jetpack_cost = 16000;
     static constexpr const char *jetpack_name = "JETPACK";
     static constexpr u8 jetpack_sprite_width = 16;
@@ -25,7 +28,7 @@ public:
     static constexpr u16 jetpack_physical_height = 12;
     static constexpr SpritesheetType jetpack_spritesheet_type = SpritesheetType::BAT_JETPACK;
 
-    Jetpack(int x, int y) : BaseCreature(
+    Jetpack(int x, int y) : BaseItem(
             x,
             y,
             jetpack_sprite_width,
@@ -33,47 +36,31 @@ public:
             jetpack_spritesheet_type,
             jetpack_physical_width,
             jetpack_physical_height,
-            CreatureType::JETPACK
+            jetpack_x_pickuped_offset_left,
+            jetpack_x_pickuped_offset_right,
+            jetpack_y_pickuped_offset
     ), ShoppingObject(jetpack_cost, jetpack_name) {
         init_sprites();
         init_anim_icon();
         update_anim_icon(x, y, _physical_width);
     }
 
-    ~Jetpack();
+    // BaseItem overrides
 
-    // Base creature overrides
-
-    void update_creature_specific() override;
-
-    void introduce_yourself() override { printf("WHIP\n"); };
-
-    void apply_dmg(int dmg_to_apply) override {};
-
-    bool can_update_collidable() const override { return !collected; }
+    void update_item_specific() override;
 
     // IRenderable overrides
 
     void init_sprites() override;
 
-    void delete_sprites() override;
-
-    void update_sprites_position() override;
-
-    // ICollidable overrides
-
-    bool can_apply_friction() const override { return true; }
-
-    bool can_apply_gravity() const override { return true; }
-
     // Other, creature specific
+
+    ~Jetpack();
 
     void equip();
 
     double _poof_spawn_timer{};
     bool collected{};
-    SpriteInfo *_main_sprite_info{};
-    SpriteInfo *_sub_sprite_info{};
     FallPoof *_poofs[2]{};
 
 };

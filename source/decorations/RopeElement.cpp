@@ -2,13 +2,14 @@
 // Created by xdbeef on 04.04.18.
 //
 
-#include "Rope.hpp"
+#include "../creatures/items/Rope.hpp"
 #include "RopeElement.hpp"
-#include "../../GlobalsDeclarations.hpp"
-#include "../../../build/gfx_blood_rock_rope_poof.h"
-#include "../SpriteUtils.hpp"
+#include "../GlobalsDeclarations.hpp"
+#include "../../build/gfx_blood_rock_rope_poof.h"
+#include "../creatures/SpriteUtils.hpp"
+#include "RopeElement.hpp"
 
-void RopeElement::update_creature_specific() {
+void RopeElement::update_decoration_specific() {
 
     if (_ready_to_dispose) return;
 
@@ -62,8 +63,7 @@ void RopeElement::update_sprites_position() {
     get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
     sprite_utils::set_entry_xy(_main_sprite_info, static_cast<u16>(main_x), static_cast<u16>(main_y));
     sprite_utils::set_entry_xy(_sub_sprite_info, static_cast<u16>(sub_x), static_cast<u16>(sub_y));
-    sprite_utils::set_entry_xy(_main_sprite_info_2, static_cast<u16>(main_x),
-                               static_cast<u16>(main_y + _sprite_height));
+    sprite_utils::set_entry_xy(_main_sprite_info_2, static_cast<u16>(main_x), static_cast<u16>(main_y + _sprite_height));
     sprite_utils::set_entry_xy(_sub_sprite_info_2, static_cast<u16>(sub_x), static_cast<u16>(sub_y + _sprite_height));
 }
 
@@ -72,10 +72,19 @@ void RopeElement::delete_sprites() {
     delete _sub_sprite_info;
     _main_sprite_info = nullptr;
     _sub_sprite_info = nullptr;
+
+    delete _main_sprite_info_2;
+    delete _sub_sprite_info_2;
+    _main_sprite_info_2 = nullptr;
+    _sub_sprite_info_2 = nullptr;
 }
 
 void RopeElement::update_visibility() {
     if (_active_timer > 20)
         sprite_utils::set_visibility(true, _main_sprite_info_2, _sub_sprite_info_2);
     sprite_utils::set_visibility(true, _main_sprite_info, _sub_sprite_info);
+}
+
+void RopeElement::introduce_yourself() const {
+    printf("ROPE ELEMENT\n");
 }

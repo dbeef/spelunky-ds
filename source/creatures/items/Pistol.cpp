@@ -15,32 +15,20 @@
 #include "../../decorations/Blast.hpp"
 #include "../collectibles/Bullet.hpp"
 
-#define PISTOL_POS_INC_DELTA 15
-#define PISTOL_COOLDOWN 750
-
-void Pistol::update_creature_specific() {
+void Pistol::update_item_specific() {
 
     if (_ready_to_dispose) return;
 
-    sprite_utils::set_vertical_flip(false, _main_sprite_info, _sub_sprite_info);
-    sprite_utils::set_horizontal_flip(false, _main_sprite_info, _sub_sprite_info);
     update_anim_icon(_x, _y, _physical_width);
-    match_animation();
 
-    check_if_can_be_pickuped();
-    if (hold_by_main_dude) {
+    if (_hold_by_main_dude) {
 
         if (shopping_transaction(this))
             equip();
 
         global::main_dude->carrying_pistol = true;
-        sprite_state = global::main_dude->sprite_state;
-
-        _y = global::main_dude->_y + 7;
-        if (global::main_dude->sprite_state == Orientation::LEFT)
-            _x = global::main_dude->_x - 4;
-        else
-            _x = global::main_dude->_x + 10;
+        _orientation = global::main_dude->sprite_state;
+        match_animation();
 
     } else
         global::main_dude->carrying_pistol = false;
@@ -65,15 +53,10 @@ void Pistol::init_sprites() {
 
     sprite_utils::set_vertical_flip(false, _main_sprite_info, _sub_sprite_info);
     sprite_utils::set_horizontal_flip(false, _main_sprite_info, _sub_sprite_info);
+    sprite_utils::set_visibility(true, _main_sprite_info, _sub_sprite_info);
+
     match_animation();
     update_sprites_position();
-}
-
-void Pistol::update_sprites_position() {
-    int main_x, main_y, sub_x, sub_y;
-    get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
-    sprite_utils::set_entry_xy(_main_sprite_info, static_cast<u16>(main_x), static_cast<u16>(main_y));
-    sprite_utils::set_entry_xy(_sub_sprite_info, static_cast<u16>(sub_x), static_cast<u16>(sub_y));
 }
 
 void Pistol::equip() {
@@ -100,16 +83,16 @@ void Pistol::spawn_bullet() {
 //TODO Share this function between pistol / shotgun, similiar behaviour besides cooldown time / spawn bullet callback
 void Pistol::handle_shooting() {
 
-    if (activated && !_firing && _cooldown > PISTOL_COOLDOWN) {
+    if (_activated && !_firing && _cooldown > pistol_cooldown) {
 
         mmEffect(SFX_XSHOTGUN);
         _firing = true;
         _cooldown = 0;
-        activated = false;
+        _activated = false;
         spawn_bullet();
 
     } else
-        activated = false;
+        _activated = false;
 
     if (_blast->_anim_frame_index >= 9) {
         _firing = false;
@@ -120,12 +103,12 @@ void Pistol::handle_shooting() {
 
     if (!_firing) {
         _cooldown += *global::timer;
-        if (sprite_state == Orientation::LEFT)
+        if (_orientation == Orientation::LEFT)
             _blast->_x = _x - 10;
         else
             _blast->_x = _x + 10;
         _blast->_y = _y;
-        _blast->_sprite_state = sprite_state;
+        _blast->_sprite_state = _orientation;
     }
 
 }
@@ -134,18 +117,11 @@ void Pistol::match_animation() {
 
     u8 *frame_gfx;
 
-    if (sprite_state == Orientation::LEFT)
+    if (_orientation == Orientation::LEFT)
         frame_gfx = sprite_utils::get_frame((u8 *) gfx_spike_collectibles_flameTiles, _sprite_size, 32);
     else
         frame_gfx = sprite_utils::get_frame((u8 *) gfx_spike_collectibles_flameTiles, _sprite_size, 33);
 
     sprite_utils::update_frame(frame_gfx, _sprite_size, _main_sprite_info, _sub_sprite_info);
-}
-
-void Pistol::delete_sprites() {
-    delete _main_sprite_info;
-    delete _sub_sprite_info;
-    _main_sprite_info = nullptr;
-    _sub_sprite_info = nullptr;
 }
 

@@ -49,7 +49,7 @@ public:
 
     // ICollidable overrides
 
-    bool can_apply_friction() const override { return true; }
+    bool can_apply_friction() const override { return _bottom_collision; }
 
     bool can_apply_gravity() const override { return true; }
 

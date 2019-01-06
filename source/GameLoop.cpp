@@ -43,6 +43,18 @@ static void update_treasures_to_add() {
         global::treasures_to_add.clear();
 }
 
+static void update_items_to_add() {
+    unsigned long size = global::items_to_add.size();
+    for (unsigned long a = 0; a < size; a++) {
+        if (global::items_to_add.at(a)) {
+            BaseItem *o = global::items_to_add.at(a);
+            global::items.push_back(o);
+        }
+    }
+    if (size)
+        global::items_to_add.clear();
+}
+
 void gameloop::run() {
 
     //init positions with main menu values:
@@ -74,6 +86,7 @@ void gameloop::run() {
         update_creatures_to_add();
         update_decorations_to_add();
         update_treasures_to_add();
+        update_items_to_add();
 
         global::main_dude->update();
         global::main_dude->whip->update();

@@ -7,13 +7,13 @@
 #include "_CollectiblesUtils.hpp"
 #include "../../GlobalsDeclarations.hpp"
 #include "../items/Jetpack.hpp"
-#include "Mitt.hpp"
+#include "../items/Mitt.hpp"
 #include "../items/SpikeShoes.hpp"
-#include "Shotgun.hpp"
-#include "Glove.hpp"
-#include "Compass.hpp"
+#include "../items/Shotgun.hpp"
+#include "../items/Glove.hpp"
+#include "../items/Compass.hpp"
 #include "../items/Cape.hpp"
-#include "SpringShoes.hpp"
+#include "../items/SpringShoes.hpp"
 #include "../items/Pistol.hpp"
 
 ShoppingObject * collectibles_utils::spawn_item(int x, int y, int r, bool bought) {
@@ -91,6 +91,12 @@ void collectibles_utils::spawn_set_up(int x, int y, BaseCreature *m) {
     m->_x = x + (int) (0.5 * (16 - m->_physical_width));
     m->_y = y;
     global::creatures_to_add.push_back(m);
+}
+
+void collectibles_utils::spawn_set_up(int x, int y, BaseItem *m) {
+    m->_x = x + (int) (0.5 * (16 - m->_physical_width));
+    m->_y = y;
+    global::items.push_back(m);
 }
 
 void collectibles_utils::spawn_random_item(int x, int y) {

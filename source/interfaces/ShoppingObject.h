@@ -7,6 +7,7 @@
 
 #include "../creatures/_BaseCreature.h"
 #include "../decorations/ShoppingIcon.h"
+#include "../creatures/items/_BaseItem.h"
 
 class ShoppingObject {
 
@@ -15,6 +16,8 @@ public:
     ShoppingObject(u16 cost, const char *name) : _cost(cost), _name(name) {
         // do nothing
     }
+
+    bool shopping_transaction(BaseItem *m);
 
     bool shopping_transaction(BaseCreature *m);
 

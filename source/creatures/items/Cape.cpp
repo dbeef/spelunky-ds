@@ -13,7 +13,7 @@
 #define CAPE_ANIM_FRAME_DELTA 60
 #define CAPE_POS_INC_DELTA 15
 
-void Cape::update_creature_specific() {
+void Cape::update_item_specific() {
 
     if (global::main_dude->carrying_jetpack && _collected) {
         global::main_dude->carrying_cape = false;
@@ -30,11 +30,10 @@ void Cape::update_creature_specific() {
 
     if (_bought && !_collected && check_if_can_be_equipped())
         equip();
-    else if (!_bought && !hold_by_main_dude)
+    else if (!_bought && !_hold_by_main_dude)
         check_if_can_be_pickuped();
 
-    if (hold_by_main_dude) {
-        set_pickuped_position(4, -4);
+    if (_hold_by_main_dude) {
         if (shopping_transaction(this)) {
             _collected = true;
             equip();
@@ -47,14 +46,14 @@ void Cape::update_creature_specific() {
 
         //match sprite rendering priority and x/y offset to the main dude's sprite state
         if (global::main_dude->climbing || global::main_dude->exiting_level) {
-            set_pickuped_position_not_checking(0, 4);
+            set_pickuped_position_not_checking(0, 0, 4);
             sprite_utils::set_priority(OBJPRIORITY_0, _main_sprite_info, _sub_sprite_info);
         } else if (global::input_handler->down_key_held || global::main_dude->dead || global::main_dude->stunned) {
-            set_pickuped_position_not_checking(0, 4);
+            set_pickuped_position_not_checking(0, 0, 4);
             sprite_utils::set_priority(OBJPRIORITY_1, _main_sprite_info, _sub_sprite_info);
         } else {
             sprite_utils::set_priority(OBJPRIORITY_1, _main_sprite_info, _sub_sprite_info);
-            set_pickuped_position_not_checking(-3, -1);
+            set_pickuped_position_not_checking(-3, -3, -1);
         }
 
         _anim_frame_timer += *global::timer;
@@ -97,13 +96,6 @@ void Cape::init_sprites() {
                                           _main_sprite_info, _sub_sprite_info);
     else
         sprite_utils::set_horizontal_flip(false, _main_sprite_info, _sub_sprite_info);
-}
-
-void Cape::update_sprites_position() {
-    int main_x, main_y, sub_x, sub_y;
-    get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
-    sprite_utils::set_entry_xy(_main_sprite_info, main_x, main_y);
-    sprite_utils::set_entry_xy(_sub_sprite_info, sub_x, sub_y);
 }
 
 void Cape::match_animation() {
@@ -159,11 +151,3 @@ void Cape::equip() {
     }
 
 }
-
-void Cape::delete_sprites() {
-    delete _main_sprite_info;
-    delete _sub_sprite_info;
-    _main_sprite_info = nullptr;
-    _sub_sprite_info = nullptr;
-}
-

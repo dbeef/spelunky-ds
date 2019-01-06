@@ -35,6 +35,33 @@ void ShoppingObject::console_display_name_cost() {
     }
 }
 
+bool ShoppingObject::shopping_transaction(BaseItem *m) {
+
+    if (!_bought) {
+        console_display_name_cost();
+        if (global::input_handler->l_bumper_down) {
+            if (global::hud->money >= _cost) {
+                _bought = true;
+                global::hud->money -= _cost;
+                global::hud->disable_all_prompts();
+                global::hud->recently_bough_item = true;
+                global::hud->recently_bought_item_name = _name;
+                global::hud->draw_level_hud();
+                return true;
+            } else {
+                global::hud->disable_all_prompts();
+                global::hud->not_enough_money = true;
+                global::main_dude->holding_item = false;
+                global::hud->draw_level_hud();
+                m->_bottom_collision = false;
+                m->_hold_by_main_dude = false;
+                return false;
+            }
+        }
+    }
+    return false;
+
+}
 bool ShoppingObject::shopping_transaction(BaseCreature *m) {
 
     if (!_bought) {

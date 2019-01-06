@@ -10,7 +10,7 @@
 #include "../animations/FallPoof.hpp"
 #include "../SpriteUtils.hpp"
 
-void Jetpack::update_creature_specific() {
+void Jetpack::update_item_specific() {
 
     if (global::main_dude->carrying_cape && collected) {
         global::main_dude->carrying_jetpack = false;
@@ -23,12 +23,11 @@ void Jetpack::update_creature_specific() {
 
     if (_bought && !collected && check_if_can_be_equipped()) {
         equip();
-    } else if (!_bought && !hold_by_main_dude) {
+    } else if (!_bought && !_hold_by_main_dude) {
         check_if_can_be_pickuped();
     }
 
-    if (hold_by_main_dude) {
-        set_pickuped_position(4, -4);
+    if (_hold_by_main_dude) {
         if (shopping_transaction(this)) {
             collected = true;
             equip();
@@ -39,15 +38,15 @@ void Jetpack::update_creature_specific() {
 
         if (global::main_dude->climbing || global::main_dude->exiting_level) {
             sprite_utils::set_priority(OBJPRIORITY_0, _main_sprite_info, _sub_sprite_info);
-            set_pickuped_position_not_checking(-3, 2);
+            set_pickuped_position_not_checking(-3, -3, 2);
             sprite_utils::set_horizontal_flip(false, _main_sprite_info, _sub_sprite_info);
         } else if (global::main_dude->sprite_state == Orientation::LEFT) {
             sprite_utils::set_priority(OBJPRIORITY_1, _main_sprite_info, _sub_sprite_info);
-            set_pickuped_position_not_checking(-6, 0);
+            set_pickuped_position_not_checking(-6, -6, 0);
             sprite_utils::set_horizontal_flip(false, _main_sprite_info, _sub_sprite_info);
         } else if (global::main_dude->sprite_state == Orientation::RIGHT) {
             sprite_utils::set_priority(OBJPRIORITY_1, _main_sprite_info, _sub_sprite_info);
-            set_pickuped_position_not_checking(-3, 0);
+            set_pickuped_position_not_checking(-3, -3, 0);
             sprite_utils::set_horizontal_flip(true, _main_sprite_info, _sub_sprite_info);
         }
 
@@ -102,6 +101,7 @@ void Jetpack::update_creature_specific() {
     }
 
     update_sprites_position();
+    update_anim_icon(_x, _y, _physical_width);
 
     for (auto &_poof : _poofs) {
         if (_poof == nullptr)
@@ -121,6 +121,8 @@ void Jetpack::init_sprites() {
                                                              nullptr, _sprite_size, ObjSize::OBJSIZE_16,
                                                              _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
 
+    update_anim_icon(_x, _y, _physical_width);
+
     sprite_utils::set_visibility(true, _main_sprite_info, _sub_sprite_info);
     sprite_utils::set_vertical_flip(false, _main_sprite_info, _sub_sprite_info);
 
@@ -132,21 +134,6 @@ void Jetpack::init_sprites() {
         frame_gfx = sprite_utils::get_frame((u8 *) gfx_bat_snake_jetpackTiles, _sprite_size, 7);
 
     sprite_utils::update_frame(frame_gfx, _sprite_size, _main_sprite_info, _sub_sprite_info);
-}
-
-void Jetpack::update_sprites_position() {
-
-    int main_x, main_y, sub_x, sub_y;
-    get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
-
-    sprite_utils::set_entry_xy(_main_sprite_info, static_cast<u16>(main_x), static_cast<u16>(main_y));
-    sprite_utils::set_entry_xy(_sub_sprite_info, static_cast<u16>(sub_x), static_cast<u16>(sub_y));
-
-    sprite_utils::set_vertical_flip(false, _main_sprite_info, _sub_sprite_info);
-    sprite_utils::set_horizontal_flip(false, _main_sprite_info, _sub_sprite_info);
-
-    update_anim_icon(_x, _y, _physical_width);
-
 }
 
 void Jetpack::equip() {
@@ -171,19 +158,6 @@ void Jetpack::equip() {
     }
 }
 
-void Jetpack::delete_sprites() {
-
-    delete _main_sprite_info;
-    delete _sub_sprite_info;
-
-    _main_sprite_info = nullptr;
-    _sub_sprite_info = nullptr;
-
-    for (auto &_poof : _poofs) {
-        if (_poof == nullptr) continue;
-        _poof->delete_sprites();
-    }
-}
 
 Jetpack::~Jetpack() {
     for (auto &poof : _poofs)

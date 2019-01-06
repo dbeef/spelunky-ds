@@ -12,7 +12,7 @@
 #include "../../tiles/LevelRenderingUtils.hpp"
 #include "../SpriteUtils.hpp"
 
-void Rope::update_creature_specific() {
+void Rope::update_item_specific() {
 
     if (_ready_to_dispose) return;
 
@@ -32,7 +32,7 @@ void Rope::update_creature_specific() {
         }
     }
 
-    if (activated && !_thrown && !_finished) {
+    if (_activated && !_thrown && !_finished) {
         mmEffect(SFX_XTHROW);
 
         _thrown = true;
@@ -79,9 +79,14 @@ void Rope::update_creature_specific() {
 
     update_sprites_position();
 
-    if (_upper_collision) {
-        if (!_finished) {
+    if (_map_collisions_checked) {
+
+        // FIXME There's some bug that causes no collision flag set to be true,
+        // but it sets _y_speed to zero anyway and actually acts as colliding with map.
+        if (!_finished && _y_speed == 0) {
+
             set_sprite_throwing_finished();
+
             _finished = true;
 
             int temp_y = floor_div(this->_y + (0.5 * _physical_height), TILE_H);
@@ -90,8 +95,9 @@ void Rope::update_creature_specific() {
             element->update();
             _rope_chain.push_back(element);
         }
-    }
 
+        _map_collisions_checked = false;
+    }
 }
 
 void Rope::set_sprite_throwing() {
@@ -104,7 +110,7 @@ void Rope::set_sprite_throwing_finished() {
     sprite_utils::update_frame(frame_gfx, _sprite_size, _main_sprite_info, _sub_sprite_info);
 }
 
-bool Rope::isThereChainForThisTile(int rope_y) {
+bool Rope::is_there_chain_for_this_tile(int rope_y) {
     for (auto &a : _rope_chain) {
         if (a->_y == rope_y)
             return true;
@@ -117,14 +123,18 @@ void Rope::init_sprites() {
     delete_sprites();
 
     _sub_sprite_info = global::sub_oam_manager->initSprite(gfx_blood_rock_rope_poofPal, gfx_blood_rock_rope_poofPalLen,
-                                                           nullptr, _sprite_size, ObjSize::OBJSIZE_8, BLOOD_ROCK_ROPE_POOF, true,
+                                                           nullptr, _sprite_size, ObjSize::OBJSIZE_8,
+                                                           BLOOD_ROCK_ROPE_POOF, true,
                                                            false, LAYER_LEVEL::MIDDLE_TOP);
     _main_sprite_info = global::main_oam_manager->initSprite(gfx_blood_rock_rope_poofPal,
                                                              gfx_blood_rock_rope_poofPalLen,
-                                                             nullptr, _sprite_size, ObjSize::OBJSIZE_8, BLOOD_ROCK_ROPE_POOF, true,
+                                                             nullptr, _sprite_size, ObjSize::OBJSIZE_8,
+                                                             BLOOD_ROCK_ROPE_POOF, true,
                                                              false, LAYER_LEVEL::MIDDLE_TOP);
 
     sprite_utils::set_visibility(true, _main_sprite_info, _sub_sprite_info);
+    sprite_utils::set_horizontal_flip(false, _main_sprite_info, _sub_sprite_info);
+    sprite_utils::set_vertical_flip(false, _main_sprite_info, _sub_sprite_info);
 
     if (!_finished)
         set_sprite_throwing();
@@ -139,7 +149,7 @@ void Rope::add_rope_if_needed() {
 
     int temp_y = floor_div(this->_y + (0.5 * _physical_height), TILE_H);
 
-    if (!isThereChainForThisTile(temp_y * TILE_H)) {
+    if (!is_there_chain_for_this_tile(temp_y * TILE_H)) {
 
         if (temp_y * TILE_H > _y) {
 
@@ -151,23 +161,9 @@ void Rope::add_rope_if_needed() {
                 (!_extended_rope && _rope_chain.size() == max_rope_chain_size)) {
                 set_sprite_throwing_finished();
                 _finished = true;
+                _y_speed = 0;
             }
 
         }
     }
 }
-
-void Rope::update_sprites_position() {
-    int main_x, main_y, sub_x, sub_y;
-    get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
-    sprite_utils::set_entry_xy(_main_sprite_info, static_cast<u16>(main_x), static_cast<u16>(main_y));
-    sprite_utils::set_entry_xy(_sub_sprite_info, static_cast<u16>(sub_x), static_cast<u16>(sub_y));
-}
-
-void Rope::delete_sprites() {
-    delete _main_sprite_info;
-    delete _sub_sprite_info;
-    _main_sprite_info = nullptr;
-    _sub_sprite_info = nullptr;
-}
-

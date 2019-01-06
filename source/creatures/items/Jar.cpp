@@ -9,8 +9,8 @@
 #include "../../collisions/Collisions.hpp"
 #include "../SpriteUtils.hpp"
 
-void Jar::kill() {
-    _killed = true;
+void Jar::destroy() {
+    _destroyed = true;
     match_animation();
 }
 
@@ -27,11 +27,11 @@ void Jar::update_item_specific() {
 
     if (global::main_dude->using_whip) {
         if(check_collision(global::main_dude->whip)){
-            kill();
+            destroy();
         }
     }
 
-    if (_killed && _anim_frame_index < 7) {
+    if (_destroyed && _anim_frame_index < 7) {
         _anim_frame_timer += *global::timer;
         if (_anim_frame_timer > 50) {
             _anim_frame_index++;
@@ -45,12 +45,12 @@ void Jar::update_item_specific() {
     else
         sprite_utils::set_priority(OBJPRIORITY_1, _main_sprite_info, _sub_sprite_info);
 
-    if (kill_creatures_if_have_speed(1)) { _killed = true; }
+    if (kill_creatures_if_have_speed(1)) { _destroyed = true; }
 
     if ((fabs(_x_speed) > 0.5 || fabs(_y_speed) > 0.5) &&
         (_bottom_collision || _left_collision || _right_collision || _upper_collision)) {
         //destroy jar on colliding with map tiles with enough speed
-        kill();
+        destroy();
         _x_speed = 0;
         _y_speed = 0;
     }
@@ -84,7 +84,7 @@ void Jar::match_animation() {
 
     u8 *frame_gfx;
 
-    if (_killed)
+    if (_destroyed)
         frame_gfx = sprite_utils::get_frame((u8 *) gfx_spike_collectibles_flameTiles, _sprite_size,
                                             _anim_frame_index + 24);
     else

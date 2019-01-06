@@ -33,8 +33,8 @@ add_executable(spelunkyds
         source/creatures/items/Rope.hpp
         source/decorations/Copyrights.cpp
         source/decorations/Copyrights.h
-        source/creatures/items/RopeElement.hpp
-        source/creatures/items/RopeElement.cpp
+        source/decorations/RopeElement.hpp
+        source/decorations/RopeElement.cpp
         source/creatures/items/Pistol.hpp
         source/creatures/items/Pistol.cpp
         source/creatures/items/Rope.cpp
@@ -113,22 +113,22 @@ add_executable(spelunkyds
         source/creatures/main_dude/Whip.hpp
         source/creatures/traps/Spikes.cpp
         source/creatures/traps/Spikes.h
-        source/creatures/collectibles/Chest.cpp
-        source/creatures/collectibles/Chest.hpp
-        source/creatures/collectibles/Crate.hpp
-        source/creatures/collectibles/Crate.cpp
-        source/creatures/collectibles/Shotgun.hpp
-        source/creatures/collectibles/Shotgun.cpp
+        source/creatures/items/Chest.cpp
+        source/creatures/items/Chest.hpp
+        source/creatures/items/Crate.hpp
+        source/creatures/items/Crate.cpp
+        source/creatures/items/Shotgun.hpp
+        source/creatures/items/Shotgun.cpp
         source/creatures/collectibles/Bullet.hpp
         source/creatures/collectibles/Bullet.cpp
-        source/creatures/collectibles/SpringShoes.hpp
-        source/creatures/collectibles/SpringShoes.cpp
-        source/creatures/collectibles/Mitt.hpp
-        source/creatures/collectibles/Mitt.cpp
-        source/creatures/collectibles/Glove.hpp
-        source/creatures/collectibles/Glove.cpp
-        source/creatures/collectibles/Compass.hpp
-        source/creatures/collectibles/Compass.cpp
+        source/creatures/items/SpringShoes.hpp
+        source/creatures/items/SpringShoes.cpp
+        source/creatures/items/Mitt.hpp
+        source/creatures/items/Mitt.cpp
+        source/creatures/items/Glove.hpp
+        source/creatures/items/Glove.cpp
+        source/creatures/items/Compass.hpp
+        source/creatures/items/Compass.cpp
         source/decorations/GotCollectible.hpp
         source/decorations/GotCollectible.cpp
         source/camera/LayerLevel.hpp
@@ -144,18 +144,8 @@ add_executable(spelunkyds
         source/creatures/items/Cape.cpp
         source/creatures/items/SpikeShoes.hpp
         source/creatures/items/SpikeShoes.cpp
-        source/creatures/items/Pick.hpp
-        source/creatures/items/Pick.cpp
         source/creatures/items/Jetpack.hpp
         source/creatures/items/Jetpack.cpp
-        source/creatures/items/Parachute.hpp
-        source/creatures/items/Parachute.cpp
-        source/creatures/items/RopePile.hpp
-        source/creatures/items/RopePile.cpp
-        source/creatures/items/BombBag.hpp
-        source/creatures/items/BombBag.cpp
-        source/creatures/items/BombBox.hpp
-        source/creatures/items/BombBox.cpp
         source/creatures/animations/Flame.hpp
         source/creatures/animations/FlameElement.cpp
         source/creatures/animations/Flame.cpp

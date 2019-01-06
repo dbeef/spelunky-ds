@@ -15,44 +15,38 @@
 #include "../SpriteUtils.hpp"
 #include "Arrow.hpp"
 
-void Arrow::update_creature_specific() {
+void Arrow::update_item_specific() {
 
     // TODO Isn't this checked in game loop when iterating? If so, remove because redundancy.
     if (_ready_to_dispose) return;
 
-    check_if_can_be_pickuped();
+    if (_hold_by_main_dude) {
 
-    if (hold_by_main_dude) {
-
-        thrown = false;
-
-        set_pickuped_position(1, 10, 6);
+        _thrown = false;
 
         if (global::main_dude->sprite_state == Orientation::RIGHT)
-            angle = 90;
+            _angle = 90;
         else
-            angle = 270;
+            _angle = 270;
 
-        update_frame((int) floor(angle / 22.5f));
+        update_frame((int) floor(_angle / 22.5f));
 
-    } else if (thrown) {
-        armed_timer += *global::timer;
-        if (armed_timer > 100) {
-            thrown = true;
-            armed_timer = 0;
+    } else if (_thrown) {
+        _armed_timer += *global::timer;
+        if (_armed_timer > 100) {
+            _thrown = true;
+            _armed_timer = 0;
         }
     }
 
     update_sprites_position();
 
     if (kill_creatures_if_have_speed(3)) {
-        sprite_utils::set_visibility(false, mainSpriteInfo, subSpriteInfo);
+        sprite_utils::set_visibility(false, _main_sprite_info, _sub_sprite_info);
         _ready_to_dispose = true;
-    } else if (thrown && (fabs(_x_speed) > 1.5f || fabs(_y_speed) > 1.5) && kill_main_dude_if_have_speed(3)) {
-        sprite_utils::set_visibility(false, mainSpriteInfo, subSpriteInfo);
+    } else if (_thrown && (fabs(_x_speed) > 1.5f || fabs(_y_speed) > 1.5) && kill_main_dude_if_have_speed(3)) {
+        sprite_utils::set_visibility(false, _main_sprite_info, _sub_sprite_info);
         _ready_to_dispose = true;
-
-        spawn_blood();
 
         // TODO Make an util function for this;
         // settings those flags causes main dude to fall off whatever he is hanging on.
@@ -67,9 +61,9 @@ void Arrow::update_creature_specific() {
         global::main_dude->stunned_timer = 0;
         global::main_dude->stunned = true;
 
-        if (sprite_state == Orientation::LEFT)
+        if (_orientation == Orientation::LEFT)
             global::main_dude->_x_speed = -3;
-        else if (sprite_state == Orientation::RIGHT)
+        else if (_orientation == Orientation::RIGHT)
             global::main_dude->_x_speed = 3;
 
         global::main_dude->time_since_last_damage = 0;
@@ -87,66 +81,66 @@ void Arrow::update_creature_specific() {
     if (_map_collisions_checked) {
         //now handle bouncing off map tiles:
 
-        double temp_angle = angle;
+        double temp_angle = _angle;
 
         if (_bottom_collision) {
-            if (angle > 90 && angle < 270) {
-                if (angle > 90 && angle < 180)
+            if (_angle > 90 && _angle < 270) {
+                if (_angle > 90 && _angle < 180)
                     //right-bottom collision
-                    angle = 180 - angle;
-                else if (angle > 180 && angle < 270)
+                    _angle = 180 - _angle;
+                else if (_angle > 180 && _angle < 270)
                     //left-bottom collision
-                    angle = 360 - (angle - 180);
+                    _angle = 360 - (_angle - 180);
             }
         }
 
         if (_upper_collision) {
-            if (angle > 270 && angle < 360)
+            if (_angle > 270 && _angle < 360)
                 //left-upper collision
-                angle = 90 - (angle - 270);
-            else if (angle > 0 && angle < 90)
+                _angle = 90 - (_angle - 270);
+            else if (_angle > 0 && _angle < 90)
                 //right-upper collision
-                angle = 270 + (90 - angle);
+                _angle = 270 + (90 - _angle);
         }
 
         if (_right_collision) {
-            if (angle > 0 && angle < 90)
-                angle = 270 + (90 - angle);
+            if (_angle > 0 && _angle < 90)
+                _angle = 270 + (90 - _angle);
         }
 
         if (_left_collision) {
-            if (angle > 270 && angle < 360)
-                angle = 360 - angle;
+            if (_angle > 270 && _angle < 360)
+                _angle = 360 - _angle;
         }
 
         if (_bottom_collision && fabs(_y_speed) < 0.22f) {
-            if (angle > 0 && angle <= 180)
-                angle = 90;
+            if (_angle > 0 && _angle <= 180)
+                _angle = 90;
             else
-                angle = 270;
+                _angle = 270;
         }
 
-        if (temp_angle != angle)
-            update_frame((int) floor(angle / 22.5f));
+        if (temp_angle != _angle)
+            update_frame((int) floor(_angle / 22.5f));
 
-        if (!_bottom_collision && !hold_by_main_dude) {
+        if (!_bottom_collision && !_hold_by_main_dude) {
 
 
-            int frame_before = (int) floor(angle / 22.5f);
+            int frame_before = (int) floor(_angle / 22.5f);
 
             //change angle from time to time, so arrow would point to ground eventually
-            if (angle > 0 && angle < 180) {
-                angle += 8 * (1 / ((_x_speed)));
-            } else if (angle > 180 && angle < 360) {
-                angle -= 8 * (1 / ((_x_speed)));
+            if (_angle > 0 && _angle < 180) {
+                _angle += 8 * (1 / ((_x_speed)));
+            } else if (_angle > 180 && _angle < 360) {
+                _angle -= 8 * (1 / ((_x_speed)));
             }
 
-            if (angle < 0)
-                angle = 0;
-            if (angle > 360)
-                angle = 0;
+            if (_angle < 0)
+                _angle = 0;
+            if (_angle > 360)
+                _angle = 0;
 
-            int frame_after = (int) floor(angle / 22.5f);
+            int frame_after = (int) floor(_angle / 22.5f);
 
             if (frame_before != frame_after) {
                 update_frame(frame_after);
@@ -163,35 +157,24 @@ void Arrow::init_sprites() {
 
     delete_sprites();
 
-    subSpriteInfo = global::sub_oam_manager->initSprite(gfx_arrowPal, gfx_arrowPalLen,
-                                                        nullptr, ARROW_SPRITE_SIZE, ObjSize::OBJSIZE_8, SpritesheetType::ARROW,
+    _sub_sprite_info = global::sub_oam_manager->initSprite(gfx_arrowPal, gfx_arrowPalLen,
+                                                        nullptr, _sprite_size, ObjSize::OBJSIZE_8, SpritesheetType::ARROW,
                                                         true, false, LAYER_LEVEL::MIDDLE_TOP);
-    mainSpriteInfo = global::main_oam_manager->initSprite(gfx_arrowPal, gfx_arrowPalLen, nullptr,
-                                                          ARROW_SPRITE_SIZE, ObjSize::OBJSIZE_8, SpritesheetType::ARROW,
+    _main_sprite_info = global::main_oam_manager->initSprite(gfx_arrowPal, gfx_arrowPalLen, nullptr,
+                                                          _sprite_size, ObjSize::OBJSIZE_8, SpritesheetType::ARROW,
                                                           true, false, LAYER_LEVEL::MIDDLE_TOP);
-    update_frame(static_cast<u16>(floor(angle / 22.5f)));
+
+    update_frame(static_cast<u16>(floor(_angle / 22.5f)));
     update_sprites_position();
-    sprite_utils::set_priority(OBJPRIORITY_0, mainSpriteInfo, subSpriteInfo);
-    sprite_utils::set_horizontal_flip(false, mainSpriteInfo, subSpriteInfo);
-    sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);
-    sprite_utils::set_visibility(true, mainSpriteInfo, subSpriteInfo);
+
+    sprite_utils::set_priority(OBJPRIORITY_0, _main_sprite_info, _sub_sprite_info);
+    sprite_utils::set_horizontal_flip(false, _main_sprite_info, _sub_sprite_info);
+    sprite_utils::set_vertical_flip(false, _main_sprite_info, _sub_sprite_info);
+    sprite_utils::set_visibility(true, _main_sprite_info, _sub_sprite_info);
+
 }
 
 void Arrow::update_frame(int frame_num) {
-    u8 *frame_gfx = sprite_utils::get_frame((u8 *) gfx_arrowTiles, ARROW_SPRITE_SIZE, frame_num);
-    sprite_utils::update_frame(frame_gfx, ARROW_SPRITE_SIZE, mainSpriteInfo, subSpriteInfo);
-}
-
-void Arrow::update_sprites_position() {
-    int main_x, main_y, sub_x, sub_y;
-    get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
-    sprite_utils::set_entry_xy(mainSpriteInfo, static_cast<u16>(main_x), static_cast<u16>(main_y));
-    sprite_utils::set_entry_xy(subSpriteInfo, static_cast<u16>(sub_x), static_cast<u16>(sub_y));
-}
-
-void Arrow::delete_sprites() {
-    delete mainSpriteInfo;
-    delete subSpriteInfo;
-    mainSpriteInfo = nullptr;
-    subSpriteInfo = nullptr;
+    u8 *frame_gfx = sprite_utils::get_frame((u8 *) gfx_arrowTiles, _sprite_size, frame_num);
+    sprite_utils::update_frame(frame_gfx, _sprite_size, _main_sprite_info, _sub_sprite_info);
 }

@@ -14,8 +14,8 @@
 #include "../creatures/enemies/Bat.hpp"
 #include "../creatures/enemies/Spider.hpp"
 #include "../creatures/traps/Spikes.h"
-#include "../creatures/collectibles/Chest.hpp"
-#include "../creatures/collectibles/Crate.hpp"
+#include "../creatures/items/Chest.hpp"
+#include "../creatures/items/Crate.hpp"
 #include "../creatures/enemies/Caveman.hpp"
 #include "../creatures/enemies/Damsel.hpp"
 #include "../decorations/Lamp.h"
@@ -147,7 +147,7 @@ void populate_cave_moniez() {
 
                     if (loot_type == 0 && rocks_left > 0 && r == 1) {
                         Rock *rock = new Rock(pos_x * 16, pos_y * 16);
-                        global::creatures.push_back(rock);
+                        global::items.push_back(rock);
                         rocks_left--;
                         last_placement = 0;
                     }
@@ -372,10 +372,10 @@ void populate_main_menu() {
     Rope *rope = new Rope(227, 272);
     rope->_y_speed = -4;
     rope->_extended_rope = true;
-    rope->hold_by_main_dude = false;
-    rope->activated = false;
+    rope->_hold_by_main_dude = false;
+    rope->_activated = false;
     rope->_thrown = true;
 
-    global::creatures.push_back(rope);
+    global::items.push_back(rope);
 
 }
