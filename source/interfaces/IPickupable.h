@@ -17,8 +17,8 @@ public:
     IPickupable(int x, int y,
                 u16 sprite_width, u16 sprite_height, SpritesheetType spritesheet_type,
                 u16 physical_width, u16 physical_height) :
-            IRenderable(sprite_width, sprite_height, spritesheet_type),
-            ICollidable(physical_width, physical_height) {
+            ICollidable(physical_width, physical_height),
+            IRenderable(sprite_width, sprite_height, spritesheet_type) {
         // do nothing
     }
 

@@ -38,7 +38,7 @@ void BaseItem::update() {
     if (!_hold_by_main_dude) {
         update_collidable();
     } else
-        set_pickuped_position_not_checking(2, 8, 6);
+        set_pickuped_position_not_checking(_x_pickup_offset_left, _x_pickup_offset_right, _y_pickup_offset);
 
     check_if_can_be_pickuped();
     update_item_specific();

@@ -155,7 +155,7 @@ void populate_cave_moniez() {
 
                     if (loot_type == 4 && chests_left > 0 && r == 1) {
                         Chest *chest = new Chest(pos_x * 16, pos_y * 16);
-                        global::creatures.push_back(chest);
+                        global::items.push_back(chest);
                         chests_left--;
                         last_placement = 0;
                     }
@@ -163,7 +163,7 @@ void populate_cave_moniez() {
 
                     if (loot_type == 5 && crates_left > 0 && r == 1) {
                         Crate *crate = new Crate(pos_x * 16, pos_y * 16);
-                        global::creatures.push_back(crate);
+                        global::items.push_back(crate);
                         crates_left--;
                         last_placement = 0;
                     }

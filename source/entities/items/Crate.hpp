@@ -5,22 +5,24 @@
 #ifndef SPELUNKYDS_CRATE_H
 #define SPELUNKYDS_CRATE_H
 
-
-#include "../_BaseCreature.h"
+#include "../items/_BaseItem.h"
 #include "../../interfaces/ShoppingObject.h"
 
 //http://spelunky.wikia.com/wiki/Crate
-class Crate: public BaseCreature {
+class Crate: public BaseItem {
 
 public:
 
+    static constexpr u8 crate_pickup_offset_x_left = 4;
+    static constexpr u8 crate_pickup_offset_x_right = 8;
+    static constexpr u8 crate_pickup_offset_y = 5;
     static constexpr u8 crate_sprite_width = 16;
     static constexpr u8 crate_sprite_height = 16;
     static constexpr u16 crate_physical_width = 12;
     static constexpr u16 crate_physical_height = 10;
     static constexpr SpritesheetType crate_spritesheet_type = SpritesheetType::SPIKES_COLLECTIBLES;
 
-    Crate(int x, int y) : BaseCreature(
+    Crate(int x, int y) : BaseItem(
             x,
             y,
             crate_sprite_width,
@@ -28,34 +30,20 @@ public:
             crate_spritesheet_type,
             crate_physical_width,
             crate_physical_height,
-            CreatureType::CRATE
+            crate_pickup_offset_x_left,
+            crate_pickup_offset_x_right,
+            crate_pickup_offset_y
     ) {
         init_sprites();
     }
 
-    // Base creature overrides
+    // BaseItem overrides
 
-    void update_creature_specific() override;
-
-    void introduce_yourself() override { printf("WHIP\n"); };
-
-    void apply_dmg(int dmg_to_apply) override {};
-
-    bool can_update_collidable() const override { return true; }
+    void update_item_specific() override;
 
     // IRenderable overrides
 
     void init_sprites() override;
-
-    void delete_sprites() override;
-
-    void update_sprites_position() override;
-
-    // ICollidable overrides
-
-    bool can_apply_friction() const override { return true; }
-
-    bool can_apply_gravity() const override { return true; }
 
     // Other, creature specific
 
@@ -63,18 +51,10 @@ public:
 
     void play_collectible_animation();
     
-    double pos_inc_timer{};
-    SpriteInfo *mainSpriteInfo {};
-    SpriteInfo *subSpriteInfo {};
-    u8 * frameGfx{};
-    bool dropped_loot{};
-    int animFrame{};
-    double animFrameTimer{};
+    int _anim_frame{};
+    double _anim_frame_timer{};
+    bool _dropped_loot{};
     
 };
-
-
-
-
 
 #endif //SPELUNKYDS_CRATE_H

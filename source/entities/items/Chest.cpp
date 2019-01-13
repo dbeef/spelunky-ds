@@ -4,68 +4,69 @@
 
 #include <maxmod9.h>
 #include <cstdlib>
-#include "../../../build/gfx_spike_collectibles_flame.h"
 #include "Chest.hpp"
+#include "../../../build/gfx_spike_collectibles_flame.h"
+#include "../../../build/soundbank.h"
 #include "../../collisions/Collisions.hpp"
 #include "../../GlobalsDeclarations.hpp"
-#include "../../../build/soundbank.h"
 #include "../SpriteUtils.hpp"
 #include "../treasures/RubySmall.h"
 #include "../treasures/RubyBig.h"
 
-#define SPEED_OF_THROWING_CHEST_X 1
-#define SPEED_OF_THROWING_CHEST_Y 1
-#define CHEST_PICKUP_OFFSET_X 8
-#define CHECK_PICKUP_OFFSET_Y 2
-#define CHEST_POS_INC_DELTA 15
-#define CHEST_FRICTION 0.2
-
-void Chest::update_creature_specific() {
+void Chest::update_item_specific() {
 
     if (_ready_to_dispose) return;
 
-    sprite_utils::set_visibility(true, mainSpriteInfo, subSpriteInfo);
-    sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);
-    sprite_utils::set_horizontal_flip(false, mainSpriteInfo, subSpriteInfo);
+    if (_activated && !_dropped_loot) {
 
-    check_if_can_be_pickuped();
-    set_pickuped_position(CHEST_PICKUP_OFFSET_X, CHECK_PICKUP_OFFSET_Y);
+        if (global::input_handler->up_key_held) {
+            mmEffect(SFX_XCHESTOPEN);
+            spawn_treasure();
+            _dropped_loot = true;
+            match_animation();
+        } else {
+            // FIXME For now, throwing a chest requires pressing throwing key (Y) twice.
+            // Launch throwing code manually?
+            // write function that would work i.e like: throwItem(this);
+        }
 
-    if (check_if_can_be_opened()) {
-        match_animation();
-        mmEffect(SFX_XCHESTOPEN);
-        spawn_treasure();
     }
 
     kill_creatures_if_have_speed(1);
     update_sprites_position();
+
+    // TODO Let's make a function pointer for this, so it wouldn't be updated every frame,
+    //  but rather every pickup/leaving item.
+    if (_hold_by_main_dude)
+        sprite_utils::set_priority(OBJPRIORITY_0, _main_sprite_info, _sub_sprite_info);
+    else
+        sprite_utils::set_priority(OBJPRIORITY_1, _main_sprite_info, _sub_sprite_info);
 }
 
 void Chest::init_sprites() {
 
     delete_sprites();
 
-    subSpriteInfo = global::sub_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
-                                                        gfx_spike_collectibles_flamePalLen,
-                                                        nullptr, _sprite_size, ObjSize::OBJSIZE_16,
-                                                        _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
-    mainSpriteInfo = global::main_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
-                                                          gfx_spike_collectibles_flamePalLen,
-                                                          nullptr, _sprite_size, ObjSize::OBJSIZE_16,
-                                                          _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
+    _sub_sprite_info = global::sub_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
+                                                           gfx_spike_collectibles_flamePalLen,
+                                                           nullptr, _sprite_size, ObjSize::OBJSIZE_16,
+                                                           _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
+    _main_sprite_info = global::main_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
+                                                             gfx_spike_collectibles_flamePalLen,
+                                                             nullptr, _sprite_size, ObjSize::OBJSIZE_16,
+                                                             _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
 
-    sprite_utils::set_visibility(true, mainSpriteInfo, subSpriteInfo);
-    sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);
-    sprite_utils::set_horizontal_flip(false, mainSpriteInfo, subSpriteInfo);
+    sprite_utils::set_visibility(true, _main_sprite_info, _sub_sprite_info);
+    sprite_utils::set_vertical_flip(false, _main_sprite_info, _sub_sprite_info);
+    sprite_utils::set_horizontal_flip(false, _main_sprite_info, _sub_sprite_info);
     update_sprites_position();
     match_animation();
-}
 
-void Chest::update_sprites_position() {
-    int main_x, main_y, sub_x, sub_y;
-    get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
-    sprite_utils::set_entry_xy(mainSpriteInfo, main_x, main_y);
-    sprite_utils::set_entry_xy(subSpriteInfo, sub_x, sub_y);
+    if (_hold_by_main_dude)
+        sprite_utils::set_priority(OBJPRIORITY_0, _main_sprite_info, _sub_sprite_info);
+    else
+        sprite_utils::set_priority(OBJPRIORITY_1, _main_sprite_info, _sub_sprite_info);
+
 }
 
 void Chest::spawn_treasure() {
@@ -75,7 +76,7 @@ void Chest::spawn_treasure() {
         int ruby_type = rand() % 2;
 
         if (ruby_type == 0) {
-            
+
             auto *ruby_small = new RubySmall(_x + _physical_width * 0.5, _y + _physical_height * 0.5);
             ruby_small->_y_speed = -1.7;
             ruby_small->_collectible_timer = 0;
@@ -86,7 +87,7 @@ void Chest::spawn_treasure() {
             global::treasures_to_add.push_back(ruby_small);
 
         } else {
-            
+
             auto *ruby_big = new RubyBig(_x + _physical_width * 0.5, _y + _physical_width * 0.5);
             ruby_big->_y_speed = -1.7;
             ruby_big->_collectible_timer = 0;
@@ -101,18 +102,13 @@ void Chest::spawn_treasure() {
 
 void Chest::match_animation() {
 
-    if (activated)
-        frameGfx = sprite_utils::get_frame((u8 *) gfx_spike_collectibles_flameTiles, _sprite_size, 3);
+    u8 *frame_gfx;
+
+    if (_dropped_loot)
+        frame_gfx = sprite_utils::get_frame((u8 *) gfx_spike_collectibles_flameTiles, _sprite_size, 3);
     else
-        frameGfx = sprite_utils::get_frame((u8 *) gfx_spike_collectibles_flameTiles, _sprite_size, 2);
+        frame_gfx = sprite_utils::get_frame((u8 *) gfx_spike_collectibles_flameTiles, _sprite_size, 2);
 
-    sprite_utils::update_frame(frameGfx, _sprite_size, mainSpriteInfo, subSpriteInfo);
-}
-
-void Chest::delete_sprites() {
-    delete mainSpriteInfo;
-    delete subSpriteInfo;
-    mainSpriteInfo = nullptr;
-    subSpriteInfo = nullptr;
+    sprite_utils::update_frame(frame_gfx, _sprite_size, _main_sprite_info, _sub_sprite_info);
 }
 
