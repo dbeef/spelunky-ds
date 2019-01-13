@@ -29,8 +29,6 @@ public:
 
     virtual void update_item_specific() = 0;
 
-    bool is_activated() { return _activated; };
-
     // IRenderable overrides
 
     // Not overriding init_sprites, that should be done in inheriting class.
