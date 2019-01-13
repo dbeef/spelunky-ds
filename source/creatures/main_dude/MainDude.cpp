@@ -504,21 +504,22 @@ void MainDude::throw_item() {
     //throw holding item
     //if holding bomb, arm it only
 
-    if (_currently_held_item || _currently_held_creature) {
+    if (_currently_held_item || _currently_held_creature || _currently_held_pickupable) {
 
         bool activated;
         ICollidable *held;
         if (_currently_held_item) {
             held = dynamic_cast<ICollidable *>(_currently_held_item);
             activated = _currently_held_item->_activated;
-        } else {
+        } else if (_currently_held_creature) {
             held = dynamic_cast<ICollidable *>(_currently_held_creature);
             activated = _currently_held_creature->activated;
+        } else {
+            held = _currently_held_pickupable;
+            activated = _currently_held_pickupable->_activated;
         }
 
         if (activated) {
-
-
 
             if (!global::input_handler->down_key_held) {
 
@@ -563,10 +564,12 @@ void MainDude::throw_item() {
             if (_currently_held_item) {
                 _currently_held_item->_hold_by_main_dude = false;
                 _currently_held_item = nullptr;
-            }
-            else {
+            } else if (_currently_held_creature) {
                 _currently_held_creature->hold_by_main_dude = false;
                 _currently_held_creature = nullptr;
+            } else {
+                _currently_held_pickupable->_hold_by_main_dude = false;
+                _currently_held_pickupable = nullptr;
             }
 
 
@@ -582,8 +585,10 @@ void MainDude::throw_item() {
             // activate item because it's not activated yet
             if (_currently_held_item)
                 _currently_held_item->_activated = true;
-            else
+            else if(_currently_held_creature)
                 _currently_held_creature->activated = true;
+            else
+                _currently_held_pickupable->_activated = true;
         }
 
     }
@@ -604,7 +609,8 @@ void MainDude::throw_rope() {
     global::hud->draw_level_hud();
 
     u8 ROPE_PHYSICAL_WIDTH = 16;
-    Rope *rope = new Rope((floor_div(_x + (0.5 * _physical_width), TILE_W) * TILE_W) + (ROPE_PHYSICAL_WIDTH * 0.5), _y + 6);
+    Rope *rope = new Rope((floor_div(_x + (0.5 * _physical_width), TILE_W) * TILE_W) + (ROPE_PHYSICAL_WIDTH * 0.5),
+                          _y + 6);
     rope->_activated = true;
     rope->_y_speed = -4;
     global::items.push_back(rope);

@@ -207,4 +207,4 @@ add_executable(spelunkyds
         source/interfaces/ICollidable.h
         source/interfaces/IBase.cpp
         source/interfaces/IBase.h
-        source/creatures/treasures/_BaseTreasure.cpp source/creatures/treasures/_BaseTreasure.h source/creatures/items/_BaseItem.cpp source/creatures/items/_BaseItem.h)
+        source/creatures/treasures/_BaseTreasure.cpp source/creatures/treasures/_BaseTreasure.h source/creatures/items/_BaseItem.cpp source/creatures/items/_BaseItem.h source/interfaces/IPickupable.cpp source/interfaces/IPickupable.h)

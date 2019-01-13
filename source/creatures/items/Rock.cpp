@@ -14,6 +14,7 @@ void Rock::update_item_specific() {
 
     if (_ready_to_dispose) return;
 
+
     kill_creatures_if_have_speed(1);
     update_sprites_position();
 }

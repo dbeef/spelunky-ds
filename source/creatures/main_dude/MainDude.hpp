@@ -32,6 +32,7 @@
 #include "../_BaseCreature.h"
 #include "../items/_BaseItem.h"
 #include "Whip.hpp"
+#include "../../interfaces/IPickupable.h"
 
 //http://spelunky.wikia.com/wiki/Spelunky_Guy
 class MainDude : public BaseCreature {
@@ -143,6 +144,8 @@ public:
 
     BaseItem *_currently_held_item{};
     BaseCreature *_currently_held_creature{};
+    IPickupable *_currently_held_pickupable{};
+
 
     SpriteInfo *main_sprite_info{};
     SpriteInfo *sub_sprite_info{};
