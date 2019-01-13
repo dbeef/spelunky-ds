@@ -8,11 +8,11 @@
 #include "../../build/gfx_spike_collectibles_flame.h"
 #include "../../build/soundbank.h"
 
-#include "../creatures/traps/Spikes.h"
+#include "../entities/creatures/Spikes.h"
 #include "../collisions/Collisions.hpp"
 #include "../GlobalsDeclarations.hpp"
-#include "../creatures/animations/Blood.hpp"
-#include "../creatures/items/Arrow.hpp"
+#include "../entities/animations/Blood.hpp"
+#include "../entities/items/Arrow.hpp"
 #include "ArrowTrap.h"
 
 void ArrowTrap::update_decoration_specific() {

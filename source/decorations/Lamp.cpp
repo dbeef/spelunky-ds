@@ -4,7 +4,7 @@
 
 #include "../../build/gfx_shopkeeper.h"
 #include "../GlobalsDeclarations.hpp"
-#include "../creatures/SpriteUtils.hpp"
+#include "../entities/SpriteUtils.hpp"
 #include "Lamp.h"
 
 Lamp::Lamp(int x, int y) :

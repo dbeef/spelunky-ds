@@ -7,7 +7,7 @@
 
 #include <nds.h>
 
-#include "../creatures/SpritesheetType.hpp"
+#include "../entities/SpritesheetType.hpp"
 #include "IBase.h"
 
 // Renderable provides fields neccesary to render graphic on screen, which are:

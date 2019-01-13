@@ -97,15 +97,15 @@ public:
     // Updates _neighboring_tiles.
     void update_collisions_with_map(int x_current_pos_in_tiles, int y_current_pos_in_tiles);
 
-    // If speed exceeds some constant, iterates through all creatures and checks whether collision
+    // If speed exceeds some constant, iterates through all entities and checks whether collision
     // with them exist. If so, kills them and returns true when finished iterating.
-    // Does not kill jars and does not cause recoil on creatures that it hits;
-    // i.e rocks/jars can kill creatures, but no jars
+    // Does not kill jars and does not cause recoil on entities that it hits;
+    // i.e rocks/jars can kill entities, but no jars
     bool kill_creatures_if_have_speed(u8 dmg_to_apply) const;
 
-    // If speed exceeds some constant, iterates through all creatures and checks whether collision
+    // If speed exceeds some constant, iterates through all entities and checks whether collision
     // with them exist. If so, kills them and returns true when finished iterating.
-    // I.e bullets, they can harm both creatures and jars and do cause recoil on creatures they hit.
+    // I.e bullets, they can harm both entities and jars and do cause recoil on entities they hit.
     bool kill_creatures_jars_if_have_speed_recoil(u8 dmg_to_apply) const;
 
     // If speed exceeds some constant, checks whether collision with main dude exists.

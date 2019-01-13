@@ -5,7 +5,7 @@
 #ifndef SPELUNKYDS_MENU_ARCH_SIGN_H
 #define SPELUNKYDS_MENU_ARCH_SIGN_H
 
-#include "../creatures/SpriteInfo.h"
+#include "../entities/SpriteInfo.h"
 #include "_BaseDecoration.h"
 
 // Represents arch sign graphic that is rendered in the main menu's upper screen,

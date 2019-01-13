@@ -4,7 +4,7 @@
 
 #include "../../build/gfx_spike_collectibles_flame.h"
 #include "../GlobalsDeclarations.hpp"
-#include "../creatures/SpriteUtils.hpp"
+#include "../entities/SpriteUtils.hpp"
 #include "Blast.hpp"
 
 Blast::Blast(int x, int y) :

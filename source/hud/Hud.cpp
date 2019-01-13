@@ -9,18 +9,18 @@
 #include "../../build/gfx_hud.h"
 #include "Hud.hpp"
 #include "../GlobalsDeclarations.hpp"
-#include "../creatures/enemies/Snake.hpp"
-#include "../creatures/enemies/Bat.hpp"
-#include "../creatures/enemies/Spider.hpp"
-#include "../creatures/SpriteUtils.hpp"
-#include "../creatures/enemies/Damsel.hpp"
-#include "../creatures/enemies/Skeleton.hpp"
-#include "../creatures/enemies/Caveman.hpp"
-#include "../creatures/enemies/Shopkeeper.hpp"
-#include "../creatures/treasures/RubyBig.h"
-#include "../creatures/treasures/RubySmall.h"
-#include "../creatures/treasures/TripleGoldbar.h"
-#include "../creatures/treasures/SingleGoldbar.hpp"
+#include "../entities/creatures/Snake.hpp"
+#include "../entities/creatures/Bat.hpp"
+#include "../entities/creatures/Spider.hpp"
+#include "../entities/SpriteUtils.hpp"
+#include "../entities/creatures/Damsel.hpp"
+#include "../entities/creatures/Skeleton.hpp"
+#include "../entities/creatures/Caveman.hpp"
+#include "../entities/creatures/Shopkeeper.hpp"
+#include "../entities/treasures/RubyBig.h"
+#include "../entities/treasures/RubySmall.h"
+#include "../entities/treasures/TripleGoldbar.h"
+#include "../entities/treasures/SingleGoldbar.hpp"
 
 #define HEART_POSITION_X 5
 #define HEART_POSITION_Y 5
@@ -100,7 +100,7 @@ void Hud::init() {
 //Call only when something changed (i.e hearts counter decremented and it needs to be updated on hud)
 //otherwise, if called frequently, font blinking will occur.
 //TODO Statically sized array - printing to the buffer, then to the console, to avoid screen flickering.
-//^ other way to avoid flickering is OAM sprite for every digit (but then it would take some from the 128 creatures pool).
+//^ other way to avoid flickering is OAM sprite for every digit (but then it would take some from the 128 entities pool).
 //^ btw, flickering is very noticable on an emulator, but not that much on a real NDS
 void Hud::draw_level_hud() {
 

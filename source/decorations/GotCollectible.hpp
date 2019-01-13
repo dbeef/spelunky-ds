@@ -5,7 +5,7 @@
 #ifndef SPELUNKYDS_GOT_COLLECTIBLE_H
 #define SPELUNKYDS_GOT_COLLECTIBLE_H
 
-#include "../creatures/SpriteInfo.h"
+#include "../entities/SpriteInfo.h"
 #include "_BaseDecoration.h"
 
 // Represents animation that is launched on collecting new item/bombs/ropes.

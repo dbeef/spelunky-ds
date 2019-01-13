@@ -11,7 +11,7 @@
 #include "../../tiles/SplashScreenType.hpp"
 #include "../../memory/OamUtils.hpp"
 #include "../../../build/soundbank.h"
-#include "../enemies/Damsel.hpp"
+#include "../creatures/Damsel.hpp"
 #include "../../decorations/Smooch.hpp"
 #include "../../sound/SoundUtils.hpp"
 #include "../../BaseMap.hpp"
@@ -256,7 +256,7 @@ void GameState::handle_changing_screens() {
         //changing scene, so delete all MovingObjects you have, and according SpriteInfos
         oam_utils::delete_all_sprites();
 
-        //new MainDude since we deleted it. TODO Don't push main dude to the global::creatures and update it separately
+        //new MainDude since we deleted it. TODO Don't push main dude to the global::entities and update it separately
         global::main_dude = new MainDude(224, 300);
 
         global::main_dude->dead = dead; //TODO Move this fields out to the game_state! or do the thing above, same result
@@ -265,7 +265,7 @@ void GameState::handle_changing_screens() {
         global::main_dude->_y = temp_y;
 
 //        global::main_dude->init();
-//        global::creatures.push_back(global::main_dude);
+//        global::entities.push_back(global::main_dude);
 
         consoleClear();
 
@@ -277,7 +277,7 @@ void GameState::handle_changing_screens() {
                 sound::start_cave_music();
             }
 
-            global::game_state->start_next_level(); //initializes hud creatures
+            global::game_state->start_next_level(); //initializes hud entities
 
         } else {
 

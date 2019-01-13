@@ -4,8 +4,8 @@
 #include "tiles/PopulatingUtils.hpp"
 #include "time/TimeUtils.h"
 #include "memory/OamUtils.hpp"
-#include "creatures/animations/Blood.hpp"
-#include "creatures/items/Arrow.hpp"
+#include "entities/animations/Blood.hpp"
+#include "entities/items/Arrow.hpp"
 
 static void update_creatures_to_add() {
     unsigned long size = global::creatures_to_add.size();
@@ -60,7 +60,7 @@ void gameloop::run() {
     //init positions with main menu values:
     global::camera->x = 0;
     global::camera->y = 127;
-//    global::creatures.push_back(global::main_dude);
+//    global::entities.push_back(global::main_dude);
 
     global::main_dude = new MainDude(224, 300); //TODO Some constexpr file for xy
 

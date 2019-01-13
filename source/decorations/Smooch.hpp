@@ -5,7 +5,7 @@
 #ifndef SPELUNKYDS_SMOOCH_H
 #define SPELUNKYDS_SMOOCH_H
 
-#include "../creatures/SpriteInfo.h"
+#include "../entities/SpriteInfo.h"
 #include "_BaseDecoration.h"
 
 class Smooch : public BaseDecoration {

@@ -17,10 +17,10 @@ void global::init_globals() {
     hud = new Hud();
     game_state = new GameState();
 
-    //some of the moving objects aren't rendered as creatures, like the ArrowTrap, which is render as a map tile,
-    //so the the list is bigger, though the maximum number of creatures that can be rendered on NDS is 128
+    //some of the moving objects aren't rendered as entities, like the ArrowTrap, which is render as a map tile,
+    //so the the list is bigger, though the maximum number of entities that can be rendered on NDS is 128
     global::creatures.reserve(64);
-    //some of the creatures in this list may just wait to be disposed, that's why this size is slightly bigger that 128
+    //some of the entities in this list may just wait to be disposed, that's why this size is slightly bigger that 128
     global::sprite_infos.reserve(128);
     //I assume there won't be a situation when we'll add more than 64 objects in a single frame
     global::creatures_to_add.reserve(64);

@@ -5,8 +5,8 @@
 #ifndef SPELUNKYDS_BLAST_H
 #define SPELUNKYDS_BLAST_H
 
-#include "../creatures/SpriteInfo.h"
-#include "../creatures/Orientation.hpp"
+#include "../entities/SpriteInfo.h"
+#include "../entities/Orientation.hpp"
 #include "_BaseDecoration.h"
 
 // Represents blast that occurs on shooting pistol/shotgun.

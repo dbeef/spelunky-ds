@@ -14,9 +14,9 @@
 #include "../SpriteInfo.h"
 
 //blood trail animation:
-//spawn 3-4 creatures with sBlood animation (3 frames)
+//spawn 3-4 entities with sBlood animation (3 frames)
 //every of them spawn every .5 second animation sBloodTrail, every one of them should be one frame in forward, comprared to the latter
-//if spawned 6 of them, then the sBlood animation creatures should finish with sBloodTrail animation
+//if spawned 6 of them, then the sBlood animation entities should finish with sBloodTrail animation
 
 class Blood : public BaseCreature {
 

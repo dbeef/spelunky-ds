@@ -11,14 +11,14 @@
 #include "input/InputHandler.hpp"
 #include "hud/Hud.hpp"
 #include "camera/Camera.hpp"
-#include "creatures/main_dude/MainDude.hpp"
-#include "creatures/CreatureType.hpp"
+#include "entities/main_dude/MainDude.hpp"
+#include "entities/CreatureType.hpp"
 #include "tiles/Level.hpp"
-#include "creatures/SpriteInfo.h"
-#include "creatures/main_dude/GameState.hpp"
+#include "entities/SpriteInfo.h"
+#include "entities/main_dude/GameState.hpp"
 #include "decorations/_BaseDecoration.h"
-#include "creatures/treasures/_BaseTreasure.h"
-#include "creatures/items/_BaseItem.h"
+#include "entities/treasures/_BaseTreasure.h"
+#include "entities/items/_BaseItem.h"
 
 #define GRAVITY_DELTA_SPEED 0.22 //FIXME isn't it mob-specific?
 #define DEFAULT_DMA_CHANNEL 3
@@ -58,7 +58,7 @@ namespace global {
     extern int bg_main_address; //technically, it's an id returned by oam init FIXME naming
     extern int bg_sub_address; //technically, it's an id returned by oam init FIXME naming
     extern double *timer; //global timer, updated in game loop FIXME can be int, /delta time/ is in milliseconds anyway
-    extern double clean_unused_oam_timer; //every arbitrary amount of time OAM is checked for unused creatures and cleaned off
+    extern double clean_unused_oam_timer; //every arbitrary amount of time OAM is checked for unused entities and cleaned off
     extern u16 current_map[4096]; //cave background with tiles rendered on it
     extern u16 base_map[4096]; //cave background only
     extern u16 *temp_map; //cave background only

@@ -2,11 +2,11 @@
 // Created by xdbeef on 04.04.18.
 //
 
-#include "../creatures/items/Rope.hpp"
+#include "../entities/items/Rope.hpp"
 #include "RopeElement.hpp"
 #include "../GlobalsDeclarations.hpp"
 #include "../../build/gfx_blood_rock_rope_poof.h"
-#include "../creatures/SpriteUtils.hpp"
+#include "../entities/SpriteUtils.hpp"
 #include "RopeElement.hpp"
 
 void RopeElement::update_decoration_specific() {

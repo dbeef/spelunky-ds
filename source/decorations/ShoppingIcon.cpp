@@ -6,7 +6,7 @@
 
 #include "../../build/gfx_goldbars.h"
 #include "../GlobalsDeclarations.hpp"
-#include "../creatures/SpriteUtils.hpp"
+#include "../entities/SpriteUtils.hpp"
 #include "ShoppingIcon.h"
 
 ShoppingIcon::ShoppingIcon(int x, int y) :

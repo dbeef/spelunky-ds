@@ -6,7 +6,7 @@
 #define SPELUNKYDS_LAMP_H
 
 #include "_BaseDecoration.h"
-#include "../creatures/SpriteInfo.h"
+#include "../entities/SpriteInfo.h"
 
 // http://spelunky.wikia.com/wiki/Lantern
 class Lamp : public BaseDecoration {

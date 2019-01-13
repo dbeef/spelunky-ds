@@ -11,7 +11,7 @@
 
 void Blood::update_creature_specific() {
 
-    //FIXME Add elements to the global creatures array
+    //FIXME Add elements to the global entities array
     //update all trail elements
 //    for (int a = 0; a < bloodTrail.size(); a++) {
 //        bloodTrail.at(a)->draw();

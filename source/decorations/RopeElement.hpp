@@ -8,9 +8,9 @@
 #include <nds/arm9/sprite.h>
 #include <vector>
 
-#include "../creatures/items/Rope.hpp"
+#include "../entities/items/Rope.hpp"
 #include "../camera/Camera.hpp"
-#include "../creatures/SpriteInfo.h"
+#include "../entities/SpriteInfo.h"
 #include "_BaseDecoration.h"
 
 // Represents a single 16x16 element in rope chain.

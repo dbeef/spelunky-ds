@@ -5,7 +5,7 @@
 //
 #include <cmath>
 #include "Collisions.hpp"
-#include "../creatures/main_dude/MainDude.hpp"
+#include "../entities/main_dude/MainDude.hpp"
 #include "../GlobalsDeclarations.hpp"
 #include "../tiles/TileOrientation.hpp"
 

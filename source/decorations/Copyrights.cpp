@@ -4,7 +4,7 @@
 
 #include "../../build/gfx_copyrights.h"
 #include "../GlobalsDeclarations.hpp"
-#include "../creatures/SpriteUtils.hpp"
+#include "../entities/SpriteUtils.hpp"
 #include "Copyrights.h"
 
 Copyrights::Copyrights(int x, int y) :

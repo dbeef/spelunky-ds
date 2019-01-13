@@ -4,7 +4,7 @@
 
 #include "../../build/gfx_got_collectible.h"
 #include "../GlobalsDeclarations.hpp"
-#include "../creatures/SpriteUtils.hpp"
+#include "../entities/SpriteUtils.hpp"
 #include "GotCollectible.hpp"
 
 void GotCollectible::update_decoration_specific() {

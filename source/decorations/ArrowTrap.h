@@ -5,8 +5,8 @@
 #ifndef SPELUNKYDS_ARROW_TRAP_H
 #define SPELUNKYDS_ARROW_TRAP_H
 
-#include "../creatures/_BaseCreature.h"
-#include "../creatures/SpriteInfo.h"
+#include "../entities/_BaseCreature.h"
+#include "../entities/SpriteInfo.h"
 #include "_BaseDecoration.h"
 
 // http://spelunky.wikia.com/wiki/Arrow_Trap

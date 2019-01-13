@@ -4,7 +4,7 @@
 
 #include "../../build/gfx_spelunky_title.h"
 #include "../GlobalsDeclarations.hpp"
-#include "../creatures/SpriteUtils.hpp"
+#include "../entities/SpriteUtils.hpp"
 #include "SpelunkyTitle.h"
 
 SpelunkyTitle::SpelunkyTitle(int x, int y) :

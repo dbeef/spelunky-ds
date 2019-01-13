@@ -7,11 +7,11 @@
 
 #include <nds/arm9/sprite.h>
 #include "tiles/Level.hpp"
-#include "creatures/SpriteInfo.h"
+#include "entities/SpriteInfo.h"
 #include "GlobalsDeclarations.hpp"
-#include "creatures/enemies/Snake.hpp"
-#include "creatures/items/Jar.hpp"
-#include "creatures/items/Rock.hpp"
+#include "entities/creatures/Snake.hpp"
+#include "entities/items/Jar.hpp"
+#include "entities/items/Rock.hpp"
 
 namespace gameloop {
 

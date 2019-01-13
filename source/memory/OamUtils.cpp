@@ -8,7 +8,7 @@
 
 namespace oam_utils {
 
-    //TODO Clean only the higher addresses of memory, don't clean up the hud and main dude creatures, so the blinking
+    //TODO Clean only the higher addresses of memory, don't clean up the hud and main dude entities, so the blinking
     // that the cleaning causes would be less visible.
     bool clean_unused_oam() {
 
@@ -85,10 +85,10 @@ namespace oam_utils {
 //https://stackoverflow.com/questions/2275076/is-stdvector-copying-the-objects-with-a-push-back
             global::sprite_infos.clear();
 
-//            for (int a = 0; a < global::creatures.size(); a++) {
-//                if (global::creatures.at(a)->ready_to_dispose) {
-//                    delete (global::creatures.at(a));
-//                    global::creatures.erase(global::creatures.begin() + a);
+//            for (int a = 0; a < global::entities.size(); a++) {
+//                if (global::entities.at(a)->ready_to_dispose) {
+//                    delete (global::entities.at(a));
+//                    global::entities.erase(global::entities.begin() + a);
 //                }
 //            }
 
@@ -187,7 +187,7 @@ namespace oam_utils {
             delete sprite; //deletes sprite itself
         }
 
-        global::creatures.clear(); //deletes pointers to the creatures removed above - they're not nullptrs!
+        global::creatures.clear(); //deletes pointers to the entities removed above - they're not nullptrs!
         global::decorations.clear(); //deletes pointers to the decorations removed above - they're not nullptrs!
         global::treasures.clear(); //deletes pointers to the treasures removed above - they're not nullptrs!
         global::items.clear(); //deletes pointers to the items removed above - they're not nullptrs!

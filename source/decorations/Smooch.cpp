@@ -4,7 +4,7 @@
 
 #include "../../build/gfx_caveman_damsel.h"
 #include "../GlobalsDeclarations.hpp"
-#include "../creatures/SpriteUtils.hpp"
+#include "../entities/SpriteUtils.hpp"
 #include "Smooch.hpp"
 
 void Smooch::update_decoration_specific() {

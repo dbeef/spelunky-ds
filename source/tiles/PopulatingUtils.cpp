@@ -10,20 +10,20 @@
 
 #include "../decorations/SpelunkyTitle.h"
 #include "../decorations/Copyrights.h"
-#include "../creatures/items/Rope.hpp"
-#include "../creatures/enemies/Bat.hpp"
-#include "../creatures/enemies/Spider.hpp"
-#include "../creatures/traps/Spikes.h"
-#include "../creatures/items/Chest.hpp"
-#include "../creatures/items/Crate.hpp"
-#include "../creatures/enemies/Caveman.hpp"
-#include "../creatures/enemies/Damsel.hpp"
+#include "../entities/items/Rope.hpp"
+#include "../entities/creatures/Bat.hpp"
+#include "../entities/creatures/Spider.hpp"
+#include "../entities/creatures/Spikes.h"
+#include "../entities/items/Chest.hpp"
+#include "../entities/items/Crate.hpp"
+#include "../entities/creatures/Caveman.hpp"
+#include "../entities/creatures/Damsel.hpp"
 #include "../decorations/Lamp.h"
-#include "../creatures/enemies/Shopkeeper.hpp"
+#include "../entities/creatures/Shopkeeper.hpp"
 #include "../decorations/ArrowTrap.h"
-#include "../creatures/collectibles/_CollectiblesUtils.hpp"
-#include "../creatures/animations/FakeSkeleton.hpp"
-#include "../creatures/enemies/Skeleton.hpp"
+#include "../entities/collectibles/_CollectiblesUtils.hpp"
+#include "../entities/animations/FakeSkeleton.hpp"
+#include "../entities/creatures/Skeleton.hpp"
 
 #include "../rooms/ShopRooms.hpp"
 #include "../rooms/ClosedRooms.hpp"
@@ -32,10 +32,10 @@
 #include "../rooms/LeftRightUpRooms.hpp"
 #include "../rooms/LeftRightDownRooms.hpp"
 #include "../rooms/EntranceRooms.hpp"
-#include "../creatures/treasures/SingleGoldbar.hpp"
-#include "../creatures/treasures/TripleGoldbar.h"
-#include "../creatures/treasures/RubySmall.h"
-#include "../creatures/treasures/RubyBig.h"
+#include "../entities/treasures/SingleGoldbar.hpp"
+#include "../entities/treasures/TripleGoldbar.h"
+#include "../entities/treasures/RubySmall.h"
+#include "../entities/treasures/RubyBig.h"
 #include "../decorations/RockSign.h"
 #include "../decorations/ArchSign.h"
 
@@ -138,7 +138,7 @@ void populate_cave_moniez() {
 /*                    if (loot_type == 0 && rocks_left > 0 && r == 1) {
                         Arrow *arrow = new Arrow();
                         arrow->init();
-                        global::creatures.push_back(arrow);
+                        global::entities.push_back(arrow);
                         arrow->x = pos_x * 16;
                         arrow->y = pos_y * 16;
                         rocks_left--;

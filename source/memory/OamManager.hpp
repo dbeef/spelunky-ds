@@ -7,9 +7,9 @@
 
 #define MAX_SPRITE_NUMBER 128
 
-#include "../creatures/SpritesheetType.hpp"
+#include "../entities/SpritesheetType.hpp"
 #include "OamType.hpp"
-#include "../creatures/SpriteInfo.h"
+#include "../entities/SpriteInfo.h"
 #include "../camera/LayerLevel.hpp"
 
 

@@ -4,7 +4,7 @@
 
 #include "../../build/gfx_menu_signs_tutorial_quit.h"
 #include "../GlobalsDeclarations.hpp"
-#include "../creatures/SpriteUtils.hpp"
+#include "../entities/SpriteUtils.hpp"
 #include "RockSign.h"
 
 RockSign::RockSign(int x, int y, RockSign::Type type) :

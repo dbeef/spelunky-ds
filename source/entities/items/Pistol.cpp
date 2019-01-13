@@ -13,7 +13,7 @@
 #include "../../tiles/LevelRenderingUtils.hpp"
 #include "../SpriteUtils.hpp"
 #include "../../decorations/Blast.hpp"
-#include "../collectibles/Bullet.hpp"
+#include "../creatures/Bullet.hpp"
 
 void Pistol::update_item_specific() {
 
