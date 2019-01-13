@@ -5,8 +5,6 @@
 #ifndef SPELUNKYDS_CAPE_H
 #define SPELUNKYDS_CAPE_H
 
-#include "../SpriteInfo.h"
-#include "../Orientation.hpp"
 #include "../items/_BaseItem.h"
 #include "../../interfaces/ShoppingObject.h"
 
@@ -15,9 +13,10 @@ class Cape : public BaseItem , public ShoppingObject {
     
 public:
 
-    static constexpr int cape_x_pickuped_offset_left = 4;
-    static constexpr int cape_x_pickuped_offset_right = 4;
-    static constexpr int cape_y_pickuped_offset = -4;
+    static constexpr u16 cape_anim_frame_delta = 60;
+    static constexpr int cape_x_pickup_offset_left = 4;
+    static constexpr int cape_x_pickup_offset_right = 4;
+    static constexpr int cape_y_pickup_offset = -4;
     static constexpr u16 cape_cost = 13000;
     static constexpr const char *cape_name = "CAPE";
     static constexpr u8 cape_sprite_width = 16;
@@ -34,9 +33,9 @@ public:
             cape_spritesheet_type,
             cape_physical_width,
             cape_physical_height,
-            cape_x_pickuped_offset_left,
-            cape_x_pickuped_offset_right,
-            cape_y_pickuped_offset
+            cape_x_pickup_offset_left,
+            cape_x_pickup_offset_right,
+            cape_y_pickup_offset
     ), ShoppingObject(cape_cost, cape_name) {
         init_sprites();
         init_anim_icon();
@@ -51,7 +50,7 @@ public:
 
     void init_sprites() override;
 
-    // Other, creature specific
+    // Other, item specific
 
     void match_animation();
 

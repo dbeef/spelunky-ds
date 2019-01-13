@@ -644,9 +644,9 @@ void MainDude::spawn_carried_items() {
     }
     if (carrying_glove) {
         auto *glove = new Glove(HUD_ITEMS_ROW_X, global::hud->items_offset_y);
-        glove->collected = true;
+        glove->_render_in_hud = true;
         glove->_bought = true;
-        global::creatures_to_add.push_back(glove);
+        global::items.push_back(glove);
         global::hud->increment_offset_on_grabbed_item();
     }
     if (carrying_cape) {

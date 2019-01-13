@@ -10,9 +10,6 @@
 #include "../../collisions/Collisions.hpp"
 #include "../SpriteUtils.hpp"
 
-#define CAPE_ANIM_FRAME_DELTA 60
-#define CAPE_POS_INC_DELTA 15
-
 void Cape::update_item_specific() {
 
     if (global::main_dude->carrying_jetpack && _collected) {
@@ -58,7 +55,7 @@ void Cape::update_item_specific() {
 
         _anim_frame_timer += *global::timer;
 
-        if (_anim_frame_timer > CAPE_ANIM_FRAME_DELTA) {
+        if (_anim_frame_timer > cape_anim_frame_delta) {
 
             if (global::main_dude->_x_speed != 0 || global::main_dude->_y_speed != 0)
                 _anim_frame_index++;

@@ -45,12 +45,23 @@ public:
 
     virtual ~BaseItem() = default;
 
+    // Providing pickup offsets to be applied when main dude's holding this item:
+
     const int _x_pickup_offset_left;
     const int _x_pickup_offset_right;
     const int _y_pickup_offset;
 
+    // Providing SpriteInfo's here instead of in inheriting class, since all items in the
+    // game are smaller than 64x64px, there's no need to use more sprites to represent an item.
+
     SpriteInfo *_main_sprite_info{};
     SpriteInfo *_sub_sprite_info{};
+
+    // Set to true if this item can be drawn on HUD instead like a normal item.
+    // Equipped items are those, which on pickup are transferred to the inventory,
+    // therefore they're drawn on HUD.
+    // i.e mitt or spring shoes become hud items when they're pickuped, and rock or arrow don't.
+    bool _render_in_hud{};
 };
 
 

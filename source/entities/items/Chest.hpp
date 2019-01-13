@@ -5,8 +5,6 @@
 #ifndef SPELUNKYDS_CHEST_H
 #define SPELUNKYDS_CHEST_H
 
-#include "../_BaseCreature.h"
-#include "../SpriteInfo.h"
 #include "_BaseItem.h"
 
 //http://spelunky.wikia.com/wiki/Chest
@@ -42,19 +40,19 @@ public:
         init_sprites();
     }
 
+    // BaseItem overrides
+
     void update_item_specific() override;
 
     // IRenderable overrides
 
     void init_sprites() override;
 
-    // Other, creature specific
+    // Other, item specific
 
     void spawn_treasure();
 
     void match_animation();
-
-    // Other, creature specific
 
     bool _dropped_loot{};
 

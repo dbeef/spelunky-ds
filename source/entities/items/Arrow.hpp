@@ -15,9 +15,9 @@
 class Arrow : public BaseItem {
 public:
     
-    static constexpr int arrow_x_pickuped_offset_left = 1;
-    static constexpr int arrow_x_pickuped_offset_right = 10;
-    static constexpr int arrow_y_pickuped_offset = 6;
+    static constexpr int arrow_x_pickup_offset_left = 1;
+    static constexpr int arrow_x_pickup_offset_right = 10;
+    static constexpr int arrow_y_pickup_offset = 6;
     static constexpr u8 arrow_sprite_width = 8;
     static constexpr u8 arrow_sprite_height = 8;
     static constexpr u16 arrow_physical_width = 8;
@@ -32,9 +32,9 @@ public:
             arrow_spritesheet_type,
             arrow_physical_width,
             arrow_physical_height,
-            arrow_x_pickuped_offset_left,
-            arrow_x_pickuped_offset_right,
-            arrow_y_pickuped_offset
+            arrow_x_pickup_offset_left,
+            arrow_x_pickup_offset_right,
+            arrow_y_pickup_offset
     ), _orientation(orientation) {
         init_sprites();
         _thrown = true;
@@ -52,7 +52,7 @@ public:
 
     void init_sprites() override;
 
-    // Other, creature specific
+    // Other, item specific
 
     void update_frame(int frame_num);
 

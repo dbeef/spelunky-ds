@@ -18,18 +18,15 @@ void Crate::update_item_specific() {
 
     if (_ready_to_dispose) return;
 
-    if (_activated) {
-
-        if (global::input_handler->up_key_held) {
-            mmEffect(SFX_XPICKUP);
-            _hold_by_main_dude = false;
-            global::main_dude->holding_item = false;
-            drop_loot();
-        } else {
-            // FIXME For now, throwing a chest requires pressing throwing key (Y) twice.
-            // Launch throwing code manually?
-            // write function that would work i.e like: throwItem(this);
-        }
+    if (!_dropped_loot && global::input_handler->up_key_held) {
+        mmEffect(SFX_XPICKUP);
+        _hold_by_main_dude = false;
+        global::main_dude->holding_item = false;
+        drop_loot();
+    } else if (_activated) {
+        // FIXME For now, throwing a chest requires pressing throwing key (Y) twice.
+        // Launch throwing code manually?
+        // write function that would work i.e like: throwItem(this);
     }
 
     if (_dropped_loot)
