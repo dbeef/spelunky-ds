@@ -49,7 +49,7 @@ namespace oam_utils {
                     ++iter_deco;
             }
             
-            std::vector<_BaseTreasure *>::iterator iter_treasure;
+            std::vector<BaseTreasure *>::iterator iter_treasure;
             for (iter_treasure = global::treasures.begin(); iter_treasure != global::treasures.end();) {
                 iter_treasure.operator*()->delete_sprites();
                 if (iter_treasure.operator*()->_ready_to_dispose) {

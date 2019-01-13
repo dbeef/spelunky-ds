@@ -45,8 +45,8 @@ namespace global {
     extern std::vector<BaseDecoration *> decorations;
     extern std::vector<BaseDecoration *> decorations_to_add;
 
-    extern std::vector<_BaseTreasure *> treasures;
-    extern std::vector<_BaseTreasure *> treasures_to_add;
+    extern std::vector<BaseTreasure *> treasures;
+    extern std::vector<BaseTreasure *> treasures_to_add;
 
     extern std::vector<BaseItem *> items;
     extern std::vector<BaseItem *> items_to_add;

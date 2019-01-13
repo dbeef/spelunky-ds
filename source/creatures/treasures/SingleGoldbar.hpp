@@ -7,7 +7,7 @@
 
 #include "_BaseTreasure.h"
 
-class SingleGoldbar : public _BaseTreasure {
+class SingleGoldbar : public BaseTreasure {
 
 public:
 

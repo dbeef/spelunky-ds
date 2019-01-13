@@ -47,7 +47,7 @@ void RubyBig::init_sprites() {
     sprite_utils::set_priority(OBJPRIORITY_0, _main_sprite_info, _sub_sprite_info);
 }
 
-RubyBig::RubyBig(int x, int y) : _BaseTreasure(
+RubyBig::RubyBig(int x, int y) : BaseTreasure(
         x,
         y,
         ruby_big_sprite_width,

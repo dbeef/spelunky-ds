@@ -7,7 +7,7 @@
 
 #include "_BaseTreasure.h"
 
-class RubyBig : public _BaseTreasure {
+class RubyBig : public BaseTreasure {
 
 public:
 

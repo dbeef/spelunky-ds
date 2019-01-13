@@ -7,7 +7,7 @@
 
 #include "_BaseTreasure.h"
 
-class TripleGoldbar : public _BaseTreasure{
+class TripleGoldbar : public BaseTreasure{
 
 public:
 
@@ -17,7 +17,7 @@ public:
     static constexpr u16 triple_goldbar_physical_height = 10;
     static constexpr SpritesheetType triple_goldbar_spritesheet_type = SpritesheetType::MONIEZ_GOLDBARS;
 
-    TripleGoldbar(int x, int y) : _BaseTreasure(
+    TripleGoldbar(int x, int y) : BaseTreasure(
             x,
             y,
             triple_goldbar_sprite_width,
