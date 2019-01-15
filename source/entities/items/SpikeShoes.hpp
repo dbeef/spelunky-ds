@@ -7,11 +7,11 @@
 
 #include "../SpriteInfo.h"
 #include "../Orientation.hpp"
-#include "../_BaseCreature.h"
+#include "../items/_BaseItem.h"
 #include "../../interfaces/ShoppingObject.h"
 
 //http://spelunky.wikia.com/wiki/Spike_Shoes
-class SpikeShoes : public BaseCreature, public ShoppingObject {
+class SpikeShoes : public BaseItem, public ShoppingObject {
 
     static constexpr u8 spike_shoes_sprite_width = 16;
     static constexpr u8 spike_shoes_sprite_height = 16;
@@ -23,7 +23,7 @@ class SpikeShoes : public BaseCreature, public ShoppingObject {
 
 public:
 
-    SpikeShoes(int x, int y) : BaseCreature(
+    SpikeShoes(int x, int y) : BaseItem(
             x,
             y,
             spike_shoes_sprite_width,
@@ -31,45 +31,24 @@ public:
             spike_shoes_spritesheet_type,
             spike_shoes_physical_width,
             spike_shoes_physical_height,
-            CreatureType::SPIKE_SHOES
+            4, 4, -4
     ), ShoppingObject(spike_shoes_cost, spike_shoes_name) {
         init_anim_icon();
         update_anim_icon(x, y, _physical_width);
         init_sprites();
     }
 
-    // Base creature overrides
+    // Base item overrides
 
-    void update_creature_specific() override;
-
-    void introduce_yourself() override { printf("WHIP\n"); };
-
-    void apply_dmg(int dmg_to_apply) override {};
-
-    bool can_update_collidable() const override { return !_collected; }
+    void update_item_specific() override;
 
     // IRenderable overrides
 
     void init_sprites() override;
 
-    void delete_sprites() override;
-
-    void update_sprites_position() override;
-
-    // ICollidable overrides
-
-    bool can_apply_friction() const override { return true; }
-
-    bool can_apply_gravity() const override { return true; }
-
     // Other, creature specific
 
     void equip();
-
-    // if collected, then drawn in HUD
-    bool _collected{};
-    SpriteInfo *_main_sprite_info{};
-    SpriteInfo *_sub_sprite_info{};
 
 };
 

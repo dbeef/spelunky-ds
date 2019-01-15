@@ -49,7 +49,7 @@ void Shopkeeper::update_creature_specific() {
 
         check_if_can_be_pickuped();
         holding_shotgun = false;
-        shotgun->hold_by_anyone = false;
+        shotgun->_hold_by_anyone = false;
 
     } else if (triggered && !holding_shotgun) {
 
@@ -73,18 +73,18 @@ void Shopkeeper::update_creature_specific() {
 
     if (shotgun != nullptr && holding_shotgun) {
 
-        shotgun->hold_by_anyone = true;
+        shotgun->_hold_by_anyone = true;
 
         set_pickuped_position_on_another_moving_obj(5, 3, shotgun);
 
         if (_x_speed > 0) {
-            shotgun->sprite_state = Orientation::RIGHT;
+            shotgun->_orientation= Orientation::RIGHT;
         } else if (_x_speed < 0) {
-            shotgun->sprite_state = Orientation::LEFT;
+            shotgun->_orientation= Orientation::LEFT;
         }
 
         if (!global::main_dude->dead && triggered) {
-            shotgun->activated = true;
+            shotgun->_activated = true;
         }
     }
 
@@ -190,13 +190,13 @@ void Shopkeeper::randomizeMovement() {
     if (r == 0) {
         sprite_state = Orientation::LEFT;
         if (shotgun != nullptr)
-            shotgun->sprite_state = Orientation::LEFT;
+            shotgun->_orientation= Orientation::LEFT;
     } else if (r == 1) {
 
         sprite_state = Orientation::RIGHT;
 
         if (shotgun != nullptr)
-            shotgun->sprite_state = Orientation::RIGHT;
+            shotgun->_orientation= Orientation::RIGHT;
     }
 
     if (standby) {
@@ -517,10 +517,10 @@ void Shopkeeper::de_shopify_all_items() {
 
 void Shopkeeper::spawn_shotgun() {
     shotgun = new Shotgun(0, 0);
-    shotgun->hold_by_main_dude = false;
+    shotgun->_hold_by_main_dude = false;
     shotgun->_bought = true;
     shotgun->cooldown = 250;
-    global::creatures_to_add.push_back(shotgun);
+    global::items.push_back(shotgun);
     holding_shotgun = true;
 
 }

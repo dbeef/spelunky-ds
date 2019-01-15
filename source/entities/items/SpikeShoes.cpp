@@ -3,43 +3,35 @@
 //
 
 #include <cstdio>
-
-#include "SpikeShoes.hpp"
-#include "../SpritesheetType.hpp"
-#include "../../GlobalsDeclarations.hpp"
-#include "../../collisions/Collisions.hpp"
 #include "../../../build/gfx_saleable.h"
+#include "../../collisions/Collisions.hpp"
+#include "../../GlobalsDeclarations.hpp"
 #include "../../decorations/GotCollectible.hpp"
-#include "../_BaseCreature.h"
+#include "../SpritesheetType.hpp"
 #include "../SpriteUtils.hpp"
+#include "SpikeShoes.hpp"
 
-#define SPIKE_SHOES_POS_INC_DELTA 15
-
-void SpikeShoes::update_creature_specific() {
+void SpikeShoes::update_item_specific() {
 
     if (_ready_to_dispose) return;
+    update_anim_icon(_x, _y, _physical_width);
 
-    if (!_collected) {
+    if (!_render_in_hud) {
 
         if (_bought && check_if_can_be_equipped()) {
             equip();
-        } else if (!_bought && !hold_by_main_dude) {
+        }
+        else if (!_bought && !_hold_by_main_dude) {
             check_if_can_be_pickuped();
         }
 
-        if (hold_by_main_dude) {
-            set_pickuped_position(4, -4);
-            if (shopping_transaction(this)) {
-                _collected = true;
-                _main_sprite_info->entry->priority = OBJPRIORITY_0;
-                _sub_sprite_info->entry->isHidden = true;
-                _main_sprite_info->entry->isHidden = false;
+        if (_hold_by_main_dude) {
+            if (_bought || shopping_transaction(this)) {
                 equip();
             }
         }
     }
 
-    update_anim_icon(_x, _y, _physical_width);
     update_sprites_position();
 }
 
@@ -61,26 +53,12 @@ void SpikeShoes::init_sprites() {
     sprite_utils::set_vertical_flip(false, _main_sprite_info, _sub_sprite_info);
     sprite_utils::set_horizontal_flip(false, _main_sprite_info, _sub_sprite_info);
 
-    if (_collected) {
+    if (_render_in_hud) {
         _main_sprite_info->entry->priority = OBJPRIORITY_0;
         _sub_sprite_info->entry->isHidden = true;
         _main_sprite_info->entry->isHidden = false;
     } else
         sprite_utils::set_visibility(true, _main_sprite_info, _sub_sprite_info);
-
-}
-
-void SpikeShoes::update_sprites_position() {
-
-    if (_collected) {
-        //no viewporting, draw on HUD
-        sprite_utils::set_entry_xy(_main_sprite_info, static_cast<u16>(_x), static_cast<u16>(_y));
-    } else {
-        int main_x, main_y, sub_x, sub_y;
-        get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
-        sprite_utils::set_entry_xy(_main_sprite_info, static_cast<u16>(main_x), static_cast<u16>(main_y));
-        sprite_utils::set_entry_xy(_sub_sprite_info, static_cast<u16>(sub_x), static_cast<u16>(sub_y));
-    }
 
 }
 
@@ -90,23 +68,22 @@ void SpikeShoes::equip() {
     global::decorations_to_add.push_back(g);
 
     if (!global::main_dude->carrying_spike_shoes) {
+
         global::main_dude->carrying_spike_shoes = true;
-        update_sprites_position();
-        _collected = true;
+        _render_in_hud = true;
+
         _x = HUD_ITEMS_ROW_X;
         _y = global::hud->items_offset_y;
         global::hud->increment_offset_on_grabbed_item();
+
+        _sub_sprite_info->entry->isHidden = true;
+        _main_sprite_info->entry->isHidden = false;
+        _main_sprite_info->entry->priority = OBJPRIORITY_0;
+        update_sprites_position();
+
     } else {
         sprite_utils::set_visibility(false, _main_sprite_info, _sub_sprite_info);
         _ready_to_dispose = true;
     }
 
 }
-
-void SpikeShoes::delete_sprites() {
-    delete _main_sprite_info;
-    delete _sub_sprite_info;
-    _main_sprite_info = nullptr;
-    _sub_sprite_info = nullptr;
-}
-

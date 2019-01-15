@@ -28,7 +28,7 @@ ShoppingObject * collectibles_utils::spawn_item(int x, int y, int r, bool bought
     Mitt *mitt = nullptr;
     Jetpack *jetpack = nullptr;
 
-    switch (r) {
+    switch (6) {
         case 0:
             pistol = new Pistol(0, 0);
             pistol->_bought = bought;

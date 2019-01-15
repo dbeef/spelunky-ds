@@ -108,7 +108,7 @@ void Pistol::handle_shooting() {
         else
             _blast->_x = _x + 10;
         _blast->_y = _y;
-        _blast->_sprite_state = _orientation;
+        _blast->_orientation = _orientation;
     }
 
 }

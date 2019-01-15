@@ -46,7 +46,7 @@ public:
     u8 _anim_frame_index{};
     double _anim_frame_timer{};
     bool _firing{};
-    Orientation _sprite_state{};
+    Orientation _orientation{};
 
 private:
 

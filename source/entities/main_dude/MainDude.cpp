@@ -629,9 +629,9 @@ void MainDude::spawn_carried_items() {
 
     if (carrying_spike_shoes) {
         auto *spikeShoes = new SpikeShoes(HUD_ITEMS_ROW_X, global::hud->items_offset_y);
-        spikeShoes->_collected = true;
+        spikeShoes->_render_in_hud = true;
         spikeShoes->_bought = true;
-        global::creatures_to_add.push_back(spikeShoes);
+        global::items_to_add.push_back(spikeShoes);
         global::hud->increment_offset_on_grabbed_item();
     }
 
@@ -674,8 +674,8 @@ void MainDude::spawn_carried_items() {
         holding_item = true;
         auto *shotgun = new Shotgun(_x, _y);
         shotgun->_bought = true;
-        shotgun->hold_by_main_dude = true;
-        global::creatures_to_add.push_back(shotgun);
+        shotgun->_hold_by_main_dude = true;
+        global::items_to_add.push_back(shotgun);
     }
 
     if (carrying_pistol) {

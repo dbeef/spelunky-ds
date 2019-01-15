@@ -10,6 +10,7 @@
 #include "CreatureType.hpp"
 #include "../interfaces/IRenderable.h"
 #include "../interfaces/ICollidable.h"
+#include "items/_BaseItem.h"
 
 /**
  *  https://en.wikibooks.org/wiki/C%2B%2B_Programming/Classes/Abstract_Classes
@@ -92,6 +93,8 @@ public:
     void set_pickuped_position_not_checking(int pickup_offset_x, int pickup_offset_y);
 
     void set_pickuped_position_on_another_moving_obj(int pickup_offset_x, int pickup_offset_y, BaseCreature *m) const;
+
+    void set_pickuped_position_on_another_moving_obj(int pickup_offset_x, int pickup_offset_y, BaseItem *m) const;
 };
 
 #endif //SPELUNKYDS_MOVINGOBJECT_H

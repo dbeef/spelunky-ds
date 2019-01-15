@@ -163,6 +163,19 @@ BaseCreature::set_pickuped_position_on_another_moving_obj(int pickup_offset_x, i
 
 }
 
+//this should be applied, when item is being carried by another moving object
+void
+BaseCreature::set_pickuped_position_on_another_moving_obj(int pickup_offset_x, int pickup_offset_y, BaseItem *m) const {
+
+    m->_y = _y + pickup_offset_y;
+
+    if (sprite_state == Orientation::LEFT) {
+        m->_x = _x - pickup_offset_x;
+    } else
+        m->_x = _x + pickup_offset_x;
+
+}
+
 
 //this should be applied, when item is being carried by main dude
 void BaseCreature::set_pickuped_position_not_checking(int pickup_offset_x, int pickup_offset_y) {
