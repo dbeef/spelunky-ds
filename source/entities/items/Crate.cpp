@@ -18,7 +18,7 @@ void Crate::update_item_specific() {
 
     if (_ready_to_dispose) return;
 
-    if (!_dropped_loot && global::input_handler->up_key_held) {
+    if (!_dropped_loot && global::input_handler->up_key_held && check_collision(global::main_dude)) {
         mmEffect(SFX_XPICKUP);
         _hold_by_main_dude = false;
         global::main_dude->holding_item = false;
@@ -29,16 +29,14 @@ void Crate::update_item_specific() {
         // write function that would work i.e like: throwItem(this);
     }
 
-    if (_dropped_loot)
-
-        play_collectible_animation();
+    if (_dropped_loot) play_collectible_animation();
 
     kill_creatures_if_have_speed(1);
 
     update_sprites_position();
 
-// TODO Let's make a function pointer for this, so it wouldn't be updated every frame,
-//  but rather every pickup/leaving item.
+    // TODO Let's make a function pointer for this, so it wouldn't be updated every frame,
+    //  but rather every pickup/leaving item.
     if (_hold_by_main_dude)
         sprite_utils::set_priority(OBJPRIORITY_0, _main_sprite_info, _sub_sprite_info
         );
