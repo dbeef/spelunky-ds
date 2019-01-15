@@ -92,13 +92,13 @@ void gameloop::run() {
         global::main_dude->whip->update();
 
         for (auto &creature : global::creatures) {
-            if (creature) {
+            if (creature && !creature->_ready_to_dispose) {
                 creature->update();
             }
         }
 
         for (auto &item : global::items) {
-            if (item) {
+            if (item && !item->_ready_to_dispose) {
                 item->update();
             }
         }
@@ -109,9 +109,9 @@ void gameloop::run() {
             }
         }
 
-        for (auto &decoration : global::treasures) {
-            if (decoration) {
-                decoration->update();
+        for (auto &treasure : global::treasures) {
+            if (treasure && !treasure->_ready_to_dispose) {
+                treasure->update();
             }
         }
 
