@@ -7,7 +7,7 @@
 #include "../../collisions/Collisions.hpp"
 #include "FlameElement.hpp"
 #include "Flame.hpp"
-#include "../SpriteUtils.hpp"
+#include "../../memory/SpriteUtils.hpp"
 
 //TODO remove 'finished' flag - duplicates _ready_to_dispose - same for blood element
 //TODO Give bombs a bigger rendering priority than other things - but no bigger than hud

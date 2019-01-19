@@ -5,7 +5,7 @@
 #include <maxmod9.h>
 #include "_BaseTreasure.h"
 
-#include "../SpriteUtils.hpp"
+#include "../../memory/SpriteUtils.hpp"
 #include "../../GlobalsDeclarations.hpp"
 #include "../../collisions/Collisions.hpp"
 #include "../../../build/soundbank.h"

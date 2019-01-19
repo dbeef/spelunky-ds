@@ -7,7 +7,7 @@
 #include "../../GlobalsDeclarations.hpp"
 #include "../../../build/gfx_spike_collectibles_flame.h"
 #include "../../collisions/Collisions.hpp"
-#include "../SpriteUtils.hpp"
+#include "../../memory/SpriteUtils.hpp"
 
 void Jar::destroy() {
     _destroyed = true;

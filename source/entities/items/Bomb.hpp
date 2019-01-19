@@ -7,8 +7,8 @@
 
 #include <nds/arm9/sprite.h>
 
-#include "../_BaseCreature.h"
-#include "../SpriteInfo.h"
+#include "../creatures/_BaseCreature.h"
+#include "../../memory/SpriteInfo.h"
 
 #define ARMED_TIME_BLINK_SLOW 2000
 #define ARMED_TIME_BLINK_FAST 3500

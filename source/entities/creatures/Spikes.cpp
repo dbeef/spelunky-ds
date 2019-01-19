@@ -12,7 +12,7 @@
 #include "../../GlobalsDeclarations.hpp"
 #include "../../sound/SoundUtils.hpp"
 #include "../animations/Blood.hpp"
-#include "../SpriteUtils.hpp"
+#include "../../memory/SpriteUtils.hpp"
 #include "Spikes.h"
 
 void Spikes::update_creature_specific() {

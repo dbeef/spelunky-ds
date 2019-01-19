@@ -3,7 +3,7 @@
 //
 
 #include "_BaseItem.h"
-#include "../SpriteUtils.hpp"
+#include "../../memory/SpriteUtils.hpp"
 #include "../../collisions/Collisions.hpp"
 #include "../../GlobalsDeclarations.hpp"
 

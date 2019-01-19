@@ -7,9 +7,9 @@
 
 #include <nds.h>
 
-#include "../../interfaces/IRenderable.h"
-#include "../../interfaces/ICollidable.h"
-#include "../SpriteInfo.h"
+#include "../_interfaces/IRenderable.h"
+#include "../_interfaces/ICollidable.h"
+#include "../../memory/SpriteInfo.h"
 
 enum class TreasureType {
     RUBY_BIG,

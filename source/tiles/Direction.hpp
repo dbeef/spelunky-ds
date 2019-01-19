@@ -7,6 +7,7 @@
 
 /**
  * Indicates direction, where level generator can go when making new level layout.
+ * FIXME Duplicates Orientation enum.
  */
 enum Direction{
     LEFT,

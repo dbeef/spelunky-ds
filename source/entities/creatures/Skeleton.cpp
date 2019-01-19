@@ -13,7 +13,7 @@
 #include "../../../build/soundbank.h"
 #include "../animations/Bone.hpp"
 #include "../animations/Skull.hpp"
-#include "../SpriteUtils.hpp"
+#include "../../memory/SpriteUtils.hpp"
 
 #define SKELETON_POS_INC_DELTA 19
 #define SKELETON_ANIM_FRAME_DELTA 90

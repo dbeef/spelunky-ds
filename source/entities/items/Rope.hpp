@@ -19,7 +19,7 @@
 #include <nds/arm9/sprite.h>
 #include <vector>
 
-#include "../../decorations/RopeElement.hpp"
+#include "../../entities/decorations/RopeElement.hpp"
 #include "../items/_BaseItem.h"
 
 //http://spelunky.wikia.com/wiki/Rope

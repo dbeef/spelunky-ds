@@ -5,8 +5,8 @@
 #ifndef SPELUNKYDS_BLOODELEMENT_H
 #define SPELUNKYDS_BLOODELEMENT_H
 
-#include "../_BaseCreature.h"
-#include "../SpriteInfo.h"
+#include "../creatures/_BaseCreature.h"
+#include "../../memory/SpriteInfo.h"
 
 
 #define blood_sprite_width 8

@@ -8,8 +8,8 @@
 //FIXME used in collisions
 #define WHIP_WIDTH 12
 
-#include "../_BaseCreature.h"
-#include "../SpriteInfo.h"
+#include "../creatures/_BaseCreature.h"
+#include "../../memory/SpriteInfo.h"
 
 //http://spelunky.wikia.com/wiki/Whip
 class Whip : public BaseCreature {

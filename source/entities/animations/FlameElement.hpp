@@ -5,8 +5,8 @@
 #ifndef SPELUNKYDS_FLAME_ELEMENT_H
 #define SPELUNKYDS_FLAME_ELEMENT_H
 
-#include "../_BaseCreature.h"
-#include "../SpriteInfo.h"
+#include "../creatures/_BaseCreature.h"
+#include "../../memory/SpriteInfo.h"
 
 #define flame_sprite_width 16
 #define flame_sprite_height 16

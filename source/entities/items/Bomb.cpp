@@ -15,7 +15,7 @@
 #include "../../tiles/LevelRenderingUtils.hpp"
 #include "../../collisions/Collisions.hpp"
 #include "../animations/Flame.hpp"
-#include "../SpriteUtils.hpp"
+#include "../../memory/SpriteUtils.hpp"
 
 #define BOMB_POS_INC_DELTA 15
 #define BOMB_ANIM_FRAME_DELTA 50

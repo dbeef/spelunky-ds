@@ -9,9 +9,9 @@
 #include "../../collisions/Collisions.hpp"
 #include "../../GlobalsDeclarations.hpp"
 #include "../creatures/Bullet.hpp"
-#include "../../decorations/GotCollectible.hpp"
+#include "../../entities/decorations/GotCollectible.hpp"
 #include "../../tiles/LevelRenderingUtils.hpp"
-#include "../SpriteUtils.hpp"
+#include "../../memory/SpriteUtils.hpp"
 #include "Shotgun.hpp"
 
 void Shotgun::update_item_specific() {

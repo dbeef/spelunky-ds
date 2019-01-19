@@ -12,7 +12,7 @@
 #include "../../collisions/Collisions.hpp"
 #include "../../tiles/LevelRenderingUtils.hpp"
 #include "../../../build/soundbank.h"
-#include "../SpriteUtils.hpp"
+#include "../../memory/SpriteUtils.hpp"
 
 #define SNAKE_POS_INC_DELTA 35
 #define SNAKE_ANIM_FRAME_DELTA 125

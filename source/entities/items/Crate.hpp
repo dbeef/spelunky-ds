@@ -6,7 +6,7 @@
 #define SPELUNKYDS_CRATE_H
 
 #include "../items/_BaseItem.h"
-#include "../../interfaces/ShoppingObject.h"
+#include "../_interfaces/ShoppingObject.h"
 
 //http://spelunky.wikia.com/wiki/Crate
 class Crate: public BaseItem {

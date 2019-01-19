@@ -5,10 +5,10 @@
 #ifndef SPELUNKYDS_SPIKE_SHOES_H
 #define SPELUNKYDS_SPIKE_SHOES_H
 
-#include "../SpriteInfo.h"
-#include "../Orientation.hpp"
+#include "../../memory/SpriteInfo.h"
+#include "../_common/Orientation.hpp"
 #include "../items/_BaseItem.h"
-#include "../../interfaces/ShoppingObject.h"
+#include "../_interfaces/ShoppingObject.h"
 
 //http://spelunky.wikia.com/wiki/Spike_Shoes
 class SpikeShoes : public BaseItem, public ShoppingObject {

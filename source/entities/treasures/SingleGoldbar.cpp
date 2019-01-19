@@ -4,7 +4,7 @@
 
 #include "../../GlobalsDeclarations.hpp"
 #include "../../../build/gfx_goldbars.h"
-#include "../SpriteUtils.hpp"
+#include "../../memory/SpriteUtils.hpp"
 #include "SingleGoldbar.hpp"
 
 void SingleGoldbar::init_sprites() {

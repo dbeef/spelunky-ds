@@ -12,7 +12,7 @@
 #include "../../memory/OamUtils.hpp"
 #include "../../../build/soundbank.h"
 #include "../creatures/Damsel.hpp"
-#include "../../decorations/Smooch.hpp"
+#include "../../entities/decorations/Smooch.hpp"
 #include "../../sound/SoundUtils.hpp"
 #include "../../BaseMap.hpp"
 #include "../../tiles/LevelGenerator.hpp"

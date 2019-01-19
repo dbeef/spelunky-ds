@@ -5,10 +5,10 @@
 #include "Jetpack.hpp"
 #include "../../../build/gfx_bat_snake_jetpack.h"
 #include "../../GlobalsDeclarations.hpp"
-#include "../../decorations/GotCollectible.hpp"
+#include "../../entities/decorations/GotCollectible.hpp"
 #include "../../collisions/Collisions.hpp"
 #include "../animations/FallPoof.hpp"
-#include "../SpriteUtils.hpp"
+#include "../../memory/SpriteUtils.hpp"
 
 void Jetpack::update_item_specific() {
 

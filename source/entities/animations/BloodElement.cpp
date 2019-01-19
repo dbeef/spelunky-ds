@@ -8,7 +8,7 @@
 #include "Blood.hpp"
 #include "../../collisions/Collisions.hpp"
 #include "../../tiles/LevelRenderingUtils.hpp"
-#include "../SpriteUtils.hpp"
+#include "../../memory/SpriteUtils.hpp"
 
 void BloodElement::update_creature_specific() {
 

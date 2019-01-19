@@ -6,9 +6,9 @@
 #define SPELUNKYDS_PISTOL_H
 
 #include "../items/_BaseItem.h"
-#include "../Orientation.hpp"
-#include "../../interfaces/ShoppingObject.h"
-#include "../../decorations/Blast.hpp"
+#include "../_common/Orientation.hpp"
+#include "../_interfaces/ShoppingObject.h"
+#include "../../entities/decorations/Blast.hpp"
 #include "../../GlobalsDeclarations.hpp"
 
 //http://spelunky.wikia.com/wiki/Pistol

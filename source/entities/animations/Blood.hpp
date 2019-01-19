@@ -9,9 +9,9 @@
 #define BLOOD_ANIM_FRAME_DELTA 90
 
 #include <vector>
-#include "../_BaseCreature.h"
+#include "../creatures/_BaseCreature.h"
 #include "BloodElement.hpp"
-#include "../SpriteInfo.h"
+#include "../../memory/SpriteInfo.h"
 
 //blood trail animation:
 //spawn 3-4 entities with sBlood animation (3 frames)

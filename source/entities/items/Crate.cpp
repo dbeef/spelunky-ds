@@ -10,9 +10,9 @@
 #include "../../collisions/Collisions.hpp"
 #include "../../GlobalsDeclarations.hpp"
 #include "../../../build/soundbank.h"
-#include "../../decorations/GotCollectible.hpp"
-#include "../collectibles/_CollectiblesUtils.hpp"
-#include "../SpriteUtils.hpp"
+#include "../../entities/decorations/GotCollectible.hpp"
+#include "_ItemsUtils.hpp"
+#include "../../memory/SpriteUtils.hpp"
 
 void Crate::update_item_specific() {
 

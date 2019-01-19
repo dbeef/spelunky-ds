@@ -20,8 +20,8 @@
 #define flame_physical_height 6
 #define flame_spritesheet_type SpritesheetType::SPIKES_COLLECTIBLES
 
-#include "../_BaseCreature.h"
-#include "../SpriteInfo.h"
+#include "../creatures/_BaseCreature.h"
+#include "../../memory/SpriteInfo.h"
 #include "FlameElement.hpp"
 
 //almost same as blood animation

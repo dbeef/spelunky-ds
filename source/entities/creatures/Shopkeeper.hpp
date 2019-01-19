@@ -8,10 +8,10 @@
 #define SHOPKEEPER_STUN_TIME 7000
 #define SHOPKEEPER_HITPOINTS 3
 
-#include "../_BaseCreature.h"
-#include "../Orientation.hpp"
-#include "../SpriteInfo.h"
-#include "../../interfaces/ShoppingObject.h"
+#include "_BaseCreature.h"
+#include "../_common/Orientation.hpp"
+#include "../../memory/SpriteInfo.h"
+#include "../_interfaces/ShoppingObject.h"
 #include "../items/Shotgun.hpp"
 
 //http://spelunky.wikia.com/wiki/Shopkeeper

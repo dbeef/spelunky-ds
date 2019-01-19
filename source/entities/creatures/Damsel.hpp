@@ -9,9 +9,9 @@
 #define DAMSEL_STUN_TIME 7000
 #define DAMSEL_HITPOINTS 3
 
-#include "../_BaseCreature.h"
-#include "../Orientation.hpp"
-#include "../SpriteInfo.h"
+#include "_BaseCreature.h"
+#include "../_common/Orientation.hpp"
+#include "../../memory/SpriteInfo.h"
 
 //http://spelunky.wikia.com/wiki/Damsel
 class Damsel : public BaseCreature {

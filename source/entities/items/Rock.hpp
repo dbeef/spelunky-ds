@@ -8,7 +8,7 @@
 #include <nds/arm9/sprite.h>
 
 #include "../items/_BaseItem.h"
-#include "../SpriteInfo.h"
+#include "../../memory/SpriteInfo.h"
 
 //http://spelunky.wikia.com/wiki/Rock
 class Rock : public BaseItem {

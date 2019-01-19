@@ -10,7 +10,7 @@
 #include "../../../build/soundbank.h"
 #include "../../collisions/Collisions.hpp"
 #include "../../tiles/LevelRenderingUtils.hpp"
-#include "../SpriteUtils.hpp"
+#include "../../memory/SpriteUtils.hpp"
 
 void Rope::update_item_specific() {
 

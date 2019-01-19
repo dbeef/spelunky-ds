@@ -6,7 +6,7 @@
 #define SPELUNKYDS_CAPE_H
 
 #include "../items/_BaseItem.h"
-#include "../../interfaces/ShoppingObject.h"
+#include "../_interfaces/ShoppingObject.h"
 
 //http://spelunky.wikia.com/wiki/Cape
 class Cape : public BaseItem , public ShoppingObject {

@@ -6,7 +6,7 @@
 
 #include "../../../build/gfx_rubies.h"
 #include "../../GlobalsDeclarations.hpp"
-#include "../SpriteUtils.hpp"
+#include "../../memory/SpriteUtils.hpp"
 #include "RubySmall.h"
 
 void RubySmall::init_sprites() {

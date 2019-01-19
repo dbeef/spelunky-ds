@@ -6,10 +6,10 @@
 #define SPELUNKYDS_BASEITEM_H
 
 
-#include "../SpriteInfo.h"
-#include "../../interfaces/IRenderable.h"
-#include "../../interfaces/ICollidable.h"
-#include "../../interfaces/IPickupable.h"
+#include "../../memory/SpriteInfo.h"
+#include "../_interfaces/IRenderable.h"
+#include "../_interfaces/ICollidable.h"
+#include "../_interfaces/IPickupable.h"
 
 class BaseItem : public IPickupable {
 

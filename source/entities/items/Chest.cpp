@@ -9,7 +9,7 @@
 #include "../../../build/soundbank.h"
 #include "../../collisions/Collisions.hpp"
 #include "../../GlobalsDeclarations.hpp"
-#include "../SpriteUtils.hpp"
+#include "../../memory/SpriteUtils.hpp"
 #include "../treasures/RubySmall.h"
 #include "../treasures/RubyBig.h"
 

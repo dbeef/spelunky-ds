@@ -5,10 +5,10 @@
 #ifndef SPELUNKYDS_MITT_H
 #define SPELUNKYDS_MITT_H
 
-#include "../SpriteInfo.h"
-#include "../Orientation.hpp"
-#include "../_BaseCreature.h"
-#include "../../interfaces/ShoppingObject.h"
+#include "../../memory/SpriteInfo.h"
+#include "../_common/Orientation.hpp"
+#include "../creatures/_BaseCreature.h"
+#include "../_interfaces/ShoppingObject.h"
 
 //http://spelunky.wikia.com/wiki/Pitcher%27s_Mitt
 class Mitt : public BaseCreature, public ShoppingObject  {

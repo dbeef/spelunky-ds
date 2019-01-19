@@ -7,7 +7,7 @@
 #include "../../../build/gfx_blood_rock_rope_poof.h"
 #include "../../collisions/Collisions.hpp"
 #include "../../tiles/LevelRenderingUtils.hpp"
-#include "../SpriteUtils.hpp"
+#include "../../memory/SpriteUtils.hpp"
 
 void Blood::update_creature_specific() {
 

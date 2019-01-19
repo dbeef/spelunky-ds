@@ -6,9 +6,9 @@
 #ifndef SPELUNKYDS_SNAKE_H
 #define SPELUNKYDS_SNAKE_H
 
-#include "../_BaseCreature.h"
-#include "../Orientation.hpp"
-#include "../SpriteInfo.h"
+#include "_BaseCreature.h"
+#include "../_common/Orientation.hpp"
+#include "../../memory/SpriteInfo.h"
 
 //http://spelunky.wikia.com/wiki/Snake
 class Snake : public BaseCreature {

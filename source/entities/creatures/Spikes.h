@@ -5,8 +5,8 @@
 #ifndef SPELUNKYDS_SPIKES_H
 #define SPELUNKYDS_SPIKES_H
 
-#include "../_BaseCreature.h"
-#include "../SpriteInfo.h"
+#include "_BaseCreature.h"
+#include "../../memory/SpriteInfo.h"
 
 //http://spelunky.wikia.com/wiki/Spikes
 class Spikes : public BaseCreature {

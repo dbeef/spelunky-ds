@@ -6,10 +6,10 @@
 #define SPELUNKYDS_JETPACK_H
 
 
-#include "../SpriteInfo.h"
-#include "../Orientation.hpp"
+#include "../../memory/SpriteInfo.h"
+#include "../_common/Orientation.hpp"
 #include "../items/_BaseItem.h"
-#include "../../interfaces/ShoppingObject.h"
+#include "../_interfaces/ShoppingObject.h"
 #include "../animations/FallPoof.hpp"
 
 //http://spelunky.wikia.com/wiki/jetpack

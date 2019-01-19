@@ -5,9 +5,9 @@
 #ifndef SPELUNKYDS_FAKE_SKELETON_H
 #define SPELUNKYDS_FAKE_SKELETON_H
 
-#include "../SpriteInfo.h"
-#include "../Orientation.hpp"
-#include "../_BaseCreature.h"
+#include "../../memory/SpriteInfo.h"
+#include "../_common/Orientation.hpp"
+#include "../creatures/_BaseCreature.h"
 
 #define FAKE_SKELETON_PHYSICAL_HEIGHT_WOUT_SKULL 4
 #define FAKE_SKELETON_PHYSICAL_HEIGHT_WITH_SKULL 7

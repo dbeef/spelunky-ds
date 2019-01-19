@@ -3,13 +3,13 @@
 //
 
 
-#include "../SpritesheetType.hpp"
+#include "../../memory/SpritesheetType.hpp"
 #include "SpringShoes.hpp"
 #include "../../GlobalsDeclarations.hpp"
 #include "../../collisions/Collisions.hpp"
 #include "../../../build/gfx_saleable.h"
-#include "../../decorations/GotCollectible.hpp"
-#include "../SpriteUtils.hpp"
+#include "../../entities/decorations/GotCollectible.hpp"
+#include "../../memory/SpriteUtils.hpp"
 
 #define SPRING_SHOES_POS_INC_DELTA 15
 

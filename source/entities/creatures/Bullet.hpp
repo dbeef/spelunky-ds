@@ -5,11 +5,11 @@
 #ifndef SPELUNKYDS_BULLET_H
 #define SPELUNKYDS_BULLET_H
 
-#include "../_BaseCreature.h"
-#include "../Orientation.hpp"
+#include "_BaseCreature.h"
+#include "../_common/Orientation.hpp"
 #include "../../collisions/Collisions.hpp"
 #include "../../tiles/LevelRenderingUtils.hpp"
-#include "../SpriteUtils.hpp"
+#include "../../memory/SpriteUtils.hpp"
 
 class Bullet : public BaseCreature {
 

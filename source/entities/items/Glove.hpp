@@ -6,9 +6,9 @@
 #define SPELUNKYDS_GLOVE_H
 
 
-#include "../SpriteInfo.h"
-#include "../_BaseCreature.h"
-#include "../../interfaces/ShoppingObject.h"
+#include "../../memory/SpriteInfo.h"
+#include "../creatures/_BaseCreature.h"
+#include "../_interfaces/ShoppingObject.h"
 
 //http://spelunky.wikia.com/wiki/Climbing_Gloves
 class Glove : public BaseItem, public ShoppingObject {

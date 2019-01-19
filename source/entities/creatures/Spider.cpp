@@ -13,7 +13,7 @@
 #include "../../collisions/Collisions.hpp"
 #include "../../tiles/LevelRenderingUtils.hpp"
 #include "../../../build/soundbank.h"
-#include "../SpriteUtils.hpp"
+#include "../../memory/SpriteUtils.hpp"
 
 #define SPIDER_HANGING_OFFSET 8
 #define SPIDER_ANIM_FRAME_DELTA 75

@@ -12,7 +12,7 @@
 #include "../entities/creatures/Snake.hpp"
 #include "../entities/creatures/Bat.hpp"
 #include "../entities/creatures/Spider.hpp"
-#include "../entities/SpriteUtils.hpp"
+#include "../memory/SpriteUtils.hpp"
 #include "../entities/creatures/Damsel.hpp"
 #include "../entities/creatures/Skeleton.hpp"
 #include "../entities/creatures/Caveman.hpp"

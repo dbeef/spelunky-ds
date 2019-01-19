@@ -8,8 +8,8 @@
 #include <nds/arm9/sprite.h>
 
 #include "../items/_BaseItem.h"
-#include "../SpriteInfo.h"
-#include "../Orientation.hpp"
+#include "../../memory/SpriteInfo.h"
+#include "../_common/Orientation.hpp"
 
 //http://spelunky.wikia.com/wiki/Arrow
 class Arrow : public BaseItem {

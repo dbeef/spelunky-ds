@@ -4,9 +4,9 @@
 #ifndef SPELUNKYDS_SKELETON_H
 #define SPELUNKYDS_SKELETON_H
 
-#include "../_BaseCreature.h"
-#include "../Orientation.hpp"
-#include "../SpriteInfo.h"
+#include "_BaseCreature.h"
+#include "../_common/Orientation.hpp"
+#include "../../memory/SpriteInfo.h"
 
 //http://spelunky.wikia.com/wiki/Skeleton
 class Skeleton : public BaseCreature {

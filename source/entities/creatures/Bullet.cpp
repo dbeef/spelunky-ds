@@ -5,10 +5,10 @@
 #include "../../GlobalsDeclarations.hpp"
 #include "../../collisions/Collisions.hpp"
 #include "../../../build/gfx_spike_collectibles_flame.h"
-#include "../_BaseCreature.h"
+#include "_BaseCreature.h"
 #include "Bullet.hpp"
 #include "../../tiles/LevelRenderingUtils.hpp"
-#include "../SpriteUtils.hpp"
+#include "../../memory/SpriteUtils.hpp"
 
 #define BULLET_POSITION_INC_DELTA 15
 #define BULLET_ANIM_X_OFFSET 5

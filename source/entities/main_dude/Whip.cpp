@@ -5,7 +5,7 @@
 #include "Whip.hpp"
 #include "../../../build/gfx_spike_collectibles_flame.h"
 #include "../../GlobalsDeclarations.hpp"
-#include "../SpriteUtils.hpp"
+#include "../../memory/SpriteUtils.hpp"
 
 void Whip::update_creature_specific() {
 

@@ -7,14 +7,14 @@
 
 #include <mm_types.h>
 #include <nds/arm9/console.h>
-#include "entities/SpritesheetType.hpp"
-#include "entities/CreatureType.hpp"
-#include "entities/SpriteInfo.h"
+#include "memory/SpritesheetType.hpp"
+#include "entities/creatures/CreatureType.hpp"
+#include "memory/SpriteInfo.h"
 #include "hud/Hud.hpp"
 #include "tiles/Level.hpp"
 #include "entities/main_dude/MainDude.hpp"
 #include "entities/main_dude/GameState.hpp"
-#include "decorations/_BaseDecoration.h"
+#include "entities/decorations/_BaseDecoration.h"
 
 namespace global {
 

@@ -2,12 +2,12 @@
 // Created by xdbeef on 29.07.18.
 //
 
-#include "../../decorations/GotCollectible.hpp"
+#include "../../entities/decorations/GotCollectible.hpp"
 #include "../../GlobalsDeclarations.hpp"
 #include "../../../build/gfx_spider_skeleton.h"
 #include "../../collisions/Collisions.hpp"
 #include "Bone.hpp"
-#include "../SpriteUtils.hpp"
+#include "../../memory/SpriteUtils.hpp"
 
 #define BONE_POS_INC_DELTA 35
 #define BONE_ANIM_FRAME_DELTA  45

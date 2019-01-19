@@ -6,10 +6,10 @@
 #define SPELUNKYDS_SPRING_SHOES_H
 
 
-#include "../SpriteInfo.h"
-#include "../Orientation.hpp"
-#include "../_BaseCreature.h"
-#include "../../interfaces/ShoppingObject.h"
+#include "../../memory/SpriteInfo.h"
+#include "../_common/Orientation.hpp"
+#include "../creatures/_BaseCreature.h"
+#include "../_interfaces/ShoppingObject.h"
 
 //http://spelunky.wikia.com/wiki/Spring_Shoes
 class SpringShoes : public BaseCreature, public ShoppingObject {

@@ -8,8 +8,8 @@
 #include "PopulatingUtils.hpp"
 #include "../GameLoop.hpp"
 
-#include "../decorations/SpelunkyTitle.h"
-#include "../decorations/Copyrights.h"
+#include "../entities/decorations/SpelunkyTitle.h"
+#include "../entities/decorations/Copyrights.h"
 #include "../entities/items/Rope.hpp"
 #include "../entities/creatures/Bat.hpp"
 #include "../entities/creatures/Spider.hpp"
@@ -18,10 +18,10 @@
 #include "../entities/items/Crate.hpp"
 #include "../entities/creatures/Caveman.hpp"
 #include "../entities/creatures/Damsel.hpp"
-#include "../decorations/Lamp.h"
+#include "../entities/decorations/Lamp.h"
 #include "../entities/creatures/Shopkeeper.hpp"
-#include "../decorations/ArrowTrap.h"
-#include "../entities/collectibles/_CollectiblesUtils.hpp"
+#include "../entities/decorations/ArrowTrap.h"
+#include "../entities/items/_ItemsUtils.hpp"
 #include "../entities/animations/FakeSkeleton.hpp"
 #include "../entities/creatures/Skeleton.hpp"
 
@@ -36,8 +36,8 @@
 #include "../entities/treasures/TripleGoldbar.h"
 #include "../entities/treasures/RubySmall.h"
 #include "../entities/treasures/RubyBig.h"
-#include "../decorations/RockSign.h"
-#include "../decorations/ArchSign.h"
+#include "../entities/decorations/RockSign.h"
+#include "../entities/decorations/ArchSign.h"
 
 //TODO Make main menu signs globals
 void populate_cave_moniez() {

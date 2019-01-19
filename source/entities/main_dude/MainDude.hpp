@@ -28,11 +28,11 @@
 #include <nds.h>
 #include <vector>
 
-#include "../Orientation.hpp"
-#include "../_BaseCreature.h"
+#include "../_common/Orientation.hpp"
+#include "../creatures/_BaseCreature.h"
 #include "../items/_BaseItem.h"
 #include "Whip.hpp"
-#include "../../interfaces/IPickupable.h"
+#include "../_interfaces/IPickupable.h"
 
 //http://spelunky.wikia.com/wiki/Spelunky_Guy
 class MainDude : public BaseCreature {

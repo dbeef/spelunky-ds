@@ -23,7 +23,7 @@ link_directories(${DEVKITPRO}/libnds/include/nds/arm9)
 add_executable(spelunkyds
         gfx/fonts/font.grit
         gfx/sprites/16x16/sprite.grit
-        source/decorations/_BaseDecoration.h
+        source/entities/decorations/_BaseDecoration.h
         source/entities/main_dude/MainDude.cpp
         source/entities/main_dude/MainDude.hpp
         source/entities/items/Bomb.cpp
@@ -31,15 +31,15 @@ add_executable(spelunkyds
         source/entities/items/Arrow.cpp
         source/entities/items/Bomb.hpp
         source/entities/items/Rope.hpp
-        source/decorations/Copyrights.cpp
-        source/decorations/Copyrights.h
-        source/decorations/RopeElement.hpp
-        source/decorations/RopeElement.cpp
+        source/entities/decorations/Copyrights.cpp
+        source/entities/decorations/Copyrights.h
+        source/entities/decorations/RopeElement.hpp
+        source/entities/decorations/RopeElement.cpp
         source/entities/items/Pistol.hpp
         source/entities/items/Pistol.cpp
         source/entities/items/Rope.cpp
-        source/entities/_BaseCreature.h
-        source/entities/_BaseCreature.cpp
+        source/entities/creatures/_BaseCreature.h
+        source/entities/creatures/_BaseCreature.cpp
         source/Main.cpp
         source/tiles/Level.cpp
         source/tiles/Level.hpp
@@ -53,7 +53,7 @@ add_executable(spelunkyds
         README.md
         source/entities/main_dude/MainDude.cpp
         source/entities/main_dude/MainDude.hpp
-        source/entities/Orientation.hpp
+        source/entities/_common/Orientation.hpp
         source/GlobalsDeclarations.hpp
         source/GameLoop.hpp
         source/tiles/Level.cpp
@@ -65,15 +65,15 @@ add_executable(spelunkyds
         source/collisions/Collisions.cpp
         source/collisions/Collisions.hpp
         source/hud/Hud.cpp source/hud/Hud.hpp
-        source/entities/SpriteInfo.cpp
-        source/entities/SpriteInfo.h
+        source/memory/SpriteInfo.cpp
+        source/memory/SpriteInfo.h
         source/camera/Camera.cpp
         source/camera/Camera.hpp
         source/memory/OamManager.cpp
         source/memory/OamManager.hpp
         source/input/InputHandler.cpp
         source/input/InputHandler.hpp
-        source/entities/SpritesheetType.hpp
+        source/memory/SpritesheetType.hpp
         source/memory/OamType.hpp
         source/entities/items/Rock.hpp
         source/entities/items/Jar.cpp
@@ -85,8 +85,8 @@ add_executable(spelunkyds
         source/entities/animations/Blood.hpp
         source/entities/animations/BloodElement.cpp
         source/entities/animations/BloodElement.hpp
-        source/decorations/SpelunkyTitle.cpp
-        source/decorations/SpelunkyTitle.h
+        source/entities/decorations/SpelunkyTitle.cpp
+        source/entities/decorations/SpelunkyTitle.h
         source/tiles/TileOrientation.hpp
         source/tiles/SplashScreenType.hpp
         source/rooms/LeftRightRooms.hpp
@@ -101,7 +101,7 @@ add_executable(spelunkyds
         source/entities/creatures/Bat.hpp
         source/entities/creatures/Spider.cpp
         source/entities/creatures/Spider.hpp
-        source/entities/CreatureType.hpp
+        source/entities/creatures/CreatureType.hpp
         source/GlobalsDefinitions.hpp
         source/sound/SoundUtils.hpp
         source/console/ConsoleUtils.hpp
@@ -129,8 +129,8 @@ add_executable(spelunkyds
         source/entities/items/Glove.cpp
         source/entities/items/Compass.hpp
         source/entities/items/Compass.cpp
-        source/decorations/GotCollectible.hpp
-        source/decorations/GotCollectible.cpp
+        source/entities/decorations/GotCollectible.hpp
+        source/entities/decorations/GotCollectible.cpp
         source/camera/LayerLevel.hpp
         source/entities/creatures/Shopkeeper.hpp
         source/entities/creatures/Shopkeeper.cpp
@@ -152,22 +152,22 @@ add_executable(spelunkyds
         source/entities/animations/FlameElement.hpp
         source/entities/creatures/Damsel.hpp
         source/entities/creatures/Damsel.cpp
-        source/decorations/Smooch.hpp
-        source/decorations/Smooch.cpp
+        source/entities/decorations/Smooch.hpp
+        source/entities/decorations/Smooch.cpp
         source/rooms/ShopRooms.hpp
-        source/decorations/Lamp.h
-        source/decorations/Lamp.cpp
+        source/entities/decorations/Lamp.h
+        source/entities/decorations/Lamp.cpp
         source/tiles/Direction.hpp
-        source/entities/collectibles/_CollectiblesUtils.hpp
-        source/entities/collectibles/_CollectiblesUtils.cpp
-        source/interfaces/ShoppingObject.h
-        source/decorations/ShoppingIcon.h
-        source/decorations/ShoppingIcon.cpp
-        source/interfaces/ShoppingObject.cpp
-        source/decorations/ArrowTrap.h
-        source/decorations/ArrowTrap.cpp
-        source/decorations/Blast.hpp
-        source/decorations/Blast.cpp
+        source/entities/items/_ItemsUtils.hpp
+        source/entities/items/_ItemsUtils.cpp
+        source/entities/_interfaces/ShoppingObject.h
+        source/entities/decorations/ShoppingIcon.h
+        source/entities/decorations/ShoppingIcon.cpp
+        source/entities/_interfaces/ShoppingObject.cpp
+        source/entities/decorations/ArrowTrap.h
+        source/entities/decorations/ArrowTrap.cpp
+        source/entities/decorations/Blast.hpp
+        source/entities/decorations/Blast.cpp
         source/rooms/SnakeWellRoom.hpp
         source/entities/creatures/Skeleton.cpp
         source/entities/creatures/Skeleton.hpp
@@ -180,8 +180,8 @@ add_executable(spelunkyds
         source/entities/animations/FakeSkeleton.cpp
         source/GlobalsDefinitions.cpp
         source/BaseMap.hpp
-        source/entities/SpriteUtils.cpp
-        source/entities/SpriteUtils.hpp
+        source/memory/SpriteUtils.cpp
+        source/memory/SpriteUtils.hpp
         source/tiles/LevelGenerator.hpp
         source/tiles/LevelGenerator.cpp
         source/tiles/PopulatingUtils.hpp
@@ -196,15 +196,15 @@ add_executable(spelunkyds
         source/entities/treasures/RubyBig.cpp
         source/collisions/CollisionsUtils.h
         source/collisions/CollisionsUtils.cpp
-        source/decorations/_BaseDecoration.h
-        source/decorations/RockSign.h
-        source/decorations/RockSign.cpp
-        source/decorations/ArchSign.h
-        source/decorations/ArchSign.cpp
-        source/interfaces/IRenderable.cpp
-        source/interfaces/IRenderable.h
-        source/interfaces/ICollidable.cpp
-        source/interfaces/ICollidable.h
-        source/interfaces/IBase.cpp
-        source/interfaces/IBase.h
-        source/entities/treasures/_BaseTreasure.cpp source/entities/treasures/_BaseTreasure.h source/entities/items/_BaseItem.cpp source/entities/items/_BaseItem.h source/interfaces/IPickupable.cpp source/interfaces/IPickupable.h)
+        source/entities/decorations/_BaseDecoration.h
+        source/entities/decorations/RockSign.h
+        source/entities/decorations/RockSign.cpp
+        source/entities/decorations/ArchSign.h
+        source/entities/decorations/ArchSign.cpp
+        source/entities/_interfaces/IRenderable.cpp
+        source/entities/_interfaces/IRenderable.h
+        source/entities/_interfaces/ICollidable.cpp
+        source/entities/_interfaces/ICollidable.h
+        source/entities/_interfaces/IBase.cpp
+        source/entities/_interfaces/IBase.h
+        source/entities/treasures/_BaseTreasure.cpp source/entities/treasures/_BaseTreasure.h source/entities/items/_BaseItem.cpp source/entities/items/_BaseItem.h source/entities/_interfaces/IPickupable.cpp source/entities/_interfaces/IPickupable.h)

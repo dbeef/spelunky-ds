@@ -8,7 +8,7 @@
 #include "../../collisions/Collisions.hpp"
 #include "../../tiles/TileOrientation.hpp"
 #include "../../../build/gfx_shopkeeper.h"
-#include "../SpriteUtils.hpp"
+#include "../../memory/SpriteUtils.hpp"
 
 #define SHOPKEEPER_SPRITESHEET_OFFSET 0
 #define SHOPKEEPER_POS_INC_DELTA 18

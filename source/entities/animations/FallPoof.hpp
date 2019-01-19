@@ -5,9 +5,9 @@
 #ifndef SPELUNKYDS_FALL_BLOOP_H
 #define SPELUNKYDS_FALL_BLOOP_H
 
-#include "../SpriteInfo.h"
-#include "../Orientation.hpp"
-#include "../_BaseCreature.h"
+#include "../../memory/SpriteInfo.h"
+#include "../_common/Orientation.hpp"
+#include "../creatures/_BaseCreature.h"
 
 #define FALL_POOF_SPRITE_HEIGHT 8
 #define FALL_POOF_SPRITE_WIDTH 8

@@ -8,9 +8,9 @@
 #define CAVEMAN_STUN_TIME 7000
 #define CAVEMAN_HITPOINTS 3
 
-#include "../_BaseCreature.h"
-#include "../Orientation.hpp"
-#include "../SpriteInfo.h"
+#include "_BaseCreature.h"
+#include "../_common/Orientation.hpp"
+#include "../../memory/SpriteInfo.h"
 
 //http://spelunky.wikia.com/wiki/Caveman
 class Caveman : public BaseCreature {

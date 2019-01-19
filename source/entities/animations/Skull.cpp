@@ -3,13 +3,13 @@
 //
 
 #include <cmath>
-#include "../../decorations/GotCollectible.hpp"
+#include "../../entities/decorations/GotCollectible.hpp"
 #include "../../GlobalsDeclarations.hpp"
 #include "../../../build/gfx_spider_skeleton.h"
 #include "../../collisions/Collisions.hpp"
 #include "Skull.hpp"
 #include "Bone.hpp"
-#include "../SpriteUtils.hpp"
+#include "../../memory/SpriteUtils.hpp"
 
 #define SKULL_POS_INC_DELTA 22
 #define SKULL_ANIM_FRAME_DELTA  45

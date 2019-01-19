@@ -6,8 +6,8 @@
 #define SPELUNKYDS_SHOTGUN_H
 
 #include "../items/_BaseItem.h"
-#include "../../interfaces/ShoppingObject.h"
-#include "../../decorations/Blast.hpp"
+#include "../_interfaces/ShoppingObject.h"
+#include "../../entities/decorations/Blast.hpp"
 
 //http://spelunky.wikia.com/wiki/Shotgun
 class Shotgun: public BaseItem, public ShoppingObject {
