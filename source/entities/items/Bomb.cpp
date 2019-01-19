@@ -58,8 +58,10 @@ void Bomb::update_creature_specific() {
             explosionTimer += *global::timer;
             if (explosionTimer > BOMB_ANIM_FRAME_DELTA && explosionFrame < 10) {
 
-                if (explosionFrame == 0)
+                if (explosionFrame == 0) {
                     explode();
+                    global::camera->shake();
+                }
 
                 explosionTimer = 0;
                 explosionFrame++;

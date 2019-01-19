@@ -16,6 +16,53 @@ constexpr u16 MAP_HEIGHT = 512;
 constexpr u16 BOUNDARY_X = 32;
 constexpr u16 BOUNDARY_Y = 16;
 
+constexpr u8 shaking_max_delta = 3;
+constexpr u8 shaking_max_same_direction = 3;
+
+void Camera::apply_shaking() {
+
+    if (shakescreen_duration_timer > 0) {
+
+        shakescreen_duration_timer -= *global::timer;
+
+        if (shakescreen_duration_timer < 0)
+            shakescreen_duration_timer = 0;
+
+        int x_r = (rand() % 2) == 0 ? (rand() % shaking_max_delta) : -(rand() % shaking_max_delta);
+        int y_r = (rand() % 2) == 0 ? (rand() % shaking_max_delta) : -(rand() % shaking_max_delta);
+
+        if (x_r < 0)
+            x_shake_direction--;
+        else
+            x_shake_direction++;
+
+        if (y_r < 0)
+            y_shake_direction--;
+        else
+            y_shake_direction++;
+
+        if (x_shake_direction < -shaking_max_same_direction) {
+            x_r = 1;
+            x_shake_direction++;
+        } else if (x_shake_direction > shaking_max_same_direction) {
+            x_r = -1;
+            x_shake_direction--;
+        }
+
+        if (y_shake_direction < -shaking_max_same_direction) {
+            y_r = 1;
+            y_shake_direction++;
+        } else if (y_shake_direction > shaking_max_same_direction) {
+            y_r = -1;
+            y_shake_direction--;
+        }
+
+        x -= x_r;
+        y -= y_r;
+    }
+
+}
+
 //Instant camera focus with main dude in center.
 void Camera::instant_focus() {
     x = global::main_dude->_x - (SCREEN_WIDTH / 2);
@@ -29,19 +76,23 @@ void Camera::incremental_focus(int camera_speed) {
     int center_x = global::main_dude->_x - (SCREEN_WIDTH / 2);
     int center_y = global::main_dude->_y - (SCREEN_HEIGHT / 2);
 
-    if (abs(center_x - this->x) > BOUNDARY_X) {
+    u16 distance_x = static_cast<u16>(abs(center_x - this->x));
+    u16 distance_y = static_cast<u16>(abs(center_y - this->y));
+
+    if (distance_x > BOUNDARY_X) {
         if (center_x > this->x)
             this->x += camera_speed;
         else
             this->x -= camera_speed;
     }
 
-    if (abs(center_y - this->y) > BOUNDARY_Y) {
+    if (distance_y > BOUNDARY_Y) {
         if (center_y > this->y)
             this->y += camera_speed;
         else
             this->y -= camera_speed;
     }
+
 }
 
 /**
@@ -55,17 +106,20 @@ void Camera::update() {
 
     position_update_timer += *global::timer;
 
-    //FIXME Not using position_update_timer
+    if (position_update_timer > 15) {
 
-    //main dude's spriting, scroll faster
-    if (global::input_handler->r_bumper_held)
-        incremental_focus(3);
-    else
-        incremental_focus(2);
+        //main dude's spriting, scroll faster
+        if (global::input_handler->r_bumper_held)
+            incremental_focus(3);
+        else
+            incremental_focus(2);
 
-    position_update_timer = 0;
+        position_update_timer = 0;
+    }
 
     apply_map_boundaries();
+
+    apply_shaking();
 }
 
 /**
@@ -84,5 +138,9 @@ void Camera::write_current_position_to_graphics_engines() {
     bgSetScroll(global::bg_main_address, this->x, this->y);
     bgSetScroll(global::bg_sub_address, this->x, this->y + SCREEN_HEIGHT);
     bgUpdate();
+}
+
+void Camera::shake() {
+    shakescreen_duration_timer = 350;
 }
 

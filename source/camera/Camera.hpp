@@ -7,10 +7,6 @@
 
 class Camera {
 public:
-    bool follow_main_dude{};
-    int position_update_timer{};
-    int x{};
-    int y{};
 
     void update();
 
@@ -22,7 +18,22 @@ public:
 
     void incremental_focus(int camera_speed);
 
-    //TODO Shakescreen function, that would be called on bomb explosion
+    bool follow_main_dude{};
+    double position_update_timer{};
+
+    int x{};
+    int y{};
+
+    double shakescreen_duration_timer{};
+
+    int x_shake_direction{};
+    int y_shake_direction{};
+
+    inline void shake();
+
+private:
+
+    void apply_shaking();
 
 };
 
