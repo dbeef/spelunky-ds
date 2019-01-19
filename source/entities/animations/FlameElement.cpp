@@ -17,9 +17,6 @@ void FlameElement::update_creature_specific() {
         return;
 
     update_sprites_position();
-    sprite_utils::set_visibility(true, mainSpriteInfo, subSpriteInfo);
-    sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);
-    sprite_utils::set_horizontal_flip(false, mainSpriteInfo, subSpriteInfo);
 
     inactive_delay += *global::timer;
     frameTimer += *global::timer;
@@ -55,13 +52,14 @@ void FlameElement::init_sprites() {
     sprite_utils::set_visibility(true, mainSpriteInfo, subSpriteInfo);
     sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);
     sprite_utils::set_horizontal_flip(false, mainSpriteInfo, subSpriteInfo);
+
 }
 
 void FlameElement::update_sprites_position() {
     int main_x, main_y, sub_x, sub_y;
     get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
-    sprite_utils::set_entry_xy(mainSpriteInfo, main_x, main_y);
-    sprite_utils::set_entry_xy(subSpriteInfo, sub_x, sub_y);
+    sprite_utils::set_entry_xy(mainSpriteInfo, static_cast<u16>(main_x), static_cast<u16>(main_y));
+    sprite_utils::set_entry_xy(subSpriteInfo, static_cast<u16>(sub_x), static_cast<u16>(sub_y));
 }
 
 void FlameElement::match_animation() {

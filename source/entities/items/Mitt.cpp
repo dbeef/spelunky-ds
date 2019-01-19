@@ -12,25 +12,23 @@
 #include "../../entities/decorations/GotCollectible.hpp"
 #include "../../memory/SpriteUtils.hpp"
 
-#define MITT_POS_INC_DELTA 15
 
-void Mitt::update_creature_specific() {
+void Mitt::update_item_specific() {
 
     if (_ready_to_dispose) return;
 
-    sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);
-    sprite_utils::set_horizontal_flip(false, mainSpriteInfo, subSpriteInfo);
+    sprite_utils::set_vertical_flip(false, _main_sprite_info, _sub_sprite_info);
+    sprite_utils::set_horizontal_flip(false, _main_sprite_info, _sub_sprite_info);
     update_anim_icon(_x, _y, _physical_width);
 
     if (collected) return;
 
     if (_bought && check_if_can_be_equipped())
         equip();
-    else if (!_bought && !hold_by_main_dude)
+    else if (!_bought && !_hold_by_main_dude)
         check_if_can_be_pickuped();
 
-    if (hold_by_main_dude) {
-        set_pickuped_position(4, -4);
+    if (_hold_by_main_dude) {
         if (shopping_transaction(this)) {
             collected = true;
             equip();
@@ -44,33 +42,18 @@ void Mitt::init_sprites() {
 
     delete_sprites();
 
-    subSpriteInfo = global::sub_oam_manager->initSprite(gfx_saleablePal, gfx_saleablePalLen,
+    _sub_sprite_info = global::sub_oam_manager->initSprite(gfx_saleablePal, gfx_saleablePalLen,
                                                         nullptr, _sprite_size, ObjSize::OBJSIZE_16,
                                                         _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
-    mainSpriteInfo = global::main_oam_manager->initSprite(gfx_saleablePal, gfx_saleablePalLen,
+    _main_sprite_info = global::main_oam_manager->initSprite(gfx_saleablePal, gfx_saleablePalLen,
                                                           nullptr, _sprite_size, ObjSize::OBJSIZE_16,
                                                           _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
 
-    sprite_utils::set_visibility(true, mainSpriteInfo, subSpriteInfo);
-    sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);
-    sprite_utils::set_horizontal_flip(false, mainSpriteInfo, subSpriteInfo);
+    sprite_utils::set_visibility(true, _main_sprite_info, _sub_sprite_info);
+    sprite_utils::set_vertical_flip(false, _main_sprite_info, _sub_sprite_info);
+    sprite_utils::set_horizontal_flip(false, _main_sprite_info, _sub_sprite_info);
     update_sprites_position();
     match_animation();
-}
-
-void Mitt::update_sprites_position() {
-    if (collected) {
-        mainSpriteInfo->entry->priority = OBJPRIORITY_0;
-        sprite_utils::set_entry_xy(mainSpriteInfo, _x, _y);
-        subSpriteInfo->entry->isHidden = true;
-        mainSpriteInfo->entry->isHidden = false;
-    } else {
-        int main_x, main_y, sub_x, sub_y;
-        get_x_y_viewported(&main_x, &main_y, &sub_x, &sub_y);
-        sprite_utils::set_entry_xy(mainSpriteInfo, main_x, main_y);
-        sprite_utils::set_entry_xy(subSpriteInfo, sub_x, sub_y);
-    }
-
 }
 
 void Mitt::equip() {
@@ -86,20 +69,14 @@ void Mitt::equip() {
         _y = global::hud->items_offset_y;
         global::hud->increment_offset_on_grabbed_item();
     } else {
-        sprite_utils::set_visibility(false, mainSpriteInfo, subSpriteInfo);
+        sprite_utils::set_visibility(false, _main_sprite_info, _sub_sprite_info);
         _ready_to_dispose = true;
     }
 
 }
 
 void Mitt::match_animation() {
-    frameGfx = sprite_utils::get_frame((u8 *) gfx_saleableTiles, _sprite_size, 0);
-    sprite_utils::update_frame(frameGfx, _sprite_size, mainSpriteInfo, subSpriteInfo);
+    u8 *frame_gfx = sprite_utils::get_frame((u8 *) gfx_saleableTiles, _sprite_size, 0);
+    sprite_utils::update_frame(frame_gfx, _sprite_size, _main_sprite_info, _sub_sprite_info);
 }
 
-void Mitt::delete_sprites() {
-    delete mainSpriteInfo;
-    delete subSpriteInfo;
-    mainSpriteInfo = nullptr;
-    subSpriteInfo = nullptr;
-}

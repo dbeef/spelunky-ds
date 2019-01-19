@@ -4,15 +4,16 @@
 
 #include <cstdlib>
 #include <nds/arm9/background.h>
+
 #include "Camera.hpp"
 #include "../GlobalsDeclarations.hpp"
 
 constexpr u16 MAP_WIDTH = 512;
 constexpr u16 MAP_HEIGHT = 512;
 
-//boundaries, that are used when it comes to follow main dude.
-//camera does not stick to the main dude - main dude can make some little movement
-//inside this BOUNDARY_X/Y box and the camera won't move untill he crosses the box.
+// boundaries, that are used when it comes to follow main dude.
+// camera does not stick to the main dude - main dude can make some little movement
+// inside this BOUNDARY_X/Y box and the camera won't move untill he crosses the box.
 constexpr u16 BOUNDARY_X = 32;
 constexpr u16 BOUNDARY_Y = 16;
 
@@ -63,14 +64,14 @@ void Camera::apply_shaking() {
 
 }
 
-//Instant camera focus with main dude in center.
+// Instant camera focus with main dude in center.
 void Camera::instant_focus() {
     x = global::main_dude->_x - (SCREEN_WIDTH / 2);
     y = global::main_dude->_y - (SCREEN_HEIGHT / 2);
     apply_map_boundaries();
 }
 
-//Camera focus with main dude in center, applied incrementally every function call
+// Camera focus with main dude in center, applied incrementally every function call
 void Camera::incremental_focus(int camera_speed) {
 
     int center_x = global::main_dude->_x - (SCREEN_WIDTH / 2);
@@ -139,8 +140,3 @@ void Camera::write_current_position_to_graphics_engines() {
     bgSetScroll(global::bg_sub_address, this->x, this->y + SCREEN_HEIGHT);
     bgUpdate();
 }
-
-void Camera::shake() {
-    shakescreen_duration_timer = 350;
-}
-

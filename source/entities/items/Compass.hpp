@@ -7,11 +7,11 @@
 
 #include "../../memory/SpriteInfo.h"
 #include "../_common/Orientation.hpp"
-#include "../creatures/_BaseCreature.h"
+#include "../items/_BaseItem.h"
 #include "../_interfaces/ShoppingObject.h"
 
 //http://spelunky.wikia.com/wiki/Compass
-class Compass : public BaseCreature , public ShoppingObject {
+class Compass : public BaseItem, public ShoppingObject {
 
 public:
 
@@ -25,7 +25,7 @@ public:
 
 public:
 
-    Compass(int x, int y) : BaseCreature(
+    Compass(int x, int y) : BaseItem(
             x,
             y,
             compas_sprite_width,
@@ -33,36 +33,20 @@ public:
             compas_spritesheet_type,
             compas_physical_width,
             compas_physical_height,
-            CreatureType::COMPASS
+            0, 0, 0
     ), ShoppingObject(compas_cost, compas_name) {
         init_anim_icon();
         update_anim_icon(x, y, _physical_width);
         init_sprites();
     }
 
-    // Base creature overrides
+    // Base item overrides
 
-    void update_creature_specific() override;
-
-    void introduce_yourself() override { printf("WHIP\n"); };
-
-    void apply_dmg(int dmg_to_apply) override {};
-
-    bool can_update_collidable() const override { return true; }
+    void update_item_specific() override;
 
     // IRenderable overrides
 
     void init_sprites() override;
-
-    void delete_sprites() override;
-
-    void update_sprites_position() override;
-
-    // ICollidable overrides
-
-    bool can_apply_friction() const override { return true; }
-
-    bool can_apply_gravity() const override { return true; }
 
     // Other, creature specific
 
@@ -72,9 +56,7 @@ public:
 
     double pos_inc_timer{};
     bool collected{};
-    SpriteInfo *mainSpriteInfo{};
-    SpriteInfo *subSpriteInfo{};
-    u8 *frameGfx{};
+
 };
 
 

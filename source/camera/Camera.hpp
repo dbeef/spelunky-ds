@@ -18,6 +18,8 @@ public:
 
     void incremental_focus(int camera_speed);
 
+    inline void shake() { shakescreen_duration_timer = 350; }
+
     bool follow_main_dude{};
     double position_update_timer{};
 
@@ -25,11 +27,8 @@ public:
     int y{};
 
     double shakescreen_duration_timer{};
-
     int x_shake_direction{};
     int y_shake_direction{};
-
-    inline void shake();
 
 private:
 

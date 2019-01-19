@@ -7,11 +7,11 @@
 
 #include "../../memory/SpriteInfo.h"
 #include "../_common/Orientation.hpp"
-#include "../creatures/_BaseCreature.h"
+#include "../items/_BaseItem.h"
 #include "../_interfaces/ShoppingObject.h"
 
 //http://spelunky.wikia.com/wiki/Pitcher%27s_Mitt
-class Mitt : public BaseCreature, public ShoppingObject  {
+class Mitt : public BaseItem, public ShoppingObject {
 
     static constexpr u8 mitt_sprite_width = 16;
     static constexpr u8 mitt_sprite_height = 16;
@@ -23,7 +23,7 @@ class Mitt : public BaseCreature, public ShoppingObject  {
 
 public:
 
-    Mitt(int x, int y) : BaseCreature(
+    Mitt(int x, int y) : BaseItem(
             x,
             y,
             mitt_sprite_width,
@@ -31,45 +31,28 @@ public:
             mitt_spritesheet_type,
             mitt_physical_width,
             mitt_physical_height,
-            CreatureType::MITT
+            0, 0, 0
     ), ShoppingObject(mitt_cost, mitt_name) {
         init_anim_icon();
         update_anim_icon(x, y, _physical_width);
         init_sprites();
     }
 
-    // Base creature overrides
+    // Base item overrides
 
-    void update_creature_specific() override;
-
-    void introduce_yourself() override { printf("WHIP\n"); };
-
-    void apply_dmg(int dmg_to_apply) override {};
-
-    bool can_update_collidable() const override { return !collected; }
+    void update_item_specific() override;
 
     // IRenderable overrides
 
     void init_sprites() override;
 
-    void delete_sprites() override;
-
-    void update_sprites_position() override;
-
-    // ICollidable overrides
-
-    bool can_apply_friction() const override { return true; }
-
-    bool can_apply_gravity() const override { return true; }
-
     // Other, creature specific
-    
+
     double pos_inc_timer{};
     bool collected{};
-    SpriteInfo *mainSpriteInfo{};
-    SpriteInfo *subSpriteInfo{};
-    u8 *frameGfx{};
+
     void equip();
+
     void match_animation();
 };
 

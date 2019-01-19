@@ -598,8 +598,8 @@ void MainDude::take_out_bomb() {
     global::hud->bombs--;
     global::hud->draw_level_hud();
     Bomb *bomb = new Bomb(_x, _y);
-    bomb->hold_by_main_dude = true;
-    global::creatures.push_back(bomb);
+    bomb->_hold_by_main_dude = true;
+    global::items_to_add.push_back(bomb);
     holding_item = true;
 }
 
@@ -623,7 +623,7 @@ void MainDude::spawn_carried_items() {
         auto *springShoes = new SpringShoes(HUD_ITEMS_ROW_X, global::hud->items_offset_y);
         springShoes->collected = true;
         springShoes->_bought = true;
-        global::creatures_to_add.push_back(springShoes);
+        global::items_to_add.push_back(springShoes);
         global::hud->increment_offset_on_grabbed_item();
     }
 
@@ -639,7 +639,7 @@ void MainDude::spawn_carried_items() {
         auto *compass = new Compass(HUD_ITEMS_ROW_X, global::hud->items_offset_y);
         compass->collected = true;
         compass->_bought = true;
-        global::creatures_to_add.push_back(compass);
+        global::items_to_add.push_back(compass);
         global::hud->increment_offset_on_grabbed_item();
     }
     if (carrying_glove) {
@@ -667,7 +667,7 @@ void MainDude::spawn_carried_items() {
         auto mitt = new Mitt(HUD_ITEMS_ROW_X, global::hud->items_offset_y);
         mitt->collected = true;
         mitt->_bought = true;
-        global::creatures_to_add.push_back(mitt);
+        global::items_to_add.push_back(mitt);
         global::hud->increment_offset_on_grabbed_item();
     }
     if (carrying_shotgun) {

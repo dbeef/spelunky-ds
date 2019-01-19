@@ -5,8 +5,7 @@
 #ifndef SPELUNKYDS_LAYER_TYPES_H
 #define SPELUNKYDS_LAYER_TYPES_H
 
-//TODO Proposal: Use types provided by devkitPro
-//https://devkitpro.org/viewtopic.php?f=38&t=8720
+// https://devkitpro.org/viewtopic.php?f=38&t=8720
 // OBJPRIORITY_0 > BG_PRIORITY_0 >
 // OBJPRIORITY_1 > BG_PRIORITY_1 >
 // OBJPRIORITY_2 > BG_PRIORITY_2 >

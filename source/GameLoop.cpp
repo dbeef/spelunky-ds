@@ -76,8 +76,12 @@ void gameloop::run() {
         if (global::game_state->bombed) { //TODO Can't this be done in the Bomb class?
             global::current_level->update_level();
             global::game_state->bombed = false;
-            for (unsigned long a = 0; a < global::creatures.size(); a++)
-                (*global::creatures.at(a))._bottom_collision = false;
+            for (auto &creature : global::creatures)
+                (*creature)._bottom_collision = false;
+            for (auto &item : global::items)
+                (*item)._bottom_collision = false;
+            for (auto &treasures : global::treasures)
+                (*treasures)._bottom_collision = false;
             global::main_dude->_bottom_collision = false;
         }
 

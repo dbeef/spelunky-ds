@@ -8,11 +8,11 @@
 
 #include "../../memory/SpriteInfo.h"
 #include "../_common/Orientation.hpp"
-#include "../creatures/_BaseCreature.h"
+#include "../items/_BaseItem.h"
 #include "../_interfaces/ShoppingObject.h"
 
 //http://spelunky.wikia.com/wiki/Spring_Shoes
-class SpringShoes : public BaseCreature, public ShoppingObject {
+class SpringShoes : public BaseItem, public ShoppingObject {
 
     static constexpr u8 spring_shoes_sprite_width = 16;
     static constexpr u8 spring_shoes_sprite_height = 16;
@@ -24,7 +24,7 @@ class SpringShoes : public BaseCreature, public ShoppingObject {
 
 public:
 
-    SpringShoes(int x, int y) : BaseCreature(
+    SpringShoes(int x, int y) : BaseItem(
             x,
             y,
             spring_shoes_sprite_width,
@@ -32,36 +32,20 @@ public:
             spring_shoes_spritesheet_type,
             spring_shoes_physical_width,
             spring_shoes_physical_height,
-            CreatureType::SPRING_SHOES
+            0, 0, 0
     ), ShoppingObject(spring_shoes_cost, spring_shoes_name) {
         init_anim_icon();
         update_anim_icon(x, y, _physical_width);
         init_sprites();
     }
 
-    // Base creature overrides
+    // Base item overrides
 
-    void update_creature_specific() override;
-
-    void introduce_yourself() override { printf("WHIP\n"); };
-
-    void apply_dmg(int dmg_to_apply) override {};
-
-    bool can_update_collidable() const override { return !collected; }
+    void update_item_specific() override;
 
     // IRenderable overrides
 
     void init_sprites() override;
-
-    void delete_sprites() override;
-
-    void update_sprites_position() override;
-
-    // ICollidable overrides
-
-    bool can_apply_friction() const override { return true; }
-
-    bool can_apply_gravity() const override { return true; }
 
     // Other, creature specific
 
@@ -69,9 +53,6 @@ public:
 
     double pos_inc_timer{};
     bool collected{};
-    SpriteInfo *mainSpriteInfo{};
-    SpriteInfo *subSpriteInfo{};
-    u8 *frameGfx{};
 
 };
 

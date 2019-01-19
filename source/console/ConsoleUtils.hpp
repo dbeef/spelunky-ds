@@ -6,6 +6,7 @@
 #define SPELUNKYDS_CONSOLE_UTILS_H
 
 #include <nds/arm9/console.h>
+
 #include "../../build/font.h"
 #include "../GlobalsDefinitions.hpp"
 #include "../camera/LayerLevel.hpp"

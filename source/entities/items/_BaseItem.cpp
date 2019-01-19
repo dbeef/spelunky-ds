@@ -48,4 +48,7 @@ void BaseItem::update() {
 
     check_if_can_be_pickuped();
     update_item_specific();
+
+    // FIXME Call this here, automatically instead of in every item.
+    // kill_creatures_if_have_speed(1);
 }

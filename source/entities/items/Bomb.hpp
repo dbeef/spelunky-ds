@@ -7,24 +7,24 @@
 
 #include <nds/arm9/sprite.h>
 
-#include "../creatures/_BaseCreature.h"
+#include "../items/_BaseItem.h"
 #include "../../memory/SpriteInfo.h"
 
 #define ARMED_TIME_BLINK_SLOW 2000
 #define ARMED_TIME_BLINK_FAST 3500
 
 //http://spelunky.wikia.com/wiki/Bombs
-class Bomb : public BaseCreature {
-    
-    static constexpr u8 bomb_sprite_width = 64;
-    static constexpr u8 bomb_sprite_height = 64;
-    static constexpr u16 bomb_physical_width = 8;
-    static constexpr u16 bomb_physical_height = 8;
+class Bomb : public BaseItem {
+
+    static constexpr u8 bomb_sprite_width = 8;
+    static constexpr u8 bomb_sprite_height = 8;
+    static constexpr u16 bomb_physical_width = 7;
+    static constexpr u16 bomb_physical_height = 7;
     static constexpr SpritesheetType bomb_spritesheet_type = SpritesheetType::BOMB;
 
 public:
-    
-    Bomb(int x, int y) : BaseCreature(
+
+    Bomb(int x, int y) : BaseItem(
             x,
             y,
             bomb_sprite_width,
@@ -32,37 +32,23 @@ public:
             bomb_spritesheet_type,
             bomb_physical_width,
             bomb_physical_height,
-            CreatureType::BOMB
+            1, 10, 6
     ) {
         init_sprites();
         set_sprite_disarmed();
     }
 
-    // Base creature overrides
+    // Base item overrides
 
-    void update_creature_specific() override;
-
-    void introduce_yourself() override { printf("WHIP\n"); };
-
-    void apply_dmg(int dmg_to_apply) override {};
-
-    bool can_update_collidable() const override { return !hold_by_main_dude && explosionFrame == 0; }
+    void update_item_specific() override;
 
     // IRenderable overrides
 
     void init_sprites() override;
 
-    void delete_sprites() override;
-
-    void update_sprites_position() override;
-
-    // ICollidable overrides
-
-    bool can_apply_friction() const override { return true; }
-
-    bool can_apply_gravity() const override { return true; }
-
     // Other, creature specific
+
+private:
 
     void set_sprite_disarmed();
 
@@ -70,12 +56,8 @@ public:
 
     void explode();
 
-    SpriteInfo *mainSpriteInfo{};
-    SpriteInfo *subSpriteInfo{};
     bool armed{};
     u16 armedTimer{};
-    double explosionTimer{};
-    u16 explosionFrame{};
 
 };
 
