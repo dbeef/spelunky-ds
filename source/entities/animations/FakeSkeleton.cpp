@@ -8,7 +8,7 @@
 #include "../../../build/gfx_spider_skeleton.h"
 #include "../../collisions/Collisions.hpp"
 #include "FakeSkeleton.hpp"
-#include "Skull.hpp"
+#include "../items/Skull.hpp"
 #include "../../memory/SpriteUtils.hpp"
 
 #define FAKE_SKELETON_POS_INC_DELTA 25
@@ -77,8 +77,9 @@ void FakeSkeleton::update_sprites_position() {
 
 void FakeSkeleton::spawn_skull() {
     auto s = new Skull(_x, _y);
-    s->hold_by_main_dude = true;
-    global::creatures_to_add.push_back(s);
+    s->_hold_by_main_dude = true;
+    global::main_dude->_currently_held_item = s;
+    global::items_to_add.push_back(s);
 }
 
 void FakeSkeleton::match_animation() {

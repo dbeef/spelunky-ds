@@ -12,7 +12,7 @@
 #include "../../tiles/LevelRenderingUtils.hpp"
 #include "../../../build/soundbank.h"
 #include "../animations/Bone.hpp"
-#include "../animations/Skull.hpp"
+#include "../items/Skull.hpp"
 #include "../../memory/SpriteUtils.hpp"
 
 #define SKELETON_POS_INC_DELTA 19
@@ -257,7 +257,7 @@ void Skeleton::spawn_remnants() {
 
     global::creatures_to_add.push_back(b_1);
     global::creatures_to_add.push_back(b_2);
-    global::creatures_to_add.push_back(s);
+    global::items_to_add.push_back(s);
 
 }
 

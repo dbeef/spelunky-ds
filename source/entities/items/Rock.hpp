@@ -36,6 +36,7 @@ public:
             rock_x_pickuped_offset_right,
             rock_y_pickuped_offset
     ) {
+        _activated = true;
         _max_x_speed = 3.5f;
         _friction = ICollidable::default_friction * 12;
         init_sprites();

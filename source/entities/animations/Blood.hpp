@@ -5,7 +5,6 @@
 #ifndef SPELUNKYDS_BLOOD_H
 #define SPELUNKYDS_BLOOD_H
 
-#define BLOOD_CHANGE_POS_DELTA 17
 #define BLOOD_ANIM_FRAME_DELTA 90
 
 #include <vector>

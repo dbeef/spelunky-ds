@@ -174,8 +174,8 @@ add_executable(spelunkyds
         source/sound/SoundUtils.cpp
         source/entities/animations/Bone.hpp
         source/entities/animations/Bone.cpp
-        source/entities/animations/Skull.hpp
-        source/entities/animations/Skull.cpp
+        source/entities/items/Skull.hpp
+        source/entities/items/Skull.cpp
         source/entities/animations/FakeSkeleton.hpp
         source/entities/animations/FakeSkeleton.cpp
         source/GlobalsDefinitions.cpp
