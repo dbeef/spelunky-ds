@@ -13,29 +13,29 @@
  * Tilemap can be found at gfx/tilemaps/gfx_cavebg.png
  */
 enum MapTileType {
-    NOTHING,                        //0  NON_COLLIDABLE
-    CAVE_ROCK,                      //1 from 8
-    CAVE_REGULAR,                   //2 from 1
-    STONE_BLOCK,                    //3 from 5
-    CAVE_DOWN_ORIENTED,             //4 from 3
-    CAVE_SOME_GOLD,                 //5 from 6
-    CAVE_MUCH_GOLD,                 //6 from 7
-    CAVE_UP_ORIENTED,               //7 from 2
-    CAVE_UP_DOWN_ORIENTED,          //8 from 4
+    NOTHING,                        //0 NON_COLLIDABLE
+    CAVE_ROCK,                      //1
+    CAVE_REGULAR,                   //2
+    STONE_BLOCK,                    //3
+    CAVE_DOWN_ORIENTED,             //4
+    CAVE_SOME_GOLD,                 //5
+    CAVE_MUCH_GOLD,                 //6
+    CAVE_UP_ORIENTED,               //7
+    CAVE_UP_DOWN_ORIENTED,          //8
     LADDER,                         //9  NON_COLLIDABLE
     LADDER_DECK,                    //10 NON_COLLIDABLE
-    ARROW_TRAP_LEFT,                //11 //from 12
-    ARROW_TRAP_RIGHT,               //12 //from 13
-    ENTRANCE,                       //13 NON_COLLIDABLE //from 11
+    ARROW_TRAP_LEFT,                //11
+    ARROW_TRAP_RIGHT,               //12
+    ENTRANCE,                       //13 NON_COLLIDABLE
     EXIT,                           //14 NON_COLLIDABLE
-    CONSOLE_LEFT_BAR_TOP_ROUNDED,   //15 //from 16
-    CONSOLE_RIGHT_BAR_TOP_ROUNDED,  //16 //from 19
+    CONSOLE_LEFT_BAR_TOP_ROUNDED,   //15
+    CONSOLE_RIGHT_BAR_TOP_ROUNDED,  //16
     CONSOLE_LEFT_BAR_BOT_ROUNDED,   //17
-    CONSOLE_RIGHT_BAR_BOT_ROUNDED,  //18 //from 20
-    CONSOLE_TOP_BAR,                //19 //from 21
-    CONSOLE_BOTTOM_BAR,             //20 //from 22 1
-    CONSOLE_LEFT_BAR,               //21 //from 15
-    CONSOLE_RIGHT_BAR,              //22 //from 18 2
+    CONSOLE_RIGHT_BAR_BOT_ROUNDED,  //18
+    CONSOLE_TOP_BAR,                //19
+    CONSOLE_BOTTOM_BAR,             //20
+    CONSOLE_LEFT_BAR,               //21
+    CONSOLE_RIGHT_BAR,              //22
     CONSOLE_BLACK_BACKGROUND,       //23
     CAVE_SMOOTH,                    //24
     SCORES_STAR_DOOR,               //25
