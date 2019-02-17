@@ -43,7 +43,7 @@ enum class CreatureType {
     SPIKE_SHOES,
     MITT,
     JETPACK,
-    BULLET
+    BULLET, BOULDER
 };
 
 #endif //SPELUNKYDS_SPRITETYPE_H

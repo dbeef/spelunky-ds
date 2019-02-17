@@ -20,8 +20,7 @@
 
 void Snake::update_creature_specific() {
 
-    if (_ready_to_dispose)
-        return;
+    if (_ready_to_dispose) return;
 
     update_sprites_position();
     sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);

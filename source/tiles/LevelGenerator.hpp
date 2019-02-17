@@ -11,6 +11,8 @@ void generate_new_level_layout();
 
 void obtain_new_direction(int curr_x, Direction &direction);
 
+void place_an_altar();
+
 void place_a_shop();
 
 #endif //SPELUNKYDS_LEVEL_LAYOUT_H

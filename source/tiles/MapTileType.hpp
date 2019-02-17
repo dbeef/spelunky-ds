@@ -54,6 +54,8 @@ enum MapTileType {
     SHOP_MUGSHOT_2,                 //38
     SHOP_MUGSHOT_3,                 //39
     SHOP_MUGSHOT_4,                 //40
+    ALTAR_LEFT,                     //41
+    ALTAR_RIGHT,                    //42
 };
 
  #endif //SPELUNKYDS_MAPTILETYPES_H

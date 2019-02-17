@@ -25,6 +25,7 @@
 #include "../entities/animations/FakeSkeleton.hpp"
 #include "../entities/creatures/Skeleton.hpp"
 
+#include "../rooms/AltarRoom.hpp"
 #include "../rooms/ShopRooms.hpp"
 #include "../rooms/ClosedRooms.hpp"
 #include "../rooms/LeftRightRooms.hpp"
@@ -38,6 +39,7 @@
 #include "../entities/treasures/RubyBig.h"
 #include "../entities/decorations/RockSign.h"
 #include "../entities/decorations/ArchSign.h"
+#include "../entities/items/GoldenIdol.h"
 
 //TODO Make main menu signs globals
 void populate_cave_moniez() {
@@ -177,6 +179,7 @@ void populate_cave_moniez() {
 
 }
 
+// TODO Create enum for creature type to be spawned! Just like in case of tile maps.
 void populate_cave_npcs() {
 
     Shopkeeper *shopkeeper = nullptr;
@@ -232,8 +235,10 @@ void populate_cave_npcs() {
                         npc = shops_npcs[1][tab_y][tab_x];
                         if (shop_starting_item == -1)
                             shop_starting_item = rand() % 9;
-                    } else
-                        continue;
+                    } else if(room_type == RoomType::R_ALTAR){
+                        room_id = 0;
+                        npc = altar_room_npc[room_id][tab_y][tab_x];
+                    } else continue;
 
                     int r = rand() % 3;
 
@@ -319,6 +324,11 @@ void populate_cave_npcs() {
                         shopkeeper = new Shopkeeper(pos_x * 16, pos_y * 16);
                         global::creatures.push_back(shopkeeper);
                         shopkeeper->set_shop_bounds();
+                    }
+
+                    if (npc == 20) {
+                        auto goldenIdol = new GoldenIdol((pos_x * 16) + 10, pos_y * 16);
+                        global::items.push_back(goldenIdol);
                     }
 
                     if (npc == 12) {

@@ -99,6 +99,7 @@ void generate_new_level_layout() {
     }
 
     //TODO more post-generation effects, i.e if there's a column of '0' type rooms, then make a snake well
+    place_an_altar();
     place_a_shop();
 }
 
@@ -116,6 +117,17 @@ void obtain_new_direction(int curr_x, Direction &direction) {
     else
         //we're in the middle, so make a guess where should we gow now
         direction = static_cast<Direction>(rand() % 2); //left or right
+}
+
+void place_an_altar() {
+    for (int a = 0; a < ROOMS_X; a++) {
+        for (int b = 0; b < ROOMS_Y; b++) {
+            if (global::current_level->layout[a][b] == RoomType::R_CLOSED) {
+                global::current_level->layout[a][b] = RoomType::R_ALTAR;
+                return;
+            }
+        }
+    }
 }
 
 

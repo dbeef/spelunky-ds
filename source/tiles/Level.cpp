@@ -14,6 +14,7 @@
 #include "../rooms/LeftRightDownRooms.hpp"
 #include "../rooms/LeftRightUpRooms.hpp"
 #include "../rooms/SplashScreenRooms.hpp"
+#include "../rooms/AltarRoom.hpp"
 #include "../rooms/RoomType.hpp"
 #include "LevelRenderingUtils.hpp"
 #include "../rooms/ShopRooms.hpp"
@@ -246,6 +247,9 @@ void Level::initialise_tiles_from_room_layout() {
                     break;
                 case RoomType::R_SHOP_RIGHT_MUGSHOT:
                     memcpy(tab, shops_mugshots[1], sizeof(shops_mugshots[1]));
+                    break;
+                case RoomType::R_ALTAR:
+                    memcpy(tab, altar_room[0], sizeof(altar_room[1]));
                     break;
                 default:
                     break;
