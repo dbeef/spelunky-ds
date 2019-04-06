@@ -18,8 +18,6 @@ public:
     int keys_down{};
     bool stop_handling{};
 
-    //TODO An array for these:
-
     bool left_key_held{};
     bool right_key_held{};
     bool down_key_held{};

@@ -20,7 +20,6 @@
 #include "entities/treasures/_BaseTreasure.h"
 #include "entities/items/_BaseItem.h"
 
-#define GRAVITY_DELTA_SPEED 0.22 //FIXME isn't it mob-specific?
 #define DEFAULT_DMA_CHANNEL 3
 
 //https://stackoverflow.com/questions/21505021/extern-and-global-same-variable-in-same-file

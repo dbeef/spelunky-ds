@@ -130,15 +130,8 @@ void GameState::handle_changing_screens() {
 
         global::main_dude->animFrame = 0;
 
-//        printf("BEFORE DMA COPY\n");
-//        for(int a =0;a < 1*60;a++)
-//            swiWaitForVBlank();
-
+        // copy base cave background to current map array
         dmaCopyHalfWords(DEFAULT_DMA_CHANNEL, global::base_map, global::current_map, sizeof(global::base_map));
-
-//        printf("BEFORE NEW LAYOUT\n");
-//        for(int a =0;a < 1*60;a++)
-//            swiWaitForVBlank();
 
         generate_new_level_layout();
 
@@ -153,23 +146,10 @@ void GameState::handle_changing_screens() {
                 sound::stop_cave_music();
 
 
-//            printf("BEFORE GENERATE FRAME\n");
-//            for(int a =0;a < 1*60;a++)
-//                swiWaitForVBlank();
-
             global::current_level->generate_frame();
-
-//            printf("BEFORE GENERATE ROOMS\n");
-//            for(int a =0;a < 1*60;a++)
-//                swiWaitForVBlank();
-
             global::current_level->initialise_tiles_from_room_layout();
             set_position_to(MapTileType::ENTRANCE);
 
-
-//            printf("AFTER GENERATE ROOMS\n");
-//            for(int a =0;a < 1*60;a++)
-//                swiWaitForVBlank();
 
         } else {
 
@@ -205,49 +185,19 @@ void GameState::handle_changing_screens() {
                 global::current_level->initialise_tiles_from_splash_screen(SplashScreenType::ON_LEVEL_DONE_UPPER);
                 global::current_level->initialise_tiles_from_splash_screen(SplashScreenType::ON_LEVEL_DONE_LOWER);
                 set_position_to(MapTileType::ENTRANCE);
-//                global::main_dude->x = 32;
-//                global::main_dude->y = 280;
-//                global::camera->follow_main_dude = true;
-//                global::camera->instant_focus();
             }
 
         }
 
-        //
-
-//        printf("BEFORE TILES TO MAP\n");
-//        for(int a =0;a < 1*60;a++)
-//            swiWaitForVBlank();
-
         global::current_level->write_tiles_to_map();
-
-
-//        printf("BEFORE SECTORIZE\n");
-//        for(int a =0;a < 1*60;a++)
-//            swiWaitForVBlank();
 
         sectorize_map();
 
-//        printf("BEFORE COPY 1\n");
-//        for(int a =0;a < 1*60;a++)
-//            swiWaitForVBlank();
-
+        // copy current map to rendering engines
         dmaCopyHalfWords(DEFAULT_DMA_CHANNEL, global::current_map, bgGetMapPtr(global::bg_main_address),
                          sizeof(global::current_map));
-
-
-//        printf("BEFORE COPY 2\n");
-//        for(int a =0;a < 1*60;a++)
-//            swiWaitForVBlank();
-
         dmaCopyHalfWords(DEFAULT_DMA_CHANNEL, global::current_map, bgGetMapPtr(global::bg_sub_address),
                          sizeof(global::current_map));
-        //
-
-//        printf("BEFORE DELETE ALL SPRITES\n");
-//        for(int a =0;a < 1*60;a++)
-//            swiWaitForVBlank();
-
 
         bool dead = global::main_dude->dead;
         int temp_x = global::main_dude->_x;
@@ -263,9 +213,6 @@ void GameState::handle_changing_screens() {
 
         global::main_dude->_x = temp_x;
         global::main_dude->_y = temp_y;
-
-//        global::main_dude->init();
-//        global::entities.push_back(global::main_dude);
 
         consoleClear();
 
