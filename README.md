@@ -64,12 +64,33 @@
 
 <p> 1) Download Nintendo DS homebrew toolchain made by <b>devkitPro</b> organization for your platform from their official website: https://devkitpro.org/wiki/Getting_Started </p>
 <p> 2) Set up a few environment variables, as shown in their tutorial  </p>
-<p> 3) cd to the spelunky-ds directory and type <b>'make'</b>, or with assertions fired up <b>'make DEBUG=1'</b> </p>
+<p> 3) cd to the spelunky-ds directory and type <b>'make'</b></p>
 
 <h2 align="center"> Running </h2>
 <p> For running on a PC I preffer an emulator called Desmume. type 'desmume spelunky.nds' for running. </p>
 <p> For running on an NDS I use 'R4i-3DS-RTS-WiFi' (oh boy) card, but it's probably going to work on any other card. Just make sure, you have NDS program called 'DSiMenu++', which helps running homebrew. Installation instructions:
  https://gbatemp.net/threads/ds-i-3ds-dsimenu-ds-i-menu-replacement.472200/
+
+<h2 align="center"> Debugging </h2>
+
+<p> To compile SpelunkyDS with assertions fired up type <b>'make DEBUG=1'</b> </p>
+<p> Debugging seemingly random crashes is possible only on an emulator, which will provide last executed line:
+
+<p align="center">
+<img src="https://github.com/dbeef/spelunky-ds/blob/master/readme/desmume_output.png" alt="Desmume output"
+ width="489" height="30">
+ 
+<p> Calling <b> addr2line </b>: </p>
+
+
+<p align="center">
+<img src="https://github.com/dbeef/spelunky-ds/blob/master/readme/debugging.png" alt="Calling addr2line"
+ width="670" height="55">
+ 
+
+<>
+
+</p>
 
 <h2 align="center"> Tools I use </h2>
 <ul>
