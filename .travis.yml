@@ -5,9 +5,7 @@ services:
 
 before_install:
 - docker pull devkitpro/devkitarm
-- docker run -d -p 127.0.0.1:80:4567 devkitpro/devkitarm /bin/sh -c "cd /root/ && git clone https://github.com/dbeef/spelunky-ds.git"
-- docker ps -a
-- docker run devkitpro/devkitarm /bin/sh -c "cd /root/spelunky-ds"
+- docker run --name toolchain devkitpro/devkitarm /bin/sh -c "cd /root/ && git clone https://github.com/dbeef/spelunky-ds.git"
 
 script:
-- make
+- docker exec -it /bin/sh -c "cd spelunky-ds && make"
