@@ -23,6 +23,7 @@ link_directories(${DEVKITPRO}/libnds/include/nds/arm9)
 add_executable(spelunkyds
         gfx/fonts/font.grit
         gfx/sprites/16x16/sprite.grit
+        source/preprocessor/Debug.h
         source/entities/decorations/_BaseDecoration.h
         source/entities/main_dude/MainDude.cpp
         source/entities/main_dude/MainDude.hpp

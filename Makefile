@@ -26,7 +26,7 @@ SOURCES		:=	source source/tiles source/entities/_interfaces source/console sourc
                 source/collisions source/entities source/entities/treasures source/entities/creatures \
                 source/entities/items source/entities/decorations source/time \
                 source/hud source/rooms source/memory source/camera source/entities/animations \
-                source/entities/main_dude source/sound source/entities/traps
+                source/entities/main_dude source/sound source/entities/traps preprocessor/Debug.h
 DATA		:=	data
 INCLUDES	:=	include
 FONTS   	:=	gfx/fonts
@@ -51,7 +51,18 @@ CFLAGS	:=	-g -Wall -O2\
 			$(ARCH)
 
 CFLAGS	+=	$(INCLUDE) -DARM9
-CXXFLAGS	:=	$(CFLAGS) -fno-rtti -fno-exceptions -std=c++14 -DNDEBUG
+CXXFLAGS	:=	$(CFLAGS) -fno-rtti -fno-exceptions -std=c++14
+
+ifndef DEBUG
+DEBUG = 0
+endif
+
+DEBUG ?= 1
+ifeq ($(DEBUG), 1)
+    CXXFLAGS += -DDEBUG -g
+else
+    CXXFLAGS += -DNDEBUG
+endif
 
 ASFLAGS	:=	-g $(ARCH)
 LDFLAGS	=	-specs=ds_arm9.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)

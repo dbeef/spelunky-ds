@@ -8,6 +8,7 @@
 #include "../entities/main_dude/MainDude.hpp"
 #include "../GlobalsDeclarations.hpp"
 #include "../tiles/TileOrientation.hpp"
+#include "../preprocessor/Debug.h"
 
 //(TILE_W * a), (TILE_H * b) makes x,y point placed in the left-upper corner of the tile from passed *map_tiles[a][b].
 //Sprite's x,y positions that are given to the following functions are expected to be upper-left corner.
@@ -159,16 +160,9 @@ bool Collisions::isStandingOnRightEdge(MapTile *neighboringTiles[9], int x, int 
 }
 
 
-//#include <cassert>
-//
 void Collisions::getNeighboringTiles(MapTile *mapTiles[32][32], int xx, int yy, MapTile *out_neighboringTiles[9]) {
 
-//    if(xx < 0 || yy < 0 || xx >= 32 || yy >= 32){
-    //        std::cout<< "WRONG" << xx << " " << yy;
-//    }
-
-//    assert(xx >= 0 && yy >= 0 && xx < 32 && yy < 32);
-
+    SPELUNKYDS_BREAKING_ASSERT(xx >= 0 && yy >= 0 && xx < 32 && yy < 32);
 
     MapTile *left_middle = nullptr,
             *right_middle = nullptr,
@@ -180,25 +174,15 @@ void Collisions::getNeighboringTiles(MapTile *mapTiles[32][32], int xx, int yy, 
             *left_down = nullptr,
             *right_down = nullptr;
 
-    if (xx > 0)
-        left_middle = mapTiles[xx - 1][yy]->exists ? mapTiles[xx - 1][yy] : nullptr;
-    if (xx < 31)
-        right_middle = mapTiles[xx + 1][yy]->exists ? mapTiles[xx + 1][yy] : nullptr;
-    if (yy > 0)
-        up_middle = mapTiles[xx][yy - 1]->exists ? mapTiles[xx][yy - 1] : nullptr;
-    if (yy < 31)
-        down_middle = mapTiles[xx][yy + 1]->exists ? mapTiles[xx][yy + 1] : nullptr;
-
+    left_middle = mapTiles[xx - 1][yy]->exists ? mapTiles[xx - 1][yy] : nullptr;
+    right_middle = mapTiles[xx + 1][yy]->exists ? mapTiles[xx + 1][yy] : nullptr;
+    up_middle = mapTiles[xx][yy - 1]->exists ? mapTiles[xx][yy - 1] : nullptr;
+    down_middle = mapTiles[xx][yy + 1]->exists ? mapTiles[xx][yy + 1] : nullptr;
     center = mapTiles[xx][yy]->exists ? mapTiles[xx][yy] : nullptr;
-
-    if (xx > 0 && yy > 0)
-        left_up = mapTiles[xx - 1][yy - 1]->exists ? mapTiles[xx - 1][yy - 1] : nullptr;
-    if (xx < 31 && yy > 0)
-        right_up = mapTiles[xx + 1][yy - 1]->exists ? mapTiles[xx + 1][yy - 1] : nullptr;
-    if (xx > 0 && yy < 31)
-        left_down = mapTiles[xx - 1][yy + 1]->exists ? mapTiles[xx - 1][yy + 1] : nullptr;
-    if (xx < 31 && yy < 31)
-        right_down = mapTiles[xx + 1][yy + 1]->exists ? mapTiles[xx + 1][yy + 1] : nullptr;
+    left_up = mapTiles[xx - 1][yy - 1]->exists ? mapTiles[xx - 1][yy - 1] : nullptr;
+    right_up = mapTiles[xx + 1][yy - 1]->exists ? mapTiles[xx + 1][yy - 1] : nullptr;
+    left_down = mapTiles[xx - 1][yy + 1]->exists ? mapTiles[xx - 1][yy + 1] : nullptr;
+    right_down = mapTiles[xx + 1][yy + 1]->exists ? mapTiles[xx + 1][yy + 1] : nullptr;
 
     out_neighboringTiles[TileOrientation::LEFT_MIDDLE] = left_middle;
     out_neighboringTiles[TileOrientation::RIGHT_MIDDLE] = right_middle;
@@ -209,7 +193,6 @@ void Collisions::getNeighboringTiles(MapTile *mapTiles[32][32], int xx, int yy, 
     out_neighboringTiles[TileOrientation::RIGHT_UP] = right_up;
     out_neighboringTiles[TileOrientation::LEFT_DOWN] = left_down;
     out_neighboringTiles[TileOrientation::RIGHT_DOWN] = right_down;
-
 }
 
 void Collisions::bombNeighboringTiles(MapTile *mapTiles[32][32], int xx, int yy) {
