@@ -1,0 +1,8 @@
+//
+// Created by dbeef on 4/20/19.
+//
+
+#ifndef SPELUNKYDS_MAINDUDECONSTS_H
+#define SPELUNKYDS_MAINDUDECONSTS_H
+
+#endif //SPELUNKYDS_MAINDUDECONSTS_H
