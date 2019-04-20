@@ -79,7 +79,7 @@ void FakeSkeleton::spawn_skull() {
     auto s = new Skull(_x, _y);
     s->_hold_by_main_dude = true;
     global::main_dude->_currently_held_item = s;
-    global::items_to_add.push_back(s);
+    global::items.push_back(s);
 }
 
 void FakeSkeleton::match_animation() {

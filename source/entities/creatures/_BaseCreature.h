@@ -34,12 +34,7 @@ public:
             u16 physical_width,
             u16 physical_height,
             CreatureType creature_type
-    ) :
-            IRenderable(sprite_width, sprite_height, spritesheet_type),
-            ICollidable(physical_width, physical_height),
-            _creature_type(creature_type) {
-        set_xy(x, y);
-    }
+    );
 
     virtual ~BaseCreature() = default;
 
@@ -72,11 +67,10 @@ public:
 
     void spawn_blood() const;
 
-
     void kill_if_main_dude_jumped_on_you(int dmg_to_apply);
 
-
     void kill_if_whip(int dmg_to_apply);
+
 
 
     bool check_if_can_be_opened();
@@ -84,6 +78,7 @@ public:
     void check_if_can_be_pickuped();
 
     bool check_if_can_be_equipped();
+
 
 
     void set_pickuped_position(int pickup_offset_x, int pickup_offset_y);

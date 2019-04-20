@@ -52,6 +52,7 @@ add_executable(spelunkyds
         source/GameLoop.hpp
         Makefile
         README.md
+        source/entities/main_dude/MainDudeConsts.h
         source/entities/main_dude/MainDude.cpp
         source/entities/main_dude/MainDude.hpp
         source/entities/_common/Orientation.hpp

@@ -84,7 +84,7 @@ void Chest::spawn_treasure() {
                 ruby_small->_x_speed = -0.8;
             else
                 ruby_small->_x_speed = 0.8;
-            global::treasures_to_add.push_back(ruby_small);
+            global::treasures.push_back(ruby_small);
 
         } else {
 
@@ -95,7 +95,7 @@ void Chest::spawn_treasure() {
                 ruby_big->_x_speed = -0.8;
             else
                 ruby_big->_x_speed = 0.8;
-            global::treasures_to_add.push_back(ruby_big);
+            global::treasures.push_back(ruby_big);
         }
     }
 }

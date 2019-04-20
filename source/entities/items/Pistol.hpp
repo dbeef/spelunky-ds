@@ -46,12 +46,14 @@ public:
         init_sprites();
 
         _blast = new Blast(0, 0);
-        global::decorations_to_add.push_back(_blast);
+        global::decorations.push_back(_blast);
     }
 
     // BaseItem overrides
 
     void update_item_specific() override;
+
+    void print_classname() override { printf("PISTOL\n"); };
 
     // IRenderable overrides
 

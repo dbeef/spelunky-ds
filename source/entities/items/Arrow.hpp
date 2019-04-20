@@ -14,7 +14,7 @@
 //http://spelunky.wikia.com/wiki/Arrow
 class Arrow : public BaseItem {
 public:
-    
+
     static constexpr int arrow_x_pickup_offset_left = 1;
     static constexpr int arrow_x_pickup_offset_right = 10;
     static constexpr int arrow_y_pickup_offset = 6;
@@ -47,6 +47,8 @@ public:
     // BaseItem overrides
 
     void update_item_specific() override;
+
+    void print_classname() override { printf("ARROW\n"); };
 
     // IRenderable overrides
 

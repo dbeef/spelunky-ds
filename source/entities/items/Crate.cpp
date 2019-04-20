@@ -100,7 +100,7 @@ void Crate::drop_loot() {
 
         global::hud->draw_level_hud();
 
-        global::decorations_to_add.push_back(g);
+        global::decorations.push_back(g);
     } else {
         collectibles_utils::spawn_random_item(this->_x, this->_y);
     }

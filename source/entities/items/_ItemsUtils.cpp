@@ -90,7 +90,7 @@ ShoppingObject * collectibles_utils::spawn_item(int x, int y, int r, bool bought
 void collectibles_utils::spawn_set_up(int x, int y, BaseCreature *m) {
     m->_x = x + (int) (0.5 * (16 - m->_physical_width));
     m->_y = y;
-    global::creatures_to_add.push_back(m);
+    global::creatures.push_back(m);
 }
 
 void collectibles_utils::spawn_set_up(int x, int y, BaseItem *m) {

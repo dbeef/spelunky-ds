@@ -80,7 +80,7 @@ void Shotgun::spawn_bullets() {
             b->_x += 5 + _physical_width;
         }
 
-        global::creatures_to_add.push_back(b);
+        global::creatures.push_back(b);
 
         if (a == 0)
             b->_y_speed = 1;
@@ -93,7 +93,7 @@ void Shotgun::spawn_bullets() {
 
 void Shotgun::equip() {
     auto *g = new GotCollectible(_x - 12, _y - 20, GotCollectible::Type::ITEM);
-    global::decorations_to_add.push_back(g);
+    global::decorations.push_back(g);
 }
 
 void Shotgun::match_animation() {
@@ -155,6 +155,6 @@ Shotgun::Shotgun(int x, int y) : BaseItem(
     update_anim_icon(x, y, _physical_width);
 
     blast = new Blast(0, 0);
-    global::decorations_to_add.push_back(blast);
+    global::decorations.push_back(blast);
     init_sprites();
 }

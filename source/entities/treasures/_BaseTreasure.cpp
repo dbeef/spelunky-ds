@@ -9,6 +9,7 @@
 #include "../../GlobalsDeclarations.hpp"
 #include "../../collisions/Collisions.hpp"
 #include "../../../build/soundbank.h"
+#include "../../memory/SpriteInfo.h"
 
 void BaseTreasure::update_sprites_position() {
     int main_x, main_y, sub_x, sub_y;

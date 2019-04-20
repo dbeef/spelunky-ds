@@ -21,6 +21,7 @@
 #include "../entities/treasures/RubySmall.h"
 #include "../entities/treasures/TripleGoldbar.h"
 #include "../entities/treasures/SingleGoldbar.hpp"
+#include "../entities/main_dude/MainDudeConsts.h"
 
 #define HEART_POSITION_X 5
 #define HEART_POSITION_Y 5
@@ -344,7 +345,7 @@ void Hud::draw_collected_loot() {
 
             auto *ruby_big = new RubyBig(90 + (a * 4), 190);
             ruby_big->_y += (16 - ruby_big->_physical_height); //aligning to same level
-            global::treasures_to_add.push_back(ruby_big);
+            global::treasures.push_back(ruby_big);
             ruby_big->update_sprites_position();
             ruby_big->_ready_to_dispose = true;
 
@@ -352,7 +353,7 @@ void Hud::draw_collected_loot() {
 
             auto *ruby_small = new RubySmall(90 + (a * 4), 190);
             ruby_small->_y += (16 - ruby_small->_physical_height); //aligning to same level
-            global::treasures_to_add.push_back(ruby_small);
+            global::treasures.push_back(ruby_small);
             ruby_small->update_sprites_position();
             ruby_small->_ready_to_dispose = true;
 
@@ -360,7 +361,7 @@ void Hud::draw_collected_loot() {
 
             auto *triple_goldbars = new TripleGoldbar(90 + (a * 4), 190);
             triple_goldbars->_y += (16 - triple_goldbars->_physical_height); //aligning to same level
-            global::treasures_to_add.push_back(triple_goldbars);
+            global::treasures.push_back(triple_goldbars);
             triple_goldbars->update_sprites_position();
             triple_goldbars->_ready_to_dispose = true;
 
@@ -368,7 +369,7 @@ void Hud::draw_collected_loot() {
 
             auto *single_goldbar = new SingleGoldbar(90 + (a * 4), 190);
             single_goldbar->_y += (16 - single_goldbar->_physical_height); //aligning to same level
-            global::treasures_to_add.push_back(single_goldbar);
+            global::treasures.push_back(single_goldbar);
             single_goldbar->update_sprites_position();
             single_goldbar->_ready_to_dispose = true;
 

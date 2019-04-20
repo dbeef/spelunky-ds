@@ -23,12 +23,9 @@ void global::init_globals() {
     //some of the entities in this list may just wait to be disposed, that's why this size is slightly bigger that 128
     global::sprite_infos.reserve(128);
     //I assume there won't be a situation when we'll add more than 64 objects in a single frame
-    global::creatures_to_add.reserve(64);
 
     global::decorations.reserve(64);
-    global::decorations_to_add.reserve(64);
 
     global::treasures.reserve(8);
-    global::treasures_to_add.reserve(8);
 
 }

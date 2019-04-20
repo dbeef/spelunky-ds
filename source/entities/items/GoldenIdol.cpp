@@ -25,7 +25,7 @@ void GoldenIdol::update_item_specific() {
 
         if (never_pickuped) {
             auto boulder = new Boulder(_x, _y - 5 * 16);
-            global::creatures_to_add.push_back(boulder);
+            global::creatures.push_back(boulder);
             never_pickuped = false;
         }
 

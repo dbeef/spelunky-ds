@@ -8,6 +8,7 @@
 #include "OamManager.hpp"
 #include "../GlobalsDeclarations.hpp"
 #include "../camera/LayerLevel.hpp"
+#include "../preprocessor/Debug.h"
 
 /**
  * "Another advantage of using 16-color sprites is the ability to use 16 different palettes."
@@ -85,12 +86,7 @@ OAMManager::initSprite(const unsigned short pallette[], int palLen, const unsign
 
     /* Keep track of the available tiles */
 //    assert(current_oam_id_palette < SPRITE_COUNT && current_oam_id_tiles < SPRITE_COUNT);
-    if (!(current_oam_id_palette < SPRITE_COUNT && current_oam_id_tiles < SPRITE_COUNT)) {
-        printf("\n\n\nTOO MUCH entities/PALETTES! %lu %lu",
-               static_cast<unsigned long>(current_oam_id_palette), static_cast<unsigned long>(current_oam_id_tiles));
-        for (int a = 0; a < 120; a++) swiWaitForVBlank();
-        return nullptr;
-    }
+    SPELUNKYDS_ASSERT(current_oam_id_palette < SPRITE_COUNT && current_oam_id_tiles < SPRITE_COUNT);
 
     auto *spriteInfo = new SpriteInfo(); //TODO Smart pointer?
     SpriteEntry *spriteEntry = &oam->oamBuffer[current_oam_id_tiles];
@@ -126,12 +122,7 @@ OAMManager::initSprite(const unsigned short pallette[], int palLen, const unsign
      * the matrix id match the affine id, but if you do make them match, this
      * assert can be helpful. */
 //    assert(!spriteEntry->isRotateScale || (spriteInfo->oamId_tiles < MATRIX_COUNT));
-    if (!(!spriteEntry->isRotateScale || (spriteInfo->oamId_tiles < MATRIX_COUNT))) {
-        printf("\n\n\nTOO MUCH AFFINE TRANSFORMED SPRITES!");
-        for (int a = 0; a < 120; a++) swiWaitForVBlank();
-        delete spriteInfo;
-        return nullptr;
-    }
+    SPELUNKYDS_ASSERT(!spriteEntry->isRotateScale || (spriteInfo->oamId_tiles < MATRIX_COUNT))
 
     spriteEntry->isSizeDouble = false;
     spriteEntry->isMosaic = false;

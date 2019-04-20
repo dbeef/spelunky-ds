@@ -5,11 +5,11 @@
 #ifndef SPELUNKYDS_BASEITEM_H
 #define SPELUNKYDS_BASEITEM_H
 
-
-#include "../../memory/SpriteInfo.h"
 #include "../_interfaces/IRenderable.h"
 #include "../_interfaces/ICollidable.h"
 #include "../_interfaces/IPickupable.h"
+
+class SpriteInfo;
 
 class BaseItem : public IPickupable {
 
@@ -26,6 +26,8 @@ public:
     void update();
 
     // To be implemented by inheriting class:
+
+    virtual void print_classname() = 0;
 
     virtual void update_item_specific() = 0;
 

@@ -98,7 +98,7 @@ void Blood::spawn_blood() {
     element->currentFrame = currentFrame;
     element->update();
     bloodTrail.push_back(element);
-    global::creatures_to_add.push_back(element);
+    global::creatures.push_back(element);
 }
 
 void Blood::match_animation() {

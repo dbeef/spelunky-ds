@@ -5,6 +5,7 @@
 #ifndef SPELUNKYDS_CONSTS_H
 #define SPELUNKYDS_CONSTS_H
 
+#include <vector>
 #include <mm_types.h>
 #include <nds/arm9/console.h>
 
@@ -39,16 +40,9 @@ namespace global {
     extern PrintConsole *print_console; //in-game console
 
     extern std::vector<BaseCreature *> creatures;
-    extern std::vector<BaseCreature *> creatures_to_add;
-
     extern std::vector<BaseDecoration *> decorations;
-    extern std::vector<BaseDecoration *> decorations_to_add;
-
     extern std::vector<BaseTreasure *> treasures;
-    extern std::vector<BaseTreasure *> treasures_to_add;
-
     extern std::vector<BaseItem *> items;
-    extern std::vector<BaseItem *> items_to_add;
 
     extern std::vector<SpriteInfo *> sprite_infos; //technically list of wrappers around OAM entries FIXME naming
     extern std::vector<CreatureType> killed_npcs; //list of NPCs killed in current level //FIXME should be SpriteType

@@ -44,6 +44,8 @@ public:
 
     void update_item_specific() override;
 
+    void print_classname() override { printf("CHEST\n"); };
+
     // IRenderable overrides
 
     void init_sprites() override;

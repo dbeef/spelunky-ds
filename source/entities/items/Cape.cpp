@@ -132,7 +132,7 @@ void Cape::match_animation() {
 void Cape::equip() {
 
     auto g = new GotCollectible(_x - 12, _y - 20, GotCollectible::Type::ITEM);
-    global::decorations_to_add.push_back(g);
+    global::decorations.push_back(g);
 
     if (global::main_dude->carrying_jetpack)
         global::main_dude->carrying_jetpack = false;

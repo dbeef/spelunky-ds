@@ -2,6 +2,7 @@
 #include <nds/arm9/video.h>
 #include <nds/arm9/sprite.h>
 #include <nds/arm9/console.h>
+#include <nds/arm9/exceptions.h>
 #include "../build/gfx_cavebg.h"
 #include "GlobalsDeclarations.hpp"
 #include "GlobalsDefinitions.hpp"
@@ -16,6 +17,8 @@
  * TODO Link current VRAM bank configuration.
  */
 int main() {
+
+    defaultExceptionHandler();
 
     global::init_globals();
 

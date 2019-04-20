@@ -12,6 +12,7 @@
 #include "SpikeShoes.hpp"
 
 void SpikeShoes::update_item_specific() {
+
     if (_ready_to_dispose) return;
 
     update_anim_icon(_x, _y, _physical_width);
@@ -67,7 +68,7 @@ void SpikeShoes::equip() {
     _render_in_hud = true;
 
     auto *g = new GotCollectible(_x - 12, _y - 20, GotCollectible::Type::ITEM);
-    global::decorations_to_add.push_back(g);
+    global::decorations.push_back(g);
 
     if (!global::main_dude->carrying_spike_shoes) {
 

@@ -19,5 +19,8 @@ namespace gameloop {
 
     void manage_brightness();
 
+    void on_bomb_explosion();
+
+    void update_entities();
 }
 #endif //SPELUNKYDS_SCROLLING_H

@@ -6,33 +6,14 @@
 #ifndef SPELUNKYDS_MAINDUDE_H
 #define SPELUNKYDS_MAINDUDE_H
 
-//TODO Make it constexpr
-#define MAIN_DUDE_MAX_X_SPEED 2
-#define MAIN_DUDE_MAX_X_SPEED_CRAWLING 1.5f
-#define MAIN_DUDE_MAX_X_SPEED_RUNNING 3
-#define MAIN_DUDE_MAX_Y_SPEED 3.3f
-#define MAIN_DUDE_MAX_Y_SPEED_USING_CAPE 1.7f
-#define MAIN_DUDE_JUMP_SPEED 2.55f
-#define MAIN_DUDE_MIN_HANGING_TIME 100
-#define MAIN_DUDE_STUN_TIME 2000
-#define MAIN_DUDE_STUN_FALLING_TIME 900
-#define MAIN_DUDE_PUSHING_TIME 500
-#define MAIN_DUDE_DAMAGE_PROTECTION_TIME 1500
-#define MAIN_DUDE_FRAMES_PER_ANIMATION 6
-#define MAIN_DUDE_HITPOINTS 4
-#define MAIN_DUDE_SPRITESHEET_ROW_WIDTH 6
-#define MAIN_DUDE_X_SPEED_DELTA_TIME_MS 2
-#define MAIN_DUDE_X_SPEED_DELTA_VALUE 2
-#define MAIN_DUDE_FRICTION_DELTA_SPEED 1
-
 #include <nds.h>
-#include <vector>
 
-#include "../_common/Orientation.hpp"
 #include "../creatures/_BaseCreature.h"
-#include "../items/_BaseItem.h"
+#include "../_common/Orientation.hpp"
 #include "Whip.hpp"
-#include "../_interfaces/IPickupable.h"
+
+class _BaseItem;
+class IPickupable;
 
 //http://spelunky.wikia.com/wiki/Spelunky_Guy
 class MainDude : public BaseCreature {
@@ -51,27 +32,9 @@ public:
     static constexpr float main_dude_max_x_speed_running = 3.0f;
     static constexpr float main_dude_max_x_crawling = 0.55f;
 
-    MainDude(int x, int y) : BaseCreature(
-            x,
-            y,
-            main_dude_sprite_width,
-            main_dude_sprite_height,
-            main_dude_spritesheet_type,
-            main_dude_physical_width,
-            main_dude_physical_height,
-            CreatureType::MAIN_DUDE
-    ) {
-        _friction = ICollidable::default_friction * 5.0f;
-        _bouncing_factor_y = 0;
-        _bouncing_factor_x = 0;
-        init_sprites();
-        whip = new Whip(0, 0);
-        _gravity = ICollidable::default_gravity * 1.15f;
-    }
+    MainDude(int x, int y);
 
-    ~MainDude() {
-        delete whip;
-    }
+    ~MainDude() override;
 
     // Base creature overrides
     void update_creature_specific() override;
@@ -163,7 +126,7 @@ public:
     double jumping_timer{};
     double pushing_timer{};
     double time_since_last_jump{};
-    double time_since_last_damage = MAIN_DUDE_DAMAGE_PROTECTION_TIME + 1;
+    double time_since_last_damage{};
 
     bool hanging_on_tile_left{};
     bool hanging_on_tile_right{};

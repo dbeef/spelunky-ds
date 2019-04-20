@@ -61,7 +61,7 @@ void Pistol::init_sprites() {
 
 void Pistol::equip() {
     auto *g = new GotCollectible(_x - 12, _y - 20, GotCollectible::Type::ITEM);
-    global::decorations_to_add.push_back(g);
+    global::decorations.push_back(g);
 }
 
 void Pistol::spawn_bullet() {
@@ -76,7 +76,7 @@ void Pistol::spawn_bullet() {
         b->_x += 2;
     }
 
-    global::creatures_to_add.push_back(b);
+    global::creatures.push_back(b);
     b->_y_speed = 0;
 }
 

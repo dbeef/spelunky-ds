@@ -129,17 +129,6 @@ namespace oam_utils {
 
     void delete_all_sprites() {
 
-        //possible memory leak?
-//        global::main_oam_manager->delete_sprite_infos();
-//        global::sub_oam_manager->delete_sprite_infos();
-
-//        for (auto &sprite_info : global::sprite_infos) {
-//            if (sprite_info != nullptr) {
-//                sprite_info->entry = nullptr; //fixme - shouldn't this be deleted first? i guess no
-//                delete sprite_info;
-//                sprite_info = nullptr;
-//            }
-//        }
         global::main_oam_manager->clear_sprite_attributes();
         global::sub_oam_manager->clear_sprite_attributes();
 
@@ -152,17 +141,7 @@ namespace oam_utils {
             delete sprite; //deletes sprite itself
         }
 
-        for (auto &sprite : global::creatures_to_add) {
-            sprite->delete_sprites(); //deletes its SpriteInfos and nullptrs them
-            delete sprite; //deletes sprite itself
-        }
-
         for (auto &sprite : global::decorations) {
-            sprite->delete_sprites(); //deletes its SpriteInfos and nullptrs them
-            delete sprite; //deletes sprite itself
-        }
-
-        for (auto &sprite : global::decorations_to_add) {
             sprite->delete_sprites(); //deletes its SpriteInfos and nullptrs them
             delete sprite; //deletes sprite itself
         }
@@ -172,17 +151,7 @@ namespace oam_utils {
             delete sprite; //deletes sprite itself
         }
 
-        for (auto &sprite : global::treasures_to_add) {
-            sprite->delete_sprites(); //deletes its SpriteInfos and nullptrs them
-            delete sprite; //deletes sprite itself
-        }
-
         for (auto &sprite : global::items) {
-            sprite->delete_sprites(); //deletes its SpriteInfos and nullptrs them
-            delete sprite; //deletes sprite itself
-        }
-
-        for (auto &sprite : global::items_to_add) {
             sprite->delete_sprites(); //deletes its SpriteInfos and nullptrs them
             delete sprite; //deletes sprite itself
         }
@@ -192,17 +161,7 @@ namespace oam_utils {
         global::treasures.clear(); //deletes pointers to the treasures removed above - they're not nullptrs!
         global::items.clear(); //deletes pointers to the items removed above - they're not nullptrs!
 
-//Assertion will always be false, pointers are copied when pushed to the vector
-//        int c =0;
-//        for (auto &sprite_info: global::sprite_infos) {
-//            if (sprite_info != nullptr) {
-//                printf("ASSERTION FALSE %i", c);
-//                for(int a =0;a<5*60;a++)
-//                    swiWaitForVBlank();
-//            }
-//            c++;
-//        }
-//https://stackoverflow.com/questions/2275076/is-stdvector-copying-the-objects-with-a-push-back
+        //https://stackoverflow.com/questions/2275076/is-stdvector-copying-the-objects-with-a-push-back
         global::sprite_infos.clear(); //deletes pointers to the SpriteInfos deleted above - they're not nullptrs!
 
 

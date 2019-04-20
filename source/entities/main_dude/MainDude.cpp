@@ -23,6 +23,10 @@
 #include "../../memory/SpriteInfo.h"
 #include "../items/Bomb.hpp"
 #include "../../input/InputHandler.hpp"
+#include "../items/_BaseItem.h"
+#include "../_interfaces/IPickupable.h"
+#include "MainDudeConsts.h"
+
 
 // Called externally in game loop
 void MainDude::handle_key_input() {
@@ -585,7 +589,7 @@ void MainDude::throw_item() {
             // activate item because it's not activated yet
             if (_currently_held_item)
                 _currently_held_item->_activated = true;
-            else if(_currently_held_creature)
+            else if (_currently_held_creature)
                 _currently_held_creature->activated = true;
             else
                 _currently_held_pickupable->_activated = true;
@@ -599,7 +603,7 @@ void MainDude::take_out_bomb() {
     global::hud->draw_level_hud();
     Bomb *bomb = new Bomb(_x, _y);
     bomb->_hold_by_main_dude = true;
-    global::items_to_add.push_back(bomb);
+    global::items.push_back(bomb);
     holding_item = true;
 }
 
@@ -623,7 +627,7 @@ void MainDude::spawn_carried_items() {
         auto *springShoes = new SpringShoes(HUD_ITEMS_ROW_X, global::hud->items_offset_y);
         springShoes->collected = true;
         springShoes->_bought = true;
-        global::items_to_add.push_back(springShoes);
+        global::items.push_back(springShoes);
         global::hud->increment_offset_on_grabbed_item();
     }
 
@@ -631,7 +635,7 @@ void MainDude::spawn_carried_items() {
         auto *spikeShoes = new SpikeShoes(HUD_ITEMS_ROW_X, global::hud->items_offset_y);
         spikeShoes->_render_in_hud = true;
         spikeShoes->_bought = true;
-        global::items_to_add.push_back(spikeShoes);
+        global::items.push_back(spikeShoes);
         global::hud->increment_offset_on_grabbed_item();
     }
 
@@ -639,7 +643,7 @@ void MainDude::spawn_carried_items() {
         auto *compass = new Compass(HUD_ITEMS_ROW_X, global::hud->items_offset_y);
         compass->collected = true;
         compass->_bought = true;
-        global::items_to_add.push_back(compass);
+        global::items.push_back(compass);
         global::hud->increment_offset_on_grabbed_item();
     }
     if (carrying_glove) {
@@ -653,21 +657,21 @@ void MainDude::spawn_carried_items() {
         auto cape = new Cape(HUD_ITEMS_ROW_X, global::hud->items_offset_y);
         cape->_collected = true;
         cape->_bought = true;
-        global::items_to_add.push_back(cape);
+        global::items.push_back(cape);
         global::hud->increment_offset_on_grabbed_item();
     }
     if (carrying_jetpack) {
         auto *jetpack = new Jetpack(HUD_ITEMS_ROW_X, global::hud->items_offset_y);
         jetpack->collected = true;
         jetpack->_bought = true;
-        global::items_to_add.push_back(jetpack);
+        global::items.push_back(jetpack);
         global::hud->increment_offset_on_grabbed_item();
     }
     if (carrying_mitt) {
         auto mitt = new Mitt(HUD_ITEMS_ROW_X, global::hud->items_offset_y);
         mitt->collected = true;
         mitt->_bought = true;
-        global::items_to_add.push_back(mitt);
+        global::items.push_back(mitt);
         global::hud->increment_offset_on_grabbed_item();
     }
     if (carrying_shotgun) {
@@ -675,7 +679,7 @@ void MainDude::spawn_carried_items() {
         auto *shotgun = new Shotgun(_x, _y);
         shotgun->_bought = true;
         shotgun->_hold_by_main_dude = true;
-        global::items_to_add.push_back(shotgun);
+        global::items.push_back(shotgun);
     }
 
     if (carrying_pistol) {
@@ -929,3 +933,26 @@ void MainDude::delete_sprites() {
     main_sprite_info = nullptr;
     sub_sprite_info = nullptr;
 }
+
+MainDude::~MainDude() {
+    delete whip;
+}
+
+MainDude::MainDude(int x, int y) : BaseCreature(
+        x,
+        y,
+        main_dude_sprite_width,
+        main_dude_sprite_height,
+        main_dude_spritesheet_type,
+        main_dude_physical_width,
+        main_dude_physical_height,
+        CreatureType::MAIN_DUDE
+) {
+    time_since_last_damage = MAIN_DUDE_DAMAGE_PROTECTION_TIME + 1;
+    _friction = ICollidable::default_friction * 5.0f;
+    _bouncing_factor_y = 0;
+    _bouncing_factor_x = 0;
+    init_sprites();
+    whip = new Whip(0, 0);
+    _gravity = ICollidable::default_gravity * 1.15f;
+};

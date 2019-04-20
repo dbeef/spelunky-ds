@@ -17,6 +17,7 @@
 #include "../../BaseMap.hpp"
 #include "../../tiles/LevelGenerator.hpp"
 #include "../../tiles/PopulatingUtils.hpp"
+#include "MainDudeConsts.h"
 
 void GameState::reset_main_dude() {
     global::main_dude->carrying_spring_shoes = false;
@@ -207,7 +208,7 @@ void GameState::handle_changing_screens() {
         oam_utils::delete_all_sprites();
 
         //new MainDude since we deleted it. TODO Don't push main dude to the global::entities and update it separately
-        global::main_dude = new MainDude(224, 300);
+        global::main_dude = new MainDude(MAIN_DUDE_MENU_START_POSITION_X, MAIN_DUDE_MENU_START_POSITION_Y);
 
         global::main_dude->dead = dead; //TODO Move this fields out to the game_state! or do the thing above, same result
 
@@ -285,7 +286,7 @@ void GameState::handle_transition_screen_smooch() {
                 mmEffect(SFX_XKISS);
                 spawned_smooch = true;
                 auto *s = new Smooch(144, 436);
-                global::decorations_to_add.push_back(s);
+                global::decorations.push_back(s);
             }
         }
         //144

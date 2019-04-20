@@ -108,7 +108,7 @@ void Bomb::explode() {
             flame->_x_speed = (-1.3 / a);
 
         flame->_y_speed = (-2 / a);
-        global::creatures_to_add.push_back(flame);
+        global::creatures.push_back(flame);
     }
 
     mmEffect(SFX_XEXPLOSION);
@@ -120,7 +120,7 @@ void Bomb::explode() {
     global::game_state->bombed = true;
 
     auto *explosion = new Explosion(_x - 32, _y - 32);
-    global::decorations_to_add.push_back(explosion);
+    global::decorations.push_back(explosion);
 
     sprite_utils::set_visibility(false, _main_sprite_info, _sub_sprite_info);
 }

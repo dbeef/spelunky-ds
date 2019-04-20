@@ -58,7 +58,7 @@ void SpringShoes::init_sprites() {
 void SpringShoes::equip() {
 
     auto g = new GotCollectible(_x - 12, _y - 20, GotCollectible::Type::ITEM);
-    global::decorations_to_add.push_back(g);
+    global::decorations.push_back(g);
 
     if (!global::main_dude->carrying_spring_shoes) {
         global::main_dude->carrying_spring_shoes = true;

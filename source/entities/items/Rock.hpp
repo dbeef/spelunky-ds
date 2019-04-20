@@ -46,6 +46,8 @@ public:
 
     void update_item_specific() override;
 
+    void print_classname() override { printf("ROCK\n"); };
+
     // IRenderable overrides
 
     void init_sprites() override;

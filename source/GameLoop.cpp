@@ -1,123 +1,40 @@
 #include <nds.h>
 #include <cstdlib>
+#include <nds/arm9/exceptions.h>
 #include "GameLoop.hpp"
 #include "tiles/PopulatingUtils.hpp"
 #include "time/TimeUtils.h"
 #include "memory/OamUtils.hpp"
 #include "entities/animations/Blood.hpp"
 #include "entities/items/Arrow.hpp"
-
-static void update_creatures_to_add() {
-    unsigned long size = global::creatures_to_add.size();
-    for (unsigned long a = 0; a < size; a++) {
-        if (global::creatures_to_add.at(a)) {
-            BaseCreature *o = global::creatures_to_add.at(a);
-            global::creatures.push_back(o);
-        }
-    }
-    if (size)
-        global::creatures_to_add.clear();
-}
-
-static void update_decorations_to_add() {
-    unsigned long size = global::decorations_to_add.size();
-    for (unsigned long a = 0; a < size; a++) {
-        if (global::decorations_to_add.at(a)) {
-            BaseDecoration *o = global::decorations_to_add.at(a);
-            global::decorations.push_back(o);
-        }
-    }
-    if (size)
-        global::decorations_to_add.clear();
-}
-
-static void update_treasures_to_add() {
-    unsigned long size = global::treasures_to_add.size();
-    for (unsigned long a = 0; a < size; a++) {
-        if (global::treasures_to_add.at(a)) {
-            BaseTreasure *o = global::treasures_to_add.at(a);
-            global::treasures.push_back(o);
-        }
-    }
-    if (size)
-        global::treasures_to_add.clear();
-}
-
-static void update_items_to_add() {
-    unsigned long size = global::items_to_add.size();
-    for (unsigned long a = 0; a < size; a++) {
-        if (global::items_to_add.at(a)) {
-            BaseItem *o = global::items_to_add.at(a);
-            global::items.push_back(o);
-        }
-    }
-    if (size)
-        global::items_to_add.clear();
-}
+#include "entities/main_dude/MainDudeConsts.h"
 
 void gameloop::run() {
 
-    //init positions with main menu values:
-    global::camera->x = 0;
-    global::camera->y = 127;
-//    global::entities.push_back(global::main_dude);
-
-    global::main_dude = new MainDude(224, 300); //TODO Some constexpr file for xy
+    global::camera->x = CAMERA_MENU_START_X;
+    global::camera->y = CAMERA_MENU_START_Y;
+    global::main_dude = new MainDude(MAIN_DUDE_MENU_START_POSITION_X, MAIN_DUDE_MENU_START_POSITION_Y);
 
     global::hud->init();
-    populate_main_menu(); //TODO Game state function for matching this?
+    populate_main_menu();
 
-    //the game loop. If exited, SpelunkyDS returns 0 and gets back to the menu
+    // If exited, SpelunkyDS returns 0 and gets back to the menu.
     while (true) {
 
         time_utils::update_ms_since_last_frame();
         global::input_handler->updateInput();
 
-        if (global::game_state->bombed) { //TODO Can't this be done in the Bomb class?
-            global::current_level->update_level();
+        if (global::game_state->bombed) {
+            on_bomb_explosion();
             global::game_state->bombed = false;
-            for (auto &creature : global::creatures)
-                (*creature)._bottom_collision = false;
-            for (auto &item : global::items)
-                (*item)._bottom_collision = false;
-            for (auto &treasures : global::treasures)
-                (*treasures)._bottom_collision = false;
-            global::main_dude->_bottom_collision = false;
         }
 
         global::camera->update();
 
-        update_creatures_to_add();
-        update_decorations_to_add();
-        update_treasures_to_add();
-        update_items_to_add();
-
         global::main_dude->update();
         global::main_dude->whip->update();
 
-        for (auto &creature : global::creatures) {
-            if (creature && !creature->_ready_to_dispose) {
-                creature->update();
-            }
-        }
-
-        for (auto &item : global::items) {
-            if (item && !item->_ready_to_dispose) {
-                item->update();
-            }
-        }
-
-        for (auto &decoration : global::decorations) {
-            if (decoration) {
-                decoration->update();
-            }
-        }
-
-        for (auto &treasure : global::treasures) {
-            if (treasure && !treasure->_ready_to_dispose) {
-                treasure->update();
-            }
-        }
+        update_entities();
 
         global::game_state->handle_transition_screen_smooch();
         global::main_dude->handle_key_input();
@@ -170,5 +87,60 @@ void gameloop::manage_brightness() {
 
         }
     }
-
 }
+
+void gameloop::on_bomb_explosion() {
+    global::current_level->update_level();
+
+    for (auto &creature : global::creatures)
+        (*creature)._bottom_collision = false;
+    for (auto &item : global::items)
+        (*item)._bottom_collision = false;
+    for (auto &treasures : global::treasures)
+        (*treasures)._bottom_collision = false;
+    global::main_dude->_bottom_collision = false;
+}
+
+void gameloop::update_entities() {
+
+    // Iterating using indexes since entities may be
+    // pushed back while iterating, invalidating iterators.
+
+    {
+        const std::size_t size = global::creatures.size();
+        for (std::size_t index = 0; index < size; ++index) {
+            auto *&creature = global::creatures.at(index);
+            if (creature && !creature->_ready_to_dispose) {
+                creature->update();
+            }
+        }
+    }
+    {
+        const std::size_t size = global::items.size();
+        for (std::size_t index = 0; index < size; ++index) {
+            auto *&item = global::items.at(index);
+            if (item && !item->_ready_to_dispose) {
+                item->update();
+            }
+        }
+    }
+    {
+        const std::size_t size = global::decorations.size();
+        for (std::size_t index = 0; index < size; ++index) {
+            auto *&decoration = global::decorations.at(index);
+            if (decoration) {
+                decoration->update();
+            }
+        }
+    }
+    {
+        const std::size_t size = global::treasures.size();
+        for (std::size_t index = 0; index < size; ++index) {
+            auto *&treasure = global::treasures.at(index);
+            if (treasure && !treasure->_ready_to_dispose) {
+                treasure->update();
+            }
+        }
+    }
+}
+

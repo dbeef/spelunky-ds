@@ -9,16 +9,16 @@
 void ShoppingObject::init_anim_icon() {
     if (!_bought) {
         _shopping_icon = new ShoppingIcon(0, 0);
-        global::decorations_to_add.push_back(_shopping_icon);
+        global::decorations.push_back(_shopping_icon);
     }
 }
 
 void ShoppingObject::update_anim_icon(int x, int y, int carrier_width) {
 
-    if (global::game_state->robbed_killed_shopkeeper)
+    if (global::game_state->robbed_killed_shopkeeper || !_shopping_icon)
         return;
 
-    if (!_bought) {
+    if (!_bought && _shopping_icon) {
         _shopping_icon->_x = (int) (x + ((0.5 * carrier_width)) - 4);
         _shopping_icon->_y = y - 12;
     }

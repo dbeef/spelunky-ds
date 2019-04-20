@@ -10,6 +10,7 @@
 #include "../../GlobalsDeclarations.hpp"
 #include "ICollidable.h"
 #include "../../../build/soundbank.h"
+#include "../../preprocessor/Debug.h"
 
 void ICollidable::update_collisions_with_map(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
     Collisions::getNeighboringTiles(global::current_level->map_tiles, x_current_pos_in_tiles,
@@ -58,8 +59,8 @@ void ICollidable::update_position() {
         yy = floor_div(_y + 0.5 * _physical_height, TILE_H);
 
         if (old_xx != xx || old_yy != yy || _physical_width <= 8 || _physical_height <= 8) {
-            if (xx < 31 && yy < 31)
-                update_collisions_with_map(xx, yy);
+            SPELUNKYDS_BREAKING_ASSERT(xx < 31 && yy < 31 && xx >= 0 && yy >= 0);
+            update_collisions_with_map(xx, yy);
         }
 
         old_xx = xx;
@@ -98,6 +99,7 @@ void ICollidable::update_collidable() {
             apply_gravity();
         _pos_inc_timer = 0;
     }
+
 }
 
 void ICollidable::apply_gravity() {

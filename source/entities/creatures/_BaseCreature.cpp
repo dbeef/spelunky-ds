@@ -27,7 +27,7 @@ void BaseCreature::spawn_blood() const {
             blood->_x_speed = (0.8 + ((float) (rand() % 20) / 10)) / a;
 
         blood->_y_speed = (-1.5 - (((float) (rand() % 20) / 5))) / a;
-        global::creatures_to_add.push_back(blood);
+        global::creatures.push_back(blood);
     }
 }
 
@@ -152,7 +152,8 @@ void BaseCreature::set_pickuped_position(int pickup_offset_x_left, int pickup_of
 
 //this should be applied, when item is being carried by another moving object
 void
-BaseCreature::set_pickuped_position_on_another_moving_obj(int pickup_offset_x, int pickup_offset_y, BaseCreature *m) const {
+BaseCreature::set_pickuped_position_on_another_moving_obj(int pickup_offset_x, int pickup_offset_y,
+                                                          BaseCreature *m) const {
 
     m->_y = _y + pickup_offset_y;
 
@@ -185,6 +186,15 @@ void BaseCreature::set_pickuped_position_not_checking(int pickup_offset_x, int p
         _x = global::main_dude->_x - pickup_offset_x;
     } else
         _x = global::main_dude->_x + pickup_offset_x;
+}
+
+BaseCreature::BaseCreature(int x, int y, const u16 sprite_width, const u16 sprite_height,
+                           const SpritesheetType spritesheet_type, u16 physical_width, u16 physical_height,
+                           CreatureType creature_type) :
+        IRenderable(sprite_width, sprite_height, spritesheet_type),
+        ICollidable(physical_width, physical_height),
+        _creature_type(creature_type) {
+    set_xy(x, y);
 }
 
 

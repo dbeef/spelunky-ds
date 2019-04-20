@@ -103,10 +103,10 @@ void populate_cave_moniez() {
 
                         if (goldbar_type == 0) {
                             auto *single_goldbar = new SingleGoldbar(pos_x * 16, pos_y * 16);
-                            global::treasures_to_add.push_back(single_goldbar);
+                            global::treasures.push_back(single_goldbar);
                         } else {
                             auto *triple_goldbar = new TripleGoldbar(pos_x * 16, pos_y * 16);
-                            global::treasures_to_add.push_back(triple_goldbar);
+                            global::treasures.push_back(triple_goldbar);
                         }
 
                         gold_bars_left--;
@@ -119,10 +119,10 @@ void populate_cave_moniez() {
 
                         if (ruby_type == 0) {
                             auto *ruby_small = new RubySmall(pos_x * 16, pos_y * 16);
-                            global::treasures_to_add.push_back(ruby_small);
+                            global::treasures.push_back(ruby_small);
                         } else {
                             auto *ruby_big = new RubyBig(pos_x * 16, pos_y * 16);
-                            global::treasures_to_add.push_back(ruby_big);
+                            global::treasures.push_back(ruby_big);
                         }
 
                         rubies_left--;
@@ -251,7 +251,7 @@ void populate_cave_npcs() {
                             arrowTrap = new ArrowTrap(pos_x * 16, pos_y * 16, Orientation::LEFT);
                         else if (npc == 10)
                             arrowTrap = new ArrowTrap(pos_x * 16, pos_y * 16, Orientation::RIGHT);
-                        global::decorations_to_add.push_back(arrowTrap);
+                        global::decorations.push_back(arrowTrap);
                     }
 
                     if (npc == 13 && skeletons_left > 0 && r == 1) {
@@ -317,7 +317,7 @@ void populate_cave_npcs() {
 
                     if (npc == 7) {
                         Lamp *lamp = new Lamp(pos_x * 16, pos_y * 16);
-                        global::decorations_to_add.push_back(lamp);
+                        global::decorations.push_back(lamp);
                     }
 
                     if (npc == 8) {
@@ -362,22 +362,22 @@ void populate_main_menu() {
     global::hud->ropes = 0;
 
     auto *spelunkyTitle = new SpelunkyTitle(60, 175);
-    global::decorations_to_add.push_back(spelunkyTitle);
+    global::decorations.push_back(spelunkyTitle);
 
     auto *copyrights = new Copyrights(60, 380);
-    global::decorations_to_add.push_back(copyrights);
+    global::decorations.push_back(copyrights);
 
     auto *start = new ArchSign(50, 272, ArchSign::Type::START);
-    global::decorations_to_add.push_back(start);
+    global::decorations.push_back(start);
 
     auto *scores = new ArchSign(98, 272, ArchSign::Type::SCORES);
-    global::decorations_to_add.push_back(scores);
+    global::decorations.push_back(scores);
 
     auto *tutorial = new RockSign(0, 272, RockSign::Type::TUTORIAL);
-    global::decorations_to_add.push_back(tutorial);
+    global::decorations.push_back(tutorial);
 
     auto *quit = new RockSign(192, 143, RockSign::Type::QUIT);
-    global::decorations_to_add.push_back(quit);
+    global::decorations.push_back(quit);
 
     Rope *rope = new Rope(227, 272);
     rope->_y_speed = -4;

@@ -49,7 +49,7 @@ void Skull::update_item_specific() {
             b->_x_speed = 0;
             b->_y_speed = -1.4f;
             b->animFrame = 2;
-            global::creatures_to_add.push_back(b);
+            global::creatures.push_back(b);
 
         } else _map_collisions_checked = false;
     }

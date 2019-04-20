@@ -510,7 +510,8 @@ void Shopkeeper::de_shopify_all_items() {
             continue;
 
         shop_item->_bought = true;
-        shop_item->_shopping_icon->set_ready_to_dispose();
+        if(shop_item->_shopping_icon)
+            shop_item->_shopping_icon->set_ready_to_dispose();
     }
     global::game_state->robbed_killed_shopkeeper = true;
 }

@@ -9,7 +9,8 @@
 
 #include "../_interfaces/IRenderable.h"
 #include "../_interfaces/ICollidable.h"
-#include "../../memory/SpriteInfo.h"
+
+class SpriteInfo;
 
 enum class TreasureType {
     RUBY_BIG,

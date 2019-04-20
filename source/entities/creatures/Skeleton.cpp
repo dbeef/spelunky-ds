@@ -255,9 +255,9 @@ void Skeleton::spawn_remnants() {
     s->_x_speed = -0.5f;
     s->_y_speed = -1.8f;
 
-    global::creatures_to_add.push_back(b_1);
-    global::creatures_to_add.push_back(b_2);
-    global::items_to_add.push_back(s);
+    global::creatures.push_back(b_1);
+    global::creatures.push_back(b_2);
+    global::items.push_back(s);
 
 }
 

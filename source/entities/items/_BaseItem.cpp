@@ -2,10 +2,12 @@
 // Created by xdbeef on 01.01.19.
 //
 
+#include <cstdlib>
 #include "_BaseItem.h"
 #include "../../memory/SpriteUtils.hpp"
 #include "../../collisions/Collisions.hpp"
 #include "../../GlobalsDeclarations.hpp"
+#include "../../memory/SpriteInfo.h"
 
 BaseItem::BaseItem(
         int x, int y,
@@ -41,6 +43,7 @@ void BaseItem::delete_sprites() {
 }
 
 void BaseItem::update() {
+
     if (!_hold_by_main_dude) {
         update_collidable();
     } else
