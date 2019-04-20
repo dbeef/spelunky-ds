@@ -62,9 +62,9 @@
 
 <h2 align="center"> Building </h2>
 
-<p> 1) Download devkitPro for your platform from their official website: https://devkitpro.org/wiki/Getting_Started </p>
+<p> 1) Download Nintendo DS homebrew toolchain made by <b>devkitPro</b> organization for your platform from their official website: https://devkitpro.org/wiki/Getting_Started </p>
 <p> 2) Set up a few environment variables, as shown in their tutorial  </p>
-<p> 3) cd to the spelunky-ds directory and type 'make'  </p>
+<p> 3) cd to the spelunky-ds directory and type <b>'make'</b>, or with assertions fired up <b>'make DEBUG=1'</b> </p>
 
 <h2 align="center"> Running </h2>
 <p> For running on a PC I preffer an emulator called Desmume. type 'desmume spelunky.nds' for running. </p>
