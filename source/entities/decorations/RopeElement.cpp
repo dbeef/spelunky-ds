@@ -85,6 +85,6 @@ void RopeElement::update_visibility() {
     sprite_utils::set_visibility(true, _main_sprite_info, _sub_sprite_info);
 }
 
-void RopeElement::introduce_yourself() const {
+void RopeElement::print_classname() const {
     printf("ROPE ELEMENT\n");
 }

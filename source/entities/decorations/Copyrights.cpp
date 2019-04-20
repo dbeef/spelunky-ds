@@ -53,7 +53,7 @@ void Copyrights::update_sprites_position() {
                                    static_cast<u16>(sub_x + (_sprite_width * a)), static_cast<u16>(sub_y));
 }
 
-void Copyrights::introduce_yourself() const {
+void Copyrights::print_classname() const {
     printf("COPYRIGHTS\n");
 }
 

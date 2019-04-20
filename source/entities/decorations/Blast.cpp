@@ -96,7 +96,7 @@ void Blast::delete_sprites() {
     _sub_sprite_info = nullptr;
 }
 
-void Blast::introduce_yourself() const {
+void Blast::print_classname() const {
     printf("BLAST\n");
 }
 

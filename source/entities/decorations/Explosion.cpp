@@ -36,7 +36,7 @@ void Explosion::update_decoration_specific() {
     
 }
 
-void Explosion::introduce_yourself() const {
+void Explosion::print_classname() const {
     printf("EXPLOSION\n");
 }
 

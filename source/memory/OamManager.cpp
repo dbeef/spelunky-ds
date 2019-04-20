@@ -4,7 +4,6 @@
 
 #include <nds.h>
 #include <nds/arm9/cache.h>
-#include <assert.h>
 #include "OamManager.hpp"
 #include "../GlobalsDeclarations.hpp"
 #include "../camera/LayerLevel.hpp"
@@ -77,25 +76,10 @@ SpriteInfo *
 OAMManager::initSprite(const unsigned short pallette[], int palLen, const unsigned int tiles[], int tilesLen,
                        ObjSize size, SpritesheetType type, bool reuse_palette, bool reuse_tiles, LAYER_LEVEL l) {
 
-
-//    if (global::hud->level > 6) {
-//        printf("NEW SPRITE INFO\n");
-//        for (int a = 0; a < 60; a++)
-//            swiWaitForVBlank();
-//    }
-
-    /* Keep track of the available tiles */
-//    assert(current_oam_id_palette < SPRITE_COUNT && current_oam_id_tiles < SPRITE_COUNT);
     SPELUNKYDS_ASSERT(current_oam_id_palette < SPRITE_COUNT && current_oam_id_tiles < SPRITE_COUNT);
 
     auto *spriteInfo = new SpriteInfo(); //TODO Smart pointer?
     SpriteEntry *spriteEntry = &oam->oamBuffer[current_oam_id_tiles];
-
-//    if (global::hud->level > 6) {
-//        printf("DONE SPRITE INFO\n");
-//        for (int a = 0; a < 60; a++)
-//            swiWaitForVBlank();
-//    }
 
     /* Initialize spriteInfo */
     spriteInfo->oamType = oamType;
@@ -121,7 +105,7 @@ OAMManager::initSprite(const unsigned short pallette[], int palLen, const unsign
      * transformation matrix for this sprite. Of course, you don't have to have
      * the matrix id match the affine id, but if you do make them match, this
      * assert can be helpful. */
-//    assert(!spriteEntry->isRotateScale || (spriteInfo->oamId_tiles < MATRIX_COUNT));
+
     SPELUNKYDS_ASSERT(!spriteEntry->isRotateScale || (spriteInfo->oamId_tiles < MATRIX_COUNT))
 
     spriteEntry->isSizeDouble = false;
@@ -211,7 +195,6 @@ OAMManager::initSprite(const unsigned short pallette[], int palLen, const unsign
         current_oam_id_palette++;
 
     }
-
 
     spriteInfo->oam_address = *oam_address;
 

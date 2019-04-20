@@ -90,7 +90,7 @@ ArrowTrap::ArrowTrap(int x, int y, Orientation orientation) :
     init_sprites();
 }
 
-void ArrowTrap::introduce_yourself() const {
+void ArrowTrap::print_classname() const {
     printf("ARROW TRAP\n");
 }
 

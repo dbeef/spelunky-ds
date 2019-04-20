@@ -81,6 +81,6 @@ void Smooch::update_sprites_position() {
     sprite_utils::set_entry_xy(_sub_sprite_info, static_cast<u16>(sub_x), static_cast<u16>(sub_y));
 }
 
-void Smooch::introduce_yourself() const {
+void Smooch::print_classname() const {
     printf("SMOOCH\n");
 }

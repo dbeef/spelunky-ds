@@ -80,6 +80,6 @@ void GotCollectible::update_sprites_position() {
     sprite_utils::set_entry_xy(_sub_sprite_info, static_cast<u16>(sub_x), static_cast<u16>(sub_y));
 }
 
-void GotCollectible::introduce_yourself() const {
+void GotCollectible::print_classname() const {
     printf("GOT COLLECTIBLE\n");
 }

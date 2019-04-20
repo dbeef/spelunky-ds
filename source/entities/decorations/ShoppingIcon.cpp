@@ -82,6 +82,6 @@ void ShoppingIcon::delete_sprites() {
     _sub_sprite_info = nullptr;
 }
 
-void ShoppingIcon::introduce_yourself() const {
+void ShoppingIcon::print_classname() const {
     printf("SHOPPING ICON\n");
 }

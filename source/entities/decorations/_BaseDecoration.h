@@ -42,7 +42,7 @@ public:
     virtual void update_decoration_specific() = 0;
 
     // Should print its name upper-cased with newline character.
-    virtual void introduce_yourself() const = 0;
+    virtual void print_classname() const = 0;
 
 };
 

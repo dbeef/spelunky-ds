@@ -54,7 +54,7 @@ void SpelunkyTitle::update_sprites_position() {
                                    static_cast<u16>(main_x + (_sprite_width * a)), static_cast<u16>(main_y));
 }
 
-void SpelunkyTitle::introduce_yourself() const {
+void SpelunkyTitle::print_classname() const {
     printf("SPELUNKY TITLE\n");
 }
 

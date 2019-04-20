@@ -68,6 +68,6 @@ void Lamp::update_sprites_position() {
     sprite_utils::set_entry_xy(_sub_sprite_info, static_cast<u16>(sub_x), static_cast<u16>(sub_y));
 }
 
-void Lamp::introduce_yourself() const {
+void Lamp::print_classname() const {
     printf("LAMP\n");
 }

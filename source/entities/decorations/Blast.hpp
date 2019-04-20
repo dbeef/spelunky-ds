@@ -26,7 +26,7 @@ public:
 
     // BaseDecoration overrides
 
-    void introduce_yourself() const override;
+    void print_classname() const override;
 
     void update_decoration_specific() override;
 

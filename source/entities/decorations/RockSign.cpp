@@ -58,7 +58,7 @@ void RockSign::update_sprites_position() {
                                    static_cast<u16>(main_x + (_sprite_width * a)), static_cast<u16>(main_y));
 }
 
-void RockSign::introduce_yourself() const {
+void RockSign::print_classname() const {
     printf("ROCK SIGN\n");
 }
 
