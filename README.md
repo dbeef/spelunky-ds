@@ -86,9 +86,7 @@
 <p align="center">
 <img src="https://github.com/dbeef/spelunky-ds/blob/master/readme/debugging.png" alt="Calling addr2line"
  width="670" height="55">
- 
 
-<>
 
 </p>
 
