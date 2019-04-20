@@ -64,8 +64,8 @@
 
 <p> 1) Download devkitPro for your platform from their official website: https://devkitpro.org/wiki/Getting_Started </p>
 <p> 2) Set up a few environment variables, as shown in their tutorial  </p>
-<p> 3) cd to the spelunky-ds directory and type 'make'  </p>
-<p> 3) To fire up assertions type 'make DEBUG=1'  </p>
+<p> 3) cd to the spelunky-ds directory and type 'make'.  </p>
+<p>  To fire up assertions type 'make DEBUG=1'  </p>
 
 <h2 align="center"> Running </h2>
 <p> For running on a PC I preffer an emulator called Desmume. type 'desmume spelunky.nds' for running. </p>
