@@ -50,8 +50,6 @@ add_executable(spelunkyds
         source/tiles/MapTile.hpp
         source/GameLoop.cpp
         source/GameLoop.hpp
-        Makefile
-        README.md
         source/entities/main_dude/MainDudeConsts.h
         source/entities/main_dude/MainDude.cpp
         source/entities/main_dude/MainDude.hpp
@@ -209,4 +207,15 @@ add_executable(spelunkyds
         source/entities/_interfaces/ICollidable.h
         source/entities/_interfaces/IBase.cpp
         source/entities/_interfaces/IBase.h
-        source/entities/treasures/_BaseTreasure.cpp source/entities/treasures/_BaseTreasure.h source/entities/items/_BaseItem.cpp source/entities/items/_BaseItem.h source/entities/_interfaces/IPickupable.cpp source/entities/_interfaces/IPickupable.h source/entities/decorations/Explosion.cpp source/entities/decorations/Explosion.h source/entities/items/GoldenIdol.cpp source/entities/items/GoldenIdol.h source/entities/creatures/Boulder.cpp source/entities/creatures/Boulder.h)
+        source/entities/treasures/_BaseTreasure.cpp
+        source/entities/treasures/_BaseTreasure.h
+        source/entities/items/_BaseItem.cppsource/entities/items/_BaseItem.h
+        source/entities/_interfaces/IPickupable.cpp
+        source/entities/_interfaces/IPickupable.h
+        source/entities/decorations/Explosion.cpp
+        source/entities/decorations/Explosion.h
+        source/entities/items/GoldenIdol.cpp
+        source/entities/items/GoldenIdol.h
+        source/entities/creatures/Boulder.cpp
+        source/entities/creatures/Boulder.h
+        )
