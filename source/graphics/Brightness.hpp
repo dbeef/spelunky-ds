@@ -11,7 +11,9 @@ namespace brightness {
     void set_maximum_brightness();
 
     //!> this should be called after Vblank (otherwise - crash!)
-    void normalize_brightness();
+    void update_brightness();
+
+    bool is_maximum_brightness();
 
 }
 

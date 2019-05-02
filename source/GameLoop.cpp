@@ -43,12 +43,14 @@ void gameloop::run() {
         GameState::instance().hud->update();
 
         swiWaitForVBlank();
-        brightness::normalize_brightness();
 
         GameState::instance().camera->write_current_position_to_graphics_engines();
         GameState::instance().main_oam_manager->updateOAM();
         GameState::instance().sub_oam_manager->updateOAM();
         oam_utils::clean_unused_oam();
+
+        brightness::update_brightness();
+        if (GameState::instance().exiting_game && brightness::is_maximum_brightness()) break;
     }
 
 }
