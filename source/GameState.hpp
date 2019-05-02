@@ -72,6 +72,7 @@ public:
     int damsels_rescued_this_level{};
     int smooch_timer{};
 
+    // TODO: Most of those can be re-made as singletons.
     MainDude *main_dude{};
     InputHandler *input_handler{};
     Camera *camera{};
