@@ -75,8 +75,6 @@ public:
     // TODO: Most of those can be re-made as singletons.
     MainDude *main_dude{};
     Level *current_level{};
-    OAMManager *main_oam_manager{};
-    OAMManager *sub_oam_manager{};
 
     u16 *temp_map{}; //cave background only
 

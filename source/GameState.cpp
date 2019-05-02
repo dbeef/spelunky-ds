@@ -26,14 +26,10 @@ GameState::GameState() {
     main_dude = nullptr;
     current_level = new Level();
     current_level->init_map_tiles();
-    main_oam_manager = new OAMManager();
-    sub_oam_manager = new OAMManager();
     temp_map = new u16[4096];
 
     SPELUNKYDS_BREAKING_ASSERT(main_dude);
     SPELUNKYDS_BREAKING_ASSERT(current_level);
-    SPELUNKYDS_BREAKING_ASSERT(main_oam_manager);
-    SPELUNKYDS_BREAKING_ASSERT(sub_oam_manager);
     SPELUNKYDS_BREAKING_ASSERT(temp_map);
 
     // some of the moving objects aren't rendered as entities, like the ArrowTrap, which is render as a map tile,
@@ -287,8 +283,6 @@ void GameState::handle_transition_screen_smooch() {
 GameState::~GameState() {
     delete main_dude;
     delete current_level;
-    delete main_oam_manager;
-    delete sub_oam_manager;
     delete temp_map;
 }
 

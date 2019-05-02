@@ -49,10 +49,10 @@ void FallPoof::init_sprites() {
 
     delete_sprites();
 
-    subSpriteInfo = GameState::instance().sub_oam_manager->initSprite(gfx_blood_rock_rope_poofPal, gfx_blood_rock_rope_poofPalLen,
+    subSpriteInfo = OAMManager::sub().initSprite(gfx_blood_rock_rope_poofPal, gfx_blood_rock_rope_poofPalLen,
                                                         nullptr, FALL_POOF_SPRITE_SIZE, ObjSize::OBJSIZE_16,
                                                         _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
-    mainSpriteInfo = GameState::instance().main_oam_manager->initSprite(gfx_blood_rock_rope_poofPal, gfx_blood_rock_rope_poofPalLen,
+    mainSpriteInfo = OAMManager::main().initSprite(gfx_blood_rock_rope_poofPal, gfx_blood_rock_rope_poofPalLen,
                                                           nullptr, FALL_POOF_SPRITE_SIZE, ObjSize::OBJSIZE_16,
                                                           _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
 

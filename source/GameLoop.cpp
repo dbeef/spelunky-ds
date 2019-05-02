@@ -46,8 +46,8 @@ void gameloop::run() {
         swiWaitForVBlank();
 
         Camera::instance().write_current_position_to_graphics_engines();
-        GameState::instance().main_oam_manager->updateOAM();
-        GameState::instance().sub_oam_manager->updateOAM();
+        OAMManager::main().updateOAM();
+        OAMManager::sub().updateOAM();
         oam_utils::clean_unused_oam();
 
         brightness::update_brightness();

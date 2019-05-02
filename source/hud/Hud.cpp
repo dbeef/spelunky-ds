@@ -78,23 +78,23 @@ void Hud::init_sprites() {
 
     delete_sprites();
 
-    heartSpriteInfo = GameState::instance().main_oam_manager->initSprite(gfx_hudPal, gfx_hudPalLen,
+    heartSpriteInfo = OAMManager::main().initSprite(gfx_hudPal, gfx_hudPalLen,
                                                                          nullptr, HUD_ICON_SIZE,
                                                                          ObjSize::OBJSIZE_16, SpritesheetType::HUD,
                                                                          true, false, LAYER_LEVEL::TOP);
-    dollarSpriteInfo = GameState::instance().main_oam_manager->initSprite(gfx_hudPal, gfx_hudPalLen,
+    dollarSpriteInfo = OAMManager::main().initSprite(gfx_hudPal, gfx_hudPalLen,
                                                                           nullptr, HUD_ICON_SIZE,
                                                                           ObjSize::OBJSIZE_16, SpritesheetType::HUD,
                                                                           true, false, LAYER_LEVEL::TOP);
-    bombSpriteInfo = GameState::instance().main_oam_manager->initSprite(gfx_hudPal, gfx_hudPalLen,
+    bombSpriteInfo = OAMManager::main().initSprite(gfx_hudPal, gfx_hudPalLen,
                                                                         nullptr, HUD_ICON_SIZE,
                                                                         ObjSize::OBJSIZE_16, SpritesheetType::HUD, true,
                                                                         false, LAYER_LEVEL::TOP);
-    ropeSpriteInfo = GameState::instance().main_oam_manager->initSprite(gfx_hudPal, gfx_hudPalLen,
+    ropeSpriteInfo = OAMManager::main().initSprite(gfx_hudPal, gfx_hudPalLen,
                                                                         nullptr, HUD_ICON_SIZE,
                                                                         ObjSize::OBJSIZE_16, SpritesheetType::HUD, true,
                                                                         false, LAYER_LEVEL::TOP);
-    holdingItemSpriteInfo = GameState::instance().main_oam_manager->initSprite(gfx_hudPal, gfx_hudPalLen,
+    holdingItemSpriteInfo = OAMManager::main().initSprite(gfx_hudPal, gfx_hudPalLen,
                                                                                nullptr, HUD_ICON_SIZE,
                                                                                ObjSize::OBJSIZE_16,
                                                                                SpritesheetType::HUD, true, false,
@@ -341,12 +341,12 @@ void Hud::increment_offset_on_grabbed_item() {
 
 void Hud::debug_oam() {
     printf("\n \n \n  IPM: %lu\n IPS: %lu\n ITM: %lu\n ITS: %lu\n NS: %d NM: %d",
-           static_cast<unsigned long>(GameState::instance().main_oam_manager->current_oam_id_palette),
-           static_cast<unsigned long>(GameState::instance().sub_oam_manager->current_oam_id_palette),
-           static_cast<unsigned long>(GameState::instance().main_oam_manager->current_oam_id_tiles),
-           static_cast<unsigned long>(GameState::instance().sub_oam_manager->current_oam_id_tiles),
-           GameState::instance().sub_oam_manager->nextAvailableTileIdx,
-           GameState::instance().main_oam_manager->nextAvailableTileIdx);
+           static_cast<unsigned long>(OAMManager::main().current_oam_id_palette),
+           static_cast<unsigned long>(OAMManager::sub().current_oam_id_palette),
+           static_cast<unsigned long>(OAMManager::main().current_oam_id_tiles),
+           static_cast<unsigned long>(OAMManager::sub().current_oam_id_tiles),
+           OAMManager::sub().nextAvailableTileIdx,
+           OAMManager::main().nextAvailableTileIdx);
 }
 
 void Hud::disable_all_prompts() {

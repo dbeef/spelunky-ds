@@ -61,10 +61,10 @@ void Skull::init_sprites() {
 
     delete_sprites();
 
-    _sub_sprite_info = GameState::instance().sub_oam_manager->initSprite(gfx_spider_skeletonPal, gfx_spider_skeletonPalLen,
+    _sub_sprite_info = OAMManager::sub().initSprite(gfx_spider_skeletonPal, gfx_spider_skeletonPalLen,
                                                            nullptr, _sprite_size, ObjSize::OBJSIZE_16,
                                                            _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
-    _main_sprite_info = GameState::instance().main_oam_manager->initSprite(gfx_spider_skeletonPal, gfx_spider_skeletonPalLen,
+    _main_sprite_info = OAMManager::main().initSprite(gfx_spider_skeletonPal, gfx_spider_skeletonPalLen,
                                                              nullptr, _sprite_size, ObjSize::OBJSIZE_16,
                                                              _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
     match_animation();

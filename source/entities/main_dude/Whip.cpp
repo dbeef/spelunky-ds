@@ -42,12 +42,12 @@ void Whip::init_sprites() {
 
     delete_sprites();
 
-    _main_sprite_info = GameState::instance().main_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
+    _main_sprite_info = OAMManager::main().initSprite(gfx_spike_collectibles_flamePal,
                                                              gfx_spike_collectibles_flamePalLen, nullptr,
                                                              _sprite_size, ObjSize::OBJSIZE_16, SpritesheetType::WHIP,
                                                              true, false, LAYER_LEVEL::MIDDLE_TOP);
 
-    _sub_sprite_info = GameState::instance().sub_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
+    _sub_sprite_info = OAMManager::sub().initSprite(gfx_spike_collectibles_flamePal,
                                                            gfx_spike_collectibles_flamePalLen, nullptr,
                                                            _sprite_size, ObjSize::OBJSIZE_16, SpritesheetType::WHIP, true, false,
                                                            LAYER_LEVEL::MIDDLE_TOP);

@@ -48,11 +48,11 @@ void Smooch::init_sprites() {
 
     delete_sprites();
 
-    _main_sprite_info = GameState::instance().main_oam_manager->initSprite(gfx_caveman_damselPal, gfx_caveman_damselPalLen, nullptr,
+    _main_sprite_info = OAMManager::main().initSprite(gfx_caveman_damselPal, gfx_caveman_damselPalLen, nullptr,
                                                              _sprite_size, ObjSize::OBJSIZE_16, _spritesheet_type, true,
                                                              false, LAYER_LEVEL::MIDDLE_TOP);
 
-    _sub_sprite_info = GameState::instance().sub_oam_manager->initSprite(gfx_caveman_damselPal, gfx_caveman_damselPalLen, nullptr,
+    _sub_sprite_info = OAMManager::sub().initSprite(gfx_caveman_damselPal, gfx_caveman_damselPalLen, nullptr,
                                                            _sprite_size, ObjSize::OBJSIZE_16, _spritesheet_type, true,
                                                            false, LAYER_LEVEL::MIDDLE_TOP);
 

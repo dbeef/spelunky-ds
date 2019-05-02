@@ -253,16 +253,16 @@ void Damsel::init_sprites() {
 
     delete_sprites();
 
-    subSpriteInfo = GameState::instance().sub_oam_manager->initSprite(gfx_caveman_damselPal, gfx_caveman_damselPalLen,
+    subSpriteInfo = OAMManager::sub().initSprite(gfx_caveman_damselPal, gfx_caveman_damselPalLen,
                                                         nullptr, _sprite_size, ObjSize::OBJSIZE_16, SpritesheetType::CAVEMAN_DAMSEL,
                                                         true, false, LAYER_LEVEL::MIDDLE_BOT);
-    mainSpriteInfo = GameState::instance().main_oam_manager->initSprite(gfx_caveman_damselPal, gfx_caveman_damselPalLen,
+    mainSpriteInfo = OAMManager::main().initSprite(gfx_caveman_damselPal, gfx_caveman_damselPalLen,
                                                           nullptr, _sprite_size, ObjSize::OBJSIZE_16, SpritesheetType::CAVEMAN_DAMSEL,
                                                           true, false, LAYER_LEVEL::MIDDLE_BOT);
-    yell_subSpriteInfo = GameState::instance().sub_oam_manager->initSprite(gfx_caveman_damselPal, gfx_caveman_damselPalLen,
+    yell_subSpriteInfo = OAMManager::sub().initSprite(gfx_caveman_damselPal, gfx_caveman_damselPalLen,
                                                              nullptr, _sprite_size, ObjSize::OBJSIZE_16, SpritesheetType::CAVEMAN_DAMSEL,
                                                              true, false, LAYER_LEVEL::MIDDLE_BOT);
-    yell_mainSpriteInfo = GameState::instance().main_oam_manager->initSprite(gfx_caveman_damselPal, gfx_caveman_damselPalLen,
+    yell_mainSpriteInfo = OAMManager::main().initSprite(gfx_caveman_damselPal, gfx_caveman_damselPalLen,
                                                                nullptr, _sprite_size, ObjSize::OBJSIZE_16,
                                                                              SpritesheetType::CAVEMAN_DAMSEL, true, false, LAYER_LEVEL::MIDDLE_BOT);
 

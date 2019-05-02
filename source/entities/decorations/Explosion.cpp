@@ -46,10 +46,10 @@ void Explosion::init_sprites() {
 
     delete_sprites();
 
-    _sub_sprite_info = GameState::instance().sub_oam_manager->initSprite(gfx_explosionPal, gfx_explosionPalLen,
+    _sub_sprite_info = OAMManager::sub().initSprite(gfx_explosionPal, gfx_explosionPalLen,
                                                         nullptr, _sprite_size, ObjSize::OBJSIZE_64, SpritesheetType::BOMB, true, false,
                                                         LAYER_LEVEL::MIDDLE_TOP);
-    _main_sprite_info = GameState::instance().main_oam_manager->initSprite(gfx_explosionPal, gfx_explosionPalLen,
+    _main_sprite_info = OAMManager::main().initSprite(gfx_explosionPal, gfx_explosionPalLen,
                                                           nullptr, _sprite_size, ObjSize::OBJSIZE_64, SpritesheetType::BOMB, true, false,
                                                           LAYER_LEVEL::MIDDLE_TOP);
 

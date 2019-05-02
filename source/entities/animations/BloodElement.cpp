@@ -49,10 +49,10 @@ void BloodElement::init_sprites() {
 
     delete_sprites();
 
-    subSpriteInfo = GameState::instance().sub_oam_manager->initSprite(gfx_blood_rock_rope_poofPal, gfx_blood_rock_rope_poofPalLen,
+    subSpriteInfo = OAMManager::sub().initSprite(gfx_blood_rock_rope_poofPal, gfx_blood_rock_rope_poofPalLen,
                                                         nullptr, _sprite_size, ObjSize::OBJSIZE_8, SpritesheetType::BLOOD_ROCK_ROPE_POOF,
                                                         true, false, LAYER_LEVEL::MIDDLE_TOP);
-    mainSpriteInfo = GameState::instance().main_oam_manager->initSprite(gfx_blood_rock_rope_poofPal, gfx_blood_rock_rope_poofPalLen,
+    mainSpriteInfo = OAMManager::main().initSprite(gfx_blood_rock_rope_poofPal, gfx_blood_rock_rope_poofPalLen,
                                                           nullptr, _sprite_size, ObjSize::OBJSIZE_8, SpritesheetType::BLOOD_ROCK_ROPE_POOF,
                                                           true, false, LAYER_LEVEL::MIDDLE_TOP);
     match_animation();

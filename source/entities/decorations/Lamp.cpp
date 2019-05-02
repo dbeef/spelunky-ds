@@ -35,11 +35,11 @@ void Lamp::init_sprites() {
 
     delete_sprites();
 
-    _main_sprite_info = GameState::instance().main_oam_manager->initSprite(gfx_shopkeeperPal, gfx_shopkeeperPalLen, nullptr,
+    _main_sprite_info = OAMManager::main().initSprite(gfx_shopkeeperPal, gfx_shopkeeperPalLen, nullptr,
                                                              _sprite_size, ObjSize::OBJSIZE_16, _spritesheet_type, true,
                                                              false, LAYER_LEVEL::MIDDLE_TOP);
 
-    _sub_sprite_info = GameState::instance().sub_oam_manager->initSprite(gfx_shopkeeperPal, gfx_shopkeeperPalLen, nullptr,
+    _sub_sprite_info = OAMManager::sub().initSprite(gfx_shopkeeperPal, gfx_shopkeeperPalLen, nullptr,
                                                            _sprite_size, ObjSize::OBJSIZE_16, _spritesheet_type, true,
                                                            false, LAYER_LEVEL::MIDDLE_TOP);
 

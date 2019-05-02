@@ -103,11 +103,11 @@ void Bat::init_sprites() {
 
     delete_sprites();
 
-    subSpriteInfo = GameState::instance().sub_oam_manager->initSprite(gfx_bat_snake_jetpackPal, gfx_bat_snake_jetpackPalLen,
+    subSpriteInfo = OAMManager::sub().initSprite(gfx_bat_snake_jetpackPal, gfx_bat_snake_jetpackPalLen,
                                                         nullptr, BAT_SPRITE_SIZE, ObjSize::OBJSIZE_16, SpritesheetType::BAT_JETPACK,
                                                         true,
                                                         false, LAYER_LEVEL::MIDDLE_TOP);
-    mainSpriteInfo = GameState::instance().main_oam_manager->initSprite(gfx_bat_snake_jetpackPal, gfx_bat_snake_jetpackPalLen,
+    mainSpriteInfo = OAMManager::main().initSprite(gfx_bat_snake_jetpackPal, gfx_bat_snake_jetpackPalLen,
                                                           nullptr, BAT_SPRITE_SIZE, ObjSize::OBJSIZE_16, SpritesheetType::BAT_JETPACK,
                                                           true,
                                                           false, LAYER_LEVEL::MIDDLE_TOP);

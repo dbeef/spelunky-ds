@@ -74,10 +74,10 @@ void Bomb::init_sprites() {
 
     delete_sprites();
 
-    _sub_sprite_info = GameState::instance().sub_oam_manager->initSprite(gfx_bombPal, gfx_bombPalLen,
+    _sub_sprite_info = OAMManager::sub().initSprite(gfx_bombPal, gfx_bombPalLen,
                                                            nullptr, _sprite_size, ObjSize::OBJSIZE_8,
                                                            SpritesheetType::BOMB, true, false, LAYER_LEVEL::MIDDLE_TOP);
-    _main_sprite_info = GameState::instance().main_oam_manager->initSprite(gfx_bombPal, gfx_bombPalLen,
+    _main_sprite_info = OAMManager::main().initSprite(gfx_bombPal, gfx_bombPalLen,
                                                              nullptr, _sprite_size, ObjSize::OBJSIZE_8,
                                                                            SpritesheetType::BOMB, true, false, LAYER_LEVEL::MIDDLE_TOP);
     if (armed) {

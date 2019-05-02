@@ -22,11 +22,29 @@
 static const int BYTES_PER_16_COLOR_TILE = 32;
 static const int COLORS_PER_PALETTE = 16;
 
+OAMManager* OAMManager::_main_instance = nullptr;
+OAMManager* OAMManager::_sub_instance = nullptr;
+
+void OAMManager::init() {
+    SPELUNKYDS_BREAKING_ASSERT(!_main_instance);
+    SPELUNKYDS_BREAKING_ASSERT(!_sub_instance);
+    _main_instance = new OAMManager(OamType::MAIN);
+    _sub_instance = new OAMManager(OamType::SUB);
+    SPELUNKYDS_BREAKING_ASSERT(_main_instance);
+    SPELUNKYDS_BREAKING_ASSERT(_sub_instance);
+}
+
+void OAMManager::dispose() {
+    SPELUNKYDS_BREAKING_ASSERT(_main_instance);
+    SPELUNKYDS_BREAKING_ASSERT(_sub_instance);
+    delete _main_instance;
+    delete _sub_instance;
+}
+
 void
-OAMManager::initOAMTable(u16 *sprite_address, u16 *paletteAddress, u16 *oam_address, int offset_multiplier, OamType o) {
+OAMManager::initOAMTable(u16 *sprite_address, u16 *paletteAddress, u16 *oam_address, int offset_multiplier) {
 
     oam = new OAMTable();
-    this->oamType = o;
     this->sprite_address = sprite_address;
     this->palette_address = paletteAddress;
     this->oam_address = oam_address;
@@ -82,7 +100,7 @@ OAMManager::initSprite(const unsigned short pallette[], int palLen, const unsign
     SpriteEntry *spriteEntry = &oam->oamBuffer[current_oam_id_tiles];
 
     /* Initialize spriteInfo */
-    spriteInfo->oamType = oamType;
+    spriteInfo->oamType = _oam_type;
     spriteInfo->spriteType = type;
     spriteInfo->offset_multiplier = this->offset_multiplier;
     spriteInfo->sprite_address = this->sprite_address;
@@ -157,7 +175,7 @@ OAMManager::initSprite(const unsigned short pallette[], int palLen, const unsign
             if (GameState::instance().sprite_infos.at(a)) {
 
                 if ((*GameState::instance().sprite_infos.at(a)).spriteType == type &&
-                    (*GameState::instance().sprite_infos.at(a)).oamType == oamType) {
+                    (*GameState::instance().sprite_infos.at(a)).oamType == _oam_type) {
 
                     if (reuse_palette) {
                         spriteInfo->oamId_palette = (*GameState::instance().sprite_infos.at(a)).oamId_palette;
@@ -205,3 +223,6 @@ OAMManager::initSprite(const unsigned short pallette[], int palLen, const unsign
     return spriteInfo;
 }
 
+OAMManager::OAMManager(OamType oam_type) : _oam_type(oam_type){
+    // do nothing
+}

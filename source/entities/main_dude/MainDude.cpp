@@ -489,13 +489,13 @@ void MainDude::init_sprites() {
 
     delete_sprites();
 
-    main_sprite_info = GameState::instance().main_oam_manager->initSprite(gfx_spelunkerPal, gfx_spelunkerPalLen, nullptr,
+    main_sprite_info = OAMManager::main().initSprite(gfx_spelunkerPal, gfx_spelunkerPalLen, nullptr,
                                                             _sprite_size, ObjSize::OBJSIZE_16, _spritesheet_type, true,
                                                             false,
                                                             LAYER_LEVEL::MIDDLE_TOP);
 
 
-    sub_sprite_info = GameState::instance().sub_oam_manager->initSprite(gfx_spelunkerPal, gfx_spelunkerPalLen, nullptr,
+    sub_sprite_info = OAMManager::sub().initSprite(gfx_spelunkerPal, gfx_spelunkerPalLen, nullptr,
                                                           _sprite_size, ObjSize::OBJSIZE_16, _spritesheet_type, true,
                                                           false,
                                                           LAYER_LEVEL::MIDDLE_TOP);

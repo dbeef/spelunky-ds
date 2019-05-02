@@ -15,7 +15,7 @@ namespace oam_utils {
 
         GameState::instance().clean_unused_oam_timer += Timer::getDeltaTime();
 
-        if (/*GameState::instance().clean_unused_oam_timer > 250 && */GameState::instance().main_oam_manager->current_oam_id_tiles >= 118) {
+        if (/*GameState::instance().clean_unused_oam_timer > 250 && */OAMManager::main().current_oam_id_tiles >= 118) {
 
 //            for (auto &sprite_info : GameState::instance().sprite_infos) {
 //                sprite_info->entry = nullptr; //fixme - shouldn't this be deleted first? i guess no
@@ -23,8 +23,8 @@ namespace oam_utils {
 //                sprite_info = nullptr;
 //            }
 
-            GameState::instance().main_oam_manager->clear_sprite_attributes();
-            GameState::instance().sub_oam_manager->clear_sprite_attributes();
+            OAMManager::main().clear_sprite_attributes();
+            OAMManager::sub().clear_sprite_attributes();
 
             Hud::instance().delete_sprites();
             GameState::instance().main_dude->delete_sprites();
@@ -130,8 +130,8 @@ namespace oam_utils {
 
     void delete_all_sprites() {
 
-        GameState::instance().main_oam_manager->clear_sprite_attributes();
-        GameState::instance().sub_oam_manager->clear_sprite_attributes();
+        OAMManager::main().clear_sprite_attributes();
+        OAMManager::sub().clear_sprite_attributes();
 
         GameState::instance().main_dude->delete_sprites();
         GameState::instance().main_dude->whip->delete_sprites();

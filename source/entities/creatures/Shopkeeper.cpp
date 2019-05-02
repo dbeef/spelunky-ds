@@ -242,10 +242,10 @@ void Shopkeeper::init_sprites() {
 
     delete_sprites();
 
-    subSpriteInfo = GameState::instance().sub_oam_manager->initSprite(gfx_shopkeeperPal, gfx_shopkeeperPalLen,
+    subSpriteInfo = OAMManager::sub().initSprite(gfx_shopkeeperPal, gfx_shopkeeperPalLen,
                                                         nullptr, _sprite_size, ObjSize::OBJSIZE_16, SpritesheetType::SHOPKEEPER,
                                                         true, false, LAYER_LEVEL::MIDDLE_BOT);
-    mainSpriteInfo = GameState::instance().main_oam_manager->initSprite(gfx_shopkeeperPal, gfx_shopkeeperPalLen,
+    mainSpriteInfo = OAMManager::main().initSprite(gfx_shopkeeperPal, gfx_shopkeeperPalLen,
                                                           nullptr, _sprite_size, ObjSize::OBJSIZE_16, SpritesheetType::SHOPKEEPER,
                                                           true, false, LAYER_LEVEL::MIDDLE_BOT);
 

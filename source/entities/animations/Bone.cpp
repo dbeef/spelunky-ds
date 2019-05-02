@@ -51,10 +51,10 @@ void Bone::init_sprites() {
 
     delete_sprites();
 
-    subSpriteInfo = GameState::instance().sub_oam_manager->initSprite(gfx_spider_skeletonPal, gfx_spider_skeletonPalLen,
+    subSpriteInfo = OAMManager::sub().initSprite(gfx_spider_skeletonPal, gfx_spider_skeletonPalLen,
                                                         nullptr, _sprite_size, ObjSize::OBJSIZE_16,
                                                         _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
-    mainSpriteInfo = GameState::instance().main_oam_manager->initSprite(gfx_spider_skeletonPal, gfx_spider_skeletonPalLen,
+    mainSpriteInfo = OAMManager::main().initSprite(gfx_spider_skeletonPal, gfx_spider_skeletonPalLen,
                                                           nullptr, _sprite_size, ObjSize::OBJSIZE_16,
                                                           _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
     sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);

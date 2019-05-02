@@ -159,10 +159,10 @@ void Arrow::init_sprites() {
 
     delete_sprites();
 
-    _sub_sprite_info = GameState::instance().sub_oam_manager->initSprite(gfx_arrowPal, gfx_arrowPalLen,
+    _sub_sprite_info = OAMManager::sub().initSprite(gfx_arrowPal, gfx_arrowPalLen,
                                                         nullptr, _sprite_size, ObjSize::OBJSIZE_8, SpritesheetType::ARROW,
                                                         true, false, LAYER_LEVEL::MIDDLE_TOP);
-    _main_sprite_info = GameState::instance().main_oam_manager->initSprite(gfx_arrowPal, gfx_arrowPalLen, nullptr,
+    _main_sprite_info = OAMManager::main().initSprite(gfx_arrowPal, gfx_arrowPalLen, nullptr,
                                                           _sprite_size, ObjSize::OBJSIZE_8, SpritesheetType::ARROW,
                                                           true, false, LAYER_LEVEL::MIDDLE_TOP);
 

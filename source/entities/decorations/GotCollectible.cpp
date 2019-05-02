@@ -45,10 +45,10 @@ void GotCollectible::init_sprites() {
 
     delete_sprites();
 
-    _sub_sprite_info = GameState::instance().sub_oam_manager->initSprite(gfx_got_collectiblePal, gfx_got_collectiblePalLen,
+    _sub_sprite_info = OAMManager::sub().initSprite(gfx_got_collectiblePal, gfx_got_collectiblePalLen,
                                                            nullptr, _sprite_size, ObjSize::OBJSIZE_32,
                                                            _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
-    _main_sprite_info = GameState::instance().main_oam_manager->initSprite(gfx_got_collectiblePal, gfx_got_collectiblePalLen,
+    _main_sprite_info = OAMManager::main().initSprite(gfx_got_collectiblePal, gfx_got_collectiblePalLen,
                                                              nullptr, _sprite_size, ObjSize::OBJSIZE_32,
                                                              _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
 

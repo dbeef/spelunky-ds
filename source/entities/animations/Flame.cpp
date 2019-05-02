@@ -79,10 +79,10 @@ void Flame::init_sprites() {
 
     delete_sprites();
     
-    subSpriteInfo = GameState::instance().sub_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
+    subSpriteInfo = OAMManager::sub().initSprite(gfx_spike_collectibles_flamePal,
                                                         gfx_spike_collectibles_flamePalLen, nullptr, _sprite_size,
                                                         ObjSize::OBJSIZE_8, SpritesheetType::SPIKES_COLLECTIBLES, true, false, LAYER_LEVEL::MIDDLE_TOP);
-    mainSpriteInfo = GameState::instance().main_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
+    mainSpriteInfo = OAMManager::main().initSprite(gfx_spike_collectibles_flamePal,
                                                           gfx_spike_collectibles_flamePalLen, nullptr,
                                                           _sprite_size, ObjSize::OBJSIZE_8, SpritesheetType::SPIKES_COLLECTIBLES, true, false,
                                                           LAYER_LEVEL::MIDDLE_TOP);

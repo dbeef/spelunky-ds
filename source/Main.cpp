@@ -21,6 +21,7 @@ int main() {
     InputHandler::init();
     Camera::init();
     Hud::init();
+    OAMManager::init();
 
     // waiting for a next frame so it would be allowed to change the brightness
     swiWaitForVBlank();
@@ -78,9 +79,8 @@ int main() {
     constexpr int OFFSET_MULTIPLIER_MAIN = BOUNDARY_VALUE / sizeof(SPRITE_GFX[0]);
     constexpr int OFFSET_MULTIPLIER_SUB = BOUNDARY_VALUE / sizeof(SPRITE_GFX_SUB[0]);
 
-    GameState::instance().main_oam_manager->initOAMTable(SPRITE_GFX, SPRITE_PALETTE, OAM, OFFSET_MULTIPLIER_MAIN, OamType::MAIN);
-    GameState::instance().sub_oam_manager->initOAMTable(SPRITE_GFX_SUB, SPRITE_PALETTE_SUB, OAM_SUB, OFFSET_MULTIPLIER_SUB,
-                                          OamType::SUB);
+    OAMManager::main().initOAMTable(SPRITE_GFX, SPRITE_PALETTE, OAM, OFFSET_MULTIPLIER_MAIN);
+    OAMManager::sub().initOAMTable(SPRITE_GFX_SUB, SPRITE_PALETTE_SUB, OAM_SUB, OFFSET_MULTIPLIER_SUB);
 
     gameloop::run();
     Timer::stop();
@@ -89,6 +89,7 @@ int main() {
     InputHandler::dispose();
     Camera::dispose();
     Hud::dispose();
+    OAMManager::dispose();
 
     return 0;
 }

@@ -12,10 +12,10 @@ void Boulder::init_sprites() {
 
     delete_sprites();
 
-    subSpriteInfo = GameState::instance().sub_oam_manager->initSprite(gfx_got_collectiblePal, gfx_got_collectiblePalLen,
+    subSpriteInfo = OAMManager::sub().initSprite(gfx_got_collectiblePal, gfx_got_collectiblePalLen,
                                                         nullptr, _sprite_size, ObjSize::OBJSIZE_32, _spritesheet_type,
                                                         true, false, LAYER_LEVEL::MIDDLE_TOP);
-    mainSpriteInfo = GameState::instance().main_oam_manager->initSprite(gfx_got_collectiblePal, gfx_got_collectiblePalLen,
+    mainSpriteInfo = OAMManager::main().initSprite(gfx_got_collectiblePal, gfx_got_collectiblePalLen,
                                                           nullptr, _sprite_size, ObjSize::OBJSIZE_32, _spritesheet_type,
                                                           true, false, LAYER_LEVEL::MIDDLE_TOP);
 

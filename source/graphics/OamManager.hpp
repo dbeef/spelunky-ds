@@ -11,25 +11,28 @@
 #include "OamType.hpp"
 #include "SpriteInfo.h"
 #include "../camera/LayerLevel.hpp"
-
+#include "../preprocessor/Debug.h"
 
 class OAMManager {
 public:
-    OamType oamType;
-    int offset_multiplier;
-    u16 *sprite_address;
-    u16 *palette_address;
-    u16 *oam_address;
 
-    u32 current_oam_id_palette = 0;
-    u32 current_oam_id_tiles = 0;
+    explicit OAMManager(OamType);
 
-    /* Keep track of the available tiles */
-    u16 nextAvailableTileIdx = 0;
+    static void init();
 
-    OAMTable *oam;
+    static void dispose();
 
-    void initOAMTable(u16 *spriteAddress, u16 *paletteAddress, u16 *oam_address, int offset_multiplier, OamType o);
+    static inline OAMManager& main(){
+        SPELUNKYDS_BREAKING_ASSERT(_main_instance);
+        return *_main_instance;
+    }
+
+    static inline OAMManager& sub(){
+        SPELUNKYDS_BREAKING_ASSERT(_main_instance);
+        return *_sub_instance;
+    }
+
+    void initOAMTable(u16 *spriteAddress, u16 *paletteAddress, u16 *oam_address, int offset_multiplier);
 
     void updateOAM();
 
@@ -37,6 +40,26 @@ public:
                            ObjSize size, SpritesheetType spriteType, bool reuse_palette, bool reuse_tiles, LAYER_LEVEL l);
 
     void clear_sprite_attributes();
+
+    OamType _oam_type{};
+    int offset_multiplier{};
+    u16 *sprite_address{};
+    u16 *palette_address{};
+    u16 *oam_address{};
+
+    u32 current_oam_id_palette = 0;
+    u32 current_oam_id_tiles = 0;
+
+    /* Keep track of the available tiles */
+    u16 nextAvailableTileIdx = 0;
+
+    OAMTable *oam{};
+
+
+private:
+
+    static OAMManager* _main_instance;
+    static OAMManager* _sub_instance;
 };
 
 
