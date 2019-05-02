@@ -28,6 +28,43 @@
 #include "../_interfaces/IPickupable.h"
 #include "MainDudeConsts.h"
 
+void MainDude::reset_state(){
+    // no items
+    carrying_spring_shoes = false;
+    carrying_compass = false;
+    carrying_glove = false;
+    carrying_mitt = false;
+    carrying_spike_shoes = false;
+    carrying_cape = false;
+    carrying_shotgun = false;
+    carrying_pistol = false;
+    carrying_jetpack = false;
+    // alive and not in weird state
+    dead = false;
+    stunned = false;
+    hanging_on_tile_right = false;
+    hanging_on_tile_left = false;
+}
+
+/**
+ * Sets main dude's position to the first tile of given type that occurs during iteration through the map
+ */
+void MainDude::set_position_to(MapTileType t) {
+
+    MapTile *entrance;
+    GameState::instance().current_level->get_first_tile_of_given_type(t, entrance);
+
+    if (entrance != nullptr && entrance->exists) {
+        _x = entrance->x * 16;
+        _y = entrance->y * 16;
+    } else {
+        _x = 0;
+        _y = 144;
+    }
+
+    GameState::instance().camera->follow_main_dude = true;
+    GameState::instance().camera->instant_focus();
+}
 
 // Called externally in game loop
 void MainDude::handle_key_input() {

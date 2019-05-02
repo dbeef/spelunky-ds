@@ -62,11 +62,7 @@ public:
 
     void handle_changing_screens();
 
-    void set_position_to(MapTileType t);
-
     void handle_transition_screen_smooch();
-
-    void reset_main_dude();
 
     bool just_started_game = true;
     bool exiting_game{};

@@ -45,25 +45,9 @@ GameState::GameState() {
     temp_map = new u16[4096];
 }
 
-void GameState::reset_main_dude() {
-    main_dude->carrying_spring_shoes = false;
-    main_dude->carrying_compass = false;
-    main_dude->carrying_glove = false;
-    main_dude->carrying_mitt = false;
-    main_dude->carrying_spike_shoes = false;
-    main_dude->carrying_cape = false;
-    main_dude->carrying_shotgun = false;
-    main_dude->carrying_pistol = false;
-    main_dude->carrying_jetpack = false;
-    main_dude->dead = false;
-    main_dude->stunned = false;
-    main_dude->hanging_on_tile_right = false;
-    main_dude->hanging_on_tile_left = false;
-}
-
 void GameState::start_new_game() {
 
-    reset_main_dude();
+    main_dude->reset_state();
     hud->hearts = 4;
     hud->ropes = 4;
     hud->bombs = 4;
@@ -88,7 +72,7 @@ void GameState::start_main_menu() {
 
 void GameState::start_scores() {
 
-    reset_main_dude();
+    main_dude->reset_state();
 
     GameState::instance().scores_screen = true;
     hud->draw_scores();
@@ -175,7 +159,7 @@ void GameState::handle_changing_screens() {
 
             current_level->generate_frame();
             current_level->initialise_tiles_from_room_layout();
-            set_position_to(MapTileType::ENTRANCE);
+            main_dude->set_position_to(MapTileType::ENTRANCE);
 
 
         } else {
@@ -206,12 +190,12 @@ void GameState::handle_changing_screens() {
             } else if (main_dude->dead) {
                 current_level->initialise_tiles_from_splash_screen(SplashScreenType::SCORES_UPPER);
                 current_level->initialise_tiles_from_splash_screen(SplashScreenType::SCORES_LOWER);
-                set_position_to(MapTileType::EXIT);
+                main_dude->set_position_to(MapTileType::EXIT);
             } else {
 
                 current_level->initialise_tiles_from_splash_screen(SplashScreenType::ON_LEVEL_DONE_UPPER);
                 current_level->initialise_tiles_from_splash_screen(SplashScreenType::ON_LEVEL_DONE_LOWER);
-                set_position_to(MapTileType::ENTRANCE);
+                main_dude->set_position_to(MapTileType::ENTRANCE);
             }
 
         }
@@ -277,27 +261,6 @@ void GameState::handle_changing_screens() {
         }
 
     }
-}
-
-/**
- * Sets main dude's position to the first tile of given type that occurs during iteration through the map
- */
-void GameState::set_position_to(MapTileType t) {
-
-    MapTile *entrance;
-    current_level->get_first_tile_of_given_type(t, entrance);
-
-    if (entrance != nullptr && entrance->exists) {
-        main_dude->_x = entrance->x * 16;
-        main_dude->_y = entrance->y * 16;
-    } else {
-        main_dude->_x = 0;
-        main_dude->_y = 144;
-    }
-
-    camera->follow_main_dude = true;
-    camera->instant_focus();
-
 }
 
 /**

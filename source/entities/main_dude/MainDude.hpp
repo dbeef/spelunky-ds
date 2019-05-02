@@ -105,6 +105,10 @@ public:
 
     void spawn_carried_items();
 
+    void set_position_to(MapTileType t);
+
+    void reset_state();
+
     BaseItem *_currently_held_item{};
     BaseCreature *_currently_held_creature{};
     IPickupable *_currently_held_pickupable{};
