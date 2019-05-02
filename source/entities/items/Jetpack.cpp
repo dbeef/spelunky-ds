@@ -8,8 +8,9 @@
 #include "../../entities/decorations/GotCollectible.hpp"
 #include "../../collisions/Collisions.hpp"
 #include "../animations/FallPoof.hpp"
-#include "../../memory/SpriteUtils.hpp"
+
 #include "../../time/Timer.h"
+#include "../../graphics/SpriteUtils.hpp"
 
 void Jetpack::update_item_specific() {
 

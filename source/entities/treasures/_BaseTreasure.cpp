@@ -5,12 +5,13 @@
 #include <maxmod9.h>
 #include "_BaseTreasure.h"
 
-#include "../../memory/SpriteUtils.hpp"
+
 #include "../../collisions/Collisions.hpp"
 #include "../../../build/soundbank.h"
-#include "../../memory/SpriteInfo.h"
+
 #include "../../GameState.hpp"
 #include "../../time/Timer.h"
+#include "../../graphics/SpriteUtils.hpp"
 
 void BaseTreasure::update_sprites_position() {
     int main_x, main_y, sub_x, sub_y;

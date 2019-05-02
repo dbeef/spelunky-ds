@@ -6,7 +6,7 @@
 #define SPELUNKYDS_GLOVE_H
 
 
-#include "../../memory/SpriteInfo.h"
+
 #include "../creatures/_BaseCreature.h"
 #include "../_interfaces/ShoppingObject.h"
 

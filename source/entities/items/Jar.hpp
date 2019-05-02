@@ -6,7 +6,7 @@
 #define SPELUNKYDS_JAR_H
 
 #include "_BaseItem.h"
-#include "../../memory/SpriteInfo.h"
+
 #include "../creatures/CreatureType.hpp"
 
 //http://spelunky.wikia.com/wiki/Pot

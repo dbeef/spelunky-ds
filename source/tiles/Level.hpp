@@ -35,7 +35,7 @@ class Level {
 
 public:
 
-    //I allocate these tiles on heap on game start, never delete them later. That helps memory fragmentation a lot.
+    //I allocate these tiles on heap on game start, never delete them later. That helps graphics fragmentation a lot.
     //Before, I allocated/deallocated them on every level and It caused crashes on malloc after some time (~40 levels).
     MapTile *map_tiles[32][32];
 

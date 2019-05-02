@@ -7,8 +7,9 @@
 #include "../../GameState.hpp"
 #include "../../../build/gfx_spike_collectibles_flame.h"
 #include "../../collisions/Collisions.hpp"
-#include "../../memory/SpriteUtils.hpp"
+
 #include "../../time/Timer.h"
+#include "../../graphics/SpriteUtils.hpp"
 
 void Jar::destroy() {
     _destroyed = true;

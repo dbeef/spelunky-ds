@@ -5,7 +5,7 @@
 #ifndef SPELUNKYDS_BONE_H
 #define SPELUNKYDS_BONE_H
 
-#include "../../memory/SpriteInfo.h"
+
 #include "../_common/Orientation.hpp"
 #include "../creatures/_BaseCreature.h"
 

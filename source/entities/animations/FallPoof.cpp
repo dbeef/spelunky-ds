@@ -8,8 +8,9 @@
 #include "../creatures/_BaseCreature.h"
 #include "FallPoof.hpp"
 #include "../../collisions/Collisions.hpp"
-#include "../../memory/SpriteUtils.hpp"
+
 #include "../../time/Timer.h"
+#include "../../graphics/SpriteUtils.hpp"
 
 
 #define FALL_POOF_POS_INC_DELTA 35

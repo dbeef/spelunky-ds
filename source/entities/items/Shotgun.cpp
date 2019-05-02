@@ -11,7 +11,7 @@
 #include "../creatures/Bullet.hpp"
 #include "../../entities/decorations/GotCollectible.hpp"
 #include "../../tiles/LevelRenderingUtils.hpp"
-#include "../../memory/SpriteUtils.hpp"
+
 #include "Shotgun.hpp"
 #include "../../time/Timer.h"
 

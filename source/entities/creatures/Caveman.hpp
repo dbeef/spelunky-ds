@@ -10,7 +10,7 @@
 
 #include "_BaseCreature.h"
 #include "../_common/Orientation.hpp"
-#include "../../memory/SpriteInfo.h"
+
 
 //http://spelunky.wikia.com/wiki/Caveman
 class Caveman : public BaseCreature {

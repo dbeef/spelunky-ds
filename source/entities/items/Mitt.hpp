@@ -5,7 +5,7 @@
 #ifndef SPELUNKYDS_MITT_H
 #define SPELUNKYDS_MITT_H
 
-#include "../../memory/SpriteInfo.h"
+
 #include "../_common/Orientation.hpp"
 #include "../items/_BaseItem.h"
 #include "../_interfaces/ShoppingObject.h"

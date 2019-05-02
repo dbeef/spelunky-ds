@@ -9,9 +9,10 @@
 #include "../../../build/soundbank.h"
 #include "../../collisions/Collisions.hpp"
 #include "../../GameState.hpp"
-#include "../../memory/SpriteUtils.hpp"
+
 #include "../treasures/RubySmall.h"
 #include "../treasures/RubyBig.h"
+#include "../../graphics/SpriteUtils.hpp"
 
 void Chest::update_item_specific() {
 

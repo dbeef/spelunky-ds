@@ -8,8 +8,9 @@
 #include "../../GameState.hpp"
 #include "../../entities/decorations/GotCollectible.hpp"
 #include "../../collisions/Collisions.hpp"
-#include "../../memory/SpriteUtils.hpp"
+
 #include "../../time/Timer.h"
+#include "../../graphics/SpriteUtils.hpp"
 
 void Cape::update_item_specific() {
 

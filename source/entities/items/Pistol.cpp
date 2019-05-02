@@ -11,7 +11,7 @@
 #include "../../../build/soundbank.h"
 #include "../../entities/decorations/GotCollectible.hpp"
 #include "../../tiles/LevelRenderingUtils.hpp"
-#include "../../memory/SpriteUtils.hpp"
+
 #include "../../entities/decorations/Blast.hpp"
 #include "../creatures/Bullet.hpp"
 #include "../../time/Timer.h"

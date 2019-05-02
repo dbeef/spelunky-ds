@@ -9,7 +9,8 @@
 #include "../../collisions/Collisions.hpp"
 #include "../../../build/gfx_saleable.h"
 #include "../../entities/decorations/GotCollectible.hpp"
-#include "../../memory/SpriteUtils.hpp"
+#include "../../graphics/SpriteUtils.hpp"
+
 
 void Compass::update_item_specific() {
 

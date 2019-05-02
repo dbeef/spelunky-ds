@@ -5,7 +5,7 @@
 #ifndef SPELUNKYDS_COMPASS_H
 #define SPELUNKYDS_COMPASS_H
 
-#include "../../memory/SpriteInfo.h"
+
 #include "../_common/Orientation.hpp"
 #include "../items/_BaseItem.h"
 #include "../_interfaces/ShoppingObject.h"

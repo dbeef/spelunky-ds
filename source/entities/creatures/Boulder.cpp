@@ -3,9 +3,10 @@
 //
 
 #include "Boulder.h"
-#include "../../memory/SpriteUtils.hpp"
+
 #include "../../../build/gfx_got_collectible.h"
 #include "../../GameState.hpp"
+#include "../../graphics/SpriteUtils.hpp"
 
 void Boulder::init_sprites() {
 

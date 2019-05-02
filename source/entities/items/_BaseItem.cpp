@@ -4,10 +4,11 @@
 
 #include <cstdlib>
 #include "_BaseItem.h"
-#include "../../memory/SpriteUtils.hpp"
+
 #include "../../collisions/Collisions.hpp"
 #include "../../GameState.hpp"
-#include "../../memory/SpriteInfo.h"
+#include "../../graphics/SpriteUtils.hpp"
+
 
 BaseItem::BaseItem(
         int x, int y,

@@ -5,9 +5,10 @@
 #include <cstdlib>
 
 #include "../../../build/gfx_rubies.h"
-#include "../../memory/SpriteUtils.hpp"
+
 #include "RubyBig.h"
 #include "../../GameState.hpp"
+#include "../../graphics/SpriteUtils.hpp"
 
 void RubyBig::init_sprites() {
 

@@ -7,8 +7,9 @@
 
 #include <nds.h>
 
-#include "../../memory/SpritesheetType.hpp"
+
 #include "IBase.h"
+#include "../../graphics/SpritesheetType.hpp"
 
 // Renderable provides fields neccesary to render graphic on screen, which are:
 // * xy position

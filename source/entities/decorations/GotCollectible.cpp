@@ -4,9 +4,10 @@
 
 #include "../../../build/gfx_got_collectible.h"
 #include "../../GameState.hpp"
-#include "../../memory/SpriteUtils.hpp"
+
 #include "GotCollectible.hpp"
 #include "../../time/Timer.h"
+#include "../../graphics/SpriteUtils.hpp"
 
 void GotCollectible::update_decoration_specific() {
 

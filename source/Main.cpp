@@ -11,6 +11,7 @@
 #include "console/ConsoleUtils.hpp"
 #include "time/Timer.h"
 #include "GameState.hpp"
+#include "graphics/Brightness.hpp"
 
 /**
  * Set-up before the gameloop can be run.
@@ -23,7 +24,7 @@ int main() {
     // waiting for a next frame so it would be allowed to change the brightness
     swiWaitForVBlank();
     // setting screen white to smooth transition from game launcher
-    GameState::instance().set_maximum_brightness();
+    Brightness::set_maximum_brightness();
 
     sound::load_sounds();
     sound::start_menu_music();
@@ -54,7 +55,7 @@ int main() {
     bgSetPriority(GameState::instance().bg_main_address, BG_PRIORITY_3);
     bgSetPriority(GameState::instance().bg_sub_address, BG_PRIORITY_3);
 
-    //Copy cave background tiles to the graphics memory
+    //Copy cave background tiles to the graphics graphics
     dmaCopy(gfx_cavebgTiles, bgGetGfxPtr(GameState::instance().bg_main_address), sizeof(gfx_cavebgTiles));
     dmaCopy(gfx_cavebgTiles, bgGetGfxPtr(GameState::instance().bg_sub_address), sizeof(gfx_cavebgTiles));
 
@@ -65,11 +66,11 @@ int main() {
     GameState::instance().current_level->initialise_tiles_from_splash_screen(SplashScreenType::MAIN_MENU_LOWER);
     GameState::instance().current_level->update_level();
 
-    //Copy cave background palette to the graphics memory
+    //Copy cave background palette to the graphics graphics
     dmaCopy(gfx_cavebgPal, BG_PALETTE, gfx_cavebgPalLen);
     dmaCopy(gfx_cavebgPal, BG_PALETTE_SUB, gfx_cavebgPalLen);
 
-    //Initialise sprite memory
+    //Initialise sprite graphics
     constexpr int BOUNDARY_VALUE = 64; /* This is the default boundary value (can be set in REG_DISPCNT) */
     constexpr int OFFSET_MULTIPLIER_MAIN = BOUNDARY_VALUE / sizeof(SPRITE_GFX[0]);
     constexpr int OFFSET_MULTIPLIER_SUB = BOUNDARY_VALUE / sizeof(SPRITE_GFX_SUB[0]);

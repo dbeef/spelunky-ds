@@ -24,7 +24,7 @@ void sound::start_menu_music() {
 void sound::stop_menu_music() {
 #ifdef WITH_SOUND
     mmEffectCancel(menu_music_handler);
-    // probably should not unload, due to memory fragmentation when loading/unloading every level
+    // probably should not unload, due to graphics fragmentation when loading/unloading every level
     mmUnloadEffect(SFX_MTITLE);
 #endif
 }
@@ -40,7 +40,7 @@ void sound::start_cave_music() {
 void sound::stop_cave_music() {
 #ifdef WITH_SOUND
     mmEffectCancel(cave_music_handler);
-    // probably should not unload, due to memory fragmentation when loading/unloading every level
+    // probably should not unload, due to graphics fragmentation when loading/unloading every level
     mmUnloadEffect(SFX_MCAVE);
 #endif
 }

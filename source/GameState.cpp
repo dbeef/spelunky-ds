@@ -8,7 +8,6 @@
 #include "GameLoop.hpp"
 #include "tiles/LevelRenderingUtils.hpp"
 #include "tiles/SplashScreenType.hpp"
-#include "memory/OamUtils.hpp"
 #include "../build/soundbank.h"
 #include "entities/creatures/Damsel.hpp"
 #include "entities/decorations/Smooch.hpp"
@@ -18,6 +17,7 @@
 #include "tiles/PopulatingUtils.hpp"
 #include "entities/main_dude/MainDudeConsts.h"
 #include "time/Timer.h"
+#include "graphics/OamUtils.hpp"
 
 GameState *GameState::_instance = nullptr;
 
@@ -290,49 +290,6 @@ void GameState::handle_transition_screen_smooch() {
     }
 }
 
-//!> this should be done after Vblank (otherwise - crash!)
-void GameState::normalize_brightness() {
-
-    if (just_started_game) {
-        //just started the game, so lowering the brightness to the normal level.
-        //game starts with the maximum brightness, so the transition between DSiMenu++ would look smoother
-        change_brightness_timer += Timer::getDeltaTime();
-
-        if (change_brightness_timer > 100) {
-
-            _brightness_level--;
-
-            if (_brightness_level == 0)
-                just_started_game = false;
-            else
-                setBrightness(3, _brightness_level);
-
-        }
-    }
-
-    if (in_main_menu && exiting_game) {
-        //exiting game, so increasing the brightness to the maximum level so the transition
-        //between the game and DSiMenu++ would be smoother
-        change_brightness_timer += Timer::getDeltaTime();
-
-        if (change_brightness_timer > 100) {
-
-            _brightness_level++;
-
-            if (_brightness_level > 16)
-                exit(0);
-
-            setBrightness(3, _brightness_level);
-
-        }
-    }
-}
-
-void GameState::set_maximum_brightness() {
-    setBrightness(3, GameState::instance()._brightness_level);
-    _brightness_level = 16;
-}
-
 GameState::~GameState() {
     delete main_dude;
     delete input_handler;
@@ -343,4 +300,15 @@ GameState::~GameState() {
     delete hud;
     delete print_console;
     delete temp_map;
+}
+
+void GameState::init() {
+    SPELUNKYDS_BREAKING_ASSERT(!_instance);
+    _instance = new GameState();
+    SPELUNKYDS_BREAKING_ASSERT(_instance);
+}
+
+void GameState::dispose() {
+    SPELUNKYDS_BREAKING_ASSERT(_instance);
+    delete _instance;
 }

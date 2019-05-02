@@ -4,9 +4,10 @@
 
 #include "../../../build/gfx_spike_collectibles_flame.h"
 #include "../../GameState.hpp"
-#include "../../memory/SpriteUtils.hpp"
+
 #include "Blast.hpp"
 #include "../../time/Timer.h"
+#include "../../graphics/SpriteUtils.hpp"
 
 Blast::Blast(int x, int y) :
         BaseDecoration(x, y, blast_sprite_width, blast_sprite_height, blast_spritesheet_type) {

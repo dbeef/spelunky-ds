@@ -5,12 +5,13 @@
 #ifndef SPELUNKYDS_MOVINGOBJECT_H
 #define SPELUNKYDS_MOVINGOBJECT_H
 
-#include "../../memory/SpritesheetType.hpp"
+
 #include "../_common/Orientation.hpp"
 #include "CreatureType.hpp"
 #include "../_interfaces/IRenderable.h"
 #include "../_interfaces/ICollidable.h"
 #include "../items/_BaseItem.h"
+#include "../../graphics/SpritesheetType.hpp"
 
 /**
  *  https://en.wikibooks.org/wiki/C%2B%2B_Programming/Classes/Abstract_Classes

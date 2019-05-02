@@ -11,9 +11,10 @@
 #include "../../collisions/Collisions.hpp"
 #include "../../tiles/LevelRenderingUtils.hpp"
 #include "../../../build/soundbank.h"
-#include "../../memory/SpriteUtils.hpp"
+
 #include "../../GameState.hpp"
 #include "../../time/Timer.h"
+#include "../../graphics/SpriteUtils.hpp"
 
 #define SNAKE_POS_INC_DELTA 35
 #define SNAKE_ANIM_FRAME_DELTA 125

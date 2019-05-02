@@ -5,7 +5,7 @@
 #ifndef SPELUNKYDS_SPIKE_SHOES_H
 #define SPELUNKYDS_SPIKE_SHOES_H
 
-#include "../../memory/SpriteInfo.h"
+
 #include "../_common/Orientation.hpp"
 #include "../items/_BaseItem.h"
 #include "../_interfaces/ShoppingObject.h"

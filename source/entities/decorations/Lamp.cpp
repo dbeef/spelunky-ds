@@ -4,9 +4,10 @@
 
 #include "../../../build/gfx_shopkeeper.h"
 #include "../../GameState.hpp"
-#include "../../memory/SpriteUtils.hpp"
+
 #include "Lamp.h"
 #include "../../time/Timer.h"
+#include "../../graphics/SpriteUtils.hpp"
 
 Lamp::Lamp(int x, int y) :
         BaseDecoration(x, y, lamp_sprite_width, lamp_sprite_height, lamp_spritesheet_type) {

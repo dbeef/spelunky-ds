@@ -5,8 +5,9 @@
 #ifndef SPELUNKYDS_GOT_COLLECTIBLE_H
 #define SPELUNKYDS_GOT_COLLECTIBLE_H
 
-#include "../../memory/SpriteInfo.h"
 #include "_BaseDecoration.h"
+
+class SpriteInfo;
 
 // Represents animation that is launched on collecting new item/bombs/ropes.
 class GotCollectible : public BaseDecoration {

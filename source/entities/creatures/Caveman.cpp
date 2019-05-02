@@ -12,9 +12,10 @@
 #include "../../../build/gfx_caveman_damsel.h"
 #include "../../tiles/LevelRenderingUtils.hpp"
 #include "../../tiles/TileOrientation.hpp"
-#include "../../memory/SpriteUtils.hpp"
+
 #include "../../GameState.hpp"
 #include "../../time/Timer.h"
+#include "../../graphics/SpriteUtils.hpp"
 
 #define CAVEMAN_POS_INC_DELTA 20
 #define CAVEMAN_TRIGGERED_SPEED 3

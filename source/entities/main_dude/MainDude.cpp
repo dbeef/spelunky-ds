@@ -7,6 +7,7 @@
 #include <maxmod9.h>
 #include <cstdlib>
 
+#include "../../graphics/SpriteUtils.hpp"
 #include "../../GameState.hpp"
 #include "MainDude.hpp"
 #include "../../GameState.hpp"
@@ -17,11 +18,11 @@
 #include "../../tiles/TileOrientation.hpp"
 #include "../animations/FallPoof.hpp"
 #include "../../sound/Sound.hpp"
-#include "../../memory/SpriteUtils.hpp"
+
 #include "../../tiles/MapTile.hpp"
 #include "../../tiles/Level.hpp"
 #include "../../camera/Camera.hpp"
-#include "../../memory/SpriteInfo.h"
+
 #include "../items/Bomb.hpp"
 #include "../../input/InputHandler.hpp"
 #include "../items/_BaseItem.h"
@@ -530,7 +531,7 @@ void MainDude::reset_values_checked_every_frame() {
 #include "../items/SpikeShoes.hpp"
 #include "../items/Cape.hpp"
 #include "../items/Jetpack.hpp"
-#include "../../memory/SpriteUtils.hpp"
+
 #include "../../../build/gfx_spelunker.h"
 #include "../items/Pistol.hpp"
 #include "MainDude.hpp"
@@ -538,10 +539,11 @@ void MainDude::reset_values_checked_every_frame() {
 #include "../../tiles/MapTile.hpp"
 #include "../../tiles/Level.hpp"
 #include "../../camera/Camera.hpp"
-#include "../../memory/SpriteInfo.h"
+
 #include "../items/Bomb.hpp"
 #include "../../input/InputHandler.hpp"
 #include "../../GameState.hpp"
+#include "../../graphics/SpriteUtils.hpp"
 
 void MainDude::throw_item() {
 

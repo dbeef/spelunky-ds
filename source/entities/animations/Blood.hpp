@@ -10,7 +10,7 @@
 #include <vector>
 #include "../creatures/_BaseCreature.h"
 #include "BloodElement.hpp"
-#include "../../memory/SpriteInfo.h"
+
 
 //blood trail animation:
 //spawn 3-4 entities with sBlood animation (3 frames)

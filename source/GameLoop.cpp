@@ -4,11 +4,12 @@
 #include "GameLoop.hpp"
 #include "tiles/PopulatingUtils.hpp"
 #include "time/Timer.h"
-#include "memory/OamUtils.hpp"
 #include "entities/animations/Blood.hpp"
 #include "entities/items/Arrow.hpp"
 #include "entities/main_dude/MainDudeConsts.h"
 #include "GameState.hpp"
+#include "graphics/OamUtils.hpp"
+#include "graphics/Brightness.hpp"
 
 void gameloop::run() {
 
@@ -42,7 +43,7 @@ void gameloop::run() {
         GameState::instance().hud->update();
 
         swiWaitForVBlank();
-        GameState::instance().normalize_brightness();
+        Brightness::normalize_brightness();
 
         GameState::instance().camera->write_current_position_to_graphics_engines();
         GameState::instance().main_oam_manager->updateOAM();

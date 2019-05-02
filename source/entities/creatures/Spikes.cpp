@@ -11,9 +11,10 @@
 #include "../../collisions/Collisions.hpp"
 #include "../../sound/Sound.hpp"
 #include "../animations/Blood.hpp"
-#include "../../memory/SpriteUtils.hpp"
+
 #include "Spikes.h"
 #include "../../GameState.hpp"
+#include "../../graphics/SpriteUtils.hpp"
 
 void Spikes::update_creature_specific() {
 

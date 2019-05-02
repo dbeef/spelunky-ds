@@ -14,12 +14,13 @@
 #include "entities/main_dude/MainDude.hpp"
 #include "entities/creatures/CreatureType.hpp"
 #include "tiles/Level.hpp"
-#include "memory/SpriteInfo.h"
+#include "graphics/SpriteInfo.h"
 #include "entities/decorations/_BaseDecoration.h"
 #include "entities/treasures/_BaseTreasure.h"
 #include "entities/items/_BaseItem.h"
 #include "tiles/MapTileType.hpp"
 #include "preprocessor/Debug.h"
+#include "graphics/OamManager.hpp"
 
 // Some resources worth reading:
 // https://softwareengineering.stackexchange.com/questions/245236/is-heap-fragmentation-a-problem-in-bare-metal-arm-with-g
@@ -35,25 +36,14 @@ public:
     GameState();
     ~GameState();
 
-    inline static void init() {
-        SPELUNKYDS_BREAKING_ASSERT(!_instance);
-        _instance = new GameState();
-        SPELUNKYDS_BREAKING_ASSERT(_instance);
-    }
+    static void init();
 
-    inline static void dispose() {
-        SPELUNKYDS_BREAKING_ASSERT(_instance);
-        delete _instance;
-    }
+    static void dispose();
 
     inline static GameState &instance() {
         SPELUNKYDS_BREAKING_ASSERT(_instance);
         return *_instance;
     }
-
-    void set_maximum_brightness();
-
-    void normalize_brightness();
 
     void start_new_game();
 
@@ -81,17 +71,16 @@ public:
     bool smooching{};
     int damsels_rescued_this_level{};
     int smooch_timer{};
-    int change_brightness_timer{};
 
-    MainDude *main_dude;
-    InputHandler *input_handler;
-    Camera *camera;
-    Level *current_level;
-    OAMManager *main_oam_manager;
-    OAMManager *sub_oam_manager;
-    Hud *hud;
-    PrintConsole *print_console; //in-game console
-    u16 *temp_map; //cave background only
+    MainDude *main_dude{};
+    InputHandler *input_handler{};
+    Camera *camera{};
+    Level *current_level{};
+    OAMManager *main_oam_manager{};
+    OAMManager *sub_oam_manager{};
+    Hud *hud{};
+    PrintConsole *print_console{}; //in-game console
+    u16 *temp_map{}; //cave background only
 
     std::vector<BaseCreature *> creatures;
     std::vector<BaseDecoration *> decorations;
@@ -109,8 +98,6 @@ public:
 
 private:
     static GameState *_instance;
-
-    int _brightness_level{};
 };
 
 #endif //SPELUNKYDS_GAME_STATE_H

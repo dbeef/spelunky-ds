@@ -6,9 +6,10 @@
 
 #include "../../../build/gfx_goldbars.h"
 #include "../../GameState.hpp"
-#include "../../memory/SpriteUtils.hpp"
+
 #include "ShoppingIcon.h"
 #include "../../time/Timer.h"
+#include "../../graphics/SpriteUtils.hpp"
 
 ShoppingIcon::ShoppingIcon(int x, int y) :
         BaseDecoration(x, y, shopping_icon_sprite_width, shopping_icon_sprite_height, shopping_icon_spritesheet_type) {

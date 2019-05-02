@@ -11,9 +11,10 @@
 #include "../../collisions/Collisions.hpp"
 #include "../../tiles/LevelRenderingUtils.hpp"
 #include "../../../build/soundbank.h"
-#include "../../memory/SpriteUtils.hpp"
+
 #include "../../GameState.hpp"
 #include "../../time/Timer.h"
+#include "../../graphics/SpriteUtils.hpp"
 
 #define BAT_ANIM_FRAME_DELTA 100
 #define BAT_POS_INC_DELTA 30

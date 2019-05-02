@@ -4,9 +4,10 @@
 
 #include "../../../build/gfx_caveman_damsel.h"
 #include "../../GameState.hpp"
-#include "../../memory/SpriteUtils.hpp"
+
 #include "Smooch.hpp"
 #include "../../time/Timer.h"
+#include "../../graphics/SpriteUtils.hpp"
 
 void Smooch::update_decoration_specific() {
 

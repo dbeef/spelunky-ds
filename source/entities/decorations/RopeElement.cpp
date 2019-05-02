@@ -6,9 +6,10 @@
 #include "RopeElement.hpp"
 #include "../../GameState.hpp"
 #include "../../../build/gfx_blood_rock_rope_poof.h"
-#include "../../memory/SpriteUtils.hpp"
+
 #include "RopeElement.hpp"
 #include "../../time/Timer.h"
+#include "../../graphics/SpriteUtils.hpp"
 
 void RopeElement::update_decoration_specific() {
 

@@ -5,12 +5,13 @@
 
 #include "Mitt.hpp"
 #include "Glove.hpp"
-#include "../../memory/SpritesheetType.hpp"
+
 #include "../../GameState.hpp"
 #include "../../collisions/Collisions.hpp"
 #include "../../../build/gfx_saleable.h"
 #include "../../entities/decorations/GotCollectible.hpp"
-#include "../../memory/SpriteUtils.hpp"
+#include "../../graphics/SpriteUtils.hpp"
+
 
 void Glove::update_item_specific() {
 

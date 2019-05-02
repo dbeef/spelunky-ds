@@ -5,7 +5,7 @@
 #ifndef SPELUNKYDS_COPYRIGHTS_H
 #define SPELUNKYDS_COPYRIGHTS_H
 
-#include "../../memory/SpriteInfo.h"
+
 #include "_BaseDecoration.h"
 
 // Represents copyrights graphic that is rendered in the main menu's lower screen.

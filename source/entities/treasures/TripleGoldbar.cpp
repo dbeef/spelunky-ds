@@ -3,9 +3,10 @@
 //
 
 #include "../../../build/gfx_goldbars.h"
-#include "../../memory/SpriteUtils.hpp"
+
 #include "TripleGoldbar.h"
 #include "../../GameState.hpp"
+#include "../../graphics/SpriteUtils.hpp"
 
 void TripleGoldbar::init_sprites() {
 

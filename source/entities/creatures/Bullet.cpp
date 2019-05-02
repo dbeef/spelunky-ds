@@ -7,9 +7,10 @@
 #include "_BaseCreature.h"
 #include "Bullet.hpp"
 #include "../../tiles/LevelRenderingUtils.hpp"
-#include "../../memory/SpriteUtils.hpp"
+
 #include "../../GameState.hpp"
 #include "../../time/Timer.h"
+#include "../../graphics/SpriteUtils.hpp"
 
 #define BULLET_POSITION_INC_DELTA 15
 #define BULLET_ANIM_X_OFFSET 5

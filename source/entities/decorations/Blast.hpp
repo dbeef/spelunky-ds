@@ -5,7 +5,7 @@
 #ifndef SPELUNKYDS_BLAST_H
 #define SPELUNKYDS_BLAST_H
 
-#include "../../memory/SpriteInfo.h"
+
 #include "../_common/Orientation.hpp"
 #include "_BaseDecoration.h"
 

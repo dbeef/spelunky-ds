@@ -12,11 +12,12 @@
 #include "../../../build/gfx_bomb.h"
 #include "../../../build/soundbank.h"
 #include "../../tiles/LevelRenderingUtils.hpp"
-#include "../../memory/SpriteUtils.hpp"
+
 #include "../animations/Flame.hpp"
 #include "../decorations/Explosion.h"
 #include "../../GameState.hpp"
 #include "../../time/Timer.h"
+#include "../../graphics/SpriteUtils.hpp"
 
 void Bomb::update_item_specific() {
 

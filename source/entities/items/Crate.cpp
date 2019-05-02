@@ -12,8 +12,9 @@
 #include "../../../build/soundbank.h"
 #include "../../entities/decorations/GotCollectible.hpp"
 #include "_ItemsUtils.hpp"
-#include "../../memory/SpriteUtils.hpp"
+
 #include "../../time/Timer.h"
+#include "../../graphics/SpriteUtils.hpp"
 
 void Crate::update_item_specific() {
 

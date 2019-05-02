@@ -9,7 +9,7 @@
 #include <nds/arm9/sprite.h>
 
 #include "../items/_BaseItem.h"
-#include "../../memory/SpriteInfo.h"
+
 
 //http://spelunky.wikia.com/wiki/GoldenIdol
 class GoldenIdol : public BaseItem {

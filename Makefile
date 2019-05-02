@@ -25,7 +25,7 @@ BUILD		:=	build
 SOURCES		:=	source source/tiles source/entities/_interfaces source/console source/input  \
                 source/collisions source/entities source/entities/treasures source/entities/creatures \
                 source/entities/items source/entities/decorations source/time \
-                source/hud source/rooms source/memory source/camera source/entities/animations \
+                source/hud source/rooms source/graphics source/camera source/entities/animations \
                 source/entities/main_dude source/sound source/entities/traps preprocessor/Debug.h
 DATA		:=	data
 INCLUDES	:=	include

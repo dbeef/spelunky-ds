@@ -18,7 +18,7 @@
 
 #include "_BaseCreature.h"
 #include "../_common/Orientation.hpp"
-#include "../../memory/SpriteInfo.h"
+
 
 //http://spelunky.wikia.com/wiki/Bat
 class Bat : public BaseCreature {

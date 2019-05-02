@@ -9,7 +9,8 @@
 #include "../_common/Orientation.hpp"
 #include "../../collisions/Collisions.hpp"
 #include "../../tiles/LevelRenderingUtils.hpp"
-#include "../../memory/SpriteUtils.hpp"
+#include "../../graphics/SpriteUtils.hpp"
+
 
 class Bullet : public BaseCreature {
 

@@ -5,7 +5,7 @@
 #ifndef SPELUNKYDS_FAKE_SKELETON_H
 #define SPELUNKYDS_FAKE_SKELETON_H
 
-#include "../../memory/SpriteInfo.h"
+
 #include "../_common/Orientation.hpp"
 #include "../creatures/_BaseCreature.h"
 

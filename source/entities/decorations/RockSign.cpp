@@ -4,13 +4,14 @@
 
 #include "../../../build/gfx_menu_signs_tutorial_quit.h"
 #include "../../GameState.hpp"
-#include "../../memory/SpriteUtils.hpp"
+
 #include "RockSign.h"
+#include "../../graphics/SpriteUtils.hpp"
 
 RockSign::RockSign(int x, int y, RockSign::Type type) :
         BaseDecoration(x, y, rock_sign_sprite_width, rock_sign_sprite_height,
                        rock_sign_spritesheet_type), _type(type) {
-    // Cleaning allocated memory from trash data.
+    // Cleaning allocated graphics from trash data.
     for (auto &mainSpriteInfo : _mainSpriteInfos) mainSpriteInfo = nullptr;
     init_sprites();
 }

@@ -5,8 +5,9 @@
 #ifndef SPELUNKYDS_EXPLOSION_H
 #define SPELUNKYDS_EXPLOSION_H
 
-#include "../../memory/SpriteInfo.h"
+
 #include "_BaseDecoration.h"
+#include "../../graphics/SpriteInfo.h"
 
 class Explosion : public BaseDecoration {
 

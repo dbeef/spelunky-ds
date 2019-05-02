@@ -7,9 +7,10 @@
 #include "../../collisions/Collisions.hpp"
 #include "../../GameState.hpp"
 #include "../../entities/decorations/GotCollectible.hpp"
-#include "../../memory/SpritesheetType.hpp"
-#include "../../memory/SpriteUtils.hpp"
+
+
 #include "SpikeShoes.hpp"
+#include "../../graphics/SpriteUtils.hpp"
 
 void SpikeShoes::update_item_specific() {
 

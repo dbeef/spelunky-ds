@@ -12,9 +12,10 @@
 #include "../../collisions/Collisions.hpp"
 #include "../../tiles/LevelRenderingUtils.hpp"
 #include "../../../build/soundbank.h"
-#include "../../memory/SpriteUtils.hpp"
+
 #include "../../GameState.hpp"
 #include "../../time/Timer.h"
+#include "../../graphics/SpriteUtils.hpp"
 
 #define SPIDER_HANGING_OFFSET 8
 #define SPIDER_ANIM_FRAME_DELTA 75

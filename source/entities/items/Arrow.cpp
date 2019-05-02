@@ -12,9 +12,10 @@
 #include "../../collisions/Collisions.hpp"
 #include "../../tiles/LevelRenderingUtils.hpp"
 #include "../main_dude/MainDude.hpp"
-#include "../../memory/SpriteUtils.hpp"
+
 #include "Arrow.hpp"
 #include "../../time/Timer.h"
+#include "../../graphics/SpriteUtils.hpp"
 
 void Arrow::update_item_specific() {
 

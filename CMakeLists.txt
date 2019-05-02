@@ -64,16 +64,16 @@ add_executable(spelunkyds
         source/collisions/Collisions.cpp
         source/collisions/Collisions.hpp
         source/hud/Hud.cpp source/hud/Hud.hpp
-        source/memory/SpriteInfo.cpp
-        source/memory/SpriteInfo.h
+        source/graphics/SpriteInfo.cpp
+        source/graphics/SpriteInfo.h
         source/camera/Camera.cpp
         source/camera/Camera.hpp
-        source/memory/OamManager.cpp
-        source/memory/OamManager.hpp
+        source/graphics/OamManager.cpp
+        source/graphics/OamManager.hpp
         source/input/InputHandler.cpp
         source/input/InputHandler.hpp
-        source/memory/SpritesheetType.hpp
-        source/memory/OamType.hpp
+        source/graphics/SpritesheetType.hpp
+        source/graphics/OamType.hpp
         source/entities/items/Rock.hpp
         source/entities/items/Jar.cpp
         source/entities/items/Jar.hpp
@@ -105,8 +105,8 @@ add_executable(spelunkyds
         source/console/ConsoleUtils.hpp
         source/time/Timer.h
         source/time/Timer.cpp
-        source/memory/OamUtils.cpp
-        source/memory/OamUtils.hpp
+        source/graphics/OamUtils.cpp
+        source/graphics/OamUtils.hpp
         source/entities/main_dude/Whip.cpp
         source/entities/main_dude/Whip.hpp
         source/entities/creatures/Spikes.cpp
@@ -177,8 +177,8 @@ add_executable(spelunkyds
         source/entities/animations/FakeSkeleton.hpp
         source/entities/animations/FakeSkeleton.cpp
         source/tiles/BaseMap.hpp
-        source/memory/SpriteUtils.cpp
-        source/memory/SpriteUtils.hpp
+        source/graphics/SpriteUtils.cpp
+        source/graphics/SpriteUtils.hpp
         source/tiles/LevelGenerator.hpp
         source/tiles/LevelGenerator.cpp
         source/tiles/PopulatingUtils.hpp
@@ -216,4 +216,6 @@ add_executable(spelunkyds
         source/entities/items/GoldenIdol.h
         source/entities/creatures/Boulder.cpp
         source/entities/creatures/Boulder.h
+        source/graphics/Brightness.cpp
+        source/graphics/Brightness.hpp
 )

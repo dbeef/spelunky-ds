@@ -7,7 +7,7 @@
 
 #include <nds/arm9/sprite.h>
 #include "tiles/Level.hpp"
-#include "memory/SpriteInfo.h"
+#include "graphics/SpriteInfo.h"
 #include "entities/creatures/Snake.hpp"
 #include "entities/items/Jar.hpp"
 #include "entities/items/Rock.hpp"

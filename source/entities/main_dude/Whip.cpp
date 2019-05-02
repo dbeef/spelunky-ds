@@ -5,8 +5,9 @@
 #include "Whip.hpp"
 #include "../../../build/gfx_spike_collectibles_flame.h"
 #include "../../GameState.hpp"
-#include "../../memory/SpriteUtils.hpp"
+
 #include "../../time/Timer.h"
+#include "../../graphics/SpriteUtils.hpp"
 
 void Whip::update_creature_specific() {
 

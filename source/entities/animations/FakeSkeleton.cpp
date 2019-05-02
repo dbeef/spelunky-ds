@@ -9,14 +9,15 @@
 #include "../../collisions/Collisions.hpp"
 #include "FakeSkeleton.hpp"
 #include "../items/Skull.hpp"
-#include "../../memory/SpriteUtils.hpp"
+#include "../../graphics/SpriteUtils.hpp"
+
 
 #define FAKE_SKELETON_POS_INC_DELTA 25
 #define FRAME_OFFSET_FAKE_SKELETON_WITH_SKULL 33
 #define FRAME_OFFSET_FAKE_SKELETON_WOUT_SKULL 23
 
 //Skull object is spawned only when main dude attempts to pick it up,
-//before that a single sprite is drawn that has both skeleton and skull. (saving some memory)
+//before that a single sprite is drawn that has both skeleton and skull. (saving some graphics)
 
 void FakeSkeleton::update_creature_specific() {
 

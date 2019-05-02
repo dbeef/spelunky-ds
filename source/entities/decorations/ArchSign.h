@@ -5,8 +5,9 @@
 #ifndef SPELUNKYDS_MENU_ARCH_SIGN_H
 #define SPELUNKYDS_MENU_ARCH_SIGN_H
 
-#include "../../memory/SpriteInfo.h"
+
 #include "_BaseDecoration.h"
+#include "../../graphics/SpriteInfo.h"
 
 // Represents arch sign graphic that is rendered in the main menu's upper screen,
 // may take form of 'START' or 'SCORES'.

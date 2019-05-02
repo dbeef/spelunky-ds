@@ -11,7 +11,7 @@
 #include "../entities/creatures/Snake.hpp"
 #include "../entities/creatures/Bat.hpp"
 #include "../entities/creatures/Spider.hpp"
-#include "../memory/SpriteUtils.hpp"
+
 #include "../entities/creatures/Damsel.hpp"
 #include "../entities/creatures/Skeleton.hpp"
 #include "../entities/creatures/Caveman.hpp"
@@ -23,6 +23,7 @@
 #include "../entities/main_dude/MainDudeConsts.h"
 #include "../GameState.hpp"
 #include "../time/Timer.h"
+#include "../graphics/SpriteUtils.hpp"
 
 #define HEART_POSITION_X 5
 #define HEART_POSITION_Y 5

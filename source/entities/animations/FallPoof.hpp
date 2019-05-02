@@ -5,7 +5,7 @@
 #ifndef SPELUNKYDS_FALL_BLOOP_H
 #define SPELUNKYDS_FALL_BLOOP_H
 
-#include "../../memory/SpriteInfo.h"
+
 #include "../_common/Orientation.hpp"
 #include "../creatures/_BaseCreature.h"
 

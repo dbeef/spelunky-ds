@@ -12,9 +12,10 @@
 #include "../../../build/soundbank.h"
 #include "../animations/Bone.hpp"
 #include "../items/Skull.hpp"
-#include "../../memory/SpriteUtils.hpp"
+
 #include "../../GameState.hpp"
 #include "../../time/Timer.h"
+#include "../../graphics/SpriteUtils.hpp"
 
 #define SKELETON_POS_INC_DELTA 19
 #define SKELETON_ANIM_FRAME_DELTA 90

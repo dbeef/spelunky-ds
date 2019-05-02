@@ -6,12 +6,13 @@
 
 #include "../../GameState.hpp"
 #include "../../../build/gfx_menu_signs_start_scores.h"
-#include "../../memory/SpriteUtils.hpp"
+#include "../../graphics/SpriteUtils.hpp"
+
 
 ArchSign::ArchSign(int x, int y, ArchSign::Type type) :
         BaseDecoration(x, y, rock_sign_sprite_width, rock_sign_sprite_height,
                        rock_sign_spritesheet_type), _type(type) {
-    // Cleaning allocated memory from trash data.
+    // Cleaning allocated graphics from trash data.
     for (auto &mainSpriteInfo : _mainSpriteInfos) mainSpriteInfo = nullptr;
     init_sprites();
 }

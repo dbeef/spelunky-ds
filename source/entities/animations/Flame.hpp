@@ -21,7 +21,7 @@
 #define flame_spritesheet_type SpritesheetType::SPIKES_COLLECTIBLES
 
 #include "../creatures/_BaseCreature.h"
-#include "../../memory/SpriteInfo.h"
+
 #include "FlameElement.hpp"
 
 //almost same as blood animation

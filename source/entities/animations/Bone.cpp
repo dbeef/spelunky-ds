@@ -7,8 +7,9 @@
 #include "../../../build/gfx_spider_skeleton.h"
 #include "../../collisions/Collisions.hpp"
 #include "Bone.hpp"
-#include "../../memory/SpriteUtils.hpp"
+
 #include "../../time/Timer.h"
+#include "../../graphics/SpriteUtils.hpp"
 
 #define BONE_POS_INC_DELTA 35
 #define BONE_ANIM_FRAME_DELTA  45

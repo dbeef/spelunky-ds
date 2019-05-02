@@ -6,10 +6,11 @@
 #include "../../../build/gfx_spider_skeleton.h"
 #include "../../GameState.hpp"
 #include "../../collisions/Collisions.hpp"
-#include "../../memory/SpriteUtils.hpp"
+
 #include "../animations/Bone.hpp"
 #include "Skull.hpp"
 #include "../../time/Timer.h"
+#include "../../graphics/SpriteUtils.hpp"
 
 #define SKULL_ANIM_FRAME_DELTA  45
 #define COLLIDED_FRAMES 7

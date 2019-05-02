@@ -4,13 +4,14 @@
 
 #include "../../../build/gfx_spelunky_title.h"
 #include "../../GameState.hpp"
-#include "../../memory/SpriteUtils.hpp"
+
 #include "SpelunkyTitle.h"
+#include "../../graphics/SpriteUtils.hpp"
 
 SpelunkyTitle::SpelunkyTitle(int x, int y) :
         BaseDecoration(x, y, spelunky_title_sprite_width, spelunky_title_sprite_height,
                        spelunky_title_spritesheet_type) {
-    // Cleaning allocated memory from trash data.
+    // Cleaning allocated graphics from trash data.
     for (auto &mainSpriteInfo : _mainSpriteInfos) mainSpriteInfo = nullptr;
     init_sprites();
 }

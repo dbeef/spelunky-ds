@@ -5,10 +5,11 @@
 #include <cstdio>
 
 #include "Explosion.h"
-#include "../../memory/SpriteUtils.hpp"
+
 #include "../../GameState.hpp"
 #include "../../../build/gfx_explosion.h"
 #include "../../time/Timer.h"
+#include "../../graphics/SpriteUtils.hpp"
 
 Explosion::Explosion(int x, int y) :
         BaseDecoration(x, y,

@@ -9,7 +9,7 @@
 #define WHIP_WIDTH 12
 
 #include "../creatures/_BaseCreature.h"
-#include "../../memory/SpriteInfo.h"
+
 
 //http://spelunky.wikia.com/wiki/Whip
 class Whip : public BaseCreature {

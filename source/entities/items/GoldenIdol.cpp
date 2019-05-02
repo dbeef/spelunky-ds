@@ -8,11 +8,12 @@
 #include "../../../build/gfx_goldbars.h"
 #include "../../collisions/Collisions.hpp"
 #include "../../tiles/LevelRenderingUtils.hpp"
-#include "../../memory/SpriteUtils.hpp"
+
 #include "../../tiles/TileOrientation.hpp"
 #include "../../../build/soundbank.h"
 #include "../creatures/Boulder.h"
 #include "../../time/Timer.h"
+#include "../../graphics/SpriteUtils.hpp"
 
 void GoldenIdol::update_item_specific() {
 

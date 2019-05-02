@@ -11,9 +11,10 @@
 #include "../../tiles/TileOrientation.hpp"
 #include "Damsel.hpp"
 #include "../../../build/soundbank.h"
-#include "../../memory/SpriteUtils.hpp"
+
 #include "../../GameState.hpp"
 #include "../../time/Timer.h"
+#include "../../graphics/SpriteUtils.hpp"
 
 #define DAMSEL_SPRITESHEET_OFFSET 25
 #define DAMSEL_POS_INC_DELTA 18

@@ -3,14 +3,14 @@
 //
 
 
-#include "../../memory/SpritesheetType.hpp"
+
 #include "SpringShoes.hpp"
 #include "../../GameState.hpp"
 #include "../../collisions/Collisions.hpp"
 #include "../../../build/gfx_saleable.h"
 #include "Mitt.hpp"
 #include "../../entities/decorations/GotCollectible.hpp"
-#include "../../memory/SpriteUtils.hpp"
+#include "../../graphics/SpriteUtils.hpp"
 
 
 void Mitt::update_item_specific() {

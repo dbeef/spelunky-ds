@@ -7,6 +7,7 @@
 
 #include "IRenderable.h"
 #include "ICollidable.h"
+#include "../../graphics/SpritesheetType.hpp"
 
 class IPickupable : public ICollidable, public IRenderable {
 

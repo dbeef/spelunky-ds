@@ -10,7 +10,7 @@
 
 #include "_BaseCreature.h"
 #include "../_common/Orientation.hpp"
-#include "../../memory/SpriteInfo.h"
+
 #include "../_interfaces/ShoppingObject.h"
 #include "../items/Shotgun.hpp"
 

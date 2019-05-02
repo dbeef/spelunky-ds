@@ -4,12 +4,13 @@
 
 #include "../../../build/gfx_copyrights.h"
 #include "../../GameState.hpp"
-#include "../../memory/SpriteUtils.hpp"
+
 #include "Copyrights.h"
+#include "../../graphics/SpriteUtils.hpp"
 
 Copyrights::Copyrights(int x, int y) :
         BaseDecoration(x, y, copyrights_sprite_width, copyrights_sprite_height, copyrights_spritesheet_type) {
-    // Cleaning allocated memory from trash data.
+    // Cleaning allocated graphics from trash data.
     for (auto &subSpriteInfo : _subSpriteInfos) subSpriteInfo = nullptr;
     init_sprites();
 }
