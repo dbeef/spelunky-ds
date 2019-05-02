@@ -44,7 +44,7 @@
 #define HUD_ICON_HEIGHT 16
 #define HUD_ICON_SIZE HUD_ICON_WIDTH * HUD_ICON_HEIGHT
 
-void Hud::delete_sprites(){
+void Hud::delete_sprites() {
 
     delete heartSpriteInfo;
     delete dollarSpriteInfo;
@@ -64,20 +64,26 @@ void Hud::init_sprites() {
     delete_sprites();
 
     heartSpriteInfo = GameState::instance().main_oam_manager->initSprite(gfx_hudPal, gfx_hudPalLen,
-                                                           nullptr, HUD_ICON_SIZE,
-                                                           ObjSize::OBJSIZE_16, SpritesheetType::HUD, true, false, LAYER_LEVEL::TOP);
+                                                                         nullptr, HUD_ICON_SIZE,
+                                                                         ObjSize::OBJSIZE_16, SpritesheetType::HUD,
+                                                                         true, false, LAYER_LEVEL::TOP);
     dollarSpriteInfo = GameState::instance().main_oam_manager->initSprite(gfx_hudPal, gfx_hudPalLen,
-                                                            nullptr, HUD_ICON_SIZE,
-                                                            ObjSize::OBJSIZE_16, SpritesheetType::HUD, true, false, LAYER_LEVEL::TOP);
+                                                                          nullptr, HUD_ICON_SIZE,
+                                                                          ObjSize::OBJSIZE_16, SpritesheetType::HUD,
+                                                                          true, false, LAYER_LEVEL::TOP);
     bombSpriteInfo = GameState::instance().main_oam_manager->initSprite(gfx_hudPal, gfx_hudPalLen,
-                                                          nullptr, HUD_ICON_SIZE,
-                                                          ObjSize::OBJSIZE_16, SpritesheetType::HUD, true, false, LAYER_LEVEL::TOP);
+                                                                        nullptr, HUD_ICON_SIZE,
+                                                                        ObjSize::OBJSIZE_16, SpritesheetType::HUD, true,
+                                                                        false, LAYER_LEVEL::TOP);
     ropeSpriteInfo = GameState::instance().main_oam_manager->initSprite(gfx_hudPal, gfx_hudPalLen,
-                                                          nullptr, HUD_ICON_SIZE,
-                                                          ObjSize::OBJSIZE_16, SpritesheetType::HUD, true, false, LAYER_LEVEL::TOP);
+                                                                        nullptr, HUD_ICON_SIZE,
+                                                                        ObjSize::OBJSIZE_16, SpritesheetType::HUD, true,
+                                                                        false, LAYER_LEVEL::TOP);
     holdingItemSpriteInfo = GameState::instance().main_oam_manager->initSprite(gfx_hudPal, gfx_hudPalLen,
-                                                                 nullptr, HUD_ICON_SIZE,
-                                                                 ObjSize::OBJSIZE_16, SpritesheetType::HUD, true, false, LAYER_LEVEL::TOP);
+                                                                               nullptr, HUD_ICON_SIZE,
+                                                                               ObjSize::OBJSIZE_16,
+                                                                               SpritesheetType::HUD, true, false,
+                                                                               LAYER_LEVEL::TOP);
 
     u8 *frameGfxHeart = sprite_utils::get_frame((u8 *) gfx_hudTiles, HUD_ICON_SIZE, 0);
     u8 *frameGfxHoldingItem = sprite_utils::get_frame((u8 *) gfx_hudTiles, HUD_ICON_SIZE, 1);
@@ -129,8 +135,6 @@ void Hud::draw_level_hud() {
             printf("\n\n    %s FOR $%d.\n    PRESS L TO PURCHASE.\n", holding_item_name, *holding_item_cost);
         }
 
-        //TODO Make use of debug flag
-        //debug_oam();
     } else {
 
         sprite_utils::set_visibility(false, heartSpriteInfo, bombSpriteInfo,
@@ -148,6 +152,9 @@ void Hud::draw_level_hud() {
 
     }
 
+#ifndef NDEBUG
+    debug_oam();
+#endif //NDEBUG
 
 }
 
@@ -264,7 +271,8 @@ void Hud::update() {
     if (!GameState::instance().splash_screen)
         time_spent_on_level += Timer::getDeltaTime();
 
-    if (GameState::instance().main_dude->dead && GameState::instance().main_dude->time_since_last_damage > MAIN_DUDE_DAMAGE_PROTECTION_TIME) {
+    if (GameState::instance().main_dude->dead &&
+        GameState::instance().main_dude->time_since_last_damage > MAIN_DUDE_DAMAGE_PROTECTION_TIME) {
 
         bool milestone_0 = game_over_timer > 0;
         bool milestone_1750 = game_over_timer > 1750;
