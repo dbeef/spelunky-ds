@@ -50,7 +50,7 @@ void Bomb::update_item_specific() {
 
         } else {
             explode();
-            GameState::instance().camera->shake();
+            Camera::instance().shake();
             _ready_to_dispose = true;
         }
     }

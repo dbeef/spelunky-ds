@@ -81,8 +81,8 @@ void Compass::draw_arrow_to_exit() {
         int tile_y = exit->y * TILE_H;
 
         //camera is centered on main dude
-        int diff_x = abs((GameState::instance().camera->x + 0.5 * SCREEN_WIDTH) - tile_x);
-        int diff_y = abs((GameState::instance().camera->y + 1.5 * SCREEN_HEIGHT) - tile_y);
+        int diff_x = abs((Camera::instance().x + 0.5 * SCREEN_WIDTH) - tile_x);
+        int diff_y = abs((Camera::instance().y + 1.5 * SCREEN_HEIGHT) - tile_y);
 
         _sub_sprite_info->entry->isHidden = false;
 

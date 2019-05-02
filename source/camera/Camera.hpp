@@ -5,8 +5,19 @@
 #ifndef SPELUNKYDS_CAMERA_H
 #define SPELUNKYDS_CAMERA_H
 
+#include "../preprocessor/Debug.h"
+
 class Camera {
 public:
+
+    static void init();
+
+    static void dispose();
+
+    inline static Camera &instance() {
+        SPELUNKYDS_BREAKING_ASSERT(_instance);
+        return *_instance;
+    }
 
     void update();
 
@@ -31,6 +42,8 @@ public:
     int y_shake_direction{};
 
 private:
+
+    static Camera* _instance;
 
     void apply_shaking();
 

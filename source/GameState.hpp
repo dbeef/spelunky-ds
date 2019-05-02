@@ -74,7 +74,6 @@ public:
 
     // TODO: Most of those can be re-made as singletons.
     MainDude *main_dude{};
-    Camera *camera{};
     Level *current_level{};
     OAMManager *main_oam_manager{};
     OAMManager *sub_oam_manager{};

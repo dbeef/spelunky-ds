@@ -21,6 +21,19 @@ constexpr u16 BOUNDARY_Y = 16;
 constexpr u8 shaking_max_delta = 3;
 constexpr u8 shaking_max_same_direction = 3;
 
+Camera* Camera::_instance = nullptr;
+
+void Camera::init() {
+    SPELUNKYDS_BREAKING_ASSERT(!_instance);
+    _instance = new Camera();
+    SPELUNKYDS_BREAKING_ASSERT(_instance);
+}
+
+void Camera::dispose() {
+    SPELUNKYDS_BREAKING_ASSERT(_instance);
+    delete _instance;
+}
+
 void Camera::apply_shaking() {
 
     if (shakescreen_duration_timer > 0) {

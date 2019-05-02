@@ -64,8 +64,8 @@ void MainDude::set_position_to(MapTileType t) {
         _y = 144;
     }
 
-    GameState::instance().camera->follow_main_dude = true;
-    GameState::instance().camera->instant_focus();
+    Camera::instance().follow_main_dude = true;
+    Camera::instance().instant_focus();
 }
 
 // Called externally in game loop

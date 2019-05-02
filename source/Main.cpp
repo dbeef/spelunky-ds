@@ -21,6 +21,7 @@ int main() {
 
     GameState::init();
     InputHandler::init();
+    Camera::init();
 
     // waiting for a next frame so it would be allowed to change the brightness
     swiWaitForVBlank();
@@ -85,6 +86,7 @@ int main() {
 
     GameState::dispose();
     InputHandler::dispose();
+    Camera::dispose();
 
     return 0;
 }

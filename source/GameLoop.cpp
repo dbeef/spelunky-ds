@@ -13,8 +13,8 @@
 
 void gameloop::run() {
 
-    GameState::instance().camera->x = CAMERA_MENU_START_X;
-    GameState::instance().camera->y = CAMERA_MENU_START_Y;
+    Camera::instance().x = CAMERA_MENU_START_X;
+    Camera::instance().y = CAMERA_MENU_START_Y;
     GameState::instance().main_dude = new MainDude(MAIN_DUDE_MENU_START_POSITION_X, MAIN_DUDE_MENU_START_POSITION_Y);
 
     GameState::instance().hud->init();
@@ -31,7 +31,7 @@ void gameloop::run() {
             GameState::instance().bombed = false;
         }
 
-        GameState::instance().camera->update();
+        Camera::instance().update();
 
         GameState::instance().main_dude->update();
         GameState::instance().main_dude->whip->update();
@@ -44,7 +44,7 @@ void gameloop::run() {
 
         swiWaitForVBlank();
 
-        GameState::instance().camera->write_current_position_to_graphics_engines();
+        Camera::instance().write_current_position_to_graphics_engines();
         GameState::instance().main_oam_manager->updateOAM();
         GameState::instance().sub_oam_manager->updateOAM();
         oam_utils::clean_unused_oam();

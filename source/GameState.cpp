@@ -23,7 +23,6 @@ GameState *GameState::_instance = nullptr;
 
 GameState::GameState() {
 
-    camera = new Camera();
     main_dude = nullptr;
     current_level = new Level();
     current_level->init_map_tiles();
@@ -32,7 +31,6 @@ GameState::GameState() {
     hud = new Hud();
     temp_map = new u16[4096];
 
-    SPELUNKYDS_BREAKING_ASSERT(camera);
     SPELUNKYDS_BREAKING_ASSERT(main_dude);
     SPELUNKYDS_BREAKING_ASSERT(current_level);
     SPELUNKYDS_BREAKING_ASSERT(main_oam_manager);
@@ -68,7 +66,7 @@ void GameState::start_new_game() {
 
 void GameState::start_main_menu() {
     main_dude->climbing = false;
-    camera->follow_main_dude = false;
+    Camera::instance().follow_main_dude = false;
     in_main_menu = true;
     levels_transition_screen = false;
     scores_screen = false;
@@ -81,7 +79,7 @@ void GameState::start_scores() {
 
     scores_screen = true;
     hud->draw_scores();
-    camera->follow_main_dude = false;
+    Camera::instance().follow_main_dude = false;
 }
 
 void GameState::start_level_transition_screen() {
@@ -95,7 +93,7 @@ void GameState::start_level_transition_screen() {
     InputHandler::instance().l_bumper_held = true;
     InputHandler::instance().right_key_held = true;
 
-    camera->follow_main_dude = false;
+    Camera::instance().follow_main_dude = false;
     consoleClear();
     hud->draw_on_level_done();
 
@@ -189,8 +187,8 @@ void GameState::handle_changing_screens() {
 //                set_position_to(MapTileType::ENTRANCE);
                 main_dude->_x = 113;
                 main_dude->_y = 288;
-                camera->follow_main_dude = true;
-                camera->instant_focus();
+                Camera::instance().follow_main_dude = true;
+                Camera::instance().instant_focus();
 
             } else if (main_dude->dead) {
                 current_level->initialise_tiles_from_splash_screen(SplashScreenType::SCORES_UPPER);
@@ -290,7 +288,6 @@ void GameState::handle_transition_screen_smooch() {
 
 GameState::~GameState() {
     delete main_dude;
-    delete camera;
     delete current_level;
     delete main_oam_manager;
     delete sub_oam_manager;
