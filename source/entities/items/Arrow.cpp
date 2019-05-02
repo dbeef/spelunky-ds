@@ -69,10 +69,10 @@ void Arrow::update_item_specific() {
             GameState::instance().main_dude->_x_speed = 3;
 
         GameState::instance().main_dude->time_since_last_damage = 0;
-        GameState::instance().hud->hearts -= 2;
-        GameState::instance().hud->draw_level_hud();
+        Hud::instance().hearts -= 2;
+        Hud::instance().draw_level_hud();
 
-        if (GameState::instance().hud->hearts <= 0) {
+        if (Hud::instance().hearts <= 0) {
             GameState::instance().main_dude->set_dead();
         } else
             sound::hit();

@@ -359,8 +359,8 @@ void populate_cave_npcs() {
 /** Creates all Sprites that are exlusively needed in the main menu scene */
 void populate_main_menu() {
 
-    GameState::instance().hud->bombs = 0;
-    GameState::instance().hud->ropes = 0;
+    Hud::instance().bombs = 0;
+    Hud::instance().ropes = 0;
 
     auto *spelunkyTitle = new SpelunkyTitle(60, 175);
     GameState::instance().decorations.push_back(spelunkyTitle);

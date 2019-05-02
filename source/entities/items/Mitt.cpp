@@ -66,8 +66,8 @@ void Mitt::equip() {
         GameState::instance().main_dude->carrying_mitt = true;
         update_sprites_position();
         _x = HUD_ITEMS_ROW_X;
-        _y = GameState::instance().hud->items_offset_y;
-        GameState::instance().hud->increment_offset_on_grabbed_item();
+        _y = Hud::instance().items_offset_y;
+        Hud::instance().increment_offset_on_grabbed_item();
     } else {
         sprite_utils::set_visibility(false, _main_sprite_info, _sub_sprite_info);
         _ready_to_dispose = true;

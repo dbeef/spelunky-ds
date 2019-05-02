@@ -8,7 +8,6 @@
 #include "tiles/SplashScreenType.hpp"
 #include "GameLoop.hpp"
 #include "sound/Sound.hpp"
-#include "console/ConsoleUtils.hpp"
 #include "time/Timer.h"
 #include "GameState.hpp"
 #include "graphics/Brightness.hpp"
@@ -22,6 +21,7 @@ int main() {
     GameState::init();
     InputHandler::init();
     Camera::init();
+    Hud::init();
 
     // waiting for a next frame so it would be allowed to change the brightness
     swiWaitForVBlank();
@@ -61,7 +61,7 @@ int main() {
     dmaCopy(gfx_cavebgTiles, bgGetGfxPtr(GameState::instance().bg_main_address), sizeof(gfx_cavebgTiles));
     dmaCopy(gfx_cavebgTiles, bgGetGfxPtr(GameState::instance().bg_sub_address), sizeof(gfx_cavebgTiles));
 
-    console::init();
+    Hud::instance().init_console();
 
     //Set-up main menu scene from tiles
     GameState::instance().current_level->initialise_tiles_from_splash_screen(SplashScreenType::MAIN_MENU_UPPER);
@@ -87,6 +87,7 @@ int main() {
     GameState::dispose();
     InputHandler::dispose();
     Camera::dispose();
+    Hud::dispose();
 
     return 0;
 }

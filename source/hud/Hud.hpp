@@ -5,10 +5,12 @@
 #ifndef SPELUNKYDS_HUD_H
 #define SPELUNKYDS_HUD_H
 
-
-#include "../graphics/SpriteInfo.h"
+#include <nds/arm9/console.h>
+#include "../preprocessor/Debug.h"
 
 #define HUD_ITEMS_ROW_X 236
+
+class SpriteInfo;
 
 class Hud {
 
@@ -16,29 +18,60 @@ public:
 
     Hud();
 
-    bool thief{};
-    double thief_timer{};
+    static void init();
 
-    bool introduce_shop{};
-    double introduce_shop_timer{};
-    const char *shop_name{};
+    static void dispose();
 
-    bool recently_bough_item{};
-    double recently_bough_item_timer{};
-    const char *recently_bought_item_name{};
+    inline static Hud &instance() {
+        SPELUNKYDS_BREAKING_ASSERT(_instance);
+        return *_instance;
+    }
 
-    bool not_enough_money{};
-    double not_enough_money_timer{};
+    void init_console();
 
-    bool holding_item_shopping{};
-    const char *holding_item_name{};
-    u16 *holding_item_cost{};
+    void clear_console();
+
+    void init_sprites();
+
+    void delete_sprites();
+
+    void update();
 
     void disable_all_prompts();
 
     void draw_level_hud();
 
-    void init();
+    void add_moniez_on_collected_loot(int value);
+
+    void draw_on_level_done();
+
+    void draw_scores();
+
+    void set_hud_sprites_attributes();
+
+    void increment_offset_on_grabbed_item();
+
+    void debug_oam();
+
+    void draw_collected_loot();
+
+    void draw_killed_npcs();
+
+    bool thief{};
+    double thief_timer{};
+    bool introduce_shop{};
+    double introduce_shop_timer{};
+    bool recently_bough_item{};
+    double recently_bough_item_timer{};
+    bool not_enough_money{};
+    double not_enough_money_timer{};
+    bool holding_item_shopping{};
+
+    const char *shop_name{};
+    const char *holding_item_name{};
+    const char *recently_bought_item_name{};
+    u16 *holding_item_cost{};
+
 
     int dollars_buffer{};
     double dollars_timer{};
@@ -65,26 +98,9 @@ public:
 
     //changes every time_utils a new item is added to hud
     int items_offset_y{};
+    PrintConsole *print_console{}; //in-game console
 
-    void delete_sprites();
-    void update();
-    void add_moniez_on_collected_loot(int value);
-
-    void draw_on_level_done();
-    void draw_scores();
-
-    void init_sprites();
-
-    void set_hud_sprites_attributes();
-
-    void increment_offset_on_grabbed_item();
-
-    void debug_oam();
-
-    void draw_collected_loot();
-
-    void draw_killed_npcs();
-
+    static Hud* _instance;
 };
 
 

@@ -76,8 +76,8 @@ void SpikeShoes::equip() {
         GameState::instance().main_dude->carrying_spike_shoes = true;
 
         _x = HUD_ITEMS_ROW_X;
-        _y = GameState::instance().hud->items_offset_y;
-        GameState::instance().hud->increment_offset_on_grabbed_item();
+        _y = Hud::instance().items_offset_y;
+        Hud::instance().increment_offset_on_grabbed_item();
 
         _sub_sprite_info->entry->isHidden = true;
         _main_sprite_info->entry->isHidden = false;

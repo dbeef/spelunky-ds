@@ -26,7 +26,7 @@ namespace oam_utils {
             GameState::instance().main_oam_manager->clear_sprite_attributes();
             GameState::instance().sub_oam_manager->clear_sprite_attributes();
 
-            GameState::instance().hud->delete_sprites();
+            Hud::instance().delete_sprites();
             GameState::instance().main_dude->delete_sprites();
             GameState::instance().main_dude->whip->delete_sprites();
 
@@ -118,7 +118,7 @@ namespace oam_utils {
                 }
             }
 
-            GameState::instance().hud->init_sprites();
+            Hud::instance().init_sprites();
 
 //            GameState::instance().clean_unused_oam_timer = 0;
             return true;
@@ -135,7 +135,7 @@ namespace oam_utils {
 
         GameState::instance().main_dude->delete_sprites();
         GameState::instance().main_dude->whip->delete_sprites();
-        GameState::instance().hud->delete_sprites();
+        Hud::instance().delete_sprites();
 
         for (auto &sprite : GameState::instance().creatures) {
             sprite->delete_sprites(); //deletes its SpriteInfos and nullptrs them

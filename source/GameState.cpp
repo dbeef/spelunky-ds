@@ -28,14 +28,12 @@ GameState::GameState() {
     current_level->init_map_tiles();
     main_oam_manager = new OAMManager();
     sub_oam_manager = new OAMManager();
-    hud = new Hud();
     temp_map = new u16[4096];
 
     SPELUNKYDS_BREAKING_ASSERT(main_dude);
     SPELUNKYDS_BREAKING_ASSERT(current_level);
     SPELUNKYDS_BREAKING_ASSERT(main_oam_manager);
     SPELUNKYDS_BREAKING_ASSERT(sub_oam_manager);
-    SPELUNKYDS_BREAKING_ASSERT(hud);
     SPELUNKYDS_BREAKING_ASSERT(temp_map);
 
     // some of the moving objects aren't rendered as entities, like the ArrowTrap, which is render as a map tile,
@@ -53,15 +51,15 @@ GameState::GameState() {
 void GameState::start_new_game() {
 
     main_dude->reset_state();
-    hud->hearts = 4;
-    hud->ropes = 4;
-    hud->bombs = 4;
-    hud->money = 0;
-    hud->items_offset_y = 7;
-    hud->game_over_timer = 0;
-    hud->disable_all_prompts();
-    hud->set_hud_sprites_attributes();
-    hud->draw_level_hud();
+    Hud::instance().hearts = 4;
+    Hud::instance().ropes = 4;
+    Hud::instance().bombs = 4;
+    Hud::instance().money = 0;
+    Hud::instance().items_offset_y = 7;
+    Hud::instance().game_over_timer = 0;
+    Hud::instance().disable_all_prompts();
+    Hud::instance().set_hud_sprites_attributes();
+    Hud::instance().draw_level_hud();
 }
 
 void GameState::start_main_menu() {
@@ -78,13 +76,13 @@ void GameState::start_scores() {
     main_dude->reset_state();
 
     scores_screen = true;
-    hud->draw_scores();
+    Hud::instance().draw_scores();
     Camera::instance().follow_main_dude = false;
 }
 
 void GameState::start_level_transition_screen() {
-    hud->total_time_spent += hud->time_spent_on_level;
-    hud->level++;
+    Hud::instance().total_time_spent += Hud::instance().time_spent_on_level;
+    Hud::instance().level++;
 
     levels_transition_screen = true;
     splash_screen = true;
@@ -95,11 +93,11 @@ void GameState::start_level_transition_screen() {
 
     Camera::instance().follow_main_dude = false;
     consoleClear();
-    hud->draw_on_level_done();
+    Hud::instance().draw_on_level_done();
 
 
     if (damsels_rescued_this_level > 0) {
-        hud->hearts += damsels_rescued_this_level;
+        Hud::instance().hearts += damsels_rescued_this_level;
         damsels_rescued_this_level = 0;
         smooching = true;
 
@@ -122,18 +120,18 @@ void GameState::start_level_transition_screen() {
 
 void GameState::start_next_level() {
 
-    hud->items_offset_y = 7;
+    Hud::instance().items_offset_y = 7;
     main_dude->holding_item = false;
     main_dude->spawn_carried_items();
-    hud->init_sprites();
+    Hud::instance().init_sprites();
     populate_cave_npcs();
     populate_cave_moniez();
     levels_transition_screen = false;
     in_main_menu = false;
     killed_npcs.clear();
     collected_treasures.clear();
-    hud->money_on_this_level = 0;
-    hud->draw_level_hud();
+    Hud::instance().money_on_this_level = 0;
+    Hud::instance().draw_level_hud();
 
 }
 
@@ -170,8 +168,8 @@ void GameState::handle_changing_screens() {
             current_level->clean_map_layout();
 
             //flushing the buffer so it wouldn't update in the scores/main menu/transition screen if != 0
-            hud->money_on_this_level += hud->dollars_buffer;
-            hud->dollars_buffer = 0;
+            Hud::instance().money_on_this_level += Hud::instance().dollars_buffer;
+            Hud::instance().dollars_buffer = 0;
 
             //splash screen; scores or level transition
 
@@ -291,8 +289,6 @@ GameState::~GameState() {
     delete current_level;
     delete main_oam_manager;
     delete sub_oam_manager;
-    delete hud;
-    delete print_console;
     delete temp_map;
 }
 

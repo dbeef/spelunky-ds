@@ -26,12 +26,12 @@ void ShoppingObject::update_anim_icon(int x, int y, int carrier_width) {
 
 void ShoppingObject::console_display_name_cost() {
     //if, so the text wouldn't blink because of constant clearing/drawing
-    if (!GameState::instance().hud->holding_item_shopping) {
-        GameState::instance().hud->disable_all_prompts();
-        GameState::instance().hud->holding_item_shopping = true;
-        GameState::instance().hud->holding_item_cost = &_cost;
-        GameState::instance().hud->holding_item_name = _name;
-        GameState::instance().hud->draw_level_hud();
+    if (!Hud::instance().holding_item_shopping) {
+        Hud::instance().disable_all_prompts();
+        Hud::instance().holding_item_shopping = true;
+        Hud::instance().holding_item_cost = &_cost;
+        Hud::instance().holding_item_name = _name;
+        Hud::instance().draw_level_hud();
     }
 }
 
@@ -40,19 +40,19 @@ bool ShoppingObject::shopping_transaction(BaseItem *m) {
     if (!_bought) {
         console_display_name_cost();
         if (InputHandler::instance().l_bumper_down) {
-            if (GameState::instance().hud->money >= _cost) {
+            if (Hud::instance().money >= _cost) {
                 _bought = true;
-                GameState::instance().hud->money -= _cost;
-                GameState::instance().hud->disable_all_prompts();
-                GameState::instance().hud->recently_bough_item = true;
-                GameState::instance().hud->recently_bought_item_name = _name;
-                GameState::instance().hud->draw_level_hud();
+                Hud::instance().money -= _cost;
+                Hud::instance().disable_all_prompts();
+                Hud::instance().recently_bough_item = true;
+                Hud::instance().recently_bought_item_name = _name;
+                Hud::instance().draw_level_hud();
                 return true;
             } else {
-                GameState::instance().hud->disable_all_prompts();
-                GameState::instance().hud->not_enough_money = true;
+                Hud::instance().disable_all_prompts();
+                Hud::instance().not_enough_money = true;
                 GameState::instance().main_dude->holding_item = false;
-                GameState::instance().hud->draw_level_hud();
+                Hud::instance().draw_level_hud();
                 m->_bottom_collision = false;
                 m->_hold_by_main_dude = false;
                 return false;
@@ -67,19 +67,19 @@ bool ShoppingObject::shopping_transaction(BaseCreature *m) {
     if (!_bought) {
         console_display_name_cost();
         if (InputHandler::instance().l_bumper_down) {
-            if (GameState::instance().hud->money >= _cost) {
+            if (Hud::instance().money >= _cost) {
                 _bought = true;
-                GameState::instance().hud->money -= _cost;
-                GameState::instance().hud->disable_all_prompts();
-                GameState::instance().hud->recently_bough_item = true;
-                GameState::instance().hud->recently_bought_item_name = _name;
-                GameState::instance().hud->draw_level_hud();
+                Hud::instance().money -= _cost;
+                Hud::instance().disable_all_prompts();
+                Hud::instance().recently_bough_item = true;
+                Hud::instance().recently_bought_item_name = _name;
+                Hud::instance().draw_level_hud();
                 return true;
             } else {
-                GameState::instance().hud->disable_all_prompts();
-                GameState::instance().hud->not_enough_money = true;
+                Hud::instance().disable_all_prompts();
+                Hud::instance().not_enough_money = true;
                 GameState::instance().main_dude->holding_item = false;
-                GameState::instance().hud->draw_level_hud();
+                Hud::instance().draw_level_hud();
                 m->_bottom_collision = false;
                 m->hold_by_main_dude = false;
                 return false;

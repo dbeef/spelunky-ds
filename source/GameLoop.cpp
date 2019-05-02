@@ -17,7 +17,8 @@ void gameloop::run() {
     Camera::instance().y = CAMERA_MENU_START_Y;
     GameState::instance().main_dude = new MainDude(MAIN_DUDE_MENU_START_POSITION_X, MAIN_DUDE_MENU_START_POSITION_Y);
 
-    GameState::instance().hud->init();
+    Hud::instance().clear_console();
+    Hud::instance().init_sprites();
     populate_main_menu();
 
     // If exited, SpelunkyDS returns 0 and gets back to the menu.
@@ -40,7 +41,7 @@ void gameloop::run() {
 
         GameState::instance().handle_transition_screen_smooch();
         GameState::instance().main_dude->handle_key_input();
-        GameState::instance().hud->update();
+        Hud::instance().update();
 
         swiWaitForVBlank();
 

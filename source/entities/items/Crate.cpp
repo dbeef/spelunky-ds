@@ -94,14 +94,14 @@ void Crate::drop_loot() {
         GotCollectible *g;
 
         if (r == 0) {
-            GameState::instance().hud->ropes += 4;
+            Hud::instance().ropes += 4;
             g = new GotCollectible(_x - 12, _y - 20, GotCollectible::Type::ROPE);
         } else {
-            GameState::instance().hud->bombs += 4;
+            Hud::instance().bombs += 4;
             g = new GotCollectible(_x - 12, _y - 20, GotCollectible::Type::BOMB);
         }
 
-        GameState::instance().hud->draw_level_hud();
+        Hud::instance().draw_level_hud();
 
         GameState::instance().decorations.push_back(g);
     } else {

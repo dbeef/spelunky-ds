@@ -24,6 +24,8 @@
 #include "../GameState.hpp"
 #include "../time/Timer.h"
 #include "../graphics/SpriteUtils.hpp"
+#include "../graphics/SpriteInfo.h"
+#include "../../build/font.h"
 
 #define HEART_POSITION_X 5
 #define HEART_POSITION_Y 5
@@ -43,6 +45,19 @@
 #define HUD_ICON_WIDTH 16
 #define HUD_ICON_HEIGHT 16
 #define HUD_ICON_SIZE HUD_ICON_WIDTH * HUD_ICON_HEIGHT
+
+Hud* Hud::_instance = nullptr;
+
+void Hud::init() {
+    SPELUNKYDS_BREAKING_ASSERT(!_instance);
+    _instance = new Hud();
+    SPELUNKYDS_BREAKING_ASSERT(_instance);
+}
+
+void Hud::dispose() {
+    SPELUNKYDS_BREAKING_ASSERT(_instance);
+    delete _instance;
+}
 
 void Hud::delete_sprites() {
 
@@ -98,12 +113,6 @@ void Hud::init_sprites() {
     dollarSpriteInfo->updateFrame(frameGfxDollar, HUD_ICON_SIZE);
 
     set_hud_sprites_attributes();
-}
-
-
-void Hud::init() {
-    consoleClear();
-    init_sprites();
 }
 
 //Call only when something changed (i.e hearts counter decremented and it needs to be updated on hud)
@@ -480,3 +489,27 @@ void Hud::draw_killed_npcs() {
 
 }
 
+void Hud::clear_console() {
+    consoleClear();
+}
+
+void Hud::init_console() {
+    constexpr int tile_base = 2;
+    constexpr int map_base = 8;
+
+    //The default instance utilizes the sub display, approximatly 15KiB of vram C starting
+    //at tile base 0 and 2KiB of map at map base 30.
+    consoleInit(print_console, OBJPRIORITY_0, BgType_Text4bpp, BgSize_T_256x256,
+                map_base, tile_base, true, false);
+
+    ConsoleFont font;
+
+    font.gfx = (u16 *) fontTiles;
+    font.pal = (u16 *) fontPal;
+    font.numChars = 59;
+    font.numColors = 2 /*fontPalLen / 2*/;
+    font.bpp = 4;
+    font.asciiOffset = 32;
+    font.convertSingleColor = true;
+    consoleSetFont(print_console, &font);
+}

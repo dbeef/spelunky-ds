@@ -226,7 +226,7 @@ void Shopkeeper::apply_dmg(int dmg_to_apply) {
     }
 
     if (!killed && hitpoints <= 0) {
-        GameState::instance().hud->disable_all_prompts();
+        Hud::instance().disable_all_prompts();
         de_shopify_all_items();
         GameState::instance().robbed_killed_shopkeeper = true;
         GameState::instance().killed_npcs.push_back(_creature_type);
@@ -455,10 +455,10 @@ void Shopkeeper::check_if_dude_in_shop_bounds() {
         }
 
         if (!introduced_shop_name) {
-            GameState::instance().hud->disable_all_prompts();
-            GameState::instance().hud->introduce_shop = true;
-            GameState::instance().hud->shop_name = "\n\n\n\nWELCOME TO SMITHY'S SUPPLY SHOP!";
-            GameState::instance().hud->draw_level_hud();
+            Hud::instance().disable_all_prompts();
+            Hud::instance().introduce_shop = true;
+            Hud::instance().shop_name = "\n\n\n\nWELCOME TO SMITHY'S SUPPLY SHOP!";
+            Hud::instance().draw_level_hud();
             introduced_shop_name = true;
         }
 
@@ -471,7 +471,7 @@ void Shopkeeper::check_if_dude_in_shop_bounds() {
             else
                 sprite_state = Orientation::RIGHT;
 
-            if (GameState::instance().hud->holding_item_shopping) {
+            if (Hud::instance().holding_item_shopping) {
 
                 int abs_diff = abs(diff);
 
@@ -489,7 +489,7 @@ void Shopkeeper::check_if_dude_in_shop_bounds() {
         }
 
 
-    } else if (GameState::instance().hud->holding_item_shopping && !triggered) {
+    } else if (Hud::instance().holding_item_shopping && !triggered) {
         trigger();
     } else {
 
@@ -530,11 +530,11 @@ void Shopkeeper::spawn_shotgun() {
 
 void Shopkeeper::trigger() {
 
-    GameState::instance().hud->disable_all_prompts();
+    Hud::instance().disable_all_prompts();
     standby = false;
     triggered = true;
-    GameState::instance().hud->thief = true;
-    GameState::instance().hud->draw_level_hud();
+    Hud::instance().thief = true;
+    Hud::instance().draw_level_hud();
     de_shopify_all_items();
     if (!holding_shotgun) {
         spawn_shotgun();

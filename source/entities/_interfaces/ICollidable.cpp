@@ -215,10 +215,10 @@ void ICollidable::deal_damage_main_dude_on_collision(int dmg_to_apply) const {
         GameState::instance().main_dude->time_since_last_damage > 1000 && !GameState::instance().main_dude->exiting_level) {
 
         GameState::instance().main_dude->time_since_last_damage = 0;
-        GameState::instance().hud->hearts -= dmg_to_apply;
-        GameState::instance().hud->draw_level_hud();
+        Hud::instance().hearts -= dmg_to_apply;
+        Hud::instance().draw_level_hud();
 
-        if (GameState::instance().hud->hearts <= 0) {
+        if (Hud::instance().hearts <= 0) {
             GameState::instance().main_dude->set_dead();
         } else
             sound::hit();

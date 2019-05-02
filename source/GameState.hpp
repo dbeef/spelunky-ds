@@ -77,8 +77,7 @@ public:
     Level *current_level{};
     OAMManager *main_oam_manager{};
     OAMManager *sub_oam_manager{};
-    Hud *hud{};
-    PrintConsole *print_console{}; //in-game console
+
     u16 *temp_map{}; //cave background only
 
     std::vector<BaseCreature *> creatures;

@@ -43,8 +43,8 @@ void GoldenIdol::update_item_specific() {
             _y = tiles[static_cast<uint16>(TileOrientation::CENTER)]->y * 16;
             if (_hold_by_main_dude) {
                 GameState::instance().main_dude->holding_item = false;
-                GameState::instance().hud->money += 5000;
-                GameState::instance().hud->update();
+                Hud::instance().money += 5000;
+                Hud::instance().update();
                 _hold_by_main_dude = false;
                 _physical_height = 0;
                 _physical_width = 0;

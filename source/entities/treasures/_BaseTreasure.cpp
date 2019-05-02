@@ -48,7 +48,7 @@ void BaseTreasure::update() {
         else if (_spritesheet_type == SpritesheetType::MONIEZ_GOLDBARS)
             sound::coin();
 
-        GameState::instance().hud->add_moniez_on_collected_loot(get_dollars_value());
+        Hud::instance().add_moniez_on_collected_loot(get_dollars_value());
         sprite_utils::set_visibility(false, _main_sprite_info, _sub_sprite_info);
         GameState::instance().collected_treasures.push_back(_treasure_type);
         _ready_to_dispose = true;

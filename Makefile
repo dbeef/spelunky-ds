@@ -22,7 +22,7 @@ include $(DEVKITARM)/ds_rules
 #---------------------------------------------------------------------------------
 TARGET		:=	$(notdir $(CURDIR))
 BUILD		:=	build
-SOURCES		:=	source source/tiles source/entities/_interfaces source/console source/input  \
+SOURCES		:=	source source/tiles source/entities/_interfaces source/input  \
                 source/collisions source/entities source/entities/treasures source/entities/creatures \
                 source/entities/items source/entities/decorations source/time \
                 source/hud source/rooms source/graphics source/camera source/entities/animations \

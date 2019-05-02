@@ -131,9 +131,9 @@ void MainDude::handle_key_input() {
 
         }
 
-        if (InputHandler::instance().x_key_down && GameState::instance().hud->ropes > 0) {
+        if (InputHandler::instance().x_key_down && Hud::instance().ropes > 0) {
             throw_rope();
-        } else if (InputHandler::instance().a_key_down && !holding_item && GameState::instance().hud->bombs > 0) {
+        } else if (InputHandler::instance().a_key_down && !holding_item && Hud::instance().bombs > 0) {
             take_out_bomb();
         }
 
@@ -421,9 +421,9 @@ void MainDude::update_creature_specific() {
     if (_bottom_collision && jumping_timer > MAIN_DUDE_STUN_FALLING_TIME) {
 
 
-        if (GameState::instance().hud->hearts > 0) {
-            GameState::instance().hud->hearts--;
-            GameState::instance().hud->draw_level_hud();
+        if (Hud::instance().hearts > 0) {
+            Hud::instance().hearts--;
+            Hud::instance().draw_level_hud();
         }
 
         stunned = true;
@@ -440,7 +440,7 @@ void MainDude::update_creature_specific() {
         GameState::instance().creatures.push_back(f_left);
         GameState::instance().creatures.push_back(f_right);
 
-        if (GameState::instance().hud->hearts == 0) {
+        if (Hud::instance().hearts == 0) {
             GameState::instance().main_dude->set_dead();
         }
 
@@ -621,8 +621,8 @@ void MainDude::throw_item() {
 
             holding_item = false;
 
-            GameState::instance().hud->disable_all_prompts();
-            GameState::instance().hud->draw_level_hud();
+            Hud::instance().disable_all_prompts();
+            Hud::instance().draw_level_hud();
 
             sound::throwing();
 
@@ -641,8 +641,8 @@ void MainDude::throw_item() {
 }
 
 void MainDude::take_out_bomb() {
-    GameState::instance().hud->bombs--;
-    GameState::instance().hud->draw_level_hud();
+    Hud::instance().bombs--;
+    Hud::instance().draw_level_hud();
     Bomb *bomb = new Bomb(_x, _y);
     bomb->_hold_by_main_dude = true;
     GameState::instance().items.push_back(bomb);
@@ -651,8 +651,8 @@ void MainDude::take_out_bomb() {
 
 void MainDude::throw_rope() {
 
-    GameState::instance().hud->ropes--;
-    GameState::instance().hud->draw_level_hud();
+    Hud::instance().ropes--;
+    Hud::instance().draw_level_hud();
 
     u8 ROPE_PHYSICAL_WIDTH = 16;
     Rope *rope = new Rope((floor_div(_x + (0.5 * _physical_width), TILE_W) * TILE_W) + (ROPE_PHYSICAL_WIDTH * 0.5),
@@ -666,55 +666,55 @@ void MainDude::throw_rope() {
 void MainDude::spawn_carried_items() {
 
     if (carrying_spring_shoes) {
-        auto *springShoes = new SpringShoes(HUD_ITEMS_ROW_X, GameState::instance().hud->items_offset_y);
+        auto *springShoes = new SpringShoes(HUD_ITEMS_ROW_X, Hud::instance().items_offset_y);
         springShoes->collected = true;
         springShoes->_bought = true;
         GameState::instance().items.push_back(springShoes);
-        GameState::instance().hud->increment_offset_on_grabbed_item();
+        Hud::instance().increment_offset_on_grabbed_item();
     }
 
     if (carrying_spike_shoes) {
-        auto *spikeShoes = new SpikeShoes(HUD_ITEMS_ROW_X, GameState::instance().hud->items_offset_y);
+        auto *spikeShoes = new SpikeShoes(HUD_ITEMS_ROW_X, Hud::instance().items_offset_y);
         spikeShoes->_render_in_hud = true;
         spikeShoes->_bought = true;
         GameState::instance().items.push_back(spikeShoes);
-        GameState::instance().hud->increment_offset_on_grabbed_item();
+        Hud::instance().increment_offset_on_grabbed_item();
     }
 
     if (carrying_compass) {
-        auto *compass = new Compass(HUD_ITEMS_ROW_X, GameState::instance().hud->items_offset_y);
+        auto *compass = new Compass(HUD_ITEMS_ROW_X, Hud::instance().items_offset_y);
         compass->collected = true;
         compass->_bought = true;
         GameState::instance().items.push_back(compass);
-        GameState::instance().hud->increment_offset_on_grabbed_item();
+        Hud::instance().increment_offset_on_grabbed_item();
     }
     if (carrying_glove) {
-        auto *glove = new Glove(HUD_ITEMS_ROW_X, GameState::instance().hud->items_offset_y);
+        auto *glove = new Glove(HUD_ITEMS_ROW_X, Hud::instance().items_offset_y);
         glove->_render_in_hud = true;
         glove->_bought = true;
         GameState::instance().items.push_back(glove);
-        GameState::instance().hud->increment_offset_on_grabbed_item();
+        Hud::instance().increment_offset_on_grabbed_item();
     }
     if (carrying_cape) {
-        auto cape = new Cape(HUD_ITEMS_ROW_X, GameState::instance().hud->items_offset_y);
+        auto cape = new Cape(HUD_ITEMS_ROW_X, Hud::instance().items_offset_y);
         cape->_collected = true;
         cape->_bought = true;
         GameState::instance().items.push_back(cape);
-        GameState::instance().hud->increment_offset_on_grabbed_item();
+        Hud::instance().increment_offset_on_grabbed_item();
     }
     if (carrying_jetpack) {
-        auto *jetpack = new Jetpack(HUD_ITEMS_ROW_X, GameState::instance().hud->items_offset_y);
+        auto *jetpack = new Jetpack(HUD_ITEMS_ROW_X, Hud::instance().items_offset_y);
         jetpack->collected = true;
         jetpack->_bought = true;
         GameState::instance().items.push_back(jetpack);
-        GameState::instance().hud->increment_offset_on_grabbed_item();
+        Hud::instance().increment_offset_on_grabbed_item();
     }
     if (carrying_mitt) {
-        auto mitt = new Mitt(HUD_ITEMS_ROW_X, GameState::instance().hud->items_offset_y);
+        auto mitt = new Mitt(HUD_ITEMS_ROW_X, Hud::instance().items_offset_y);
         mitt->collected = true;
         mitt->_bought = true;
         GameState::instance().items.push_back(mitt);
-        GameState::instance().hud->increment_offset_on_grabbed_item();
+        Hud::instance().increment_offset_on_grabbed_item();
     }
     if (carrying_shotgun) {
         holding_item = true;
@@ -952,8 +952,8 @@ bool MainDude::can_apply_gravity() const {
 //TODO Enum dead cause?
 void MainDude::set_dead() {
     time_since_last_damage = 0;
-    GameState::instance().hud->hearts = 0;
-    GameState::instance().hud->draw_level_hud();
+    Hud::instance().hearts = 0;
+    Hud::instance().draw_level_hud();
     dead = true;
     _bouncing_factor_y = ICollidable::default_bouncing_factor_y;
     _y_speed = -MAIN_DUDE_JUMP_SPEED * 0.25;
