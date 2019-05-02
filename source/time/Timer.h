@@ -16,11 +16,11 @@ public:
 
     //note -> calling timerElapsed(0) flushes the value, so by the next timerElapsed(0) that
     //happens in the same frame, you will get 0 - make sure then, that you call it only once every frame!
-    inline static double getDeltaTime() { return _timer; }
+    inline static double getDeltaTime() { return _delta_time; }
 
 private:
 
-    static double _timer;
+    static double _delta_time;
 };
 
 #endif //SPELUNKYDS_TIME_UTILS_H

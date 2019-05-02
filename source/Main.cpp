@@ -70,7 +70,7 @@ int main() {
     GameState::instance().current_level->initialise_tiles_from_splash_screen(SplashScreenType::MAIN_MENU_LOWER);
     GameState::instance().current_level->update_level();
 
-    //Copy cave background palette to the graphics graphics
+    //Copy cave background palette to the graphics memory
     dmaCopy(gfx_cavebgPal, BG_PALETTE, gfx_cavebgPalLen);
     dmaCopy(gfx_cavebgPal, BG_PALETTE_SUB, gfx_cavebgPalLen);
 
@@ -83,8 +83,8 @@ int main() {
     OAMManager::sub().initOAMTable(SPRITE_GFX_SUB, SPRITE_PALETTE_SUB, OAM_SUB, OFFSET_MULTIPLIER_SUB);
 
     gameloop::run();
-    Timer::stop();
 
+    Timer::stop();
     GameState::dispose();
     InputHandler::dispose();
     Camera::dispose();
