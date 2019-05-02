@@ -30,8 +30,11 @@ void gameloop::run() {
         Timer::update_ms_since_last_frame();
         InputHandler::instance().updateInput();
 
+        // TODO: Make something like 'update' method for game state
+        //   for things like this.
         GameState::instance().handle_transition_screen_smooch();
 
+        // TODO: Merge those functions.
         MainDude::instance().handle_key_input();
         MainDude::instance().update();
 
@@ -41,18 +44,25 @@ void gameloop::run() {
 
         update_entities();
 
+        // TODO: Should be placed in planned GameState's update method
         if (GameState::instance().bombed) {
             on_bomb_explosion();
             GameState::instance().bombed = false;
         }
 
+        // TODO: Place in camera's update method
         Camera::instance().write_current_position_to_graphics_engines();
+
+        // TODO: Rename to just update
         OAMManager::main().updateOAM();
         OAMManager::sub().updateOAM();
+
+        // TODO: Place in planned GameState's update
         oam_utils::clean_unused_oam();
 
         swiWaitForVBlank();
 
+        // TODO: Place in planned GameState's update
         brightness::update_brightness();
         if (GameState::instance().exiting_game && brightness::is_maximum_brightness()) break;
     }
