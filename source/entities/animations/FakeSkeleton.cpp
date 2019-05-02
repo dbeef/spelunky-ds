@@ -31,15 +31,15 @@ void FakeSkeleton::update_creature_specific() {
 
     if (!tried_to_pickup) {
 
-        if (GameState::instance().input_handler->y_key_down &&
-            GameState::instance().input_handler->down_key_held &&
+        if (InputHandler::instance().y_key_down &&
+            InputHandler::instance().down_key_held &&
             !GameState::instance().main_dude->holding_item &&
             Collisions::checkCollisionWithMainDude(_x, _y, _physical_width, _physical_height)) {
 
             //pickup item from the ground
 
             GameState::instance().main_dude->holding_item = true;
-            GameState::instance().input_handler->y_key_down = false;
+            InputHandler::instance().y_key_down = false;
 
             tried_to_pickup = true;
             match_animation();

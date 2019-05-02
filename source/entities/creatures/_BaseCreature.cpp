@@ -55,10 +55,10 @@ void BaseCreature::kill_if_main_dude_jumped_on_you(int dmg_to_apply) {
 bool BaseCreature::check_if_can_be_opened() {
     if (!activated &&
         Collisions::checkCollisionWithMainDudeWidthBoundary(_x, _y, _physical_width, _physical_height, 8) &&
-        GameState::instance().input_handler->up_key_held && GameState::instance().input_handler->y_key_down) {
+        InputHandler::instance().up_key_held && InputHandler::instance().y_key_down) {
 
         activated = true;
-        GameState::instance().input_handler->y_key_down = false;
+        InputHandler::instance().y_key_down = false;
 
         return true;
     } else
@@ -70,20 +70,20 @@ bool BaseCreature::check_if_can_be_opened() {
 void BaseCreature::check_if_can_be_pickuped() {
 
     if (hold_by_main_dude &&
-        GameState::instance().input_handler->y_key_down &&
-        GameState::instance().input_handler->down_key_held &&
+        InputHandler::instance().y_key_down &&
+        InputHandler::instance().down_key_held &&
         GameState::instance().main_dude->_bottom_collision) {
 
         //leave item on ground
 
         hold_by_main_dude = false;
         GameState::instance().main_dude->holding_item = false;
-        GameState::instance().input_handler->y_key_down = false;
+        InputHandler::instance().y_key_down = false;
         _bottom_collision = false;
         GameState::instance().main_dude->_currently_held_creature = nullptr;
 
-    } else if (GameState::instance().input_handler->y_key_down &&
-               GameState::instance().input_handler->down_key_held &&
+    } else if (InputHandler::instance().y_key_down &&
+               InputHandler::instance().down_key_held &&
                !GameState::instance().main_dude->holding_item &&
                Collisions::checkCollisionWithMainDude(_x, _y, _physical_width, _physical_height)) {
 
@@ -92,7 +92,7 @@ void BaseCreature::check_if_can_be_pickuped() {
         GameState::instance().main_dude->holding_item = true;
         GameState::instance().main_dude->_currently_held_creature = this;
         hold_by_main_dude = true;
-        GameState::instance().input_handler->y_key_down = false;
+        InputHandler::instance().y_key_down = false;
 
     }
 
@@ -101,12 +101,12 @@ void BaseCreature::check_if_can_be_pickuped() {
 //check, if main dude can pickup to the inventory (not to the hands)
 bool BaseCreature::check_if_can_be_equipped() {
 
-    bool q = (GameState::instance().input_handler->y_key_down && GameState::instance().input_handler->down_key_held &&
+    bool q = (InputHandler::instance().y_key_down && InputHandler::instance().down_key_held &&
               !GameState::instance().main_dude->holding_item) &&
              Collisions::checkCollisionWithMainDude(_x, _y, _sprite_width, _sprite_height);
 
     if (q) {
-        GameState::instance().input_handler->y_key_down = false;
+        InputHandler::instance().y_key_down = false;
     }
 
     return q;

@@ -65,9 +65,9 @@ void Rope::update_item_specific() {
             _rope_chain.at(a)->_y - 5 < GameState::instance().main_dude->_y + MainDude::main_dude_physical_height &&
             _rope_chain.at(a)->_active
             && !onTopOfClimbingSpace) {
-            if (!GameState::instance().input_handler->r_bumper_down) {
+            if (!InputHandler::instance().r_bumper_down) {
                 GameState::instance().main_dude->can_climb_rope = true;
-                if (GameState::instance().input_handler->up_key_held) {
+                if (InputHandler::instance().up_key_held) {
                     GameState::instance().main_dude->_x = _rope_chain.at(a)->_x - 4;
                 }
             }

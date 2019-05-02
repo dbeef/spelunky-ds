@@ -47,7 +47,7 @@ void Cape::update_item_specific() {
         if (GameState::instance().main_dude->climbing || GameState::instance().main_dude->exiting_level) {
             set_pickuped_position_not_checking(0, 0, 4);
             sprite_utils::set_priority(OBJPRIORITY_0, _main_sprite_info, _sub_sprite_info);
-        } else if (GameState::instance().input_handler->down_key_held || GameState::instance().main_dude->dead || GameState::instance().main_dude->stunned) {
+        } else if (InputHandler::instance().down_key_held || GameState::instance().main_dude->dead || GameState::instance().main_dude->stunned) {
             set_pickuped_position_not_checking(0, 0, 4);
             sprite_utils::set_priority(OBJPRIORITY_1, _main_sprite_info, _sub_sprite_info);
         } else {
@@ -106,7 +106,7 @@ void Cape::match_animation() {
     } else if (GameState::instance().main_dude->climbing) {
         //climbing
         frame_gfx = sprite_utils::get_frame((u8 *) gfx_goldbarsTiles, _sprite_size, 3);
-    } else if (GameState::instance().input_handler->down_key_held || GameState::instance().main_dude->dead || GameState::instance().main_dude->stunned ||
+    } else if (InputHandler::instance().down_key_held || GameState::instance().main_dude->dead || GameState::instance().main_dude->stunned ||
                (!GameState::instance().main_dude->using_cape && !GameState::instance().main_dude->stunned &&
                 (GameState::instance().main_dude->_x_speed != 0 || GameState::instance().main_dude->_y_speed != 0))) {
 

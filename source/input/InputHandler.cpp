@@ -5,6 +5,19 @@
 #include <nds/arm9/input.h>
 #include "InputHandler.hpp"
 
+InputHandler* InputHandler::_instance;
+
+void InputHandler::init() {
+    SPELUNKYDS_BREAKING_ASSERT(!_instance);
+    _instance = new InputHandler();
+    SPELUNKYDS_BREAKING_ASSERT(_instance);
+}
+
+void InputHandler::dispose() {
+    SPELUNKYDS_BREAKING_ASSERT(_instance);
+    delete _instance;
+}
+
 void InputHandler::updateInput() {
 
     if (stop_handling)

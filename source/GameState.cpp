@@ -23,7 +23,6 @@ GameState *GameState::_instance = nullptr;
 
 GameState::GameState() {
 
-    input_handler = new InputHandler();
     camera = new Camera();
     main_dude = nullptr;
     current_level = new Level();
@@ -33,7 +32,6 @@ GameState::GameState() {
     hud = new Hud();
     temp_map = new u16[4096];
 
-    SPELUNKYDS_BREAKING_ASSERT(input_handler);
     SPELUNKYDS_BREAKING_ASSERT(camera);
     SPELUNKYDS_BREAKING_ASSERT(main_dude);
     SPELUNKYDS_BREAKING_ASSERT(current_level);
@@ -93,9 +91,9 @@ void GameState::start_level_transition_screen() {
     levels_transition_screen = true;
     splash_screen = true;
 
-    input_handler->stop_handling = true;
-    input_handler->l_bumper_held = true;
-    input_handler->right_key_held = true;
+    InputHandler::instance().stop_handling = true;
+    InputHandler::instance().l_bumper_held = true;
+    InputHandler::instance().right_key_held = true;
 
     camera->follow_main_dude = false;
     consoleClear();
@@ -143,7 +141,7 @@ void GameState::start_next_level() {
 
 void GameState::handle_changing_screens() {
 
-    if ((main_dude->dead && input_handler->y_key_down) ||
+    if ((main_dude->dead && InputHandler::instance().y_key_down) ||
         (main_dude->animFrame >= 16 && !splash_screen)) {
 
         main_dude->animFrame = 0;
@@ -261,9 +259,9 @@ void GameState::handle_changing_screens() {
 
         main_dude->main_sprite_info->entry->isHidden = true;
         main_dude->sub_sprite_info->entry->isHidden = true;
-        input_handler->stop_handling = false;
+        InputHandler::instance().stop_handling = false;
 
-        if (input_handler->y_key_down) {
+        if (InputHandler::instance().y_key_down) {
             splash_screen = false;
         }
 
@@ -277,7 +275,7 @@ void GameState::handle_transition_screen_smooch() {
     if (smooching) {
         if (144 - main_dude->_x <= 16) {
             smooch_timer += Timer::getDeltaTime();
-            input_handler->right_key_held = false;
+            InputHandler::instance().right_key_held = false;
             if (!spawned_smooch) {
                 sound::kiss();
                 spawned_smooch = true;
@@ -292,7 +290,6 @@ void GameState::handle_transition_screen_smooch() {
 
 GameState::~GameState() {
     delete main_dude;
-    delete input_handler;
     delete camera;
     delete current_level;
     delete main_oam_manager;

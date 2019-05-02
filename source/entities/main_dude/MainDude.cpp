@@ -72,7 +72,7 @@ void MainDude::set_position_to(MapTileType t) {
 void MainDude::handle_key_input() {
 
     if (!stunned && !exiting_level && !dead) {
-        if (GameState::instance().input_handler->b_key_down && time_since_last_jump > 100) {
+        if (InputHandler::instance().b_key_down && time_since_last_jump > 100) {
 
             if (_bottom_collision || climbing) {
                 if (carrying_spring_shoes)
@@ -103,7 +103,7 @@ void MainDude::handle_key_input() {
             }
         }
 
-        if (GameState::instance().input_handler->b_key_down && time_since_last_jump > 100) {
+        if (InputHandler::instance().b_key_down && time_since_last_jump > 100) {
 
             if (!climbing && carrying_jetpack && jetpack_fuel_counter > 0) {
                 jumping_timer = 0;
@@ -117,7 +117,7 @@ void MainDude::handle_key_input() {
 
         }
 
-        if (GameState::instance().input_handler->y_key_down) {
+        if (InputHandler::instance().y_key_down) {
 
             if (!stunned && !using_whip) {
                 if (holding_item) {
@@ -131,13 +131,13 @@ void MainDude::handle_key_input() {
 
         }
 
-        if (GameState::instance().input_handler->x_key_down && GameState::instance().hud->ropes > 0) {
+        if (InputHandler::instance().x_key_down && GameState::instance().hud->ropes > 0) {
             throw_rope();
-        } else if (GameState::instance().input_handler->a_key_down && !holding_item && GameState::instance().hud->bombs > 0) {
+        } else if (InputHandler::instance().a_key_down && !holding_item && GameState::instance().hud->bombs > 0) {
             take_out_bomb();
         }
 
-        if (GameState::instance().input_handler->left_key_held) {
+        if (InputHandler::instance().left_key_held) {
 
             sprite_state = Orientation::LEFT;
             hanging_on_tile_left = false;
@@ -149,7 +149,7 @@ void MainDude::handle_key_input() {
 
         }
 
-        if (GameState::instance().input_handler->right_key_held) {
+        if (InputHandler::instance().right_key_held) {
 
             sprite_state = Orientation::RIGHT;
             hanging_on_tile_right = false;
@@ -168,8 +168,8 @@ void MainDude::handle_key_input() {
         current_x_in_tiles = xx;
         current_y_in_tiles = yy;
 
-        if (GameState::instance().input_handler->l_bumper_held || GameState::instance().input_handler->up_key_held ||
-            GameState::instance().input_handler->down_key_held) {
+        if (InputHandler::instance().l_bumper_held || InputHandler::instance().up_key_held ||
+            InputHandler::instance().down_key_held) {
 
             if (climbing) {
 
@@ -200,12 +200,12 @@ void MainDude::handle_key_input() {
                                (neighboringTiles[static_cast<uint16>(TileOrientation::CENTER)]->mapTileType == MapTileType::LADDER ||
                                 neighboringTiles[static_cast<uint16>(TileOrientation::CENTER)]->mapTileType == MapTileType::LADDER_DECK);
 
-            can_climb_ladder = can_climb_ladder && GameState::instance().input_handler->up_key_held;
-            can_climb_rope = can_climb_rope && GameState::instance().input_handler->up_key_held;
+            can_climb_ladder = can_climb_ladder && InputHandler::instance().up_key_held;
+            can_climb_rope = can_climb_rope && InputHandler::instance().up_key_held;
 
             exiting_level = neighboringTiles[static_cast<uint16>(TileOrientation::CENTER)] != nullptr &&
                             (neighboringTiles[static_cast<uint16>(TileOrientation::CENTER)]->mapTileType == MapTileType::EXIT) &&
-                            GameState::instance().input_handler->l_bumper_held;
+                            InputHandler::instance().l_bumper_held;
 
             if (exiting_level) {
 
@@ -237,7 +237,7 @@ void MainDude::handle_key_input() {
                 jumping_timer = 0;
                 _x_speed = 0;
 
-                if (GameState::instance().input_handler->up_key_held)
+                if (InputHandler::instance().up_key_held)
                     _y_speed = -1;
 
                 if (can_climb_rope)
@@ -256,7 +256,7 @@ void MainDude::handle_key_input() {
             _y_speed = 0;
         }
 
-        if (GameState::instance().input_handler->down_key_held) {
+        if (InputHandler::instance().down_key_held) {
 
             MapTile *neighboringTiles[9] = {};
 
@@ -292,7 +292,7 @@ void MainDude::handle_key_input() {
             }
         } else {
             crawling = false;
-            if (!GameState::instance().input_handler->r_bumper_held) {
+            if (!InputHandler::instance().r_bumper_held) {
                 _max_x_speed = main_dude_max_x_speed_walking;
                 _pos_update_delta = main_dude_pos_update_delta_walking_running;
             }
@@ -301,7 +301,7 @@ void MainDude::handle_key_input() {
 
     } else {
         crawling = false;
-        if (!GameState::instance().input_handler->r_bumper_held) {
+        if (!InputHandler::instance().r_bumper_held) {
             _max_x_speed = main_dude_max_x_speed_walking;
             _pos_update_delta = main_dude_pos_update_delta_walking_running;
         }
@@ -339,7 +339,7 @@ void MainDude::update_creature_specific() {
     if (crawling) {
         _max_x_speed = MAIN_DUDE_MAX_X_SPEED_CRAWLING;
         _max_y_speed = MAIN_DUDE_MAX_Y_SPEED;
-    } else if (GameState::instance().input_handler->r_bumper_held) {
+    } else if (InputHandler::instance().r_bumper_held) {
         // running fast
         _max_x_speed = main_dude_max_x_speed_running;
         _max_y_speed = MAIN_DUDE_MAX_Y_SPEED;
@@ -357,7 +357,7 @@ void MainDude::update_creature_specific() {
         _pos_update_delta = main_dude_pos_update_delta_crawling;
         _max_x_speed = main_dude_max_x_crawling;
     } else {
-        if (!GameState::instance().input_handler->r_bumper_held)
+        if (!InputHandler::instance().r_bumper_held)
             _pos_update_delta = main_dude_pos_update_delta_walking_running;
     }
     // "Update timers"
@@ -377,17 +377,17 @@ void MainDude::update_creature_specific() {
 
     }
 
-    if (!GameState::instance().input_handler->left_key_held && pushing_left) {
+    if (!InputHandler::instance().left_key_held && pushing_left) {
         pushing_left = false;
         pushing_timer = 0;
     }
-    if (!GameState::instance().input_handler->right_key_held && pushing_right) {
+    if (!InputHandler::instance().right_key_held && pushing_right) {
         pushing_right = false;
         pushing_timer = 0;
     }
 
     if ((_left_collision || _right_collision) && !crawling && !hanging_on_tile_left && !hanging_on_tile_right &&
-        (GameState::instance().input_handler->left_key_held || GameState::instance().input_handler->right_key_held)) {
+        (InputHandler::instance().left_key_held || InputHandler::instance().right_key_held)) {
         pushing_timer += Timer::getDeltaTime();
         if (pushing_timer > MAIN_DUDE_PUSHING_TIME) {
             if (_left_collision) {
@@ -466,7 +466,7 @@ void MainDude::update_creature_specific() {
 
     if (!_bottom_collision) {
         crawling = false;
-        if (!GameState::instance().input_handler->r_bumper_held) {
+        if (!InputHandler::instance().r_bumper_held) {
             _max_x_speed = main_dude_max_x_speed_walking;
             _pos_update_delta = main_dude_pos_update_delta_walking_running;
         }
@@ -567,7 +567,7 @@ void MainDude::throw_item() {
 
         if (activated) {
 
-            if (!GameState::instance().input_handler->down_key_held) {
+            if (!InputHandler::instance().down_key_held) {
 
                 if (carrying_mitt) {
                     if (sprite_state == Orientation::LEFT)
@@ -598,7 +598,7 @@ void MainDude::throw_item() {
                 held->_x_speed *= 2;
             } else {
 
-                if (GameState::instance().input_handler->up_key_held)
+                if (InputHandler::instance().up_key_held)
                     held->_y_speed = -2.55 - abs(_y_speed);
                 else {
                     held->_y_speed = -1;
@@ -912,7 +912,7 @@ void MainDude::apply_dmg(int dmg_to_apply) {
 
 void MainDude::match_animation() {
 
-    if (exiting_level || (dead && GameState::instance().input_handler->y_key_down)) {
+    if (exiting_level || (dead && InputHandler::instance().y_key_down)) {
         GameState::instance().handle_changing_screens();
         set_sprite_exiting_level();
     } else if (using_whip) {

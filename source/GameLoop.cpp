@@ -24,7 +24,7 @@ void gameloop::run() {
     while (true) {
 
         Timer::update_ms_since_last_frame();
-        GameState::instance().input_handler->updateInput();
+        InputHandler::instance().updateInput();
 
         if (GameState::instance().bombed) {
             on_bomb_explosion();

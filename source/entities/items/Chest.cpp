@@ -21,7 +21,7 @@ void Chest::update_item_specific() {
 
     if (_activated && !_dropped_loot) {
 
-        if (GameState::instance().input_handler->up_key_held) {
+        if (InputHandler::instance().up_key_held) {
             sound::open_chest();
             spawn_treasure();
             _dropped_loot = true;

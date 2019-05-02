@@ -111,7 +111,7 @@ void Camera::update() {
     if (position_update_timer > 15) {
 
         //main dude's spriting, scroll faster
-        if (GameState::instance().input_handler->r_bumper_held)
+        if (InputHandler::instance().r_bumper_held)
             incremental_focus(3);
         else
             incremental_focus(2);

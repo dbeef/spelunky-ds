@@ -5,17 +5,22 @@
 #ifndef SPELUNKYDS_INPUTHANDLER_H
 #define SPELUNKYDS_INPUTHANDLER_H
 
-/**
- * keysDown - recently pressed keys
- * keysHeld - keys that are currently hold
- */
+#include "../preprocessor/Debug.h"
 
 class InputHandler {
 public:
+
+    static void init();
+
+    static void dispose();
+
+    inline static InputHandler &instance() {
+        SPELUNKYDS_BREAKING_ASSERT(_instance);
+        return *_instance;
+    }
+
     void updateInput();
 
-    int keys_held{};
-    int keys_down{};
     bool stop_handling{};
 
     bool left_key_held{};
@@ -32,6 +37,15 @@ public:
     bool y_key_down{};
     bool a_key_down{};
     bool b_key_down{};
+
+private:
+
+    static InputHandler *_instance;
+
+    // keys that are currently held
+    int keys_held{};
+    // recently pressed keys
+    int keys_down{};
 };
 
 

@@ -39,7 +39,7 @@ bool ShoppingObject::shopping_transaction(BaseItem *m) {
 
     if (!_bought) {
         console_display_name_cost();
-        if (GameState::instance().input_handler->l_bumper_down) {
+        if (InputHandler::instance().l_bumper_down) {
             if (GameState::instance().hud->money >= _cost) {
                 _bought = true;
                 GameState::instance().hud->money -= _cost;
@@ -66,7 +66,7 @@ bool ShoppingObject::shopping_transaction(BaseCreature *m) {
 
     if (!_bought) {
         console_display_name_cost();
-        if (GameState::instance().input_handler->l_bumper_down) {
+        if (InputHandler::instance().l_bumper_down) {
             if (GameState::instance().hud->money >= _cost) {
                 _bought = true;
                 GameState::instance().hud->money -= _cost;
