@@ -43,7 +43,7 @@ void gameloop::run() {
         GameState::instance().hud->update();
 
         swiWaitForVBlank();
-        Brightness::normalize_brightness();
+        brightness::normalize_brightness();
 
         GameState::instance().camera->write_current_position_to_graphics_engines();
         GameState::instance().main_oam_manager->updateOAM();

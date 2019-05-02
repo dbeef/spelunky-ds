@@ -24,7 +24,7 @@ int main() {
     // waiting for a next frame so it would be allowed to change the brightness
     swiWaitForVBlank();
     // setting screen white to smooth transition from game launcher
-    Brightness::set_maximum_brightness();
+    brightness::set_maximum_brightness();
 
     sound::load_sounds();
     sound::start_menu_music();
