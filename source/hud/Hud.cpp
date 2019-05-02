@@ -20,7 +20,7 @@
 #include "../entities/treasures/RubySmall.h"
 #include "../entities/treasures/TripleGoldbar.h"
 #include "../entities/treasures/SingleGoldbar.hpp"
-#include "../entities/main_dude/MainDudeConsts.h"
+#include "../entities/singletons/MainDudeConsts.h"
 #include "../GameState.hpp"
 #include "../time/Timer.h"
 #include "../graphics/SpriteUtils.hpp"
@@ -124,7 +124,7 @@ void Hud::draw_level_hud() {
 
     consoleClear();
 
-    if (!GameState::instance().main_dude->dead) {
+    if (!MainDude::instance().dead) {
 
         if (dollars_buffer != 0) {
             printf("\n   %d    %d    %d    %d\n                  +%d",
@@ -280,8 +280,8 @@ void Hud::update() {
     if (!GameState::instance().splash_screen)
         time_spent_on_level += Timer::getDeltaTime();
 
-    if (GameState::instance().main_dude->dead &&
-        GameState::instance().main_dude->time_since_last_damage > MAIN_DUDE_DAMAGE_PROTECTION_TIME) {
+    if (MainDude::instance().dead &&
+        MainDude::instance().time_since_last_damage > MAIN_DUDE_DAMAGE_PROTECTION_TIME) {
 
         bool milestone_0 = game_over_timer > 0;
         bool milestone_1750 = game_over_timer > 1750;
@@ -312,7 +312,7 @@ void Hud::set_hud_sprites_attributes() {
             !GameState::instance().scores_screen &&
             !GameState::instance().levels_transition_screen;
 
-    sprite_utils::set_visibility(!GameState::instance().main_dude->dead & playing_level,
+    sprite_utils::set_visibility(!MainDude::instance().dead & playing_level,
                                  heartSpriteInfo, bombSpriteInfo, ropeSpriteInfo, dollarSpriteInfo,
                                  holdingItemSpriteInfo);
 

@@ -4,7 +4,7 @@
 
 #include "GoldenIdol.h"
 #include "../../GameState.hpp"
-#include "../main_dude/MainDude.hpp"
+#include "../singletons/MainDude.hpp"
 #include "../../../build/gfx_goldbars.h"
 #include "../../collisions/Collisions.hpp"
 #include "../../tiles/LevelRenderingUtils.hpp"
@@ -32,8 +32,8 @@ void GoldenIdol::update_item_specific() {
         }
 
         MapTile *tiles[9] = {};
-        Collisions::getNeighboringTiles(GameState::instance().current_level->map_tiles, GameState::instance().main_dude->current_x_in_tiles,
-                                        GameState::instance().main_dude->current_y_in_tiles, tiles);
+        Collisions::getNeighboringTiles(GameState::instance().current_level->map_tiles, MainDude::instance().current_x_in_tiles,
+                                        MainDude::instance().current_y_in_tiles, tiles);
 
         collected = tiles[static_cast<uint16>(TileOrientation::CENTER)] != nullptr && tiles[static_cast<uint16>(TileOrientation::CENTER)]->mapTileType == MapTileType::EXIT;
         if (collected) {
@@ -42,7 +42,7 @@ void GoldenIdol::update_item_specific() {
             _x = tiles[static_cast<uint16>(TileOrientation::CENTER)]->x * 16;
             _y = tiles[static_cast<uint16>(TileOrientation::CENTER)]->y * 16;
             if (_hold_by_main_dude) {
-                GameState::instance().main_dude->holding_item = false;
+                MainDude::instance().holding_item = false;
                 Hud::instance().money += 5000;
                 Hud::instance().update();
                 _hold_by_main_dude = false;

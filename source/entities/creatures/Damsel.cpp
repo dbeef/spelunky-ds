@@ -54,9 +54,9 @@ void Damsel::update_creature_specific() {
         yelling = false;
 
         if (!killed)
-            GameState::instance().main_dude->carrying_damsel = true;
+            MainDude::instance().carrying_damsel = true;
 
-        if (GameState::instance().main_dude->killed) {
+        if (MainDude::instance().killed) {
             hold_by_main_dude = false;
             stunned = true;
             stunned_timer = 0;
@@ -69,7 +69,7 @@ void Damsel::update_creature_specific() {
             _bouncing_factor_y = 0;
         }
 
-        sprite_state = GameState::instance().main_dude->sprite_state;
+        sprite_state = MainDude::instance().sprite_state;
         sprite_utils::set_priority(OBJPRIORITY_0, mainSpriteInfo, subSpriteInfo);
 
     } else
@@ -80,8 +80,8 @@ void Damsel::update_creature_specific() {
 
     update_sprites_position();
 
-    if (!hold_by_main_dude && GameState::instance().main_dude->carrying_damsel) {
-        GameState::instance().main_dude->carrying_damsel = false;
+    if (!hold_by_main_dude && MainDude::instance().carrying_damsel) {
+        MainDude::instance().carrying_damsel = false;
         stunned = true;
         stunned_timer = 0;
         triggered = true;
@@ -137,8 +137,8 @@ void Damsel::update_creature_specific() {
 
         //search for an exit
         MapTile *tiles[9] = {};
-        Collisions::getNeighboringTiles(GameState::instance().current_level->map_tiles, GameState::instance().main_dude->current_x_in_tiles,
-                                        GameState::instance().main_dude->current_y_in_tiles, tiles);
+        Collisions::getNeighboringTiles(GameState::instance().current_level->map_tiles, MainDude::instance().current_x_in_tiles,
+                                        MainDude::instance().current_y_in_tiles, tiles);
 
         exiting_level = tiles[static_cast<uint16>(TileOrientation::CENTER)] != nullptr && tiles[static_cast<uint16>(TileOrientation::CENTER)]->mapTileType == MapTileType::EXIT;
         if (exiting_level) {
@@ -148,9 +148,9 @@ void Damsel::update_creature_specific() {
             _y = tiles[static_cast<uint16>(TileOrientation::CENTER)]->y * 16;
             hold_by_main_dude = false;
             sound::steps();
-            if (GameState::instance().main_dude->carrying_damsel) {
-                GameState::instance().main_dude->holding_item = false;
-                GameState::instance().main_dude->carrying_damsel = false;
+            if (MainDude::instance().carrying_damsel) {
+                MainDude::instance().holding_item = false;
+                MainDude::instance().carrying_damsel = false;
             }
         }
     }

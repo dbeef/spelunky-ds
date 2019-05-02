@@ -8,24 +8,38 @@
 
 #include "../../time/Timer.h"
 #include "../../graphics/SpriteUtils.hpp"
+#include "MainDudeConsts.h"
+
+Whip *Whip::_instance = nullptr;
+
+void Whip::init() {
+    SPELUNKYDS_BREAKING_ASSERT(!_instance);
+    _instance = new Whip(MAIN_DUDE_MENU_START_POSITION_X, MAIN_DUDE_MENU_START_POSITION_X);
+    SPELUNKYDS_BREAKING_ASSERT(_instance);
+}
+
+void Whip::dispose() {
+    SPELUNKYDS_BREAKING_ASSERT(_instance);
+    delete _instance;
+}
 
 void Whip::update_creature_specific() {
 
-    if (GameState::instance().main_dude->using_whip) {
+    if (MainDude::instance().using_whip) {
         update_sprites_position();
 
         _whiping_timer += Timer::getDeltaTime();
         if (_whiping_timer > 420) {
             _whiping_timer = 0;
-            GameState::instance().main_dude->using_whip = false;
+            MainDude::instance().using_whip = false;
             hide();
         }
 
     } else
         hide();
 
-    _x = GameState::instance().main_dude->_x;
-    _y = GameState::instance().main_dude->_y - 1;
+    _x = MainDude::instance()._x;
+    _y = MainDude::instance()._y - 1;
 
     match_animation();
 
@@ -43,14 +57,15 @@ void Whip::init_sprites() {
     delete_sprites();
 
     _main_sprite_info = OAMManager::main().initSprite(gfx_spike_collectibles_flamePal,
-                                                             gfx_spike_collectibles_flamePalLen, nullptr,
-                                                             _sprite_size, ObjSize::OBJSIZE_16, SpritesheetType::WHIP,
-                                                             true, false, LAYER_LEVEL::MIDDLE_TOP);
+                                                      gfx_spike_collectibles_flamePalLen, nullptr,
+                                                      _sprite_size, ObjSize::OBJSIZE_16, SpritesheetType::WHIP,
+                                                      true, false, LAYER_LEVEL::MIDDLE_TOP);
 
     _sub_sprite_info = OAMManager::sub().initSprite(gfx_spike_collectibles_flamePal,
-                                                           gfx_spike_collectibles_flamePalLen, nullptr,
-                                                           _sprite_size, ObjSize::OBJSIZE_16, SpritesheetType::WHIP, true, false,
-                                                           LAYER_LEVEL::MIDDLE_TOP);
+                                                    gfx_spike_collectibles_flamePalLen, nullptr,
+                                                    _sprite_size, ObjSize::OBJSIZE_16, SpritesheetType::WHIP, true,
+                                                    false,
+                                                    LAYER_LEVEL::MIDDLE_TOP);
     sprite_utils::set_vertical_flip(false, _main_sprite_info, _sub_sprite_info);
     hide();
 }
@@ -84,7 +99,7 @@ void Whip::match_animation() {
         assign_pre_whip_sprite();
         sprite_utils::set_visibility(true, _main_sprite_info, _sub_sprite_info);
 
-        if (GameState::instance().main_dude->sprite_state == Orientation::LEFT) {
+        if (MainDude::instance().sprite_state == Orientation::LEFT) {
             _x += 8;
             sprite_utils::set_horizontal_flip(true, _main_sprite_info, _sub_sprite_info);
         } else {
@@ -98,7 +113,7 @@ void Whip::match_animation() {
         assign_whip_sprite();
         sprite_utils::set_visibility(true, _main_sprite_info, _sub_sprite_info);
 
-        if (GameState::instance().main_dude->sprite_state == Orientation::LEFT) {
+        if (MainDude::instance().sprite_state == Orientation::LEFT) {
             _x -= 16;
             sprite_utils::set_horizontal_flip(false, _main_sprite_info, _sub_sprite_info);
         } else {

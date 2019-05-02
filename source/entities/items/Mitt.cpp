@@ -62,8 +62,8 @@ void Mitt::equip() {
     auto *g = new GotCollectible(_x - 12, _y - 20, GotCollectible::Type::ITEM);
     GameState::instance().decorations.push_back(g);
 
-    if (!GameState::instance().main_dude->carrying_mitt) {
-        GameState::instance().main_dude->carrying_mitt = true;
+    if (!MainDude::instance().carrying_mitt) {
+        MainDude::instance().carrying_mitt = true;
         update_sprites_position();
         _x = HUD_ITEMS_ROW_X;
         _y = Hud::instance().items_offset_y;

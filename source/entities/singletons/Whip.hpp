@@ -9,6 +9,7 @@
 #define WHIP_WIDTH 12
 
 #include "../creatures/_BaseCreature.h"
+#include "../../preprocessor/Debug.h"
 
 
 //http://spelunky.wikia.com/wiki/Whip
@@ -21,6 +22,15 @@ class Whip : public BaseCreature {
     static constexpr SpritesheetType whip_spritesheet_type = SpritesheetType::SPIKES_COLLECTIBLES;
 
 public:
+
+    static void init();
+
+    static void dispose();
+
+    inline static Whip& instance() {
+        SPELUNKYDS_BREAKING_ASSERT(_instance);
+        return *_instance;
+    }
 
     Whip(int x, int y) : BaseCreature(
             x,
@@ -72,6 +82,8 @@ public:
     double _whiping_timer{};
 
 private:
+
+    static Whip* _instance;
 
     //Updates sprites' graphics according to current animation frame index.
     void match_animation();

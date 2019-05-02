@@ -33,7 +33,7 @@ void Shopkeeper::update_creature_specific() {
 
     kill_if_whip(1);
 
-    if (!GameState::instance().main_dude->dead)
+    if (!MainDude::instance().dead)
         kill_if_main_dude_jumped_on_you(1);
 
     check_if_dude_in_shop_bounds();
@@ -85,7 +85,7 @@ void Shopkeeper::update_creature_specific() {
             shotgun->_orientation= Orientation::LEFT;
         }
 
-        if (!GameState::instance().main_dude->dead && triggered) {
+        if (!MainDude::instance().dead && triggered) {
             shotgun->_activated = true;
         }
     }
@@ -93,9 +93,9 @@ void Shopkeeper::update_creature_specific() {
     if (hold_by_main_dude) {
 
         if (!killed)
-            GameState::instance().main_dude->carrying_damsel = true;
+            MainDude::instance().carrying_damsel = true;
 
-        if (GameState::instance().main_dude->killed) {
+        if (MainDude::instance().killed) {
             hold_by_main_dude = false;
             stunned = true;
             _bouncing_factor_x = ICollidable::default_bouncing_factor_x;
@@ -107,7 +107,7 @@ void Shopkeeper::update_creature_specific() {
             _bouncing_factor_y = 0;
         }
 
-        sprite_state = GameState::instance().main_dude->sprite_state;
+        sprite_state = MainDude::instance().sprite_state;
         sprite_utils::set_priority(OBJPRIORITY_0, mainSpriteInfo, subSpriteInfo);
 
     } else
@@ -135,7 +135,7 @@ void Shopkeeper::update_creature_specific() {
     }
 
     if (triggered) {
-        if (GameState::instance().main_dude->dead) {
+        if (MainDude::instance().dead) {
             triggered = false;
             standby = true;
         }
@@ -447,8 +447,8 @@ void Shopkeeper::check_if_dude_in_shop_bounds() {
     if (killed)
         return;
 
-    if (GameState::instance().main_dude->_x < shop_bounds_right_x_px && GameState::instance().main_dude->_x > shop_bounds_left_x_px &&
-        GameState::instance().main_dude->_y > shop_bounds_up_y_px && GameState::instance().main_dude->_y < shop_bounds_down_y_px) {
+    if (MainDude::instance()._x < shop_bounds_right_x_px && MainDude::instance()._x > shop_bounds_left_x_px &&
+        MainDude::instance()._y > shop_bounds_up_y_px && MainDude::instance()._y < shop_bounds_down_y_px) {
 
         if (standby) {
             trigger();
@@ -462,7 +462,7 @@ void Shopkeeper::check_if_dude_in_shop_bounds() {
             introduced_shop_name = true;
         }
 
-        int diff = _x - GameState::instance().main_dude->_x;
+        int diff = _x - MainDude::instance()._x;
 
         if (!triggered) {
 

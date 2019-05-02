@@ -39,8 +39,8 @@ void Spider::update_creature_specific() {
     if (!hunting)
         //Check if main dude is direcly under the spider - intentionally not checking for terrain obstacles,
         //like in the original game. Also check if main dude is in certain range
-        hunting = abs(_y - GameState::instance().main_dude->_y) < 9 * TILE_H && GameState::instance().main_dude->_x + MainDude::main_dude_physical_width > _x &&
-                  GameState::instance().main_dude->_x < _x + _physical_width && GameState::instance().main_dude->_y > _y;
+        hunting = abs(_y - MainDude::instance()._y) < 9 * TILE_H && MainDude::instance()._x + MainDude::main_dude_physical_width > _x &&
+                  MainDude::instance()._x < _x + _physical_width && MainDude::instance()._y > _y;
     else {
         time_since_last_big_jump += Timer::getDeltaTime();
         time_since_last_jump += Timer::getDeltaTime();
@@ -167,7 +167,7 @@ void Spider::jump_to_main_dude() {
 
     time_since_last_jump = 0;
 
-    int diff = GameState::instance().main_dude->_x - _x > 0;
+    int diff = MainDude::instance()._x - _x > 0;
 
     bool additional_jump_speed = false;
 

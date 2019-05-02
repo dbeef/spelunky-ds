@@ -28,12 +28,12 @@ void Pistol::update_item_specific() {
         if (shopping_transaction(this))
             equip();
 
-        GameState::instance().main_dude->carrying_pistol = true;
-        _orientation = GameState::instance().main_dude->sprite_state;
+        MainDude::instance().carrying_pistol = true;
+        _orientation = MainDude::instance().sprite_state;
         match_animation();
 
     } else
-        GameState::instance().main_dude->carrying_pistol = false;
+        MainDude::instance().carrying_pistol = false;
 
     update_sprites_position(); //must be called here, after position is offsetted if pistol carried
     handle_shooting();
@@ -70,10 +70,10 @@ void Pistol::spawn_bullet() {
 
     auto *b = new Bullet(_x, _y);
 
-    if (GameState::instance().main_dude->sprite_state == Orientation::LEFT) {
+    if (MainDude::instance().sprite_state == Orientation::LEFT) {
         b->_x_speed = -5.0;
         b->_x -= 2;
-    } else if (GameState::instance().main_dude->sprite_state == Orientation::RIGHT) {
+    } else if (MainDude::instance().sprite_state == Orientation::RIGHT) {
         b->_x_speed = 5.0;
         b->_x += 2;
     }

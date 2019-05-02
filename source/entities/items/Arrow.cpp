@@ -11,7 +11,7 @@
 #include "../../GameState.hpp"
 #include "../../collisions/Collisions.hpp"
 #include "../../tiles/LevelRenderingUtils.hpp"
-#include "../main_dude/MainDude.hpp"
+#include "../singletons/MainDude.hpp"
 
 #include "Arrow.hpp"
 #include "../../time/Timer.h"
@@ -26,7 +26,7 @@ void Arrow::update_item_specific() {
 
         _thrown = false;
 
-        if (GameState::instance().main_dude->sprite_state == Orientation::RIGHT)
+        if (MainDude::instance().sprite_state == Orientation::RIGHT)
             _angle = 90;
         else
             _angle = 270;
@@ -52,28 +52,28 @@ void Arrow::update_item_specific() {
 
         // TODO Make an util function for this;
         // settings those flags causes main dude to fall off whatever he is hanging on.
-        GameState::instance().main_dude->can_climb_rope = false;
-        GameState::instance().main_dude->started_climbing_rope = false;
-        GameState::instance().main_dude->can_climb_ladder = false;
-        GameState::instance().main_dude->started_climbing_ladder = false;
-        GameState::instance().main_dude->climbing = false;
-        GameState::instance().main_dude->hanging_on_tile_left = false;
-        GameState::instance().main_dude->hanging_on_tile_right = false;
-        GameState::instance().main_dude->using_whip = false;
-        GameState::instance().main_dude->stunned_timer = 0;
-        GameState::instance().main_dude->stunned = true;
+        MainDude::instance().can_climb_rope = false;
+        MainDude::instance().started_climbing_rope = false;
+        MainDude::instance().can_climb_ladder = false;
+        MainDude::instance().started_climbing_ladder = false;
+        MainDude::instance().climbing = false;
+        MainDude::instance().hanging_on_tile_left = false;
+        MainDude::instance().hanging_on_tile_right = false;
+        MainDude::instance().using_whip = false;
+        MainDude::instance().stunned_timer = 0;
+        MainDude::instance().stunned = true;
 
         if (_orientation == Orientation::LEFT)
-            GameState::instance().main_dude->_x_speed = -3;
+            MainDude::instance()._x_speed = -3;
         else if (_orientation == Orientation::RIGHT)
-            GameState::instance().main_dude->_x_speed = 3;
+            MainDude::instance()._x_speed = 3;
 
-        GameState::instance().main_dude->time_since_last_damage = 0;
+        MainDude::instance().time_since_last_damage = 0;
         Hud::instance().hearts -= 2;
         Hud::instance().draw_level_hud();
 
         if (Hud::instance().hearts <= 0) {
-            GameState::instance().main_dude->set_dead();
+            MainDude::instance().set_dead();
         } else
             sound::hit();
 

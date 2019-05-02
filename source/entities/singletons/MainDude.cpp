@@ -30,6 +30,19 @@
 #include "MainDudeConsts.h"
 #include "../../time/Timer.h"
 
+MainDude* MainDude::_instance = nullptr;
+
+void MainDude::init() {
+    SPELUNKYDS_BREAKING_ASSERT(!_instance);
+    _instance = new MainDude(MAIN_DUDE_MENU_START_POSITION_X, MAIN_DUDE_MENU_START_POSITION_Y);
+    SPELUNKYDS_BREAKING_ASSERT(_instance);
+}
+
+void MainDude::dispose() {
+    SPELUNKYDS_BREAKING_ASSERT(_instance);
+    delete _instance;
+}
+
 void MainDude::reset_state(){
     // no items
     carrying_spring_shoes = false;
@@ -441,7 +454,7 @@ void MainDude::update_creature_specific() {
         GameState::instance().creatures.push_back(f_right);
 
         if (Hud::instance().hearts == 0) {
-            GameState::instance().main_dude->set_dead();
+            MainDude::instance().set_dead();
         }
 
         sound::land();
@@ -977,7 +990,7 @@ void MainDude::delete_sprites() {
 }
 
 MainDude::~MainDude() {
-    delete whip;
+    // do nothing
 }
 
 MainDude::MainDude(int x, int y) : BaseCreature(
@@ -994,7 +1007,5 @@ MainDude::MainDude(int x, int y) : BaseCreature(
     _friction = ICollidable::default_friction * 5.0f;
     _bouncing_factor_y = 0;
     _bouncing_factor_x = 0;
-    init_sprites();
-    whip = new Whip(0, 0);
     _gravity = ICollidable::default_gravity * 1.15f;
 };

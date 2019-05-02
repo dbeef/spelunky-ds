@@ -25,8 +25,8 @@ add_executable(spelunkyds
         gfx/sprites/16x16/sprite.grit
         source/preprocessor/Debug.h
         source/entities/decorations/_BaseDecoration.h
-        source/entities/main_dude/MainDude.cpp
-        source/entities/main_dude/MainDude.hpp
+        source/entities/singletons/MainDude.cpp
+        source/entities/singletons/MainDude.hpp
         source/entities/items/Bomb.cpp
         source/entities/items/Rock.cpp
         source/entities/items/Arrow.cpp
@@ -50,9 +50,9 @@ add_executable(spelunkyds
         source/tiles/MapTile.hpp
         source/GameLoop.cpp
         source/GameLoop.hpp
-        source/entities/main_dude/MainDudeConsts.h
-        source/entities/main_dude/MainDude.cpp
-        source/entities/main_dude/MainDude.hpp
+        source/entities/singletons/MainDudeConsts.h
+        source/entities/singletons/MainDude.cpp
+        source/entities/singletons/MainDude.hpp
         source/entities/_common/Orientation.hpp
         source/GameLoop.hpp
         source/tiles/Level.cpp
@@ -102,13 +102,12 @@ add_executable(spelunkyds
         source/entities/creatures/Spider.hpp
         source/entities/creatures/CreatureType.hpp
         source/sound/Sound.hpp
-        source/console/ConsoleUtils.hpp
         source/time/Timer.h
         source/time/Timer.cpp
         source/graphics/OamUtils.cpp
         source/graphics/OamUtils.hpp
-        source/entities/main_dude/Whip.cpp
-        source/entities/main_dude/Whip.hpp
+        source/entities/singletons/Whip.cpp
+        source/entities/singletons/Whip.hpp
         source/entities/creatures/Spikes.cpp
         source/entities/creatures/Spikes.h
         source/entities/items/Chest.cpp

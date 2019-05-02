@@ -27,8 +27,8 @@ namespace oam_utils {
             OAMManager::sub().clear_sprite_attributes();
 
             Hud::instance().delete_sprites();
-            GameState::instance().main_dude->delete_sprites();
-            GameState::instance().main_dude->whip->delete_sprites();
+            MainDude::instance().delete_sprites();
+            Whip::instance().delete_sprites();
 
             std::vector<BaseCreature *>::iterator iter;
             for (iter = GameState::instance().creatures.begin(); iter != GameState::instance().creatures.end();) {
@@ -94,8 +94,8 @@ namespace oam_utils {
 //            }
 
 
-            GameState::instance().main_dude->init_sprites();
-            GameState::instance().main_dude->whip->init_sprites();
+            MainDude::instance().init_sprites();
+            Whip::instance().init_sprites();
 
             for (auto &creature : GameState::instance().creatures) {
                 if (!creature->_ready_to_dispose) {
@@ -133,8 +133,8 @@ namespace oam_utils {
         OAMManager::main().clear_sprite_attributes();
         OAMManager::sub().clear_sprite_attributes();
 
-        GameState::instance().main_dude->delete_sprites();
-        GameState::instance().main_dude->whip->delete_sprites();
+        MainDude::instance().delete_sprites();
+        Whip::instance().delete_sprites();
         Hud::instance().delete_sprites();
 
         for (auto &sprite : GameState::instance().creatures) {

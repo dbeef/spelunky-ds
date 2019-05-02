@@ -42,7 +42,7 @@ void Caveman::update_creature_specific() {
         set_pickuped_position(6, -4);
 
         if (hold_by_main_dude) {
-            sprite_state = GameState::instance().main_dude->sprite_state;
+            sprite_state = MainDude::instance().sprite_state;
             sprite_utils::set_priority(OBJPRIORITY_0, mainSpriteInfo, subSpriteInfo);
         } else
             sprite_utils::set_priority(OBJPRIORITY_2, mainSpriteInfo, subSpriteInfo);
@@ -55,7 +55,7 @@ void Caveman::update_creature_specific() {
     if (!stunned && !killed) {
         if (hold_by_main_dude) {
             hold_by_main_dude = false;
-            GameState::instance().main_dude->holding_item = false;
+            MainDude::instance().holding_item = false;
             goTimer = 2000;
             waitTimer = 0;
         }
@@ -80,7 +80,7 @@ void Caveman::update_creature_specific() {
     if (!stunned && !killed)
         kill_if_whip(1);
     if (!stunned && !killed) {
-        if (GameState::instance().main_dude->carrying_spike_shoes)
+        if (MainDude::instance().carrying_spike_shoes)
             kill_if_main_dude_jumped_on_you(3);
         else
             kill_if_main_dude_jumped_on_you(1);
@@ -273,15 +273,15 @@ void Caveman::make_some_movement() {
 
 void Caveman::check_if_can_be_triggered() {
 
-    int diff = _x - GameState::instance().main_dude->_x;
+    int diff = _x - MainDude::instance()._x;
     int diff_abs = abs(diff);
 
-    if (!triggered && diff_abs < 9 * TILE_W && abs(_y - GameState::instance().main_dude->_y) < 0.8 * TILE_H) {
+    if (!triggered && diff_abs < 9 * TILE_W && abs(_y - MainDude::instance()._y) < 0.8 * TILE_H) {
 
         int xx = floor_div(this->_x + 0.5 * _physical_width, TILE_W);
         int yy = floor_div(this->_y + 0.5 * _physical_height, TILE_H);
 
-        int dude_xx = floor_div(GameState::instance().main_dude->_x + 0.5 * MainDude::main_dude_physical_width, TILE_W);
+        int dude_xx = floor_div(MainDude::instance()._x + 0.5 * MainDude::main_dude_physical_width, TILE_W);
 
         triggered = true;
 

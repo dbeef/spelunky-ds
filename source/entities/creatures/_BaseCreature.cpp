@@ -32,7 +32,7 @@ void BaseCreature::spawn_blood() const {
 }
 
 void BaseCreature::kill_if_whip(int dmg_to_apply) {
-    if (GameState::instance().main_dude->using_whip && !killed && GameState::instance().main_dude->whip->_whiping_timer > 120) {
+    if (MainDude::instance().using_whip && !killed && Whip::instance()._whiping_timer > 120) {
         if (Collisions::checkCollisionWithMainDudeWhip(_x, _y, _sprite_width, _sprite_height)) {
             apply_dmg(dmg_to_apply);
         }
@@ -41,12 +41,12 @@ void BaseCreature::kill_if_whip(int dmg_to_apply) {
 
 void BaseCreature::kill_if_main_dude_jumped_on_you(int dmg_to_apply) {
     if (!killed && Collisions::checkCollisionWithMainDude(_x, _y, _sprite_width, _sprite_height) &&
-        GameState::instance().main_dude->_y_speed > 0 &&
-        GameState::instance().main_dude->_y_speed - 4 < _y) {
+        MainDude::instance()._y_speed > 0 &&
+        MainDude::instance()._y_speed - 4 < _y) {
 
         apply_dmg(dmg_to_apply);
-        GameState::instance().main_dude->_y_speed = -2;
-        GameState::instance().main_dude->jumping_timer = 0;
+        MainDude::instance()._y_speed = -2;
+        MainDude::instance().jumping_timer = 0;
 
     }
 }
@@ -72,25 +72,25 @@ void BaseCreature::check_if_can_be_pickuped() {
     if (hold_by_main_dude &&
         InputHandler::instance().y_key_down &&
         InputHandler::instance().down_key_held &&
-        GameState::instance().main_dude->_bottom_collision) {
+        MainDude::instance()._bottom_collision) {
 
         //leave item on ground
 
         hold_by_main_dude = false;
-        GameState::instance().main_dude->holding_item = false;
+        MainDude::instance().holding_item = false;
         InputHandler::instance().y_key_down = false;
         _bottom_collision = false;
-        GameState::instance().main_dude->_currently_held_creature = nullptr;
+        MainDude::instance()._currently_held_creature = nullptr;
 
     } else if (InputHandler::instance().y_key_down &&
                InputHandler::instance().down_key_held &&
-               !GameState::instance().main_dude->holding_item &&
+               !MainDude::instance().holding_item &&
                Collisions::checkCollisionWithMainDude(_x, _y, _physical_width, _physical_height)) {
 
         //pickup item from the ground
 
-        GameState::instance().main_dude->holding_item = true;
-        GameState::instance().main_dude->_currently_held_creature = this;
+        MainDude::instance().holding_item = true;
+        MainDude::instance()._currently_held_creature = this;
         hold_by_main_dude = true;
         InputHandler::instance().y_key_down = false;
 
@@ -102,7 +102,7 @@ void BaseCreature::check_if_can_be_pickuped() {
 bool BaseCreature::check_if_can_be_equipped() {
 
     bool q = (InputHandler::instance().y_key_down && InputHandler::instance().down_key_held &&
-              !GameState::instance().main_dude->holding_item) &&
+              !MainDude::instance().holding_item) &&
              Collisions::checkCollisionWithMainDude(_x, _y, _sprite_width, _sprite_height);
 
     if (q) {
@@ -119,15 +119,15 @@ void BaseCreature::set_pickuped_position(int pickup_offset_x, int pickup_offset_
 
     if (hold_by_main_dude) {
 
-        _y = GameState::instance().main_dude->_y + pickup_offset_y;
+        _y = MainDude::instance()._y + pickup_offset_y;
 
-        if (GameState::instance().main_dude->sprite_state == Orientation::LEFT) {
-            _x = GameState::instance().main_dude->_x - pickup_offset_x;
+        if (MainDude::instance().sprite_state == Orientation::LEFT) {
+            _x = MainDude::instance()._x - pickup_offset_x;
         } else
-            _x = GameState::instance().main_dude->_x + pickup_offset_x;
+            _x = MainDude::instance()._x + pickup_offset_x;
 
 
-        sprite_state = GameState::instance().main_dude->sprite_state;
+        sprite_state = MainDude::instance().sprite_state;
     }
 
 }
@@ -137,15 +137,15 @@ void BaseCreature::set_pickuped_position(int pickup_offset_x_left, int pickup_of
 
     if (hold_by_main_dude) {
 
-        _y = GameState::instance().main_dude->_y + pickup_offset_y;
+        _y = MainDude::instance()._y + pickup_offset_y;
 
-        if (GameState::instance().main_dude->sprite_state == Orientation::LEFT) {
-            _x = GameState::instance().main_dude->_x - pickup_offset_x_left;
+        if (MainDude::instance().sprite_state == Orientation::LEFT) {
+            _x = MainDude::instance()._x - pickup_offset_x_left;
         } else
-            _x = GameState::instance().main_dude->_x + pickup_offset_x_right;
+            _x = MainDude::instance()._x + pickup_offset_x_right;
 
 
-        sprite_state = GameState::instance().main_dude->sprite_state;
+        sprite_state = MainDude::instance().sprite_state;
     }
 
 }
@@ -181,11 +181,11 @@ BaseCreature::set_pickuped_position_on_another_moving_obj(int pickup_offset_x, i
 //this should be applied, when item is being carried by main dude
 void BaseCreature::set_pickuped_position_not_checking(int pickup_offset_x, int pickup_offset_y) {
 
-    _y = GameState::instance().main_dude->_y + pickup_offset_y;
-    if (GameState::instance().main_dude->sprite_state == Orientation::LEFT) {
-        _x = GameState::instance().main_dude->_x - pickup_offset_x;
+    _y = MainDude::instance()._y + pickup_offset_y;
+    if (MainDude::instance().sprite_state == Orientation::LEFT) {
+        _x = MainDude::instance()._x - pickup_offset_x;
     } else
-        _x = GameState::instance().main_dude->_x + pickup_offset_x;
+        _x = MainDude::instance()._x + pickup_offset_x;
 }
 
 BaseCreature::BaseCreature(int x, int y, const u16 sprite_width, const u16 sprite_height,

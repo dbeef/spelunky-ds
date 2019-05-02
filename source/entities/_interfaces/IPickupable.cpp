@@ -27,25 +27,25 @@ void IPickupable::check_if_can_be_pickuped() {
     if (_hold_by_main_dude &&
         InputHandler::instance().y_key_down &&
         InputHandler::instance().down_key_held &&
-        GameState::instance().main_dude->_bottom_collision) {
+        MainDude::instance()._bottom_collision) {
 
         //leave item on ground
 
         _hold_by_main_dude = false;
-        GameState::instance().main_dude->holding_item = false;
+        MainDude::instance().holding_item = false;
         InputHandler::instance().y_key_down = false;
         _bottom_collision = false;
-        GameState::instance().main_dude->_currently_held_creature = nullptr;
+        MainDude::instance()._currently_held_creature = nullptr;
 
     } else if (InputHandler::instance().y_key_down &&
                InputHandler::instance().down_key_held &&
-               !GameState::instance().main_dude->holding_item &&
+               !MainDude::instance().holding_item &&
                Collisions::checkCollisionWithMainDude(_x, _y, _physical_width, _physical_height)) {
 
         //pickup item from the ground
 
-        GameState::instance().main_dude->holding_item = true;
-        GameState::instance().main_dude->_currently_held_pickupable = this;
+        MainDude::instance().holding_item = true;
+        MainDude::instance()._currently_held_pickupable = this;
         _hold_by_main_dude = true;
         InputHandler::instance().y_key_down = false;
 
@@ -57,7 +57,7 @@ void IPickupable::check_if_can_be_pickuped() {
 bool IPickupable::check_if_can_be_equipped() {
 
     bool q = (InputHandler::instance().y_key_down && InputHandler::instance().down_key_held &&
-              !GameState::instance().main_dude->holding_item) &&
+              !MainDude::instance().holding_item) &&
              Collisions::checkCollisionWithMainDude(_x, _y, _sprite_width, _sprite_height);
 
     if (q) {

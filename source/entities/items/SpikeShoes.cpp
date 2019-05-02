@@ -71,9 +71,9 @@ void SpikeShoes::equip() {
     auto *g = new GotCollectible(_x - 12, _y - 20, GotCollectible::Type::ITEM);
     GameState::instance().decorations.push_back(g);
 
-    if (!GameState::instance().main_dude->carrying_spike_shoes) {
+    if (!MainDude::instance().carrying_spike_shoes) {
 
-        GameState::instance().main_dude->carrying_spike_shoes = true;
+        MainDude::instance().carrying_spike_shoes = true;
 
         _x = HUD_ITEMS_ROW_X;
         _y = Hud::instance().items_offset_y;

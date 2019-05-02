@@ -15,7 +15,7 @@
 #include "tiles/BaseMap.hpp"
 #include "tiles/LevelGenerator.hpp"
 #include "tiles/PopulatingUtils.hpp"
-#include "entities/main_dude/MainDudeConsts.h"
+#include "entities/singletons/MainDudeConsts.h"
 #include "time/Timer.h"
 #include "graphics/OamUtils.hpp"
 
@@ -23,12 +23,10 @@ GameState *GameState::_instance = nullptr;
 
 GameState::GameState() {
 
-    main_dude = nullptr;
     current_level = new Level();
     current_level->init_map_tiles();
     temp_map = new u16[4096];
 
-    SPELUNKYDS_BREAKING_ASSERT(main_dude);
     SPELUNKYDS_BREAKING_ASSERT(current_level);
     SPELUNKYDS_BREAKING_ASSERT(temp_map);
 
@@ -46,7 +44,7 @@ GameState::GameState() {
 
 void GameState::start_new_game() {
 
-    main_dude->reset_state();
+    MainDude::instance().reset_state();
     Hud::instance().hearts = 4;
     Hud::instance().ropes = 4;
     Hud::instance().bombs = 4;
@@ -59,7 +57,7 @@ void GameState::start_new_game() {
 }
 
 void GameState::start_main_menu() {
-    main_dude->climbing = false;
+    MainDude::instance().climbing = false;
     Camera::instance().follow_main_dude = false;
     in_main_menu = true;
     levels_transition_screen = false;
@@ -69,7 +67,7 @@ void GameState::start_main_menu() {
 
 void GameState::start_scores() {
 
-    main_dude->reset_state();
+    MainDude::instance().reset_state();
 
     scores_screen = true;
     Hud::instance().draw_scores();
@@ -117,8 +115,8 @@ void GameState::start_level_transition_screen() {
 void GameState::start_next_level() {
 
     Hud::instance().items_offset_y = 7;
-    main_dude->holding_item = false;
-    main_dude->spawn_carried_items();
+    MainDude::instance().holding_item = false;
+    MainDude::instance().spawn_carried_items();
     Hud::instance().init_sprites();
     populate_cave_npcs();
     populate_cave_moniez();
@@ -133,10 +131,10 @@ void GameState::start_next_level() {
 
 void GameState::handle_changing_screens() {
 
-    if ((main_dude->dead && InputHandler::instance().y_key_down) ||
-        (main_dude->animFrame >= 16 && !splash_screen)) {
+    if ((MainDude::instance().dead && InputHandler::instance().y_key_down) ||
+        (MainDude::instance().animFrame >= 16 && !splash_screen)) {
 
-        main_dude->animFrame = 0;
+        MainDude::instance().animFrame = 0;
 
         // copy base cave background to current map array
         dmaCopyHalfWords(DEFAULT_DMA_CHANNEL, base_map, current_map, sizeof(base_map));
@@ -156,7 +154,7 @@ void GameState::handle_changing_screens() {
 
             current_level->generate_frame();
             current_level->initialise_tiles_from_room_layout();
-            main_dude->set_position_to(MapTileType::ENTRANCE);
+            MainDude::instance().set_position_to(MapTileType::ENTRANCE);
 
 
         } else {
@@ -179,20 +177,20 @@ void GameState::handle_changing_screens() {
                 current_level->initialise_tiles_from_splash_screen(SplashScreenType::MAIN_MENU_UPPER);
                 current_level->initialise_tiles_from_splash_screen(SplashScreenType::MAIN_MENU_LOWER);
 //                set_position_to(MapTileType::ENTRANCE);
-                main_dude->_x = 113;
-                main_dude->_y = 288;
+                MainDude::instance()._x = 113;
+                MainDude::instance()._y = 288;
                 Camera::instance().follow_main_dude = true;
                 Camera::instance().instant_focus();
 
-            } else if (main_dude->dead) {
+            } else if (MainDude::instance().dead) {
                 current_level->initialise_tiles_from_splash_screen(SplashScreenType::SCORES_UPPER);
                 current_level->initialise_tiles_from_splash_screen(SplashScreenType::SCORES_LOWER);
-                main_dude->set_position_to(MapTileType::EXIT);
+                MainDude::instance().set_position_to(MapTileType::EXIT);
             } else {
 
                 current_level->initialise_tiles_from_splash_screen(SplashScreenType::ON_LEVEL_DONE_UPPER);
                 current_level->initialise_tiles_from_splash_screen(SplashScreenType::ON_LEVEL_DONE_LOWER);
-                main_dude->set_position_to(MapTileType::ENTRANCE);
+                MainDude::instance().set_position_to(MapTileType::ENTRANCE);
             }
 
         }
@@ -207,20 +205,21 @@ void GameState::handle_changing_screens() {
         dmaCopyHalfWords(DEFAULT_DMA_CHANNEL, current_map, bgGetMapPtr(bg_sub_address),
                          sizeof(current_map));
 
-        bool dead = main_dude->dead;
-        int temp_x = main_dude->_x;
-        int temp_y = main_dude->_y;
+        bool dead = MainDude::instance().dead;
+        int temp_x = MainDude::instance()._x;
+        int temp_y = MainDude::instance()._y;
 
-        //changing scene, so delete all MovingObjects you have, and according SpriteInfos
+        // changing scene, so delete all MovingObjects you have, and according SpriteInfos
         oam_utils::delete_all_sprites();
 
-        //new MainDude since we deleted it. TODO Don't push main dude to the entities and update it separately
-        main_dude = new MainDude(MAIN_DUDE_MENU_START_POSITION_X, MAIN_DUDE_MENU_START_POSITION_Y);
+        // init sprites since they've been disposed
+        MainDude::instance().init_sprites();
+        Whip::instance().init_sprites();
 
-        main_dude->dead = dead; //TODO Move this fields out to the game_state! or do the thing above, same result
+        MainDude::instance().dead = dead; //TODO Move this fields out to the game_state! or do the thing above, same result
 
-        main_dude->_x = temp_x;
-        main_dude->_y = temp_y;
+        MainDude::instance()._x = temp_x;
+        MainDude::instance()._y = temp_y;
 
         consoleClear();
 
@@ -238,19 +237,19 @@ void GameState::handle_changing_screens() {
 
             if (scores_screen)
                 start_main_menu();
-            else if (main_dude->dead) {
+            else if (MainDude::instance().dead) {
                 start_scores();
             } else
                 start_level_transition_screen();
         }
 
-        main_dude->exiting_level = false;
+        MainDude::instance().exiting_level = false;
 
 
-    } else if (main_dude->animFrame >= 16 && splash_screen) {
+    } else if (MainDude::instance().animFrame >= 16 && splash_screen) {
 
-        main_dude->main_sprite_info->entry->isHidden = true;
-        main_dude->sub_sprite_info->entry->isHidden = true;
+        MainDude::instance().main_sprite_info->entry->isHidden = true;
+        MainDude::instance().sub_sprite_info->entry->isHidden = true;
         InputHandler::instance().stop_handling = false;
 
         if (InputHandler::instance().y_key_down) {
@@ -265,7 +264,7 @@ void GameState::handle_changing_screens() {
  */
 void GameState::handle_transition_screen_smooch() {
     if (smooching) {
-        if (144 - main_dude->_x <= 16) {
+        if (144 - MainDude::instance()._x <= 16) {
             smooch_timer += Timer::getDeltaTime();
             InputHandler::instance().right_key_held = false;
             if (!spawned_smooch) {
@@ -281,7 +280,6 @@ void GameState::handle_transition_screen_smooch() {
 }
 
 GameState::~GameState() {
-    delete main_dude;
     delete current_level;
     delete temp_map;
 }

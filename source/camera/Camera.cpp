@@ -80,16 +80,16 @@ void Camera::apply_shaking() {
 
 // Instant camera focus with main dude in center.
 void Camera::instant_focus() {
-    x = GameState::instance().main_dude->_x - (SCREEN_WIDTH / 2);
-    y = GameState::instance().main_dude->_y - (SCREEN_HEIGHT / 2);
+    x = MainDude::instance()._x - (SCREEN_WIDTH / 2);
+    y = MainDude::instance()._y - (SCREEN_HEIGHT / 2);
     apply_map_boundaries();
 }
 
 // Camera focus with main dude in center, applied incrementally every function call
 void Camera::incremental_focus(int camera_speed) {
 
-    int center_x = GameState::instance().main_dude->_x - (SCREEN_WIDTH / 2);
-    int center_y = GameState::instance().main_dude->_y - (SCREEN_HEIGHT / 2);
+    int center_x = MainDude::instance()._x - (SCREEN_WIDTH / 2);
+    int center_y = MainDude::instance()._y - (SCREEN_HEIGHT / 2);
 
     u16 distance_x = static_cast<u16>(abs(center_x - this->x));
     u16 distance_y = static_cast<u16>(abs(center_y - this->y));

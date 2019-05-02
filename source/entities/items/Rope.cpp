@@ -41,7 +41,7 @@ void Rope::update_item_specific() {
         _thrown = true;
         _throwing_timer = 0;
 
-        _x = floor_div(GameState::instance().main_dude->_x + 0.5 * MainDude::main_dude_physical_width, TILE_W) * TILE_W +
+        _x = floor_div(MainDude::instance()._x + 0.5 * MainDude::main_dude_physical_width, TILE_W) * TILE_W +
              _physical_width * 0.5;
         _y -= 16;
         _y_speed = -4;
@@ -54,21 +54,21 @@ void Rope::update_item_specific() {
 
     //checking if main dude can climb over the rope
 
-    bool onTopOfClimbingSpace = GameState::instance().main_dude->_y < _y + 6;
-    GameState::instance().main_dude->on_top_of_climbing_space = onTopOfClimbingSpace;
+    bool onTopOfClimbingSpace = MainDude::instance()._y < _y + 6;
+    MainDude::instance().on_top_of_climbing_space = onTopOfClimbingSpace;
 
     for (unsigned long a = 0; a < _rope_chain.size(); a++) {
 
-        if (_rope_chain.at(a)->_x + 5 > GameState::instance().main_dude->_x &&
-            _rope_chain.at(a)->_x + 5 < GameState::instance().main_dude->_x + MainDude::main_dude_physical_width &&
-            _rope_chain.at(a)->_y + 5 > GameState::instance().main_dude->_y &&
-            _rope_chain.at(a)->_y - 5 < GameState::instance().main_dude->_y + MainDude::main_dude_physical_height &&
+        if (_rope_chain.at(a)->_x + 5 > MainDude::instance()._x &&
+            _rope_chain.at(a)->_x + 5 < MainDude::instance()._x + MainDude::main_dude_physical_width &&
+            _rope_chain.at(a)->_y + 5 > MainDude::instance()._y &&
+            _rope_chain.at(a)->_y - 5 < MainDude::instance()._y + MainDude::main_dude_physical_height &&
             _rope_chain.at(a)->_active
             && !onTopOfClimbingSpace) {
             if (!InputHandler::instance().r_bumper_down) {
-                GameState::instance().main_dude->can_climb_rope = true;
+                MainDude::instance().can_climb_rope = true;
                 if (InputHandler::instance().up_key_held) {
-                    GameState::instance().main_dude->_x = _rope_chain.at(a)->_x - 4;
+                    MainDude::instance()._x = _rope_chain.at(a)->_x - 4;
                 }
             }
 

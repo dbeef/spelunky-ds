@@ -14,8 +14,8 @@
 
 void Cape::update_item_specific() {
 
-    if (GameState::instance().main_dude->carrying_jetpack && _collected) {
-        GameState::instance().main_dude->carrying_cape = false;
+    if (MainDude::instance().carrying_jetpack && _collected) {
+        MainDude::instance().carrying_cape = false;
         sprite_utils::set_visibility(false, _main_sprite_info, _sub_sprite_info);
         _ready_to_dispose = true;
     }
@@ -44,10 +44,10 @@ void Cape::update_item_specific() {
     if (_collected) {
 
         //match sprite rendering priority and x/y offset to the main dude's sprite state
-        if (GameState::instance().main_dude->climbing || GameState::instance().main_dude->exiting_level) {
+        if (MainDude::instance().climbing || MainDude::instance().exiting_level) {
             set_pickuped_position_not_checking(0, 0, 4);
             sprite_utils::set_priority(OBJPRIORITY_0, _main_sprite_info, _sub_sprite_info);
-        } else if (InputHandler::instance().down_key_held || GameState::instance().main_dude->dead || GameState::instance().main_dude->stunned) {
+        } else if (InputHandler::instance().down_key_held || MainDude::instance().dead || MainDude::instance().stunned) {
             set_pickuped_position_not_checking(0, 0, 4);
             sprite_utils::set_priority(OBJPRIORITY_1, _main_sprite_info, _sub_sprite_info);
         } else {
@@ -59,18 +59,18 @@ void Cape::update_item_specific() {
 
         if (_anim_frame_timer > cape_anim_frame_delta) {
 
-            if (GameState::instance().main_dude->_x_speed != 0 || GameState::instance().main_dude->_y_speed != 0)
+            if (MainDude::instance()._x_speed != 0 || MainDude::instance()._y_speed != 0)
                 _anim_frame_index++;
 
             _anim_frame_timer = 0;
             match_animation();
         }
 
-        sprite_utils::set_horizontal_flip(GameState::instance().main_dude->sprite_state == Orientation::RIGHT,
+        sprite_utils::set_horizontal_flip(MainDude::instance().sprite_state == Orientation::RIGHT,
                                           _main_sprite_info, _sub_sprite_info);
 
-        if (GameState::instance().main_dude->_bottom_collision)
-            GameState::instance().main_dude->using_cape = false;
+        if (MainDude::instance()._bottom_collision)
+            MainDude::instance().using_cape = false;
 
     }
 
@@ -91,7 +91,7 @@ void Cape::init_sprites() {
     sprite_utils::set_vertical_flip(false, _main_sprite_info, _sub_sprite_info);
 
     if (_collected)
-        sprite_utils::set_horizontal_flip(GameState::instance().main_dude->sprite_state == Orientation::RIGHT,
+        sprite_utils::set_horizontal_flip(MainDude::instance().sprite_state == Orientation::RIGHT,
                                           _main_sprite_info, _sub_sprite_info);
     else
         sprite_utils::set_horizontal_flip(false, _main_sprite_info, _sub_sprite_info);
@@ -103,19 +103,19 @@ void Cape::match_animation() {
     
     if (!_collected) {
         frame_gfx = sprite_utils::get_frame((u8 *) gfx_goldbarsTiles, _sprite_size, 2);
-    } else if (GameState::instance().main_dude->climbing) {
+    } else if (MainDude::instance().climbing) {
         //climbing
         frame_gfx = sprite_utils::get_frame((u8 *) gfx_goldbarsTiles, _sprite_size, 3);
-    } else if (InputHandler::instance().down_key_held || GameState::instance().main_dude->dead || GameState::instance().main_dude->stunned ||
-               (!GameState::instance().main_dude->using_cape && !GameState::instance().main_dude->stunned &&
-                (GameState::instance().main_dude->_x_speed != 0 || GameState::instance().main_dude->_y_speed != 0))) {
+    } else if (InputHandler::instance().down_key_held || MainDude::instance().dead || MainDude::instance().stunned ||
+               (!MainDude::instance().using_cape && !MainDude::instance().stunned &&
+                (MainDude::instance()._x_speed != 0 || MainDude::instance()._y_speed != 0))) {
 
         if (_anim_frame_index >= 5)
             _anim_frame_index = 0;
 
         frame_gfx = sprite_utils::get_frame((u8 *) gfx_goldbarsTiles, _sprite_size, 5 + _anim_frame_index);
 
-    } else if (GameState::instance().main_dude->_x_speed == 0 && GameState::instance().main_dude->_y_speed == 0) {
+    } else if (MainDude::instance()._x_speed == 0 && MainDude::instance()._y_speed == 0) {
         //staying still
         frame_gfx = sprite_utils::get_frame((u8 *) gfx_goldbarsTiles, _sprite_size, 4);
     } else {
@@ -136,11 +136,11 @@ void Cape::equip() {
     auto g = new GotCollectible(_x - 12, _y - 20, GotCollectible::Type::ITEM);
     GameState::instance().decorations.push_back(g);
 
-    if (GameState::instance().main_dude->carrying_jetpack)
-        GameState::instance().main_dude->carrying_jetpack = false;
+    if (MainDude::instance().carrying_jetpack)
+        MainDude::instance().carrying_jetpack = false;
 
-    if (!GameState::instance().main_dude->carrying_cape) {
-        GameState::instance().main_dude->carrying_cape = true;
+    if (!MainDude::instance().carrying_cape) {
+        MainDude::instance().carrying_cape = true;
         update_sprites_position();
         _collected = true;
     } else {

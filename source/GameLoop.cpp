@@ -6,7 +6,7 @@
 #include "time/Timer.h"
 #include "entities/animations/Blood.hpp"
 #include "entities/items/Arrow.hpp"
-#include "entities/main_dude/MainDudeConsts.h"
+#include "entities/singletons/MainDudeConsts.h"
 #include "GameState.hpp"
 #include "graphics/OamUtils.hpp"
 #include "graphics/Brightness.hpp"
@@ -15,10 +15,13 @@ void gameloop::run() {
 
     Camera::instance().x = CAMERA_MENU_START_X;
     Camera::instance().y = CAMERA_MENU_START_Y;
-    GameState::instance().main_dude = new MainDude(MAIN_DUDE_MENU_START_POSITION_X, MAIN_DUDE_MENU_START_POSITION_Y);
 
-    Hud::instance().clear_console();
+    MainDude::instance().init_sprites();
+    Whip::instance().init_sprites();
+
     Hud::instance().init_sprites();
+    Hud::instance().clear_console();
+
     populate_main_menu();
 
     // If exited, SpelunkyDS returns 0 and gets back to the menu.
@@ -27,28 +30,28 @@ void gameloop::run() {
         Timer::update_ms_since_last_frame();
         InputHandler::instance().updateInput();
 
+        GameState::instance().handle_transition_screen_smooch();
+
+        MainDude::instance().handle_key_input();
+        MainDude::instance().update();
+
+        Hud::instance().update();
+        Camera::instance().update();
+        Whip::instance().update();
+
+        update_entities();
+
         if (GameState::instance().bombed) {
             on_bomb_explosion();
             GameState::instance().bombed = false;
         }
 
-        Camera::instance().update();
-
-        GameState::instance().main_dude->update();
-        GameState::instance().main_dude->whip->update();
-
-        update_entities();
-
-        GameState::instance().handle_transition_screen_smooch();
-        GameState::instance().main_dude->handle_key_input();
-        Hud::instance().update();
-
-        swiWaitForVBlank();
-
         Camera::instance().write_current_position_to_graphics_engines();
         OAMManager::main().updateOAM();
         OAMManager::sub().updateOAM();
         oam_utils::clean_unused_oam();
+
+        swiWaitForVBlank();
 
         brightness::update_brightness();
         if (GameState::instance().exiting_game && brightness::is_maximum_brightness()) break;
@@ -65,7 +68,7 @@ void gameloop::on_bomb_explosion() {
         (*item)._bottom_collision = false;
     for (auto &treasures : GameState::instance().treasures)
         (*treasures)._bottom_collision = false;
-    GameState::instance().main_dude->_bottom_collision = false;
+    MainDude::instance()._bottom_collision = false;
 }
 
 void gameloop::update_entities() {

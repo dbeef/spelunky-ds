@@ -36,7 +36,7 @@ void Skull::update_item_specific() {
     kill_creatures_if_have_speed(1);
 
     if (_hold_by_main_dude) {
-        sprite_utils::set_horizontal_flip(GameState::instance().main_dude->sprite_state == Orientation::RIGHT,
+        sprite_utils::set_horizontal_flip(MainDude::instance().sprite_state == Orientation::RIGHT,
                                           _main_sprite_info, _sub_sprite_info);
         return;
     }
@@ -74,7 +74,7 @@ void Skull::init_sprites() {
     update_sprites_position();
 
     if (_hold_by_main_dude)
-        sprite_utils::set_horizontal_flip(GameState::instance().main_dude->sprite_state == Orientation::RIGHT,
+        sprite_utils::set_horizontal_flip(MainDude::instance().sprite_state == Orientation::RIGHT,
                                           _main_sprite_info, _sub_sprite_info);
 
 }

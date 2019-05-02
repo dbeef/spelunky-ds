@@ -23,7 +23,7 @@ void ArrowTrap::update_decoration_specific() {
 
     if (_activated) return;
 
-    if (check_if_can_be_triggered(GameState::instance().main_dude)) return;
+    if (check_if_can_be_triggered(&MainDude::instance())) return;
 
     for (auto &creature : GameState::instance().creatures)
         if (check_if_can_be_triggered(creature)) return;

@@ -14,8 +14,8 @@
 
 void Jetpack::update_item_specific() {
 
-    if (GameState::instance().main_dude->carrying_cape && collected) {
-        GameState::instance().main_dude->carrying_jetpack = false;
+    if (MainDude::instance().carrying_cape && collected) {
+        MainDude::instance().carrying_jetpack = false;
         _ready_to_dispose = true;
         sprite_utils::set_visibility(false, _main_sprite_info, _sub_sprite_info);
     }
@@ -38,26 +38,26 @@ void Jetpack::update_item_specific() {
 
     if (collected) {
 
-        if (GameState::instance().main_dude->climbing || GameState::instance().main_dude->exiting_level) {
+        if (MainDude::instance().climbing || MainDude::instance().exiting_level) {
             sprite_utils::set_priority(OBJPRIORITY_0, _main_sprite_info, _sub_sprite_info);
             set_pickuped_position_not_checking(-3, -3, 2);
             sprite_utils::set_horizontal_flip(false, _main_sprite_info, _sub_sprite_info);
-        } else if (GameState::instance().main_dude->sprite_state == Orientation::LEFT) {
+        } else if (MainDude::instance().sprite_state == Orientation::LEFT) {
             sprite_utils::set_priority(OBJPRIORITY_1, _main_sprite_info, _sub_sprite_info);
             set_pickuped_position_not_checking(-6, -6, 0);
             sprite_utils::set_horizontal_flip(false, _main_sprite_info, _sub_sprite_info);
-        } else if (GameState::instance().main_dude->sprite_state == Orientation::RIGHT) {
+        } else if (MainDude::instance().sprite_state == Orientation::RIGHT) {
             sprite_utils::set_priority(OBJPRIORITY_1, _main_sprite_info, _sub_sprite_info);
             set_pickuped_position_not_checking(-3, -3, 0);
             sprite_utils::set_horizontal_flip(true, _main_sprite_info, _sub_sprite_info);
         }
 
 
-        if (GameState::instance().main_dude->using_jetpack) {
+        if (MainDude::instance().using_jetpack) {
             _poof_spawn_timer += Timer::getDeltaTime();
 
-            if (GameState::instance().main_dude->jetpack_fuel_counter <= 0) {
-                GameState::instance().main_dude->using_jetpack = false;
+            if (MainDude::instance().jetpack_fuel_counter <= 0) {
+                MainDude::instance().using_jetpack = false;
             }
 
             if (_poof_spawn_timer > 130) {
@@ -96,10 +96,10 @@ void Jetpack::update_item_specific() {
         }
     }
 
-    if (GameState::instance().main_dude->_bottom_collision || GameState::instance().main_dude->hanging_on_tile_left ||
-        GameState::instance().main_dude->hanging_on_tile_right) {
-        GameState::instance().main_dude->using_jetpack = false;
-        GameState::instance().main_dude->jetpack_fuel_counter = 15;
+    if (MainDude::instance()._bottom_collision || MainDude::instance().hanging_on_tile_left ||
+        MainDude::instance().hanging_on_tile_right) {
+        MainDude::instance().using_jetpack = false;
+        MainDude::instance().jetpack_fuel_counter = 15;
     }
 
     update_sprites_position();
@@ -143,12 +143,12 @@ void Jetpack::equip() {
     auto *g = new GotCollectible(_x - 12, _y - 20, GotCollectible::Type::ITEM);
     GameState::instance().decorations.push_back(g);
 
-    if (GameState::instance().main_dude->carrying_cape) {
-        GameState::instance().main_dude->carrying_cape = false;
+    if (MainDude::instance().carrying_cape) {
+        MainDude::instance().carrying_cape = false;
     }
 
-    if (!GameState::instance().main_dude->carrying_jetpack) {
-        GameState::instance().main_dude->carrying_jetpack = true;
+    if (!MainDude::instance().carrying_jetpack) {
+        MainDude::instance().carrying_jetpack = true;
         update_sprites_position();
         collected = true;
         u8 *frame_gfx = sprite_utils::get_frame((u8 *) gfx_bat_snake_jetpackTiles, _sprite_size, 8);

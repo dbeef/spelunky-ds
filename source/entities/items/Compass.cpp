@@ -101,7 +101,7 @@ void Compass::draw_arrow_to_exit() {
                 frame_gfx = sprite_utils::get_frame((u8 *) gfx_saleableTiles, _sprite_size, 6);
             } else if (diff_y < 3 * TILE_H) {
 
-                if (GameState::instance().main_dude->_x > tile_x) {
+                if (MainDude::instance()._x > tile_x) {
                     //left_arrow
                     frame_gfx = sprite_utils::get_frame((u8 *) gfx_saleableTiles, _sprite_size, 5);
                     sprite_utils::set_entry_xy(_sub_sprite_info, 4, SCREEN_HEIGHT * 0.5);
@@ -114,7 +114,7 @@ void Compass::draw_arrow_to_exit() {
 
             } else {
 
-                if (GameState::instance().main_dude->_x > tile_x) {
+                if (MainDude::instance()._x > tile_x) {
                     //down-left arrow
                     frame_gfx = sprite_utils::get_frame((u8 *) gfx_saleableTiles, _sprite_size, 8);
                     sprite_utils::set_entry_xy(_sub_sprite_info, 4, SCREEN_HEIGHT - 4 - _sprite_height);
@@ -138,8 +138,8 @@ void Compass::equip() {
     auto *g = new GotCollectible(_x - 12, _y - 20, GotCollectible::Type::ITEM);
     GameState::instance().decorations.push_back(g);
 
-    if (!GameState::instance().main_dude->carrying_compass) {
-        GameState::instance().main_dude->carrying_compass = true;
+    if (!MainDude::instance().carrying_compass) {
+        MainDude::instance().carrying_compass = true;
         update_sprites_position();
         _x = HUD_ITEMS_ROW_X;
         _y = Hud::instance().items_offset_y;

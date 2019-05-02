@@ -8,6 +8,7 @@
 
 #include <nds.h>
 
+#include "../../preprocessor/Debug.h"
 #include "../creatures/_BaseCreature.h"
 #include "../_common/Orientation.hpp"
 #include "Whip.hpp"
@@ -31,6 +32,15 @@ public:
     static constexpr float main_dude_max_x_speed_walking = 1.50f;
     static constexpr float main_dude_max_x_speed_running = 3.0f;
     static constexpr float main_dude_max_x_crawling = 0.55f;
+
+    static void init();
+
+    static void dispose();
+
+    inline static MainDude& instance() {
+        SPELUNKYDS_BREAKING_ASSERT(_instance);
+        return *_instance;
+    }
 
     MainDude(int x, int y);
 
@@ -151,7 +161,6 @@ public:
 
     int animFrame{};
     u8 *frameGfx{};
-    Whip *whip{};
 
     double climbing_timer{};
     int climbing_sound{};
@@ -174,6 +183,10 @@ public:
     int jetpack_fuel_counter{};
 
     bool carrying_damsel{};
+
+private:
+
+    static MainDude* _instance;
 };
 
 

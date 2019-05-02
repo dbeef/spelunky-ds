@@ -28,19 +28,19 @@ void Shotgun::update_item_specific() {
         if (shopping_transaction(this))
             equip();
 
-        GameState::instance().main_dude->carrying_shotgun = true;
-        _orientation = GameState::instance().main_dude->sprite_state;
+        MainDude::instance().carrying_shotgun = true;
+        _orientation = MainDude::instance().sprite_state;
         sprite_utils::set_priority(OBJPRIORITY_0, _main_sprite_info, _sub_sprite_info);
 
-        _y = GameState::instance().main_dude->_y + 7;
+        _y = MainDude::instance()._y + 7;
         if (_orientation == Orientation::LEFT)
-            _x = GameState::instance().main_dude->_x - 4;
+            _x = MainDude::instance()._x - 4;
         else
-            _x = GameState::instance().main_dude->_x + 7;
+            _x = MainDude::instance()._x + 7;
 
     } else {
         sprite_utils::set_priority(OBJPRIORITY_1, _main_sprite_info, _sub_sprite_info);
-        GameState::instance().main_dude->carrying_shotgun = false;
+        MainDude::instance().carrying_shotgun = false;
     }
 
     update_sprites_position();

@@ -27,8 +27,8 @@ void Jar::update_item_specific() {
         return;
     }
 
-    if (GameState::instance().main_dude->using_whip) {
-        if(check_collision(GameState::instance().main_dude->whip)){
+    if (MainDude::instance().using_whip) {
+        if(check_collision(Whip::instance())){
             destroy();
         }
     }

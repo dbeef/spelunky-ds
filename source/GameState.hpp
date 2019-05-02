@@ -11,7 +11,7 @@
 #include "input/InputHandler.hpp"
 #include "hud/Hud.hpp"
 #include "camera/Camera.hpp"
-#include "entities/main_dude/MainDude.hpp"
+#include "entities/singletons/MainDude.hpp"
 #include "entities/creatures/CreatureType.hpp"
 #include "tiles/Level.hpp"
 #include "graphics/SpriteInfo.h"
@@ -72,8 +72,7 @@ public:
     int damsels_rescued_this_level{};
     int smooch_timer{};
 
-    // TODO: Most of those can be re-made as singletons.
-    MainDude *main_dude{};
+    // TODO: Make current level a singleton.
     Level *current_level{};
 
     u16 *temp_map{}; //cave background only

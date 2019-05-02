@@ -36,16 +36,16 @@ void Bat::update_creature_specific() {
 
     if (!hunting) {
         //check if main dude is in bat's triggering scope
-        hunting = abs(_x - GameState::instance().main_dude->_x) < 7 * 16 &&
-                  abs(_y - GameState::instance().main_dude->_y) < 7 * 16 &&
-                  GameState::instance().main_dude->_y > _y;
+        hunting = abs(_x - MainDude::instance()._x) < 7 * 16 &&
+                  abs(_y - MainDude::instance()._y) < 7 * 16 &&
+                  MainDude::instance()._y > _y;
 
         if (hunting)
             sound::bat();
 
     } else
         //checking if main dude is still in bat's triggering scope
-        hunting = abs(_x - GameState::instance().main_dude->_x) < 9 * 16 && abs(_y - GameState::instance().main_dude->_y) < 9 * 16;
+        hunting = abs(_x - MainDude::instance()._x) < 9 * 16 && abs(_y - MainDude::instance()._y) < 9 * 16;
 
     animFrameTimer += Timer::getDeltaTime();
 
@@ -144,14 +144,14 @@ void Bat::update_sprites_position() {
 
 //!> naive approach to following main dude, disregarding obstacles just like in the original game
 void Bat::follow_main_dude() {
-    if (GameState::instance().main_dude->_x > _x)
+    if (MainDude::instance()._x > _x)
         _x_speed = 1;
     else
         _x_speed = -1;
 
-    if (GameState::instance().main_dude->_y == _y)
+    if (MainDude::instance()._y == _y)
         _y_speed = 0;
-    else if (GameState::instance().main_dude->_y > _y)
+    else if (MainDude::instance()._y > _y)
         _y_speed = 1;
     else
         _y_speed = -1;

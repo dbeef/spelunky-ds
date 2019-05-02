@@ -60,8 +60,8 @@ void SpringShoes::equip() {
     auto g = new GotCollectible(_x - 12, _y - 20, GotCollectible::Type::ITEM);
     GameState::instance().decorations.push_back(g);
 
-    if (!GameState::instance().main_dude->carrying_spring_shoes) {
-        GameState::instance().main_dude->carrying_spring_shoes = true;
+    if (!MainDude::instance().carrying_spring_shoes) {
+        MainDude::instance().carrying_spring_shoes = true;
         update_sprites_position();
         collected = true;
         _x = HUD_ITEMS_ROW_X;

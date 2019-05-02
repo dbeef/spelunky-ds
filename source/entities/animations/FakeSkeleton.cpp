@@ -33,12 +33,12 @@ void FakeSkeleton::update_creature_specific() {
 
         if (InputHandler::instance().y_key_down &&
             InputHandler::instance().down_key_held &&
-            !GameState::instance().main_dude->holding_item &&
+            !MainDude::instance().holding_item &&
             Collisions::checkCollisionWithMainDude(_x, _y, _physical_width, _physical_height)) {
 
             //pickup item from the ground
 
-            GameState::instance().main_dude->holding_item = true;
+            MainDude::instance().holding_item = true;
             InputHandler::instance().y_key_down = false;
 
             tried_to_pickup = true;
@@ -79,7 +79,7 @@ void FakeSkeleton::update_sprites_position() {
 void FakeSkeleton::spawn_skull() {
     auto s = new Skull(_x, _y);
     s->_hold_by_main_dude = true;
-    GameState::instance().main_dude->_currently_held_item = s;
+    MainDude::instance()._currently_held_item = s;
     GameState::instance().items.push_back(s);
 }
 

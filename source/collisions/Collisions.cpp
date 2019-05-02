@@ -5,7 +5,7 @@
 //
 #include <cmath>
 #include "Collisions.hpp"
-#include "../entities/main_dude/MainDude.hpp"
+#include "../entities/singletons/MainDude.hpp"
 #include "../tiles/TileOrientation.hpp"
 #include "../preprocessor/Debug.h"
 #include "../GameState.hpp"
@@ -209,23 +209,23 @@ void Collisions::bombNeighboringTiles(MapTile *mapTiles[32][32], int xx, int yy)
 }
 
 bool Collisions::checkCollisionWithMainDude(int x, int y, int width, int height) {
-    return checkCollisionBodies(x, y, width, height, GameState::instance().main_dude->_x, GameState::instance().main_dude->_y, 16, 16);
+    return checkCollisionBodies(x, y, width, height, MainDude::instance()._x, MainDude::instance()._y, 16, 16);
 }
 
 bool Collisions::checkCollisionWithMainDudeWidthBoundary(int x, int y, int width, int height, int x_boundary) {
-    return GameState::instance().main_dude->_x + 16 > x && GameState::instance().main_dude->_x <= x + width &&
-           y + height > GameState::instance().main_dude->_y && y <= GameState::instance().main_dude->_y + MainDude::main_dude_physical_height;
+    return MainDude::instance()._x + 16 > x && MainDude::instance()._x <= x + width &&
+           y + height > MainDude::instance()._y && y <= MainDude::instance()._y + MainDude::main_dude_physical_height;
 }
 
 bool Collisions::checkCollisionWithMainDudeWhip(int x, int y, int width, int height) {
-    if (GameState::instance().main_dude->sprite_state == Orientation::LEFT) {
-        return x + width >= GameState::instance().main_dude->_x - WHIP_WIDTH &&
-               x + width < GameState::instance().main_dude->_x + MainDude::main_dude_physical_width &&
-               y + height > GameState::instance().main_dude->_y && y < GameState::instance().main_dude->_y + MainDude::main_dude_physical_height;
-    } else if (GameState::instance().main_dude->sprite_state == Orientation::RIGHT) {
-        return x + width >= GameState::instance().main_dude->_x &&
-               x + width < GameState::instance().main_dude->_x + MainDude::main_dude_physical_width + WHIP_WIDTH * 2 &&
-               y + height > GameState::instance().main_dude->_y && y < GameState::instance().main_dude->_y + MainDude::main_dude_physical_height;
+    if (MainDude::instance().sprite_state == Orientation::LEFT) {
+        return x + width >= MainDude::instance()._x - WHIP_WIDTH &&
+               x + width < MainDude::instance()._x + MainDude::main_dude_physical_width &&
+               y + height > MainDude::instance()._y && y < MainDude::instance()._y + MainDude::main_dude_physical_height;
+    } else if (MainDude::instance().sprite_state == Orientation::RIGHT) {
+        return x + width >= MainDude::instance()._x &&
+               x + width < MainDude::instance()._x + MainDude::main_dude_physical_width + WHIP_WIDTH * 2 &&
+               y + height > MainDude::instance()._y && y < MainDude::instance()._y + MainDude::main_dude_physical_height;
     } else return false;
 
 }

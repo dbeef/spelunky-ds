@@ -21,12 +21,12 @@ void Spikes::update_creature_specific() {
     if (_ready_to_dispose) return;
 
     // check whether main dude can be killed by this spikes
-    if (!GameState::instance().main_dude->dead && !GameState::instance().main_dude->using_cape &&
+    if (!MainDude::instance().dead && !MainDude::instance().using_cape &&
         Collisions::checkCollisionBodiesLeftLowerCorner(_x, _y + 16, _physical_width, _physical_height,
-                                                        GameState::instance().main_dude->_x, GameState::instance().main_dude->_y + 16, 16, 16) &&
-        !GameState::instance().main_dude->_bottom_collision && GameState::instance().main_dude->_y_speed > 1) {
+                                                        MainDude::instance()._x, MainDude::instance()._y + 16, 16, 16) &&
+        !MainDude::instance()._bottom_collision && MainDude::instance()._y_speed > 1) {
 
-        GameState::instance().main_dude->set_dead();
+        MainDude::instance().set_dead();
         spawn_blood();
 
         _blood = true;

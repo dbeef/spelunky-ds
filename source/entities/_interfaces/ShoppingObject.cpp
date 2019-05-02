@@ -51,7 +51,7 @@ bool ShoppingObject::shopping_transaction(BaseItem *m) {
             } else {
                 Hud::instance().disable_all_prompts();
                 Hud::instance().not_enough_money = true;
-                GameState::instance().main_dude->holding_item = false;
+                MainDude::instance().holding_item = false;
                 Hud::instance().draw_level_hud();
                 m->_bottom_collision = false;
                 m->_hold_by_main_dude = false;
@@ -78,7 +78,7 @@ bool ShoppingObject::shopping_transaction(BaseCreature *m) {
             } else {
                 Hud::instance().disable_all_prompts();
                 Hud::instance().not_enough_money = true;
-                GameState::instance().main_dude->holding_item = false;
+                MainDude::instance().holding_item = false;
                 Hud::instance().draw_level_hud();
                 m->_bottom_collision = false;
                 m->hold_by_main_dude = false;

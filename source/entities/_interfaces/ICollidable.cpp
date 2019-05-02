@@ -197,12 +197,12 @@ bool ICollidable::kill_main_dude_if_have_speed(u8 dmg_to_apply) const {
 
     if (abs(_x_speed) > 0 || abs(_y_speed) > 0) {
 
-        if (Collisions::checkCollisionBodies(_x, _y, _physical_width, _physical_height, GameState::instance().main_dude->_x,
-                                             GameState::instance().main_dude->_y,
-                                             GameState::instance().main_dude->_physical_width,
-                                             GameState::instance().main_dude->_physical_height)) {
-            GameState::instance().main_dude->_x_speed += this->_x_speed * 0.3f;
-            GameState::instance().main_dude->apply_dmg(dmg_to_apply);
+        if (Collisions::checkCollisionBodies(_x, _y, _physical_width, _physical_height, MainDude::instance()._x,
+                                             MainDude::instance()._y,
+                                             MainDude::instance()._physical_width,
+                                             MainDude::instance()._physical_height)) {
+            MainDude::instance()._x_speed += this->_x_speed * 0.3f;
+            MainDude::instance().apply_dmg(dmg_to_apply);
             return true;
         }
 
@@ -211,15 +211,15 @@ bool ICollidable::kill_main_dude_if_have_speed(u8 dmg_to_apply) const {
 }
 
 void ICollidable::deal_damage_main_dude_on_collision(int dmg_to_apply) const {
-    if (!GameState::instance().main_dude->dead && Collisions::checkCollisionWithMainDude(_x, _y, 16, 16) &&
-        GameState::instance().main_dude->time_since_last_damage > 1000 && !GameState::instance().main_dude->exiting_level) {
+    if (!MainDude::instance().dead && Collisions::checkCollisionWithMainDude(_x, _y, 16, 16) &&
+        MainDude::instance().time_since_last_damage > 1000 && !MainDude::instance().exiting_level) {
 
-        GameState::instance().main_dude->time_since_last_damage = 0;
+        MainDude::instance().time_since_last_damage = 0;
         Hud::instance().hearts -= dmg_to_apply;
         Hud::instance().draw_level_hud();
 
         if (Hud::instance().hearts <= 0) {
-            GameState::instance().main_dude->set_dead();
+            MainDude::instance().set_dead();
         } else
             sound::hit();
     }

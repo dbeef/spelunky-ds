@@ -22,6 +22,8 @@ int main() {
     Camera::init();
     Hud::init();
     OAMManager::init();
+    MainDude::init();
+    Whip::init();
 
     // waiting for a next frame so it would be allowed to change the brightness
     swiWaitForVBlank();
@@ -90,6 +92,8 @@ int main() {
     Camera::dispose();
     Hud::dispose();
     OAMManager::dispose();
+    MainDude::dispose();
+    Whip::dispose();
 
     return 0;
 }
