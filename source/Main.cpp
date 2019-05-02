@@ -12,10 +12,6 @@
 #include "GameState.hpp"
 #include "graphics/Brightness.hpp"
 
-/**
- * Set-up before the gameloop can be run.
- * TODO Link current VRAM bank configuration.
- */
 int main() {
 
     // FIXME: This function mixes abstraction levels,
@@ -35,6 +31,8 @@ int main() {
     sound::start_menu_music();
 
     Timer::start();
+
+    // TODO Link current VRAM bank configuration.
 
     videoSetMode(MODE_0_2D);
     videoSetModeSub(MODE_0_2D);
