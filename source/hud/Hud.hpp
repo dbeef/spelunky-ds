@@ -8,6 +8,8 @@
 #include <nds/arm9/console.h>
 #include "../preprocessor/Debug.h"
 
+// TODO Refactor this class
+
 #define HUD_ITEMS_ROW_X 236
 
 class SpriteInfo;
