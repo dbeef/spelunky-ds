@@ -2,7 +2,7 @@
 // Created by xdbeef on 31.12.18.
 //
 
-#include <maxmod9.h>
+
 #include "_BaseTreasure.h"
 
 
@@ -12,6 +12,7 @@
 #include "../../GameState.hpp"
 #include "../../time/Timer.h"
 #include "../../graphics/SpriteUtils.hpp"
+#include "../../sound/Sound.hpp"
 
 void BaseTreasure::update_sprites_position() {
     int main_x, main_y, sub_x, sub_y;
@@ -43,9 +44,9 @@ void BaseTreasure::update() {
         Collisions::checkCollisionWithMainDudeWidthBoundary(_x, _y, _physical_width, _physical_height, 8)) {
 
         if (_spritesheet_type == SpritesheetType::MONIEZ_RUBY)
-            mmEffect(SFX_XGEM);
+            sound::gem();
         else if (_spritesheet_type == SpritesheetType::MONIEZ_GOLDBARS)
-            mmEffect(SFX_XCOIN);
+            sound::coin();
 
         GameState::instance().hud->add_moniez_on_collected_loot(get_dollars_value());
         sprite_utils::set_visibility(false, _main_sprite_info, _sub_sprite_info);

@@ -2,7 +2,7 @@
 // Created by xdbeef on 03.05.18.
 //
 
-#include <maxmod9.h>
+
 #include <cstdlib>
 #include <cstdio>
 #include "Spider.hpp"

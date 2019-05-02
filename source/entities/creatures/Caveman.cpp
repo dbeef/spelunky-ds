@@ -3,7 +3,7 @@
 //
 
 
-#include <maxmod9.h>
+
 #include <cstdlib>
 #include "Caveman.hpp"
 #include "../../collisions/Collisions.hpp"
@@ -16,6 +16,7 @@
 #include "../../GameState.hpp"
 #include "../../time/Timer.h"
 #include "../../graphics/SpriteUtils.hpp"
+#include "../../sound/Sound.hpp"
 
 #define CAVEMAN_POS_INC_DELTA 20
 #define CAVEMAN_TRIGGERED_SPEED 3
@@ -71,7 +72,7 @@ void Caveman::update_creature_specific() {
     if (!triggered && !killed && !stunned) {
         check_if_can_be_triggered();
         if (triggered)
-            mmEffect(SFX_XALERT);
+            sound::allert();
     }
 
     make_some_movement();

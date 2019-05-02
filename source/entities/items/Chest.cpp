@@ -2,7 +2,7 @@
 // Created by xdbeef on 16.05.18.
 //
 
-#include <maxmod9.h>
+
 #include <cstdlib>
 #include "Chest.hpp"
 #include "../../../build/gfx_spike_collectibles_flame.h"
@@ -13,6 +13,7 @@
 #include "../treasures/RubySmall.h"
 #include "../treasures/RubyBig.h"
 #include "../../graphics/SpriteUtils.hpp"
+#include "../../sound/Sound.hpp"
 
 void Chest::update_item_specific() {
 
@@ -21,7 +22,7 @@ void Chest::update_item_specific() {
     if (_activated && !_dropped_loot) {
 
         if (GameState::instance().input_handler->up_key_held) {
-            mmEffect(SFX_XCHESTOPEN);
+            sound::open_chest();
             spawn_treasure();
             _dropped_loot = true;
             match_animation();

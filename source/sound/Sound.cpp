@@ -72,3 +72,129 @@ void sound::load_sounds() {
     mmLoadEffect(SFX_XSHOTGUN);
 #endif
 }
+
+void sound::hit() {
+#ifdef WITH_SOUND
+    mmEffect(SFX_XHIT);
+#endif
+}
+
+void sound::shotgun() {
+#ifdef WITH_SOUND
+    mmEffect(SFX_XSHOTGUN);
+#endif
+}
+
+void sound::pickup() {
+#ifdef WITH_SOUND
+    mmEffect(SFX_XPICKUP);
+#endif
+}
+
+void sound::explosion() {
+#ifdef WITH_SOUND
+    mmEffect(SFX_XEXPLOSION);
+#endif
+}
+
+void sound::die() {
+#ifdef WITH_SOUND
+    mmEffect(SFX_XDIE);
+#endif
+}
+
+void sound::jetpack() {
+#ifdef WITH_SOUND
+    mmEffect(SFX_XJETPACK);
+#endif
+}
+
+void sound::whip() {
+#ifdef WITH_SOUND
+    mmEffect(SFX_XWHIP);
+#endif
+}
+
+void sound::climb_1() {
+#ifdef WITH_SOUND
+    mmEffect(SFX_XCLIMB1);
+#endif
+}
+
+void sound::climb_2() {
+#ifdef WITH_SOUND
+    mmEffect(SFX_XCLIMB2);
+#endif
+}
+
+void sound::throwing() {
+#ifdef WITH_SOUND
+    mmEffect(SFX_XTHROW);
+#endif
+}
+
+void sound::open_chest() {
+#ifdef WITH_SOUND
+    mmEffect(SFX_XCHESTOPEN);
+#endif
+}
+
+void sound::gem() {
+#ifdef WITH_SOUND
+    mmEffect(SFX_XGEM);
+#endif
+}
+
+void sound::coin() {
+#ifdef WITH_SOUND
+    mmEffect(SFX_XCOIN);
+#endif
+}
+
+void sound::steps() {
+#ifdef WITH_SOUND
+    mmEffect(SFX_XSTEPS);
+#endif
+}
+
+void sound::allert() {
+#ifdef WITH_SOUND
+    mmEffect(SFX_XALERT);
+#endif
+}
+
+void sound::bat() {
+#ifdef WITH_SOUND
+    mmEffect(SFX_XBAT);
+#endif
+}
+
+void sound::skeleton_break() {
+#ifdef WITH_SOUND
+    mmEffect(SFX_XBREAK);
+#endif
+}
+
+void sound::jump() {
+#ifdef WITH_SOUND
+    mmEffect(SFX_XJUMP);
+#endif
+}
+
+void sound::land() {
+#ifdef WITH_SOUND
+    mmEffect(SFX_XLAND);
+#endif
+}
+
+void sound::kiss() {
+#ifdef WITH_SOUND
+    mmEffect(SFX_XKISS);
+#endif
+}
+
+void sound::arrow_trap() {
+#ifdef WITH_SOUND
+    mmEffect(SFX_XARROWTRAP);
+#endif
+}

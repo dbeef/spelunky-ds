@@ -2,7 +2,7 @@
 // Created by xdbeef on 17.05.18.
 //
 
-#include <maxmod9.h>
+
 #include <cstdlib>
 #include "../../../build/soundbank.h"
 #include "../../../build/gfx_spike_collectibles_flame.h"
@@ -14,6 +14,7 @@
 
 #include "Shotgun.hpp"
 #include "../../time/Timer.h"
+#include "../../sound/Sound.hpp"
 
 void Shotgun::update_item_specific() {
 
@@ -112,7 +113,7 @@ void Shotgun::match_animation() {
 void Shotgun::handle_shooting() {
     if (_activated && !firing && cooldown > shotgun_cooldown) {
 
-        mmEffect(SFX_XSHOTGUN);
+        sound::shotgun();
         firing = true;
         cooldown = 0;
         _activated = false;

@@ -2,7 +2,7 @@
 // Created by xdbeef on 27.05.18.
 //
 
-#include <maxmod9.h>
+
 #include <cstdio>
 #include "GameState.hpp"
 #include "GameLoop.hpp"
@@ -279,7 +279,7 @@ void GameState::handle_transition_screen_smooch() {
             smooch_timer += Timer::getDeltaTime();
             input_handler->right_key_held = false;
             if (!spawned_smooch) {
-                mmEffect(SFX_XKISS);
+                sound::kiss();
                 spawned_smooch = true;
                 auto *s = new Smooch(144, 436);
                 decorations.push_back(s);

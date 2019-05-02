@@ -3,7 +3,7 @@
 //
 
 #include <cstdlib>
-#include <maxmod9.h>
+
 #include "Skeleton.hpp"
 
 #include "../../../build/gfx_spider_skeleton.h"
@@ -16,6 +16,7 @@
 #include "../../GameState.hpp"
 #include "../../time/Timer.h"
 #include "../../graphics/SpriteUtils.hpp"
+#include "../../sound/Sound.hpp"
 
 #define SKELETON_POS_INC_DELTA 19
 #define SKELETON_ANIM_FRAME_DELTA 90
@@ -113,7 +114,7 @@ void Skeleton::apply_dmg(int dmg_to_apply) {
     killed = true;
     _ready_to_dispose = true;
     GameState::instance().killed_npcs.push_back(_creature_type);
-    mmEffect(SFX_XBREAK);
+    sound::skeleton_break();
     spawn_remnants();
 }
 

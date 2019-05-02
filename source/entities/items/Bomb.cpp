@@ -3,7 +3,7 @@
 //
 
 #include <math.h>
-#include <maxmod9.h>
+
 
 #include "Bomb.hpp"
 #include "../../GameState.hpp"
@@ -18,6 +18,7 @@
 #include "../../GameState.hpp"
 #include "../../time/Timer.h"
 #include "../../graphics/SpriteUtils.hpp"
+#include "../../sound/Sound.hpp"
 
 void Bomb::update_item_specific() {
 
@@ -114,7 +115,7 @@ void Bomb::explode() {
         GameState::instance().creatures.push_back(flame);
     }
 
-    mmEffect(SFX_XEXPLOSION);
+    sound::explosion();
 
     int xx = floor_div(this->_x + 0.5 * _sprite_width, TILE_W);
     int yy = floor_div(this->_y + 0.5 * _sprite_height, TILE_H);

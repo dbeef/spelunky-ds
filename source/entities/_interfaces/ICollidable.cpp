@@ -3,7 +3,7 @@
 //
 
 #include <cmath>
-#include <maxmod9.h>
+
 
 #include "../../collisions/Collisions.hpp"
 #include "../../tiles/LevelRenderingUtils.hpp"
@@ -12,6 +12,7 @@
 #include "../../preprocessor/Debug.h"
 #include "../../GameState.hpp"
 #include "../../time/Timer.h"
+#include "../../sound/Sound.hpp"
 
 void ICollidable::update_collisions_with_map(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
     Collisions::getNeighboringTiles(GameState::instance().current_level->map_tiles, x_current_pos_in_tiles,
@@ -220,6 +221,6 @@ void ICollidable::deal_damage_main_dude_on_collision(int dmg_to_apply) const {
         if (GameState::instance().hud->hearts <= 0) {
             GameState::instance().main_dude->set_dead();
         } else
-            mmEffect(SFX_XHIT);
+            sound::hit();
     }
 }

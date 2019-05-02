@@ -2,7 +2,7 @@
 // Created by xdbeef on 31.05.18.
 //
 
-#include <maxmod9.h>
+
 #include <cstdlib>
 #include "Caveman.hpp"
 #include "../../GameState.hpp"
@@ -15,6 +15,7 @@
 #include "../../GameState.hpp"
 #include "../../time/Timer.h"
 #include "../../graphics/SpriteUtils.hpp"
+#include "../../sound/Sound.hpp"
 
 #define DAMSEL_SPRITESHEET_OFFSET 25
 #define DAMSEL_POS_INC_DELTA 18
@@ -146,7 +147,7 @@ void Damsel::update_creature_specific() {
             _x = tiles[static_cast<uint16>(TileOrientation::CENTER)]->x * 16;
             _y = tiles[static_cast<uint16>(TileOrientation::CENTER)]->y * 16;
             hold_by_main_dude = false;
-            mmEffect(SFX_XSTEPS);
+            sound::steps();
             if (GameState::instance().main_dude->carrying_damsel) {
                 GameState::instance().main_dude->holding_item = false;
                 GameState::instance().main_dude->carrying_damsel = false;

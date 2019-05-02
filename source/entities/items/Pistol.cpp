@@ -3,7 +3,7 @@
 //
 
 
-#include <maxmod9.h>
+
 #include "Pistol.hpp"
 #include "../../GameState.hpp"
 #include "../../collisions/Collisions.hpp"
@@ -15,6 +15,7 @@
 #include "../../entities/decorations/Blast.hpp"
 #include "../creatures/Bullet.hpp"
 #include "../../time/Timer.h"
+#include "../../sound/Sound.hpp"
 
 void Pistol::update_item_specific() {
 
@@ -86,7 +87,7 @@ void Pistol::handle_shooting() {
 
     if (_activated && !_firing && _cooldown > pistol_cooldown) {
 
-        mmEffect(SFX_XSHOTGUN);
+        sound::shotgun();
         _firing = true;
         _cooldown = 0;
         _activated = false;

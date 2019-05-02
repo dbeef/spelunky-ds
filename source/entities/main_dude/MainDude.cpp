@@ -4,7 +4,7 @@
 
 #include <nds.h>
 #include <nds/arm9/sprite.h>
-#include <maxmod9.h>
+
 #include <cstdlib>
 
 #include "../../graphics/SpriteUtils.hpp"
@@ -85,14 +85,14 @@ void MainDude::handle_key_input() {
                 can_climb_rope = false;
                 time_since_last_jump = 0;
 
-                mmEffect(SFX_XJUMP);
+                sound::jump();
             } else if (_y_speed > 0 && carrying_cape) {
                 using_cape = true;
             }
             if ((hanging_on_tile_left || hanging_on_tile_right) && hanging_timer > MAIN_DUDE_MIN_HANGING_TIME &&
                 time_since_last_jump > 100) {
 
-                mmEffect(SFX_XJUMP);
+                sound::jump();
 
                 _y_speed = -MAIN_DUDE_JUMP_SPEED;
                 hanging_on_tile_left = false;
@@ -110,7 +110,7 @@ void MainDude::handle_key_input() {
                 using_jetpack = true;
                 _y_speed -= MAIN_DUDE_JUMP_SPEED;
                 jetpack_fuel_counter--;
-                mmEffect(SFX_XJETPACK);
+                sound::jetpack();
                 time_since_last_jump = 0;
             } else
                 using_jetpack = false;
@@ -123,7 +123,7 @@ void MainDude::handle_key_input() {
                 if (holding_item) {
                     throw_item();
                 } else {
-                    mmEffect(SFX_XWHIP);
+                    sound::whip();
                     using_whip = true;
                     animFrame = 0;
                 }
@@ -184,9 +184,9 @@ void MainDude::handle_key_input() {
                     climbing_timer = 0;
                     climbing_sound++;
                     if (climbing_sound % 2 == 0)
-                        mmEffect(SFX_XCLIMB1);
+                        sound::climb_1();
                     else
-                        mmEffect(SFX_XCLIMB2);
+                        sound::climb_2();
                 }
             } else {
                 climbing_timer = 200;
@@ -209,7 +209,7 @@ void MainDude::handle_key_input() {
 
             if (exiting_level) {
 
-                mmEffect(SFX_XSTEPS);
+                sound::steps();
 
                 sound::stop_cave_music();
 
@@ -444,7 +444,7 @@ void MainDude::update_creature_specific() {
             GameState::instance().main_dude->set_dead();
         }
 
-        mmEffect(SFX_XLAND);
+        sound::land();
 
         jumping_timer = 0;
     } else if (_bottom_collision && jumping_timer < MAIN_DUDE_STUN_FALLING_TIME) {
@@ -513,7 +513,7 @@ void MainDude::reset_values_checked_every_frame() {
     can_climb_ladder = false;
 }
 
-#include <maxmod9.h>
+
 #include <cstdlib>
 #include <cmath>
 #include <cstdio>
@@ -624,7 +624,7 @@ void MainDude::throw_item() {
             GameState::instance().hud->disable_all_prompts();
             GameState::instance().hud->draw_level_hud();
 
-            mmEffect(SFX_XTHROW);
+            sound::throwing();
 
         } else {
 
@@ -966,7 +966,7 @@ void MainDude::set_dead() {
     pushing_right = false;
     consoleClear();
     sound::stop_cave_music();
-    mmEffect(SFX_XDIE);
+    sound::die();
 }
 
 void MainDude::delete_sprites() {

@@ -2,7 +2,7 @@
 // Created by xdbeef on 04.04.18.
 //
 
-#include <maxmod9.h>
+
 
 #include "Rope.hpp"
 #include "../../GameState.hpp"
@@ -13,6 +13,7 @@
 
 #include "../../time/Timer.h"
 #include "../../graphics/SpriteUtils.hpp"
+#include "../../sound/Sound.hpp"
 
 void Rope::update_item_specific() {
 
@@ -35,7 +36,7 @@ void Rope::update_item_specific() {
     }
 
     if (_activated && !_thrown && !_finished) {
-        mmEffect(SFX_XTHROW);
+        sound::throwing();
 
         _thrown = true;
         _throwing_timer = 0;

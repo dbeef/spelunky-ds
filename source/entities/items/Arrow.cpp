@@ -3,7 +3,7 @@
 //
 
 #include <cmath>
-#include <maxmod9.h>
+
 
 #include "../../../build/gfx_arrow.h"
 #include "../../../build/soundbank.h"
@@ -75,7 +75,7 @@ void Arrow::update_item_specific() {
         if (GameState::instance().hud->hearts <= 0) {
             GameState::instance().main_dude->set_dead();
         } else
-            mmEffect(SFX_XHIT);
+            sound::hit();
 
     }
 

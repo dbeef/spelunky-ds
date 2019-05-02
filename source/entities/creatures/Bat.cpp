@@ -2,7 +2,7 @@
 // Created by xdbeef on 02.05.18.
 //
 
-#include <maxmod9.h>
+
 #include <cstdlib>
 #include "Bat.hpp"
 #include "../../../build/gfx_bat_snake_jetpack.h"
@@ -15,6 +15,7 @@
 #include "../../GameState.hpp"
 #include "../../time/Timer.h"
 #include "../../graphics/SpriteUtils.hpp"
+#include "../../sound/Sound.hpp"
 
 #define BAT_ANIM_FRAME_DELTA 100
 #define BAT_POS_INC_DELTA 30
@@ -40,7 +41,7 @@ void Bat::update_creature_specific() {
                   GameState::instance().main_dude->_y > _y;
 
         if (hunting)
-            mmEffect(SFX_XBAT);
+            sound::bat();
 
     } else
         //checking if main dude is still in bat's triggering scope

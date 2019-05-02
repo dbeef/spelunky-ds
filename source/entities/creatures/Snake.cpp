@@ -2,7 +2,7 @@
 // Created by xdbeef on 23.04.18.
 //
 
-#include <maxmod9.h>
+
 #include <cstdlib>
 #include "Snake.hpp"
 #include "../items/Rock.hpp"

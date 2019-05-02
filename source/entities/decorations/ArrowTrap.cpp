@@ -3,7 +3,7 @@
 //
 
 #include <cstdlib>
-#include <maxmod9.h>
+
 
 #include "../../../build/gfx_spike_collectibles_flame.h"
 #include "../../../build/soundbank.h"
@@ -14,6 +14,7 @@
 #include "../animations/Blood.hpp"
 #include "../items/Arrow.hpp"
 #include "ArrowTrap.h"
+#include "../../sound/Sound.hpp"
 
 void ArrowTrap::update_decoration_specific() {
 
@@ -60,7 +61,7 @@ bool ArrowTrap::check_if_can_be_triggered(BaseCreature *obj) {
 
                 _activated = true;
                 spawn_arrow();
-                mmEffect(SFX_XARROWTRAP);
+                sound::arrow_trap();
                 return true;
 
             }
@@ -75,7 +76,7 @@ bool ArrowTrap::check_if_can_be_triggered(BaseCreature *obj) {
 
                 _activated = true;
                 spawn_arrow();
-                mmEffect(SFX_XARROWTRAP);
+                sound::arrow_trap();
                 return true;
             }
         }

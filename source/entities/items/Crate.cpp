@@ -2,7 +2,7 @@
 // Created by xdbeef on 16.05.18.
 //
 
-#include <maxmod9.h>
+
 #include <cstdlib>
 #include <cstdio>
 #include "Crate.hpp"
@@ -15,13 +15,14 @@
 
 #include "../../time/Timer.h"
 #include "../../graphics/SpriteUtils.hpp"
+#include "../../sound/Sound.hpp"
 
 void Crate::update_item_specific() {
 
     if (_ready_to_dispose) return;
 
     if (!_dropped_loot && GameState::instance().input_handler->up_key_held && check_collision(GameState::instance().main_dude)) {
-        mmEffect(SFX_XPICKUP);
+        sound::pickup();
         _hold_by_main_dude = false;
         GameState::instance().main_dude->holding_item = false;
         drop_loot();

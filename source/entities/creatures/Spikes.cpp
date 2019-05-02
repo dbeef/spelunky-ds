@@ -3,7 +3,7 @@
 //
 
 #include <cstdlib>
-#include <maxmod9.h>
+
 
 #include "../../../build/gfx_spike_collectibles_flame.h"
 #include "../../../build/soundbank.h"
