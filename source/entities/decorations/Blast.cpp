@@ -3,7 +3,7 @@
 //
 
 #include "../../../build/gfx_spike_collectibles_flame.h"
-#include "../../GlobalsDeclarations.hpp"
+#include "../../GameState.hpp"
 #include "../../memory/SpriteUtils.hpp"
 #include "Blast.hpp"
 
@@ -19,7 +19,7 @@ void Blast::update_decoration_specific() {
     //'_firing' property is set by the owner of a blast instance when firing, a pistol or shotgun.
     if (_firing) {
 
-        _anim_frame_timer += *global::timer;
+        _anim_frame_timer += *GameState::instance().timer;
 
         if (_anim_frame_timer > blast_anim_frame_delta) {
             _anim_frame_timer = 0;
@@ -43,11 +43,11 @@ void Blast::init_sprites() {
 
     delete_sprites();
 
-    _sub_sprite_info = global::sub_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
+    _sub_sprite_info = GameState::instance().sub_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
                                                            gfx_spike_collectibles_flamePalLen,
                                                            nullptr, _sprite_size, ObjSize::OBJSIZE_16,
                                                            _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
-    _main_sprite_info = global::main_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
+    _main_sprite_info = GameState::instance().main_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
                                                              gfx_spike_collectibles_flamePalLen,
                                                              nullptr, _sprite_size, ObjSize::OBJSIZE_16,
                                                              _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);

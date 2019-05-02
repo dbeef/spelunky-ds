@@ -54,7 +54,6 @@ add_executable(spelunkyds
         source/entities/main_dude/MainDude.cpp
         source/entities/main_dude/MainDude.hpp
         source/entities/_common/Orientation.hpp
-        source/GlobalsDeclarations.hpp
         source/GameLoop.hpp
         source/tiles/Level.cpp
         source/tiles/Level.hpp
@@ -102,8 +101,7 @@ add_executable(spelunkyds
         source/entities/creatures/Spider.cpp
         source/entities/creatures/Spider.hpp
         source/entities/creatures/CreatureType.hpp
-        source/GlobalsDefinitions.hpp
-        source/sound/SoundUtils.hpp
+        source/sound/Sound.hpp
         source/console/ConsoleUtils.hpp
         source/time/TimeUtils.h
         source/time/TimeUtils.cpp
@@ -134,8 +132,8 @@ add_executable(spelunkyds
         source/camera/LayerLevel.hpp
         source/entities/creatures/Shopkeeper.hpp
         source/entities/creatures/Shopkeeper.cpp
-        source/entities/main_dude/GameState.hpp
-        source/entities/main_dude/GameState.cpp
+        source/GameState.hpp
+        source/GameState.cpp
         source/entities/creatures/Caveman.hpp
         source/entities/creatures/Caveman.cpp
         source/entities/animations/FallPoof.hpp
@@ -171,15 +169,14 @@ add_executable(spelunkyds
         source/rooms/SnakeWellRoom.hpp
         source/entities/creatures/Skeleton.cpp
         source/entities/creatures/Skeleton.hpp
-        source/sound/SoundUtils.cpp
+        source/sound/Sound.cpp
         source/entities/animations/Bone.hpp
         source/entities/animations/Bone.cpp
         source/entities/items/Skull.hpp
         source/entities/items/Skull.cpp
         source/entities/animations/FakeSkeleton.hpp
         source/entities/animations/FakeSkeleton.cpp
-        source/GlobalsDefinitions.cpp
-        source/BaseMap.hpp
+        source/tiles/BaseMap.hpp
         source/memory/SpriteUtils.cpp
         source/memory/SpriteUtils.hpp
         source/tiles/LevelGenerator.hpp
@@ -209,7 +206,8 @@ add_executable(spelunkyds
         source/entities/_interfaces/IBase.h
         source/entities/treasures/_BaseTreasure.cpp
         source/entities/treasures/_BaseTreasure.h
-        source/entities/items/_BaseItem.cppsource/entities/items/_BaseItem.h
+        source/entities/items/_BaseItem.cpp
+        source/entities/items/_BaseItem.h
         source/entities/_interfaces/IPickupable.cpp
         source/entities/_interfaces/IPickupable.h
         source/entities/decorations/Explosion.cpp
@@ -218,4 +216,4 @@ add_executable(spelunkyds
         source/entities/items/GoldenIdol.h
         source/entities/creatures/Boulder.cpp
         source/entities/creatures/Boulder.h
-        )
+)

@@ -5,13 +5,14 @@
 #include <maxmod9.h>
 #include <cstdlib>
 #include "Caveman.hpp"
-#include "../../GlobalsDeclarations.hpp"
+#include "../../GameState.hpp"
 #include "../../collisions/Collisions.hpp"
 #include "../../../build/gfx_caveman_damsel.h"
 #include "../../tiles/TileOrientation.hpp"
 #include "Damsel.hpp"
 #include "../../../build/soundbank.h"
 #include "../../memory/SpriteUtils.hpp"
+#include "../../GameState.hpp"
 
 #define DAMSEL_SPRITESHEET_OFFSET 25
 #define DAMSEL_POS_INC_DELTA 18
@@ -35,8 +36,8 @@ void Damsel::update_creature_specific() {
     if (killed)
         yelling = false;
 
-    invert_speed_timer += *global::timer;
-    blood_spawn_timer += *global::timer;
+    invert_speed_timer += *GameState::instance().timer;
+    blood_spawn_timer += *GameState::instance().timer;
 
     sprite_utils::set_horizontal_flip(sprite_state == Orientation::RIGHT, mainSpriteInfo, subSpriteInfo);
     sprite_utils::set_visibility(true, mainSpriteInfo, subSpriteInfo);
@@ -50,9 +51,9 @@ void Damsel::update_creature_specific() {
         yelling = false;
 
         if (!killed)
-            global::main_dude->carrying_damsel = true;
+            GameState::instance().main_dude->carrying_damsel = true;
 
-        if (global::main_dude->killed) {
+        if (GameState::instance().main_dude->killed) {
             hold_by_main_dude = false;
             stunned = true;
             stunned_timer = 0;
@@ -65,7 +66,7 @@ void Damsel::update_creature_specific() {
             _bouncing_factor_y = 0;
         }
 
-        sprite_state = global::main_dude->sprite_state;
+        sprite_state = GameState::instance().main_dude->sprite_state;
         sprite_utils::set_priority(OBJPRIORITY_0, mainSpriteInfo, subSpriteInfo);
 
     } else
@@ -76,8 +77,8 @@ void Damsel::update_creature_specific() {
 
     update_sprites_position();
 
-    if (!hold_by_main_dude && global::main_dude->carrying_damsel) {
-        global::main_dude->carrying_damsel = false;
+    if (!hold_by_main_dude && GameState::instance().main_dude->carrying_damsel) {
+        GameState::instance().main_dude->carrying_damsel = false;
         stunned = true;
         stunned_timer = 0;
         triggered = true;
@@ -86,7 +87,7 @@ void Damsel::update_creature_specific() {
         _bouncing_factor_y = ICollidable::default_bouncing_factor_y;
     }
 
-    animFrameTimer += *global::timer;
+    animFrameTimer += *GameState::instance().timer;
 
     sprite_utils::set_visibility(yelling, yell_mainSpriteInfo, yell_subSpriteInfo);
 
@@ -111,7 +112,7 @@ void Damsel::update_creature_specific() {
 //        kill_if_whip(0);
 
     if (call_for_help && !triggered && !yelling && !killed) {
-        yell_timer += *global::timer;
+        yell_timer += *GameState::instance().timer;
         if (yell_timer > 5 * 1000) {
             yell_timer = 0;
             yelling = true;
@@ -120,7 +121,7 @@ void Damsel::update_creature_specific() {
 
 
     if (stunned) {
-        stunned_timer += *global::timer;
+        stunned_timer += *GameState::instance().timer;
         if (stunned_timer > DAMSEL_STUN_TIME) {
             stunned = false;
             stunned_timer = 0;
@@ -133,20 +134,20 @@ void Damsel::update_creature_specific() {
 
         //search for an exit
         MapTile *tiles[9] = {};
-        Collisions::getNeighboringTiles(global::current_level->map_tiles, global::main_dude->current_x_in_tiles,
-                                        global::main_dude->current_y_in_tiles, tiles);
+        Collisions::getNeighboringTiles(GameState::instance().current_level->map_tiles, GameState::instance().main_dude->current_x_in_tiles,
+                                        GameState::instance().main_dude->current_y_in_tiles, tiles);
 
-        exiting_level = tiles[CENTER] != nullptr && tiles[CENTER]->mapTileType == MapTileType::EXIT;
+        exiting_level = tiles[static_cast<uint16>(TileOrientation::CENTER)] != nullptr && tiles[static_cast<uint16>(TileOrientation::CENTER)]->mapTileType == MapTileType::EXIT;
         if (exiting_level) {
             _x_speed = 0;
             _y_speed = 0;
-            _x = tiles[CENTER]->x * 16;
-            _y = tiles[CENTER]->y * 16;
+            _x = tiles[static_cast<uint16>(TileOrientation::CENTER)]->x * 16;
+            _y = tiles[static_cast<uint16>(TileOrientation::CENTER)]->y * 16;
             hold_by_main_dude = false;
             mmEffect(SFX_XSTEPS);
-            if (global::main_dude->carrying_damsel) {
-                global::main_dude->holding_item = false;
-                global::main_dude->carrying_damsel = false;
+            if (GameState::instance().main_dude->carrying_damsel) {
+                GameState::instance().main_dude->holding_item = false;
+                GameState::instance().main_dude->carrying_damsel = false;
             }
         }
     }
@@ -162,9 +163,9 @@ void Damsel::update_creature_specific() {
 
         //TODO This piece of code should be shared between shopkeeper/damsel/caveman in some utils file
 
-        if (_bottom_collision && _neighboring_tiles[TileOrientation::RIGHT_MIDDLE] != nullptr &&
-            _neighboring_tiles[TileOrientation::RIGHT_MIDDLE]->collidable &&
-            _neighboring_tiles[TileOrientation::LEFT_MIDDLE] != nullptr && _neighboring_tiles[TileOrientation::LEFT_MIDDLE]->collidable) {
+        if (_bottom_collision && _neighboring_tiles[static_cast<uint16>(TileOrientation::RIGHT_MIDDLE)] != nullptr &&
+            _neighboring_tiles[static_cast<uint16>(TileOrientation::RIGHT_MIDDLE)]->collidable &&
+            _neighboring_tiles[static_cast<uint16>(TileOrientation::LEFT_MIDDLE)] != nullptr && _neighboring_tiles[static_cast<uint16>(TileOrientation::LEFT_MIDDLE)]->collidable) {
             //high jump if damsel's surrounded by tiles
             _y_speed = -2.6 - ((rand() % 10) / 5);
             landlocked = true;
@@ -173,16 +174,16 @@ void Damsel::update_creature_specific() {
 
         if (!_bottom_collision) {
 
-            if ((_neighboring_tiles[TileOrientation::RIGHT_MIDDLE] == nullptr || !_neighboring_tiles[TileOrientation::RIGHT_MIDDLE]->collidable) &&
-                (_neighboring_tiles[TileOrientation::RIGHT_UP] != nullptr && _neighboring_tiles[TileOrientation::RIGHT_DOWN] != nullptr)) {
+            if ((_neighboring_tiles[static_cast<uint16>(TileOrientation::RIGHT_MIDDLE)] == nullptr || !_neighboring_tiles[static_cast<uint16>(TileOrientation::RIGHT_MIDDLE)]->collidable) &&
+                (_neighboring_tiles[static_cast<uint16>(TileOrientation::RIGHT_UP)] != nullptr && _neighboring_tiles[static_cast<uint16>(TileOrientation::RIGHT_DOWN)] != nullptr)) {
                 //if there's no collidable tile on right-mid, but there are on right-up and right-down,
                 //add extra x-pos to ease going through a hole
                 if (_x_speed > 0)
                     _x += 2;
             }
 
-            if ((_neighboring_tiles[TileOrientation::LEFT_MIDDLE] == nullptr || !_neighboring_tiles[TileOrientation::LEFT_MIDDLE]->collidable) &&
-                (_neighboring_tiles[TileOrientation::LEFT_UP] != nullptr && _neighboring_tiles[TileOrientation::LEFT_DOWN] != nullptr)) {
+            if ((_neighboring_tiles[static_cast<uint16>(TileOrientation::LEFT_MIDDLE)] == nullptr || !_neighboring_tiles[static_cast<uint16>(TileOrientation::LEFT_MIDDLE)]->collidable) &&
+                (_neighboring_tiles[static_cast<uint16>(TileOrientation::LEFT_UP)] != nullptr && _neighboring_tiles[static_cast<uint16>(TileOrientation::LEFT_DOWN)] != nullptr)) {
                 //same but for left side
                 if (_x_speed < 0)
                     _x -= 2;
@@ -233,7 +234,7 @@ void Damsel::apply_dmg(int dmg_to_apply) {
     if (hitpoints <= 0) {
         killed = true;
         stunned = false;
-        global::killed_npcs.push_back(_creature_type);
+        GameState::instance().killed_npcs.push_back(_creature_type);
 
         _bouncing_factor_x = 0;
         _bouncing_factor_y = 0;
@@ -249,18 +250,18 @@ void Damsel::init_sprites() {
 
     delete_sprites();
 
-    subSpriteInfo = global::sub_oam_manager->initSprite(gfx_caveman_damselPal, gfx_caveman_damselPalLen,
-                                                        nullptr, _sprite_size, ObjSize::OBJSIZE_16, CAVEMAN_DAMSEL,
+    subSpriteInfo = GameState::instance().sub_oam_manager->initSprite(gfx_caveman_damselPal, gfx_caveman_damselPalLen,
+                                                        nullptr, _sprite_size, ObjSize::OBJSIZE_16, SpritesheetType::CAVEMAN_DAMSEL,
                                                         true, false, LAYER_LEVEL::MIDDLE_BOT);
-    mainSpriteInfo = global::main_oam_manager->initSprite(gfx_caveman_damselPal, gfx_caveman_damselPalLen,
-                                                          nullptr, _sprite_size, ObjSize::OBJSIZE_16, CAVEMAN_DAMSEL,
+    mainSpriteInfo = GameState::instance().main_oam_manager->initSprite(gfx_caveman_damselPal, gfx_caveman_damselPalLen,
+                                                          nullptr, _sprite_size, ObjSize::OBJSIZE_16, SpritesheetType::CAVEMAN_DAMSEL,
                                                           true, false, LAYER_LEVEL::MIDDLE_BOT);
-    yell_subSpriteInfo = global::sub_oam_manager->initSprite(gfx_caveman_damselPal, gfx_caveman_damselPalLen,
-                                                             nullptr, _sprite_size, ObjSize::OBJSIZE_16, CAVEMAN_DAMSEL,
+    yell_subSpriteInfo = GameState::instance().sub_oam_manager->initSprite(gfx_caveman_damselPal, gfx_caveman_damselPalLen,
+                                                             nullptr, _sprite_size, ObjSize::OBJSIZE_16, SpritesheetType::CAVEMAN_DAMSEL,
                                                              true, false, LAYER_LEVEL::MIDDLE_BOT);
-    yell_mainSpriteInfo = global::main_oam_manager->initSprite(gfx_caveman_damselPal, gfx_caveman_damselPalLen,
+    yell_mainSpriteInfo = GameState::instance().main_oam_manager->initSprite(gfx_caveman_damselPal, gfx_caveman_damselPalLen,
                                                                nullptr, _sprite_size, ObjSize::OBJSIZE_16,
-                                                               CAVEMAN_DAMSEL, true, false, LAYER_LEVEL::MIDDLE_BOT);
+                                                                             SpritesheetType::CAVEMAN_DAMSEL, true, false, LAYER_LEVEL::MIDDLE_BOT);
 
     match_animation();
 
@@ -311,11 +312,11 @@ void Damsel::make_some_movement() {
         return;
 
     if (waitTimer > 0 && !triggered) {
-        waitTimer -= *global::timer;
+        waitTimer -= *GameState::instance().timer;
     } else {
 
         if (goTimer > 0)
-            goTimer -= *global::timer;
+            goTimer -= *GameState::instance().timer;
 
         if (triggered) {
             if (sprite_state == Orientation::RIGHT)
@@ -425,7 +426,7 @@ void Damsel::apply_stunned_sprites() {
 void Damsel::apply_exiting_level_sprites() {
     if (animFrame >= 16) {
         rescued = true;
-        global::game_state->damsels_rescued_this_level++;
+        GameState::instance().damsels_rescued_this_level++;
     } else
         frameGfx = sprite_utils::get_frame((u8 *) gfx_caveman_damselTiles, _sprite_size,
                                            DAMSEL_SPRITESHEET_OFFSET + 14 + animFrame);
@@ -447,7 +448,7 @@ void Damsel::apply_yelling_sprites() {
 //!> after calling this function, call sprite_utils::update_frame to update OAM with current frameGfx
 void Damsel::match_animation() {
 
-    if (global::game_state->smooching && global::game_state->smooch_timer > 0)
+    if (GameState::instance().smooching && GameState::instance().smooch_timer > 0)
         apply_smooching_sprites();
     else if (yelling)
         apply_yelling_sprites();
@@ -469,10 +470,10 @@ void Damsel::match_animation() {
 void Damsel::apply_smooching_sprites() {
 
     if (animFrame >= 10) {
-        global::game_state->smooching = false;
-        global::game_state->spawned_smooch = false;
-        global::game_state->smooch_timer = 0;
-        global::input_handler->right_key_held = true;
+        GameState::instance().smooching = false;
+        GameState::instance().spawned_smooch = false;
+        GameState::instance().smooch_timer = 0;
+        GameState::instance().input_handler->right_key_held = true;
     } else
         frameGfx = (u8 *) gfx_caveman_damselTiles +
                    ((_sprite_size * (DAMSEL_SPRITESHEET_OFFSET + animFrame + 43)) / 2);

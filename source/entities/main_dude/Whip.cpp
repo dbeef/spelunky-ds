@@ -4,26 +4,26 @@
 
 #include "Whip.hpp"
 #include "../../../build/gfx_spike_collectibles_flame.h"
-#include "../../GlobalsDeclarations.hpp"
+#include "../../GameState.hpp"
 #include "../../memory/SpriteUtils.hpp"
 
 void Whip::update_creature_specific() {
 
-    if (global::main_dude->using_whip) {
+    if (GameState::instance().main_dude->using_whip) {
         update_sprites_position();
 
-        _whiping_timer += *global::timer;
+        _whiping_timer += *GameState::instance().timer;
         if (_whiping_timer > 420) {
             _whiping_timer = 0;
-            global::main_dude->using_whip = false;
+            GameState::instance().main_dude->using_whip = false;
             hide();
         }
 
     } else
         hide();
 
-    _x = global::main_dude->_x;
-    _y = global::main_dude->_y - 1;
+    _x = GameState::instance().main_dude->_x;
+    _y = GameState::instance().main_dude->_y - 1;
 
     match_animation();
 
@@ -40,14 +40,14 @@ void Whip::init_sprites() {
 
     delete_sprites();
 
-    _main_sprite_info = global::main_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
+    _main_sprite_info = GameState::instance().main_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
                                                              gfx_spike_collectibles_flamePalLen, nullptr,
-                                                             _sprite_size, ObjSize::OBJSIZE_16, WHIP,
+                                                             _sprite_size, ObjSize::OBJSIZE_16, SpritesheetType::WHIP,
                                                              true, false, LAYER_LEVEL::MIDDLE_TOP);
 
-    _sub_sprite_info = global::sub_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
+    _sub_sprite_info = GameState::instance().sub_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
                                                            gfx_spike_collectibles_flamePalLen, nullptr,
-                                                           _sprite_size, ObjSize::OBJSIZE_16, WHIP, true, false,
+                                                           _sprite_size, ObjSize::OBJSIZE_16, SpritesheetType::WHIP, true, false,
                                                            LAYER_LEVEL::MIDDLE_TOP);
     sprite_utils::set_vertical_flip(false, _main_sprite_info, _sub_sprite_info);
     hide();
@@ -82,7 +82,7 @@ void Whip::match_animation() {
         assign_pre_whip_sprite();
         sprite_utils::set_visibility(true, _main_sprite_info, _sub_sprite_info);
 
-        if (global::main_dude->sprite_state == Orientation::LEFT) {
+        if (GameState::instance().main_dude->sprite_state == Orientation::LEFT) {
             _x += 8;
             sprite_utils::set_horizontal_flip(true, _main_sprite_info, _sub_sprite_info);
         } else {
@@ -96,7 +96,7 @@ void Whip::match_animation() {
         assign_whip_sprite();
         sprite_utils::set_visibility(true, _main_sprite_info, _sub_sprite_info);
 
-        if (global::main_dude->sprite_state == Orientation::LEFT) {
+        if (GameState::instance().main_dude->sprite_state == Orientation::LEFT) {
             _x -= 16;
             sprite_utils::set_horizontal_flip(false, _main_sprite_info, _sub_sprite_info);
         } else {

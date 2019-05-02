@@ -5,18 +5,18 @@
 #include <cstdlib>
 
 #include "../../../build/gfx_rubies.h"
-#include "../../GlobalsDeclarations.hpp"
 #include "../../memory/SpriteUtils.hpp"
 #include "RubyBig.h"
+#include "../../GameState.hpp"
 
 void RubyBig::init_sprites() {
 
     delete_sprites();
 
-    _main_sprite_info = global::main_oam_manager->initSprite(gfx_rubiesPal, gfx_rubiesPalLen,
+    _main_sprite_info = GameState::instance().main_oam_manager->initSprite(gfx_rubiesPal, gfx_rubiesPalLen,
                                                             nullptr, _sprite_size, ObjSize::OBJSIZE_8,
                                                             _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
-    _sub_sprite_info = global::sub_oam_manager->initSprite(gfx_rubiesPal, gfx_rubiesPalLen, nullptr,
+    _sub_sprite_info = GameState::instance().sub_oam_manager->initSprite(gfx_rubiesPal, gfx_rubiesPalLen, nullptr,
                                                             _sprite_size, ObjSize::OBJSIZE_8, _spritesheet_type, true,
                                                             false, LAYER_LEVEL::MIDDLE_TOP);
 

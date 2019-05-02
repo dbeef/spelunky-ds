@@ -5,7 +5,7 @@
 
 #include <cstdlib>
 #include "Compass.hpp"
-#include "../../GlobalsDeclarations.hpp"
+#include "../../GameState.hpp"
 #include "../../collisions/Collisions.hpp"
 #include "../../../build/gfx_saleable.h"
 #include "../../entities/decorations/GotCollectible.hpp"
@@ -45,10 +45,10 @@ void Compass::init_sprites() {
 
     delete_sprites();
 
-    _sub_sprite_info = global::sub_oam_manager->initSprite(gfx_saleablePal, gfx_saleablePalLen,
+    _sub_sprite_info = GameState::instance().sub_oam_manager->initSprite(gfx_saleablePal, gfx_saleablePalLen,
                                                            nullptr, _sprite_size, ObjSize::OBJSIZE_16,
                                                            _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
-    _main_sprite_info = global::main_oam_manager->initSprite(gfx_saleablePal, gfx_saleablePalLen,
+    _main_sprite_info = GameState::instance().main_oam_manager->initSprite(gfx_saleablePal, gfx_saleablePalLen,
                                                              nullptr, _sprite_size, ObjSize::OBJSIZE_16,
                                                              _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
 
@@ -71,7 +71,7 @@ void Compass::init_sprites() {
 void Compass::draw_arrow_to_exit() {
 
     MapTile *exit = nullptr;
-    global::current_level->get_first_tile_of_given_type(MapTileType::EXIT, exit);
+    GameState::instance().current_level->get_first_tile_of_given_type(MapTileType::EXIT, exit);
 
 
     if (exit != nullptr) {
@@ -80,8 +80,8 @@ void Compass::draw_arrow_to_exit() {
         int tile_y = exit->y * TILE_H;
 
         //camera is centered on main dude
-        int diff_x = abs((global::camera->x + 0.5 * SCREEN_WIDTH) - tile_x);
-        int diff_y = abs((global::camera->y + 1.5 * SCREEN_HEIGHT) - tile_y);
+        int diff_x = abs((GameState::instance().camera->x + 0.5 * SCREEN_WIDTH) - tile_x);
+        int diff_y = abs((GameState::instance().camera->y + 1.5 * SCREEN_HEIGHT) - tile_y);
 
         _sub_sprite_info->entry->isHidden = false;
 
@@ -100,7 +100,7 @@ void Compass::draw_arrow_to_exit() {
                 frame_gfx = sprite_utils::get_frame((u8 *) gfx_saleableTiles, _sprite_size, 6);
             } else if (diff_y < 3 * TILE_H) {
 
-                if (global::main_dude->_x > tile_x) {
+                if (GameState::instance().main_dude->_x > tile_x) {
                     //left_arrow
                     frame_gfx = sprite_utils::get_frame((u8 *) gfx_saleableTiles, _sprite_size, 5);
                     sprite_utils::set_entry_xy(_sub_sprite_info, 4, SCREEN_HEIGHT * 0.5);
@@ -113,7 +113,7 @@ void Compass::draw_arrow_to_exit() {
 
             } else {
 
-                if (global::main_dude->_x > tile_x) {
+                if (GameState::instance().main_dude->_x > tile_x) {
                     //down-left arrow
                     frame_gfx = sprite_utils::get_frame((u8 *) gfx_saleableTiles, _sprite_size, 8);
                     sprite_utils::set_entry_xy(_sub_sprite_info, 4, SCREEN_HEIGHT - 4 - _sprite_height);
@@ -135,14 +135,14 @@ void Compass::equip() {
     collected = true;
 
     auto *g = new GotCollectible(_x - 12, _y - 20, GotCollectible::Type::ITEM);
-    global::decorations.push_back(g);
+    GameState::instance().decorations.push_back(g);
 
-    if (!global::main_dude->carrying_compass) {
-        global::main_dude->carrying_compass = true;
+    if (!GameState::instance().main_dude->carrying_compass) {
+        GameState::instance().main_dude->carrying_compass = true;
         update_sprites_position();
         _x = HUD_ITEMS_ROW_X;
-        _y = global::hud->items_offset_y;
-        global::hud->increment_offset_on_grabbed_item();
+        _y = GameState::instance().hud->items_offset_y;
+        GameState::instance().hud->increment_offset_on_grabbed_item();
     } else {
         sprite_utils::set_visibility(false, _main_sprite_info, _sub_sprite_info);
         _ready_to_dispose = true;

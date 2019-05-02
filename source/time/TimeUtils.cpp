@@ -1,7 +1,7 @@
 //
 // Created by xdbeef on 06.05.18.
 //
-#include "../GlobalsDeclarations.hpp"
+#include "../GameState.hpp"
 
 #define TICKS_PER_SECOND 30.5554503
 
@@ -10,7 +10,7 @@ namespace time_utils {
     //note -> calling timerElapsed(0) flushes the value, so by the next timerElapsed(0) that
     //happens in the same frame, you will get 0 - make sure then, that you call it only once every frame!
     void update_ms_since_last_frame() {
-        *global::timer = (timerElapsed(0) / TICKS_PER_SECOND);
+        *GameState::instance().timer = (timerElapsed(0) / TICKS_PER_SECOND);
     }
 
     void stop() {

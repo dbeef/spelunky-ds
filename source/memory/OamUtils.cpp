@@ -4,7 +4,7 @@
 
 #include <cassert>
 #include "OamUtils.hpp"
-#include "../GlobalsDeclarations.hpp"
+#include "../GameState.hpp"
 
 namespace oam_utils {
 
@@ -12,70 +12,70 @@ namespace oam_utils {
     // that the cleaning causes would be less visible.
     bool clean_unused_oam() {
 
-        global::clean_unused_oam_timer += *global::timer;
+        GameState::instance().clean_unused_oam_timer += *GameState::instance().timer;
 
-        if (/*global::clean_unused_oam_timer > 250 && */global::main_oam_manager->current_oam_id_tiles >= 118) {
+        if (/*GameState::instance().clean_unused_oam_timer > 250 && */GameState::instance().main_oam_manager->current_oam_id_tiles >= 118) {
 
-//            for (auto &sprite_info : global::sprite_infos) {
+//            for (auto &sprite_info : GameState::instance().sprite_infos) {
 //                sprite_info->entry = nullptr; //fixme - shouldn't this be deleted first? i guess no
 //                delete sprite_info;
 //                sprite_info = nullptr;
 //            }
 
-            global::main_oam_manager->clear_sprite_attributes();
-            global::sub_oam_manager->clear_sprite_attributes();
+            GameState::instance().main_oam_manager->clear_sprite_attributes();
+            GameState::instance().sub_oam_manager->clear_sprite_attributes();
 
-            global::hud->delete_sprites();
-            global::main_dude->delete_sprites();
-            global::main_dude->whip->delete_sprites();
+            GameState::instance().hud->delete_sprites();
+            GameState::instance().main_dude->delete_sprites();
+            GameState::instance().main_dude->whip->delete_sprites();
 
             std::vector<BaseCreature *>::iterator iter;
-            for (iter = global::creatures.begin(); iter != global::creatures.end();) {
+            for (iter = GameState::instance().creatures.begin(); iter != GameState::instance().creatures.end();) {
                 iter.operator*()->delete_sprites();
                 if (iter.operator*()->_ready_to_dispose) {
                     delete iter.operator*();
-                    iter = global::creatures.erase(iter);
+                    iter = GameState::instance().creatures.erase(iter);
                 } else
                     ++iter;
             }
             
             std::vector<BaseDecoration *>::iterator iter_deco;
-            for (iter_deco = global::decorations.begin(); iter_deco != global::decorations.end();) {
+            for (iter_deco = GameState::instance().decorations.begin(); iter_deco != GameState::instance().decorations.end();) {
                 iter_deco.operator*()->delete_sprites();
                 if (iter_deco.operator*()->_ready_to_dispose) {
                     delete iter_deco.operator*();
-                    iter_deco = global::decorations.erase(iter_deco);
+                    iter_deco = GameState::instance().decorations.erase(iter_deco);
                 } else
                     ++iter_deco;
             }
             
             std::vector<BaseTreasure *>::iterator iter_treasure;
-            for (iter_treasure = global::treasures.begin(); iter_treasure != global::treasures.end();) {
+            for (iter_treasure = GameState::instance().treasures.begin(); iter_treasure != GameState::instance().treasures.end();) {
                 iter_treasure.operator*()->delete_sprites();
                 if (iter_treasure.operator*()->_ready_to_dispose) {
                     delete iter_treasure.operator*();
-                    iter_treasure = global::treasures.erase(iter_treasure);
+                    iter_treasure = GameState::instance().treasures.erase(iter_treasure);
                 } else
                     ++iter_treasure;
             }
             std::vector<BaseItem *>::iterator iter_item;
-            for (iter_item = global::items.begin(); iter_item != global::items.end();) {
+            for (iter_item = GameState::instance().items.begin(); iter_item != GameState::instance().items.end();) {
                 iter_item.operator*()->delete_sprites();
                 if (iter_item.operator*()->_ready_to_dispose) {
                     delete iter_item.operator*();
-                    iter_item = global::items.erase(iter_item);
+                    iter_item = GameState::instance().items.erase(iter_item);
                 } else
                     ++iter_item;
             }
 
 //            std::vector<BaseDecoration *>::iterator iter_decorations;
-//            for (iter_decorations = global::decorations.begin(); iter_decorations != global::decorations.end();) {
+//            for (iter_decorations = GameState::instance().decorations.begin(); iter_decorations != GameState::instance().decorations.end();) {
 //                iter_decorations.operator*()->delete_sprites();
 //                ++iter;
 //            }
 
 
-//            for (auto &sprite_info: global::sprite_infos) {
+//            for (auto &sprite_info: GameState::instance().sprite_infos) {
 //                if (sprite_info != nullptr) {
 //                    printf("ASSERTION FALSE");
 //                    for(int a =0;a<5*60;a++)
@@ -83,43 +83,43 @@ namespace oam_utils {
 //                }
 //            }
 //https://stackoverflow.com/questions/2275076/is-stdvector-copying-the-objects-with-a-push-back
-            global::sprite_infos.clear();
+            GameState::instance().sprite_infos.clear();
 
-//            for (int a = 0; a < global::entities.size(); a++) {
-//                if (global::entities.at(a)->ready_to_dispose) {
-//                    delete (global::entities.at(a));
-//                    global::entities.erase(global::entities.begin() + a);
+//            for (int a = 0; a < GameState::instance().entities.size(); a++) {
+//                if (GameState::instance().entities.at(a)->ready_to_dispose) {
+//                    delete (GameState::instance().entities.at(a));
+//                    GameState::instance().entities.erase(GameState::instance().entities.begin() + a);
 //                }
 //            }
 
 
-            global::main_dude->init_sprites();
-            global::main_dude->whip->init_sprites();
+            GameState::instance().main_dude->init_sprites();
+            GameState::instance().main_dude->whip->init_sprites();
 
-            for (auto &creature : global::creatures) {
+            for (auto &creature : GameState::instance().creatures) {
                 if (!creature->_ready_to_dispose) {
                     creature->init_sprites();
                 }
             }
-            for (auto &decoration : global::decorations) {
+            for (auto &decoration : GameState::instance().decorations) {
                 if (!decoration->_ready_to_dispose) {
                     decoration->init_sprites();
                 }
             }
-            for (auto &treasure : global::treasures) {
+            for (auto &treasure : GameState::instance().treasures) {
                 if (!treasure->_ready_to_dispose) {
                     treasure->init_sprites();
                 }
             }
-            for (auto &treasure : global::items) {
+            for (auto &treasure : GameState::instance().items) {
                 if (!treasure->_ready_to_dispose) {
                     treasure->init_sprites();
                 }
             }
 
-            global::hud->init_sprites();
+            GameState::instance().hud->init_sprites();
 
-//            global::clean_unused_oam_timer = 0;
+//            GameState::instance().clean_unused_oam_timer = 0;
             return true;
         }
 
@@ -129,40 +129,40 @@ namespace oam_utils {
 
     void delete_all_sprites() {
 
-        global::main_oam_manager->clear_sprite_attributes();
-        global::sub_oam_manager->clear_sprite_attributes();
+        GameState::instance().main_oam_manager->clear_sprite_attributes();
+        GameState::instance().sub_oam_manager->clear_sprite_attributes();
 
-        global::main_dude->delete_sprites();
-        global::main_dude->whip->delete_sprites();
-        global::hud->delete_sprites();
+        GameState::instance().main_dude->delete_sprites();
+        GameState::instance().main_dude->whip->delete_sprites();
+        GameState::instance().hud->delete_sprites();
 
-        for (auto &sprite : global::creatures) {
+        for (auto &sprite : GameState::instance().creatures) {
             sprite->delete_sprites(); //deletes its SpriteInfos and nullptrs them
             delete sprite; //deletes sprite itself
         }
 
-        for (auto &sprite : global::decorations) {
+        for (auto &sprite : GameState::instance().decorations) {
             sprite->delete_sprites(); //deletes its SpriteInfos and nullptrs them
             delete sprite; //deletes sprite itself
         }
 
-        for (auto &sprite : global::treasures) {
+        for (auto &sprite : GameState::instance().treasures) {
             sprite->delete_sprites(); //deletes its SpriteInfos and nullptrs them
             delete sprite; //deletes sprite itself
         }
 
-        for (auto &sprite : global::items) {
+        for (auto &sprite : GameState::instance().items) {
             sprite->delete_sprites(); //deletes its SpriteInfos and nullptrs them
             delete sprite; //deletes sprite itself
         }
 
-        global::creatures.clear(); //deletes pointers to the entities removed above - they're not nullptrs!
-        global::decorations.clear(); //deletes pointers to the decorations removed above - they're not nullptrs!
-        global::treasures.clear(); //deletes pointers to the treasures removed above - they're not nullptrs!
-        global::items.clear(); //deletes pointers to the items removed above - they're not nullptrs!
+        GameState::instance().creatures.clear(); //deletes pointers to the entities removed above - they're not nullptrs!
+        GameState::instance().decorations.clear(); //deletes pointers to the decorations removed above - they're not nullptrs!
+        GameState::instance().treasures.clear(); //deletes pointers to the treasures removed above - they're not nullptrs!
+        GameState::instance().items.clear(); //deletes pointers to the items removed above - they're not nullptrs!
 
         //https://stackoverflow.com/questions/2275076/is-stdvector-copying-the-objects-with-a-push-back
-        global::sprite_infos.clear(); //deletes pointers to the SpriteInfos deleted above - they're not nullptrs!
+        GameState::instance().sprite_infos.clear(); //deletes pointers to the SpriteInfos deleted above - they're not nullptrs!
 
 
     }

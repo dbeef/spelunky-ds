@@ -10,7 +10,7 @@
 
 #include "../creatures/Spikes.h"
 #include "../../collisions/Collisions.hpp"
-#include "../../GlobalsDeclarations.hpp"
+#include "../../GameState.hpp"
 #include "../animations/Blood.hpp"
 #include "../items/Arrow.hpp"
 #include "ArrowTrap.h"
@@ -22,9 +22,9 @@ void ArrowTrap::update_decoration_specific() {
 
     if (_activated) return;
 
-    if (check_if_can_be_triggered(global::main_dude)) return;
+    if (check_if_can_be_triggered(GameState::instance().main_dude)) return;
 
-    for (auto &creature : global::creatures)
+    for (auto &creature : GameState::instance().creatures)
         if (check_if_can_be_triggered(creature)) return;
 }
 
@@ -41,7 +41,7 @@ void ArrowTrap::spawn_arrow() const {
         arrow->_x_speed = 4;
     }
 
-    global::items.push_back(arrow);
+    GameState::instance().items.push_back(arrow);
 }
 
 // TODO Exclude blood/fire particles from triggering traps.

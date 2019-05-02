@@ -3,7 +3,7 @@
 //
 
 #include "../../../build/gfx_got_collectible.h"
-#include "../../GlobalsDeclarations.hpp"
+#include "../../GameState.hpp"
 #include "../../memory/SpriteUtils.hpp"
 #include "GotCollectible.hpp"
 
@@ -13,7 +13,7 @@ void GotCollectible::update_decoration_specific() {
 
     update_sprites_position();
 
-    _anim_frame_timer += *global::timer;
+    _anim_frame_timer += *GameState::instance().timer;
 
     // Blink a few times and disappear
     if (_anim_frame_timer > got_collectible_anim_frame_delta) {
@@ -43,10 +43,10 @@ void GotCollectible::init_sprites() {
 
     delete_sprites();
 
-    _sub_sprite_info = global::sub_oam_manager->initSprite(gfx_got_collectiblePal, gfx_got_collectiblePalLen,
+    _sub_sprite_info = GameState::instance().sub_oam_manager->initSprite(gfx_got_collectiblePal, gfx_got_collectiblePalLen,
                                                            nullptr, _sprite_size, ObjSize::OBJSIZE_32,
                                                            _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
-    _main_sprite_info = global::main_oam_manager->initSprite(gfx_got_collectiblePal, gfx_got_collectiblePalLen,
+    _main_sprite_info = GameState::instance().main_oam_manager->initSprite(gfx_got_collectiblePal, gfx_got_collectiblePalLen,
                                                              nullptr, _sprite_size, ObjSize::OBJSIZE_32,
                                                              _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
 

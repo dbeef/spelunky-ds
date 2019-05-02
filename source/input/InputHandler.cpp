@@ -4,7 +4,6 @@
 #include <nds.h>
 #include <nds/arm9/input.h>
 #include "InputHandler.hpp"
-#include "../GlobalsDeclarations.hpp"
 
 void InputHandler::updateInput() {
 

@@ -3,7 +3,7 @@
 //
 
 #include "../../../build/gfx_caveman_damsel.h"
-#include "../../GlobalsDeclarations.hpp"
+#include "../../GameState.hpp"
 #include "../../memory/SpriteUtils.hpp"
 #include "Smooch.hpp"
 
@@ -13,7 +13,7 @@ void Smooch::update_decoration_specific() {
 
     update_sprites_position();
 
-    _anim_frame_timer += *global::timer;
+    _anim_frame_timer += *GameState::instance().timer;
 
     // Animate and go upwards gradually
     if (_anim_frame_timer > smooch_anim_frame_delta) {
@@ -46,11 +46,11 @@ void Smooch::init_sprites() {
 
     delete_sprites();
 
-    _main_sprite_info = global::main_oam_manager->initSprite(gfx_caveman_damselPal, gfx_caveman_damselPalLen, nullptr,
+    _main_sprite_info = GameState::instance().main_oam_manager->initSprite(gfx_caveman_damselPal, gfx_caveman_damselPalLen, nullptr,
                                                              _sprite_size, ObjSize::OBJSIZE_16, _spritesheet_type, true,
                                                              false, LAYER_LEVEL::MIDDLE_TOP);
 
-    _sub_sprite_info = global::sub_oam_manager->initSprite(gfx_caveman_damselPal, gfx_caveman_damselPalLen, nullptr,
+    _sub_sprite_info = GameState::instance().sub_oam_manager->initSprite(gfx_caveman_damselPal, gfx_caveman_damselPalLen, nullptr,
                                                            _sprite_size, ObjSize::OBJSIZE_16, _spritesheet_type, true,
                                                            false, LAYER_LEVEL::MIDDLE_TOP);
 

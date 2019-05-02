@@ -8,7 +8,7 @@
 #include "Crate.hpp"
 #include "../../../build/gfx_spike_collectibles_flame.h"
 #include "../../collisions/Collisions.hpp"
-#include "../../GlobalsDeclarations.hpp"
+#include "../../GameState.hpp"
 #include "../../../build/soundbank.h"
 #include "../../entities/decorations/GotCollectible.hpp"
 #include "_ItemsUtils.hpp"
@@ -18,10 +18,10 @@ void Crate::update_item_specific() {
 
     if (_ready_to_dispose) return;
 
-    if (!_dropped_loot && global::input_handler->up_key_held && check_collision(global::main_dude)) {
+    if (!_dropped_loot && GameState::instance().input_handler->up_key_held && check_collision(GameState::instance().main_dude)) {
         mmEffect(SFX_XPICKUP);
         _hold_by_main_dude = false;
-        global::main_dude->holding_item = false;
+        GameState::instance().main_dude->holding_item = false;
         drop_loot();
     } else if (_activated) {
         // FIXME For now, throwing a chest requires pressing throwing key (Y) twice.
@@ -51,11 +51,11 @@ void Crate::init_sprites() {
 
     delete_sprites();
 
-    _sub_sprite_info = global::sub_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
+    _sub_sprite_info = GameState::instance().sub_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
                                                            gfx_spike_collectibles_flamePalLen,
                                                            nullptr, _sprite_size, ObjSize::OBJSIZE_16,
                                                            _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
-    _main_sprite_info = global::main_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
+    _main_sprite_info = GameState::instance().main_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
                                                              gfx_spike_collectibles_flamePalLen,
                                                              nullptr, _sprite_size, ObjSize::OBJSIZE_16,
                                                              _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
@@ -91,16 +91,16 @@ void Crate::drop_loot() {
         GotCollectible *g;
 
         if (r == 0) {
-            global::hud->ropes += 4;
+            GameState::instance().hud->ropes += 4;
             g = new GotCollectible(_x - 12, _y - 20, GotCollectible::Type::ROPE);
         } else {
-            global::hud->bombs += 4;
+            GameState::instance().hud->bombs += 4;
             g = new GotCollectible(_x - 12, _y - 20, GotCollectible::Type::BOMB);
         }
 
-        global::hud->draw_level_hud();
+        GameState::instance().hud->draw_level_hud();
 
-        global::decorations.push_back(g);
+        GameState::instance().decorations.push_back(g);
     } else {
         collectibles_utils::spawn_random_item(this->_x, this->_y);
     }
@@ -109,7 +109,7 @@ void Crate::drop_loot() {
 
 void Crate::play_collectible_animation() {
 
-    _anim_frame_timer += *global::timer;
+    _anim_frame_timer += *GameState::instance().timer;
 
     if (_anim_frame_timer > 75) {
         _anim_frame++;

@@ -5,7 +5,7 @@
 
 #include <maxmod9.h>
 #include "Pistol.hpp"
-#include "../../GlobalsDeclarations.hpp"
+#include "../../GameState.hpp"
 #include "../../collisions/Collisions.hpp"
 #include "../../../build/gfx_spike_collectibles_flame.h"
 #include "../../../build/soundbank.h"
@@ -26,12 +26,12 @@ void Pistol::update_item_specific() {
         if (shopping_transaction(this))
             equip();
 
-        global::main_dude->carrying_pistol = true;
-        _orientation = global::main_dude->sprite_state;
+        GameState::instance().main_dude->carrying_pistol = true;
+        _orientation = GameState::instance().main_dude->sprite_state;
         match_animation();
 
     } else
-        global::main_dude->carrying_pistol = false;
+        GameState::instance().main_dude->carrying_pistol = false;
 
     update_sprites_position(); //must be called here, after position is offsetted if pistol carried
     handle_shooting();
@@ -42,11 +42,11 @@ void Pistol::init_sprites() {
 
     delete_sprites();
     
-    _main_sprite_info = global::main_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
+    _main_sprite_info = GameState::instance().main_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
                                                           gfx_spike_collectibles_flamePalLen,
                                                           nullptr, _sprite_size, ObjSize::OBJSIZE_16,
                                                           _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
-    _sub_sprite_info = global::sub_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
+    _sub_sprite_info = GameState::instance().sub_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
                                                         gfx_spike_collectibles_flamePalLen,
                                                         nullptr, _sprite_size, ObjSize::OBJSIZE_16,
                                                         _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
@@ -61,22 +61,22 @@ void Pistol::init_sprites() {
 
 void Pistol::equip() {
     auto *g = new GotCollectible(_x - 12, _y - 20, GotCollectible::Type::ITEM);
-    global::decorations.push_back(g);
+    GameState::instance().decorations.push_back(g);
 }
 
 void Pistol::spawn_bullet() {
 
     auto *b = new Bullet(_x, _y);
 
-    if (global::main_dude->sprite_state == Orientation::LEFT) {
+    if (GameState::instance().main_dude->sprite_state == Orientation::LEFT) {
         b->_x_speed = -5.0;
         b->_x -= 2;
-    } else if (global::main_dude->sprite_state == Orientation::RIGHT) {
+    } else if (GameState::instance().main_dude->sprite_state == Orientation::RIGHT) {
         b->_x_speed = 5.0;
         b->_x += 2;
     }
 
-    global::creatures.push_back(b);
+    GameState::instance().creatures.push_back(b);
     b->_y_speed = 0;
 }
 
@@ -102,7 +102,7 @@ void Pistol::handle_shooting() {
     _blast->_firing = _firing;
 
     if (!_firing) {
-        _cooldown += *global::timer;
+        _cooldown += *GameState::instance().timer;
         if (_orientation == Orientation::LEFT)
             _blast->_x = _x - 10;
         else

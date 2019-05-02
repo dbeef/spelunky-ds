@@ -3,7 +3,7 @@
 //
 
 #include "../../entities/decorations/GotCollectible.hpp"
-#include "../../GlobalsDeclarations.hpp"
+#include "../../GameState.hpp"
 #include "../../../build/gfx_spider_skeleton.h"
 #include "../../collisions/Collisions.hpp"
 #include "Bone.hpp"
@@ -25,7 +25,7 @@ void Bone::update_creature_specific() {
     sprite_utils::set_priority(OBJPRIORITY_0, mainSpriteInfo, subSpriteInfo);
     update_sprites_position();
 
-    animFrameTimer += *global::timer;
+    animFrameTimer += *GameState::instance().timer;
 
     if (animFrameTimer > BONE_ANIM_FRAME_DELTA) {
         animFrameTimer = 0;
@@ -49,10 +49,10 @@ void Bone::init_sprites() {
 
     delete_sprites();
 
-    subSpriteInfo = global::sub_oam_manager->initSprite(gfx_spider_skeletonPal, gfx_spider_skeletonPalLen,
+    subSpriteInfo = GameState::instance().sub_oam_manager->initSprite(gfx_spider_skeletonPal, gfx_spider_skeletonPalLen,
                                                         nullptr, _sprite_size, ObjSize::OBJSIZE_16,
                                                         _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
-    mainSpriteInfo = global::main_oam_manager->initSprite(gfx_spider_skeletonPal, gfx_spider_skeletonPalLen,
+    mainSpriteInfo = GameState::instance().main_oam_manager->initSprite(gfx_spider_skeletonPal, gfx_spider_skeletonPalLen,
                                                           nullptr, _sprite_size, ObjSize::OBJSIZE_16,
                                                           _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
     sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);

@@ -5,7 +5,7 @@
 #include <cstdio>
 #include "../../../build/gfx_saleable.h"
 #include "../../collisions/Collisions.hpp"
-#include "../../GlobalsDeclarations.hpp"
+#include "../../GameState.hpp"
 #include "../../entities/decorations/GotCollectible.hpp"
 #include "../../memory/SpritesheetType.hpp"
 #include "../../memory/SpriteUtils.hpp"
@@ -40,10 +40,10 @@ void SpikeShoes::init_sprites() {
 
     delete_sprites();
 
-    _sub_sprite_info = global::sub_oam_manager->initSprite(gfx_saleablePal, gfx_saleablePalLen,
+    _sub_sprite_info = GameState::instance().sub_oam_manager->initSprite(gfx_saleablePal, gfx_saleablePalLen,
                                                            nullptr, _sprite_size, ObjSize::OBJSIZE_16,
                                                            _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
-    _main_sprite_info = global::main_oam_manager->initSprite(gfx_saleablePal, gfx_saleablePalLen,
+    _main_sprite_info = GameState::instance().main_oam_manager->initSprite(gfx_saleablePal, gfx_saleablePalLen,
                                                              nullptr, _sprite_size, ObjSize::OBJSIZE_16,
                                                              _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
 
@@ -68,15 +68,15 @@ void SpikeShoes::equip() {
     _render_in_hud = true;
 
     auto *g = new GotCollectible(_x - 12, _y - 20, GotCollectible::Type::ITEM);
-    global::decorations.push_back(g);
+    GameState::instance().decorations.push_back(g);
 
-    if (!global::main_dude->carrying_spike_shoes) {
+    if (!GameState::instance().main_dude->carrying_spike_shoes) {
 
-        global::main_dude->carrying_spike_shoes = true;
+        GameState::instance().main_dude->carrying_spike_shoes = true;
 
         _x = HUD_ITEMS_ROW_X;
-        _y = global::hud->items_offset_y;
-        global::hud->increment_offset_on_grabbed_item();
+        _y = GameState::instance().hud->items_offset_y;
+        GameState::instance().hud->increment_offset_on_grabbed_item();
 
         _sub_sprite_info->entry->isHidden = true;
         _main_sprite_info->entry->isHidden = false;

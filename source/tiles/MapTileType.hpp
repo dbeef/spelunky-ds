@@ -12,7 +12,7 @@
  * Indicates type of a MapTile.
  * Tilemap can be found at gfx/tilemaps/gfx_cavebg.png
  */
-enum MapTileType {
+enum class MapTileType {
     NOTHING,                        //0 NON_COLLIDABLE
     CAVE_ROCK,                      //1
     CAVE_REGULAR,                   //2

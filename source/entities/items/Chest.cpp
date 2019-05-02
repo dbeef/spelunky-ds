@@ -8,7 +8,7 @@
 #include "../../../build/gfx_spike_collectibles_flame.h"
 #include "../../../build/soundbank.h"
 #include "../../collisions/Collisions.hpp"
-#include "../../GlobalsDeclarations.hpp"
+#include "../../GameState.hpp"
 #include "../../memory/SpriteUtils.hpp"
 #include "../treasures/RubySmall.h"
 #include "../treasures/RubyBig.h"
@@ -19,7 +19,7 @@ void Chest::update_item_specific() {
 
     if (_activated && !_dropped_loot) {
 
-        if (global::input_handler->up_key_held) {
+        if (GameState::instance().input_handler->up_key_held) {
             mmEffect(SFX_XCHESTOPEN);
             spawn_treasure();
             _dropped_loot = true;
@@ -47,11 +47,11 @@ void Chest::init_sprites() {
 
     delete_sprites();
 
-    _sub_sprite_info = global::sub_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
+    _sub_sprite_info = GameState::instance().sub_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
                                                            gfx_spike_collectibles_flamePalLen,
                                                            nullptr, _sprite_size, ObjSize::OBJSIZE_16,
                                                            _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
-    _main_sprite_info = global::main_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
+    _main_sprite_info = GameState::instance().main_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
                                                              gfx_spike_collectibles_flamePalLen,
                                                              nullptr, _sprite_size, ObjSize::OBJSIZE_16,
                                                              _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
@@ -84,7 +84,7 @@ void Chest::spawn_treasure() {
                 ruby_small->_x_speed = -0.8;
             else
                 ruby_small->_x_speed = 0.8;
-            global::treasures.push_back(ruby_small);
+            GameState::instance().treasures.push_back(ruby_small);
 
         } else {
 
@@ -95,7 +95,7 @@ void Chest::spawn_treasure() {
                 ruby_big->_x_speed = -0.8;
             else
                 ruby_big->_x_speed = 0.8;
-            global::treasures.push_back(ruby_big);
+            GameState::instance().treasures.push_back(ruby_big);
         }
     }
 }

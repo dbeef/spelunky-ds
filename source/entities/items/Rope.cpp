@@ -5,7 +5,7 @@
 #include <maxmod9.h>
 
 #include "Rope.hpp"
-#include "../../GlobalsDeclarations.hpp"
+#include "../../GameState.hpp"
 #include "../../../build/gfx_blood_rock_rope_poof.h"
 #include "../../../build/soundbank.h"
 #include "../../collisions/Collisions.hpp"
@@ -16,7 +16,7 @@ void Rope::update_item_specific() {
 
     if (_ready_to_dispose) return;
 
-    _expand_timer += *global::timer;
+    _expand_timer += *GameState::instance().timer;
 
     for (int a = _rope_chain.size() - 1; a >= 0; a--) {
 
@@ -38,34 +38,34 @@ void Rope::update_item_specific() {
         _thrown = true;
         _throwing_timer = 0;
 
-        _x = floor_div(global::main_dude->_x + 0.5 * MainDude::main_dude_physical_width, TILE_W) * TILE_W +
+        _x = floor_div(GameState::instance().main_dude->_x + 0.5 * MainDude::main_dude_physical_width, TILE_W) * TILE_W +
              _physical_width * 0.5;
         _y -= 16;
         _y_speed = -4;
     }
 
     if (_thrown && !_finished) {
-        _throwing_timer += *global::timer;
+        _throwing_timer += *GameState::instance().timer;
         add_rope_if_needed();
     }
 
     //checking if main dude can climb over the rope
 
-    bool onTopOfClimbingSpace = global::main_dude->_y < _y + 6;
-    global::main_dude->on_top_of_climbing_space = onTopOfClimbingSpace;
+    bool onTopOfClimbingSpace = GameState::instance().main_dude->_y < _y + 6;
+    GameState::instance().main_dude->on_top_of_climbing_space = onTopOfClimbingSpace;
 
     for (unsigned long a = 0; a < _rope_chain.size(); a++) {
 
-        if (_rope_chain.at(a)->_x + 5 > global::main_dude->_x &&
-            _rope_chain.at(a)->_x + 5 < global::main_dude->_x + MainDude::main_dude_physical_width &&
-            _rope_chain.at(a)->_y + 5 > global::main_dude->_y &&
-            _rope_chain.at(a)->_y - 5 < global::main_dude->_y + MainDude::main_dude_physical_height &&
+        if (_rope_chain.at(a)->_x + 5 > GameState::instance().main_dude->_x &&
+            _rope_chain.at(a)->_x + 5 < GameState::instance().main_dude->_x + MainDude::main_dude_physical_width &&
+            _rope_chain.at(a)->_y + 5 > GameState::instance().main_dude->_y &&
+            _rope_chain.at(a)->_y - 5 < GameState::instance().main_dude->_y + MainDude::main_dude_physical_height &&
             _rope_chain.at(a)->_active
             && !onTopOfClimbingSpace) {
-            if (!global::input_handler->r_bumper_down) {
-                global::main_dude->can_climb_rope = true;
-                if (global::input_handler->up_key_held) {
-                    global::main_dude->_x = _rope_chain.at(a)->_x - 4;
+            if (!GameState::instance().input_handler->r_bumper_down) {
+                GameState::instance().main_dude->can_climb_rope = true;
+                if (GameState::instance().input_handler->up_key_held) {
+                    GameState::instance().main_dude->_x = _rope_chain.at(a)->_x - 4;
                 }
             }
 
@@ -122,14 +122,14 @@ void Rope::init_sprites() {
 
     delete_sprites();
 
-    _sub_sprite_info = global::sub_oam_manager->initSprite(gfx_blood_rock_rope_poofPal, gfx_blood_rock_rope_poofPalLen,
+    _sub_sprite_info = GameState::instance().sub_oam_manager->initSprite(gfx_blood_rock_rope_poofPal, gfx_blood_rock_rope_poofPalLen,
                                                            nullptr, _sprite_size, ObjSize::OBJSIZE_8,
-                                                           BLOOD_ROCK_ROPE_POOF, true,
+                                                                         SpritesheetType::BLOOD_ROCK_ROPE_POOF, true,
                                                            false, LAYER_LEVEL::MIDDLE_TOP);
-    _main_sprite_info = global::main_oam_manager->initSprite(gfx_blood_rock_rope_poofPal,
+    _main_sprite_info = GameState::instance().main_oam_manager->initSprite(gfx_blood_rock_rope_poofPal,
                                                              gfx_blood_rock_rope_poofPalLen,
                                                              nullptr, _sprite_size, ObjSize::OBJSIZE_8,
-                                                             BLOOD_ROCK_ROPE_POOF, true,
+                                                                           SpritesheetType::BLOOD_ROCK_ROPE_POOF, true,
                                                              false, LAYER_LEVEL::MIDDLE_TOP);
 
     sprite_utils::set_visibility(true, _main_sprite_info, _sub_sprite_info);

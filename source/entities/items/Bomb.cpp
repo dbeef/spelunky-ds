@@ -6,7 +6,7 @@
 #include <maxmod9.h>
 
 #include "Bomb.hpp"
-#include "../../GlobalsDeclarations.hpp"
+#include "../../GameState.hpp"
 #include "../../tiles/LevelRenderingUtils.hpp"
 #include "../../collisions/Collisions.hpp"
 #include "../../../build/gfx_bomb.h"
@@ -15,6 +15,7 @@
 #include "../../memory/SpriteUtils.hpp"
 #include "../animations/Flame.hpp"
 #include "../decorations/Explosion.h"
+#include "../../GameState.hpp"
 
 void Bomb::update_item_specific() {
 
@@ -28,7 +29,7 @@ void Bomb::update_item_specific() {
 
     if (armed) {
 
-        armedTimer += *global::timer;
+        armedTimer += *GameState::instance().timer;
 
         if (armedTimer < ARMED_TIME_BLINK_SLOW) {
 
@@ -46,7 +47,7 @@ void Bomb::update_item_specific() {
 
         } else {
             explode();
-            global::camera->shake();
+            GameState::instance().camera->shake();
             _ready_to_dispose = true;
         }
     }
@@ -70,12 +71,12 @@ void Bomb::init_sprites() {
 
     delete_sprites();
 
-    _sub_sprite_info = global::sub_oam_manager->initSprite(gfx_bombPal, gfx_bombPalLen,
+    _sub_sprite_info = GameState::instance().sub_oam_manager->initSprite(gfx_bombPal, gfx_bombPalLen,
                                                            nullptr, _sprite_size, ObjSize::OBJSIZE_8,
-                                                           BOMB, true, false, LAYER_LEVEL::MIDDLE_TOP);
-    _main_sprite_info = global::main_oam_manager->initSprite(gfx_bombPal, gfx_bombPalLen,
+                                                           SpritesheetType::BOMB, true, false, LAYER_LEVEL::MIDDLE_TOP);
+    _main_sprite_info = GameState::instance().main_oam_manager->initSprite(gfx_bombPal, gfx_bombPalLen,
                                                              nullptr, _sprite_size, ObjSize::OBJSIZE_8,
-                                                             BOMB, true, false, LAYER_LEVEL::MIDDLE_TOP);
+                                                                           SpritesheetType::BOMB, true, false, LAYER_LEVEL::MIDDLE_TOP);
     if (armed) {
         if (armedTimer < ARMED_TIME_BLINK_SLOW) {
             if ((armedTimer) % 250 < 125)
@@ -108,7 +109,7 @@ void Bomb::explode() {
             flame->_x_speed = (-1.3 / a);
 
         flame->_y_speed = (-2 / a);
-        global::creatures.push_back(flame);
+        GameState::instance().creatures.push_back(flame);
     }
 
     mmEffect(SFX_XEXPLOSION);
@@ -116,11 +117,11 @@ void Bomb::explode() {
     int xx = floor_div(this->_x + 0.5 * _sprite_width, TILE_W);
     int yy = floor_div(this->_y + 0.5 * _sprite_height, TILE_H);
 
-    Collisions::bombNeighboringTiles(global::current_level->map_tiles, xx, yy);
-    global::game_state->bombed = true;
+    Collisions::bombNeighboringTiles(GameState::instance().current_level->map_tiles, xx, yy);
+    GameState::instance().bombed = true;
 
     auto *explosion = new Explosion(_x - 32, _y - 32);
-    global::decorations.push_back(explosion);
+    GameState::instance().decorations.push_back(explosion);
 
     sprite_utils::set_visibility(false, _main_sprite_info, _sub_sprite_info);
 }

@@ -6,7 +6,7 @@
 #include "Level.hpp"
 #include "LevelGenerator.hpp"
 #include "../rooms/RoomType.hpp"
-#include "../GlobalsDeclarations.hpp"
+#include "../GameState.hpp"
 
 /**
  * How the Spelunky level generator works:
@@ -20,8 +20,8 @@
 void generate_new_level_layout() {
 
     //clean current layout
-    global::current_level->clean_map_layout();
-    for (auto &room_type : global::current_level->layout)
+    GameState::instance().current_level->clean_map_layout();
+    for (auto &room_type : GameState::instance().current_level->layout)
         for (RoomType &b : room_type)
             //not visited rooms are of CLOSED type by default
             b = RoomType::R_CLOSED;
@@ -39,7 +39,7 @@ void generate_new_level_layout() {
     bool exit_placed = false;
 
     //set the starting room as an entrance room
-    global::current_level->layout[curr_x][curr_y] = RoomType::R_ENTRANCE;
+    GameState::instance().current_level->layout[curr_x][curr_y] = RoomType::R_ENTRANCE;
 
     //while we're on the very bottom floor or higher, do
     while (curr_y >= 0) {
@@ -61,9 +61,9 @@ void generate_new_level_layout() {
                 if (curr_y == 0 && !exit_placed && rand() % 2 == 0) {
                     //we're on the most bottom floor, we didn't plant an exit yet and we've guessed that's the place
                     exit_placed = true;
-                    global::current_level->layout[curr_x][curr_y] = RoomType::R_EXIT;
+                    GameState::instance().current_level->layout[curr_x][curr_y] = RoomType::R_EXIT;
                 } else
-                    global::current_level->layout[curr_x][curr_y] = RoomType::R_LEFT_RIGHT;
+                    GameState::instance().current_level->layout[curr_x][curr_y] = RoomType::R_LEFT_RIGHT;
 
                 if (rand() % 3 == 2)
                     //random chance that we change our direction to go down in the next iteration
@@ -74,14 +74,14 @@ void generate_new_level_layout() {
 
             if (curr_y > 0) {
 
-                global::current_level->layout[curr_x][curr_y] = RoomType::R_LEFT_RIGHT_DOWN;
+                GameState::instance().current_level->layout[curr_x][curr_y] = RoomType::R_LEFT_RIGHT_DOWN;
                 curr_y--;
-                global::current_level->layout[curr_x][curr_y] = RoomType::R_LEFT_RIGHT_UP;
+                GameState::instance().current_level->layout[curr_x][curr_y] = RoomType::R_LEFT_RIGHT_UP;
 
                 if (curr_y == 0 && !exit_placed && rand() % 2 == 0) {
                     //if we're on the very bottom floor, no exit planted yet and a guess tells us so, place an exit
                     exit_placed = true;
-                    global::current_level->layout[curr_x][curr_y] = RoomType::R_EXIT;
+                    GameState::instance().current_level->layout[curr_x][curr_y] = RoomType::R_EXIT;
                 }
 
                 obtain_new_direction(curr_x, direction);
@@ -90,7 +90,7 @@ void generate_new_level_layout() {
                 if (!exit_placed)
                     //we're on the very bottom floor, didn't plant an exit yet and we're
                     //done with iterating through map, so plant an exit
-                    global::current_level->layout[curr_x][curr_y] = RoomType::R_EXIT;
+                    GameState::instance().current_level->layout[curr_x][curr_y] = RoomType::R_EXIT;
 
                 break;
             }
@@ -122,8 +122,8 @@ void obtain_new_direction(int curr_x, Direction &direction) {
 void place_an_altar() {
     for (int a = 0; a < ROOMS_X; a++) {
         for (int b = 0; b < ROOMS_Y; b++) {
-            if (global::current_level->layout[a][b] == RoomType::R_CLOSED) {
-                global::current_level->layout[a][b] = RoomType::R_ALTAR;
+            if (GameState::instance().current_level->layout[a][b] == RoomType::R_CLOSED) {
+                GameState::instance().current_level->layout[a][b] = RoomType::R_ALTAR;
                 return;
             }
         }
@@ -139,31 +139,31 @@ void place_an_altar() {
 void place_a_shop() {
     for (int a = 0; a < ROOMS_X; a++) {
         for (int b = 0; b < ROOMS_Y; b++) {
-            if (global::current_level->layout[a][b] == RoomType::R_CLOSED) {
+            if (GameState::instance().current_level->layout[a][b] == RoomType::R_CLOSED) {
                 if (a == 0) {
-                    if (global::current_level->layout[a + 1][b] != RoomType::R_CLOSED) {
-                        if (global::game_state->robbed_killed_shopkeeper)
-                            global::current_level->layout[a][b] = RoomType::R_SHOP_RIGHT_MUGSHOT;
+                    if (GameState::instance().current_level->layout[a + 1][b] != RoomType::R_CLOSED) {
+                        if (GameState::instance().robbed_killed_shopkeeper)
+                            GameState::instance().current_level->layout[a][b] = RoomType::R_SHOP_RIGHT_MUGSHOT;
                         else
-                            global::current_level->layout[a][b] = RoomType::R_SHOP_RIGHT;
+                            GameState::instance().current_level->layout[a][b] = RoomType::R_SHOP_RIGHT;
                         return;
                     }
                 } else if (a == 2) {
-                    if (global::current_level->layout[a - 1][b] != RoomType::R_CLOSED) {
-                        if (global::game_state->robbed_killed_shopkeeper)
-                            global::current_level->layout[a][b] = RoomType::R_SHOP_LEFT_MUGSHOT;
+                    if (GameState::instance().current_level->layout[a - 1][b] != RoomType::R_CLOSED) {
+                        if (GameState::instance().robbed_killed_shopkeeper)
+                            GameState::instance().current_level->layout[a][b] = RoomType::R_SHOP_LEFT_MUGSHOT;
                         else
-                            global::current_level->layout[a][b] = RoomType::R_SHOP_LEFT;
+                            GameState::instance().current_level->layout[a][b] = RoomType::R_SHOP_LEFT;
                         return;
                     }
                 } else if (a == 1) {
-                    if (global::current_level->layout[a - 1][b] != RoomType::R_CLOSED &&
-                        global::current_level->layout[a + 1][b] != RoomType::R_CLOSED) {
+                    if (GameState::instance().current_level->layout[a - 1][b] != RoomType::R_CLOSED &&
+                        GameState::instance().current_level->layout[a + 1][b] != RoomType::R_CLOSED) {
 
                         if (rand() % 2 == 0)
-                            global::current_level->layout[a][b] = RoomType::R_SHOP_LEFT;
+                            GameState::instance().current_level->layout[a][b] = RoomType::R_SHOP_LEFT;
                         else
-                            global::current_level->layout[a][b] = RoomType::R_SHOP_RIGHT;
+                            GameState::instance().current_level->layout[a][b] = RoomType::R_SHOP_RIGHT;
 
                         return;
                     }

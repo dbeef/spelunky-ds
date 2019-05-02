@@ -5,7 +5,7 @@
 
 #include "../../memory/SpritesheetType.hpp"
 #include "SpringShoes.hpp"
-#include "../../GlobalsDeclarations.hpp"
+#include "../../GameState.hpp"
 #include "../../collisions/Collisions.hpp"
 #include "../../../build/gfx_saleable.h"
 #include "../../entities/decorations/GotCollectible.hpp"
@@ -43,10 +43,10 @@ void SpringShoes::init_sprites() {
 
     delete_sprites();
 
-    _sub_sprite_info = global::sub_oam_manager->initSprite(gfx_saleablePal, gfx_saleablePalLen,
+    _sub_sprite_info = GameState::instance().sub_oam_manager->initSprite(gfx_saleablePal, gfx_saleablePalLen,
                                                         nullptr, _sprite_size, ObjSize::OBJSIZE_16,
                                                         _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
-    _main_sprite_info = global::main_oam_manager->initSprite(gfx_saleablePal, gfx_saleablePalLen,
+    _main_sprite_info = GameState::instance().main_oam_manager->initSprite(gfx_saleablePal, gfx_saleablePalLen,
                                                           nullptr, _sprite_size, ObjSize::OBJSIZE_16,
                                                           _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
 
@@ -58,15 +58,15 @@ void SpringShoes::init_sprites() {
 void SpringShoes::equip() {
 
     auto g = new GotCollectible(_x - 12, _y - 20, GotCollectible::Type::ITEM);
-    global::decorations.push_back(g);
+    GameState::instance().decorations.push_back(g);
 
-    if (!global::main_dude->carrying_spring_shoes) {
-        global::main_dude->carrying_spring_shoes = true;
+    if (!GameState::instance().main_dude->carrying_spring_shoes) {
+        GameState::instance().main_dude->carrying_spring_shoes = true;
         update_sprites_position();
         collected = true;
         _x = HUD_ITEMS_ROW_X;
-        _y = global::hud->items_offset_y;
-        global::hud->increment_offset_on_grabbed_item();
+        _y = GameState::instance().hud->items_offset_y;
+        GameState::instance().hud->increment_offset_on_grabbed_item();
     } else {
         sprite_utils::set_visibility(false, _main_sprite_info, _sub_sprite_info);
         _ready_to_dispose = true;

@@ -7,13 +7,13 @@
 
 #include "../../collisions/Collisions.hpp"
 #include "../../tiles/LevelRenderingUtils.hpp"
-#include "../../GlobalsDeclarations.hpp"
 #include "ICollidable.h"
 #include "../../../build/soundbank.h"
 #include "../../preprocessor/Debug.h"
+#include "../../GameState.hpp"
 
 void ICollidable::update_collisions_with_map(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
-    Collisions::getNeighboringTiles(global::current_level->map_tiles, x_current_pos_in_tiles,
+    Collisions::getNeighboringTiles(GameState::instance().current_level->map_tiles, x_current_pos_in_tiles,
                                     y_current_pos_in_tiles, _neighboring_tiles);
 
     _bottom_collision = Collisions::checkBottomCollision(_neighboring_tiles, &_x, &_y, &_y_speed, _physical_width,
@@ -89,7 +89,7 @@ void ICollidable::update_collidable() {
 
     limit_speed();
 
-    _pos_inc_timer += *global::timer;
+    _pos_inc_timer += *GameState::instance().timer;
 
     if (_pos_inc_timer > _pos_update_delta) {
         update_position();
@@ -146,13 +146,13 @@ bool ICollidable::kill_creatures_if_have_speed(u8 dmg_to_apply) const {
     bool killed = false;
 
     if (abs(_x_speed) > 0 || abs(_y_speed) > 0) {
-        for (unsigned long a = 0; a < global::creatures.size(); a++) {
-            if (is_killable_creature(global::creatures.at(a))
-                && !global::creatures.at(a)->killed) {
-                if (Collisions::checkCollisionBodies(_x, _y, 16, 16, global::creatures.at(a)->_x,
-                                                     global::creatures.at(a)->_y, _physical_width, _physical_height)) {
+        for (unsigned long a = 0; a < GameState::instance().creatures.size(); a++) {
+            if (is_killable_creature(GameState::instance().creatures.at(a))
+                && !GameState::instance().creatures.at(a)->killed) {
+                if (Collisions::checkCollisionBodies(_x, _y, 16, 16, GameState::instance().creatures.at(a)->_x,
+                                                     GameState::instance().creatures.at(a)->_y, _physical_width, _physical_height)) {
 
-                    global::creatures.at(a)->apply_dmg(dmg_to_apply);
+                    GameState::instance().creatures.at(a)->apply_dmg(dmg_to_apply);
                     killed = true;
 
                 }
@@ -169,19 +169,19 @@ bool ICollidable::kill_creatures_jars_if_have_speed_recoil(u8 dmg_to_apply) cons
     bool killed = false;
 
     if (abs(_x_speed) > 0 || abs(_y_speed) > 0) {
-        for (unsigned long a = 0; a < global::creatures.size(); a++) {
-            if ((is_killable_creature(global::creatures.at(a)) ||
-                 global::creatures.at(a)->_creature_type == CreatureType::JAR)
-                && !global::creatures.at(a)->_ready_to_dispose) {
+        for (unsigned long a = 0; a < GameState::instance().creatures.size(); a++) {
+            if ((is_killable_creature(GameState::instance().creatures.at(a)) ||
+                 GameState::instance().creatures.at(a)->_creature_type == CreatureType::JAR)
+                && !GameState::instance().creatures.at(a)->_ready_to_dispose) {
 
                 if (Collisions::checkCollisionBodies(_x, _y, _physical_width, _physical_height,
-                                                     global::creatures.at(a)->_x,
-                                                     global::creatures.at(a)->_y,
-                                                     global::creatures.at(a)->_physical_width,
-                                                     global::creatures.at(a)->_physical_height)) {
+                                                     GameState::instance().creatures.at(a)->_x,
+                                                     GameState::instance().creatures.at(a)->_y,
+                                                     GameState::instance().creatures.at(a)->_physical_width,
+                                                     GameState::instance().creatures.at(a)->_physical_height)) {
 
-                    global::creatures.at(a)->_x_speed += this->_x_speed * 0.3f;
-                    global::creatures.at(a)->apply_dmg(dmg_to_apply);
+                    GameState::instance().creatures.at(a)->_x_speed += this->_x_speed * 0.3f;
+                    GameState::instance().creatures.at(a)->apply_dmg(dmg_to_apply);
                     killed = true;
 
                 }
@@ -195,12 +195,12 @@ bool ICollidable::kill_main_dude_if_have_speed(u8 dmg_to_apply) const {
 
     if (abs(_x_speed) > 0 || abs(_y_speed) > 0) {
 
-        if (Collisions::checkCollisionBodies(_x, _y, _physical_width, _physical_height, global::main_dude->_x,
-                                             global::main_dude->_y,
-                                             global::main_dude->_physical_width,
-                                             global::main_dude->_physical_height)) {
-            global::main_dude->_x_speed += this->_x_speed * 0.3f;
-            global::main_dude->apply_dmg(dmg_to_apply);
+        if (Collisions::checkCollisionBodies(_x, _y, _physical_width, _physical_height, GameState::instance().main_dude->_x,
+                                             GameState::instance().main_dude->_y,
+                                             GameState::instance().main_dude->_physical_width,
+                                             GameState::instance().main_dude->_physical_height)) {
+            GameState::instance().main_dude->_x_speed += this->_x_speed * 0.3f;
+            GameState::instance().main_dude->apply_dmg(dmg_to_apply);
             return true;
         }
 
@@ -209,15 +209,15 @@ bool ICollidable::kill_main_dude_if_have_speed(u8 dmg_to_apply) const {
 }
 
 void ICollidable::deal_damage_main_dude_on_collision(int dmg_to_apply) const {
-    if (!global::main_dude->dead && Collisions::checkCollisionWithMainDude(_x, _y, 16, 16) &&
-        global::main_dude->time_since_last_damage > 1000 && !global::main_dude->exiting_level) {
+    if (!GameState::instance().main_dude->dead && Collisions::checkCollisionWithMainDude(_x, _y, 16, 16) &&
+        GameState::instance().main_dude->time_since_last_damage > 1000 && !GameState::instance().main_dude->exiting_level) {
 
-        global::main_dude->time_since_last_damage = 0;
-        global::hud->hearts -= dmg_to_apply;
-        global::hud->draw_level_hud();
+        GameState::instance().main_dude->time_since_last_damage = 0;
+        GameState::instance().hud->hearts -= dmg_to_apply;
+        GameState::instance().hud->draw_level_hud();
 
-        if (global::hud->hearts <= 0) {
-            global::main_dude->set_dead();
+        if (GameState::instance().hud->hearts <= 0) {
+            GameState::instance().main_dude->set_dead();
         } else
             mmEffect(SFX_XHIT);
     }

@@ -6,7 +6,7 @@
 #include "_BaseItem.h"
 #include "../../memory/SpriteUtils.hpp"
 #include "../../collisions/Collisions.hpp"
-#include "../../GlobalsDeclarations.hpp"
+#include "../../GameState.hpp"
 #include "../../memory/SpriteInfo.h"
 
 BaseItem::BaseItem(

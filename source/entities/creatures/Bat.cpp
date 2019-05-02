@@ -5,7 +5,6 @@
 #include <maxmod9.h>
 #include <cstdlib>
 #include "Bat.hpp"
-#include "../../GlobalsDeclarations.hpp"
 #include "../../../build/gfx_bat_snake_jetpack.h"
 #include "../items/Rock.hpp"
 #include "../animations/Blood.hpp"
@@ -13,6 +12,7 @@
 #include "../../tiles/LevelRenderingUtils.hpp"
 #include "../../../build/soundbank.h"
 #include "../../memory/SpriteUtils.hpp"
+#include "../../GameState.hpp"
 
 #define BAT_ANIM_FRAME_DELTA 100
 #define BAT_POS_INC_DELTA 30
@@ -33,18 +33,18 @@ void Bat::update_creature_specific() {
 
     if (!hunting) {
         //check if main dude is in bat's triggering scope
-        hunting = abs(_x - global::main_dude->_x) < 7 * 16 &&
-                  abs(_y - global::main_dude->_y) < 7 * 16 &&
-                  global::main_dude->_y > _y;
+        hunting = abs(_x - GameState::instance().main_dude->_x) < 7 * 16 &&
+                  abs(_y - GameState::instance().main_dude->_y) < 7 * 16 &&
+                  GameState::instance().main_dude->_y > _y;
 
         if (hunting)
             mmEffect(SFX_XBAT);
 
     } else
         //checking if main dude is still in bat's triggering scope
-        hunting = abs(_x - global::main_dude->_x) < 9 * 16 && abs(_y - global::main_dude->_y) < 9 * 16;
+        hunting = abs(_x - GameState::instance().main_dude->_x) < 9 * 16 && abs(_y - GameState::instance().main_dude->_y) < 9 * 16;
 
-    animFrameTimer += *global::timer;
+    animFrameTimer += *GameState::instance().timer;
 
     if (animFrameTimer > BAT_ANIM_FRAME_DELTA) {
 
@@ -92,7 +92,7 @@ void Bat::apply_dmg(int dmg_to_apply) {
     killed = true;
     _ready_to_dispose = true;
     spawn_blood();
-    global::killed_npcs.push_back(_creature_type);
+    GameState::instance().killed_npcs.push_back(_creature_type);
 
 }
 
@@ -100,12 +100,12 @@ void Bat::init_sprites() {
 
     delete_sprites();
 
-    subSpriteInfo = global::sub_oam_manager->initSprite(gfx_bat_snake_jetpackPal, gfx_bat_snake_jetpackPalLen,
-                                                        nullptr, BAT_SPRITE_SIZE, ObjSize::OBJSIZE_16, BAT_JETPACK,
+    subSpriteInfo = GameState::instance().sub_oam_manager->initSprite(gfx_bat_snake_jetpackPal, gfx_bat_snake_jetpackPalLen,
+                                                        nullptr, BAT_SPRITE_SIZE, ObjSize::OBJSIZE_16, SpritesheetType::BAT_JETPACK,
                                                         true,
                                                         false, LAYER_LEVEL::MIDDLE_TOP);
-    mainSpriteInfo = global::main_oam_manager->initSprite(gfx_bat_snake_jetpackPal, gfx_bat_snake_jetpackPalLen,
-                                                          nullptr, BAT_SPRITE_SIZE, ObjSize::OBJSIZE_16, BAT_JETPACK,
+    mainSpriteInfo = GameState::instance().main_oam_manager->initSprite(gfx_bat_snake_jetpackPal, gfx_bat_snake_jetpackPalLen,
+                                                          nullptr, BAT_SPRITE_SIZE, ObjSize::OBJSIZE_16, SpritesheetType::BAT_JETPACK,
                                                           true,
                                                           false, LAYER_LEVEL::MIDDLE_TOP);
 
@@ -141,14 +141,14 @@ void Bat::update_sprites_position() {
 
 //!> naive approach to following main dude, disregarding obstacles just like in the original game
 void Bat::follow_main_dude() {
-    if (global::main_dude->_x > _x)
+    if (GameState::instance().main_dude->_x > _x)
         _x_speed = 1;
     else
         _x_speed = -1;
 
-    if (global::main_dude->_y == _y)
+    if (GameState::instance().main_dude->_y == _y)
         _y_speed = 0;
-    else if (global::main_dude->_y > _y)
+    else if (GameState::instance().main_dude->_y > _y)
         _y_speed = 1;
     else
         _y_speed = -1;

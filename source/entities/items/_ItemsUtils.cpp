@@ -5,7 +5,7 @@
 #include <cstdlib>
 #include <cstdio>
 #include "_ItemsUtils.hpp"
-#include "../../GlobalsDeclarations.hpp"
+#include "../../GameState.hpp"
 #include "Jetpack.hpp"
 #include "Mitt.hpp"
 #include "SpikeShoes.hpp"
@@ -90,13 +90,13 @@ ShoppingObject * collectibles_utils::spawn_item(int x, int y, int r, bool bought
 void collectibles_utils::spawn_set_up(int x, int y, BaseCreature *m) {
     m->_x = x + (int) (0.5 * (16 - m->_physical_width));
     m->_y = y;
-    global::creatures.push_back(m);
+    GameState::instance().creatures.push_back(m);
 }
 
 void collectibles_utils::spawn_set_up(int x, int y, BaseItem *m) {
     m->_x = x + (int) (0.5 * (16 - m->_physical_width));
     m->_y = y;
-    global::items.push_back(m);
+    GameState::instance().items.push_back(m);
 }
 
 void collectibles_utils::spawn_random_item(int x, int y) {

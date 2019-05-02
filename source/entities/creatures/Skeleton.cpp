@@ -7,13 +7,13 @@
 #include "Skeleton.hpp"
 
 #include "../../../build/gfx_spider_skeleton.h"
-#include "../../GlobalsDeclarations.hpp"
 #include "../../collisions/Collisions.hpp"
 #include "../../tiles/LevelRenderingUtils.hpp"
 #include "../../../build/soundbank.h"
 #include "../animations/Bone.hpp"
 #include "../items/Skull.hpp"
 #include "../../memory/SpriteUtils.hpp"
+#include "../../GameState.hpp"
 
 #define SKELETON_POS_INC_DELTA 19
 #define SKELETON_ANIM_FRAME_DELTA 90
@@ -31,7 +31,7 @@ void Skeleton::update_creature_specific() {
 
     if (summoned || can_be_summoned) {
         if (summoning_delay_timer > 350) {
-            anim_frame_timer += *global::timer;
+            anim_frame_timer += *GameState::instance().timer;
 
             if (can_be_summoned && !set_up) {
 
@@ -45,9 +45,9 @@ void Skeleton::update_creature_specific() {
             }
 
         } else
-            summoning_delay_timer += *global::timer;
+            summoning_delay_timer += *GameState::instance().timer;
 
-        change_turn_timer += *global::timer;
+        change_turn_timer += *GameState::instance().timer;
     }
 
     check_if_can_be_summoned();
@@ -110,7 +110,7 @@ void Skeleton::apply_dmg(int dmg_to_apply) {
 
     killed = true;
     _ready_to_dispose = true;
-    global::killed_npcs.push_back(_creature_type);
+    GameState::instance().killed_npcs.push_back(_creature_type);
     mmEffect(SFX_XBREAK);
     spawn_remnants();
 }
@@ -119,11 +119,11 @@ void Skeleton::init_sprites() {
 
     delete_sprites();
 
-    subSpriteInfo = global::sub_oam_manager->initSprite(gfx_spider_skeletonPal, gfx_spider_skeletonPalLen,
-                                                        nullptr, _sprite_size, ObjSize::OBJSIZE_16, SKELETON_SPIDER,
+    subSpriteInfo = GameState::instance().sub_oam_manager->initSprite(gfx_spider_skeletonPal, gfx_spider_skeletonPalLen,
+                                                        nullptr, _sprite_size, ObjSize::OBJSIZE_16, SpritesheetType::SKELETON_SPIDER,
                                                         true, false, LAYER_LEVEL::MIDDLE_TOP);
-    mainSpriteInfo = global::main_oam_manager->initSprite(gfx_spider_skeletonPal, gfx_spider_skeletonPalLen,
-                                                          nullptr, _sprite_size, ObjSize::OBJSIZE_16, SKELETON_SPIDER,
+    mainSpriteInfo = GameState::instance().main_oam_manager->initSprite(gfx_spider_skeletonPal, gfx_spider_skeletonPalLen,
+                                                          nullptr, _sprite_size, ObjSize::OBJSIZE_16, SpritesheetType::SKELETON_SPIDER,
                                                           true, false, LAYER_LEVEL::MIDDLE_TOP);
 
     update_sprites_position();
@@ -146,16 +146,16 @@ void Skeleton::check_if_can_be_summoned() {
     if (summoned || can_be_summoned)
         return;
 
-    int diff = _x - global::main_dude->_x; //distance between skeleton and main dude
+    int diff = _x - GameState::instance().main_dude->_x; //distance between skeleton and main dude
     int diff_abs = abs(diff); //absolute distance
 
-    if (diff_abs < 2 * TILE_W && abs(_y - global::main_dude->_y) < 0.8 * TILE_H) {
+    if (diff_abs < 2 * TILE_W && abs(_y - GameState::instance().main_dude->_y) < 0.8 * TILE_H) {
 
         //TODO sprite_utils function, this xx, yy tile coordinates snippet is used widely
         int xx = floor_div(this->_x + 0.5 * _physical_width, TILE_W);
         int yy = floor_div(this->_y + 0.5 * _physical_height, TILE_H);
 
-        int dude_xx = floor_div(global::main_dude->_x + 0.5 * MainDude::main_dude_physical_width, TILE_W);
+        int dude_xx = floor_div(GameState::instance().main_dude->_x + 0.5 * MainDude::main_dude_physical_width, TILE_W);
 
         MapTile *tiles[9] = {};
 
@@ -255,9 +255,9 @@ void Skeleton::spawn_remnants() {
     s->_x_speed = -0.5f;
     s->_y_speed = -1.8f;
 
-    global::creatures.push_back(b_1);
-    global::creatures.push_back(b_2);
-    global::items.push_back(s);
+    GameState::instance().creatures.push_back(b_1);
+    GameState::instance().creatures.push_back(b_2);
+    GameState::instance().items.push_back(s);
 
 }
 

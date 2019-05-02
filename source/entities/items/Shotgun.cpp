@@ -7,7 +7,7 @@
 #include "../../../build/soundbank.h"
 #include "../../../build/gfx_spike_collectibles_flame.h"
 #include "../../collisions/Collisions.hpp"
-#include "../../GlobalsDeclarations.hpp"
+#include "../../GameState.hpp"
 #include "../creatures/Bullet.hpp"
 #include "../../entities/decorations/GotCollectible.hpp"
 #include "../../tiles/LevelRenderingUtils.hpp"
@@ -26,19 +26,19 @@ void Shotgun::update_item_specific() {
         if (shopping_transaction(this))
             equip();
 
-        global::main_dude->carrying_shotgun = true;
-        _orientation = global::main_dude->sprite_state;
+        GameState::instance().main_dude->carrying_shotgun = true;
+        _orientation = GameState::instance().main_dude->sprite_state;
         sprite_utils::set_priority(OBJPRIORITY_0, _main_sprite_info, _sub_sprite_info);
 
-        _y = global::main_dude->_y + 7;
+        _y = GameState::instance().main_dude->_y + 7;
         if (_orientation == Orientation::LEFT)
-            _x = global::main_dude->_x - 4;
+            _x = GameState::instance().main_dude->_x - 4;
         else
-            _x = global::main_dude->_x + 7;
+            _x = GameState::instance().main_dude->_x + 7;
 
     } else {
         sprite_utils::set_priority(OBJPRIORITY_1, _main_sprite_info, _sub_sprite_info);
-        global::main_dude->carrying_shotgun = false;
+        GameState::instance().main_dude->carrying_shotgun = false;
     }
 
     update_sprites_position();
@@ -52,11 +52,11 @@ void Shotgun::init_sprites() {
 
     delete_sprites();
 
-    _sub_sprite_info = global::sub_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
+    _sub_sprite_info = GameState::instance().sub_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
                                                            gfx_spike_collectibles_flamePalLen,
                                                            nullptr, _sprite_size, ObjSize::OBJSIZE_16,
                                                            _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
-    _main_sprite_info = global::main_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
+    _main_sprite_info = GameState::instance().main_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
                                                              gfx_spike_collectibles_flamePalLen,
                                                              nullptr, _sprite_size, ObjSize::OBJSIZE_16,
                                                              _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
@@ -80,7 +80,7 @@ void Shotgun::spawn_bullets() {
             b->_x += 5 + _physical_width;
         }
 
-        global::creatures.push_back(b);
+        GameState::instance().creatures.push_back(b);
 
         if (a == 0)
             b->_y_speed = 1;
@@ -93,7 +93,7 @@ void Shotgun::spawn_bullets() {
 
 void Shotgun::equip() {
     auto *g = new GotCollectible(_x - 12, _y - 20, GotCollectible::Type::ITEM);
-    global::decorations.push_back(g);
+    GameState::instance().decorations.push_back(g);
 }
 
 void Shotgun::match_animation() {
@@ -128,7 +128,7 @@ void Shotgun::handle_shooting() {
     blast->_firing = firing;
 
     if (!firing) {
-        cooldown += *global::timer;
+        cooldown += *GameState::instance().timer;
         if (_orientation == Orientation::LEFT)
             blast->_x = _x - 10;
         else
@@ -155,6 +155,6 @@ Shotgun::Shotgun(int x, int y) : BaseItem(
     update_anim_icon(x, y, _physical_width);
 
     blast = new Blast(0, 0);
-    global::decorations.push_back(blast);
+    GameState::instance().decorations.push_back(blast);
     init_sprites();
 }

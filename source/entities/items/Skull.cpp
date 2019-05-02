@@ -4,7 +4,7 @@
 
 #include <cmath>
 #include "../../../build/gfx_spider_skeleton.h"
-#include "../../GlobalsDeclarations.hpp"
+#include "../../GameState.hpp"
 #include "../../collisions/Collisions.hpp"
 #include "../../memory/SpriteUtils.hpp"
 #include "../animations/Bone.hpp"
@@ -22,7 +22,7 @@ void Skull::update_item_specific() {
     update_sprites_position();
 
     if (_collided) {
-        _anim_frame_timer += *global::timer;
+        _anim_frame_timer += *GameState::instance().timer;
         if (_anim_frame_timer > SKULL_ANIM_FRAME_DELTA) {
             _anim_frame_timer = 0;
             _anim_frame++;
@@ -34,7 +34,7 @@ void Skull::update_item_specific() {
     kill_creatures_if_have_speed(1);
 
     if (_hold_by_main_dude) {
-        sprite_utils::set_horizontal_flip(global::main_dude->sprite_state == Orientation::RIGHT,
+        sprite_utils::set_horizontal_flip(GameState::instance().main_dude->sprite_state == Orientation::RIGHT,
                                           _main_sprite_info, _sub_sprite_info);
         return;
     }
@@ -49,7 +49,7 @@ void Skull::update_item_specific() {
             b->_x_speed = 0;
             b->_y_speed = -1.4f;
             b->animFrame = 2;
-            global::creatures.push_back(b);
+            GameState::instance().creatures.push_back(b);
 
         } else _map_collisions_checked = false;
     }
@@ -59,10 +59,10 @@ void Skull::init_sprites() {
 
     delete_sprites();
 
-    _sub_sprite_info = global::sub_oam_manager->initSprite(gfx_spider_skeletonPal, gfx_spider_skeletonPalLen,
+    _sub_sprite_info = GameState::instance().sub_oam_manager->initSprite(gfx_spider_skeletonPal, gfx_spider_skeletonPalLen,
                                                            nullptr, _sprite_size, ObjSize::OBJSIZE_16,
                                                            _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
-    _main_sprite_info = global::main_oam_manager->initSprite(gfx_spider_skeletonPal, gfx_spider_skeletonPalLen,
+    _main_sprite_info = GameState::instance().main_oam_manager->initSprite(gfx_spider_skeletonPal, gfx_spider_skeletonPalLen,
                                                              nullptr, _sprite_size, ObjSize::OBJSIZE_16,
                                                              _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
     match_animation();
@@ -72,7 +72,7 @@ void Skull::init_sprites() {
     update_sprites_position();
 
     if (_hold_by_main_dude)
-        sprite_utils::set_horizontal_flip(global::main_dude->sprite_state == Orientation::RIGHT,
+        sprite_utils::set_horizontal_flip(GameState::instance().main_dude->sprite_state == Orientation::RIGHT,
                                           _main_sprite_info, _sub_sprite_info);
 
 }

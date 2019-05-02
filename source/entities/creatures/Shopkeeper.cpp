@@ -4,11 +4,11 @@
 
 #include <cstdlib>
 #include "Shopkeeper.hpp"
-#include "../../GlobalsDeclarations.hpp"
 #include "../../collisions/Collisions.hpp"
 #include "../../tiles/TileOrientation.hpp"
 #include "../../../build/gfx_shopkeeper.h"
 #include "../../memory/SpriteUtils.hpp"
+#include "../../GameState.hpp"
 
 #define SHOPKEEPER_SPRITESHEET_OFFSET 0
 #define SHOPKEEPER_POS_INC_DELTA 18
@@ -31,15 +31,15 @@ void Shopkeeper::update_creature_specific() {
 
     kill_if_whip(1);
 
-    if (!global::main_dude->dead)
+    if (!GameState::instance().main_dude->dead)
         kill_if_main_dude_jumped_on_you(1);
 
     check_if_dude_in_shop_bounds();
 
-    invert_speed_timer += *global::timer;
-    blood_spawn_timer += *global::timer;
-    anim_frame_timer += *global::timer;
-    jumping_timer += *global::timer;
+    invert_speed_timer += *GameState::instance().timer;
+    blood_spawn_timer += *GameState::instance().timer;
+    anim_frame_timer += *GameState::instance().timer;
+    jumping_timer += *GameState::instance().timer;
 
     sprite_utils::set_horizontal_flip(sprite_state == Orientation::RIGHT, mainSpriteInfo, subSpriteInfo);
     sprite_utils::set_visibility(true, mainSpriteInfo, subSpriteInfo);
@@ -54,7 +54,7 @@ void Shopkeeper::update_creature_specific() {
     } else if (triggered && !holding_shotgun) {
 
         //searching for lost shotgun
-        for (auto &creature : global::creatures) {
+        for (auto &creature : GameState::instance().creatures) {
             if (creature->_creature_type == CreatureType::SHOTGUN) {
 
                 auto *sh = (Shotgun *) creature;
@@ -83,7 +83,7 @@ void Shopkeeper::update_creature_specific() {
             shotgun->_orientation= Orientation::LEFT;
         }
 
-        if (!global::main_dude->dead && triggered) {
+        if (!GameState::instance().main_dude->dead && triggered) {
             shotgun->_activated = true;
         }
     }
@@ -91,9 +91,9 @@ void Shopkeeper::update_creature_specific() {
     if (hold_by_main_dude) {
 
         if (!killed)
-            global::main_dude->carrying_damsel = true;
+            GameState::instance().main_dude->carrying_damsel = true;
 
-        if (global::main_dude->killed) {
+        if (GameState::instance().main_dude->killed) {
             hold_by_main_dude = false;
             stunned = true;
             _bouncing_factor_x = ICollidable::default_bouncing_factor_x;
@@ -105,7 +105,7 @@ void Shopkeeper::update_creature_specific() {
             _bouncing_factor_y = 0;
         }
 
-        sprite_state = global::main_dude->sprite_state;
+        sprite_state = GameState::instance().main_dude->sprite_state;
         sprite_utils::set_priority(OBJPRIORITY_0, mainSpriteInfo, subSpriteInfo);
 
     } else
@@ -125,7 +125,7 @@ void Shopkeeper::update_creature_specific() {
     make_some_movement();
 
     if (stunned) {
-        stunned_timer += *global::timer;
+        stunned_timer += *GameState::instance().timer;
         if (stunned_timer > SHOPKEEPER_STUN_TIME) {
             stunned = false;
             stunned_timer = 0;
@@ -133,7 +133,7 @@ void Shopkeeper::update_creature_specific() {
     }
 
     if (triggered) {
-        if (global::main_dude->dead) {
+        if (GameState::instance().main_dude->dead) {
             triggered = false;
             standby = true;
         }
@@ -143,10 +143,10 @@ void Shopkeeper::update_creature_specific() {
 
         if (!killed && !stunned) {
 
-            if (_bottom_collision && _neighboring_tiles[TileOrientation::RIGHT_MIDDLE] != nullptr &&
-                _neighboring_tiles[TileOrientation::RIGHT_MIDDLE]->collidable &&
-                _neighboring_tiles[TileOrientation::LEFT_MIDDLE] != nullptr &&
-                _neighboring_tiles[TileOrientation::LEFT_MIDDLE]->collidable) {
+            if (_bottom_collision && _neighboring_tiles[static_cast<uint16>(TileOrientation::RIGHT_MIDDLE)] != nullptr &&
+                _neighboring_tiles[static_cast<uint16>(TileOrientation::RIGHT_MIDDLE)]->collidable &&
+                _neighboring_tiles[static_cast<uint16>(TileOrientation::LEFT_MIDDLE)] != nullptr &&
+                _neighboring_tiles[static_cast<uint16>(TileOrientation::LEFT_MIDDLE)]->collidable) {
                 //high jump if shopkeeper's surrounded by tiles
                 _y_speed = -5 - ((rand() % 10) / 5);
                 landlocked = true;
@@ -155,20 +155,20 @@ void Shopkeeper::update_creature_specific() {
 
             if (!_bottom_collision) {
 
-                if ((_neighboring_tiles[TileOrientation::RIGHT_MIDDLE] == nullptr ||
-                     !_neighboring_tiles[TileOrientation::RIGHT_MIDDLE]->collidable) &&
-                    (_neighboring_tiles[TileOrientation::RIGHT_UP] != nullptr &&
-                     _neighboring_tiles[TileOrientation::RIGHT_DOWN] != nullptr)) {
+                if ((_neighboring_tiles[static_cast<uint16>(TileOrientation::RIGHT_MIDDLE)] == nullptr ||
+                     !_neighboring_tiles[static_cast<uint16>(TileOrientation::RIGHT_MIDDLE)]->collidable) &&
+                    (_neighboring_tiles[static_cast<uint16>(TileOrientation::RIGHT_UP)] != nullptr &&
+                     _neighboring_tiles[static_cast<uint16>(TileOrientation::RIGHT_DOWN)] != nullptr)) {
                     //if there's no collidable tile on right-mid, but there are on right-up and right-down,
                     //add extra x-pos to ease going through a hole
                     if (_x_speed > 0)
                         _x += 2;
                 }
 
-                if ((_neighboring_tiles[TileOrientation::LEFT_MIDDLE] == nullptr ||
-                     !_neighboring_tiles[TileOrientation::LEFT_MIDDLE]->collidable) &&
-                    (_neighboring_tiles[TileOrientation::LEFT_UP] != nullptr &&
-                     _neighboring_tiles[TileOrientation::LEFT_DOWN] != nullptr)) {
+                if ((_neighboring_tiles[static_cast<uint16>(TileOrientation::LEFT_MIDDLE)] == nullptr ||
+                     !_neighboring_tiles[static_cast<uint16>(TileOrientation::LEFT_MIDDLE)]->collidable) &&
+                    (_neighboring_tiles[static_cast<uint16>(TileOrientation::LEFT_UP)] != nullptr &&
+                     _neighboring_tiles[static_cast<uint16>(TileOrientation::LEFT_DOWN)] != nullptr)) {
                     //same but for left side
                     if (_x_speed < 0)
                         _x -= 2;
@@ -224,10 +224,10 @@ void Shopkeeper::apply_dmg(int dmg_to_apply) {
     }
 
     if (!killed && hitpoints <= 0) {
-        global::hud->disable_all_prompts();
+        GameState::instance().hud->disable_all_prompts();
         de_shopify_all_items();
-        global::game_state->robbed_killed_shopkeeper = true;
-        global::killed_npcs.push_back(_creature_type);
+        GameState::instance().robbed_killed_shopkeeper = true;
+        GameState::instance().killed_npcs.push_back(_creature_type);
         killed = true;
         _bouncing_factor_x = ICollidable::default_bouncing_factor_x;
         _bouncing_factor_y = ICollidable::default_bouncing_factor_y;
@@ -240,11 +240,11 @@ void Shopkeeper::init_sprites() {
 
     delete_sprites();
 
-    subSpriteInfo = global::sub_oam_manager->initSprite(gfx_shopkeeperPal, gfx_shopkeeperPalLen,
-                                                        nullptr, _sprite_size, ObjSize::OBJSIZE_16, SHOPKEEPER,
+    subSpriteInfo = GameState::instance().sub_oam_manager->initSprite(gfx_shopkeeperPal, gfx_shopkeeperPalLen,
+                                                        nullptr, _sprite_size, ObjSize::OBJSIZE_16, SpritesheetType::SHOPKEEPER,
                                                         true, false, LAYER_LEVEL::MIDDLE_BOT);
-    mainSpriteInfo = global::main_oam_manager->initSprite(gfx_shopkeeperPal, gfx_shopkeeperPalLen,
-                                                          nullptr, _sprite_size, ObjSize::OBJSIZE_16, SHOPKEEPER,
+    mainSpriteInfo = GameState::instance().main_oam_manager->initSprite(gfx_shopkeeperPal, gfx_shopkeeperPalLen,
+                                                          nullptr, _sprite_size, ObjSize::OBJSIZE_16, SpritesheetType::SHOPKEEPER,
                                                           true, false, LAYER_LEVEL::MIDDLE_BOT);
 
     update_sprites_position();
@@ -274,11 +274,11 @@ void Shopkeeper::make_some_movement() {
         return;
 
     if (waitTimer > 0 && (!triggered || standby)) {
-        waitTimer -= *global::timer;
+        waitTimer -= *GameState::instance().timer;
     } else {
 
         if (go_timer > 0)
-            go_timer -= *global::timer;
+            go_timer -= *GameState::instance().timer;
 
         if (triggered) {
             if (sprite_state == Orientation::RIGHT)
@@ -411,7 +411,7 @@ void Shopkeeper::set_shop_bounds() {
 
 
     MapTile *shop_sign = nullptr;
-    global::current_level->get_first_tile_of_given_type(MapTileType::SHOP_SIGN_RARE, shop_sign);
+    GameState::instance().current_level->get_first_tile_of_given_type(MapTileType::SHOP_SIGN_RARE, shop_sign);
 
     int tile_x = shop_sign->x * TILE_W;
 
@@ -445,22 +445,22 @@ void Shopkeeper::check_if_dude_in_shop_bounds() {
     if (killed)
         return;
 
-    if (global::main_dude->_x < shop_bounds_right_x_px && global::main_dude->_x > shop_bounds_left_x_px &&
-        global::main_dude->_y > shop_bounds_up_y_px && global::main_dude->_y < shop_bounds_down_y_px) {
+    if (GameState::instance().main_dude->_x < shop_bounds_right_x_px && GameState::instance().main_dude->_x > shop_bounds_left_x_px &&
+        GameState::instance().main_dude->_y > shop_bounds_up_y_px && GameState::instance().main_dude->_y < shop_bounds_down_y_px) {
 
         if (standby) {
             trigger();
         }
 
         if (!introduced_shop_name) {
-            global::hud->disable_all_prompts();
-            global::hud->introduce_shop = true;
-            global::hud->shop_name = "\n\n\n\nWELCOME TO SMITHY'S SUPPLY SHOP!";
-            global::hud->draw_level_hud();
+            GameState::instance().hud->disable_all_prompts();
+            GameState::instance().hud->introduce_shop = true;
+            GameState::instance().hud->shop_name = "\n\n\n\nWELCOME TO SMITHY'S SUPPLY SHOP!";
+            GameState::instance().hud->draw_level_hud();
             introduced_shop_name = true;
         }
 
-        int diff = _x - global::main_dude->_x;
+        int diff = _x - GameState::instance().main_dude->_x;
 
         if (!triggered) {
 
@@ -469,7 +469,7 @@ void Shopkeeper::check_if_dude_in_shop_bounds() {
             else
                 sprite_state = Orientation::RIGHT;
 
-            if (global::hud->holding_item_shopping) {
+            if (GameState::instance().hud->holding_item_shopping) {
 
                 int abs_diff = abs(diff);
 
@@ -487,7 +487,7 @@ void Shopkeeper::check_if_dude_in_shop_bounds() {
         }
 
 
-    } else if (global::hud->holding_item_shopping && !triggered) {
+    } else if (GameState::instance().hud->holding_item_shopping && !triggered) {
         trigger();
     } else {
 
@@ -513,7 +513,7 @@ void Shopkeeper::de_shopify_all_items() {
         if(shop_item->_shopping_icon)
             shop_item->_shopping_icon->set_ready_to_dispose();
     }
-    global::game_state->robbed_killed_shopkeeper = true;
+    GameState::instance().robbed_killed_shopkeeper = true;
 }
 
 void Shopkeeper::spawn_shotgun() {
@@ -521,18 +521,18 @@ void Shopkeeper::spawn_shotgun() {
     shotgun->_hold_by_main_dude = false;
     shotgun->_bought = true;
     shotgun->cooldown = 250;
-    global::items.push_back(shotgun);
+    GameState::instance().items.push_back(shotgun);
     holding_shotgun = true;
 
 }
 
 void Shopkeeper::trigger() {
 
-    global::hud->disable_all_prompts();
+    GameState::instance().hud->disable_all_prompts();
     standby = false;
     triggered = true;
-    global::hud->thief = true;
-    global::hud->draw_level_hud();
+    GameState::instance().hud->thief = true;
+    GameState::instance().hud->draw_level_hud();
     de_shopify_all_items();
     if (!holding_shotgun) {
         spawn_shotgun();
@@ -558,7 +558,7 @@ Shopkeeper::Shopkeeper(int x, int y) : BaseCreature(
     ) {
     hitpoints = 3;
 
-    if (global::game_state->robbed_killed_shopkeeper && !no_shotgun) {
+    if (GameState::instance().robbed_killed_shopkeeper && !no_shotgun) {
         standby = true;
         spawn_shotgun();
     }

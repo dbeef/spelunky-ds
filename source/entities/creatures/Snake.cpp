@@ -5,7 +5,6 @@
 #include <maxmod9.h>
 #include <cstdlib>
 #include "Snake.hpp"
-#include "../../GlobalsDeclarations.hpp"
 #include "../items/Rock.hpp"
 #include "../../../build/gfx_bat_snake_jetpack.h"
 #include "../animations/Blood.hpp"
@@ -13,6 +12,7 @@
 #include "../../tiles/LevelRenderingUtils.hpp"
 #include "../../../build/soundbank.h"
 #include "../../memory/SpriteUtils.hpp"
+#include "../../GameState.hpp"
 
 #define SNAKE_POS_INC_DELTA 35
 #define SNAKE_ANIM_FRAME_DELTA 125
@@ -27,7 +27,7 @@ void Snake::update_creature_specific() {
     sprite_utils::set_visibility(true, mainSpriteInfo, subSpriteInfo);
     sprite_utils::set_horizontal_flip(true, mainSpriteInfo, subSpriteInfo);
 
-    animFrameTimer += *global::timer;
+    animFrameTimer += *GameState::instance().timer;
 
     if (animFrameTimer > SNAKE_ANIM_FRAME_DELTA) {
         //update animation
@@ -44,7 +44,7 @@ void Snake::update_creature_specific() {
         //update movement
 
         if (goTimer > 0) {
-            goTimer -= *global::timer;
+            goTimer -= *GameState::instance().timer;
 
             if ((standingOnLeftEdge && spriteState == Orientation::LEFT) ||
                 (standingOnRightEdge && spriteState == Orientation::RIGHT))
@@ -59,7 +59,7 @@ void Snake::update_creature_specific() {
             _x_speed = 0;
 
             if (waitTimer > 0)
-                waitTimer -= *global::timer;
+                waitTimer -= *GameState::instance().timer;
             else if (waitTimer <= 0)
                 randomizeMovement();
         }
@@ -118,7 +118,7 @@ void Snake::apply_dmg(int dmg_to_apply) {
     //    mainSpriteInfo = nullptr;
 
     spawn_blood();
-    global::killed_npcs.push_back(_creature_type);
+    GameState::instance().killed_npcs.push_back(_creature_type);
     sprite_utils::set_visibility(false, mainSpriteInfo, subSpriteInfo);
     killed = true;
     _ready_to_dispose = true;
@@ -128,11 +128,11 @@ void Snake::init_sprites() {
 
     delete_sprites();
     
-    subSpriteInfo = global::sub_oam_manager->initSprite(gfx_bat_snake_jetpackPal, gfx_bat_snake_jetpackPalLen,
-                                                        nullptr, _sprite_size, ObjSize::OBJSIZE_16, SNAKE, true, false,
+    subSpriteInfo = GameState::instance().sub_oam_manager->initSprite(gfx_bat_snake_jetpackPal, gfx_bat_snake_jetpackPalLen,
+                                                        nullptr, _sprite_size, ObjSize::OBJSIZE_16, SpritesheetType::SNAKE, true, false,
                                                         LAYER_LEVEL::MIDDLE_TOP);
-    mainSpriteInfo = global::main_oam_manager->initSprite(gfx_bat_snake_jetpackPal, gfx_bat_snake_jetpackPalLen,
-                                                          nullptr, _sprite_size, ObjSize::OBJSIZE_16, SNAKE, true, false,
+    mainSpriteInfo = GameState::instance().main_oam_manager->initSprite(gfx_bat_snake_jetpackPal, gfx_bat_snake_jetpackPalLen,
+                                                          nullptr, _sprite_size, ObjSize::OBJSIZE_16, SpritesheetType::SNAKE, true, false,
                                                           LAYER_LEVEL::MIDDLE_TOP);
     
     sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);

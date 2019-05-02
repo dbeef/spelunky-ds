@@ -6,7 +6,7 @@
 
 #include "Explosion.h"
 #include "../../memory/SpriteUtils.hpp"
-#include "../../GlobalsDeclarations.hpp"
+#include "../../GameState.hpp"
 #include "../../../build/gfx_explosion.h"
 
 Explosion::Explosion(int x, int y) :
@@ -19,7 +19,7 @@ Explosion::Explosion(int x, int y) :
 
 void Explosion::update_decoration_specific() {
 
-    _explosion_timer += *global::timer;
+    _explosion_timer += *GameState::instance().timer;
     if (_explosion_timer > 50 && _current_frame_index < 10) {
 
         _explosion_timer = 0;
@@ -44,11 +44,11 @@ void Explosion::init_sprites() {
 
     delete_sprites();
 
-    _sub_sprite_info = global::sub_oam_manager->initSprite(gfx_explosionPal, gfx_explosionPalLen,
-                                                        nullptr, _sprite_size, ObjSize::OBJSIZE_64, BOMB, true, false,
+    _sub_sprite_info = GameState::instance().sub_oam_manager->initSprite(gfx_explosionPal, gfx_explosionPalLen,
+                                                        nullptr, _sprite_size, ObjSize::OBJSIZE_64, SpritesheetType::BOMB, true, false,
                                                         LAYER_LEVEL::MIDDLE_TOP);
-    _main_sprite_info = global::main_oam_manager->initSprite(gfx_explosionPal, gfx_explosionPalLen,
-                                                          nullptr, _sprite_size, ObjSize::OBJSIZE_64, BOMB, true, false,
+    _main_sprite_info = GameState::instance().main_oam_manager->initSprite(gfx_explosionPal, gfx_explosionPalLen,
+                                                          nullptr, _sprite_size, ObjSize::OBJSIZE_64, SpritesheetType::BOMB, true, false,
                                                           LAYER_LEVEL::MIDDLE_TOP);
 
     update_sprites_position();

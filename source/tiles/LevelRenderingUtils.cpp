@@ -5,7 +5,7 @@
 #include <cstring>
 #include <cstdlib>
 #include <nds.h>
-#include "../GlobalsDeclarations.hpp"
+#include "../GameState.hpp"
 
 //https://stackoverflow.com/questions/11072244/c-multiple-definitions-of-a-variable
 
@@ -19,7 +19,7 @@ int floor_div(int a, int b) {
 
 void sectorize_map() {
 
-    dmaCopyHalfWords(3, global::current_map, global::temp_map, sizeof(global::current_map));
+    dmaCopyHalfWords(3, GameState::instance().current_map, GameState::instance().temp_map, sizeof(GameState::instance().current_map));
 
     int b = 0;
 
@@ -29,7 +29,7 @@ void sectorize_map() {
             a += 32;
 
         if (a < 2048) {
-            global::current_map[b] = global::temp_map[a];
+            GameState::instance().current_map[b] = GameState::instance().temp_map[a];
             b++;
         }
     }
@@ -40,7 +40,7 @@ void sectorize_map() {
             a += 32;
 
         if (a < 2048) {
-            global::current_map[b] = global::temp_map[a];
+            GameState::instance().current_map[b] = GameState::instance().temp_map[a];
             b++;
         }
     }
@@ -52,7 +52,7 @@ void sectorize_map() {
             a += 32;
 
         if (a < 4096) {
-            global::current_map[b] = global::temp_map[a];
+            GameState::instance().current_map[b] = GameState::instance().temp_map[a];
             b++;
         }
 
@@ -64,7 +64,7 @@ void sectorize_map() {
             a += 32;
 
         if (a < 4096) {
-            global::current_map[b] = global::temp_map[a];
+            GameState::instance().current_map[b] = GameState::instance().temp_map[a];
             b++;
         }
     }

@@ -6,7 +6,7 @@
 #include <nds/arm9/background.h>
 
 #include "Camera.hpp"
-#include "../GlobalsDeclarations.hpp"
+#include "../GameState.hpp"
 
 constexpr u16 MAP_WIDTH = 512;
 constexpr u16 MAP_HEIGHT = 512;
@@ -24,7 +24,7 @@ void Camera::apply_shaking() {
 
     if (shakescreen_duration_timer > 0) {
 
-        shakescreen_duration_timer -= *global::timer;
+        shakescreen_duration_timer -= *GameState::instance().timer;
 
         if (shakescreen_duration_timer < 0)
             shakescreen_duration_timer = 0;
@@ -66,16 +66,16 @@ void Camera::apply_shaking() {
 
 // Instant camera focus with main dude in center.
 void Camera::instant_focus() {
-    x = global::main_dude->_x - (SCREEN_WIDTH / 2);
-    y = global::main_dude->_y - (SCREEN_HEIGHT / 2);
+    x = GameState::instance().main_dude->_x - (SCREEN_WIDTH / 2);
+    y = GameState::instance().main_dude->_y - (SCREEN_HEIGHT / 2);
     apply_map_boundaries();
 }
 
 // Camera focus with main dude in center, applied incrementally every function call
 void Camera::incremental_focus(int camera_speed) {
 
-    int center_x = global::main_dude->_x - (SCREEN_WIDTH / 2);
-    int center_y = global::main_dude->_y - (SCREEN_HEIGHT / 2);
+    int center_x = GameState::instance().main_dude->_x - (SCREEN_WIDTH / 2);
+    int center_y = GameState::instance().main_dude->_y - (SCREEN_HEIGHT / 2);
 
     u16 distance_x = static_cast<u16>(abs(center_x - this->x));
     u16 distance_y = static_cast<u16>(abs(center_y - this->y));
@@ -105,12 +105,12 @@ void Camera::update() {
     if (!follow_main_dude)
         return;
 
-    position_update_timer += *global::timer;
+    position_update_timer += *GameState::instance().timer;
 
     if (position_update_timer > 15) {
 
         //main dude's spriting, scroll faster
-        if (global::input_handler->r_bumper_held)
+        if (GameState::instance().input_handler->r_bumper_held)
             incremental_focus(3);
         else
             incremental_focus(2);
@@ -136,7 +136,7 @@ void Camera::apply_map_boundaries() {
 
 //tells the main and sub screen graphics engine to update camera position with current camera x/y
 void Camera::write_current_position_to_graphics_engines() {
-    bgSetScroll(global::bg_main_address, this->x, this->y);
-    bgSetScroll(global::bg_sub_address, this->x, this->y + SCREEN_HEIGHT);
+    bgSetScroll(GameState::instance().bg_main_address, this->x, this->y);
+    bgSetScroll(GameState::instance().bg_sub_address, this->x, this->y + SCREEN_HEIGHT);
     bgUpdate();
 }

@@ -4,7 +4,7 @@
 
 #include "BloodElement.hpp"
 #include "../../../build/gfx_blood_rock_rope_poof.h"
-#include "../../GlobalsDeclarations.hpp"
+#include "../../GameState.hpp"
 #include "Blood.hpp"
 #include "../../collisions/Collisions.hpp"
 #include "../../tiles/LevelRenderingUtils.hpp"
@@ -16,10 +16,10 @@ void BloodElement::update_creature_specific() {
         return;
 
     //won't change speed untill this timer reaches treshold
-    inactive_delay += *global::timer;
+    inactive_delay += *GameState::instance().timer;
 
     //animation not finished
-    frameTimer += *global::timer;
+    frameTimer += *GameState::instance().timer;
 
     if (frameTimer > BLOOD_ANIM_FRAME_DELTA) {
 
@@ -48,11 +48,11 @@ void BloodElement::init_sprites() {
 
     delete_sprites();
 
-    subSpriteInfo = global::sub_oam_manager->initSprite(gfx_blood_rock_rope_poofPal, gfx_blood_rock_rope_poofPalLen,
-                                                        nullptr, _sprite_size, ObjSize::OBJSIZE_8, BLOOD_ROCK_ROPE_POOF,
+    subSpriteInfo = GameState::instance().sub_oam_manager->initSprite(gfx_blood_rock_rope_poofPal, gfx_blood_rock_rope_poofPalLen,
+                                                        nullptr, _sprite_size, ObjSize::OBJSIZE_8, SpritesheetType::BLOOD_ROCK_ROPE_POOF,
                                                         true, false, LAYER_LEVEL::MIDDLE_TOP);
-    mainSpriteInfo = global::main_oam_manager->initSprite(gfx_blood_rock_rope_poofPal, gfx_blood_rock_rope_poofPalLen,
-                                                          nullptr, _sprite_size, ObjSize::OBJSIZE_8, BLOOD_ROCK_ROPE_POOF,
+    mainSpriteInfo = GameState::instance().main_oam_manager->initSprite(gfx_blood_rock_rope_poofPal, gfx_blood_rock_rope_poofPalLen,
+                                                          nullptr, _sprite_size, ObjSize::OBJSIZE_8, SpritesheetType::BLOOD_ROCK_ROPE_POOF,
                                                           true, false, LAYER_LEVEL::MIDDLE_TOP);
     match_animation();
     sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);

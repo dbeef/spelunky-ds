@@ -6,10 +6,10 @@
 #include "_BaseTreasure.h"
 
 #include "../../memory/SpriteUtils.hpp"
-#include "../../GlobalsDeclarations.hpp"
 #include "../../collisions/Collisions.hpp"
 #include "../../../build/soundbank.h"
 #include "../../memory/SpriteInfo.h"
+#include "../../GameState.hpp"
 
 void BaseTreasure::update_sprites_position() {
     int main_x, main_y, sub_x, sub_y;
@@ -45,12 +45,12 @@ void BaseTreasure::update() {
         else if (_spritesheet_type == SpritesheetType::MONIEZ_GOLDBARS)
             mmEffect(SFX_XCOIN);
 
-        global::hud->add_moniez_on_collected_loot(get_dollars_value());
+        GameState::instance().hud->add_moniez_on_collected_loot(get_dollars_value());
         sprite_utils::set_visibility(false, _main_sprite_info, _sub_sprite_info);
-        global::collected_treasures.push_back(_treasure_type);
+        GameState::instance().collected_treasures.push_back(_treasure_type);
         _ready_to_dispose = true;
     } else if (_collectible_timer < 500) {
-        _collectible_timer += *global::timer;
+        _collectible_timer += *GameState::instance().timer;
     }
 
 }

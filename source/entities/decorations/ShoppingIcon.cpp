@@ -5,7 +5,7 @@
 #include <cstdlib>
 
 #include "../../../build/gfx_goldbars.h"
-#include "../../GlobalsDeclarations.hpp"
+#include "../../GameState.hpp"
 #include "../../memory/SpriteUtils.hpp"
 #include "ShoppingIcon.h"
 
@@ -20,11 +20,11 @@ void ShoppingIcon::update_decoration_specific() {
 
     update_sprites_position();
 
-    _trigger_timer += *global::timer;
+    _trigger_timer += *GameState::instance().timer;
 
     // Launch animation every time _trigger_timer overflows
     if (_trigger_timer > shopping_icon_trigger_delta)
-        _anim_frame_timer += *global::timer;
+        _anim_frame_timer += *GameState::instance().timer;
 
     if (_anim_frame_timer > shopping_icon_anim_frame_delta) {
         _anim_frame_timer = 0;
@@ -44,11 +44,11 @@ void ShoppingIcon::init_sprites() {
 
     delete_sprites();
 
-    _main_sprite_info = global::main_oam_manager->initSprite(gfx_goldbarsPal, gfx_goldbarsPalLen, nullptr,
+    _main_sprite_info = GameState::instance().main_oam_manager->initSprite(gfx_goldbarsPal, gfx_goldbarsPalLen, nullptr,
                                                              _sprite_size, ObjSize::OBJSIZE_16, SpritesheetType::MONIEZ_GOLDBARS, true,
                                                              false, LAYER_LEVEL::MIDDLE_TOP);
 
-    _sub_sprite_info = global::sub_oam_manager->initSprite(gfx_goldbarsPal, gfx_goldbarsPalLen, nullptr,
+    _sub_sprite_info = GameState::instance().sub_oam_manager->initSprite(gfx_goldbarsPal, gfx_goldbarsPalLen, nullptr,
                                                            _sprite_size, ObjSize::OBJSIZE_16, SpritesheetType::MONIEZ_GOLDBARS, true,
                                                            false, LAYER_LEVEL::MIDDLE_TOP);
     match_animation();

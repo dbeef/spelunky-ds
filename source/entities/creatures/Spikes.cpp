@@ -9,23 +9,23 @@
 #include "../../../build/soundbank.h"
 
 #include "../../collisions/Collisions.hpp"
-#include "../../GlobalsDeclarations.hpp"
-#include "../../sound/SoundUtils.hpp"
+#include "../../sound/Sound.hpp"
 #include "../animations/Blood.hpp"
 #include "../../memory/SpriteUtils.hpp"
 #include "Spikes.h"
+#include "../../GameState.hpp"
 
 void Spikes::update_creature_specific() {
 
     if (_ready_to_dispose) return;
 
     // check whether main dude can be killed by this spikes
-    if (!global::main_dude->dead && !global::main_dude->using_cape &&
+    if (!GameState::instance().main_dude->dead && !GameState::instance().main_dude->using_cape &&
         Collisions::checkCollisionBodiesLeftLowerCorner(_x, _y + 16, _physical_width, _physical_height,
-                                                        global::main_dude->_x, global::main_dude->_y + 16, 16, 16) &&
-        !global::main_dude->_bottom_collision && global::main_dude->_y_speed > 1) {
+                                                        GameState::instance().main_dude->_x, GameState::instance().main_dude->_y + 16, 16, 16) &&
+        !GameState::instance().main_dude->_bottom_collision && GameState::instance().main_dude->_y_speed > 1) {
 
-        global::main_dude->set_dead();
+        GameState::instance().main_dude->set_dead();
         spawn_blood();
 
         _blood = true;
@@ -34,22 +34,22 @@ void Spikes::update_creature_specific() {
     }
 
     // check whether any creature can be killed by this spikes
-    for (unsigned long a = 0; a < global::creatures.size(); a++) {
-        if ((global::creatures.at(a)->_creature_type == CreatureType::SPIDER ||
-             global::creatures.at(a)->_spritesheet_type == SpritesheetType::CAVEMAN_DAMSEL ||
-             global::creatures.at(a)->_spritesheet_type == SpritesheetType::SHOPKEEPER)
-            && !global::creatures.at(a)->_ready_to_dispose && !global::creatures.at(a)->killed) {
+    for (unsigned long a = 0; a < GameState::instance().creatures.size(); a++) {
+        if ((GameState::instance().creatures.at(a)->_creature_type == CreatureType::SPIDER ||
+             GameState::instance().creatures.at(a)->_spritesheet_type == SpritesheetType::CAVEMAN_DAMSEL ||
+             GameState::instance().creatures.at(a)->_spritesheet_type == SpritesheetType::SHOPKEEPER)
+            && !GameState::instance().creatures.at(a)->_ready_to_dispose && !GameState::instance().creatures.at(a)->killed) {
 
             if (Collisions::checkCollisionBodies(_x, _y, _physical_width, _physical_height,
-                                                 global::creatures.at(a)->_x,
-                                                 global::creatures.at(a)->_y,
-                                                 global::creatures.at(a)->_physical_width,
-                                                 global::creatures.at(a)->_physical_height)) {
+                                                 GameState::instance().creatures.at(a)->_x,
+                                                 GameState::instance().creatures.at(a)->_y,
+                                                 GameState::instance().creatures.at(a)->_physical_width,
+                                                 GameState::instance().creatures.at(a)->_physical_height)) {
 
-                if (!global::creatures.at(a)->_bottom_collision && global::creatures.at(a)->_y_speed > 0 &&
-                    !global::creatures.at(a)->hold_by_main_dude) {
-                    global::creatures.at(a)->apply_dmg(8);
-                    global::creatures.at(a)->_x_speed = 0;
+                if (!GameState::instance().creatures.at(a)->_bottom_collision && GameState::instance().creatures.at(a)->_y_speed > 0 &&
+                    !GameState::instance().creatures.at(a)->hold_by_main_dude) {
+                    GameState::instance().creatures.at(a)->apply_dmg(8);
+                    GameState::instance().creatures.at(a)->_x_speed = 0;
                     _blood = true;
                     u8 *frame_gfx = (u8 *) gfx_spike_collectibles_flameTiles + (_sprite_size * (1) / 2);
                     sprite_utils::update_frame(frame_gfx, _sprite_size, _main_sprite_info, _sub_sprite_info);
@@ -65,11 +65,11 @@ void Spikes::init_sprites() {
 
     delete_sprites();
 
-    _sub_sprite_info = global::sub_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
+    _sub_sprite_info = GameState::instance().sub_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
                                                            gfx_spike_collectibles_flamePalLen,
                                                            nullptr, _sprite_size, ObjSize::OBJSIZE_16,
                                                            _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_BOT);
-    _main_sprite_info = global::main_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
+    _main_sprite_info = GameState::instance().main_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
                                                              gfx_spike_collectibles_flamePalLen,
                                                              nullptr, _sprite_size, ObjSize::OBJSIZE_16,
                                                              _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_BOT);

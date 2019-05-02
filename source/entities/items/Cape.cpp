@@ -5,15 +5,15 @@
 
 #include "Cape.hpp"
 #include "../../../build/gfx_goldbars.h"
-#include "../../GlobalsDeclarations.hpp"
+#include "../../GameState.hpp"
 #include "../../entities/decorations/GotCollectible.hpp"
 #include "../../collisions/Collisions.hpp"
 #include "../../memory/SpriteUtils.hpp"
 
 void Cape::update_item_specific() {
 
-    if (global::main_dude->carrying_jetpack && _collected) {
-        global::main_dude->carrying_cape = false;
+    if (GameState::instance().main_dude->carrying_jetpack && _collected) {
+        GameState::instance().main_dude->carrying_cape = false;
         sprite_utils::set_visibility(false, _main_sprite_info, _sub_sprite_info);
         _ready_to_dispose = true;
     }
@@ -42,10 +42,10 @@ void Cape::update_item_specific() {
     if (_collected) {
 
         //match sprite rendering priority and x/y offset to the main dude's sprite state
-        if (global::main_dude->climbing || global::main_dude->exiting_level) {
+        if (GameState::instance().main_dude->climbing || GameState::instance().main_dude->exiting_level) {
             set_pickuped_position_not_checking(0, 0, 4);
             sprite_utils::set_priority(OBJPRIORITY_0, _main_sprite_info, _sub_sprite_info);
-        } else if (global::input_handler->down_key_held || global::main_dude->dead || global::main_dude->stunned) {
+        } else if (GameState::instance().input_handler->down_key_held || GameState::instance().main_dude->dead || GameState::instance().main_dude->stunned) {
             set_pickuped_position_not_checking(0, 0, 4);
             sprite_utils::set_priority(OBJPRIORITY_1, _main_sprite_info, _sub_sprite_info);
         } else {
@@ -53,22 +53,22 @@ void Cape::update_item_specific() {
             set_pickuped_position_not_checking(-3, -3, -1);
         }
 
-        _anim_frame_timer += *global::timer;
+        _anim_frame_timer += *GameState::instance().timer;
 
         if (_anim_frame_timer > cape_anim_frame_delta) {
 
-            if (global::main_dude->_x_speed != 0 || global::main_dude->_y_speed != 0)
+            if (GameState::instance().main_dude->_x_speed != 0 || GameState::instance().main_dude->_y_speed != 0)
                 _anim_frame_index++;
 
             _anim_frame_timer = 0;
             match_animation();
         }
 
-        sprite_utils::set_horizontal_flip(global::main_dude->sprite_state == Orientation::RIGHT,
+        sprite_utils::set_horizontal_flip(GameState::instance().main_dude->sprite_state == Orientation::RIGHT,
                                           _main_sprite_info, _sub_sprite_info);
 
-        if (global::main_dude->_bottom_collision)
-            global::main_dude->using_cape = false;
+        if (GameState::instance().main_dude->_bottom_collision)
+            GameState::instance().main_dude->using_cape = false;
 
     }
 
@@ -78,10 +78,10 @@ void Cape::init_sprites() {
 
     delete_sprites();
     
-    _sub_sprite_info = global::sub_oam_manager->initSprite(gfx_goldbarsPal, gfx_goldbarsPalLen,
+    _sub_sprite_info = GameState::instance().sub_oam_manager->initSprite(gfx_goldbarsPal, gfx_goldbarsPalLen,
                                                         nullptr, _sprite_size, ObjSize::OBJSIZE_16,
                                                         _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
-    _main_sprite_info = global::main_oam_manager->initSprite(gfx_goldbarsPal, gfx_goldbarsPalLen,
+    _main_sprite_info = GameState::instance().main_oam_manager->initSprite(gfx_goldbarsPal, gfx_goldbarsPalLen,
                                                           nullptr, _sprite_size, ObjSize::OBJSIZE_16,
                                                           _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
     update_sprites_position();
@@ -89,7 +89,7 @@ void Cape::init_sprites() {
     sprite_utils::set_vertical_flip(false, _main_sprite_info, _sub_sprite_info);
 
     if (_collected)
-        sprite_utils::set_horizontal_flip(global::main_dude->sprite_state == Orientation::RIGHT,
+        sprite_utils::set_horizontal_flip(GameState::instance().main_dude->sprite_state == Orientation::RIGHT,
                                           _main_sprite_info, _sub_sprite_info);
     else
         sprite_utils::set_horizontal_flip(false, _main_sprite_info, _sub_sprite_info);
@@ -101,19 +101,19 @@ void Cape::match_animation() {
     
     if (!_collected) {
         frame_gfx = sprite_utils::get_frame((u8 *) gfx_goldbarsTiles, _sprite_size, 2);
-    } else if (global::main_dude->climbing) {
+    } else if (GameState::instance().main_dude->climbing) {
         //climbing
         frame_gfx = sprite_utils::get_frame((u8 *) gfx_goldbarsTiles, _sprite_size, 3);
-    } else if (global::input_handler->down_key_held || global::main_dude->dead || global::main_dude->stunned ||
-               (!global::main_dude->using_cape && !global::main_dude->stunned &&
-                (global::main_dude->_x_speed != 0 || global::main_dude->_y_speed != 0))) {
+    } else if (GameState::instance().input_handler->down_key_held || GameState::instance().main_dude->dead || GameState::instance().main_dude->stunned ||
+               (!GameState::instance().main_dude->using_cape && !GameState::instance().main_dude->stunned &&
+                (GameState::instance().main_dude->_x_speed != 0 || GameState::instance().main_dude->_y_speed != 0))) {
 
         if (_anim_frame_index >= 5)
             _anim_frame_index = 0;
 
         frame_gfx = sprite_utils::get_frame((u8 *) gfx_goldbarsTiles, _sprite_size, 5 + _anim_frame_index);
 
-    } else if (global::main_dude->_x_speed == 0 && global::main_dude->_y_speed == 0) {
+    } else if (GameState::instance().main_dude->_x_speed == 0 && GameState::instance().main_dude->_y_speed == 0) {
         //staying still
         frame_gfx = sprite_utils::get_frame((u8 *) gfx_goldbarsTiles, _sprite_size, 4);
     } else {
@@ -132,13 +132,13 @@ void Cape::match_animation() {
 void Cape::equip() {
 
     auto g = new GotCollectible(_x - 12, _y - 20, GotCollectible::Type::ITEM);
-    global::decorations.push_back(g);
+    GameState::instance().decorations.push_back(g);
 
-    if (global::main_dude->carrying_jetpack)
-        global::main_dude->carrying_jetpack = false;
+    if (GameState::instance().main_dude->carrying_jetpack)
+        GameState::instance().main_dude->carrying_jetpack = false;
 
-    if (!global::main_dude->carrying_cape) {
-        global::main_dude->carrying_cape = true;
+    if (!GameState::instance().main_dude->carrying_cape) {
+        GameState::instance().main_dude->carrying_cape = true;
         update_sprites_position();
         _collected = true;
     } else {

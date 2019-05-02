@@ -6,7 +6,6 @@
 #include <maxmod9.h>
 #include <cstdlib>
 #include "Caveman.hpp"
-#include "../../GlobalsDeclarations.hpp"
 #include "../../collisions/Collisions.hpp"
 #include "../../../build/soundbank.h"
 #include "../animations/Blood.hpp"
@@ -14,6 +13,7 @@
 #include "../../tiles/LevelRenderingUtils.hpp"
 #include "../../tiles/TileOrientation.hpp"
 #include "../../memory/SpriteUtils.hpp"
+#include "../../GameState.hpp"
 
 #define CAVEMAN_POS_INC_DELTA 20
 #define CAVEMAN_TRIGGERED_SPEED 3
@@ -26,8 +26,8 @@ void Caveman::update_creature_specific() {
     if (_ready_to_dispose)
         return;
 
-    invert_speed_timer += *global::timer;
-    blood_spawn_timer += *global::timer;
+    invert_speed_timer += *GameState::instance().timer;
+    blood_spawn_timer += *GameState::instance().timer;
 
     sprite_utils::set_horizontal_flip(sprite_state == Orientation::RIGHT, mainSpriteInfo, subSpriteInfo);
     sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);
@@ -39,7 +39,7 @@ void Caveman::update_creature_specific() {
         set_pickuped_position(6, -4);
 
         if (hold_by_main_dude) {
-            sprite_state = global::main_dude->sprite_state;
+            sprite_state = GameState::instance().main_dude->sprite_state;
             sprite_utils::set_priority(OBJPRIORITY_0, mainSpriteInfo, subSpriteInfo);
         } else
             sprite_utils::set_priority(OBJPRIORITY_2, mainSpriteInfo, subSpriteInfo);
@@ -52,13 +52,13 @@ void Caveman::update_creature_specific() {
     if (!stunned && !killed) {
         if (hold_by_main_dude) {
             hold_by_main_dude = false;
-            global::main_dude->holding_item = false;
+            GameState::instance().main_dude->holding_item = false;
             goTimer = 2000;
             waitTimer = 0;
         }
     }
 
-    animFrameTimer += *global::timer;
+    animFrameTimer += *GameState::instance().timer;
 
     if (animFrameTimer > CAVEMAN_ANIM_FRAME_DELTA) {
         animFrame++;
@@ -77,7 +77,7 @@ void Caveman::update_creature_specific() {
     if (!stunned && !killed)
         kill_if_whip(1);
     if (!stunned && !killed) {
-        if (global::main_dude->carrying_spike_shoes)
+        if (GameState::instance().main_dude->carrying_spike_shoes)
             kill_if_main_dude_jumped_on_you(3);
         else
             kill_if_main_dude_jumped_on_you(1);
@@ -86,7 +86,7 @@ void Caveman::update_creature_specific() {
         deal_damage_main_dude_on_collision(1);
 
     if (stunned) {
-        stunned_timer += *global::timer;
+        stunned_timer += *GameState::instance().timer;
         if (stunned_timer > CAVEMAN_STUN_TIME) {
             stunned = false;
             stunned_timer = 0;
@@ -99,16 +99,18 @@ void Caveman::update_creature_specific() {
 
         if (!_bottom_collision) {
 
-            if ((_neighboring_tiles[TileOrientation::RIGHT_MIDDLE] == nullptr || !_neighboring_tiles[TileOrientation::RIGHT_MIDDLE]->collidable) &&
-                (_neighboring_tiles[TileOrientation::RIGHT_UP] != nullptr && _neighboring_tiles[TileOrientation::RIGHT_DOWN] != nullptr)) {
+            if ((_neighboring_tiles[static_cast<uint16>(TileOrientation::RIGHT_MIDDLE)] == nullptr ||
+                !_neighboring_tiles[static_cast<uint16>(TileOrientation::RIGHT_MIDDLE)]->collidable) &&
+                (_neighboring_tiles[static_cast<uint16>(TileOrientation::RIGHT_UP)] != nullptr &&
+                _neighboring_tiles[static_cast<uint16>(TileOrientation::RIGHT_DOWN)] != nullptr)) {
                 //if there's no collidable tile on right-mid, but there are on right-up and right-down,
                 //add extra x-pos to ease going through a hole
                 if (_x_speed > 0)
                     _x += 2;
             }
 
-            if ((_neighboring_tiles[TileOrientation::LEFT_MIDDLE] == nullptr || !_neighboring_tiles[TileOrientation::LEFT_MIDDLE]->collidable) &&
-                (_neighboring_tiles[TileOrientation::LEFT_UP] != nullptr && _neighboring_tiles[TileOrientation::LEFT_DOWN] != nullptr)) {
+            if ((_neighboring_tiles[static_cast<uint16>(TileOrientation::LEFT_MIDDLE)] == nullptr || !_neighboring_tiles[static_cast<uint16>(TileOrientation::LEFT_MIDDLE)]->collidable) &&
+                (_neighboring_tiles[static_cast<uint16>(TileOrientation::LEFT_UP)] != nullptr && _neighboring_tiles[static_cast<uint16>(TileOrientation::LEFT_DOWN)] != nullptr)) {
                 //same but for left side
                 if (_x_speed < 0)
                     _x -= 2;
@@ -124,9 +126,10 @@ void Caveman::update_creature_specific() {
         if (bounce)
             return;
 
-        if (_bottom_collision && _neighboring_tiles[TileOrientation::RIGHT_MIDDLE] != nullptr &&
-            _neighboring_tiles[TileOrientation::RIGHT_MIDDLE]->collidable &&
-            _neighboring_tiles[TileOrientation::LEFT_MIDDLE] != nullptr && _neighboring_tiles[TileOrientation::LEFT_MIDDLE]->collidable) {
+        if (_bottom_collision && _neighboring_tiles[static_cast<uint16>(TileOrientation::RIGHT_MIDDLE)] != nullptr &&
+            _neighboring_tiles[static_cast<uint16>(TileOrientation::RIGHT_MIDDLE)]->collidable &&
+            _neighboring_tiles[static_cast<uint16>(TileOrientation::LEFT_MIDDLE)] != nullptr &&
+            _neighboring_tiles[static_cast<uint16>(TileOrientation::LEFT_MIDDLE)]->collidable) {
             //high jump if damsel's surrounded by tiles
             _y_speed = -3.6 - ((rand() % 10) / 5);
             landlocked = true;
@@ -170,7 +173,7 @@ void Caveman::apply_dmg(int dmg_to_apply) {
     if (hitpoints <= 0) {
         killed = true;
         stunned = false;
-        global::killed_npcs.push_back(_creature_type);
+        GameState::instance().killed_npcs.push_back(_creature_type);
         _bouncing_factor_x = ICollidable::default_bouncing_factor_x;
         _bouncing_factor_y = ICollidable::default_bouncing_factor_y;
     } else {
@@ -185,11 +188,11 @@ void Caveman::init_sprites() {
 
     delete_sprites();
 
-    subSpriteInfo = global::sub_oam_manager->initSprite(gfx_caveman_damselPal, gfx_caveman_damselPalLen,
-                                                        nullptr, _sprite_size, ObjSize::OBJSIZE_16, CAVEMAN_DAMSEL,
+    subSpriteInfo = GameState::instance().sub_oam_manager->initSprite(gfx_caveman_damselPal, gfx_caveman_damselPalLen,
+                                                        nullptr, _sprite_size, ObjSize::OBJSIZE_16, SpritesheetType::CAVEMAN_DAMSEL,
                                                         true, false, LAYER_LEVEL::MIDDLE_BOT);
-    mainSpriteInfo = global::main_oam_manager->initSprite(gfx_caveman_damselPal, gfx_caveman_damselPalLen,
-                                                          nullptr, _sprite_size, ObjSize::OBJSIZE_16, CAVEMAN_DAMSEL,
+    mainSpriteInfo = GameState::instance().main_oam_manager->initSprite(gfx_caveman_damselPal, gfx_caveman_damselPalLen,
+                                                          nullptr, _sprite_size, ObjSize::OBJSIZE_16, SpritesheetType::CAVEMAN_DAMSEL,
                                                           true, false, LAYER_LEVEL::MIDDLE_BOT);
     match_animation();
     update_sprites_position();
@@ -212,11 +215,11 @@ void Caveman::make_some_movement() {
         return;
 
     if (waitTimer > 0 && !triggered) {
-        waitTimer -= *global::timer;
+        waitTimer -= *GameState::instance().timer;
     } else {
 
         if (goTimer > 0)
-            goTimer -= *global::timer;
+            goTimer -= *GameState::instance().timer;
 
         if (triggered) {
             if (sprite_state == Orientation::RIGHT)
@@ -267,15 +270,15 @@ void Caveman::make_some_movement() {
 
 void Caveman::check_if_can_be_triggered() {
 
-    int diff = _x - global::main_dude->_x;
+    int diff = _x - GameState::instance().main_dude->_x;
     int diff_abs = abs(diff);
 
-    if (!triggered && diff_abs < 9 * TILE_W && abs(_y - global::main_dude->_y) < 0.8 * TILE_H) {
+    if (!triggered && diff_abs < 9 * TILE_W && abs(_y - GameState::instance().main_dude->_y) < 0.8 * TILE_H) {
 
         int xx = floor_div(this->_x + 0.5 * _physical_width, TILE_W);
         int yy = floor_div(this->_y + 0.5 * _physical_height, TILE_H);
 
-        int dude_xx = floor_div(global::main_dude->_x + 0.5 * MainDude::main_dude_physical_width, TILE_W);
+        int dude_xx = floor_div(GameState::instance().main_dude->_x + 0.5 * MainDude::main_dude_physical_width, TILE_W);
 
         triggered = true;
 

@@ -2,13 +2,13 @@
 // Created by xdbeef on 17.05.18.
 //
 
-#include "../../GlobalsDeclarations.hpp"
 #include "../../collisions/Collisions.hpp"
 #include "../../../build/gfx_spike_collectibles_flame.h"
 #include "_BaseCreature.h"
 #include "Bullet.hpp"
 #include "../../tiles/LevelRenderingUtils.hpp"
 #include "../../memory/SpriteUtils.hpp"
+#include "../../GameState.hpp"
 
 #define BULLET_POSITION_INC_DELTA 15
 #define BULLET_ANIM_X_OFFSET 5
@@ -25,7 +25,7 @@ void Bullet::update_creature_specific() {
     sprite_utils::set_visibility(true, mainSpriteInfo, subSpriteInfo);
     update_sprites_position();
 
-    lifetime += *global::timer;
+    lifetime += *GameState::instance().timer;
 
     if (_map_collisions_checked) {
         if (_left_collision || _right_collision || _bottom_collision || _upper_collision) {
@@ -37,7 +37,7 @@ void Bullet::update_creature_specific() {
 
     if (killed) {
 
-        animFrameTimer += *global::timer;
+        animFrameTimer += *GameState::instance().timer;
 
         if (animFrameTimer > BULLET_ANIM_FRAME_DELTA) {
 
@@ -61,11 +61,11 @@ void Bullet::init_sprites() {
 
     delete_sprites();
 
-    subSpriteInfo = global::sub_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
+    subSpriteInfo = GameState::instance().sub_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
                                                         gfx_spike_collectibles_flamePalLen,
                                                         nullptr, _sprite_size, ObjSize::OBJSIZE_8,
                                                         _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
-    mainSpriteInfo = global::main_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
+    mainSpriteInfo = GameState::instance().main_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
                                                           gfx_spike_collectibles_flamePalLen,
                                                           nullptr, _sprite_size, ObjSize::OBJSIZE_8,
                                                           _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);

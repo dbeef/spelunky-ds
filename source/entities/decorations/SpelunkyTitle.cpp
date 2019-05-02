@@ -3,7 +3,7 @@
 //
 
 #include "../../../build/gfx_spelunky_title.h"
-#include "../../GlobalsDeclarations.hpp"
+#include "../../GameState.hpp"
 #include "../../memory/SpriteUtils.hpp"
 #include "SpelunkyTitle.h"
 
@@ -27,7 +27,7 @@ void SpelunkyTitle::init_sprites() {
     delete_sprites();
 
     for (int a = 0; a < spelunky_title_graphics; a++) {
-        _mainSpriteInfos[a] = global::main_oam_manager->initSprite(gfx_spelunky_titlePal, gfx_spelunky_titlePalLen,
+        _mainSpriteInfos[a] = GameState::instance().main_oam_manager->initSprite(gfx_spelunky_titlePal, gfx_spelunky_titlePalLen,
                                                                    nullptr, _sprite_size, ObjSize::OBJSIZE_64, _spritesheet_type,
                                                                    true, false, LAYER_LEVEL::MIDDLE_TOP);
 

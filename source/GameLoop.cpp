@@ -8,44 +8,45 @@
 #include "entities/animations/Blood.hpp"
 #include "entities/items/Arrow.hpp"
 #include "entities/main_dude/MainDudeConsts.h"
+#include "GameState.hpp"
 
 void gameloop::run() {
 
-    global::camera->x = CAMERA_MENU_START_X;
-    global::camera->y = CAMERA_MENU_START_Y;
-    global::main_dude = new MainDude(MAIN_DUDE_MENU_START_POSITION_X, MAIN_DUDE_MENU_START_POSITION_Y);
+    GameState::instance().camera->x = CAMERA_MENU_START_X;
+    GameState::instance().camera->y = CAMERA_MENU_START_Y;
+    GameState::instance().main_dude = new MainDude(MAIN_DUDE_MENU_START_POSITION_X, MAIN_DUDE_MENU_START_POSITION_Y);
 
-    global::hud->init();
+    GameState::instance().hud->init();
     populate_main_menu();
 
     // If exited, SpelunkyDS returns 0 and gets back to the menu.
     while (true) {
 
         time_utils::update_ms_since_last_frame();
-        global::input_handler->updateInput();
+        GameState::instance().input_handler->updateInput();
 
-        if (global::game_state->bombed) {
+        if (GameState::instance().bombed) {
             on_bomb_explosion();
-            global::game_state->bombed = false;
+            GameState::instance().bombed = false;
         }
 
-        global::camera->update();
+        GameState::instance().camera->update();
 
-        global::main_dude->update();
-        global::main_dude->whip->update();
+        GameState::instance().main_dude->update();
+        GameState::instance().main_dude->whip->update();
 
         update_entities();
 
-        global::game_state->handle_transition_screen_smooch();
-        global::main_dude->handle_key_input();
-        global::hud->update();
+        GameState::instance().handle_transition_screen_smooch();
+        GameState::instance().main_dude->handle_key_input();
+        GameState::instance().hud->update();
 
         swiWaitForVBlank();
         manage_brightness();
 
-        global::camera->write_current_position_to_graphics_engines();
-        global::main_oam_manager->updateOAM();
-        global::sub_oam_manager->updateOAM();
+        GameState::instance().camera->write_current_position_to_graphics_engines();
+        GameState::instance().main_oam_manager->updateOAM();
+        GameState::instance().sub_oam_manager->updateOAM();
         oam_utils::clean_unused_oam();
     }
 
@@ -54,51 +55,51 @@ void gameloop::run() {
 //!> this should be done after Vblank (otherwise - crash!)
 void gameloop::manage_brightness() {
 
-    if (global::game_state->just_started_game) {
+    if (GameState::instance().just_started_game) {
         //just started the game, so lowering the brightness to the normal level.
         //game starts with the maximum brightness, so the transition between DSiMenu++ would look smoother
-        global::game_state->change_brightness_timer += *global::timer;
+        GameState::instance().change_brightness_timer += *GameState::instance().timer;
 
-        if (global::game_state->change_brightness_timer > 100) {
+        if (GameState::instance().change_brightness_timer > 100) {
 
-            global::game_state->brightness_level--;
+            GameState::instance().brightness_level--;
 
-            if (global::game_state->brightness_level == 0)
-                global::game_state->just_started_game = false;
+            if (GameState::instance().brightness_level == 0)
+                GameState::instance().just_started_game = false;
             else
-                setBrightness(3, global::game_state->brightness_level);
+                setBrightness(3, GameState::instance().brightness_level);
 
         }
     }
 
-    if (global::game_state->in_main_menu && global::game_state->exiting_game) {
+    if (GameState::instance().in_main_menu && GameState::instance().exiting_game) {
         //exiting game, so increasing the brightness to the maximum level so the transition
         //between the game and DSiMenu++ would be smoother
-        global::game_state->change_brightness_timer += *global::timer;
+        GameState::instance().change_brightness_timer += *GameState::instance().timer;
 
-        if (global::game_state->change_brightness_timer > 100) {
+        if (GameState::instance().change_brightness_timer > 100) {
 
-            global::game_state->brightness_level++;
+            GameState::instance().brightness_level++;
 
-            if (global::game_state->brightness_level > 16)
+            if (GameState::instance().brightness_level > 16)
                 exit(0);
 
-            setBrightness(3, global::game_state->brightness_level);
+            setBrightness(3, GameState::instance().brightness_level);
 
         }
     }
 }
 
 void gameloop::on_bomb_explosion() {
-    global::current_level->update_level();
+    GameState::instance().current_level->update_level();
 
-    for (auto &creature : global::creatures)
+    for (auto &creature : GameState::instance().creatures)
         (*creature)._bottom_collision = false;
-    for (auto &item : global::items)
+    for (auto &item : GameState::instance().items)
         (*item)._bottom_collision = false;
-    for (auto &treasures : global::treasures)
+    for (auto &treasures : GameState::instance().treasures)
         (*treasures)._bottom_collision = false;
-    global::main_dude->_bottom_collision = false;
+    GameState::instance().main_dude->_bottom_collision = false;
 }
 
 void gameloop::update_entities() {
@@ -107,36 +108,36 @@ void gameloop::update_entities() {
     // pushed back while iterating, invalidating iterators.
 
     {
-        const std::size_t size = global::creatures.size();
+        const std::size_t size = GameState::instance().creatures.size();
         for (std::size_t index = 0; index < size; ++index) {
-            auto *&creature = global::creatures.at(index);
+            auto *&creature = GameState::instance().creatures.at(index);
             if (creature && !creature->_ready_to_dispose) {
                 creature->update();
             }
         }
     }
     {
-        const std::size_t size = global::items.size();
+        const std::size_t size = GameState::instance().items.size();
         for (std::size_t index = 0; index < size; ++index) {
-            auto *&item = global::items.at(index);
+            auto *&item = GameState::instance().items.at(index);
             if (item && !item->_ready_to_dispose) {
                 item->update();
             }
         }
     }
     {
-        const std::size_t size = global::decorations.size();
+        const std::size_t size = GameState::instance().decorations.size();
         for (std::size_t index = 0; index < size; ++index) {
-            auto *&decoration = global::decorations.at(index);
+            auto *&decoration = GameState::instance().decorations.at(index);
             if (decoration) {
                 decoration->update();
             }
         }
     }
     {
-        const std::size_t size = global::treasures.size();
+        const std::size_t size = GameState::instance().treasures.size();
         for (std::size_t index = 0; index < size; ++index) {
-            auto *&treasure = global::treasures.at(index);
+            auto *&treasure = GameState::instance().treasures.at(index);
             if (treasure && !treasure->_ready_to_dispose) {
                 treasure->update();
             }

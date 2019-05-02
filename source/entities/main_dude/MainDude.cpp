@@ -7,15 +7,16 @@
 #include <maxmod9.h>
 #include <cstdlib>
 
+#include "../../GameState.hpp"
 #include "MainDude.hpp"
-#include "../../GlobalsDeclarations.hpp"
+#include "../../GameState.hpp"
 #include "../../collisions/Collisions.hpp"
 #include "../../tiles/LevelRenderingUtils.hpp"
 #include "../../../build/gfx_spelunker.h"
 #include "../../../build/soundbank.h"
 #include "../../tiles/TileOrientation.hpp"
 #include "../animations/FallPoof.hpp"
-#include "../../sound/SoundUtils.hpp"
+#include "../../sound/Sound.hpp"
 #include "../../memory/SpriteUtils.hpp"
 #include "../../tiles/MapTile.hpp"
 #include "../../tiles/Level.hpp"
@@ -32,7 +33,7 @@
 void MainDude::handle_key_input() {
 
     if (!stunned && !exiting_level && !dead) {
-        if (global::input_handler->b_key_down && time_since_last_jump > 100) {
+        if (GameState::instance().input_handler->b_key_down && time_since_last_jump > 100) {
 
             if (_bottom_collision || climbing) {
                 if (carrying_spring_shoes)
@@ -63,7 +64,7 @@ void MainDude::handle_key_input() {
             }
         }
 
-        if (global::input_handler->b_key_down && time_since_last_jump > 100) {
+        if (GameState::instance().input_handler->b_key_down && time_since_last_jump > 100) {
 
             if (!climbing && carrying_jetpack && jetpack_fuel_counter > 0) {
                 jumping_timer = 0;
@@ -77,7 +78,7 @@ void MainDude::handle_key_input() {
 
         }
 
-        if (global::input_handler->y_key_down) {
+        if (GameState::instance().input_handler->y_key_down) {
 
             if (!stunned && !using_whip) {
                 if (holding_item) {
@@ -91,13 +92,13 @@ void MainDude::handle_key_input() {
 
         }
 
-        if (global::input_handler->x_key_down && global::hud->ropes > 0) {
+        if (GameState::instance().input_handler->x_key_down && GameState::instance().hud->ropes > 0) {
             throw_rope();
-        } else if (global::input_handler->a_key_down && !holding_item && global::hud->bombs > 0) {
+        } else if (GameState::instance().input_handler->a_key_down && !holding_item && GameState::instance().hud->bombs > 0) {
             take_out_bomb();
         }
 
-        if (global::input_handler->left_key_held) {
+        if (GameState::instance().input_handler->left_key_held) {
 
             sprite_state = Orientation::LEFT;
             hanging_on_tile_left = false;
@@ -109,7 +110,7 @@ void MainDude::handle_key_input() {
 
         }
 
-        if (global::input_handler->right_key_held) {
+        if (GameState::instance().input_handler->right_key_held) {
 
             sprite_state = Orientation::RIGHT;
             hanging_on_tile_right = false;
@@ -128,18 +129,18 @@ void MainDude::handle_key_input() {
         current_x_in_tiles = xx;
         current_y_in_tiles = yy;
 
-        if (global::input_handler->l_bumper_held || global::input_handler->up_key_held ||
-            global::input_handler->down_key_held) {
+        if (GameState::instance().input_handler->l_bumper_held || GameState::instance().input_handler->up_key_held ||
+            GameState::instance().input_handler->down_key_held) {
 
             if (climbing) {
 
-                if (global::game_state->in_main_menu && !global::game_state->exiting_game) {
+                if (GameState::instance().in_main_menu && !GameState::instance().exiting_game) {
                     if (_y <= 100) {
-                        global::game_state->exiting_game = true;
+                        GameState::instance().exiting_game = true;
                     }
                 }
 
-                climbing_timer += *global::timer;
+                climbing_timer += *GameState::instance().timer;
                 if (climbing_timer > 260) {
                     climbing_timer = 0;
                     climbing_sound++;
@@ -153,19 +154,19 @@ void MainDude::handle_key_input() {
             }
 
             MapTile *neighboringTiles[9] = {};
-            Collisions::getNeighboringTiles(global::current_level->map_tiles, xx, yy, neighboringTiles);
+            Collisions::getNeighboringTiles(GameState::instance().current_level->map_tiles, xx, yy, neighboringTiles);
 
 
-            can_climb_ladder = neighboringTiles[CENTER] != nullptr &&
-                               (neighboringTiles[CENTER]->mapTileType == MapTileType::LADDER ||
-                                neighboringTiles[CENTER]->mapTileType == MapTileType::LADDER_DECK);
+            can_climb_ladder = neighboringTiles[static_cast<uint16>(TileOrientation::CENTER)] != nullptr &&
+                               (neighboringTiles[static_cast<uint16>(TileOrientation::CENTER)]->mapTileType == MapTileType::LADDER ||
+                                neighboringTiles[static_cast<uint16>(TileOrientation::CENTER)]->mapTileType == MapTileType::LADDER_DECK);
 
-            can_climb_ladder = can_climb_ladder && global::input_handler->up_key_held;
-            can_climb_rope = can_climb_rope && global::input_handler->up_key_held;
+            can_climb_ladder = can_climb_ladder && GameState::instance().input_handler->up_key_held;
+            can_climb_rope = can_climb_rope && GameState::instance().input_handler->up_key_held;
 
-            exiting_level = neighboringTiles[CENTER] != nullptr &&
-                            (neighboringTiles[CENTER]->mapTileType == MapTileType::EXIT) &&
-                            global::input_handler->l_bumper_held;
+            exiting_level = neighboringTiles[static_cast<uint16>(TileOrientation::CENTER)] != nullptr &&
+                            (neighboringTiles[static_cast<uint16>(TileOrientation::CENTER)]->mapTileType == MapTileType::EXIT) &&
+                            GameState::instance().input_handler->l_bumper_held;
 
             if (exiting_level) {
 
@@ -173,8 +174,8 @@ void MainDude::handle_key_input() {
 
                 sound::stop_cave_music();
 
-                _x = neighboringTiles[CENTER]->x * 16;
-                _y = neighboringTiles[CENTER]->y * 16;
+                _x = neighboringTiles[static_cast<uint16>(TileOrientation::CENTER)]->x * 16;
+                _y = neighboringTiles[static_cast<uint16>(TileOrientation::CENTER)]->y * 16;
 
                 animFrame = 0;
                 animation_frame_timer = 0;
@@ -184,11 +185,11 @@ void MainDude::handle_key_input() {
             }
 
             on_top_of_climbing_space = on_top_of_climbing_space ||
-                                       (neighboringTiles[UP_MIDDLE] != nullptr &&
-                                        neighboringTiles[UP_MIDDLE]->collidable);
+                                       (neighboringTiles[static_cast<uint16>(TileOrientation::UP_MIDDLE)] != nullptr &&
+                                        neighboringTiles[static_cast<uint16>(TileOrientation::UP_MIDDLE)]->collidable);
 
             if (can_climb_ladder) {
-                _x = neighboringTiles[CENTER]->x * 16;
+                _x = neighboringTiles[static_cast<uint16>(TileOrientation::CENTER)]->x * 16;
             }
 
             if (can_climb_rope || can_climb_ladder) {
@@ -197,7 +198,7 @@ void MainDude::handle_key_input() {
                 jumping_timer = 0;
                 _x_speed = 0;
 
-                if (global::input_handler->up_key_held)
+                if (GameState::instance().input_handler->up_key_held)
                     _y_speed = -1;
 
                 if (can_climb_rope)
@@ -216,20 +217,20 @@ void MainDude::handle_key_input() {
             _y_speed = 0;
         }
 
-        if (global::input_handler->down_key_held) {
+        if (GameState::instance().input_handler->down_key_held) {
 
             MapTile *neighboringTiles[9] = {};
 
-            Collisions::getNeighboringTiles(global::current_level->map_tiles, xx, yy, neighboringTiles);
-            can_climb_ladder = neighboringTiles[CENTER]->mapTileType == MapTileType::LADDER ||
-                               neighboringTiles[CENTER]->mapTileType == MapTileType::LADDER_DECK;
+            Collisions::getNeighboringTiles(GameState::instance().current_level->map_tiles, xx, yy, neighboringTiles);
+            can_climb_ladder = neighboringTiles[static_cast<uint16>(TileOrientation::CENTER)]->mapTileType == MapTileType::LADDER ||
+                               neighboringTiles[static_cast<uint16>(TileOrientation::CENTER)]->mapTileType == MapTileType::LADDER_DECK;
 
             if (climbing) {
-                can_climb_ladder = neighboringTiles[CENTER] != nullptr &&
-                                   (neighboringTiles[CENTER]->mapTileType == MapTileType::LADDER ||
-                                    neighboringTiles[CENTER]->mapTileType == MapTileType::LADDER_DECK) &&
-                                   (neighboringTiles[DOWN_MIDDLE] == nullptr ||
-                                    !neighboringTiles[DOWN_MIDDLE]->collidable);
+                can_climb_ladder = neighboringTiles[static_cast<uint16>(TileOrientation::CENTER)] != nullptr &&
+                                   (neighboringTiles[static_cast<uint16>(TileOrientation::CENTER)]->mapTileType == MapTileType::LADDER ||
+                                    neighboringTiles[static_cast<uint16>(TileOrientation::CENTER)]->mapTileType == MapTileType::LADDER_DECK) &&
+                                   (neighboringTiles[static_cast<uint16>(TileOrientation::DOWN_MIDDLE)] == nullptr ||
+                                    !neighboringTiles[static_cast<uint16>(TileOrientation::DOWN_MIDDLE)]->collidable);
             }
 
             if (climbing) {
@@ -252,7 +253,7 @@ void MainDude::handle_key_input() {
             }
         } else {
             crawling = false;
-            if (!global::input_handler->r_bumper_held) {
+            if (!GameState::instance().input_handler->r_bumper_held) {
                 _max_x_speed = main_dude_max_x_speed_walking;
                 _pos_update_delta = main_dude_pos_update_delta_walking_running;
             }
@@ -261,7 +262,7 @@ void MainDude::handle_key_input() {
 
     } else {
         crawling = false;
-        if (!global::input_handler->r_bumper_held) {
+        if (!GameState::instance().input_handler->r_bumper_held) {
             _max_x_speed = main_dude_max_x_speed_walking;
             _pos_update_delta = main_dude_pos_update_delta_walking_running;
         }
@@ -273,16 +274,16 @@ void MainDude::handle_key_input() {
 
 void MainDude::boost_going_through_map_holes(MapTile **const t) {
     if (!_bottom_collision) {
-        if ((t[TileOrientation::RIGHT_MIDDLE] == nullptr || !t[TileOrientation::RIGHT_MIDDLE]->collidable) &&
-            (t[TileOrientation::RIGHT_UP] != nullptr && t[TileOrientation::RIGHT_DOWN] != nullptr)) {
+        if ((t[static_cast<uint16>(TileOrientation::RIGHT_MIDDLE)] == nullptr || !t[static_cast<uint16>(TileOrientation::RIGHT_MIDDLE)]->collidable) &&
+            (t[static_cast<uint16>(TileOrientation::RIGHT_UP)] != nullptr && t[static_cast<uint16>(TileOrientation::RIGHT_DOWN)] != nullptr)) {
             //if there's no collidable tile on right-mid, but there are on right-up and right-down,
             //add extra x-pos to ease going through a hole
             if (_x_speed > 0)
                 _x += 2;
         }
 
-        if ((t[TileOrientation::LEFT_MIDDLE] == nullptr || !t[TileOrientation::LEFT_MIDDLE]->collidable) &&
-            (t[TileOrientation::LEFT_UP] != nullptr && t[TileOrientation::LEFT_DOWN] != nullptr)) {
+        if ((t[static_cast<uint16>(TileOrientation::LEFT_MIDDLE)] == nullptr || !t[static_cast<uint16>(TileOrientation::LEFT_MIDDLE)]->collidable) &&
+            (t[static_cast<uint16>(TileOrientation::LEFT_UP)] != nullptr && t[static_cast<uint16>(TileOrientation::LEFT_DOWN)] != nullptr)) {
             //same but for left side
             if (_x_speed < 0)
                 _x -= 2;
@@ -299,7 +300,7 @@ void MainDude::update_creature_specific() {
     if (crawling) {
         _max_x_speed = MAIN_DUDE_MAX_X_SPEED_CRAWLING;
         _max_y_speed = MAIN_DUDE_MAX_Y_SPEED;
-    } else if (global::input_handler->r_bumper_held) {
+    } else if (GameState::instance().input_handler->r_bumper_held) {
         // running fast
         _max_x_speed = main_dude_max_x_speed_running;
         _max_y_speed = MAIN_DUDE_MAX_Y_SPEED;
@@ -317,15 +318,15 @@ void MainDude::update_creature_specific() {
         _pos_update_delta = main_dude_pos_update_delta_crawling;
         _max_x_speed = main_dude_max_x_crawling;
     } else {
-        if (!global::input_handler->r_bumper_held)
+        if (!GameState::instance().input_handler->r_bumper_held)
             _pos_update_delta = main_dude_pos_update_delta_walking_running;
     }
     // "Update timers"
 
 
-    pos_inc_timer += *global::timer;
-    speed_inc_timer += *global::timer;
-    hanging_timer += *global::timer;
+    pos_inc_timer += *GameState::instance().timer;
+    speed_inc_timer += *GameState::instance().timer;
+    hanging_timer += *GameState::instance().timer;
 
     if (animation_frame_timer > 65) {
 
@@ -337,18 +338,18 @@ void MainDude::update_creature_specific() {
 
     }
 
-    if (!global::input_handler->left_key_held && pushing_left) {
+    if (!GameState::instance().input_handler->left_key_held && pushing_left) {
         pushing_left = false;
         pushing_timer = 0;
     }
-    if (!global::input_handler->right_key_held && pushing_right) {
+    if (!GameState::instance().input_handler->right_key_held && pushing_right) {
         pushing_right = false;
         pushing_timer = 0;
     }
 
     if ((_left_collision || _right_collision) && !crawling && !hanging_on_tile_left && !hanging_on_tile_right &&
-        (global::input_handler->left_key_held || global::input_handler->right_key_held)) {
-        pushing_timer += *global::timer;
+        (GameState::instance().input_handler->left_key_held || GameState::instance().input_handler->right_key_held)) {
+        pushing_timer += *GameState::instance().timer;
         if (pushing_timer > MAIN_DUDE_PUSHING_TIME) {
             if (_left_collision) {
                 pushing_right = true;
@@ -376,14 +377,14 @@ void MainDude::update_creature_specific() {
 
 
     if (!_bottom_collision && !hanging_on_tile_left && !hanging_on_tile_right && !climbing)
-        jumping_timer += *global::timer;
+        jumping_timer += *GameState::instance().timer;
 
     if (_bottom_collision && jumping_timer > MAIN_DUDE_STUN_FALLING_TIME) {
 
 
-        if (global::hud->hearts > 0) {
-            global::hud->hearts--;
-            global::hud->draw_level_hud();
+        if (GameState::instance().hud->hearts > 0) {
+            GameState::instance().hud->hearts--;
+            GameState::instance().hud->draw_level_hud();
         }
 
         stunned = true;
@@ -397,11 +398,11 @@ void MainDude::update_creature_specific() {
         f_left->_y = _y + 8;
         f_right->_y = _y + 8;
 
-        global::creatures.push_back(f_left);
-        global::creatures.push_back(f_right);
+        GameState::instance().creatures.push_back(f_left);
+        GameState::instance().creatures.push_back(f_right);
 
-        if (global::hud->hearts == 0) {
-            global::main_dude->set_dead();
+        if (GameState::instance().hud->hearts == 0) {
+            GameState::instance().main_dude->set_dead();
         }
 
         mmEffect(SFX_XLAND);
@@ -412,7 +413,7 @@ void MainDude::update_creature_specific() {
     }
 
     if (stunned)
-        stunned_timer += *global::timer;
+        stunned_timer += *GameState::instance().timer;
     if (stunned_timer > MAIN_DUDE_STUN_TIME) {
         stunned = false;
         stunned_timer = 0;
@@ -421,19 +422,19 @@ void MainDude::update_creature_specific() {
 
     if (_x_speed != 0 || stunned || using_whip || (pushing_left || pushing_right) || (climbing && _y_speed != 0) ||
         exiting_level)
-        animation_frame_timer += *global::timer;
+        animation_frame_timer += *GameState::instance().timer;
 
 
     if (!_bottom_collision) {
         crawling = false;
-        if (!global::input_handler->r_bumper_held) {
+        if (!GameState::instance().input_handler->r_bumper_held) {
             _max_x_speed = main_dude_max_x_speed_walking;
             _pos_update_delta = main_dude_pos_update_delta_walking_running;
         }
     }
 
-    time_since_last_jump += *global::timer;
-    time_since_last_damage += *global::timer;
+    time_since_last_jump += *GameState::instance().timer;
+    time_since_last_damage += *GameState::instance().timer;
 
     // Map collisions
 
@@ -449,13 +450,13 @@ void MainDude::init_sprites() {
 
     delete_sprites();
 
-    main_sprite_info = global::main_oam_manager->initSprite(gfx_spelunkerPal, gfx_spelunkerPalLen, nullptr,
+    main_sprite_info = GameState::instance().main_oam_manager->initSprite(gfx_spelunkerPal, gfx_spelunkerPalLen, nullptr,
                                                             _sprite_size, ObjSize::OBJSIZE_16, _spritesheet_type, true,
                                                             false,
                                                             LAYER_LEVEL::MIDDLE_TOP);
 
 
-    sub_sprite_info = global::sub_oam_manager->initSprite(gfx_spelunkerPal, gfx_spelunkerPalLen, nullptr,
+    sub_sprite_info = GameState::instance().sub_oam_manager->initSprite(gfx_spelunkerPal, gfx_spelunkerPalLen, nullptr,
                                                           _sprite_size, ObjSize::OBJSIZE_16, _spritesheet_type, true,
                                                           false,
                                                           LAYER_LEVEL::MIDDLE_TOP);
@@ -477,7 +478,7 @@ void MainDude::reset_values_checked_every_frame() {
 #include <cstdlib>
 #include <cmath>
 #include <cstdio>
-#include "../../GlobalsDeclarations.hpp"
+#include "../../GameState.hpp"
 #include "../items/Shotgun.hpp"
 #include "../items/Mitt.hpp"
 #include "../items/Glove.hpp"
@@ -495,13 +496,14 @@ void MainDude::reset_values_checked_every_frame() {
 #include "../../../build/gfx_spelunker.h"
 #include "../items/Pistol.hpp"
 #include "MainDude.hpp"
-#include "../../sound/SoundUtils.hpp"
+#include "../../sound/Sound.hpp"
 #include "../../tiles/MapTile.hpp"
 #include "../../tiles/Level.hpp"
 #include "../../camera/Camera.hpp"
 #include "../../memory/SpriteInfo.h"
 #include "../items/Bomb.hpp"
 #include "../../input/InputHandler.hpp"
+#include "../../GameState.hpp"
 
 void MainDude::throw_item() {
 
@@ -525,7 +527,7 @@ void MainDude::throw_item() {
 
         if (activated) {
 
-            if (!global::input_handler->down_key_held) {
+            if (!GameState::instance().input_handler->down_key_held) {
 
                 if (carrying_mitt) {
                     if (sprite_state == Orientation::LEFT)
@@ -550,13 +552,13 @@ void MainDude::throw_item() {
             }
 
 
-            if (_neighboring_tiles[TileOrientation::UP_MIDDLE]->exists &&
-                _neighboring_tiles[TileOrientation::UP_MIDDLE]->collidable) {
+            if (_neighboring_tiles[static_cast<uint16>(TileOrientation::UP_MIDDLE)]->exists &&
+                _neighboring_tiles[static_cast<uint16>(TileOrientation::UP_MIDDLE)]->collidable) {
                 held->_y_speed = 0.0f;
                 held->_x_speed *= 2;
             } else {
 
-                if (global::input_handler->up_key_held)
+                if (GameState::instance().input_handler->up_key_held)
                     held->_y_speed = -2.55 - abs(_y_speed);
                 else {
                     held->_y_speed = -1;
@@ -579,8 +581,8 @@ void MainDude::throw_item() {
 
             holding_item = false;
 
-            global::hud->disable_all_prompts();
-            global::hud->draw_level_hud();
+            GameState::instance().hud->disable_all_prompts();
+            GameState::instance().hud->draw_level_hud();
 
             mmEffect(SFX_XTHROW);
 
@@ -599,87 +601,87 @@ void MainDude::throw_item() {
 }
 
 void MainDude::take_out_bomb() {
-    global::hud->bombs--;
-    global::hud->draw_level_hud();
+    GameState::instance().hud->bombs--;
+    GameState::instance().hud->draw_level_hud();
     Bomb *bomb = new Bomb(_x, _y);
     bomb->_hold_by_main_dude = true;
-    global::items.push_back(bomb);
+    GameState::instance().items.push_back(bomb);
     holding_item = true;
 }
 
 void MainDude::throw_rope() {
 
-    global::hud->ropes--;
-    global::hud->draw_level_hud();
+    GameState::instance().hud->ropes--;
+    GameState::instance().hud->draw_level_hud();
 
     u8 ROPE_PHYSICAL_WIDTH = 16;
     Rope *rope = new Rope((floor_div(_x + (0.5 * _physical_width), TILE_W) * TILE_W) + (ROPE_PHYSICAL_WIDTH * 0.5),
                           _y + 6);
     rope->_activated = true;
     rope->_y_speed = -4;
-    global::items.push_back(rope);
+    GameState::instance().items.push_back(rope);
 
 }
 
 void MainDude::spawn_carried_items() {
 
     if (carrying_spring_shoes) {
-        auto *springShoes = new SpringShoes(HUD_ITEMS_ROW_X, global::hud->items_offset_y);
+        auto *springShoes = new SpringShoes(HUD_ITEMS_ROW_X, GameState::instance().hud->items_offset_y);
         springShoes->collected = true;
         springShoes->_bought = true;
-        global::items.push_back(springShoes);
-        global::hud->increment_offset_on_grabbed_item();
+        GameState::instance().items.push_back(springShoes);
+        GameState::instance().hud->increment_offset_on_grabbed_item();
     }
 
     if (carrying_spike_shoes) {
-        auto *spikeShoes = new SpikeShoes(HUD_ITEMS_ROW_X, global::hud->items_offset_y);
+        auto *spikeShoes = new SpikeShoes(HUD_ITEMS_ROW_X, GameState::instance().hud->items_offset_y);
         spikeShoes->_render_in_hud = true;
         spikeShoes->_bought = true;
-        global::items.push_back(spikeShoes);
-        global::hud->increment_offset_on_grabbed_item();
+        GameState::instance().items.push_back(spikeShoes);
+        GameState::instance().hud->increment_offset_on_grabbed_item();
     }
 
     if (carrying_compass) {
-        auto *compass = new Compass(HUD_ITEMS_ROW_X, global::hud->items_offset_y);
+        auto *compass = new Compass(HUD_ITEMS_ROW_X, GameState::instance().hud->items_offset_y);
         compass->collected = true;
         compass->_bought = true;
-        global::items.push_back(compass);
-        global::hud->increment_offset_on_grabbed_item();
+        GameState::instance().items.push_back(compass);
+        GameState::instance().hud->increment_offset_on_grabbed_item();
     }
     if (carrying_glove) {
-        auto *glove = new Glove(HUD_ITEMS_ROW_X, global::hud->items_offset_y);
+        auto *glove = new Glove(HUD_ITEMS_ROW_X, GameState::instance().hud->items_offset_y);
         glove->_render_in_hud = true;
         glove->_bought = true;
-        global::items.push_back(glove);
-        global::hud->increment_offset_on_grabbed_item();
+        GameState::instance().items.push_back(glove);
+        GameState::instance().hud->increment_offset_on_grabbed_item();
     }
     if (carrying_cape) {
-        auto cape = new Cape(HUD_ITEMS_ROW_X, global::hud->items_offset_y);
+        auto cape = new Cape(HUD_ITEMS_ROW_X, GameState::instance().hud->items_offset_y);
         cape->_collected = true;
         cape->_bought = true;
-        global::items.push_back(cape);
-        global::hud->increment_offset_on_grabbed_item();
+        GameState::instance().items.push_back(cape);
+        GameState::instance().hud->increment_offset_on_grabbed_item();
     }
     if (carrying_jetpack) {
-        auto *jetpack = new Jetpack(HUD_ITEMS_ROW_X, global::hud->items_offset_y);
+        auto *jetpack = new Jetpack(HUD_ITEMS_ROW_X, GameState::instance().hud->items_offset_y);
         jetpack->collected = true;
         jetpack->_bought = true;
-        global::items.push_back(jetpack);
-        global::hud->increment_offset_on_grabbed_item();
+        GameState::instance().items.push_back(jetpack);
+        GameState::instance().hud->increment_offset_on_grabbed_item();
     }
     if (carrying_mitt) {
-        auto mitt = new Mitt(HUD_ITEMS_ROW_X, global::hud->items_offset_y);
+        auto mitt = new Mitt(HUD_ITEMS_ROW_X, GameState::instance().hud->items_offset_y);
         mitt->collected = true;
         mitt->_bought = true;
-        global::items.push_back(mitt);
-        global::hud->increment_offset_on_grabbed_item();
+        GameState::instance().items.push_back(mitt);
+        GameState::instance().hud->increment_offset_on_grabbed_item();
     }
     if (carrying_shotgun) {
         holding_item = true;
         auto *shotgun = new Shotgun(_x, _y);
         shotgun->_bought = true;
         shotgun->_hold_by_main_dude = true;
-        global::items.push_back(shotgun);
+        GameState::instance().items.push_back(shotgun);
     }
 
     if (carrying_pistol) {
@@ -687,7 +689,7 @@ void MainDude::spawn_carried_items() {
         auto *pistol = new Pistol(_x, _y);
         pistol->_bought = true;
         pistol->_hold_by_main_dude = true;
-        global::items.push_back(pistol);
+        GameState::instance().items.push_back(pistol);
     }
 }
 
@@ -783,7 +785,7 @@ void MainDude::set_sprite_exiting_level() {
 
 void MainDude::apply_blinking_on_damage() {
 
-    if (!global::game_state->levels_transition_screen) {
+    if (!GameState::instance().levels_transition_screen) {
 
         if (time_since_last_damage < MAIN_DUDE_DAMAGE_PROTECTION_TIME) {
             sprite_utils::set_visibility(((int) time_since_last_damage % 100) >= 50, main_sprite_info, sub_sprite_info);
@@ -799,8 +801,8 @@ void MainDude::can_hang_on_tile(MapTile **neighboringTiles) {
     if (_bottom_collision || (!_left_collision && !_right_collision))
         return;
 
-    if ((neighboringTiles[UP_MIDDLE] != nullptr && neighboringTiles[UP_MIDDLE]->collidable) ||
-        (neighboringTiles[DOWN_MIDDLE] != nullptr && neighboringTiles[DOWN_MIDDLE]->collidable))
+    if ((neighboringTiles[static_cast<uint16>(TileOrientation::UP_MIDDLE)] != nullptr && neighboringTiles[static_cast<uint16>(TileOrientation::UP_MIDDLE)]->collidable) ||
+        (neighboringTiles[static_cast<uint16>(TileOrientation::DOWN_MIDDLE)] != nullptr && neighboringTiles[static_cast<uint16>(TileOrientation::DOWN_MIDDLE)]->collidable))
         return;
 
     bool y_bound = false;
@@ -808,37 +810,37 @@ void MainDude::can_hang_on_tile(MapTile **neighboringTiles) {
 
     if (_right_collision && sprite_state == Orientation::LEFT) {
 
-        if (!carrying_glove && (neighboringTiles[LEFT_UP] != nullptr && neighboringTiles[LEFT_UP]->collidable))
+        if (!carrying_glove && (neighboringTiles[static_cast<uint16>(TileOrientation::LEFT_UP)] != nullptr && neighboringTiles[static_cast<uint16>(TileOrientation::LEFT_UP)]->collidable))
             return;
 
-        x_bound = (this->_x <= (neighboringTiles[LEFT_MIDDLE]->x * 16) + 16 &&
-                   (this->_x >= (neighboringTiles[LEFT_MIDDLE]->x * 16) + 12));
-        y_bound = (this->_y > (neighboringTiles[LEFT_MIDDLE]->y * 16) - 2) &&
-                  (this->_y < (neighboringTiles[LEFT_MIDDLE]->y * 16) + 8);
+        x_bound = (this->_x <= (neighboringTiles[static_cast<uint16>(TileOrientation::LEFT_MIDDLE)]->x * 16) + 16 &&
+                   (this->_x >= (neighboringTiles[static_cast<uint16>(TileOrientation::LEFT_MIDDLE)]->x * 16) + 12));
+        y_bound = (this->_y > (neighboringTiles[static_cast<uint16>(TileOrientation::LEFT_MIDDLE)]->y * 16) - 2) &&
+                  (this->_y < (neighboringTiles[static_cast<uint16>(TileOrientation::LEFT_MIDDLE)]->y * 16) + 8);
     } else if (_left_collision && sprite_state == Orientation::RIGHT) {
 
-        if (!carrying_glove && (neighboringTiles[RIGHT_UP] != nullptr && neighboringTiles[RIGHT_UP]->collidable))
+        if (!carrying_glove && (neighboringTiles[static_cast<uint16>(TileOrientation::RIGHT_UP)] != nullptr && neighboringTiles[static_cast<uint16>(TileOrientation::RIGHT_UP)]->collidable))
             return;
 
-        y_bound = (this->_y > (neighboringTiles[RIGHT_MIDDLE]->y * 16) - 2) &&
-                  (this->_y < (neighboringTiles[RIGHT_MIDDLE]->y * 16) + 8);
-        x_bound = (this->_x <= (neighboringTiles[RIGHT_MIDDLE]->x * 16) - 12 &&
-                   (this->_x >= (neighboringTiles[RIGHT_MIDDLE]->x * 16) - 16));
+        y_bound = (this->_y > (neighboringTiles[static_cast<uint16>(TileOrientation::RIGHT_MIDDLE)]->y * 16) - 2) &&
+                  (this->_y < (neighboringTiles[static_cast<uint16>(TileOrientation::RIGHT_MIDDLE)]->y * 16) + 8);
+        x_bound = (this->_x <= (neighboringTiles[static_cast<uint16>(TileOrientation::RIGHT_MIDDLE)]->x * 16) - 12 &&
+                   (this->_x >= (neighboringTiles[static_cast<uint16>(TileOrientation::RIGHT_MIDDLE)]->x * 16) - 16));
     }
 
     if ((y_bound && x_bound) && hanging_timer > MAIN_DUDE_MIN_HANGING_TIME) {
 
-        if (_right_collision && neighboringTiles[LEFT_MIDDLE]->collidable) {
-            this->_y = (neighboringTiles[LEFT_MIDDLE]->y * 16);
+        if (_right_collision && neighboringTiles[static_cast<uint16>(TileOrientation::LEFT_MIDDLE)]->collidable) {
+            this->_y = (neighboringTiles[static_cast<uint16>(TileOrientation::LEFT_MIDDLE)]->y * 16);
             hanging_on_tile_right = true;
             jumping_timer = 0;
             hanging_timer = 0;
             _y_speed = 0;
         }
-        if (_left_collision && neighboringTiles[RIGHT_MIDDLE]->collidable) {
+        if (_left_collision && neighboringTiles[static_cast<uint16>(TileOrientation::RIGHT_MIDDLE)]->collidable) {
             jumping_timer = 0;
             hanging_on_tile_left = true;
-            this->_y = (neighboringTiles[RIGHT_MIDDLE]->y * 16);
+            this->_y = (neighboringTiles[static_cast<uint16>(TileOrientation::RIGHT_MIDDLE)]->y * 16);
             hanging_timer = 0;
             _y_speed = 0;
         }
@@ -870,8 +872,8 @@ void MainDude::apply_dmg(int dmg_to_apply) {
 
 void MainDude::match_animation() {
 
-    if (exiting_level || (dead && global::input_handler->y_key_down)) {
-        global::game_state->handle_changing_screens();
+    if (exiting_level || (dead && GameState::instance().input_handler->y_key_down)) {
+        GameState::instance().handle_changing_screens();
         set_sprite_exiting_level();
     } else if (using_whip) {
         set_sprite_whiping();
@@ -910,8 +912,8 @@ bool MainDude::can_apply_gravity() const {
 //TODO Enum dead cause?
 void MainDude::set_dead() {
     time_since_last_damage = 0;
-    global::hud->hearts = 0;
-    global::hud->draw_level_hud();
+    GameState::instance().hud->hearts = 0;
+    GameState::instance().hud->draw_level_hud();
     dead = true;
     _bouncing_factor_y = ICollidable::default_bouncing_factor_y;
     _y_speed = -MAIN_DUDE_JUMP_SPEED * 0.25;

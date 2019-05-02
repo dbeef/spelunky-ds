@@ -3,7 +3,7 @@
 //
 
 #include "../../../build/gfx_menu_signs_tutorial_quit.h"
-#include "../../GlobalsDeclarations.hpp"
+#include "../../GameState.hpp"
 #include "../../memory/SpriteUtils.hpp"
 #include "RockSign.h"
 
@@ -27,7 +27,7 @@ void RockSign::init_sprites() {
     delete_sprites();
 
     for (int a = 0; a < rock_sign_graphics; a++) {
-        _mainSpriteInfos[a] = global::main_oam_manager->initSprite(gfx_menu_signs_tutorial_quitPal,
+        _mainSpriteInfos[a] = GameState::instance().main_oam_manager->initSprite(gfx_menu_signs_tutorial_quitPal,
                                                                    gfx_menu_signs_tutorial_quitPalLen,
                                                                    nullptr, _sprite_size, ObjSize::OBJSIZE_16, _spritesheet_type,
                                                                    true, false, LAYER_LEVEL::MIDDLE_TOP);

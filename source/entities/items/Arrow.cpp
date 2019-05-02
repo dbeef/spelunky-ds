@@ -7,8 +7,8 @@
 
 #include "../../../build/gfx_arrow.h"
 #include "../../../build/soundbank.h"
-#include "../../sound/SoundUtils.hpp"
-#include "../../GlobalsDeclarations.hpp"
+#include "../../sound/Sound.hpp"
+#include "../../GameState.hpp"
 #include "../../collisions/Collisions.hpp"
 #include "../../tiles/LevelRenderingUtils.hpp"
 #include "../main_dude/MainDude.hpp"
@@ -24,7 +24,7 @@ void Arrow::update_item_specific() {
 
         _thrown = false;
 
-        if (global::main_dude->sprite_state == Orientation::RIGHT)
+        if (GameState::instance().main_dude->sprite_state == Orientation::RIGHT)
             _angle = 90;
         else
             _angle = 270;
@@ -32,7 +32,7 @@ void Arrow::update_item_specific() {
         update_frame((int) floor(_angle / 22.5f));
 
     } else if (_thrown) {
-        _armed_timer += *global::timer;
+        _armed_timer += *GameState::instance().timer;
         if (_armed_timer > 100) {
             _thrown = true;
             _armed_timer = 0;
@@ -50,28 +50,28 @@ void Arrow::update_item_specific() {
 
         // TODO Make an util function for this;
         // settings those flags causes main dude to fall off whatever he is hanging on.
-        global::main_dude->can_climb_rope = false;
-        global::main_dude->started_climbing_rope = false;
-        global::main_dude->can_climb_ladder = false;
-        global::main_dude->started_climbing_ladder = false;
-        global::main_dude->climbing = false;
-        global::main_dude->hanging_on_tile_left = false;
-        global::main_dude->hanging_on_tile_right = false;
-        global::main_dude->using_whip = false;
-        global::main_dude->stunned_timer = 0;
-        global::main_dude->stunned = true;
+        GameState::instance().main_dude->can_climb_rope = false;
+        GameState::instance().main_dude->started_climbing_rope = false;
+        GameState::instance().main_dude->can_climb_ladder = false;
+        GameState::instance().main_dude->started_climbing_ladder = false;
+        GameState::instance().main_dude->climbing = false;
+        GameState::instance().main_dude->hanging_on_tile_left = false;
+        GameState::instance().main_dude->hanging_on_tile_right = false;
+        GameState::instance().main_dude->using_whip = false;
+        GameState::instance().main_dude->stunned_timer = 0;
+        GameState::instance().main_dude->stunned = true;
 
         if (_orientation == Orientation::LEFT)
-            global::main_dude->_x_speed = -3;
+            GameState::instance().main_dude->_x_speed = -3;
         else if (_orientation == Orientation::RIGHT)
-            global::main_dude->_x_speed = 3;
+            GameState::instance().main_dude->_x_speed = 3;
 
-        global::main_dude->time_since_last_damage = 0;
-        global::hud->hearts -= 2;
-        global::hud->draw_level_hud();
+        GameState::instance().main_dude->time_since_last_damage = 0;
+        GameState::instance().hud->hearts -= 2;
+        GameState::instance().hud->draw_level_hud();
 
-        if (global::hud->hearts <= 0) {
-            global::main_dude->set_dead();
+        if (GameState::instance().hud->hearts <= 0) {
+            GameState::instance().main_dude->set_dead();
         } else
             mmEffect(SFX_XHIT);
 
@@ -157,10 +157,10 @@ void Arrow::init_sprites() {
 
     delete_sprites();
 
-    _sub_sprite_info = global::sub_oam_manager->initSprite(gfx_arrowPal, gfx_arrowPalLen,
+    _sub_sprite_info = GameState::instance().sub_oam_manager->initSprite(gfx_arrowPal, gfx_arrowPalLen,
                                                         nullptr, _sprite_size, ObjSize::OBJSIZE_8, SpritesheetType::ARROW,
                                                         true, false, LAYER_LEVEL::MIDDLE_TOP);
-    _main_sprite_info = global::main_oam_manager->initSprite(gfx_arrowPal, gfx_arrowPalLen, nullptr,
+    _main_sprite_info = GameState::instance().main_oam_manager->initSprite(gfx_arrowPal, gfx_arrowPalLen, nullptr,
                                                           _sprite_size, ObjSize::OBJSIZE_8, SpritesheetType::ARROW,
                                                           true, false, LAYER_LEVEL::MIDDLE_TOP);
 

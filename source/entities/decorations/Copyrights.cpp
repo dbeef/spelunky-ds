@@ -3,7 +3,7 @@
 //
 
 #include "../../../build/gfx_copyrights.h"
-#include "../../GlobalsDeclarations.hpp"
+#include "../../GameState.hpp"
 #include "../../memory/SpriteUtils.hpp"
 #include "Copyrights.h"
 
@@ -26,7 +26,7 @@ void Copyrights::init_sprites() {
     delete_sprites();
 
     for (int a = 0; a < copyrights_graphics; a++) {
-        _subSpriteInfos[a] = global::sub_oam_manager->initSprite(gfx_copyrightsPal, gfx_copyrightsPalLen, nullptr,
+        _subSpriteInfos[a] = GameState::instance().sub_oam_manager->initSprite(gfx_copyrightsPal, gfx_copyrightsPalLen, nullptr,
                                                                  _sprite_size, ObjSize::OBJSIZE_32, _spritesheet_type,
                                                                  true, false, LAYER_LEVEL::MIDDLE_TOP);
 

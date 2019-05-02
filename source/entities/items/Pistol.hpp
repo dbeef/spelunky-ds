@@ -9,7 +9,7 @@
 #include "../_common/Orientation.hpp"
 #include "../_interfaces/ShoppingObject.h"
 #include "../../entities/decorations/Blast.hpp"
-#include "../../GlobalsDeclarations.hpp"
+#include "../../GameState.hpp"
 
 //http://spelunky.wikia.com/wiki/Pistol
 class Pistol : public BaseItem, public ShoppingObject {
@@ -46,7 +46,7 @@ public:
         init_sprites();
 
         _blast = new Blast(0, 0);
-        global::decorations.push_back(_blast);
+        GameState::instance().decorations.push_back(_blast);
     }
 
     // BaseItem overrides

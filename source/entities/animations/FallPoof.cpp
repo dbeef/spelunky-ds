@@ -3,7 +3,7 @@
 //
 
 #include "../../entities/decorations/GotCollectible.hpp"
-#include "../../GlobalsDeclarations.hpp"
+#include "../../GameState.hpp"
 #include "../../../build/gfx_blood_rock_rope_poof.h"
 #include "../creatures/_BaseCreature.h"
 #include "FallPoof.hpp"
@@ -25,7 +25,7 @@ void FallPoof::update_creature_specific() {
     sprite_utils::set_priority(OBJPRIORITY_0, mainSpriteInfo, subSpriteInfo);
     update_sprites_position();
 
-    animFrameTimer += *global::timer;
+    animFrameTimer += *GameState::instance().timer;
 
     if (animFrameTimer > FALL_POOF_ANIM_FRAME_DELTA) {
 
@@ -47,10 +47,10 @@ void FallPoof::init_sprites() {
 
     delete_sprites();
 
-    subSpriteInfo = global::sub_oam_manager->initSprite(gfx_blood_rock_rope_poofPal, gfx_blood_rock_rope_poofPalLen,
+    subSpriteInfo = GameState::instance().sub_oam_manager->initSprite(gfx_blood_rock_rope_poofPal, gfx_blood_rock_rope_poofPalLen,
                                                         nullptr, FALL_POOF_SPRITE_SIZE, ObjSize::OBJSIZE_16,
                                                         _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
-    mainSpriteInfo = global::main_oam_manager->initSprite(gfx_blood_rock_rope_poofPal, gfx_blood_rock_rope_poofPalLen,
+    mainSpriteInfo = GameState::instance().main_oam_manager->initSprite(gfx_blood_rock_rope_poofPal, gfx_blood_rock_rope_poofPalLen,
                                                           nullptr, FALL_POOF_SPRITE_SIZE, ObjSize::OBJSIZE_16,
                                                           _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
 

@@ -5,9 +5,9 @@
 #include <nds.h>
 #include <nds/arm9/cache.h>
 #include "OamManager.hpp"
-#include "../GlobalsDeclarations.hpp"
 #include "../camera/LayerLevel.hpp"
 #include "../preprocessor/Debug.h"
+#include "../GameState.hpp"
 
 /**
  * "Another advantage of using 16-color sprites is the ability to use 16 different palettes."
@@ -17,7 +17,7 @@
 
 /**
  * When there's a sprite that can be disposed, clear all sprites in oam manager by calling clearAllSprites,
- * then call loadOAM on every sprite in global::sprites
+ * then call loadOAM on every sprite in GameState::instance().sprites
  */
 static const int BYTES_PER_16_COLOR_TILE = 32;
 static const int COLORS_PER_PALETTE = 16;
@@ -153,18 +153,18 @@ OAMManager::initSprite(const unsigned short pallette[], int palLen, const unsign
      */
     if (reuse_palette || reuse_tiles) {
         //Re-using already loaded palletes / tiles
-        for (unsigned long a = 0; a < global::sprite_infos.size(); a++) {
-            if (global::sprite_infos.at(a)) {
+        for (unsigned long a = 0; a < GameState::instance().sprite_infos.size(); a++) {
+            if (GameState::instance().sprite_infos.at(a)) {
 
-                if ((*global::sprite_infos.at(a)).spriteType == type &&
-                    (*global::sprite_infos.at(a)).oamType == oamType) {
+                if ((*GameState::instance().sprite_infos.at(a)).spriteType == type &&
+                    (*GameState::instance().sprite_infos.at(a)).oamType == oamType) {
 
                     if (reuse_palette) {
-                        spriteInfo->oamId_palette = (*global::sprite_infos.at(a)).oamId_palette;
-                        spriteEntry->palette = (*global::sprite_infos.at(a)).oamId_palette;
+                        spriteInfo->oamId_palette = (*GameState::instance().sprite_infos.at(a)).oamId_palette;
+                        spriteEntry->palette = (*GameState::instance().sprite_infos.at(a)).oamId_palette;
                     }
                     if (reuse_tiles) {
-                        spriteEntry->gfxIndex = (*(*global::sprite_infos.at(a)).entry).gfxIndex;
+                        spriteEntry->gfxIndex = (*(*GameState::instance().sprite_infos.at(a)).entry).gfxIndex;
                     }
                     break;
                 }
@@ -198,7 +198,7 @@ OAMManager::initSprite(const unsigned short pallette[], int palLen, const unsign
 
     spriteInfo->oam_address = *oam_address;
 
-    global::sprite_infos.push_back(spriteInfo);
+    GameState::instance().sprite_infos.push_back(spriteInfo);
 
     current_oam_id_tiles++;
 

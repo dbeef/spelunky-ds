@@ -5,7 +5,6 @@
 #include <cstdlib>
 #include <cstring>
 #include "Level.hpp"
-#include "../GlobalsDeclarations.hpp"
 #include "SplashScreenType.hpp"
 #include "../rooms/EntranceRooms.hpp"
 #include "../rooms/ExitRooms.hpp"
@@ -19,6 +18,8 @@
 #include "LevelRenderingUtils.hpp"
 #include "../rooms/ShopRooms.hpp"
 #include "Direction.hpp"
+#include "../GameState.hpp"
+#include "BaseMap.hpp"
 
 /**
  * Copies clean cave background to the map, then writes current tiles from map_tiles[32][32] to the map,
@@ -36,14 +37,14 @@ void Level::update_level() {
 
 void Level::write_cave_background_to_map() {
     //copy the base map to the current map, which means we start the current map with only the cave background
-    dmaCopyHalfWords(DEFAULT_DMA_CHANNEL, global::base_map, global::current_map, sizeof(global::base_map));
+    dmaCopyHalfWords(DEFAULT_DMA_CHANNEL, base_map, GameState::instance().current_map, sizeof(base_map));
 }
 
 void Level::copy_current_map_to_engines() {
-    dmaCopyHalfWords(DEFAULT_DMA_CHANNEL, global::current_map, bgGetMapPtr(global::bg_main_address),
-                     sizeof(global::current_map));
-    dmaCopyHalfWords(DEFAULT_DMA_CHANNEL, global::current_map, bgGetMapPtr(global::bg_sub_address),
-                     sizeof(global::current_map));
+    dmaCopyHalfWords(DEFAULT_DMA_CHANNEL, GameState::instance().current_map, bgGetMapPtr(GameState::instance().bg_main_address),
+                     sizeof(GameState::instance().current_map));
+    dmaCopyHalfWords(DEFAULT_DMA_CHANNEL, GameState::instance().current_map, bgGetMapPtr(GameState::instance().bg_sub_address),
+                     sizeof(GameState::instance().current_map));
 }
 
 /**
@@ -121,7 +122,7 @@ void Level::write_tiles_to_map() {
             MapTile *t = map_tiles[x][y];
             if (t->exists)
                 for (int k = 0; k < 4; k++)
-                    global::current_map[t->map_index[k]] = t->values[k];
+                    GameState::instance().current_map[t->map_index[k]] = t->values[k];
         }
     }
 }
@@ -137,24 +138,29 @@ void Level::initialise_tiles_from_splash_screen(SplashScreenType splash_type) {
     int tab[SPLASH_SCREEN_HEIGHT][SPLASH_SCREEN_WIDTH];
     bool offset_on_upper_screen{};
 
-    if (splash_type == ON_LEVEL_DONE_UPPER || splash_type == SCORES_UPPER || splash_type == MAIN_MENU_UPPER) {
+    if (splash_type == SplashScreenType::ON_LEVEL_DONE_UPPER ||
+        splash_type == SplashScreenType::SCORES_UPPER ||
+        splash_type == SplashScreenType::MAIN_MENU_UPPER) {
+
         offset_on_upper_screen = true;
 
-        if (splash_type == MAIN_MENU_UPPER)
+        if (splash_type == SplashScreenType::MAIN_MENU_UPPER)
             memcpy(tab, main_menu_upper, sizeof(main_menu_upper));
-        else if (splash_type == ON_LEVEL_DONE_UPPER)
+        else if (splash_type == SplashScreenType::ON_LEVEL_DONE_UPPER)
             memcpy(tab, on_level_done_upper, sizeof(on_level_done_upper));
-        else if (splash_type == SCORES_UPPER)
+        else if (splash_type == SplashScreenType::SCORES_UPPER)
             memcpy(tab, scores_upper, sizeof(scores_upper));
     }
 
-    if (splash_type == ON_LEVEL_DONE_LOWER || splash_type == SCORES_LOWER || splash_type == MAIN_MENU_LOWER) {
+    if (splash_type == SplashScreenType::ON_LEVEL_DONE_LOWER ||
+        splash_type == SplashScreenType::SCORES_LOWER ||
+        splash_type == SplashScreenType::MAIN_MENU_LOWER) {
 
-        if (splash_type == ON_LEVEL_DONE_LOWER)
+        if (splash_type == SplashScreenType::ON_LEVEL_DONE_LOWER)
             memcpy(tab, on_level_done_lower, sizeof(on_level_done_lower));
-        else if (splash_type == MAIN_MENU_LOWER)
+        else if (splash_type == SplashScreenType::MAIN_MENU_LOWER)
             memcpy(tab, main_menu_lower, sizeof(main_menu_lower));
-        else if (splash_type == SCORES_LOWER)
+        else if (splash_type == SplashScreenType::SCORES_LOWER)
             memcpy(tab, scores_lower, sizeof(scores_lower));
     }
 
@@ -212,7 +218,7 @@ void Level::initialise_tiles_from_room_layout() {
 
             //basing on the room type, randomly select a variation of this room
             //and copy it to the temporary tab[10][10] array
-            int room_type = layout[room_x][room_y];
+            RoomType& room_type = layout[room_x][room_y];
             r = rand() % 6;
             layout_room_ids[room_x][room_y] = r; //-1 if completely disabling NPC's in this room
 
@@ -324,7 +330,7 @@ void Level::init_map_tiles() {
 
 void Level::clean_map_layout() {
     //clean current layout
-    for (auto &map_tile : global::current_level->map_tiles)
+    for (auto &map_tile : GameState::instance().current_level->map_tiles)
         for (auto &y : map_tile) {
             y->exists = false;
             y->destroyable = true; //tiles are destroyable by default

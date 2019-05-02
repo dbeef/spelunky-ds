@@ -3,9 +3,9 @@
 //
 
 #include "../../../build/gfx_goldbars.h"
-#include "../../GlobalsDeclarations.hpp"
 #include "../../memory/SpriteUtils.hpp"
 #include "TripleGoldbar.h"
+#include "../../GameState.hpp"
 
 void TripleGoldbar::init_sprites() {
 
@@ -13,10 +13,10 @@ void TripleGoldbar::init_sprites() {
 
     u8 *frame_gfx = (u8 *) gfx_goldbarsTiles;
 
-    _sub_sprite_info = global::sub_oam_manager->initSprite(gfx_goldbarsPal, gfx_goldbarsPalLen,
+    _sub_sprite_info = GameState::instance().sub_oam_manager->initSprite(gfx_goldbarsPal, gfx_goldbarsPalLen,
                                                         nullptr, _sprite_size, ObjSize::OBJSIZE_16,
                                                         _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
-    _main_sprite_info = global::main_oam_manager->initSprite(gfx_goldbarsPal, gfx_goldbarsPalLen,
+    _main_sprite_info = GameState::instance().main_oam_manager->initSprite(gfx_goldbarsPal, gfx_goldbarsPalLen,
                                                           nullptr, _sprite_size, ObjSize::OBJSIZE_16,
                                                           _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
 

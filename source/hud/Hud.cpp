@@ -8,7 +8,6 @@
 
 #include "../../build/gfx_hud.h"
 #include "Hud.hpp"
-#include "../GlobalsDeclarations.hpp"
 #include "../entities/creatures/Snake.hpp"
 #include "../entities/creatures/Bat.hpp"
 #include "../entities/creatures/Spider.hpp"
@@ -22,6 +21,7 @@
 #include "../entities/treasures/TripleGoldbar.h"
 #include "../entities/treasures/SingleGoldbar.hpp"
 #include "../entities/main_dude/MainDudeConsts.h"
+#include "../GameState.hpp"
 
 #define HEART_POSITION_X 5
 #define HEART_POSITION_Y 5
@@ -61,21 +61,21 @@ void Hud::init_sprites() {
 
     delete_sprites();
 
-    heartSpriteInfo = global::main_oam_manager->initSprite(gfx_hudPal, gfx_hudPalLen,
+    heartSpriteInfo = GameState::instance().main_oam_manager->initSprite(gfx_hudPal, gfx_hudPalLen,
                                                            nullptr, HUD_ICON_SIZE,
-                                                           ObjSize::OBJSIZE_16, HUD, true, false, LAYER_LEVEL::TOP);
-    dollarSpriteInfo = global::main_oam_manager->initSprite(gfx_hudPal, gfx_hudPalLen,
+                                                           ObjSize::OBJSIZE_16, SpritesheetType::HUD, true, false, LAYER_LEVEL::TOP);
+    dollarSpriteInfo = GameState::instance().main_oam_manager->initSprite(gfx_hudPal, gfx_hudPalLen,
                                                             nullptr, HUD_ICON_SIZE,
-                                                            ObjSize::OBJSIZE_16, HUD, true, false, LAYER_LEVEL::TOP);
-    bombSpriteInfo = global::main_oam_manager->initSprite(gfx_hudPal, gfx_hudPalLen,
+                                                            ObjSize::OBJSIZE_16, SpritesheetType::HUD, true, false, LAYER_LEVEL::TOP);
+    bombSpriteInfo = GameState::instance().main_oam_manager->initSprite(gfx_hudPal, gfx_hudPalLen,
                                                           nullptr, HUD_ICON_SIZE,
-                                                          ObjSize::OBJSIZE_16, HUD, true, false, LAYER_LEVEL::TOP);
-    ropeSpriteInfo = global::main_oam_manager->initSprite(gfx_hudPal, gfx_hudPalLen,
+                                                          ObjSize::OBJSIZE_16, SpritesheetType::HUD, true, false, LAYER_LEVEL::TOP);
+    ropeSpriteInfo = GameState::instance().main_oam_manager->initSprite(gfx_hudPal, gfx_hudPalLen,
                                                           nullptr, HUD_ICON_SIZE,
-                                                          ObjSize::OBJSIZE_16, HUD, true, false, LAYER_LEVEL::TOP);
-    holdingItemSpriteInfo = global::main_oam_manager->initSprite(gfx_hudPal, gfx_hudPalLen,
+                                                          ObjSize::OBJSIZE_16, SpritesheetType::HUD, true, false, LAYER_LEVEL::TOP);
+    holdingItemSpriteInfo = GameState::instance().main_oam_manager->initSprite(gfx_hudPal, gfx_hudPalLen,
                                                                  nullptr, HUD_ICON_SIZE,
-                                                                 ObjSize::OBJSIZE_16, HUD, true, false, LAYER_LEVEL::TOP);
+                                                                 ObjSize::OBJSIZE_16, SpritesheetType::HUD, true, false, LAYER_LEVEL::TOP);
 
     u8 *frameGfxHeart = sprite_utils::get_frame((u8 *) gfx_hudTiles, HUD_ICON_SIZE, 0);
     u8 *frameGfxHoldingItem = sprite_utils::get_frame((u8 *) gfx_hudTiles, HUD_ICON_SIZE, 1);
@@ -107,7 +107,7 @@ void Hud::draw_level_hud() {
 
     consoleClear();
 
-    if (!global::main_dude->dead) {
+    if (!GameState::instance().main_dude->dead) {
 
         if (dollars_buffer != 0) {
             printf("\n   %d    %d    %d    %d\n                  +%d",
@@ -163,8 +163,8 @@ void Hud::draw_on_level_done() {
     printf("TIME : %02d:%02d - %02d:%02d", minutes_on_level, seconds_on_level, minutes_total, seconds_total);
     printf("\n\n     LOOT : \n\n     KILLS : \n\n     MONEY : %d - %d\n\n", money_on_this_level, money);
 
-    std::sort(global::killed_npcs.begin(), global::killed_npcs.end());
-    std::sort(global::collected_treasures.begin(), global::collected_treasures.end());
+    std::sort(GameState::instance().killed_npcs.begin(), GameState::instance().killed_npcs.end());
+    std::sort(GameState::instance().collected_treasures.begin(), GameState::instance().collected_treasures.end());
 
     draw_killed_npcs();
     draw_collected_loot();
@@ -188,7 +188,7 @@ void Hud::update() {
 
     if (thief) {
 
-        thief_timer += *global::timer;
+        thief_timer += *GameState::instance().timer;
 
         if (thief_timer > 4000) {
             thief_timer = 0;
@@ -199,7 +199,7 @@ void Hud::update() {
 
     if (not_enough_money) {
 
-        not_enough_money_timer += *global::timer;
+        not_enough_money_timer += *GameState::instance().timer;
 
         if (not_enough_money_timer > 4000) {
             not_enough_money_timer = 0;
@@ -211,7 +211,7 @@ void Hud::update() {
 
     if (introduce_shop) {
 
-        introduce_shop_timer += *global::timer;
+        introduce_shop_timer += *GameState::instance().timer;
 
         if (introduce_shop_timer > 4000) {
             introduce_shop_timer = 0;
@@ -222,7 +222,7 @@ void Hud::update() {
 
     if (recently_bough_item) {
 
-        recently_bough_item_timer += *global::timer;
+        recently_bough_item_timer += *GameState::instance().timer;
 
         if (recently_bough_item_timer > 4000) {
             recently_bough_item = false;
@@ -234,7 +234,7 @@ void Hud::update() {
 
     if (collecting_timer > 0) {
 
-        collecting_timer -= *global::timer;
+        collecting_timer -= *GameState::instance().timer;
 
         if (collecting_timer <= 0) {
             collecting_timer = 0;
@@ -244,7 +244,7 @@ void Hud::update() {
 
 
     if (collecting_timer == 0 && dollars_buffer != 0) {
-        dollars_timer += *global::timer;
+        dollars_timer += *GameState::instance().timer;
     }
 
     if (dollars_timer >= 50) {
@@ -259,16 +259,16 @@ void Hud::update() {
         draw_level_hud();
     }
 
-    if (!global::game_state->splash_screen)
-        time_spent_on_level += *global::timer;
+    if (!GameState::instance().splash_screen)
+        time_spent_on_level += *GameState::instance().timer;
 
-    if (global::main_dude->dead && global::main_dude->time_since_last_damage > MAIN_DUDE_DAMAGE_PROTECTION_TIME) {
+    if (GameState::instance().main_dude->dead && GameState::instance().main_dude->time_since_last_damage > MAIN_DUDE_DAMAGE_PROTECTION_TIME) {
 
         bool milestone_0 = game_over_timer > 0;
         bool milestone_1750 = game_over_timer > 1750;
         bool milestone_2750 = game_over_timer > 2750;
 
-        game_over_timer += *global::timer;
+        game_over_timer += *GameState::instance().timer;
 
         if ((!milestone_1750 && game_over_timer > 1750) ||
             (!milestone_2750 && game_over_timer > 2750) ||
@@ -289,11 +289,11 @@ void Hud::add_moniez_on_collected_loot(int value) {
 void Hud::set_hud_sprites_attributes() {
 
     bool playing_level =
-            !global::game_state->in_main_menu &&
-            !global::game_state->scores_screen &&
-            !global::game_state->levels_transition_screen;
+            !GameState::instance().in_main_menu &&
+            !GameState::instance().scores_screen &&
+            !GameState::instance().levels_transition_screen;
 
-    sprite_utils::set_visibility(!global::main_dude->dead & playing_level,
+    sprite_utils::set_visibility(!GameState::instance().main_dude->dead & playing_level,
                                  heartSpriteInfo, bombSpriteInfo, ropeSpriteInfo, dollarSpriteInfo,
                                  holdingItemSpriteInfo);
 
@@ -322,12 +322,12 @@ void Hud::increment_offset_on_grabbed_item() {
 
 void Hud::debug_oam() {
     printf("\n \n \n  IPM: %lu\n IPS: %lu\n ITM: %lu\n ITS: %lu\n NS: %d NM: %d",
-           static_cast<unsigned long>(global::main_oam_manager->current_oam_id_palette),
-           static_cast<unsigned long>(global::sub_oam_manager->current_oam_id_palette),
-           static_cast<unsigned long>(global::main_oam_manager->current_oam_id_tiles),
-           static_cast<unsigned long>(global::sub_oam_manager->current_oam_id_tiles),
-           global::sub_oam_manager->nextAvailableTileIdx,
-           global::main_oam_manager->nextAvailableTileIdx);
+           static_cast<unsigned long>(GameState::instance().main_oam_manager->current_oam_id_palette),
+           static_cast<unsigned long>(GameState::instance().sub_oam_manager->current_oam_id_palette),
+           static_cast<unsigned long>(GameState::instance().main_oam_manager->current_oam_id_tiles),
+           static_cast<unsigned long>(GameState::instance().sub_oam_manager->current_oam_id_tiles),
+           GameState::instance().sub_oam_manager->nextAvailableTileIdx,
+           GameState::instance().main_oam_manager->nextAvailableTileIdx);
 }
 
 void Hud::disable_all_prompts() {
@@ -337,39 +337,39 @@ void Hud::disable_all_prompts() {
 
 void Hud::draw_collected_loot() {
 
-    for (unsigned long a = 0; a < global::collected_treasures.size(); a++) {
+    for (unsigned long a = 0; a < GameState::instance().collected_treasures.size(); a++) {
 
         //FIXME Pass specific moniez type
 
-        if (global::collected_treasures.at(a) == TreasureType::RUBY_BIG) {
+        if (GameState::instance().collected_treasures.at(a) == TreasureType::RUBY_BIG) {
 
             auto *ruby_big = new RubyBig(90 + (a * 4), 190);
             ruby_big->_y += (16 - ruby_big->_physical_height); //aligning to same level
-            global::treasures.push_back(ruby_big);
+            GameState::instance().treasures.push_back(ruby_big);
             ruby_big->update_sprites_position();
             ruby_big->_ready_to_dispose = true;
 
-        } else if (global::collected_treasures.at(a) == TreasureType::RUBY_SMALL) {
+        } else if (GameState::instance().collected_treasures.at(a) == TreasureType::RUBY_SMALL) {
 
             auto *ruby_small = new RubySmall(90 + (a * 4), 190);
             ruby_small->_y += (16 - ruby_small->_physical_height); //aligning to same level
-            global::treasures.push_back(ruby_small);
+            GameState::instance().treasures.push_back(ruby_small);
             ruby_small->update_sprites_position();
             ruby_small->_ready_to_dispose = true;
 
-        } else if (global::collected_treasures.at(a) == TreasureType::TRIPLE_GOLDBAR) {
+        } else if (GameState::instance().collected_treasures.at(a) == TreasureType::TRIPLE_GOLDBAR) {
 
             auto *triple_goldbars = new TripleGoldbar(90 + (a * 4), 190);
             triple_goldbars->_y += (16 - triple_goldbars->_physical_height); //aligning to same level
-            global::treasures.push_back(triple_goldbars);
+            GameState::instance().treasures.push_back(triple_goldbars);
             triple_goldbars->update_sprites_position();
             triple_goldbars->_ready_to_dispose = true;
 
-        } else if (global::collected_treasures.at(a) == TreasureType::SINGLE_GOLDBAR) {
+        } else if (GameState::instance().collected_treasures.at(a) == TreasureType::SINGLE_GOLDBAR) {
 
             auto *single_goldbar = new SingleGoldbar(90 + (a * 4), 190);
             single_goldbar->_y += (16 - single_goldbar->_physical_height); //aligning to same level
-            global::treasures.push_back(single_goldbar);
+            GameState::instance().treasures.push_back(single_goldbar);
             single_goldbar->update_sprites_position();
             single_goldbar->_ready_to_dispose = true;
 
@@ -381,14 +381,14 @@ void Hud::draw_collected_loot() {
 
 void Hud::draw_killed_npcs() {
 
-    for (unsigned long a = 0; a < global::killed_npcs.size(); a++) {
+    for (unsigned long a = 0; a < GameState::instance().killed_npcs.size(); a++) {
 
-        switch (global::killed_npcs.at(a)) {
+        switch (GameState::instance().killed_npcs.at(a)) {
 
             case CreatureType::SPIDER: {
                 auto *spider = new Spider(95 + (a * 8), 208);
                 //deliberately not aligning to same level - already aligned
-                global::creatures.push_back(spider);
+                GameState::instance().creatures.push_back(spider);
                 spider->_ready_to_dispose = true;
                 spider->set_sprite_falling();
                 spider->update_sprites_position();
@@ -401,14 +401,14 @@ void Hud::draw_killed_npcs() {
                 bat->set_sprite_flying_left();
                 bat->update_sprites_position();
                 bat->_ready_to_dispose = true;
-                global::creatures.push_back(bat);
+                GameState::instance().creatures.push_back(bat);
                 break;
             }
             case CreatureType::SNAKE: {
                 auto *snake = new Snake(95 + (a * 8), 208);
                 snake->sprite_state = Orientation::LEFT;
                 snake->_y += (16 - snake->_physical_height); //aligning to same level
-                global::creatures.push_back(snake);
+                GameState::instance().creatures.push_back(snake);
                 snake->_ready_to_dispose = true;
                 snake->update_sprites_position();
                 snake->set_sprite_left();
@@ -420,7 +420,7 @@ void Hud::draw_killed_npcs() {
                 damsel->match_animation();
                 damsel->update();
                 damsel->_y += (16 - damsel->_physical_height); //aligning to same level
-                global::creatures.push_back(damsel);
+                GameState::instance().creatures.push_back(damsel);
                 damsel->_ready_to_dispose = true;
                 damsel->update_sprites_position();
                 break;
@@ -432,7 +432,7 @@ void Hud::draw_killed_npcs() {
                 skeleton->main_dude_orientation_at_summoning_moment = Orientation::RIGHT;
                 skeleton->set_sprite_walking();
                 skeleton->_y += (16 - skeleton->_physical_height); //aligning to same level
-                global::creatures.push_back(skeleton);
+                GameState::instance().creatures.push_back(skeleton);
                 skeleton->_ready_to_dispose = true;
                 skeleton->update_sprites_position();
                 break;
@@ -444,7 +444,7 @@ void Hud::draw_killed_npcs() {
                 caveman->animFrameTimer = 1000;
                 caveman->update();
                 caveman->_y += (16 - caveman->_physical_height); //aligning to same level
-                global::creatures.push_back(caveman);
+                GameState::instance().creatures.push_back(caveman);
                 caveman->_ready_to_dispose = true;
                 caveman->update_sprites_position();
                 break;
@@ -458,7 +458,7 @@ void Hud::draw_killed_npcs() {
                 shopkeeper->_y += (16 - shopkeeper->_physical_height); //aligning to same level
                 shopkeeper->_ready_to_dispose = true;
                 shopkeeper->update();
-                global::creatures.push_back(shopkeeper);
+                GameState::instance().creatures.push_back(shopkeeper);
                 break;
             }
 

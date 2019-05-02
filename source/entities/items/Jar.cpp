@@ -4,7 +4,7 @@
 
 #include <cmath>
 #include "Jar.hpp"
-#include "../../GlobalsDeclarations.hpp"
+#include "../../GameState.hpp"
 #include "../../../build/gfx_spike_collectibles_flame.h"
 #include "../../collisions/Collisions.hpp"
 #include "../../memory/SpriteUtils.hpp"
@@ -25,14 +25,14 @@ void Jar::update_item_specific() {
         return;
     }
 
-    if (global::main_dude->using_whip) {
-        if(check_collision(global::main_dude->whip)){
+    if (GameState::instance().main_dude->using_whip) {
+        if(check_collision(GameState::instance().main_dude->whip)){
             destroy();
         }
     }
 
     if (_destroyed && _anim_frame_index < 7) {
-        _anim_frame_timer += *global::timer;
+        _anim_frame_timer += *GameState::instance().timer;
         if (_anim_frame_timer > 50) {
             _anim_frame_index++;
             match_animation();
@@ -63,13 +63,13 @@ void Jar::init_sprites() {
 
     delete_sprites();
 
-    _sub_sprite_info = global::sub_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
+    _sub_sprite_info = GameState::instance().sub_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
                                                            gfx_spike_collectibles_flamePalLen, nullptr, _sprite_size,
-                                                           ObjSize::OBJSIZE_16, JAR, true, false,
+                                                           ObjSize::OBJSIZE_16, SpritesheetType::JAR, true, false,
                                                            LAYER_LEVEL::MIDDLE_TOP);
-    _main_sprite_info = global::main_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
+    _main_sprite_info = GameState::instance().main_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
                                                              gfx_spike_collectibles_flamePalLen, nullptr, _sprite_size,
-                                                             ObjSize::OBJSIZE_16, JAR, true, false,
+                                                             ObjSize::OBJSIZE_16, SpritesheetType::JAR, true, false,
                                                              LAYER_LEVEL::MIDDLE_TOP);
     match_animation();
     update_sprites_position();

@@ -6,7 +6,6 @@
 #include <cstdlib>
 #include <cstdio>
 #include "Spider.hpp"
-#include "../../GlobalsDeclarations.hpp"
 #include "../animations/Blood.hpp"
 #include "../../../build/gfx_spider_skeleton.h"
 #include "../items/Rock.hpp"
@@ -14,6 +13,7 @@
 #include "../../tiles/LevelRenderingUtils.hpp"
 #include "../../../build/soundbank.h"
 #include "../../memory/SpriteUtils.hpp"
+#include "../../GameState.hpp"
 
 #define SPIDER_HANGING_OFFSET 8
 #define SPIDER_ANIM_FRAME_DELTA 75
@@ -37,12 +37,12 @@ void Spider::update_creature_specific() {
     if (!hunting)
         //Check if main dude is direcly under the spider - intentionally not checking for terrain obstacles,
         //like in the original game. Also check if main dude is in certain range
-        hunting = abs(_y - global::main_dude->_y) < 9 * TILE_H && global::main_dude->_x + MainDude::main_dude_physical_width > _x &&
-                  global::main_dude->_x < _x + _physical_width && global::main_dude->_y > _y;
+        hunting = abs(_y - GameState::instance().main_dude->_y) < 9 * TILE_H && GameState::instance().main_dude->_x + MainDude::main_dude_physical_width > _x &&
+                  GameState::instance().main_dude->_x < _x + _physical_width && GameState::instance().main_dude->_y > _y;
     else {
-        time_since_last_big_jump += *global::timer;
-        time_since_last_jump += *global::timer;
-        animFrameTimer += *global::timer;
+        time_since_last_big_jump += *GameState::instance().timer;
+        time_since_last_jump += *GameState::instance().timer;
+        animFrameTimer += *GameState::instance().timer;
     }
 
     if (animFrameTimer > SPIDER_ANIM_FRAME_DELTA) {
@@ -100,7 +100,7 @@ void Spider::update_creature_specific() {
 //!>spider has only 1 dmg point, always kill if any dmg_apply
 void Spider::apply_dmg(int dmg_to_apply) {
     sprite_utils::set_visibility(false, mainSpriteInfo, subSpriteInfo);
-    global::killed_npcs.push_back(_creature_type);
+    GameState::instance().killed_npcs.push_back(_creature_type);
     spawn_blood();
     killed = true;
     _ready_to_dispose = true;
@@ -110,11 +110,11 @@ void Spider::init_sprites() {
 
     delete_sprites();
 
-    subSpriteInfo = global::sub_oam_manager->initSprite(gfx_spider_skeletonPal, gfx_spider_skeletonPalLen,
-                                                        nullptr, _sprite_size, ObjSize::OBJSIZE_16, SKELETON_SPIDER, true,
+    subSpriteInfo = GameState::instance().sub_oam_manager->initSprite(gfx_spider_skeletonPal, gfx_spider_skeletonPalLen,
+                                                        nullptr, _sprite_size, ObjSize::OBJSIZE_16, SpritesheetType::SKELETON_SPIDER, true,
                                                         false, LAYER_LEVEL::MIDDLE_TOP);
-    mainSpriteInfo = global::main_oam_manager->initSprite(gfx_spider_skeletonPal, gfx_spider_skeletonPalLen,
-                                                          nullptr, _sprite_size, ObjSize::OBJSIZE_16, SKELETON_SPIDER, true,
+    mainSpriteInfo = GameState::instance().main_oam_manager->initSprite(gfx_spider_skeletonPal, gfx_spider_skeletonPalLen,
+                                                          nullptr, _sprite_size, ObjSize::OBJSIZE_16, SpritesheetType::SKELETON_SPIDER, true,
                                                           false, LAYER_LEVEL::MIDDLE_TOP);
     update_sprites_position();
     sprite_utils::set_visibility(true, mainSpriteInfo, subSpriteInfo);
@@ -165,7 +165,7 @@ void Spider::jump_to_main_dude() {
 
     time_since_last_jump = 0;
 
-    int diff = global::main_dude->_x - _x > 0;
+    int diff = GameState::instance().main_dude->_x - _x > 0;
 
     bool additional_jump_speed = false;
 

@@ -3,7 +3,7 @@
 //
 
 #include "../../../build/gfx_spike_collectibles_flame.h"
-#include "../../GlobalsDeclarations.hpp"
+#include "../../GameState.hpp"
 #include "../../collisions/Collisions.hpp"
 #include "FlameElement.hpp"
 #include "Flame.hpp"
@@ -18,8 +18,8 @@ void FlameElement::update_creature_specific() {
 
     update_sprites_position();
 
-    inactive_delay += *global::timer;
-    frameTimer += *global::timer;
+    inactive_delay += *GameState::instance().timer;
+    frameTimer += *GameState::instance().timer;
 
     if (frameTimer > FLAME_ANIM_FRAME_DELTA) {
 
@@ -39,13 +39,13 @@ void FlameElement::init_sprites() {
 
     delete_sprites();
     
-    subSpriteInfo = global::sub_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
+    subSpriteInfo = GameState::instance().sub_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
                                                         gfx_spike_collectibles_flamePalLen, nullptr,
-                                                        _sprite_size, ObjSize::OBJSIZE_8, SPIKES_COLLECTIBLES, true,
+                                                        _sprite_size, ObjSize::OBJSIZE_8, SpritesheetType::SPIKES_COLLECTIBLES, true,
                                                         false, LAYER_LEVEL::MIDDLE_TOP);
-    mainSpriteInfo = global::main_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
+    mainSpriteInfo = GameState::instance().main_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
                                                           gfx_spike_collectibles_flamePalLen,
-                                                          nullptr, _sprite_size, ObjSize::OBJSIZE_8, SPIKES_COLLECTIBLES,
+                                                          nullptr, _sprite_size, ObjSize::OBJSIZE_8, SpritesheetType::SPIKES_COLLECTIBLES,
                                                           true, false, LAYER_LEVEL::MIDDLE_TOP);
     match_animation();
     update_sprites_position();

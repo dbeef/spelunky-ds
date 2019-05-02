@@ -9,7 +9,7 @@
  * SpritesheetType is focused on file, what it contains, i.e main dude animations and whips.
  * It helps when it comes to manage multiple palettes - see OamManager.cpp
  */
-enum SpritesheetType{
+enum class SpritesheetType{
     MAIN_DUDE,                  //0
     MENU_SIGNS_TUTORIAL_QUIT,   //1
     MENU_SIGNS_START_SCORES,    //2

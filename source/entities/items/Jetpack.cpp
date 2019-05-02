@@ -4,7 +4,7 @@
 
 #include "Jetpack.hpp"
 #include "../../../build/gfx_bat_snake_jetpack.h"
-#include "../../GlobalsDeclarations.hpp"
+#include "../../GameState.hpp"
 #include "../../entities/decorations/GotCollectible.hpp"
 #include "../../collisions/Collisions.hpp"
 #include "../animations/FallPoof.hpp"
@@ -12,8 +12,8 @@
 
 void Jetpack::update_item_specific() {
 
-    if (global::main_dude->carrying_cape && collected) {
-        global::main_dude->carrying_jetpack = false;
+    if (GameState::instance().main_dude->carrying_cape && collected) {
+        GameState::instance().main_dude->carrying_jetpack = false;
         _ready_to_dispose = true;
         sprite_utils::set_visibility(false, _main_sprite_info, _sub_sprite_info);
     }
@@ -36,26 +36,26 @@ void Jetpack::update_item_specific() {
 
     if (collected) {
 
-        if (global::main_dude->climbing || global::main_dude->exiting_level) {
+        if (GameState::instance().main_dude->climbing || GameState::instance().main_dude->exiting_level) {
             sprite_utils::set_priority(OBJPRIORITY_0, _main_sprite_info, _sub_sprite_info);
             set_pickuped_position_not_checking(-3, -3, 2);
             sprite_utils::set_horizontal_flip(false, _main_sprite_info, _sub_sprite_info);
-        } else if (global::main_dude->sprite_state == Orientation::LEFT) {
+        } else if (GameState::instance().main_dude->sprite_state == Orientation::LEFT) {
             sprite_utils::set_priority(OBJPRIORITY_1, _main_sprite_info, _sub_sprite_info);
             set_pickuped_position_not_checking(-6, -6, 0);
             sprite_utils::set_horizontal_flip(false, _main_sprite_info, _sub_sprite_info);
-        } else if (global::main_dude->sprite_state == Orientation::RIGHT) {
+        } else if (GameState::instance().main_dude->sprite_state == Orientation::RIGHT) {
             sprite_utils::set_priority(OBJPRIORITY_1, _main_sprite_info, _sub_sprite_info);
             set_pickuped_position_not_checking(-3, -3, 0);
             sprite_utils::set_horizontal_flip(true, _main_sprite_info, _sub_sprite_info);
         }
 
 
-        if (global::main_dude->using_jetpack) {
-            _poof_spawn_timer += *global::timer;
+        if (GameState::instance().main_dude->using_jetpack) {
+            _poof_spawn_timer += *GameState::instance().timer;
 
-            if (global::main_dude->jetpack_fuel_counter <= 0) {
-                global::main_dude->using_jetpack = false;
+            if (GameState::instance().main_dude->jetpack_fuel_counter <= 0) {
+                GameState::instance().main_dude->using_jetpack = false;
             }
 
             if (_poof_spawn_timer > 130) {
@@ -94,10 +94,10 @@ void Jetpack::update_item_specific() {
         }
     }
 
-    if (global::main_dude->_bottom_collision || global::main_dude->hanging_on_tile_left ||
-        global::main_dude->hanging_on_tile_right) {
-        global::main_dude->using_jetpack = false;
-        global::main_dude->jetpack_fuel_counter = 15;
+    if (GameState::instance().main_dude->_bottom_collision || GameState::instance().main_dude->hanging_on_tile_left ||
+        GameState::instance().main_dude->hanging_on_tile_right) {
+        GameState::instance().main_dude->using_jetpack = false;
+        GameState::instance().main_dude->jetpack_fuel_counter = 15;
     }
 
     update_sprites_position();
@@ -114,10 +114,10 @@ void Jetpack::init_sprites() {
 
     delete_sprites();
 
-    _sub_sprite_info = global::sub_oam_manager->initSprite(gfx_bat_snake_jetpackPal, gfx_bat_snake_jetpackPalLen,
+    _sub_sprite_info = GameState::instance().sub_oam_manager->initSprite(gfx_bat_snake_jetpackPal, gfx_bat_snake_jetpackPalLen,
                                                            nullptr, _sprite_size, ObjSize::OBJSIZE_16,
                                                            _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
-    _main_sprite_info = global::main_oam_manager->initSprite(gfx_bat_snake_jetpackPal, gfx_bat_snake_jetpackPalLen,
+    _main_sprite_info = GameState::instance().main_oam_manager->initSprite(gfx_bat_snake_jetpackPal, gfx_bat_snake_jetpackPalLen,
                                                              nullptr, _sprite_size, ObjSize::OBJSIZE_16,
                                                              _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
 
@@ -139,14 +139,14 @@ void Jetpack::init_sprites() {
 void Jetpack::equip() {
 
     auto *g = new GotCollectible(_x - 12, _y - 20, GotCollectible::Type::ITEM);
-    global::decorations.push_back(g);
+    GameState::instance().decorations.push_back(g);
 
-    if (global::main_dude->carrying_cape) {
-        global::main_dude->carrying_cape = false;
+    if (GameState::instance().main_dude->carrying_cape) {
+        GameState::instance().main_dude->carrying_cape = false;
     }
 
-    if (!global::main_dude->carrying_jetpack) {
-        global::main_dude->carrying_jetpack = true;
+    if (!GameState::instance().main_dude->carrying_jetpack) {
+        GameState::instance().main_dude->carrying_jetpack = true;
         update_sprites_position();
         collected = true;
         u8 *frame_gfx = sprite_utils::get_frame((u8 *) gfx_bat_snake_jetpackTiles, _sprite_size, 8);

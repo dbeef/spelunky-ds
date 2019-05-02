@@ -5,7 +5,7 @@
 #ifndef SPELUNKYDS_OAMTYPE_H
 #define SPELUNKYDS_OAMTYPE_H
 
-enum OamType{
+enum class OamType{
     MAIN,
     SUB
 };

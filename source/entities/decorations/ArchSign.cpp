@@ -4,7 +4,7 @@
 
 #include "ArchSign.h"
 
-#include "../../GlobalsDeclarations.hpp"
+#include "../../GameState.hpp"
 #include "../../../build/gfx_menu_signs_start_scores.h"
 #include "../../memory/SpriteUtils.hpp"
 
@@ -28,7 +28,7 @@ void ArchSign::init_sprites() {
     delete_sprites();
 
     for (int a = 0; a < rock_sign_graphics; a++) {
-        _mainSpriteInfos[a] = global::main_oam_manager->initSprite(gfx_menu_signs_start_scoresPal,
+        _mainSpriteInfos[a] = GameState::instance().main_oam_manager->initSprite(gfx_menu_signs_start_scoresPal,
                                                                    gfx_menu_signs_start_scoresPalLen,
                                                                    nullptr, _sprite_size, ObjSize::OBJSIZE_32, _spritesheet_type,
                                                                    true, false, LAYER_LEVEL::MIDDLE_TOP);

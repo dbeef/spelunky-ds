@@ -6,9 +6,9 @@
 #include <cmath>
 #include "Collisions.hpp"
 #include "../entities/main_dude/MainDude.hpp"
-#include "../GlobalsDeclarations.hpp"
 #include "../tiles/TileOrientation.hpp"
 #include "../preprocessor/Debug.h"
+#include "../GameState.hpp"
 
 //(TILE_W * a), (TILE_H * b) makes x,y point placed in the left-upper corner of the tile from passed *map_tiles[a][b].
 //Sprite's x,y positions that are given to the following functions are expected to be upper-left corner.
@@ -152,11 +152,11 @@ bool Collisions::checkRightCollision(MapTile *neighboringTiles[9], int *xPos, in
 }
 
 bool Collisions::isStandingOnLeftEdge(MapTile *neighboringTiles[9], int x, int width, int tileX) {
-    return (!neighboringTiles[TileOrientation::LEFT_DOWN] /*&& !neighboringTiles[7]->collidable && x <= (tileX * 16)*/);
+    return (!neighboringTiles[static_cast<uint16>(TileOrientation::LEFT_DOWN)] /*&& !neighboringTiles[7]->collidable && x <= (tileX * 16)*/);
 }
 
 bool Collisions::isStandingOnRightEdge(MapTile *neighboringTiles[9], int x, int width, int tileX) {
-    return (!neighboringTiles[TileOrientation::RIGHT_DOWN] /*&& !neighboringTiles[8]->collidable && x >= (tileX * 16)*/);
+    return (!neighboringTiles[static_cast<uint16>(TileOrientation::RIGHT_DOWN)] /*&& !neighboringTiles[8]->collidable && x >= (tileX * 16)*/);
 }
 
 
@@ -184,15 +184,15 @@ void Collisions::getNeighboringTiles(MapTile *mapTiles[32][32], int xx, int yy, 
     left_down = mapTiles[xx - 1][yy + 1]->exists ? mapTiles[xx - 1][yy + 1] : nullptr;
     right_down = mapTiles[xx + 1][yy + 1]->exists ? mapTiles[xx + 1][yy + 1] : nullptr;
 
-    out_neighboringTiles[TileOrientation::LEFT_MIDDLE] = left_middle;
-    out_neighboringTiles[TileOrientation::RIGHT_MIDDLE] = right_middle;
-    out_neighboringTiles[TileOrientation::UP_MIDDLE] = up_middle;
-    out_neighboringTiles[TileOrientation::DOWN_MIDDLE] = down_middle;
-    out_neighboringTiles[TileOrientation::CENTER] = center;
-    out_neighboringTiles[TileOrientation::LEFT_UP] = left_up;
-    out_neighboringTiles[TileOrientation::RIGHT_UP] = right_up;
-    out_neighboringTiles[TileOrientation::LEFT_DOWN] = left_down;
-    out_neighboringTiles[TileOrientation::RIGHT_DOWN] = right_down;
+    out_neighboringTiles[static_cast<uint16>(TileOrientation::LEFT_MIDDLE)] = left_middle;
+    out_neighboringTiles[static_cast<uint16>(TileOrientation::RIGHT_MIDDLE)] = right_middle;
+    out_neighboringTiles[static_cast<uint16>(TileOrientation::UP_MIDDLE)] = up_middle;
+    out_neighboringTiles[static_cast<uint16>(TileOrientation::DOWN_MIDDLE)] = down_middle;
+    out_neighboringTiles[static_cast<uint16>(TileOrientation::CENTER)] = center;
+    out_neighboringTiles[static_cast<uint16>(TileOrientation::LEFT_UP)] = left_up;
+    out_neighboringTiles[static_cast<uint16>(TileOrientation::RIGHT_UP)] = right_up;
+    out_neighboringTiles[static_cast<uint16>(TileOrientation::LEFT_DOWN)] = left_down;
+    out_neighboringTiles[static_cast<uint16>(TileOrientation::RIGHT_DOWN)] = right_down;
 }
 
 void Collisions::bombNeighboringTiles(MapTile *mapTiles[32][32], int xx, int yy) {
@@ -209,23 +209,23 @@ void Collisions::bombNeighboringTiles(MapTile *mapTiles[32][32], int xx, int yy)
 }
 
 bool Collisions::checkCollisionWithMainDude(int x, int y, int width, int height) {
-    return checkCollisionBodies(x, y, width, height, global::main_dude->_x, global::main_dude->_y, 16, 16);
+    return checkCollisionBodies(x, y, width, height, GameState::instance().main_dude->_x, GameState::instance().main_dude->_y, 16, 16);
 }
 
 bool Collisions::checkCollisionWithMainDudeWidthBoundary(int x, int y, int width, int height, int x_boundary) {
-    return global::main_dude->_x + 16 > x && global::main_dude->_x <= x + width &&
-           y + height > global::main_dude->_y && y <= global::main_dude->_y + MainDude::main_dude_physical_height;
+    return GameState::instance().main_dude->_x + 16 > x && GameState::instance().main_dude->_x <= x + width &&
+           y + height > GameState::instance().main_dude->_y && y <= GameState::instance().main_dude->_y + MainDude::main_dude_physical_height;
 }
 
 bool Collisions::checkCollisionWithMainDudeWhip(int x, int y, int width, int height) {
-    if (global::main_dude->sprite_state == Orientation::LEFT) {
-        return x + width >= global::main_dude->_x - WHIP_WIDTH &&
-               x + width < global::main_dude->_x + MainDude::main_dude_physical_width &&
-               y + height > global::main_dude->_y && y < global::main_dude->_y + MainDude::main_dude_physical_height;
-    } else if (global::main_dude->sprite_state == Orientation::RIGHT) {
-        return x + width >= global::main_dude->_x &&
-               x + width < global::main_dude->_x + MainDude::main_dude_physical_width + WHIP_WIDTH * 2 &&
-               y + height > global::main_dude->_y && y < global::main_dude->_y + MainDude::main_dude_physical_height;
+    if (GameState::instance().main_dude->sprite_state == Orientation::LEFT) {
+        return x + width >= GameState::instance().main_dude->_x - WHIP_WIDTH &&
+               x + width < GameState::instance().main_dude->_x + MainDude::main_dude_physical_width &&
+               y + height > GameState::instance().main_dude->_y && y < GameState::instance().main_dude->_y + MainDude::main_dude_physical_height;
+    } else if (GameState::instance().main_dude->sprite_state == Orientation::RIGHT) {
+        return x + width >= GameState::instance().main_dude->_x &&
+               x + width < GameState::instance().main_dude->_x + MainDude::main_dude_physical_width + WHIP_WIDTH * 2 &&
+               y + height > GameState::instance().main_dude->_y && y < GameState::instance().main_dude->_y + MainDude::main_dude_physical_height;
     } else return false;
 
 }
@@ -244,7 +244,7 @@ bool Collisions::checkCollisionBodiesLeftLowerCorner(int x1, int y1, int w1, int
 void Collisions::getTilesOnRightFromXY(int xx, int yy, MapTile **out_neighboringTiles) {
     for (int a = 0; a < 9; a++) {
         if (a + xx <= 31)
-            out_neighboringTiles[a] = global::current_level->map_tiles[a + xx][yy];
+            out_neighboringTiles[a] = GameState::instance().current_level->map_tiles[a + xx][yy];
         else
             out_neighboringTiles[a] = nullptr;
     }
@@ -254,7 +254,7 @@ void Collisions::getTilesOnRightFromXY(int xx, int yy, MapTile **out_neighboring
 void Collisions::getTilesOnLeftFromXY(int xx, int yy, MapTile **out_neighboringTiles) {
     for (int a = 0; a < 9; a++) {
         if (xx - a >= 0)
-            out_neighboringTiles[a] = global::current_level->map_tiles[xx - a][yy];
+            out_neighboringTiles[a] = GameState::instance().current_level->map_tiles[xx - a][yy];
         else
             out_neighboringTiles[a] = nullptr;
     }

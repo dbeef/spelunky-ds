@@ -3,17 +3,17 @@
 //
 
 #include "IPickupable.h"
-#include "../../GlobalsDeclarations.hpp"
 #include "../../collisions/Collisions.hpp"
+#include "../../GameState.hpp"
 
 //for opening chests and crates
 bool IPickupable::check_if_can_be_opened() {
     if (!_activated &&
         Collisions::checkCollisionWithMainDudeWidthBoundary(_x, _y, _physical_width, _physical_height, 8) &&
-        global::input_handler->up_key_held && global::input_handler->y_key_down) {
+        GameState::instance().input_handler->up_key_held && GameState::instance().input_handler->y_key_down) {
 
         _activated = true;
-        global::input_handler->y_key_down = false;
+        GameState::instance().input_handler->y_key_down = false;
 
         return true;
     } else
@@ -25,29 +25,29 @@ bool IPickupable::check_if_can_be_opened() {
 void IPickupable::check_if_can_be_pickuped() {
 
     if (_hold_by_main_dude &&
-        global::input_handler->y_key_down &&
-        global::input_handler->down_key_held &&
-        global::main_dude->_bottom_collision) {
+        GameState::instance().input_handler->y_key_down &&
+        GameState::instance().input_handler->down_key_held &&
+        GameState::instance().main_dude->_bottom_collision) {
 
         //leave item on ground
 
         _hold_by_main_dude = false;
-        global::main_dude->holding_item = false;
-        global::input_handler->y_key_down = false;
+        GameState::instance().main_dude->holding_item = false;
+        GameState::instance().input_handler->y_key_down = false;
         _bottom_collision = false;
-        global::main_dude->_currently_held_creature = nullptr;
+        GameState::instance().main_dude->_currently_held_creature = nullptr;
 
-    } else if (global::input_handler->y_key_down &&
-               global::input_handler->down_key_held &&
-               !global::main_dude->holding_item &&
+    } else if (GameState::instance().input_handler->y_key_down &&
+               GameState::instance().input_handler->down_key_held &&
+               !GameState::instance().main_dude->holding_item &&
                Collisions::checkCollisionWithMainDude(_x, _y, _physical_width, _physical_height)) {
 
         //pickup item from the ground
 
-        global::main_dude->holding_item = true;
-        global::main_dude->_currently_held_pickupable = this;
+        GameState::instance().main_dude->holding_item = true;
+        GameState::instance().main_dude->_currently_held_pickupable = this;
         _hold_by_main_dude = true;
-        global::input_handler->y_key_down = false;
+        GameState::instance().input_handler->y_key_down = false;
 
     }
 
@@ -56,12 +56,12 @@ void IPickupable::check_if_can_be_pickuped() {
 //check, if main dude can pickup to the inventory (not to the hands)
 bool IPickupable::check_if_can_be_equipped() {
 
-    bool q = (global::input_handler->y_key_down && global::input_handler->down_key_held &&
-              !global::main_dude->holding_item) &&
+    bool q = (GameState::instance().input_handler->y_key_down && GameState::instance().input_handler->down_key_held &&
+              !GameState::instance().main_dude->holding_item) &&
              Collisions::checkCollisionWithMainDude(_x, _y, _sprite_width, _sprite_height);
 
     if (q) {
-        global::input_handler->y_key_down = false;
+        GameState::instance().input_handler->y_key_down = false;
     }
 
     return q;

@@ -40,6 +40,7 @@
 #include "../entities/decorations/RockSign.h"
 #include "../entities/decorations/ArchSign.h"
 #include "../entities/items/GoldenIdol.h"
+#include "../GameState.hpp"
 
 //TODO Make main menu signs globals
 void populate_cave_moniez() {
@@ -56,8 +57,8 @@ void populate_cave_moniez() {
     for (int b = ROOMS_Y - 1; b >= 0; b--) {
         for (int a = 0; a < ROOMS_X; a++) {
 
-            int room_type = global::current_level->layout[a][b];
-            int room_id = global::current_level->layout_room_ids[a][b];
+            RoomType& room_type = GameState::instance().current_level->layout[a][b];
+            int room_id = GameState::instance().current_level->layout_room_ids[a][b];
 
 
             if (room_id == -1)
@@ -103,10 +104,10 @@ void populate_cave_moniez() {
 
                         if (goldbar_type == 0) {
                             auto *single_goldbar = new SingleGoldbar(pos_x * 16, pos_y * 16);
-                            global::treasures.push_back(single_goldbar);
+                            GameState::instance().treasures.push_back(single_goldbar);
                         } else {
                             auto *triple_goldbar = new TripleGoldbar(pos_x * 16, pos_y * 16);
-                            global::treasures.push_back(triple_goldbar);
+                            GameState::instance().treasures.push_back(triple_goldbar);
                         }
 
                         gold_bars_left--;
@@ -119,10 +120,10 @@ void populate_cave_moniez() {
 
                         if (ruby_type == 0) {
                             auto *ruby_small = new RubySmall(pos_x * 16, pos_y * 16);
-                            global::treasures.push_back(ruby_small);
+                            GameState::instance().treasures.push_back(ruby_small);
                         } else {
                             auto *ruby_big = new RubyBig(pos_x * 16, pos_y * 16);
-                            global::treasures.push_back(ruby_big);
+                            GameState::instance().treasures.push_back(ruby_big);
                         }
 
                         rubies_left--;
@@ -132,7 +133,7 @@ void populate_cave_moniez() {
 
                     if (loot_type == 3 && jars_left > 0 && r == 1) {
                         Jar *jar = new Jar(pos_x * 16, pos_y * 16);
-                        global::items.push_back(jar);
+                        GameState::instance().items.push_back(jar);
                         jars_left--;
                         last_placement = 0;
                     }
@@ -140,7 +141,7 @@ void populate_cave_moniez() {
 /*                    if (loot_type == 0 && rocks_left > 0 && r == 1) {
                         Arrow *arrow = new Arrow();
                         arrow->init();
-                        global::entities.push_back(arrow);
+                        GameState::instance().entities.push_back(arrow);
                         arrow->x = pos_x * 16;
                         arrow->y = pos_y * 16;
                         rocks_left--;
@@ -149,7 +150,7 @@ void populate_cave_moniez() {
 
                     if (loot_type == 0 && rocks_left > 0 && r == 1) {
                         Rock *rock = new Rock(pos_x * 16, pos_y * 16);
-                        global::items.push_back(rock);
+                        GameState::instance().items.push_back(rock);
                         rocks_left--;
                         last_placement = 0;
                     }
@@ -157,7 +158,7 @@ void populate_cave_moniez() {
 
                     if (loot_type == 4 && chests_left > 0 && r == 1) {
                         Chest *chest = new Chest(pos_x * 16, pos_y * 16);
-                        global::items.push_back(chest);
+                        GameState::instance().items.push_back(chest);
                         chests_left--;
                         last_placement = 0;
                     }
@@ -165,7 +166,7 @@ void populate_cave_moniez() {
 
                     if (loot_type == 5 && crates_left > 0 && r == 1) {
                         Crate *crate = new Crate(pos_x * 16, pos_y * 16);
-                        global::items.push_back(crate);
+                        GameState::instance().items.push_back(crate);
                         crates_left--;
                         last_placement = 0;
                     }
@@ -199,8 +200,8 @@ void populate_cave_npcs() {
     for (int b = ROOMS_Y - 1; b >= 0; b--) {
         for (int a = 0; a < ROOMS_X; a++) {
 
-            int room_type = global::current_level->layout[a][b];
-            int room_id = global::current_level->layout_room_ids[a][b];
+            RoomType& room_type = GameState::instance().current_level->layout[a][b];
+            int room_id = GameState::instance().current_level->layout_room_ids[a][b];
 
 
             if (room_id == -1)
@@ -251,20 +252,20 @@ void populate_cave_npcs() {
                             arrowTrap = new ArrowTrap(pos_x * 16, pos_y * 16, Orientation::LEFT);
                         else if (npc == 10)
                             arrowTrap = new ArrowTrap(pos_x * 16, pos_y * 16, Orientation::RIGHT);
-                        global::decorations.push_back(arrowTrap);
+                        GameState::instance().decorations.push_back(arrowTrap);
                     }
 
                     if (npc == 13 && skeletons_left > 0 && r == 1) {
 
                         if (rand() % 2 == 0) {
                             auto *skeleton = new Skeleton(pos_x * 16, pos_y * 16);
-                            global::creatures.push_back(skeleton);
+                            GameState::instance().creatures.push_back(skeleton);
                             skeletons_left--;
                             last_placement = 0;
                         } else {
 
                             auto *fakeSkeleton = new FakeSkeleton(pos_x * 16, pos_y * 16);
-                            global::creatures.push_back(fakeSkeleton);
+                            GameState::instance().creatures.push_back(fakeSkeleton);
                             skeletons_left--;
                             last_placement = 0;
 
@@ -274,28 +275,28 @@ void populate_cave_npcs() {
 
                     if (npc == 1 && snakes_left > 0 && r == 1) {
                         Snake *snake = new Snake(pos_x * 16, pos_y * 16);
-                        global::creatures.push_back(snake);
+                        GameState::instance().creatures.push_back(snake);
                         snakes_left--;
                         last_placement = 0;
                     }
 
                     if (npc == 2 && bats_left > 0 && r == 1) {
                         Bat *bat = new Bat(pos_x * 16, pos_y * 16);
-                        global::creatures.push_back(bat);
+                        GameState::instance().creatures.push_back(bat);
                         bats_left--;
                         last_placement = 0;
                     }
 
                     if (npc == 3 && spiders_left > 0 && r == 1) {
                         Spider *spider = new Spider(pos_x * 16, pos_y * 16);
-                        global::creatures.push_back(spider);
+                        GameState::instance().creatures.push_back(spider);
                         spiders_left--;
                         last_placement = 0;
                     }
 
                     if (npc == 4 && spikes_left > 0 && r == 1) {
                         Spikes *spikes = new Spikes(pos_x * 16, (pos_y * 16) + 3);
-                        global::creatures.push_back(spikes);
+                        GameState::instance().creatures.push_back(spikes);
                         spikes_left--;
                         last_placement = 0;
                     }
@@ -303,32 +304,32 @@ void populate_cave_npcs() {
 
                     if (npc == 5 && cavemen_left > 0 && r == 1) {
                         Caveman *caveman = new Caveman(pos_x * 16, pos_y * 16);
-                        global::creatures.push_back(caveman);
+                        GameState::instance().creatures.push_back(caveman);
                         cavemen_left--;
                         last_placement = 0;
                     }
 
                     if (npc == 6 && damsels_left > 0) {
                         Damsel *damsel = new Damsel(pos_x * 16, pos_y * 16);
-                        global::creatures.push_back(damsel);
+                        GameState::instance().creatures.push_back(damsel);
                         damsels_left--;
                         last_placement = 0;
                     }
 
                     if (npc == 7) {
                         Lamp *lamp = new Lamp(pos_x * 16, pos_y * 16);
-                        global::decorations.push_back(lamp);
+                        GameState::instance().decorations.push_back(lamp);
                     }
 
                     if (npc == 8) {
                         shopkeeper = new Shopkeeper(pos_x * 16, pos_y * 16);
-                        global::creatures.push_back(shopkeeper);
+                        GameState::instance().creatures.push_back(shopkeeper);
                         shopkeeper->set_shop_bounds();
                     }
 
                     if (npc == 20) {
                         auto goldenIdol = new GoldenIdol((pos_x * 16) + 10, pos_y * 16);
-                        global::items.push_back(goldenIdol);
+                        GameState::instance().items.push_back(goldenIdol);
                     }
 
                     if (npc == 12) {
@@ -358,26 +359,26 @@ void populate_cave_npcs() {
 /** Creates all Sprites that are exlusively needed in the main menu scene */
 void populate_main_menu() {
 
-    global::hud->bombs = 0;
-    global::hud->ropes = 0;
+    GameState::instance().hud->bombs = 0;
+    GameState::instance().hud->ropes = 0;
 
     auto *spelunkyTitle = new SpelunkyTitle(60, 175);
-    global::decorations.push_back(spelunkyTitle);
+    GameState::instance().decorations.push_back(spelunkyTitle);
 
     auto *copyrights = new Copyrights(60, 380);
-    global::decorations.push_back(copyrights);
+    GameState::instance().decorations.push_back(copyrights);
 
     auto *start = new ArchSign(50, 272, ArchSign::Type::START);
-    global::decorations.push_back(start);
+    GameState::instance().decorations.push_back(start);
 
     auto *scores = new ArchSign(98, 272, ArchSign::Type::SCORES);
-    global::decorations.push_back(scores);
+    GameState::instance().decorations.push_back(scores);
 
     auto *tutorial = new RockSign(0, 272, RockSign::Type::TUTORIAL);
-    global::decorations.push_back(tutorial);
+    GameState::instance().decorations.push_back(tutorial);
 
     auto *quit = new RockSign(192, 143, RockSign::Type::QUIT);
-    global::decorations.push_back(quit);
+    GameState::instance().decorations.push_back(quit);
 
     Rope *rope = new Rope(227, 272);
     rope->_y_speed = -4;
@@ -386,6 +387,6 @@ void populate_main_menu() {
     rope->_activated = false;
     rope->_thrown = true;
 
-    global::items.push_back(rope);
+    GameState::instance().items.push_back(rope);
 
 }

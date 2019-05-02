@@ -3,7 +3,7 @@
 //
 
 #include "Blood.hpp"
-#include "../../GlobalsDeclarations.hpp"
+#include "../../GameState.hpp"
 #include "../../../build/gfx_blood_rock_rope_poof.h"
 #include "../../collisions/Collisions.hpp"
 #include "../../tiles/LevelRenderingUtils.hpp"
@@ -27,13 +27,13 @@ void Blood::update_creature_specific() {
         return;
     }
 
-    time_since_last_spawn += *global::timer;
+    time_since_last_spawn += *GameState::instance().timer;
 
     if (_bottom_collision)
         //dispose blood droplet faster if touching ground
-        living_timer += 4 * (*global::timer);
+        living_timer += 4 * (*GameState::instance().timer);
     else
-        living_timer += *global::timer;
+        living_timer += *GameState::instance().timer;
 
     if (finished) {
         //if main blood droplet animation is finished,
@@ -54,7 +54,7 @@ void Blood::update_creature_specific() {
     } else {
         //animation not finished on main droplet
 
-        animFrameTimer += *global::timer;
+        animFrameTimer += *GameState::instance().timer;
 
         if (animFrameTimer > BLOOD_ANIM_FRAME_DELTA) {
             animFrameTimer = 0;
@@ -78,11 +78,11 @@ void Blood::init_sprites() {
 
     delete_sprites();
     
-    subSpriteInfo = global::sub_oam_manager->initSprite(gfx_blood_rock_rope_poofPal, gfx_blood_rock_rope_poofPalLen,
-                                                        nullptr, _sprite_size, ObjSize::OBJSIZE_8, BLOOD_ROCK_ROPE_POOF,
+    subSpriteInfo = GameState::instance().sub_oam_manager->initSprite(gfx_blood_rock_rope_poofPal, gfx_blood_rock_rope_poofPalLen,
+                                                        nullptr, _sprite_size, ObjSize::OBJSIZE_8, SpritesheetType::BLOOD_ROCK_ROPE_POOF,
                                                         true, false, LAYER_LEVEL::MIDDLE_TOP);
-    mainSpriteInfo = global::main_oam_manager->initSprite(gfx_blood_rock_rope_poofPal, gfx_blood_rock_rope_poofPalLen,
-                                                          nullptr, _sprite_size, ObjSize::OBJSIZE_8, BLOOD_ROCK_ROPE_POOF,
+    mainSpriteInfo = GameState::instance().main_oam_manager->initSprite(gfx_blood_rock_rope_poofPal, gfx_blood_rock_rope_poofPalLen,
+                                                          nullptr, _sprite_size, ObjSize::OBJSIZE_8, SpritesheetType::BLOOD_ROCK_ROPE_POOF,
                                                           true, false, LAYER_LEVEL::MIDDLE_TOP);
     match_animation();
     update_sprites_position();
@@ -98,7 +98,7 @@ void Blood::spawn_blood() {
     element->currentFrame = currentFrame;
     element->update();
     bloodTrail.push_back(element);
-    global::creatures.push_back(element);
+    GameState::instance().creatures.push_back(element);
 }
 
 void Blood::match_animation() {

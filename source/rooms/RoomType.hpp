@@ -5,8 +5,7 @@
 #ifndef SPELUNKYDS_ROOMTYPE_H
 #define SPELUNKYDS_ROOMTYPE_H
 
-// TODO enum -> enum class
-enum RoomType {
+enum class RoomType {
     R_CLOSED,
     R_LEFT_RIGHT,
     R_LEFT_RIGHT_DOWN,

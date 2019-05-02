@@ -4,7 +4,7 @@
 
 #include <cmath>
 #include "../../entities/decorations/GotCollectible.hpp"
-#include "../../GlobalsDeclarations.hpp"
+#include "../../GameState.hpp"
 #include "../../../build/gfx_spider_skeleton.h"
 #include "../../collisions/Collisions.hpp"
 #include "FakeSkeleton.hpp"
@@ -30,15 +30,15 @@ void FakeSkeleton::update_creature_specific() {
 
     if (!tried_to_pickup) {
 
-        if (global::input_handler->y_key_down &&
-            global::input_handler->down_key_held &&
-            !global::main_dude->holding_item &&
+        if (GameState::instance().input_handler->y_key_down &&
+            GameState::instance().input_handler->down_key_held &&
+            !GameState::instance().main_dude->holding_item &&
             Collisions::checkCollisionWithMainDude(_x, _y, _physical_width, _physical_height)) {
 
             //pickup item from the ground
 
-            global::main_dude->holding_item = true;
-            global::input_handler->y_key_down = false;
+            GameState::instance().main_dude->holding_item = true;
+            GameState::instance().input_handler->y_key_down = false;
 
             tried_to_pickup = true;
             match_animation();
@@ -55,10 +55,10 @@ void FakeSkeleton::init_sprites() {
 
     delete_sprites();
 
-    subSpriteInfo = global::sub_oam_manager->initSprite(gfx_spider_skeletonPal, gfx_spider_skeletonPalLen,
+    subSpriteInfo = GameState::instance().sub_oam_manager->initSprite(gfx_spider_skeletonPal, gfx_spider_skeletonPalLen,
                                                         nullptr, _sprite_size, ObjSize::OBJSIZE_16,
                                                         _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
-    mainSpriteInfo = global::main_oam_manager->initSprite(gfx_spider_skeletonPal, gfx_spider_skeletonPalLen,
+    mainSpriteInfo = GameState::instance().main_oam_manager->initSprite(gfx_spider_skeletonPal, gfx_spider_skeletonPalLen,
                                                           nullptr, _sprite_size, ObjSize::OBJSIZE_16,
                                                           _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
     sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);
@@ -78,8 +78,8 @@ void FakeSkeleton::update_sprites_position() {
 void FakeSkeleton::spawn_skull() {
     auto s = new Skull(_x, _y);
     s->_hold_by_main_dude = true;
-    global::main_dude->_currently_held_item = s;
-    global::items.push_back(s);
+    GameState::instance().main_dude->_currently_held_item = s;
+    GameState::instance().items.push_back(s);
 }
 
 void FakeSkeleton::match_animation() {

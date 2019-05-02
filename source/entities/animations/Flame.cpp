@@ -4,7 +4,7 @@
 
 
 #include <cstdlib>
-#include "../../GlobalsDeclarations.hpp"
+#include "../../GameState.hpp"
 #include "../../../build/gfx_spike_collectibles_flame.h"
 #include "../../collisions/Collisions.hpp"
 #include "Flame.hpp"
@@ -15,7 +15,7 @@ void Flame::update_creature_specific() {
     for (unsigned long a = 0; a < flame_trail.size(); a++) {
         flame_trail.at(a)->update();
         if (flame_trail.at(a)->finished) {
-            //FIXME Possible leaks in global::sprite_infos? Same with blood trails.
+            //FIXME Possible leaks in GameState::instance().sprite_infos? Same with blood trails.
             delete (flame_trail.at(a));
             flame_trail.erase(flame_trail.begin() + a);
         }
@@ -29,12 +29,12 @@ void Flame::update_creature_specific() {
     sprite_utils::set_horizontal_flip(false, mainSpriteInfo, subSpriteInfo);
     sprite_utils::set_visibility(true, mainSpriteInfo, subSpriteInfo);
 
-    time_since_last_spawn += *global::timer;
+    time_since_last_spawn += *GameState::instance().timer;
 
     if (_bottom_collision)
-        living_timer += 4 * *global::timer;
+        living_timer += 4 * *GameState::instance().timer;
     else
-        living_timer += *global::timer;
+        living_timer += *GameState::instance().timer;
 
     if (finished) {
 
@@ -58,7 +58,7 @@ void Flame::update_creature_specific() {
     } else {
         //main flame animation not finished, continue and spawn other flames if possible
 
-        animFrameTimer += *global::timer;
+        animFrameTimer += *GameState::instance().timer;
 
         if (animFrameTimer > FLAME_ANIM_FRAME_DELTA) {
             animFrameTimer = 0;
@@ -77,12 +77,12 @@ void Flame::init_sprites() {
 
     delete_sprites();
     
-    subSpriteInfo = global::sub_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
+    subSpriteInfo = GameState::instance().sub_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
                                                         gfx_spike_collectibles_flamePalLen, nullptr, _sprite_size,
-                                                        ObjSize::OBJSIZE_8, SPIKES_COLLECTIBLES, true, false, LAYER_LEVEL::MIDDLE_TOP);
-    mainSpriteInfo = global::main_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
+                                                        ObjSize::OBJSIZE_8, SpritesheetType::SPIKES_COLLECTIBLES, true, false, LAYER_LEVEL::MIDDLE_TOP);
+    mainSpriteInfo = GameState::instance().main_oam_manager->initSprite(gfx_spike_collectibles_flamePal,
                                                           gfx_spike_collectibles_flamePalLen, nullptr,
-                                                          _sprite_size, ObjSize::OBJSIZE_8, SPIKES_COLLECTIBLES, true, false,
+                                                          _sprite_size, ObjSize::OBJSIZE_8, SpritesheetType::SPIKES_COLLECTIBLES, true, false,
                                                           LAYER_LEVEL::MIDDLE_TOP);
     match_animation();
     update_sprites_position();
