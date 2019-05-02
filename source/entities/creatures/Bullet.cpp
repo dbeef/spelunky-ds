@@ -9,6 +9,7 @@
 #include "../../tiles/LevelRenderingUtils.hpp"
 #include "../../memory/SpriteUtils.hpp"
 #include "../../GameState.hpp"
+#include "../../time/Timer.h"
 
 #define BULLET_POSITION_INC_DELTA 15
 #define BULLET_ANIM_X_OFFSET 5
@@ -25,7 +26,7 @@ void Bullet::update_creature_specific() {
     sprite_utils::set_visibility(true, mainSpriteInfo, subSpriteInfo);
     update_sprites_position();
 
-    lifetime += *GameState::instance().timer;
+    lifetime += Timer::getDeltaTime();
 
     if (_map_collisions_checked) {
         if (_left_collision || _right_collision || _bottom_collision || _upper_collision) {
@@ -37,7 +38,7 @@ void Bullet::update_creature_specific() {
 
     if (killed) {
 
-        animFrameTimer += *GameState::instance().timer;
+        animFrameTimer += Timer::getDeltaTime();
 
         if (animFrameTimer > BULLET_ANIM_FRAME_DELTA) {
 

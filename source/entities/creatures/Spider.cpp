@@ -14,6 +14,7 @@
 #include "../../../build/soundbank.h"
 #include "../../memory/SpriteUtils.hpp"
 #include "../../GameState.hpp"
+#include "../../time/Timer.h"
 
 #define SPIDER_HANGING_OFFSET 8
 #define SPIDER_ANIM_FRAME_DELTA 75
@@ -40,9 +41,9 @@ void Spider::update_creature_specific() {
         hunting = abs(_y - GameState::instance().main_dude->_y) < 9 * TILE_H && GameState::instance().main_dude->_x + MainDude::main_dude_physical_width > _x &&
                   GameState::instance().main_dude->_x < _x + _physical_width && GameState::instance().main_dude->_y > _y;
     else {
-        time_since_last_big_jump += *GameState::instance().timer;
-        time_since_last_jump += *GameState::instance().timer;
-        animFrameTimer += *GameState::instance().timer;
+        time_since_last_big_jump += Timer::getDeltaTime();
+        time_since_last_jump += Timer::getDeltaTime();
+        animFrameTimer += Timer::getDeltaTime();
     }
 
     if (animFrameTimer > SPIDER_ANIM_FRAME_DELTA) {

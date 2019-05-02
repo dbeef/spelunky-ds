@@ -14,6 +14,7 @@
 #include "../items/Skull.hpp"
 #include "../../memory/SpriteUtils.hpp"
 #include "../../GameState.hpp"
+#include "../../time/Timer.h"
 
 #define SKELETON_POS_INC_DELTA 19
 #define SKELETON_ANIM_FRAME_DELTA 90
@@ -31,7 +32,7 @@ void Skeleton::update_creature_specific() {
 
     if (summoned || can_be_summoned) {
         if (summoning_delay_timer > 350) {
-            anim_frame_timer += *GameState::instance().timer;
+            anim_frame_timer += Timer::getDeltaTime();
 
             if (can_be_summoned && !set_up) {
 
@@ -45,9 +46,9 @@ void Skeleton::update_creature_specific() {
             }
 
         } else
-            summoning_delay_timer += *GameState::instance().timer;
+            summoning_delay_timer += Timer::getDeltaTime();
 
-        change_turn_timer += *GameState::instance().timer;
+        change_turn_timer += Timer::getDeltaTime();
     }
 
     check_if_can_be_summoned();

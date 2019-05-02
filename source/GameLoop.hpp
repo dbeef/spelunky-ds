@@ -16,8 +16,6 @@ namespace gameloop {
 
     void run();
 
-    void manage_brightness();
-
     void on_bomb_explosion();
 
     void update_entities();

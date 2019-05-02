@@ -5,6 +5,7 @@
 #include <cassert>
 #include "OamUtils.hpp"
 #include "../GameState.hpp"
+#include "../time/Timer.h"
 
 namespace oam_utils {
 
@@ -12,7 +13,7 @@ namespace oam_utils {
     // that the cleaning causes would be less visible.
     bool clean_unused_oam() {
 
-        GameState::instance().clean_unused_oam_timer += *GameState::instance().timer;
+        GameState::instance().clean_unused_oam_timer += Timer::getDeltaTime();
 
         if (/*GameState::instance().clean_unused_oam_timer > 250 && */GameState::instance().main_oam_manager->current_oam_id_tiles >= 118) {
 

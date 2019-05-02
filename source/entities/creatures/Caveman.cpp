@@ -14,6 +14,7 @@
 #include "../../tiles/TileOrientation.hpp"
 #include "../../memory/SpriteUtils.hpp"
 #include "../../GameState.hpp"
+#include "../../time/Timer.h"
 
 #define CAVEMAN_POS_INC_DELTA 20
 #define CAVEMAN_TRIGGERED_SPEED 3
@@ -26,8 +27,8 @@ void Caveman::update_creature_specific() {
     if (_ready_to_dispose)
         return;
 
-    invert_speed_timer += *GameState::instance().timer;
-    blood_spawn_timer += *GameState::instance().timer;
+    invert_speed_timer += Timer::getDeltaTime();
+    blood_spawn_timer += Timer::getDeltaTime();
 
     sprite_utils::set_horizontal_flip(sprite_state == Orientation::RIGHT, mainSpriteInfo, subSpriteInfo);
     sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);
@@ -58,7 +59,7 @@ void Caveman::update_creature_specific() {
         }
     }
 
-    animFrameTimer += *GameState::instance().timer;
+    animFrameTimer += Timer::getDeltaTime();
 
     if (animFrameTimer > CAVEMAN_ANIM_FRAME_DELTA) {
         animFrame++;
@@ -86,7 +87,7 @@ void Caveman::update_creature_specific() {
         deal_damage_main_dude_on_collision(1);
 
     if (stunned) {
-        stunned_timer += *GameState::instance().timer;
+        stunned_timer += Timer::getDeltaTime();
         if (stunned_timer > CAVEMAN_STUN_TIME) {
             stunned = false;
             stunned_timer = 0;
@@ -215,11 +216,11 @@ void Caveman::make_some_movement() {
         return;
 
     if (waitTimer > 0 && !triggered) {
-        waitTimer -= *GameState::instance().timer;
+        waitTimer -= Timer::getDeltaTime();
     } else {
 
         if (goTimer > 0)
-            goTimer -= *GameState::instance().timer;
+            goTimer -= Timer::getDeltaTime();
 
         if (triggered) {
             if (sprite_state == Orientation::RIGHT)

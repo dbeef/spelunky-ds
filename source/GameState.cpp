@@ -17,6 +17,7 @@
 #include "tiles/LevelGenerator.hpp"
 #include "tiles/PopulatingUtils.hpp"
 #include "entities/main_dude/MainDudeConsts.h"
+#include "time/Timer.h"
 
 GameState *GameState::_instance = nullptr;
 
@@ -30,19 +31,27 @@ GameState::GameState() {
     main_oam_manager = new OAMManager();
     sub_oam_manager = new OAMManager();
     hud = new Hud();
+    temp_map = new u16[4096];
 
-    //some of the moving objects aren't rendered as entities, like the ArrowTrap, which is render as a map tile,
-    //so the the list is bigger, though the maximum number of entities that can be rendered on NDS is 128
+    SPELUNKYDS_BREAKING_ASSERT(input_handler);
+    SPELUNKYDS_BREAKING_ASSERT(camera);
+    SPELUNKYDS_BREAKING_ASSERT(main_dude);
+    SPELUNKYDS_BREAKING_ASSERT(current_level);
+    SPELUNKYDS_BREAKING_ASSERT(main_oam_manager);
+    SPELUNKYDS_BREAKING_ASSERT(sub_oam_manager);
+    SPELUNKYDS_BREAKING_ASSERT(hud);
+    SPELUNKYDS_BREAKING_ASSERT(temp_map);
+
+    // some of the moving objects aren't rendered as entities, like the ArrowTrap, which is render as a map tile,
+    // though the maximum number of entities that can be rendered on NDS is 128
     creatures.reserve(64);
-    //some of the entities in this list may just wait to be disposed, that's why this size is slightly bigger that 128
     sprite_infos.reserve(128);
-    //I assume there won't be a situation when we'll add more than 64 objects in a single frame
-
     decorations.reserve(64);
-
     treasures.reserve(8);
 
-    temp_map = new u16[4096];
+    // set up logics
+    in_main_menu = true;
+    just_started_game = true;
 }
 
 void GameState::start_new_game() {
@@ -57,16 +66,14 @@ void GameState::start_new_game() {
     hud->disable_all_prompts();
     hud->set_hud_sprites_attributes();
     hud->draw_level_hud();
-
 }
 
 void GameState::start_main_menu() {
-
     main_dude->climbing = false;
     camera->follow_main_dude = false;
-    GameState::instance().in_main_menu = true;
-    GameState::instance().levels_transition_screen = false;
-    GameState::instance().scores_screen = false;
+    in_main_menu = true;
+    levels_transition_screen = false;
+    scores_screen = false;
     populate_main_menu();
 }
 
@@ -74,7 +81,7 @@ void GameState::start_scores() {
 
     main_dude->reset_state();
 
-    GameState::instance().scores_screen = true;
+    scores_screen = true;
     hud->draw_scores();
     camera->follow_main_dude = false;
 }
@@ -83,8 +90,8 @@ void GameState::start_level_transition_screen() {
     hud->total_time_spent += hud->time_spent_on_level;
     hud->level++;
 
-    GameState::instance().levels_transition_screen = true;
-    GameState::instance().splash_screen = true;
+    levels_transition_screen = true;
+    splash_screen = true;
 
     input_handler->stop_handling = true;
     input_handler->l_bumper_held = true;
@@ -95,10 +102,10 @@ void GameState::start_level_transition_screen() {
     hud->draw_on_level_done();
 
 
-    if (GameState::instance().damsels_rescued_this_level > 0) {
-        hud->hearts += GameState::instance().damsels_rescued_this_level;
-        GameState::instance().damsels_rescued_this_level = 0;
-        GameState::instance().smooching = true;
+    if (damsels_rescued_this_level > 0) {
+        hud->hearts += damsels_rescued_this_level;
+        damsels_rescued_this_level = 0;
+        smooching = true;
 
         Damsel *damsel = new Damsel(0, 0);
         damsel->call_for_help = false;
@@ -125,8 +132,8 @@ void GameState::start_next_level() {
     hud->init_sprites();
     populate_cave_npcs();
     populate_cave_moniez();
-    GameState::instance().levels_transition_screen = false;
-    GameState::instance().in_main_menu = false;
+    levels_transition_screen = false;
+    in_main_menu = false;
     killed_npcs.clear();
     collected_treasures.clear();
     hud->money_on_this_level = 0;
@@ -137,7 +144,7 @@ void GameState::start_next_level() {
 void GameState::handle_changing_screens() {
 
     if ((main_dude->dead && input_handler->y_key_down) ||
-        (main_dude->animFrame >= 16 && !GameState::instance().splash_screen)) {
+        (main_dude->animFrame >= 16 && !splash_screen)) {
 
         main_dude->animFrame = 0;
 
@@ -146,11 +153,11 @@ void GameState::handle_changing_screens() {
 
         generate_new_level_layout();
 
-        if (GameState::instance().in_main_menu || GameState::instance().levels_transition_screen) {
+        if (in_main_menu || levels_transition_screen) {
 
             //next level or starting game
 
-            if (GameState::instance().in_main_menu) {
+            if (in_main_menu) {
                 sound::stop_menu_music();
                 sound::start_cave_music();
             } else
@@ -172,9 +179,9 @@ void GameState::handle_changing_screens() {
 
             //splash screen; scores or level transition
 
-            if (GameState::instance().scores_screen) {
+            if (scores_screen) {
 
-                GameState::instance().robbed_killed_shopkeeper = false;
+                robbed_killed_shopkeeper = false;
 
                 sound::stop_cave_music();
                 sound::start_menu_music();
@@ -227,37 +234,37 @@ void GameState::handle_changing_screens() {
 
         consoleClear();
 
-        if (GameState::instance().in_main_menu || GameState::instance().levels_transition_screen) {
+        if (in_main_menu || levels_transition_screen) {
 
-            if (GameState::instance().in_main_menu) {
-                GameState::instance().start_new_game();
+            if (in_main_menu) {
+                start_new_game();
             } else {
                 sound::start_cave_music();
             }
 
-            GameState::instance().start_next_level(); //initializes hud entities
+            start_next_level(); //initializes hud entities
 
         } else {
 
-            if (GameState::instance().scores_screen)
-                GameState::instance().start_main_menu();
+            if (scores_screen)
+                start_main_menu();
             else if (main_dude->dead) {
-                GameState::instance().start_scores();
+                start_scores();
             } else
-                GameState::instance().start_level_transition_screen();
+                start_level_transition_screen();
         }
 
         main_dude->exiting_level = false;
 
 
-    } else if (main_dude->animFrame >= 16 && GameState::instance().splash_screen) {
+    } else if (main_dude->animFrame >= 16 && splash_screen) {
 
         main_dude->main_sprite_info->entry->isHidden = true;
         main_dude->sub_sprite_info->entry->isHidden = true;
         input_handler->stop_handling = false;
 
         if (input_handler->y_key_down) {
-            GameState::instance().splash_screen = false;
+            splash_screen = false;
         }
 
     }
@@ -269,7 +276,7 @@ void GameState::handle_changing_screens() {
 void GameState::handle_transition_screen_smooch() {
     if (smooching) {
         if (144 - main_dude->_x <= 16) {
-            smooch_timer += *timer;
+            smooch_timer += Timer::getDeltaTime();
             input_handler->right_key_held = false;
             if (!spawned_smooch) {
                 mmEffect(SFX_XKISS);
@@ -281,4 +288,59 @@ void GameState::handle_transition_screen_smooch() {
         //144
         //448
     }
+}
+
+//!> this should be done after Vblank (otherwise - crash!)
+void GameState::normalize_brightness() {
+
+    if (just_started_game) {
+        //just started the game, so lowering the brightness to the normal level.
+        //game starts with the maximum brightness, so the transition between DSiMenu++ would look smoother
+        change_brightness_timer += Timer::getDeltaTime();
+
+        if (change_brightness_timer > 100) {
+
+            _brightness_level--;
+
+            if (_brightness_level == 0)
+                just_started_game = false;
+            else
+                setBrightness(3, _brightness_level);
+
+        }
+    }
+
+    if (in_main_menu && exiting_game) {
+        //exiting game, so increasing the brightness to the maximum level so the transition
+        //between the game and DSiMenu++ would be smoother
+        change_brightness_timer += Timer::getDeltaTime();
+
+        if (change_brightness_timer > 100) {
+
+            _brightness_level++;
+
+            if (_brightness_level > 16)
+                exit(0);
+
+            setBrightness(3, _brightness_level);
+
+        }
+    }
+}
+
+void GameState::set_maximum_brightness() {
+    setBrightness(3, GameState::instance()._brightness_level);
+    _brightness_level = 16;
+}
+
+GameState::~GameState() {
+    delete main_dude;
+    delete input_handler;
+    delete camera;
+    delete current_level;
+    delete main_oam_manager;
+    delete sub_oam_manager;
+    delete hud;
+    delete print_console;
+    delete temp_map;
 }

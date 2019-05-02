@@ -10,6 +10,7 @@
 #include "../../../build/soundbank.h"
 #include "../../memory/SpriteInfo.h"
 #include "../../GameState.hpp"
+#include "../../time/Timer.h"
 
 void BaseTreasure::update_sprites_position() {
     int main_x, main_y, sub_x, sub_y;
@@ -50,7 +51,7 @@ void BaseTreasure::update() {
         GameState::instance().collected_treasures.push_back(_treasure_type);
         _ready_to_dispose = true;
     } else if (_collectible_timer < 500) {
-        _collectible_timer += *GameState::instance().timer;
+        _collectible_timer += Timer::getDeltaTime();
     }
 
 }

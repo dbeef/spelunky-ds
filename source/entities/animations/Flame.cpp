@@ -9,6 +9,7 @@
 #include "../../collisions/Collisions.hpp"
 #include "Flame.hpp"
 #include "../../memory/SpriteUtils.hpp"
+#include "../../time/Timer.h"
 
 void Flame::update_creature_specific() {
 
@@ -29,12 +30,12 @@ void Flame::update_creature_specific() {
     sprite_utils::set_horizontal_flip(false, mainSpriteInfo, subSpriteInfo);
     sprite_utils::set_visibility(true, mainSpriteInfo, subSpriteInfo);
 
-    time_since_last_spawn += *GameState::instance().timer;
+    time_since_last_spawn += Timer::getDeltaTime();
 
     if (_bottom_collision)
-        living_timer += 4 * *GameState::instance().timer;
+        living_timer += 4 * Timer::getDeltaTime();
     else
-        living_timer += *GameState::instance().timer;
+        living_timer += Timer::getDeltaTime();
 
     if (finished) {
 
@@ -58,7 +59,7 @@ void Flame::update_creature_specific() {
     } else {
         //main flame animation not finished, continue and spawn other flames if possible
 
-        animFrameTimer += *GameState::instance().timer;
+        animFrameTimer += Timer::getDeltaTime();
 
         if (animFrameTimer > FLAME_ANIM_FRAME_DELTA) {
             animFrameTimer = 0;

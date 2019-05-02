@@ -103,8 +103,8 @@ add_executable(spelunkyds
         source/entities/creatures/CreatureType.hpp
         source/sound/Sound.hpp
         source/console/ConsoleUtils.hpp
-        source/time/TimeUtils.h
-        source/time/TimeUtils.cpp
+        source/time/Timer.h
+        source/time/Timer.cpp
         source/memory/OamUtils.cpp
         source/memory/OamUtils.hpp
         source/entities/main_dude/Whip.cpp

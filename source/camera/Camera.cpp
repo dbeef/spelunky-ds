@@ -7,6 +7,7 @@
 
 #include "Camera.hpp"
 #include "../GameState.hpp"
+#include "../time/Timer.h"
 
 constexpr u16 MAP_WIDTH = 512;
 constexpr u16 MAP_HEIGHT = 512;
@@ -24,7 +25,7 @@ void Camera::apply_shaking() {
 
     if (shakescreen_duration_timer > 0) {
 
-        shakescreen_duration_timer -= *GameState::instance().timer;
+        shakescreen_duration_timer -= Timer::getDeltaTime();
 
         if (shakescreen_duration_timer < 0)
             shakescreen_duration_timer = 0;
@@ -105,7 +106,7 @@ void Camera::update() {
     if (!follow_main_dude)
         return;
 
-    position_update_timer += *GameState::instance().timer;
+    position_update_timer += Timer::getDeltaTime();
 
     if (position_update_timer > 15) {
 

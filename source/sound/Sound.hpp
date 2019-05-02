@@ -6,7 +6,7 @@
 #define SPELUNKYDS_SOUND_UTILS_H
 
 // For enabling sound effects.
-#define WITH_SOUND
+//#define WITH_SOUND
 
 namespace sound {
     void load_sounds();

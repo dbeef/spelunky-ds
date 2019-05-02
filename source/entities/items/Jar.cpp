@@ -8,6 +8,7 @@
 #include "../../../build/gfx_spike_collectibles_flame.h"
 #include "../../collisions/Collisions.hpp"
 #include "../../memory/SpriteUtils.hpp"
+#include "../../time/Timer.h"
 
 void Jar::destroy() {
     _destroyed = true;
@@ -32,7 +33,7 @@ void Jar::update_item_specific() {
     }
 
     if (_destroyed && _anim_frame_index < 7) {
-        _anim_frame_timer += *GameState::instance().timer;
+        _anim_frame_timer += Timer::getDeltaTime();
         if (_anim_frame_timer > 50) {
             _anim_frame_index++;
             match_animation();

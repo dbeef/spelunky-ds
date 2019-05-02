@@ -6,6 +6,7 @@
 #include "../../GameState.hpp"
 #include "../../memory/SpriteUtils.hpp"
 #include "Smooch.hpp"
+#include "../../time/Timer.h"
 
 void Smooch::update_decoration_specific() {
 
@@ -13,7 +14,7 @@ void Smooch::update_decoration_specific() {
 
     update_sprites_position();
 
-    _anim_frame_timer += *GameState::instance().timer;
+    _anim_frame_timer += Timer::getDeltaTime();
 
     // Animate and go upwards gradually
     if (_anim_frame_timer > smooch_anim_frame_delta) {

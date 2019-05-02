@@ -14,6 +14,7 @@
 #include "../main_dude/MainDude.hpp"
 #include "../../memory/SpriteUtils.hpp"
 #include "Arrow.hpp"
+#include "../../time/Timer.h"
 
 void Arrow::update_item_specific() {
 
@@ -32,7 +33,7 @@ void Arrow::update_item_specific() {
         update_frame((int) floor(_angle / 22.5f));
 
     } else if (_thrown) {
-        _armed_timer += *GameState::instance().timer;
+        _armed_timer += Timer::getDeltaTime();
         if (_armed_timer > 100) {
             _thrown = true;
             _armed_timer = 0;

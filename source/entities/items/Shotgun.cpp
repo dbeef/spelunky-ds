@@ -13,6 +13,7 @@
 #include "../../tiles/LevelRenderingUtils.hpp"
 #include "../../memory/SpriteUtils.hpp"
 #include "Shotgun.hpp"
+#include "../../time/Timer.h"
 
 void Shotgun::update_item_specific() {
 
@@ -128,7 +129,7 @@ void Shotgun::handle_shooting() {
     blast->_firing = firing;
 
     if (!firing) {
-        cooldown += *GameState::instance().timer;
+        cooldown += Timer::getDeltaTime();
         if (_orientation == Orientation::LEFT)
             blast->_x = _x - 10;
         else

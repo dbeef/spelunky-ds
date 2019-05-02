@@ -11,6 +11,7 @@
 #include "../../../build/soundbank.h"
 #include "../../preprocessor/Debug.h"
 #include "../../GameState.hpp"
+#include "../../time/Timer.h"
 
 void ICollidable::update_collisions_with_map(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
     Collisions::getNeighboringTiles(GameState::instance().current_level->map_tiles, x_current_pos_in_tiles,
@@ -89,7 +90,7 @@ void ICollidable::update_collidable() {
 
     limit_speed();
 
-    _pos_inc_timer += *GameState::instance().timer;
+    _pos_inc_timer += Timer::getDeltaTime();
 
     if (_pos_inc_timer > _pos_update_delta) {
         update_position();

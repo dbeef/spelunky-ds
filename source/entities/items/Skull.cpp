@@ -9,6 +9,7 @@
 #include "../../memory/SpriteUtils.hpp"
 #include "../animations/Bone.hpp"
 #include "Skull.hpp"
+#include "../../time/Timer.h"
 
 #define SKULL_ANIM_FRAME_DELTA  45
 #define COLLIDED_FRAMES 7
@@ -22,7 +23,7 @@ void Skull::update_item_specific() {
     update_sprites_position();
 
     if (_collided) {
-        _anim_frame_timer += *GameState::instance().timer;
+        _anim_frame_timer += Timer::getDeltaTime();
         if (_anim_frame_timer > SKULL_ANIM_FRAME_DELTA) {
             _anim_frame_timer = 0;
             _anim_frame++;

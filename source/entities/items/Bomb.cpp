@@ -16,6 +16,7 @@
 #include "../animations/Flame.hpp"
 #include "../decorations/Explosion.h"
 #include "../../GameState.hpp"
+#include "../../time/Timer.h"
 
 void Bomb::update_item_specific() {
 
@@ -29,7 +30,7 @@ void Bomb::update_item_specific() {
 
     if (armed) {
 
-        armedTimer += *GameState::instance().timer;
+        armedTimer += Timer::getDeltaTime();
 
         if (armedTimer < ARMED_TIME_BLINK_SLOW) {
 

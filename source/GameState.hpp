@@ -33,6 +33,7 @@ class GameState {
 public:
 
     GameState();
+    ~GameState();
 
     inline static void init() {
         SPELUNKYDS_BREAKING_ASSERT(!_instance);
@@ -50,6 +51,10 @@ public:
         return *_instance;
     }
 
+    void set_maximum_brightness();
+
+    void normalize_brightness();
+
     void start_new_game();
 
     void start_main_menu();
@@ -64,7 +69,7 @@ public:
 
     void handle_transition_screen_smooch();
 
-    bool just_started_game = true;
+    bool just_started_game{};
     bool exiting_game{};
     bool robbed_killed_shopkeeper{};
     bool bombed{};
@@ -76,7 +81,6 @@ public:
     bool smooching{};
     int damsels_rescued_this_level{};
     int smooch_timer{};
-    int brightness_level = 16;
     int change_brightness_timer{};
 
     MainDude *main_dude;
@@ -87,6 +91,7 @@ public:
     OAMManager *sub_oam_manager;
     Hud *hud;
     PrintConsole *print_console; //in-game console
+    u16 *temp_map; //cave background only
 
     std::vector<BaseCreature *> creatures;
     std::vector<BaseDecoration *> decorations;
@@ -99,14 +104,13 @@ public:
 
     int bg_main_address; //technically, it's an id returned by oam init FIXME naming
     int bg_sub_address; //technically, it's an id returned by oam init FIXME naming
-    double *timer; //global timer, updated in game loop FIXME can be int, /delta time/ is in milliseconds anyway
     double clean_unused_oam_timer; //every arbitrary amount of time OAM is checked for unused entities and cleaned off
     u16 current_map[4096]; //cave background with tiles rendered on it
-    u16 *temp_map; //cave background only
 
 private:
     static GameState *_instance;
 
+    int _brightness_level{};
 };
 
 #endif //SPELUNKYDS_GAME_STATE_H

@@ -8,6 +8,7 @@
 #include "FlameElement.hpp"
 #include "Flame.hpp"
 #include "../../memory/SpriteUtils.hpp"
+#include "../../time/Timer.h"
 
 //TODO remove 'finished' flag - duplicates _ready_to_dispose - same for blood element
 //TODO Give bombs a bigger rendering priority than other things - but no bigger than hud
@@ -18,8 +19,8 @@ void FlameElement::update_creature_specific() {
 
     update_sprites_position();
 
-    inactive_delay += *GameState::instance().timer;
-    frameTimer += *GameState::instance().timer;
+    inactive_delay += Timer::getDeltaTime();
+    frameTimer += Timer::getDeltaTime();
 
     if (frameTimer > FLAME_ANIM_FRAME_DELTA) {
 

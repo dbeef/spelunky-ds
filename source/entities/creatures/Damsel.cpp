@@ -13,6 +13,7 @@
 #include "../../../build/soundbank.h"
 #include "../../memory/SpriteUtils.hpp"
 #include "../../GameState.hpp"
+#include "../../time/Timer.h"
 
 #define DAMSEL_SPRITESHEET_OFFSET 25
 #define DAMSEL_POS_INC_DELTA 18
@@ -36,8 +37,8 @@ void Damsel::update_creature_specific() {
     if (killed)
         yelling = false;
 
-    invert_speed_timer += *GameState::instance().timer;
-    blood_spawn_timer += *GameState::instance().timer;
+    invert_speed_timer += Timer::getDeltaTime();
+    blood_spawn_timer += Timer::getDeltaTime();
 
     sprite_utils::set_horizontal_flip(sprite_state == Orientation::RIGHT, mainSpriteInfo, subSpriteInfo);
     sprite_utils::set_visibility(true, mainSpriteInfo, subSpriteInfo);
@@ -87,7 +88,7 @@ void Damsel::update_creature_specific() {
         _bouncing_factor_y = ICollidable::default_bouncing_factor_y;
     }
 
-    animFrameTimer += *GameState::instance().timer;
+    animFrameTimer += Timer::getDeltaTime();
 
     sprite_utils::set_visibility(yelling, yell_mainSpriteInfo, yell_subSpriteInfo);
 
@@ -112,7 +113,7 @@ void Damsel::update_creature_specific() {
 //        kill_if_whip(0);
 
     if (call_for_help && !triggered && !yelling && !killed) {
-        yell_timer += *GameState::instance().timer;
+        yell_timer += Timer::getDeltaTime();
         if (yell_timer > 5 * 1000) {
             yell_timer = 0;
             yelling = true;
@@ -121,7 +122,7 @@ void Damsel::update_creature_specific() {
 
 
     if (stunned) {
-        stunned_timer += *GameState::instance().timer;
+        stunned_timer += Timer::getDeltaTime();
         if (stunned_timer > DAMSEL_STUN_TIME) {
             stunned = false;
             stunned_timer = 0;
@@ -312,11 +313,11 @@ void Damsel::make_some_movement() {
         return;
 
     if (waitTimer > 0 && !triggered) {
-        waitTimer -= *GameState::instance().timer;
+        waitTimer -= Timer::getDeltaTime();
     } else {
 
         if (goTimer > 0)
-            goTimer -= *GameState::instance().timer;
+            goTimer -= Timer::getDeltaTime();
 
         if (triggered) {
             if (sprite_state == Orientation::RIGHT)

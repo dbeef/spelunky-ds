@@ -9,7 +9,7 @@
 #include "GameLoop.hpp"
 #include "sound/Sound.hpp"
 #include "console/ConsoleUtils.hpp"
-#include "time/TimeUtils.h"
+#include "time/Timer.h"
 #include "GameState.hpp"
 
 /**
@@ -20,15 +20,15 @@ int main() {
 
     GameState::init();
 
-    swiWaitForVBlank(); //waiting for a next frame so it would be allowed to change the brightness
-    setBrightness(3, GameState::instance().brightness_level); //setting brightness to max to smooth transition from menu
-
-    GameState::instance().in_main_menu = true;
+    // waiting for a next frame so it would be allowed to change the brightness
+    swiWaitForVBlank();
+    // setting screen white to smooth transition from game launcher
+    GameState::instance().set_maximum_brightness();
 
     sound::load_sounds();
     sound::start_menu_music();
 
-    time_utils::start();
+    Timer::start();
 
     videoSetMode(MODE_0_2D);
     videoSetModeSub(MODE_0_2D);
@@ -79,7 +79,7 @@ int main() {
                                           OamType::SUB);
 
     gameloop::run();
-    time_utils::stop();
+    Timer::stop();
 
     GameState::dispose();
 

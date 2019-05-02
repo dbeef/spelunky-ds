@@ -9,6 +9,7 @@
 #include "FallPoof.hpp"
 #include "../../collisions/Collisions.hpp"
 #include "../../memory/SpriteUtils.hpp"
+#include "../../time/Timer.h"
 
 
 #define FALL_POOF_POS_INC_DELTA 35
@@ -25,7 +26,7 @@ void FallPoof::update_creature_specific() {
     sprite_utils::set_priority(OBJPRIORITY_0, mainSpriteInfo, subSpriteInfo);
     update_sprites_position();
 
-    animFrameTimer += *GameState::instance().timer;
+    animFrameTimer += Timer::getDeltaTime();
 
     if (animFrameTimer > FALL_POOF_ANIM_FRAME_DELTA) {
 

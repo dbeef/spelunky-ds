@@ -9,6 +9,7 @@
 #include "../../entities/decorations/GotCollectible.hpp"
 #include "../../collisions/Collisions.hpp"
 #include "../../memory/SpriteUtils.hpp"
+#include "../../time/Timer.h"
 
 void Cape::update_item_specific() {
 
@@ -53,7 +54,7 @@ void Cape::update_item_specific() {
             set_pickuped_position_not_checking(-3, -3, -1);
         }
 
-        _anim_frame_timer += *GameState::instance().timer;
+        _anim_frame_timer += Timer::getDeltaTime();
 
         if (_anim_frame_timer > cape_anim_frame_delta) {
 

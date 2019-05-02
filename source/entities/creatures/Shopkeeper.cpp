@@ -9,6 +9,7 @@
 #include "../../../build/gfx_shopkeeper.h"
 #include "../../memory/SpriteUtils.hpp"
 #include "../../GameState.hpp"
+#include "../../time/Timer.h"
 
 #define SHOPKEEPER_SPRITESHEET_OFFSET 0
 #define SHOPKEEPER_POS_INC_DELTA 18
@@ -36,10 +37,10 @@ void Shopkeeper::update_creature_specific() {
 
     check_if_dude_in_shop_bounds();
 
-    invert_speed_timer += *GameState::instance().timer;
-    blood_spawn_timer += *GameState::instance().timer;
-    anim_frame_timer += *GameState::instance().timer;
-    jumping_timer += *GameState::instance().timer;
+    invert_speed_timer += Timer::getDeltaTime();
+    blood_spawn_timer += Timer::getDeltaTime();
+    anim_frame_timer += Timer::getDeltaTime();
+    jumping_timer += Timer::getDeltaTime();
 
     sprite_utils::set_horizontal_flip(sprite_state == Orientation::RIGHT, mainSpriteInfo, subSpriteInfo);
     sprite_utils::set_visibility(true, mainSpriteInfo, subSpriteInfo);
@@ -125,7 +126,7 @@ void Shopkeeper::update_creature_specific() {
     make_some_movement();
 
     if (stunned) {
-        stunned_timer += *GameState::instance().timer;
+        stunned_timer += Timer::getDeltaTime();
         if (stunned_timer > SHOPKEEPER_STUN_TIME) {
             stunned = false;
             stunned_timer = 0;
@@ -274,11 +275,11 @@ void Shopkeeper::make_some_movement() {
         return;
 
     if (waitTimer > 0 && (!triggered || standby)) {
-        waitTimer -= *GameState::instance().timer;
+        waitTimer -= Timer::getDeltaTime();
     } else {
 
         if (go_timer > 0)
-            go_timer -= *GameState::instance().timer;
+            go_timer -= Timer::getDeltaTime();
 
         if (triggered) {
             if (sprite_state == Orientation::RIGHT)

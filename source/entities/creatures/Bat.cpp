@@ -13,6 +13,7 @@
 #include "../../../build/soundbank.h"
 #include "../../memory/SpriteUtils.hpp"
 #include "../../GameState.hpp"
+#include "../../time/Timer.h"
 
 #define BAT_ANIM_FRAME_DELTA 100
 #define BAT_POS_INC_DELTA 30
@@ -44,7 +45,7 @@ void Bat::update_creature_specific() {
         //checking if main dude is still in bat's triggering scope
         hunting = abs(_x - GameState::instance().main_dude->_x) < 9 * 16 && abs(_y - GameState::instance().main_dude->_y) < 9 * 16;
 
-    animFrameTimer += *GameState::instance().timer;
+    animFrameTimer += Timer::getDeltaTime();
 
     if (animFrameTimer > BAT_ANIM_FRAME_DELTA) {
 

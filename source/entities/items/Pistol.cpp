@@ -14,6 +14,7 @@
 #include "../../memory/SpriteUtils.hpp"
 #include "../../entities/decorations/Blast.hpp"
 #include "../creatures/Bullet.hpp"
+#include "../../time/Timer.h"
 
 void Pistol::update_item_specific() {
 
@@ -102,7 +103,7 @@ void Pistol::handle_shooting() {
     _blast->_firing = _firing;
 
     if (!_firing) {
-        _cooldown += *GameState::instance().timer;
+        _cooldown += Timer::getDeltaTime();
         if (_orientation == Orientation::LEFT)
             _blast->_x = _x - 10;
         else

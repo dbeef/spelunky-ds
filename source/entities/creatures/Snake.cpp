@@ -13,6 +13,7 @@
 #include "../../../build/soundbank.h"
 #include "../../memory/SpriteUtils.hpp"
 #include "../../GameState.hpp"
+#include "../../time/Timer.h"
 
 #define SNAKE_POS_INC_DELTA 35
 #define SNAKE_ANIM_FRAME_DELTA 125
@@ -27,7 +28,7 @@ void Snake::update_creature_specific() {
     sprite_utils::set_visibility(true, mainSpriteInfo, subSpriteInfo);
     sprite_utils::set_horizontal_flip(true, mainSpriteInfo, subSpriteInfo);
 
-    animFrameTimer += *GameState::instance().timer;
+    animFrameTimer += Timer::getDeltaTime();
 
     if (animFrameTimer > SNAKE_ANIM_FRAME_DELTA) {
         //update animation
@@ -44,7 +45,7 @@ void Snake::update_creature_specific() {
         //update movement
 
         if (goTimer > 0) {
-            goTimer -= *GameState::instance().timer;
+            goTimer -= Timer::getDeltaTime();
 
             if ((standingOnLeftEdge && spriteState == Orientation::LEFT) ||
                 (standingOnRightEdge && spriteState == Orientation::RIGHT))
@@ -59,7 +60,7 @@ void Snake::update_creature_specific() {
             _x_speed = 0;
 
             if (waitTimer > 0)
-                waitTimer -= *GameState::instance().timer;
+                waitTimer -= Timer::getDeltaTime();
             else if (waitTimer <= 0)
                 randomizeMovement();
         }

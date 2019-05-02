@@ -6,6 +6,7 @@
 #include "../../GameState.hpp"
 #include "../../memory/SpriteUtils.hpp"
 #include "Lamp.h"
+#include "../../time/Timer.h"
 
 Lamp::Lamp(int x, int y) :
         BaseDecoration(x, y, lamp_sprite_width, lamp_sprite_height, lamp_spritesheet_type) {
@@ -14,7 +15,7 @@ Lamp::Lamp(int x, int y) :
 
 void Lamp::update_decoration_specific() {
 
-    _anim_frame_timer += *GameState::instance().timer;
+    _anim_frame_timer += Timer::getDeltaTime();
 
     if (_anim_frame_timer > lamp_anim_frame_delta) {
 

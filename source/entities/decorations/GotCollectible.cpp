@@ -6,6 +6,7 @@
 #include "../../GameState.hpp"
 #include "../../memory/SpriteUtils.hpp"
 #include "GotCollectible.hpp"
+#include "../../time/Timer.h"
 
 void GotCollectible::update_decoration_specific() {
 
@@ -13,7 +14,7 @@ void GotCollectible::update_decoration_specific() {
 
     update_sprites_position();
 
-    _anim_frame_timer += *GameState::instance().timer;
+    _anim_frame_timer += Timer::getDeltaTime();
 
     // Blink a few times and disappear
     if (_anim_frame_timer > got_collectible_anim_frame_delta) {

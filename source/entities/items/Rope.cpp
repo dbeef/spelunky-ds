@@ -11,12 +11,13 @@
 #include "../../collisions/Collisions.hpp"
 #include "../../tiles/LevelRenderingUtils.hpp"
 #include "../../memory/SpriteUtils.hpp"
+#include "../../time/Timer.h"
 
 void Rope::update_item_specific() {
 
     if (_ready_to_dispose) return;
 
-    _expand_timer += *GameState::instance().timer;
+    _expand_timer += Timer::getDeltaTime();
 
     for (int a = _rope_chain.size() - 1; a >= 0; a--) {
 
@@ -45,7 +46,7 @@ void Rope::update_item_specific() {
     }
 
     if (_thrown && !_finished) {
-        _throwing_timer += *GameState::instance().timer;
+        _throwing_timer += Timer::getDeltaTime();
         add_rope_if_needed();
     }
 

@@ -12,6 +12,7 @@
 #include "../../tiles/TileOrientation.hpp"
 #include "../../../build/soundbank.h"
 #include "../creatures/Boulder.h"
+#include "../../time/Timer.h"
 
 void GoldenIdol::update_item_specific() {
 
@@ -50,8 +51,8 @@ void GoldenIdol::update_item_specific() {
             match_frame();
         }
     } else if(collected) {
-        animation_timer += *GameState::instance().timer;
-        up_timer += *GameState::instance().timer;
+        animation_timer += Timer::getDeltaTime();
+        up_timer += Timer::getDeltaTime();
         if (up_timer > 50) {
             up_timer = 0;
             _y--;

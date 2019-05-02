@@ -9,6 +9,7 @@
 #include "../../collisions/Collisions.hpp"
 #include "../../tiles/LevelRenderingUtils.hpp"
 #include "../../memory/SpriteUtils.hpp"
+#include "../../time/Timer.h"
 
 void BloodElement::update_creature_specific() {
 
@@ -16,10 +17,10 @@ void BloodElement::update_creature_specific() {
         return;
 
     //won't change speed untill this timer reaches treshold
-    inactive_delay += *GameState::instance().timer;
+    inactive_delay += Timer::getDeltaTime();
 
     //animation not finished
-    frameTimer += *GameState::instance().timer;
+    frameTimer += Timer::getDeltaTime();
 
     if (frameTimer > BLOOD_ANIM_FRAME_DELTA) {
 
@@ -35,7 +36,6 @@ void BloodElement::update_creature_specific() {
 
         } else
             match_animation();
-
     }
 
     sprite_utils::set_vertical_flip(false, mainSpriteInfo, subSpriteInfo);

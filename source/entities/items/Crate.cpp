@@ -13,6 +13,7 @@
 #include "../../entities/decorations/GotCollectible.hpp"
 #include "_ItemsUtils.hpp"
 #include "../../memory/SpriteUtils.hpp"
+#include "../../time/Timer.h"
 
 void Crate::update_item_specific() {
 
@@ -109,7 +110,7 @@ void Crate::drop_loot() {
 
 void Crate::play_collectible_animation() {
 
-    _anim_frame_timer += *GameState::instance().timer;
+    _anim_frame_timer += Timer::getDeltaTime();
 
     if (_anim_frame_timer > 75) {
         _anim_frame++;

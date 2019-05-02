@@ -8,6 +8,7 @@
 #include "../../GameState.hpp"
 #include "../../memory/SpriteUtils.hpp"
 #include "ShoppingIcon.h"
+#include "../../time/Timer.h"
 
 ShoppingIcon::ShoppingIcon(int x, int y) :
         BaseDecoration(x, y, shopping_icon_sprite_width, shopping_icon_sprite_height, shopping_icon_spritesheet_type) {
@@ -20,11 +21,11 @@ void ShoppingIcon::update_decoration_specific() {
 
     update_sprites_position();
 
-    _trigger_timer += *GameState::instance().timer;
+    _trigger_timer += Timer::getDeltaTime();
 
     // Launch animation every time _trigger_timer overflows
     if (_trigger_timer > shopping_icon_trigger_delta)
-        _anim_frame_timer += *GameState::instance().timer;
+        _anim_frame_timer += Timer::getDeltaTime();
 
     if (_anim_frame_timer > shopping_icon_anim_frame_delta) {
         _anim_frame_timer = 0;

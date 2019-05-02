@@ -22,6 +22,7 @@
 #include "../entities/treasures/SingleGoldbar.hpp"
 #include "../entities/main_dude/MainDudeConsts.h"
 #include "../GameState.hpp"
+#include "../time/Timer.h"
 
 #define HEART_POSITION_X 5
 #define HEART_POSITION_Y 5
@@ -188,7 +189,7 @@ void Hud::update() {
 
     if (thief) {
 
-        thief_timer += *GameState::instance().timer;
+        thief_timer += Timer::getDeltaTime();
 
         if (thief_timer > 4000) {
             thief_timer = 0;
@@ -199,7 +200,7 @@ void Hud::update() {
 
     if (not_enough_money) {
 
-        not_enough_money_timer += *GameState::instance().timer;
+        not_enough_money_timer += Timer::getDeltaTime();
 
         if (not_enough_money_timer > 4000) {
             not_enough_money_timer = 0;
@@ -211,7 +212,7 @@ void Hud::update() {
 
     if (introduce_shop) {
 
-        introduce_shop_timer += *GameState::instance().timer;
+        introduce_shop_timer += Timer::getDeltaTime();
 
         if (introduce_shop_timer > 4000) {
             introduce_shop_timer = 0;
@@ -222,7 +223,7 @@ void Hud::update() {
 
     if (recently_bough_item) {
 
-        recently_bough_item_timer += *GameState::instance().timer;
+        recently_bough_item_timer += Timer::getDeltaTime();
 
         if (recently_bough_item_timer > 4000) {
             recently_bough_item = false;
@@ -234,7 +235,7 @@ void Hud::update() {
 
     if (collecting_timer > 0) {
 
-        collecting_timer -= *GameState::instance().timer;
+        collecting_timer -= Timer::getDeltaTime();
 
         if (collecting_timer <= 0) {
             collecting_timer = 0;
@@ -244,7 +245,7 @@ void Hud::update() {
 
 
     if (collecting_timer == 0 && dollars_buffer != 0) {
-        dollars_timer += *GameState::instance().timer;
+        dollars_timer += Timer::getDeltaTime();
     }
 
     if (dollars_timer >= 50) {
@@ -260,7 +261,7 @@ void Hud::update() {
     }
 
     if (!GameState::instance().splash_screen)
-        time_spent_on_level += *GameState::instance().timer;
+        time_spent_on_level += Timer::getDeltaTime();
 
     if (GameState::instance().main_dude->dead && GameState::instance().main_dude->time_since_last_damage > MAIN_DUDE_DAMAGE_PROTECTION_TIME) {
 
@@ -268,7 +269,7 @@ void Hud::update() {
         bool milestone_1750 = game_over_timer > 1750;
         bool milestone_2750 = game_over_timer > 2750;
 
-        game_over_timer += *GameState::instance().timer;
+        game_over_timer += Timer::getDeltaTime();
 
         if ((!milestone_1750 && game_over_timer > 1750) ||
             (!milestone_2750 && game_over_timer > 2750) ||

@@ -3,7 +3,7 @@
 #include <nds/arm9/exceptions.h>
 #include "GameLoop.hpp"
 #include "tiles/PopulatingUtils.hpp"
-#include "time/TimeUtils.h"
+#include "time/Timer.h"
 #include "memory/OamUtils.hpp"
 #include "entities/animations/Blood.hpp"
 #include "entities/items/Arrow.hpp"
@@ -22,7 +22,7 @@ void gameloop::run() {
     // If exited, SpelunkyDS returns 0 and gets back to the menu.
     while (true) {
 
-        time_utils::update_ms_since_last_frame();
+        Timer::update_ms_since_last_frame();
         GameState::instance().input_handler->updateInput();
 
         if (GameState::instance().bombed) {
@@ -42,7 +42,7 @@ void gameloop::run() {
         GameState::instance().hud->update();
 
         swiWaitForVBlank();
-        manage_brightness();
+        GameState::instance().normalize_brightness();
 
         GameState::instance().camera->write_current_position_to_graphics_engines();
         GameState::instance().main_oam_manager->updateOAM();
@@ -50,44 +50,6 @@ void gameloop::run() {
         oam_utils::clean_unused_oam();
     }
 
-}
-
-//!> this should be done after Vblank (otherwise - crash!)
-void gameloop::manage_brightness() {
-
-    if (GameState::instance().just_started_game) {
-        //just started the game, so lowering the brightness to the normal level.
-        //game starts with the maximum brightness, so the transition between DSiMenu++ would look smoother
-        GameState::instance().change_brightness_timer += *GameState::instance().timer;
-
-        if (GameState::instance().change_brightness_timer > 100) {
-
-            GameState::instance().brightness_level--;
-
-            if (GameState::instance().brightness_level == 0)
-                GameState::instance().just_started_game = false;
-            else
-                setBrightness(3, GameState::instance().brightness_level);
-
-        }
-    }
-
-    if (GameState::instance().in_main_menu && GameState::instance().exiting_game) {
-        //exiting game, so increasing the brightness to the maximum level so the transition
-        //between the game and DSiMenu++ would be smoother
-        GameState::instance().change_brightness_timer += *GameState::instance().timer;
-
-        if (GameState::instance().change_brightness_timer > 100) {
-
-            GameState::instance().brightness_level++;
-
-            if (GameState::instance().brightness_level > 16)
-                exit(0);
-
-            setBrightness(3, GameState::instance().brightness_level);
-
-        }
-    }
 }
 
 void gameloop::on_bomb_explosion() {

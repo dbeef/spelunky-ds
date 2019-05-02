@@ -9,6 +9,7 @@
 #include "../../collisions/Collisions.hpp"
 #include "../animations/FallPoof.hpp"
 #include "../../memory/SpriteUtils.hpp"
+#include "../../time/Timer.h"
 
 void Jetpack::update_item_specific() {
 
@@ -52,7 +53,7 @@ void Jetpack::update_item_specific() {
 
 
         if (GameState::instance().main_dude->using_jetpack) {
-            _poof_spawn_timer += *GameState::instance().timer;
+            _poof_spawn_timer += Timer::getDeltaTime();
 
             if (GameState::instance().main_dude->jetpack_fuel_counter <= 0) {
                 GameState::instance().main_dude->using_jetpack = false;

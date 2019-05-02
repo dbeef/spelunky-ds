@@ -8,6 +8,7 @@
 #include "../../../build/gfx_blood_rock_rope_poof.h"
 #include "../../memory/SpriteUtils.hpp"
 #include "RopeElement.hpp"
+#include "../../time/Timer.h"
 
 void RopeElement::update_decoration_specific() {
 
@@ -15,7 +16,7 @@ void RopeElement::update_decoration_specific() {
 
     if (_active) {
         if (_active_timer < 50)
-            _active_timer += *GameState::instance().timer;
+            _active_timer += Timer::getDeltaTime();
         else {
             update_visibility();
         }

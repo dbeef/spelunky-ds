@@ -8,6 +8,7 @@
 #include "../../collisions/Collisions.hpp"
 #include "Bone.hpp"
 #include "../../memory/SpriteUtils.hpp"
+#include "../../time/Timer.h"
 
 #define BONE_POS_INC_DELTA 35
 #define BONE_ANIM_FRAME_DELTA  45
@@ -25,7 +26,7 @@ void Bone::update_creature_specific() {
     sprite_utils::set_priority(OBJPRIORITY_0, mainSpriteInfo, subSpriteInfo);
     update_sprites_position();
 
-    animFrameTimer += *GameState::instance().timer;
+    animFrameTimer += Timer::getDeltaTime();
 
     if (animFrameTimer > BONE_ANIM_FRAME_DELTA) {
         animFrameTimer = 0;

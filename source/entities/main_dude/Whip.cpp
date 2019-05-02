@@ -6,13 +6,14 @@
 #include "../../../build/gfx_spike_collectibles_flame.h"
 #include "../../GameState.hpp"
 #include "../../memory/SpriteUtils.hpp"
+#include "../../time/Timer.h"
 
 void Whip::update_creature_specific() {
 
     if (GameState::instance().main_dude->using_whip) {
         update_sprites_position();
 
-        _whiping_timer += *GameState::instance().timer;
+        _whiping_timer += Timer::getDeltaTime();
         if (_whiping_timer > 420) {
             _whiping_timer = 0;
             GameState::instance().main_dude->using_whip = false;

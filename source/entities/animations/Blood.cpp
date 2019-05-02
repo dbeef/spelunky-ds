@@ -8,6 +8,7 @@
 #include "../../collisions/Collisions.hpp"
 #include "../../tiles/LevelRenderingUtils.hpp"
 #include "../../memory/SpriteUtils.hpp"
+#include "../../time/Timer.h"
 
 void Blood::update_creature_specific() {
 
@@ -27,13 +28,13 @@ void Blood::update_creature_specific() {
         return;
     }
 
-    time_since_last_spawn += *GameState::instance().timer;
+    time_since_last_spawn += Timer::getDeltaTime();
 
     if (_bottom_collision)
         //dispose blood droplet faster if touching ground
-        living_timer += 4 * (*GameState::instance().timer);
+        living_timer += 4 * (Timer::getDeltaTime());
     else
-        living_timer += *GameState::instance().timer;
+        living_timer += Timer::getDeltaTime();
 
     if (finished) {
         //if main blood droplet animation is finished,
@@ -54,7 +55,7 @@ void Blood::update_creature_specific() {
     } else {
         //animation not finished on main droplet
 
-        animFrameTimer += *GameState::instance().timer;
+        animFrameTimer += Timer::getDeltaTime();
 
         if (animFrameTimer > BLOOD_ANIM_FRAME_DELTA) {
             animFrameTimer = 0;

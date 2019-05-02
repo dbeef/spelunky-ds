@@ -8,6 +8,7 @@
 #include "../../memory/SpriteUtils.hpp"
 #include "../../GameState.hpp"
 #include "../../../build/gfx_explosion.h"
+#include "../../time/Timer.h"
 
 Explosion::Explosion(int x, int y) :
         BaseDecoration(x, y,
@@ -19,7 +20,7 @@ Explosion::Explosion(int x, int y) :
 
 void Explosion::update_decoration_specific() {
 
-    _explosion_timer += *GameState::instance().timer;
+    _explosion_timer += Timer::getDeltaTime();
     if (_explosion_timer > 50 && _current_frame_index < 10) {
 
         _explosion_timer = 0;

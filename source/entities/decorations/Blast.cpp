@@ -6,6 +6,7 @@
 #include "../../GameState.hpp"
 #include "../../memory/SpriteUtils.hpp"
 #include "Blast.hpp"
+#include "../../time/Timer.h"
 
 Blast::Blast(int x, int y) :
         BaseDecoration(x, y, blast_sprite_width, blast_sprite_height, blast_spritesheet_type) {
@@ -19,7 +20,7 @@ void Blast::update_decoration_specific() {
     //'_firing' property is set by the owner of a blast instance when firing, a pistol or shotgun.
     if (_firing) {
 
-        _anim_frame_timer += *GameState::instance().timer;
+        _anim_frame_timer += Timer::getDeltaTime();
 
         if (_anim_frame_timer > blast_anim_frame_delta) {
             _anim_frame_timer = 0;

@@ -27,6 +27,7 @@
 #include "../items/_BaseItem.h"
 #include "../_interfaces/IPickupable.h"
 #include "MainDudeConsts.h"
+#include "../../time/Timer.h"
 
 void MainDude::reset_state(){
     // no items
@@ -177,7 +178,7 @@ void MainDude::handle_key_input() {
                     }
                 }
 
-                climbing_timer += *GameState::instance().timer;
+                climbing_timer += Timer::getDeltaTime();
                 if (climbing_timer > 260) {
                     climbing_timer = 0;
                     climbing_sound++;
@@ -361,9 +362,9 @@ void MainDude::update_creature_specific() {
     // "Update timers"
 
 
-    pos_inc_timer += *GameState::instance().timer;
-    speed_inc_timer += *GameState::instance().timer;
-    hanging_timer += *GameState::instance().timer;
+    pos_inc_timer += Timer::getDeltaTime();
+    speed_inc_timer += Timer::getDeltaTime();
+    hanging_timer += Timer::getDeltaTime();
 
     if (animation_frame_timer > 65) {
 
@@ -386,7 +387,7 @@ void MainDude::update_creature_specific() {
 
     if ((_left_collision || _right_collision) && !crawling && !hanging_on_tile_left && !hanging_on_tile_right &&
         (GameState::instance().input_handler->left_key_held || GameState::instance().input_handler->right_key_held)) {
-        pushing_timer += *GameState::instance().timer;
+        pushing_timer += Timer::getDeltaTime();
         if (pushing_timer > MAIN_DUDE_PUSHING_TIME) {
             if (_left_collision) {
                 pushing_right = true;
@@ -414,7 +415,7 @@ void MainDude::update_creature_specific() {
 
 
     if (!_bottom_collision && !hanging_on_tile_left && !hanging_on_tile_right && !climbing)
-        jumping_timer += *GameState::instance().timer;
+        jumping_timer += Timer::getDeltaTime();
 
     if (_bottom_collision && jumping_timer > MAIN_DUDE_STUN_FALLING_TIME) {
 
@@ -450,7 +451,7 @@ void MainDude::update_creature_specific() {
     }
 
     if (stunned)
-        stunned_timer += *GameState::instance().timer;
+        stunned_timer += Timer::getDeltaTime();
     if (stunned_timer > MAIN_DUDE_STUN_TIME) {
         stunned = false;
         stunned_timer = 0;
@@ -459,7 +460,7 @@ void MainDude::update_creature_specific() {
 
     if (_x_speed != 0 || stunned || using_whip || (pushing_left || pushing_right) || (climbing && _y_speed != 0) ||
         exiting_level)
-        animation_frame_timer += *GameState::instance().timer;
+        animation_frame_timer += Timer::getDeltaTime();
 
 
     if (!_bottom_collision) {
@@ -470,8 +471,8 @@ void MainDude::update_creature_specific() {
         }
     }
 
-    time_since_last_jump += *GameState::instance().timer;
-    time_since_last_damage += *GameState::instance().timer;
+    time_since_last_jump += Timer::getDeltaTime();
+    time_since_last_damage += Timer::getDeltaTime();
 
     // Map collisions
 
