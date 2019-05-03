@@ -14,6 +14,8 @@ public:
 
     void instant_focus();
 
+    void set_main_menu_position();
+
     inline void follow_main_dude() { _follow_main_dude = true; };
 
     inline void detach_from_main_dude() { _follow_main_dude = false; };
@@ -31,9 +33,9 @@ public:
         return *_instance;
     }
 
-    int x{};
+    int _x{};
 
-    int y{};
+    int _y{};
 
 private:
 

@@ -1,20 +1,14 @@
 #include <nds.h>
-#include <cstdlib>
-#include <nds/arm9/exceptions.h>
+
 #include "GameLoop.hpp"
-#include "tiles/PopulatingUtils.hpp"
-#include "time/Timer.h"
-#include "entities/animations/Blood.hpp"
-#include "entities/items/Arrow.hpp"
-#include "entities/singletons/MainDudeConsts.h"
 #include "GameState.hpp"
 #include "graphics/OamUtils.hpp"
-#include "graphics/Brightness.hpp"
+#include "tiles/PopulatingUtils.hpp"
+#include "time/Timer.h"
 
 void gameloop::run() {
 
-    Camera::instance().x = CAMERA_MENU_START_X;
-    Camera::instance().y = CAMERA_MENU_START_Y;
+    Camera::instance().set_main_menu_position();
 
     MainDude::instance().init_sprites();
     Whip::instance().init_sprites();

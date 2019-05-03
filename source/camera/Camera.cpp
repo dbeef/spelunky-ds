@@ -9,6 +9,9 @@
 #include "../GameState.hpp"
 #include "../time/Timer.h"
 
+static const u16 CAMERA_MENU_START_X = 0;
+static const u16 CAMERA_MENU_START_Y = 127;
+
 constexpr u16 MAP_WIDTH = 32 * TILE_WIDTH;
 constexpr u16 MAP_HEIGHT = 32 * TILE_HEIGHT;
 
@@ -77,16 +80,16 @@ void Camera::apply_shaking() {
             _y_shake_direction--;
         }
 
-        x -= x_r;
-        y -= y_r;
+        _x -= x_r;
+        _y -= y_r;
     }
 
 }
 
 // Instant camera focus with main dude in center.
 void Camera::instant_focus() {
-    x = MainDude::instance()._x - (SCREEN_WIDTH / 2);
-    y = MainDude::instance()._y - (SCREEN_HEIGHT / 2);
+    _x = MainDude::instance()._x - (SCREEN_WIDTH / 2);
+    _y = MainDude::instance()._y - (SCREEN_HEIGHT / 2);
     apply_map_boundaries();
 }
 
@@ -96,21 +99,21 @@ void Camera::incremental_focus(int camera_speed) {
     int center_x = MainDude::instance()._x - (SCREEN_WIDTH / 2);
     int center_y = MainDude::instance()._y - (SCREEN_HEIGHT / 2);
 
-    u16 distance_x = static_cast<u16>(abs(center_x - this->x));
-    u16 distance_y = static_cast<u16>(abs(center_y - this->y));
+    u16 distance_x = static_cast<u16>(abs(center_x - this->_x));
+    u16 distance_y = static_cast<u16>(abs(center_y - this->_y));
 
     if (distance_x > BOUNDARY_X) {
-        if (center_x > this->x)
-            this->x += camera_speed;
+        if (center_x > this->_x)
+            this->_x += camera_speed;
         else
-            this->x -= camera_speed;
+            this->_x -= camera_speed;
     }
 
     if (distance_y > BOUNDARY_Y) {
-        if (center_y > this->y)
-            this->y += camera_speed;
+        if (center_y > this->_y)
+            this->_y += camera_speed;
         else
-            this->y -= camera_speed;
+            this->_y -= camera_speed;
     }
 
 }
@@ -149,15 +152,20 @@ void Camera::update() {
  * 512 is 2 x NDS screen width and ~2.6 x NDS screen height.
  */
 void Camera::apply_map_boundaries() {
-    if (this->x < 0) this->x = 0;
-    if (this->x >= MAP_WIDTH - SCREEN_WIDTH) this->x = MAP_WIDTH - 1 - SCREEN_WIDTH;
-    if (this->y < 0) this->y = 0;
-    if (this->y >= MAP_HEIGHT - (2 * SCREEN_HEIGHT)) this->y = MAP_HEIGHT - 1 - (2 * SCREEN_HEIGHT);
+    if (this->_x < 0) this->_x = 0;
+    if (this->_x >= MAP_WIDTH - SCREEN_WIDTH) this->_x = MAP_WIDTH - 1 - SCREEN_WIDTH;
+    if (this->_y < 0) this->_y = 0;
+    if (this->_y >= MAP_HEIGHT - (2 * SCREEN_HEIGHT)) this->_y = MAP_HEIGHT - 1 - (2 * SCREEN_HEIGHT);
 }
 
 //tells the main and sub screen graphics engine to update camera position with current camera x/y
 void Camera::write_current_position_to_graphics_engines() {
-    bgSetScroll(GameState::instance().bg_main_address, this->x, this->y);
-    bgSetScroll(GameState::instance().bg_sub_address, this->x, this->y + SCREEN_HEIGHT);
+    bgSetScroll(GameState::instance().bg_main_address, this->_x, this->_y);
+    bgSetScroll(GameState::instance().bg_sub_address, this->_x, this->_y + SCREEN_HEIGHT);
     bgUpdate();
+}
+
+void Camera::set_main_menu_position() {
+    _x = CAMERA_MENU_START_X;
+    _y = CAMERA_MENU_START_Y;
 }
