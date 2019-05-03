@@ -99,3 +99,7 @@ void GoldenIdol::match_frame() {
 
     sprite_utils::update_frame(frame_gfx, _sprite_size, _main_sprite_info, _sub_sprite_info);
 }
+
+void GoldenIdol::print_classname() const {
+    printf("GOLDEN IDOL\n");
+}

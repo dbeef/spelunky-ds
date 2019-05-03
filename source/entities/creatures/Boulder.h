@@ -41,7 +41,7 @@ public:
 
     void update_creature_specific() override;
 
-    void introduce_yourself() override { printf("WHIP\n"); };
+    void print_classname() const override;
 
     void apply_dmg(int dmg_to_apply) override;
 

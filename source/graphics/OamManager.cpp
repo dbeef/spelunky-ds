@@ -96,7 +96,7 @@ OAMManager::initSprite(const unsigned short pallette[], int palLen, const unsign
 
     SPELUNKYDS_ASSERT(current_oam_id_palette < SPRITE_COUNT && current_oam_id_tiles < SPRITE_COUNT);
 
-    auto *spriteInfo = new SpriteInfo(); //TODO Smart pointer?
+    auto *spriteInfo = new SpriteInfo();
     SpriteEntry *spriteEntry = &oam->oamBuffer[current_oam_id_tiles];
 
     /* Initialize spriteInfo */

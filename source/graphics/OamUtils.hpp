@@ -9,6 +9,7 @@ namespace oam_utils {
 
     bool clean_unused_oam();
     void delete_all_sprites();
+    void wait_for_DMA_done();
 
 }
 

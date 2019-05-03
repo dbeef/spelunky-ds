@@ -344,6 +344,11 @@ void MainDude::boost_going_through_map_holes(MapTile **const t) {
 }
 
 void MainDude::update_creature_specific() {
+
+    if (exiting_level || (dead && InputHandler::instance().y_key_down)) {
+        GameState::instance().handle_changing_screens();
+    }
+
     match_animation();
     reset_values_checked_every_frame();
     apply_blinking_on_damage();
@@ -926,7 +931,6 @@ void MainDude::apply_dmg(int dmg_to_apply) {
 void MainDude::match_animation() {
 
     if (exiting_level || (dead && InputHandler::instance().y_key_down)) {
-        GameState::instance().handle_changing_screens();
         set_sprite_exiting_level();
     } else if (using_whip) {
         set_sprite_whiping();
@@ -1008,4 +1012,8 @@ MainDude::MainDude(int x, int y) : BaseCreature(
     _bouncing_factor_y = 0;
     _bouncing_factor_x = 0;
     _gravity = ICollidable::default_gravity * 1.15f;
+}
+
+void MainDude::print_classname() const {
+    printf("MAIN_DUDE\n");
 };

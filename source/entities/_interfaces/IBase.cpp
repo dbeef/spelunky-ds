@@ -3,7 +3,7 @@
 //
 
 #include "IBase.h"
-#include "../../GameState.hpp"
+#include "../singletons/MainDude.hpp"
 
 void IBase::set_pickuped_position_not_checking(
         int pickup_offset_x_left,

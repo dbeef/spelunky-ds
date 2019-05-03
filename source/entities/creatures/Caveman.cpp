@@ -381,3 +381,7 @@ void Caveman::delete_sprites() {
     mainSpriteInfo = nullptr;
     subSpriteInfo = nullptr;
 }
+
+void Caveman::print_classname() const {
+    printf("CAVEMAN\n");
+}

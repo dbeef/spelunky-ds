@@ -90,3 +90,7 @@ void SpikeShoes::equip() {
     }
 
 }
+
+void SpikeShoes::print_classname() const {
+    printf("SPIKE SHOES\n");
+}

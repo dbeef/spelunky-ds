@@ -160,3 +160,7 @@ Shotgun::Shotgun(int x, int y) : BaseItem(
     GameState::instance().decorations.push_back(blast);
     init_sprites();
 }
+
+void Shotgun::print_classname() const {
+    printf("SHOTGUN\n");
+}

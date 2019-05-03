@@ -170,3 +170,7 @@ void Rope::add_rope_if_needed() {
         }
     }
 }
+
+void Rope::print_classname() const {
+    printf("ROPE\n");
+}

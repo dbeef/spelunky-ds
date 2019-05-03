@@ -44,7 +44,7 @@ public:
 
     void update_item_specific() override;
 
-    void print_classname() override { printf("CHEST\n"); };
+    void print_classname() const override;
 
     // IRenderable overrides
 

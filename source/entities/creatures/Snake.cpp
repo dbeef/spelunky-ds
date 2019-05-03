@@ -178,3 +178,7 @@ void Snake::delete_sprites() {
     subSpriteInfo = nullptr;
 }
 
+void Snake::print_classname() const {
+    printf("SNAKE\n");
+}
+

@@ -16,9 +16,9 @@ public:
 
     void set_main_menu_position();
 
-    inline void follow_main_dude() { _follow_main_dude = true; };
+    void follow_main_dude();
 
-    inline void detach_from_main_dude() { _follow_main_dude = false; };
+    void detach_from_main_dude();
 
     inline void shake() { _shakescreen_duration_timer = 350; }
 

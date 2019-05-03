@@ -49,7 +49,7 @@ public:
     // Base creature overrides
     void update_creature_specific() override;
 
-    void introduce_yourself() override { printf("MAIN_DUDE\n"); };
+    void print_classname() const override;
 
     void apply_dmg(int dmg_to_apply) override;
 

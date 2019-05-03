@@ -3,7 +3,7 @@
 //
 
 #include <cstdlib>
-
+#include <cstdio>
 
 #include "../../../build/gfx_spike_collectibles_flame.h"
 #include "../../../build/soundbank.h"

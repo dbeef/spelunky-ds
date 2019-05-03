@@ -73,3 +73,7 @@ void SpringShoes::equip() {
     }
 }
 
+void SpringShoes::print_classname() const {
+    printf("SPRING SHOES\n");
+}
+

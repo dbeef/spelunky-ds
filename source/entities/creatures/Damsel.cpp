@@ -492,3 +492,7 @@ void Damsel::delete_sprites() {
     yell_mainSpriteInfo= nullptr;
     yell_subSpriteInfo = nullptr;
 }
+
+void Damsel::print_classname() const {
+    printf("DAMSEL\n");
+}

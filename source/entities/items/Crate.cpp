@@ -129,3 +129,7 @@ void Crate::play_collectible_animation() {
     }
 
 }
+
+void Crate::print_classname() const {
+    printf("CRATE\n");
+}

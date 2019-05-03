@@ -28,3 +28,7 @@ void TripleGoldbar::init_sprites() {
     sprite_utils::set_horizontal_flip(false, _main_sprite_info, _sub_sprite_info);
     sprite_utils::set_priority(OBJPRIORITY_0, _main_sprite_info, _sub_sprite_info);
 }
+
+void TripleGoldbar::print_classname() const {
+    printf("TRIPLE GOLDBAR\n");
+}

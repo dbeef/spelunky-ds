@@ -79,3 +79,7 @@ void BloodElement::delete_sprites() {
     mainSpriteInfo = nullptr;
     subSpriteInfo = nullptr;
 }
+
+void BloodElement::print_classname() const {
+    printf("BLOOD ELEMENT\n");
+}

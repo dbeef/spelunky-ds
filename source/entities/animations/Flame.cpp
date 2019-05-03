@@ -137,3 +137,7 @@ void Flame::delete_sprites() {
     mainSpriteInfo = nullptr;
     subSpriteInfo = nullptr;
 }
+
+void Flame::print_classname() const {
+    printf("FLAME\n");
+}

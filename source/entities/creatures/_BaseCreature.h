@@ -44,11 +44,6 @@ public:
         update_creature_specific();
     };
 
-    //for debugging purposes
-    //https://stackoverflow.com/questions/3649278/how-can-i-get-the-class-name-from-a-c-object
-    //https://stackoverflow.com/questions/32016809/using-typeid-to-get-name-of-derived-class
-    virtual void introduce_yourself() = 0;
-
     virtual void update_creature_specific() = 0;
 
     virtual void apply_dmg(int dmg_to_apply) = 0;

@@ -180,3 +180,7 @@ void Arrow::update_frame(int frame_num) {
     u8 *frame_gfx = sprite_utils::get_frame((u8 *) gfx_arrowTiles, _sprite_size, frame_num);
     sprite_utils::update_frame(frame_gfx, _sprite_size, _main_sprite_info, _sub_sprite_info);
 }
+
+void Arrow::print_classname() const {
+    printf("ARROW\n");
+}

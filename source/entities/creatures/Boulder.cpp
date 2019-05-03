@@ -59,3 +59,7 @@ void Boulder::update_creature_specific() {
     sprite_utils::set_visibility(true, mainSpriteInfo, subSpriteInfo);
     sprite_utils::set_horizontal_flip(true, mainSpriteInfo, subSpriteInfo);
 }
+
+void Boulder::print_classname() const {
+    printf("BOULDER\n");
+}

@@ -150,3 +150,7 @@ void Cape::equip() {
     }
 
 }
+
+void Cape::print_classname() const {
+    printf("CAPE\n");
+}

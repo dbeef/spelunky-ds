@@ -571,3 +571,7 @@ Shopkeeper::Shopkeeper(int x, int y) : BaseCreature(
     _friction = 0.5f;
 }
 
+void Shopkeeper::print_classname() const {
+    printf("SHOPKEEPER\n");
+}
+

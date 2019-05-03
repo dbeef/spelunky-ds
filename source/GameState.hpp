@@ -62,7 +62,6 @@ public:
     bool just_started_game{};
     bool exiting_game{};
     bool robbed_killed_shopkeeper{};
-    bool bombed{};
     bool splash_screen{};
     bool levels_transition_screen{};
     bool scores_screen{};

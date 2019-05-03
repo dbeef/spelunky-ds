@@ -40,3 +40,7 @@ void Rock::init_sprites() {
     sprite_utils::set_vertical_flip(false, _main_sprite_info, _sub_sprite_info);
     sprite_utils::set_visibility(true, _main_sprite_info, _sub_sprite_info);
 }
+
+void Rock::print_classname() const {
+    printf("ROCK\n");
+}

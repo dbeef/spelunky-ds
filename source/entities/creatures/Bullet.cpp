@@ -108,3 +108,7 @@ void Bullet::delete_sprites() {
     subSpriteInfo = nullptr;
 }
 
+void Bullet::print_classname() const {
+    printf("BULLET\n");
+}
+

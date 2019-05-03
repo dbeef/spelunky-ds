@@ -61,3 +61,7 @@ RubyBig::RubyBig(int x, int y) : BaseTreasure(
     _ruby_color = static_cast<RubyColor>(rand() % 3);
     init_sprites();
 }
+
+void RubyBig::print_classname() const {
+    printf("RUBY BIG\n");
+}

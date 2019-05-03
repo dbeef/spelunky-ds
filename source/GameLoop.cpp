@@ -9,6 +9,7 @@
 void gameloop::run() {
 
     Camera::instance().set_main_menu_position();
+    Camera::instance().detach_from_main_dude();
 
     MainDude::instance().init_sprites();
     Whip::instance().init_sprites();
@@ -24,13 +25,8 @@ void gameloop::run() {
         Timer::update_ms_since_last_frame();
         InputHandler::instance().updateInput();
 
-        // TODO: Merge those functions.
-        MainDude::instance().handle_key_input();
-        MainDude::instance().update();
-
-        Whip::instance().update();
-        Hud::instance().update();
         Camera::instance().update();
+        Hud::instance().update();
 
         update_entities();
 
@@ -44,6 +40,12 @@ void gameloop::run() {
 }
 
 void gameloop::update_entities() {
+
+    // TODO: Merge those functions.
+    MainDude::instance().handle_key_input();
+    MainDude::instance().update();
+
+    Whip::instance().update();
 
     // Iterating using indexes since entities may be
     // pushed back while iterating, invalidating iterators.
@@ -85,4 +87,3 @@ void gameloop::update_entities() {
         }
     }
 }
-

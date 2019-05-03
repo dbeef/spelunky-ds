@@ -75,3 +75,7 @@ void FlameElement::delete_sprites() {
     mainSpriteInfo = nullptr;
     subSpriteInfo = nullptr;
 }
+
+void FlameElement::print_classname() const {
+    printf("FLAME ELEMENT\n");
+}

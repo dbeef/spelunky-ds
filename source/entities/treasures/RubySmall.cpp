@@ -61,3 +61,7 @@ RubySmall::RubySmall(int x, int y) : BaseTreasure(
     _ruby_color = static_cast<RubyColor>(rand() % 3);
     init_sprites();
 }
+
+void RubySmall::print_classname() const {
+    printf("RUBY SMALL\n");
+}

@@ -165,3 +165,7 @@ Jetpack::~Jetpack() {
     for (auto &poof : _poofs)
         delete poof;
 }
+
+void Jetpack::print_classname() const {
+    printf("JETPACK\n");
+}

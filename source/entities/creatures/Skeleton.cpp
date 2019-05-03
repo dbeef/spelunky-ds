@@ -270,3 +270,7 @@ void Skeleton::delete_sprites() {
     mainSpriteInfo = nullptr;
     subSpriteInfo = nullptr;
 }
+
+void Skeleton::print_classname() const {
+    printf("SKELETON\n");
+}

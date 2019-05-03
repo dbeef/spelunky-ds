@@ -19,6 +19,7 @@
 #include "time/Timer.h"
 #include "graphics/OamUtils.hpp"
 #include "graphics/Brightness.hpp"
+#include "graphics/SpriteUtils.hpp"
 
 GameState *GameState::_instance = nullptr;
 
@@ -67,9 +68,7 @@ void GameState::start_main_menu() {
 }
 
 void GameState::start_scores() {
-
     MainDude::instance().reset_state();
-
     scores_screen = true;
     Hud::instance().draw_scores();
     Camera::instance().detach_from_main_dude();
@@ -96,7 +95,7 @@ void GameState::start_level_transition_screen() {
         damsels_rescued_this_level = 0;
         smooching = true;
 
-        Damsel *damsel = new Damsel(0, 0);
+        auto *damsel = new Damsel(0, 0);
         damsel->call_for_help = false;
         creatures.push_back(damsel);
 
@@ -177,9 +176,11 @@ void GameState::handle_changing_screens() {
 
                 current_level->initialise_tiles_from_splash_screen(SplashScreenType::MAIN_MENU_UPPER);
                 current_level->initialise_tiles_from_splash_screen(SplashScreenType::MAIN_MENU_LOWER);
+                // FIXME: Should call method below or use constexpr position
 //                set_position_to(MapTileType::ENTRANCE);
                 MainDude::instance()._x = 113;
                 MainDude::instance()._y = 288;
+                // FIXME: Shouldn't detach?
                 Camera::instance().follow_main_dude();
                 Camera::instance().instant_focus();
 
@@ -188,7 +189,6 @@ void GameState::handle_changing_screens() {
                 current_level->initialise_tiles_from_splash_screen(SplashScreenType::SCORES_LOWER);
                 MainDude::instance().set_position_to(MapTileType::EXIT);
             } else {
-
                 current_level->initialise_tiles_from_splash_screen(SplashScreenType::ON_LEVEL_DONE_UPPER);
                 current_level->initialise_tiles_from_splash_screen(SplashScreenType::ON_LEVEL_DONE_LOWER);
                 MainDude::instance().set_position_to(MapTileType::ENTRANCE);
@@ -210,19 +210,19 @@ void GameState::handle_changing_screens() {
         int temp_x = MainDude::instance()._x;
         int temp_y = MainDude::instance()._y;
 
+        MainDude::instance().dead = dead; //TODO Move this fields out to the game_state! or do the thing above, same result
+
+        MainDude::instance()._x = temp_x;
+        MainDude::instance()._y = temp_y;
+
+        Hud::instance().clear_console();
+
         // changing scene, so delete all MovingObjects you have, and according SpriteInfos
         oam_utils::delete_all_sprites();
 
         // init sprites since they've been disposed
         MainDude::instance().init_sprites();
         Whip::instance().init_sprites();
-
-        MainDude::instance().dead = dead; //TODO Move this fields out to the game_state! or do the thing above, same result
-
-        MainDude::instance()._x = temp_x;
-        MainDude::instance()._y = temp_y;
-
-        consoleClear();
 
         if (in_main_menu || levels_transition_screen) {
 
@@ -236,27 +236,30 @@ void GameState::handle_changing_screens() {
 
         } else {
 
-            if (scores_screen)
+            if (scores_screen) {
                 start_main_menu();
+            }
             else if (MainDude::instance().dead) {
                 start_scores();
-            } else
+            } else {
                 start_level_transition_screen();
+            }
         }
 
         MainDude::instance().exiting_level = false;
-
+        MainDude::instance().dead = false;
 
     } else if (MainDude::instance().animFrame >= 16 && splash_screen) {
 
-        MainDude::instance().main_sprite_info->entry->isHidden = true;
-        MainDude::instance().sub_sprite_info->entry->isHidden = true;
+        sprite_utils::set_visibility(false,
+                                     MainDude::instance().main_sprite_info,
+                                     MainDude::instance().sub_sprite_info);
+
         InputHandler::instance().stop_handling = false;
 
         if (InputHandler::instance().y_key_down) {
             splash_screen = false;
         }
-
     }
 }
 
@@ -302,5 +305,4 @@ bool GameState::update() {
 
     brightness::update_brightness();
     return !(GameState::instance().exiting_game && brightness::is_maximum_brightness());
-
 }

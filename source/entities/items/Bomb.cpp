@@ -135,3 +135,7 @@ void Bomb::explode() {
         (*treasures)._bottom_collision = false;
     MainDude::instance()._bottom_collision = false;
 }
+
+void Bomb::print_classname() const {
+    printf("BOMB\n");
+}

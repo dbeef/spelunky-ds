@@ -114,3 +114,7 @@ void Chest::match_animation() {
     sprite_utils::update_frame(frame_gfx, _sprite_size, _main_sprite_info, _sub_sprite_info);
 }
 
+void Chest::print_classname() const {
+    printf("CHEST\n");
+}
+

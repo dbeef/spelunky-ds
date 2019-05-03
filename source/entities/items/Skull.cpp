@@ -99,3 +99,7 @@ void Skull::match_animation() {
 
     sprite_utils::update_frame(frame_gfx, _sprite_size, _main_sprite_info, _sub_sprite_info);
 }
+
+void Skull::print_classname() const {
+    printf("SKULL\n");
+}

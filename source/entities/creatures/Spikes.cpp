@@ -102,3 +102,7 @@ void Spikes::delete_sprites() {
     _main_sprite_info = nullptr;
     _sub_sprite_info = nullptr;
 }
+
+void Spikes::print_classname() const {
+    printf("SPIKES\n");
+}

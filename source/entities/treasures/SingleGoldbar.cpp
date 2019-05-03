@@ -43,3 +43,8 @@ SingleGoldbar::SingleGoldbar(int x, int y) : BaseTreasure(
     init_sprites();
 }
 
+void SingleGoldbar::print_classname() const {
+    printf("SINGLE GOLDBAR\n");
+}
+
+

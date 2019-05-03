@@ -17,6 +17,10 @@ int main() {
     // FIXME: This function mixes abstraction levels,
     //  rewrite it for the sake of clean code.
 
+#ifndef NDEBUG
+    defaultExceptionHandler();
+#endif
+
     GameState::init();
     InputHandler::init();
     Camera::init();

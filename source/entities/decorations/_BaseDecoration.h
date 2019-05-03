@@ -41,9 +41,6 @@ public:
     // Will be called every frame in game loop.
     virtual void update_decoration_specific() = 0;
 
-    // Should print its name upper-cased with newline character.
-    virtual void print_classname() const = 0;
-
 };
 
 #endif //SPELUNKYDS_BASE_DECORATION_H

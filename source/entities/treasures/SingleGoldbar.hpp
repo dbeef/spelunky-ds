@@ -21,6 +21,8 @@ public:
 
     // IRenderable overrides (rest of overrrides are in _BaseTreasure)
 
+    void print_classname() const override;
+
     void init_sprites() override;
 
     // Other, creature specific

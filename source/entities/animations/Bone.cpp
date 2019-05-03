@@ -102,3 +102,7 @@ void Bone::delete_sprites() {
     mainSpriteInfo = nullptr;
     subSpriteInfo = nullptr;
 }
+
+void Bone::print_classname() const {
+    printf("BONE\n");
+}

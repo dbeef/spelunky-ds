@@ -94,3 +94,7 @@ void Jar::match_animation() {
 
     sprite_utils::update_frame(frame_gfx, _sprite_size, _main_sprite_info, _sub_sprite_info);
 }
+
+void Jar::print_classname() const {
+    printf("JAR\n");
+}

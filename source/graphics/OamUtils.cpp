@@ -9,6 +9,12 @@
 
 namespace oam_utils {
 
+    void wait_for_DMA_done(){
+        while(dmaBusy(DEFAULT_DMA_CHANNEL)) {
+            // do nothing
+        }
+    }
+
     //TODO Clean only the higher addresses of graphics, don't clean up the hud and main dude entities, so the blinking
     // that the cleaning causes would be less visible.
     bool clean_unused_oam() {

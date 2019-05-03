@@ -82,3 +82,7 @@ void FallPoof::delete_sprites() {
     mainSpriteInfo = nullptr;
     subSpriteInfo = nullptr;
 }
+
+void FallPoof::print_classname() const {
+    printf("FALL POOF\n");
+}

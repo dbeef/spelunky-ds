@@ -175,3 +175,7 @@ void Bat::delete_sprites() {
     mainSpriteInfo = nullptr;
     subSpriteInfo = nullptr;
 }
+
+void Bat::print_classname() const {
+    printf("BAT\n");
+}

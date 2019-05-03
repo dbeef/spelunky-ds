@@ -15,8 +15,8 @@ static const u16 CAMERA_MENU_START_Y = 127;
 constexpr u16 MAP_WIDTH = 32 * TILE_WIDTH;
 constexpr u16 MAP_HEIGHT = 32 * TILE_HEIGHT;
 
-// boundaries, that are used when it comes to follow main dude.
-// camera does not stick to the main dude - main dude can make some little movement
+// Boundaries, that are used when it comes to follow main dude.
+// Camera does not stick to the main dude - main dude can make some little movement
 // inside this BOUNDARY_X/Y box and the camera won't move untill he crosses the box.
 constexpr u16 BOUNDARY_X = 32;
 constexpr u16 BOUNDARY_Y = 16;
@@ -118,22 +118,16 @@ void Camera::incremental_focus(int camera_speed) {
 
 }
 
-/**
- * General update function.
- * Camera will attempt to focus incrementally on main dude every call.
- */
+// General update function.
+// Camera will attempt to focus incrementally on main dude every call.
 void Camera::update() {
 
-    write_current_position_to_graphics_engines();
-
-    if (!_follow_main_dude)
-        return;
+    if (!_follow_main_dude) return;
 
     _position_update_timer += Timer::getDeltaTime();
 
     if (_position_update_timer > CAMERA_UPDATE_DELTA) {
 
-        //main dude's spriting, scroll faster
         if (InputHandler::instance().r_bumper_held)
             incremental_focus(CAMERA_SPEED_MAIN_DUDE_RUNNING);
         else
@@ -145,12 +139,12 @@ void Camera::update() {
     apply_map_boundaries();
 
     apply_shaking();
+
+    write_current_position_to_graphics_engines();
 }
 
-/**
- * Keeps camera inside 512x512 px boundries.
- * 512 is 2 x NDS screen width and ~2.6 x NDS screen height.
- */
+// Keeps camera inside 512x512 px boundries.
+// 512 is 2 x NDS screen width and ~2.6 x NDS screen height.
 void Camera::apply_map_boundaries() {
     if (this->_x < 0) this->_x = 0;
     if (this->_x >= MAP_WIDTH - SCREEN_WIDTH) this->_x = MAP_WIDTH - 1 - SCREEN_WIDTH;
@@ -158,7 +152,7 @@ void Camera::apply_map_boundaries() {
     if (this->_y >= MAP_HEIGHT - (2 * SCREEN_HEIGHT)) this->_y = MAP_HEIGHT - 1 - (2 * SCREEN_HEIGHT);
 }
 
-//tells the main and sub screen graphics engine to update camera position with current camera x/y
+// Tells the main and sub screen graphics engine to update camera position with current camera x/y
 void Camera::write_current_position_to_graphics_engines() {
     bgSetScroll(GameState::instance().bg_main_address, this->_x, this->_y);
     bgSetScroll(GameState::instance().bg_sub_address, this->_x, this->_y + SCREEN_HEIGHT);
@@ -168,4 +162,14 @@ void Camera::write_current_position_to_graphics_engines() {
 void Camera::set_main_menu_position() {
     _x = CAMERA_MENU_START_X;
     _y = CAMERA_MENU_START_Y;
+}
+
+void Camera::detach_from_main_dude() {
+    _follow_main_dude = false;
+    apply_map_boundaries();
+    write_current_position_to_graphics_engines();
+}
+
+void Camera::follow_main_dude() {
+    _follow_main_dude = true;
 }

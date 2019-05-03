@@ -252,3 +252,7 @@ void Spider::delete_sprites() {
     mainSpriteInfo = nullptr;
     subSpriteInfo = nullptr;
 }
+
+void Spider::print_classname() const {
+    printf("SPIDER\n");
+}

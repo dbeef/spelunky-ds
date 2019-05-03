@@ -12,7 +12,6 @@
 #include "../../camera/Camera.hpp"
 
 #include "_BaseDecoration.h"
-#include "../../graphics/SpriteInfo.h"
 
 // Represents a single 16x16 element in rope chain.
 class RopeElement : public BaseDecoration {

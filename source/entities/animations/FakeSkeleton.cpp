@@ -102,3 +102,7 @@ void FakeSkeleton::delete_sprites() {
     mainSpriteInfo = nullptr;
     subSpriteInfo = nullptr;
 }
+
+void FakeSkeleton::print_classname() const {
+    printf("FAKE SKELETON\n");
+}

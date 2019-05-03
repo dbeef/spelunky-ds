@@ -41,7 +41,7 @@ public:
 
     void update_item_specific() override;
 
-    void print_classname() override { printf("CRATE\n"); };
+    void print_classname() const override;
 
     // IRenderable overrides
 

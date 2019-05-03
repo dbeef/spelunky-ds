@@ -27,8 +27,6 @@ public:
 
     // To be implemented by inheriting class:
 
-    virtual void print_classname() = 0;
-
     virtual void update_item_specific() = 0;
 
     // IRenderable overrides

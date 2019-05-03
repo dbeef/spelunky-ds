@@ -151,3 +151,7 @@ void Compass::equip() {
 
 }
 
+void Compass::print_classname() const {
+    printf("COMPASS\n");
+}
+

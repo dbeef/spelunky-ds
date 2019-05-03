@@ -141,3 +141,7 @@ void Blood::delete_sprites() {
     mainSpriteInfo = nullptr;
     subSpriteInfo = nullptr;
 }
+
+void Blood::print_classname() const {
+    printf("BLOOD\n");
+}
