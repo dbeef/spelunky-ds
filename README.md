@@ -90,6 +90,11 @@
 <img src="https://github.com/dbeef/spelunky-ds/blob/master/readme/debugging.png" alt="Calling addr2line"
  width="670" height="55">
 
+<p> What would be nice to add is printing to emulator's console for debugging purposes. 
+ libnds ships such function calls (nds/arm9/console.h), but they work only on an emulator called nocash, which is Windows only. </p>
+<p> Please contact me if you know any Linux NDS emulator that supports printing to terminal via nocash messages or you know how to log to desmume. </p>
+
+
 
 </p>
 
