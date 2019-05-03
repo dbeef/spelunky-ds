@@ -12,6 +12,8 @@
 #include "GameState.hpp"
 #include "graphics/Brightness.hpp"
 
+#include <cstdio>
+
 int main() {
 
     // FIXME: This function mixes abstraction levels,
@@ -69,7 +71,14 @@ int main() {
     dmaCopy(gfx_cavebgTiles, bgGetGfxPtr(GameState::instance().bg_main_address), sizeof(gfx_cavebgTiles));
     dmaCopy(gfx_cavebgTiles, bgGetGfxPtr(GameState::instance().bg_sub_address), sizeof(gfx_cavebgTiles));
 
+// TODO: Find a way to print to desmume; nocash is Windows only.
+// https://wiki.desmume.org/index.php?title=Faq_095#How_can_I_do_a_printf_to_the_emulator_console.3F
+#ifdef PRINT_TO_NOCASH_EMULATOR
+    consoleDebugInit(DebugDevice_NOCASH);
+    fprintf(stderr, "This should be printed if ran on No$GBA");
+#else
     Hud::instance().init_console();
+#endif
 
     //Set-up main menu scene from tiles
     GameState::instance().current_level->initialise_tiles_from_splash_screen(SplashScreenType::MAIN_MENU_UPPER);
