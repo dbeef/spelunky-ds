@@ -18,6 +18,7 @@
 #include "entities/singletons/MainDudeConsts.h"
 #include "time/Timer.h"
 #include "graphics/OamUtils.hpp"
+#include "graphics/Brightness.hpp"
 
 GameState *GameState::_instance = nullptr;
 
@@ -58,7 +59,7 @@ void GameState::start_new_game() {
 
 void GameState::start_main_menu() {
     MainDude::instance().climbing = false;
-    Camera::instance().follow_main_dude = false;
+    Camera::instance().detach_from_main_dude();
     in_main_menu = true;
     levels_transition_screen = false;
     scores_screen = false;
@@ -71,7 +72,7 @@ void GameState::start_scores() {
 
     scores_screen = true;
     Hud::instance().draw_scores();
-    Camera::instance().follow_main_dude = false;
+    Camera::instance().detach_from_main_dude();
 }
 
 void GameState::start_level_transition_screen() {
@@ -85,7 +86,7 @@ void GameState::start_level_transition_screen() {
     InputHandler::instance().l_bumper_held = true;
     InputHandler::instance().right_key_held = true;
 
-    Camera::instance().follow_main_dude = false;
+    Camera::instance().detach_from_main_dude();
     consoleClear();
     Hud::instance().draw_on_level_done();
 
@@ -179,7 +180,7 @@ void GameState::handle_changing_screens() {
 //                set_position_to(MapTileType::ENTRANCE);
                 MainDude::instance()._x = 113;
                 MainDude::instance()._y = 288;
-                Camera::instance().follow_main_dude = true;
+                Camera::instance().follow_main_dude();
                 Camera::instance().instant_focus();
 
             } else if (MainDude::instance().dead) {
@@ -293,4 +294,13 @@ void GameState::init() {
 void GameState::dispose() {
     SPELUNKYDS_BREAKING_ASSERT(_instance);
     delete _instance;
+}
+
+bool GameState::update() {
+
+    handle_transition_screen_smooch();
+
+    brightness::update_brightness();
+    return !(GameState::instance().exiting_game && brightness::is_maximum_brightness());
+
 }

@@ -41,7 +41,7 @@ void Rope::update_item_specific() {
         _thrown = true;
         _throwing_timer = 0;
 
-        _x = floor_div(MainDude::instance()._x + 0.5 * MainDude::main_dude_physical_width, TILE_W) * TILE_W +
+        _x = floor_div(MainDude::instance()._x + 0.5 * MainDude::main_dude_physical_width, TILE_WIDTH) * TILE_WIDTH +
              _physical_width * 0.5;
         _y -= 16;
         _y_speed = -4;
@@ -92,9 +92,9 @@ void Rope::update_item_specific() {
 
             _finished = true;
 
-            int temp_y = floor_div(this->_y + (0.5 * _physical_height), TILE_H);
+            int temp_y = floor_div(this->_y + (0.5 * _physical_height), TILE_HEIGHT);
 
-            auto element = new RopeElement(_x, temp_y * TILE_H);
+            auto element = new RopeElement(_x, temp_y * TILE_HEIGHT);
             element->update();
             _rope_chain.push_back(element);
         }
@@ -150,13 +150,13 @@ void Rope::init_sprites() {
 
 void Rope::add_rope_if_needed() {
 
-    int temp_y = floor_div(this->_y + (0.5 * _physical_height), TILE_H);
+    int temp_y = floor_div(this->_y + (0.5 * _physical_height), TILE_HEIGHT);
 
-    if (!is_there_chain_for_this_tile(temp_y * TILE_H)) {
+    if (!is_there_chain_for_this_tile(temp_y * TILE_HEIGHT)) {
 
-        if (temp_y * TILE_H > _y) {
+        if (temp_y * TILE_HEIGHT > _y) {
 
-            auto *element = new RopeElement(_x, temp_y * TILE_H);
+            auto *element = new RopeElement(_x, temp_y * TILE_HEIGHT);
             element->update();
             _rope_chain.push_back(element);
 

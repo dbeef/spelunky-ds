@@ -406,36 +406,36 @@ void Shopkeeper::match_animation() {
 void Shopkeeper::set_shop_bounds() {
 
     //based on init position and constant shop layout defined in shops.h
-    //right: X + 3*TILE_W
-    //left: X - 7*TILE_W
-    //up: y - 8*TILE_H
-    //down: y + 2*TILE_H
+    //right: X + 3*TILE_WIDTH
+    //left: X - 7*TILE_WIDTH
+    //up: y - 8*TILE_HEIGHT
+    //down: y + 2*TILE_HEIGHT
 
 
     MapTile *shop_sign = nullptr;
     GameState::instance().current_level->get_first_tile_of_given_type(MapTileType::SHOP_SIGN_RARE, shop_sign);
 
-    int tile_x = shop_sign->x * TILE_W;
+    int tile_x = shop_sign->x * TILE_WIDTH;
 
-    shop_bounds_up_y_px = _y - (8 * TILE_H);
-    shop_bounds_down_y_px = _y + (2 * TILE_H);
+    shop_bounds_up_y_px = _y - (8 * TILE_HEIGHT);
+    shop_bounds_down_y_px = _y + (2 * TILE_HEIGHT);
 
     if (_x - tile_x > 0) {
         //left oriented shop (exit/entrance is on the left side)
         sprite_state = Orientation::LEFT;
-        shop_bounds_right_x_px = _x + (3 * TILE_W);
+        shop_bounds_right_x_px = _x + (3 * TILE_WIDTH);
         if (standby)
-            shop_bounds_left_x_px = _x - (9 * TILE_W);
+            shop_bounds_left_x_px = _x - (9 * TILE_WIDTH);
         else
-            shop_bounds_left_x_px = _x - (6 * TILE_W);
+            shop_bounds_left_x_px = _x - (6 * TILE_WIDTH);
 
     } else {
         sprite_state = Orientation::RIGHT;
-        shop_bounds_left_x_px = _x - (3 * TILE_W);
+        shop_bounds_left_x_px = _x - (3 * TILE_WIDTH);
         if (standby)
-            shop_bounds_right_x_px = _x + (9 * TILE_W);
+            shop_bounds_right_x_px = _x + (9 * TILE_WIDTH);
         else
-            shop_bounds_right_x_px = _x + (6 * TILE_W);
+            shop_bounds_right_x_px = _x + (6 * TILE_WIDTH);
     }
 
 }
@@ -475,7 +475,7 @@ void Shopkeeper::check_if_dude_in_shop_bounds() {
 
                 int abs_diff = abs(diff);
 
-                if (abs_diff > 1.5 * TILE_W) {
+                if (abs_diff > 1.5 * TILE_WIDTH) {
 
                     if (diff > 0)
                         _x_speed = -2.5f;

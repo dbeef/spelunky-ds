@@ -77,7 +77,7 @@ void MainDude::set_position_to(MapTileType t) {
         _y = 144;
     }
 
-    Camera::instance().follow_main_dude = true;
+    Camera::instance().follow_main_dude();
     Camera::instance().instant_focus();
 }
 
@@ -175,8 +175,8 @@ void MainDude::handle_key_input() {
 
         }
 
-        int xx = floor_div(this->_x + 0.5 * _physical_width, TILE_W);
-        int yy = floor_div(this->_y + 0.5 * _physical_height, TILE_H);
+        int xx = floor_div(this->_x + 0.5 * _physical_width, TILE_WIDTH);
+        int yy = floor_div(this->_y + 0.5 * _physical_height, TILE_HEIGHT);
 
         current_x_in_tiles = xx;
         current_y_in_tiles = yy;
@@ -668,7 +668,7 @@ void MainDude::throw_rope() {
     Hud::instance().draw_level_hud();
 
     u8 ROPE_PHYSICAL_WIDTH = 16;
-    Rope *rope = new Rope((floor_div(_x + (0.5 * _physical_width), TILE_W) * TILE_W) + (ROPE_PHYSICAL_WIDTH * 0.5),
+    Rope *rope = new Rope((floor_div(_x + (0.5 * _physical_width), TILE_WIDTH) * TILE_WIDTH) + (ROPE_PHYSICAL_WIDTH * 0.5),
                           _y + 6);
     rope->_activated = true;
     rope->_y_speed = -4;

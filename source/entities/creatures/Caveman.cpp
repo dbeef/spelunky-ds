@@ -276,12 +276,12 @@ void Caveman::check_if_can_be_triggered() {
     int diff = _x - MainDude::instance()._x;
     int diff_abs = abs(diff);
 
-    if (!triggered && diff_abs < 9 * TILE_W && abs(_y - MainDude::instance()._y) < 0.8 * TILE_H) {
+    if (!triggered && diff_abs < 9 * TILE_WIDTH && abs(_y - MainDude::instance()._y) < 0.8 * TILE_HEIGHT) {
 
-        int xx = floor_div(this->_x + 0.5 * _physical_width, TILE_W);
-        int yy = floor_div(this->_y + 0.5 * _physical_height, TILE_H);
+        int xx = floor_div(this->_x + 0.5 * _physical_width, TILE_WIDTH);
+        int yy = floor_div(this->_y + 0.5 * _physical_height, TILE_HEIGHT);
 
-        int dude_xx = floor_div(MainDude::instance()._x + 0.5 * MainDude::main_dude_physical_width, TILE_W);
+        int dude_xx = floor_div(MainDude::instance()._x + 0.5 * MainDude::main_dude_physical_width, TILE_WIDTH);
 
         triggered = true;
 

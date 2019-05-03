@@ -16,8 +16,6 @@ namespace gameloop {
 
     void run();
 
-    void on_bomb_explosion();
-
     void update_entities();
 }
 #endif //SPELUNKYDS_SCROLLING_H

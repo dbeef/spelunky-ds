@@ -39,7 +39,7 @@ void Spider::update_creature_specific() {
     if (!hunting)
         //Check if main dude is direcly under the spider - intentionally not checking for terrain obstacles,
         //like in the original game. Also check if main dude is in certain range
-        hunting = abs(_y - MainDude::instance()._y) < 9 * TILE_H && MainDude::instance()._x + MainDude::main_dude_physical_width > _x &&
+        hunting = abs(_y - MainDude::instance()._y) < 9 * TILE_HEIGHT && MainDude::instance()._x + MainDude::main_dude_physical_width > _x &&
                   MainDude::instance()._x < _x + _physical_width && MainDude::instance()._y > _y;
     else {
         time_since_last_big_jump += Timer::getDeltaTime();

@@ -5,11 +5,7 @@
 #ifndef SPELUNKYDS_COLLISIONS_H
 #define SPELUNKYDS_COLLISIONS_H
 
-
 #include "../tiles/MapTile.hpp"
-
-#define TILE_H 16
-#define TILE_W 16
 
 class Collisions {
 

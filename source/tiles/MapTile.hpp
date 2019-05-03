@@ -8,6 +8,9 @@
 #include "MapTileType.hpp"
 #include "nds.h"
 
+static constexpr u8 TILE_WIDTH = 16;
+static constexpr u8 TILE_HEIGHT = 16;
+
 /**
  * In SpelunkyDS there's a 512x512 px render space that can be filled with 8x8 tiles,
  * in the origial Spelunky, tiles are of 16 px width and 16 px height, so in SpelunkyDS it makes an array of 32x32

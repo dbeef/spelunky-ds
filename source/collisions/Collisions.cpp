@@ -10,7 +10,7 @@
 #include "../preprocessor/Debug.h"
 #include "../GameState.hpp"
 
-//(TILE_W * a), (TILE_H * b) makes x,y point placed in the left-upper corner of the tile from passed *map_tiles[a][b].
+//(TILE_WIDTH * a), (TILE_HEIGHT * b) makes x,y point placed in the left-upper corner of the tile from passed *map_tiles[a][b].
 //Sprite's x,y positions that are given to the following functions are expected to be upper-left corner.
 //The x,y coordinates go from up to down on the y's, and from left to right on the x's - (0,0) is upper-left corner of
 //the map.
@@ -27,13 +27,13 @@ bool Collisions::checkUpperCollision(MapTile *neighboringTiles[9], int *xPos, in
         if (!neighboringTiles[a]->exists || !neighboringTiles[a]->collidable)
             continue;
 
-        w1 = *yPos < (neighboringTiles[a]->y * TILE_H) + TILE_H && (*yPos > (neighboringTiles[a]->y * TILE_H));
-        w2 = *xPos > (neighboringTiles[a]->x * TILE_W) - width &&
-             (*xPos < (neighboringTiles[a]->x * TILE_W) + TILE_W);
+        w1 = *yPos < (neighboringTiles[a]->y * TILE_HEIGHT) + TILE_HEIGHT && (*yPos > (neighboringTiles[a]->y * TILE_HEIGHT));
+        w2 = *xPos > (neighboringTiles[a]->x * TILE_WIDTH) - width &&
+             (*xPos < (neighboringTiles[a]->x * TILE_WIDTH) + TILE_WIDTH);
 
         if (w1 && w2) {
             *ySpeed = (-1) * bouncing_factor * *ySpeed;
-            *yPos = (neighboringTiles[a]->y * TILE_H) + TILE_H;
+            *yPos = (neighboringTiles[a]->y * TILE_HEIGHT) + TILE_HEIGHT;
             return true;
         }
 
@@ -57,14 +57,14 @@ bool Collisions::checkBottomCollision(MapTile *neighboringTiles[9], int *xPos, i
         bool collision;
 
         if (width >= 16 && height >= 16) {
-            w1 = (*xPos > (neighboringTiles[a]->x * TILE_W) - (width * 0.75) &&
-                  *xPos < (neighboringTiles[a]->x * TILE_W) + (width * 0.75));
-            w2 = (*yPos <= neighboringTiles[a]->y * TILE_H) && *yPos + height >= (neighboringTiles[a]->y * TILE_H);
+            w1 = (*xPos > (neighboringTiles[a]->x * TILE_WIDTH) - (width * 0.75) &&
+                  *xPos < (neighboringTiles[a]->x * TILE_WIDTH) + (width * 0.75));
+            w2 = (*yPos <= neighboringTiles[a]->y * TILE_HEIGHT) && *yPos + height >= (neighboringTiles[a]->y * TILE_HEIGHT);
             collision = w1 && w2;
         } else {
-            w1 = (*xPos > (neighboringTiles[a]->x * TILE_W) - (width) &&
-                  *xPos < (neighboringTiles[a]->x * TILE_W) + (TILE_W));
-            w2 = (*yPos <= neighboringTiles[a]->y * TILE_H) && *yPos + height >= (neighboringTiles[a]->y * TILE_H);
+            w1 = (*xPos > (neighboringTiles[a]->x * TILE_WIDTH) - (width) &&
+                  *xPos < (neighboringTiles[a]->x * TILE_WIDTH) + (TILE_WIDTH));
+            w2 = (*yPos <= neighboringTiles[a]->y * TILE_HEIGHT) && *yPos + height >= (neighboringTiles[a]->y * TILE_HEIGHT);
             collision = w1 && w2;
         }
 
@@ -74,7 +74,7 @@ bool Collisions::checkBottomCollision(MapTile *neighboringTiles[9], int *xPos, i
             if (fabs(*ySpeed) < 0.15f)
                 *ySpeed = 0;
 
-            *yPos = (neighboringTiles[a]->y * TILE_H) - height;
+            *yPos = (neighboringTiles[a]->y * TILE_HEIGHT) - height;
             return true;
         }
     }
@@ -95,20 +95,20 @@ bool Collisions::checkLeftCollision(MapTile *neighboringTiles[9], int *xPos, int
             continue;
 
         if (width == 16) {
-            w2 = *xPos < (neighboringTiles[a]->x * TILE_W) - 0.75 * width &&
-                 *xPos > (neighboringTiles[a]->x * TILE_W) - width;
+            w2 = *xPos < (neighboringTiles[a]->x * TILE_WIDTH) - 0.75 * width &&
+                 *xPos > (neighboringTiles[a]->x * TILE_WIDTH) - width;
         } else {
-            w2 = (*xPos < (neighboringTiles[a]->x * TILE_W) - width + (TILE_W * 0.75) &&
-                  (*xPos + width > (neighboringTiles[a]->x * TILE_W)));
+            w2 = (*xPos < (neighboringTiles[a]->x * TILE_WIDTH) - width + (TILE_WIDTH * 0.75) &&
+                  (*xPos + width > (neighboringTiles[a]->x * TILE_WIDTH)));
         }
 
-        w1 = (*yPos > (neighboringTiles[a]->y * TILE_H) - height &&
-              (*yPos < (neighboringTiles[a]->y * TILE_H) + TILE_H));
+        w1 = (*yPos > (neighboringTiles[a]->y * TILE_HEIGHT) - height &&
+              (*yPos < (neighboringTiles[a]->y * TILE_HEIGHT) + TILE_HEIGHT));
 
         if (w1 && w2) {
             if (bouncing_factor > 0)
                 *xSpeed = (-1) * bouncing_factor * *xSpeed;
-            *xPos = (neighboringTiles[a]->x * TILE_W) - width;
+            *xPos = (neighboringTiles[a]->x * TILE_WIDTH) - width;
             return true;
         }
     }
@@ -129,20 +129,20 @@ bool Collisions::checkRightCollision(MapTile *neighboringTiles[9], int *xPos, in
             continue;
 
         if (width == 16) {
-            w2 = (*xPos < (neighboringTiles[a]->x * TILE_W) + width &&
-                  (*xPos > (neighboringTiles[a]->x * TILE_W) + 0.75 * width));
+            w2 = (*xPos < (neighboringTiles[a]->x * TILE_WIDTH) + width &&
+                  (*xPos > (neighboringTiles[a]->x * TILE_WIDTH) + 0.75 * width));
         } else {
-            w2 = (*xPos < (neighboringTiles[a]->x * TILE_W) + TILE_W &&
-                  (*xPos > (neighboringTiles[a]->x * TILE_W) + 0.75 * width));
+            w2 = (*xPos < (neighboringTiles[a]->x * TILE_WIDTH) + TILE_WIDTH &&
+                  (*xPos > (neighboringTiles[a]->x * TILE_WIDTH) + 0.75 * width));
         }
 
-        w1 = (*yPos > (neighboringTiles[a]->y * TILE_H) - height &&
-              (*yPos < (neighboringTiles[a]->y * TILE_H) + TILE_H));
+        w1 = (*yPos > (neighboringTiles[a]->y * TILE_HEIGHT) - height &&
+              (*yPos < (neighboringTiles[a]->y * TILE_HEIGHT) + TILE_HEIGHT));
 
         if (w1 && w2) {
             if (bouncing_factor > 0)
                 *xSpeed = (-1) * bouncing_factor * *xSpeed;
-            *xPos = (neighboringTiles[a]->x * TILE_W) + TILE_W;
+            *xPos = (neighboringTiles[a]->x * TILE_WIDTH) + TILE_WIDTH;
             return true;
         }
 

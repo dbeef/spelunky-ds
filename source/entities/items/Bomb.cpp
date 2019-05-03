@@ -116,15 +116,22 @@ void Bomb::explode() {
     }
 
     sound::explosion();
+    sprite_utils::set_visibility(false, _main_sprite_info, _sub_sprite_info);
 
-    int xx = floor_div(this->_x + 0.5 * _sprite_width, TILE_W);
-    int yy = floor_div(this->_y + 0.5 * _sprite_height, TILE_H);
+    int xx = floor_div(this->_x + 0.5 * _sprite_width, TILE_WIDTH);
+    int yy = floor_div(this->_y + 0.5 * _sprite_height, TILE_HEIGHT);
 
     Collisions::bombNeighboringTiles(GameState::instance().current_level->map_tiles, xx, yy);
-    GameState::instance().bombed = true;
+    GameState::instance().current_level->update_level();
 
     auto *explosion = new Explosion(_x - 32, _y - 32);
     GameState::instance().decorations.push_back(explosion);
 
-    sprite_utils::set_visibility(false, _main_sprite_info, _sub_sprite_info);
+    for (auto &creature : GameState::instance().creatures)
+        (*creature)._bottom_collision = false;
+    for (auto &item : GameState::instance().items)
+        (*item)._bottom_collision = false;
+    for (auto &treasures : GameState::instance().treasures)
+        (*treasures)._bottom_collision = false;
+    MainDude::instance()._bottom_collision = false;
 }

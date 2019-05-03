@@ -77,8 +77,8 @@ void Compass::draw_arrow_to_exit() {
 
     if (exit != nullptr) {
 
-        int tile_x = exit->x * TILE_W;
-        int tile_y = exit->y * TILE_H;
+        int tile_x = exit->x * TILE_WIDTH;
+        int tile_y = exit->y * TILE_HEIGHT;
 
         //camera is centered on main dude
         int diff_x = abs((Camera::instance().x + 0.5 * SCREEN_WIDTH) - tile_x);
@@ -94,12 +94,12 @@ void Compass::draw_arrow_to_exit() {
 
             u8 *frame_gfx;
 
-            if (diff_x < 6 * TILE_W) {
+            if (diff_x < 6 * TILE_WIDTH) {
                 //down arrow
                 sprite_utils::set_entry_xy(_sub_sprite_info, (SCREEN_WIDTH * 0.5) - 8,
                                            SCREEN_HEIGHT - 2 - _sprite_height);
                 frame_gfx = sprite_utils::get_frame((u8 *) gfx_saleableTiles, _sprite_size, 6);
-            } else if (diff_y < 3 * TILE_H) {
+            } else if (diff_y < 3 * TILE_HEIGHT) {
 
                 if (MainDude::instance()._x > tile_x) {
                     //left_arrow

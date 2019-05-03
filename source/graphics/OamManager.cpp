@@ -52,7 +52,7 @@ OAMManager::initOAMTable(u16 *sprite_address, u16 *paletteAddress, u16 *oam_addr
 
     clear_sprite_attributes();
 
-    updateOAM();
+    update();
 }
 
 void OAMManager::clear_sprite_attributes() {
@@ -82,10 +82,10 @@ void OAMManager::clear_sprite_attributes() {
         oam->matrixBuffer[i].vdy = 1 << 8;
     }
 
-    updateOAM();
+    update();
 }
 
-void OAMManager::updateOAM() {
+void OAMManager::update() {
     DC_FlushAll();
     dmaCopyHalfWords(3, oam->oamBuffer, oam_address, SPRITE_COUNT * sizeof(SpriteEntry));
 }

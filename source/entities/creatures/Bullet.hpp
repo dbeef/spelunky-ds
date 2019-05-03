@@ -33,8 +33,8 @@ public:
             CreatureType::BULLET
     ) {
         //checking this in case of firing just in front of a wall
-        int xx = floor_div(this->_x + 0.5 * _physical_width, TILE_W);
-        int yy = floor_div(this->_y + 0.5 * _physical_height, TILE_H);
+        int xx = floor_div(this->_x + 0.5 * _physical_width, TILE_WIDTH);
+        int yy = floor_div(this->_y + 0.5 * _physical_height, TILE_HEIGHT);
         update_collisions_with_map(xx, yy);
         if (killed) {
             _ready_to_dispose = true;

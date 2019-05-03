@@ -57,8 +57,8 @@ void ICollidable::update_position() {
                 _y -= 1;
         }
 
-        xx = floor_div(_x + 0.5 * _physical_width, TILE_W);
-        yy = floor_div(_y + 0.5 * _physical_height, TILE_H);
+        xx = floor_div(_x + 0.5 * _physical_width, TILE_WIDTH);
+        yy = floor_div(_y + 0.5 * _physical_height, TILE_HEIGHT);
 
         if (old_xx != xx || old_yy != yy || _physical_width <= 8 || _physical_height <= 8) {
             SPELUNKYDS_BREAKING_ASSERT(xx < 31 && yy < 31 && xx >= 0 && yy >= 0);

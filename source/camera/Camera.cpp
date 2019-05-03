@@ -9,8 +9,8 @@
 #include "../GameState.hpp"
 #include "../time/Timer.h"
 
-constexpr u16 MAP_WIDTH = 512;
-constexpr u16 MAP_HEIGHT = 512;
+constexpr u16 MAP_WIDTH = 32 * TILE_WIDTH;
+constexpr u16 MAP_HEIGHT = 32 * TILE_HEIGHT;
 
 // boundaries, that are used when it comes to follow main dude.
 // camera does not stick to the main dude - main dude can make some little movement
@@ -18,8 +18,13 @@ constexpr u16 MAP_HEIGHT = 512;
 constexpr u16 BOUNDARY_X = 32;
 constexpr u16 BOUNDARY_Y = 16;
 
-constexpr u8 shaking_max_delta = 3;
-constexpr u8 shaking_max_same_direction = 3;
+constexpr u8 CAMERA_SPEED_MAIN_DUDE_RUNNING = 3;
+constexpr u8 CAMERA_SPEED_MAIN_DUDE_WALKING = 2;
+
+constexpr u16 CAMERA_UPDATE_DELTA = 15;
+
+constexpr u8 SHAKING_MAX_DELTA_POS = 3;
+constexpr u8 SHAKING_MAX_SHAKES_IN_SAME_DIRECTION = 3;
 
 Camera* Camera::_instance = nullptr;
 
@@ -36,40 +41,40 @@ void Camera::dispose() {
 
 void Camera::apply_shaking() {
 
-    if (shakescreen_duration_timer > 0) {
+    if (_shakescreen_duration_timer > 0) {
 
-        shakescreen_duration_timer -= Timer::getDeltaTime();
+        _shakescreen_duration_timer -= Timer::getDeltaTime();
 
-        if (shakescreen_duration_timer < 0)
-            shakescreen_duration_timer = 0;
+        if (_shakescreen_duration_timer < 0)
+            _shakescreen_duration_timer = 0;
 
-        int x_r = (rand() % 2) == 0 ? (rand() % shaking_max_delta) : -(rand() % shaking_max_delta);
-        int y_r = (rand() % 2) == 0 ? (rand() % shaking_max_delta) : -(rand() % shaking_max_delta);
+        int x_r = (rand() % 2) == 0 ? (rand() % SHAKING_MAX_DELTA_POS) : -(rand() % SHAKING_MAX_DELTA_POS);
+        int y_r = (rand() % 2) == 0 ? (rand() % SHAKING_MAX_DELTA_POS) : -(rand() % SHAKING_MAX_DELTA_POS);
 
         if (x_r < 0)
-            x_shake_direction--;
+            _x_shake_direction--;
         else
-            x_shake_direction++;
+            _x_shake_direction++;
 
         if (y_r < 0)
-            y_shake_direction--;
+            _y_shake_direction--;
         else
-            y_shake_direction++;
+            _y_shake_direction++;
 
-        if (x_shake_direction < -shaking_max_same_direction) {
+        if (_x_shake_direction < -SHAKING_MAX_SHAKES_IN_SAME_DIRECTION) {
             x_r = 1;
-            x_shake_direction++;
-        } else if (x_shake_direction > shaking_max_same_direction) {
+            _x_shake_direction++;
+        } else if (_x_shake_direction > SHAKING_MAX_SHAKES_IN_SAME_DIRECTION) {
             x_r = -1;
-            x_shake_direction--;
+            _x_shake_direction--;
         }
 
-        if (y_shake_direction < -shaking_max_same_direction) {
+        if (_y_shake_direction < -SHAKING_MAX_SHAKES_IN_SAME_DIRECTION) {
             y_r = 1;
-            y_shake_direction++;
-        } else if (y_shake_direction > shaking_max_same_direction) {
+            _y_shake_direction++;
+        } else if (_y_shake_direction > SHAKING_MAX_SHAKES_IN_SAME_DIRECTION) {
             y_r = -1;
-            y_shake_direction--;
+            _y_shake_direction--;
         }
 
         x -= x_r;
@@ -116,20 +121,22 @@ void Camera::incremental_focus(int camera_speed) {
  */
 void Camera::update() {
 
-    if (!follow_main_dude)
+    write_current_position_to_graphics_engines();
+
+    if (!_follow_main_dude)
         return;
 
-    position_update_timer += Timer::getDeltaTime();
+    _position_update_timer += Timer::getDeltaTime();
 
-    if (position_update_timer > 15) {
+    if (_position_update_timer > CAMERA_UPDATE_DELTA) {
 
         //main dude's spriting, scroll faster
         if (InputHandler::instance().r_bumper_held)
-            incremental_focus(3);
+            incremental_focus(CAMERA_SPEED_MAIN_DUDE_RUNNING);
         else
-            incremental_focus(2);
+            incremental_focus(CAMERA_SPEED_MAIN_DUDE_WALKING);
 
-        position_update_timer = 0;
+        _position_update_timer = 0;
     }
 
     apply_map_boundaries();

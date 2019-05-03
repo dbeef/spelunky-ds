@@ -45,6 +45,8 @@ public:
         return *_instance;
     }
 
+    bool update();
+
     void start_new_game();
 
     void start_main_menu();
@@ -56,8 +58,6 @@ public:
     void start_next_level();
 
     void handle_changing_screens();
-
-    void handle_transition_screen_smooch();
 
     bool just_started_game{};
     bool exiting_game{};
@@ -93,6 +93,9 @@ public:
 
 private:
     static GameState *_instance;
+
+    void handle_transition_screen_smooch();
+
 };
 
 #endif //SPELUNKYDS_GAME_STATE_H

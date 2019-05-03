@@ -152,13 +152,13 @@ void Skeleton::check_if_can_be_summoned() {
     int diff = _x - MainDude::instance()._x; //distance between skeleton and main dude
     int diff_abs = abs(diff); //absolute distance
 
-    if (diff_abs < 2 * TILE_W && abs(_y - MainDude::instance()._y) < 0.8 * TILE_H) {
+    if (diff_abs < 2 * TILE_WIDTH && abs(_y - MainDude::instance()._y) < 0.8 * TILE_HEIGHT) {
 
         //TODO sprite_utils function, this xx, yy tile coordinates snippet is used widely
-        int xx = floor_div(this->_x + 0.5 * _physical_width, TILE_W);
-        int yy = floor_div(this->_y + 0.5 * _physical_height, TILE_H);
+        int xx = floor_div(this->_x + 0.5 * _physical_width, TILE_WIDTH);
+        int yy = floor_div(this->_y + 0.5 * _physical_height, TILE_HEIGHT);
 
-        int dude_xx = floor_div(MainDude::instance()._x + 0.5 * MainDude::main_dude_physical_width, TILE_W);
+        int dude_xx = floor_div(MainDude::instance()._x + 0.5 * MainDude::main_dude_physical_width, TILE_WIDTH);
 
         MapTile *tiles[9] = {};
 

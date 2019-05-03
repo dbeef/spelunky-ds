@@ -24,61 +24,29 @@ void gameloop::run() {
 
     populate_main_menu();
 
-    // If exited, SpelunkyDS returns 0 and gets back to the menu.
-    while (true) {
+    // If exited, SpelunkyDS returns 0 and gets back to game laucher.
+    while (GameState::instance().update()) {
 
         Timer::update_ms_since_last_frame();
         InputHandler::instance().updateInput();
-
-        // TODO: Make something like 'update' method for game state
-        //   for things like this.
-        GameState::instance().handle_transition_screen_smooch();
 
         // TODO: Merge those functions.
         MainDude::instance().handle_key_input();
         MainDude::instance().update();
 
+        Whip::instance().update();
         Hud::instance().update();
         Camera::instance().update();
-        Whip::instance().update();
 
         update_entities();
 
-        // TODO: Should be placed in planned GameState's update method
-        if (GameState::instance().bombed) {
-            on_bomb_explosion();
-            GameState::instance().bombed = false;
-        }
+        OAMManager::main().update();
+        OAMManager::sub().update();
 
-        // TODO: Place in camera's update method
-        Camera::instance().write_current_position_to_graphics_engines();
-
-        // TODO: Rename to just update
-        OAMManager::main().updateOAM();
-        OAMManager::sub().updateOAM();
-
-        // TODO: Place in planned GameState's update
         oam_utils::clean_unused_oam();
 
         swiWaitForVBlank();
-
-        // TODO: Place in planned GameState's update
-        brightness::update_brightness();
-        if (GameState::instance().exiting_game && brightness::is_maximum_brightness()) break;
     }
-
-}
-
-void gameloop::on_bomb_explosion() {
-    GameState::instance().current_level->update_level();
-
-    for (auto &creature : GameState::instance().creatures)
-        (*creature)._bottom_collision = false;
-    for (auto &item : GameState::instance().items)
-        (*item)._bottom_collision = false;
-    for (auto &treasures : GameState::instance().treasures)
-        (*treasures)._bottom_collision = false;
-    MainDude::instance()._bottom_collision = false;
 }
 
 void gameloop::update_entities() {
