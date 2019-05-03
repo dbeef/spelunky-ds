@@ -6,7 +6,6 @@
 #include <cstdio>
 #include "GameState.hpp"
 #include "GameLoop.hpp"
-#include "tiles/LevelRenderingUtils.hpp"
 #include "tiles/SplashScreenType.hpp"
 #include "../build/soundbank.h"
 #include "entities/creatures/Damsel.hpp"
@@ -20,17 +19,11 @@
 #include "graphics/OamUtils.hpp"
 #include "graphics/Brightness.hpp"
 #include "graphics/SpriteUtils.hpp"
+#include "tiles/LevelRenderer.hpp"
 
 GameState *GameState::_instance = nullptr;
 
 GameState::GameState() {
-
-    current_level = new Level();
-    current_level->init_map_tiles();
-    temp_map = new u16[4096];
-
-    SPELUNKYDS_BREAKING_ASSERT(current_level);
-    SPELUNKYDS_BREAKING_ASSERT(temp_map);
 
     // some of the moving objects aren't rendered as entities, like the ArrowTrap, which is render as a map tile,
     // though the maximum number of entities that can be rendered on NDS is 128
@@ -100,7 +93,7 @@ void GameState::start_level_summary() {
         creatures.push_back(damsel);
 
         MapTile *entrance;
-        current_level->get_first_tile_of_given_type(MapTileType::ENTRANCE, entrance);
+        Level::instance().get_first_tile_of_given_type(MapTileType::ENTRANCE, entrance);
         if (entrance != nullptr) {
             damsel->_x = (entrance->x * 16) + 7 * 16;
             damsel->_y = entrance->y * 16;
@@ -137,9 +130,6 @@ void GameState::handle_changing_screens() {
 
         MainDude::instance().animFrame = 0;
 
-        // copy base cave background to current map array
-        dmaCopyHalfWords(DEFAULT_DMA_CHANNEL, base_map, current_map, sizeof(base_map));
-
         generate_new_level_layout();
 
         if (_current_scene == Scene::MAIN_MENU || _current_scene == Scene::LEVEL_SUMMARY) {
@@ -153,14 +143,14 @@ void GameState::handle_changing_screens() {
                 sound::stop_cave_music();
 
 
-            current_level->generate_frame();
-            current_level->initialise_tiles_from_room_layout();
+            Level::instance().generate_frame();
+            Level::instance().initialise_tiles_from_room_layout();
             MainDude::instance().set_position_to(MapTileType::ENTRANCE);
 
 
         } else {
 
-            current_level->clean_map_layout();
+            Level::instance().clean_map_layout();
 
             //flushing the buffer so it wouldn't update in the scores/main menu/transition screen if != 0
             Hud::instance().money_on_this_level += Hud::instance().dollars_buffer;
@@ -175,8 +165,8 @@ void GameState::handle_changing_screens() {
                 sound::stop_cave_music();
                 sound::start_menu_music();
 
-                current_level->initialise_tiles_from_splash_screen(SplashScreenType::MAIN_MENU_UPPER);
-                current_level->initialise_tiles_from_splash_screen(SplashScreenType::MAIN_MENU_LOWER);
+                Level::instance().initialise_tiles_from_splash_screen(SplashScreenType::MAIN_MENU_UPPER);
+                Level::instance().initialise_tiles_from_splash_screen(SplashScreenType::MAIN_MENU_LOWER);
                 // FIXME: Should call method below or use constexpr position
 //                set_position_to(MapTileType::ENTRANCE);
                 MainDude::instance()._x = 113;
@@ -186,26 +176,16 @@ void GameState::handle_changing_screens() {
                 Camera::instance().instant_focus();
 
             } else if (MainDude::instance().dead) {
-                current_level->initialise_tiles_from_splash_screen(SplashScreenType::SCORES_UPPER);
-                current_level->initialise_tiles_from_splash_screen(SplashScreenType::SCORES_LOWER);
+                Level::instance().initialise_tiles_from_splash_screen(SplashScreenType::SCORES_UPPER);
+                Level::instance().initialise_tiles_from_splash_screen(SplashScreenType::SCORES_LOWER);
                 MainDude::instance().set_position_to(MapTileType::EXIT);
             } else {
-                current_level->initialise_tiles_from_splash_screen(SplashScreenType::ON_LEVEL_DONE_UPPER);
-                current_level->initialise_tiles_from_splash_screen(SplashScreenType::ON_LEVEL_DONE_LOWER);
+                Level::instance().initialise_tiles_from_splash_screen(SplashScreenType::ON_LEVEL_DONE_UPPER);
+                Level::instance().initialise_tiles_from_splash_screen(SplashScreenType::ON_LEVEL_DONE_LOWER);
                 MainDude::instance().set_position_to(MapTileType::ENTRANCE);
             }
 
         }
-
-        current_level->write_tiles_to_map();
-
-        sectorize_map();
-
-        // copy current map to rendering engines
-        dmaCopyHalfWords(DEFAULT_DMA_CHANNEL, current_map, bgGetMapPtr(bg_main_address),
-                         sizeof(current_map));
-        dmaCopyHalfWords(DEFAULT_DMA_CHANNEL, current_map, bgGetMapPtr(bg_sub_address),
-                         sizeof(current_map));
 
         bool dead = MainDude::instance().dead;
         int temp_x = MainDude::instance()._x;
@@ -249,6 +229,8 @@ void GameState::handle_changing_screens() {
         MainDude::instance().exiting_level = false;
         MainDude::instance().dead = false;
 
+        LevelRenderer::instance().render();
+
     } else if (MainDude::instance().animFrame >= 16) {
         sprite_utils::set_visibility(false,
                                      MainDude::instance().main_sprite_info,
@@ -277,8 +259,7 @@ void GameState::handle_transition_screen_smooch() {
 }
 
 GameState::~GameState() {
-    delete current_level;
-    delete temp_map;
+
 }
 
 void GameState::init() {

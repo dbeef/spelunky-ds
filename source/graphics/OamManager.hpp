@@ -16,6 +16,8 @@
 class OAMManager {
 public:
 
+    static void init_sprite_hardware();
+
     explicit OAMManager(OamType);
 
     static void init();
@@ -31,8 +33,6 @@ public:
         SPELUNKYDS_BREAKING_ASSERT(_main_instance);
         return *_sub_instance;
     }
-
-    void initOAMTable(u16 *spriteAddress, u16 *paletteAddress, u16 *oam_address, int offset_multiplier);
 
     void update();
 
@@ -60,6 +60,7 @@ private:
 
     static OAMManager* _main_instance;
     static OAMManager* _sub_instance;
+
 };
 
 

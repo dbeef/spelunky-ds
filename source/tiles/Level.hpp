@@ -9,8 +9,7 @@
 #include "Direction.hpp"
 #include "SplashScreenType.hpp"
 #include "../rooms/RoomType.hpp"
-
-//TODO Move from macros to constexpr in other classes too.
+#include "../preprocessor/Debug.h"
 
 constexpr u16 ROOMS_X = 3;
 constexpr u16 ROOMS_Y = 3;
@@ -35,6 +34,19 @@ class Level {
 
 public:
 
+    Level();
+
+    ~Level();
+
+    static void init();
+
+    static void dispose();
+
+    static inline Level& instance(){
+        SPELUNKYDS_BREAKING_ASSERT(_instance);
+        return *_instance;
+    }
+
     //I allocate these tiles on heap on game start, never delete them later. That helps graphics fragmentation a lot.
     //Before, I allocated/deallocated them on every level and It caused crashes on malloc after some time (~40 levels).
     MapTile *map_tiles[32][32];
@@ -42,6 +54,7 @@ public:
     //holds information on what room type is at specific array index
     RoomType layout[ROOMS_X][ROOMS_Y];
 
+    // TODO Use layout enum instead of u16
     //holds information on specific variation of room type, that is given from 'layout' array
     //i.e, we have 6 possible 'closed' rooms declared in the closed_rooms.hpp,
     //so this array lets us know, that we have a 'closed' room number 3 (for example) at some place.
@@ -49,12 +62,6 @@ public:
 
     //sets all tiles to !existing
     void clean_map_layout();
-
-    void init_map_tiles();
-
-    void update_level();
-
-    void write_tiles_to_map();
 
     void generate_frame();
 
@@ -64,9 +71,10 @@ public:
 
     void get_first_tile_of_given_type(MapTileType mapTileType, MapTile *&m);
 
-    void copy_current_map_to_engines();
+private:
 
-    void write_cave_background_to_map();
+    static Level* _instance;
+
 };
 
 #endif //SPELUNKYDS_LEVELGENERATOR_H

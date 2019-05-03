@@ -9,11 +9,11 @@
 #include "../../../build/gfx_blood_rock_rope_poof.h"
 #include "../../../build/soundbank.h"
 #include "../../collisions/Collisions.hpp"
-#include "../../tiles/LevelRenderingUtils.hpp"
 
 #include "../../time/Timer.h"
 #include "../../graphics/SpriteUtils.hpp"
 #include "../../sound/Sound.hpp"
+#include "../../math/Math.hpp"
 
 void Rope::update_item_specific() {
 
@@ -41,7 +41,7 @@ void Rope::update_item_specific() {
         _thrown = true;
         _throwing_timer = 0;
 
-        _x = floor_div(MainDude::instance()._x + 0.5 * MainDude::main_dude_physical_width, TILE_WIDTH) * TILE_WIDTH +
+        _x = math::floor_div(MainDude::instance()._x + 0.5 * MainDude::main_dude_physical_width, TILE_WIDTH) * TILE_WIDTH +
              _physical_width * 0.5;
         _y -= 16;
         _y_speed = -4;
@@ -92,7 +92,7 @@ void Rope::update_item_specific() {
 
             _finished = true;
 
-            int temp_y = floor_div(this->_y + (0.5 * _physical_height), TILE_HEIGHT);
+            int temp_y = math::floor_div(this->_y + (0.5 * _physical_height), TILE_HEIGHT);
 
             auto element = new RopeElement(_x, temp_y * TILE_HEIGHT);
             element->update();
@@ -150,7 +150,7 @@ void Rope::init_sprites() {
 
 void Rope::add_rope_if_needed() {
 
-    int temp_y = floor_div(this->_y + (0.5 * _physical_height), TILE_HEIGHT);
+    int temp_y = math::floor_div(this->_y + (0.5 * _physical_height), TILE_HEIGHT);
 
     if (!is_there_chain_for_this_tile(temp_y * TILE_HEIGHT)) {
 

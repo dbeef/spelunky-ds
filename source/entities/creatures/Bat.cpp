@@ -9,7 +9,6 @@
 #include "../items/Rock.hpp"
 #include "../animations/Blood.hpp"
 #include "../../collisions/Collisions.hpp"
-#include "../../tiles/LevelRenderingUtils.hpp"
 #include "../../../build/soundbank.h"
 
 #include "../../GameState.hpp"

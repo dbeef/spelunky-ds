@@ -22,8 +22,8 @@
 static const int BYTES_PER_16_COLOR_TILE = 32;
 static const int COLORS_PER_PALETTE = 16;
 
-OAMManager* OAMManager::_main_instance = nullptr;
-OAMManager* OAMManager::_sub_instance = nullptr;
+OAMManager *OAMManager::_main_instance = nullptr;
+OAMManager *OAMManager::_sub_instance = nullptr;
 
 void OAMManager::init() {
     SPELUNKYDS_BREAKING_ASSERT(!_main_instance);
@@ -39,20 +39,6 @@ void OAMManager::dispose() {
     SPELUNKYDS_BREAKING_ASSERT(_sub_instance);
     delete _main_instance;
     delete _sub_instance;
-}
-
-void
-OAMManager::initOAMTable(u16 *sprite_address, u16 *paletteAddress, u16 *oam_address, int offset_multiplier) {
-
-    oam = new OAMTable();
-    this->sprite_address = sprite_address;
-    this->palette_address = paletteAddress;
-    this->oam_address = oam_address;
-    this->offset_multiplier = offset_multiplier;
-
-    clear_sprite_attributes();
-
-    update();
 }
 
 void OAMManager::clear_sprite_attributes() {
@@ -223,6 +209,36 @@ OAMManager::initSprite(const unsigned short pallette[], int palLen, const unsign
     return spriteInfo;
 }
 
-OAMManager::OAMManager(OamType oam_type) : _oam_type(oam_type){
-    // do nothing
+OAMManager::OAMManager(OamType oam_type) : _oam_type(oam_type) {
+
+    const constexpr int BOUNDARY_VALUE = 64; /* This is the default boundary value (can be set in REG_DISPCNT) */
+    const constexpr int OFFSET_MULTIPLIER_MAIN = BOUNDARY_VALUE / sizeof(SPRITE_GFX[0]);
+    const constexpr int OFFSET_MULTIPLIER_SUB = BOUNDARY_VALUE / sizeof(SPRITE_GFX_SUB[0]);
+
+    switch (_oam_type) {
+        case OamType::MAIN: {
+            this->sprite_address = SPRITE_GFX;
+            this->palette_address = SPRITE_PALETTE;
+            this->oam_address = OAM;
+            this->offset_multiplier = OFFSET_MULTIPLIER_MAIN;
+            break;
+        }
+        case OamType::SUB: {
+            this->sprite_address = SPRITE_GFX_SUB;
+            this->palette_address = SPRITE_PALETTE_SUB;
+            this->oam_address = OAM_SUB;
+            this->offset_multiplier = OFFSET_MULTIPLIER_SUB;
+            break;
+        }
+    }
+
+    oam = new OAMTable();
+    clear_sprite_attributes();
+    update();
+}
+
+void OAMManager::init_sprite_hardware() {
+    //Initialise sprite graphics
+    oamInit(&oamMain, SpriteMapping_1D_64, false);
+    oamInit(&oamSub, SpriteMapping_1D_64, false);
 }

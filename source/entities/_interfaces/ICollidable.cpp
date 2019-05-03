@@ -3,10 +3,8 @@
 //
 
 #include <cmath>
-
-
+#include "../../math/Math.hpp"
 #include "../../collisions/Collisions.hpp"
-#include "../../tiles/LevelRenderingUtils.hpp"
 #include "ICollidable.h"
 #include "../../../build/soundbank.h"
 #include "../../preprocessor/Debug.h"
@@ -15,7 +13,7 @@
 #include "../../sound/Sound.hpp"
 
 void ICollidable::update_collisions_with_map(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
-    Collisions::getNeighboringTiles(GameState::instance().current_level->map_tiles, x_current_pos_in_tiles,
+    Collisions::getNeighboringTiles(Level::instance().map_tiles, x_current_pos_in_tiles,
                                     y_current_pos_in_tiles, _neighboring_tiles);
 
     _bottom_collision = Collisions::checkBottomCollision(_neighboring_tiles, &_x, &_y, &_y_speed, _physical_width,
@@ -57,8 +55,8 @@ void ICollidable::update_position() {
                 _y -= 1;
         }
 
-        xx = floor_div(_x + 0.5 * _physical_width, TILE_WIDTH);
-        yy = floor_div(_y + 0.5 * _physical_height, TILE_HEIGHT);
+        xx = math::floor_div(_x + 0.5 * _physical_width, TILE_WIDTH);
+        yy = math::floor_div(_y + 0.5 * _physical_height, TILE_HEIGHT);
 
         if (old_xx != xx || old_yy != yy || _physical_width <= 8 || _physical_height <= 8) {
             SPELUNKYDS_BREAKING_ASSERT(xx < 31 && yy < 31 && xx >= 0 && yy >= 0);

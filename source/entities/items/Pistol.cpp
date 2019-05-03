@@ -10,7 +10,6 @@
 #include "../../../build/gfx_spike_collectibles_flame.h"
 #include "../../../build/soundbank.h"
 #include "../../entities/decorations/GotCollectible.hpp"
-#include "../../tiles/LevelRenderingUtils.hpp"
 
 #include "../../entities/decorations/Blast.hpp"
 #include "../creatures/Bullet.hpp"

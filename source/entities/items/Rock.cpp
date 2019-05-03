@@ -7,7 +7,6 @@
 #include "../singletons/MainDude.hpp"
 #include "../../../build/gfx_blood_rock_rope_poof.h"
 #include "../../collisions/Collisions.hpp"
-#include "../../tiles/LevelRenderingUtils.hpp"
 #include "../../graphics/SpriteUtils.hpp"
 
 

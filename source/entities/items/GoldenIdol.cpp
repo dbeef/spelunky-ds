@@ -7,7 +7,6 @@
 #include "../singletons/MainDude.hpp"
 #include "../../../build/gfx_goldbars.h"
 #include "../../collisions/Collisions.hpp"
-#include "../../tiles/LevelRenderingUtils.hpp"
 
 #include "../../tiles/TileOrientation.hpp"
 #include "../../../build/soundbank.h"
@@ -32,7 +31,7 @@ void GoldenIdol::update_item_specific() {
         }
 
         MapTile *tiles[9] = {};
-        Collisions::getNeighboringTiles(GameState::instance().current_level->map_tiles, MainDude::instance().current_x_in_tiles,
+        Collisions::getNeighboringTiles(Level::instance().map_tiles, MainDude::instance().current_x_in_tiles,
                                         MainDude::instance().current_y_in_tiles, tiles);
 
         collected = tiles[static_cast<uint16>(TileOrientation::CENTER)] != nullptr && tiles[static_cast<uint16>(TileOrientation::CENTER)]->mapTileType == MapTileType::EXIT;

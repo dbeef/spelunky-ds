@@ -10,13 +10,13 @@
 #include "../../../build/soundbank.h"
 #include "../animations/Blood.hpp"
 #include "../../../build/gfx_caveman_damsel.h"
-#include "../../tiles/LevelRenderingUtils.hpp"
 #include "../../tiles/TileOrientation.hpp"
 
 #include "../../GameState.hpp"
 #include "../../time/Timer.h"
 #include "../../graphics/SpriteUtils.hpp"
 #include "../../sound/Sound.hpp"
+#include "../../math/Math.hpp"
 
 #define CAVEMAN_POS_INC_DELTA 20
 #define CAVEMAN_TRIGGERED_SPEED 3
@@ -278,10 +278,10 @@ void Caveman::check_if_can_be_triggered() {
 
     if (!triggered && diff_abs < 9 * TILE_WIDTH && abs(_y - MainDude::instance()._y) < 0.8 * TILE_HEIGHT) {
 
-        int xx = floor_div(this->_x + 0.5 * _physical_width, TILE_WIDTH);
-        int yy = floor_div(this->_y + 0.5 * _physical_height, TILE_HEIGHT);
+        int xx = math::floor_div(this->_x + 0.5 * _physical_width, TILE_WIDTH);
+        int yy = math::floor_div(this->_y + 0.5 * _physical_height, TILE_HEIGHT);
 
-        int dude_xx = floor_div(MainDude::instance()._x + 0.5 * MainDude::main_dude_physical_width, TILE_WIDTH);
+        int dude_xx = math::floor_div(MainDude::instance()._x + 0.5 * MainDude::main_dude_physical_width, TILE_WIDTH);
 
         triggered = true;
 

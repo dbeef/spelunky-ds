@@ -244,7 +244,7 @@ bool Collisions::checkCollisionBodiesLeftLowerCorner(int x1, int y1, int w1, int
 void Collisions::getTilesOnRightFromXY(int xx, int yy, MapTile **out_neighboringTiles) {
     for (int a = 0; a < 9; a++) {
         if (a + xx <= 31)
-            out_neighboringTiles[a] = GameState::instance().current_level->map_tiles[a + xx][yy];
+            out_neighboringTiles[a] = Level::instance().map_tiles[a + xx][yy];
         else
             out_neighboringTiles[a] = nullptr;
     }
@@ -254,7 +254,7 @@ void Collisions::getTilesOnRightFromXY(int xx, int yy, MapTile **out_neighboring
 void Collisions::getTilesOnLeftFromXY(int xx, int yy, MapTile **out_neighboringTiles) {
     for (int a = 0; a < 9; a++) {
         if (xx - a >= 0)
-            out_neighboringTiles[a] = GameState::instance().current_level->map_tiles[xx - a][yy];
+            out_neighboringTiles[a] = Level::instance().map_tiles[xx - a][yy];
         else
             out_neighboringTiles[a] = nullptr;
     }

@@ -8,7 +8,6 @@
 
 #include "../../../build/gfx_spider_skeleton.h"
 #include "../../collisions/Collisions.hpp"
-#include "../../tiles/LevelRenderingUtils.hpp"
 #include "../../../build/soundbank.h"
 #include "../animations/Bone.hpp"
 #include "../items/Skull.hpp"
@@ -17,6 +16,7 @@
 #include "../../time/Timer.h"
 #include "../../graphics/SpriteUtils.hpp"
 #include "../../sound/Sound.hpp"
+#include "../../math/Math.hpp"
 
 #define SKELETON_POS_INC_DELTA 19
 #define SKELETON_ANIM_FRAME_DELTA 90
@@ -155,10 +155,10 @@ void Skeleton::check_if_can_be_summoned() {
     if (diff_abs < 2 * TILE_WIDTH && abs(_y - MainDude::instance()._y) < 0.8 * TILE_HEIGHT) {
 
         //TODO sprite_utils function, this xx, yy tile coordinates snippet is used widely
-        int xx = floor_div(this->_x + 0.5 * _physical_width, TILE_WIDTH);
-        int yy = floor_div(this->_y + 0.5 * _physical_height, TILE_HEIGHT);
+        int xx = math::floor_div(this->_x + 0.5 * _physical_width, TILE_WIDTH);
+        int yy = math::floor_div(this->_y + 0.5 * _physical_height, TILE_HEIGHT);
 
-        int dude_xx = floor_div(MainDude::instance()._x + 0.5 * MainDude::main_dude_physical_width, TILE_WIDTH);
+        int dude_xx = math::floor_div(MainDude::instance()._x + 0.5 * MainDude::main_dude_physical_width, TILE_WIDTH);
 
         MapTile *tiles[9] = {};
 

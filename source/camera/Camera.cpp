@@ -8,6 +8,7 @@
 #include "Camera.hpp"
 #include "../GameState.hpp"
 #include "../time/Timer.h"
+#include "../tiles/LevelRenderer.hpp"
 
 static const u16 CAMERA_MENU_START_X = 0;
 static const u16 CAMERA_MENU_START_Y = 127;
@@ -154,8 +155,8 @@ void Camera::apply_map_boundaries() {
 
 // Tells the main and sub screen graphics engine to update camera position with current camera x/y
 void Camera::write_current_position_to_graphics_engines() {
-    bgSetScroll(GameState::instance().bg_main_address, this->_x, this->_y);
-    bgSetScroll(GameState::instance().bg_sub_address, this->_x, this->_y + SCREEN_HEIGHT);
+    bgSetScroll(LevelRenderer::instance()._main_background_id, this->_x, this->_y);
+    bgSetScroll(LevelRenderer::instance()._sub_background_id, this->_x, this->_y + SCREEN_HEIGHT);
     bgUpdate();
 }
 

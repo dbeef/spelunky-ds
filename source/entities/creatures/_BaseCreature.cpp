@@ -10,7 +10,6 @@
 #include "../../../build/soundbank.h"
 
 #include "../../camera/Camera.hpp"
-#include "../../tiles/LevelRenderingUtils.hpp"
 #include "../../collisions/Collisions.hpp"
 #include "../../sound/Sound.hpp"
 #include "_BaseCreature.h"

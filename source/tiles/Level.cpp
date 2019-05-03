@@ -15,36 +15,34 @@
 #include "../rooms/SplashScreenRooms.hpp"
 #include "../rooms/AltarRoom.hpp"
 #include "../rooms/RoomType.hpp"
-#include "LevelRenderingUtils.hpp"
 #include "../rooms/ShopRooms.hpp"
 #include "Direction.hpp"
 #include "../GameState.hpp"
 #include "BaseMap.hpp"
 
-/**
- * Copies clean cave background to the map, then writes current tiles from map_tiles[32][32] to the map,
- * formats it in a way that makes it understandable by the graphics engines and copies it to the place
- * the engines expect the map to be.
- * One should call this function, when he knows that the map changed,
- * i.e a bomb exploded or he moved from main menu to game level.
- */
-void Level::update_level() {
-    write_cave_background_to_map();
-    write_tiles_to_map(); //now we write our tiles onto the current map
-    sectorize_map(); //sectorizing map, so it would be correctly rendered
-    copy_current_map_to_engines(); //and copy the map to both main and sub screen engine
+Level* Level::_instance = nullptr;
+
+void Level::init() {
+    SPELUNKYDS_BREAKING_ASSERT(!_instance);
+    _instance = new Level();
+    SPELUNKYDS_BREAKING_ASSERT(_instance);
 }
 
-void Level::write_cave_background_to_map() {
-    //copy the base map to the current map, which means we start the current map with only the cave background
-    dmaCopyHalfWords(DEFAULT_DMA_CHANNEL, base_map, GameState::instance().current_map, sizeof(base_map));
+void Level::dispose() {
+    SPELUNKYDS_BREAKING_ASSERT(_instance);
+    delete _instance;
 }
 
-void Level::copy_current_map_to_engines() {
-    dmaCopyHalfWords(DEFAULT_DMA_CHANNEL, GameState::instance().current_map, bgGetMapPtr(GameState::instance().bg_main_address),
-                     sizeof(GameState::instance().current_map));
-    dmaCopyHalfWords(DEFAULT_DMA_CHANNEL, GameState::instance().current_map, bgGetMapPtr(GameState::instance().bg_sub_address),
-                     sizeof(GameState::instance().current_map));
+Level::Level(){
+    for (auto &map_tile : map_tiles)
+        for (auto &b : map_tile)
+            b = new MapTile();
+}
+
+Level::~Level(){
+    for (auto &map_tile : map_tiles)
+        for (auto &b : map_tile)
+            delete b;
 }
 
 /**
@@ -110,20 +108,6 @@ void Level::generate_frame() {
         map_tiles[0][a]->x = 0;
         map_tiles[0][a]->y = a;
         map_tiles[0][a]->exists = true;
-    }
-}
-
-/**
- * Writes bytes that make a graphical representation of every MapTile in map_tiles array to the current map.
- */
-void Level::write_tiles_to_map() {
-    for (int x = 0; x < MAP_GAME_WIDTH_TILES; x++) {
-        for (int y = 0; y < MAP_GAME_HEIGHT_TILES; y++) {
-            MapTile *t = map_tiles[x][y];
-            if (t->exists)
-                for (int k = 0; k < 4; k++)
-                    GameState::instance().current_map[t->map_index[k]] = t->values[k];
-        }
     }
 }
 
@@ -322,15 +306,9 @@ void Level::get_first_tile_of_given_type(MapTileType mapTileType, MapTile *&m) {
     }
 }
 
-void Level::init_map_tiles() {
-    for (int a = 0; a < 32; a++)
-        for (int b = 0; b < 32; b++)
-            map_tiles[a][b] = new MapTile();
-}
-
 void Level::clean_map_layout() {
     //clean current layout
-    for (auto &map_tile : GameState::instance().current_level->map_tiles)
+    for (auto &map_tile : Level::instance().map_tiles)
         for (auto &y : map_tile) {
             y->exists = false;
             y->destroyable = true; //tiles are destroyable by default

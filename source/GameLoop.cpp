@@ -5,8 +5,14 @@
 #include "graphics/OamUtils.hpp"
 #include "tiles/PopulatingUtils.hpp"
 #include "time/Timer.h"
+#include "tiles/LevelRenderer.hpp"
 
 void gameloop::run() {
+
+    //Set-up main menu scene from tiles
+    Level::instance().initialise_tiles_from_splash_screen(SplashScreenType::MAIN_MENU_UPPER);
+    Level::instance().initialise_tiles_from_splash_screen(SplashScreenType::MAIN_MENU_LOWER);
+    LevelRenderer::instance().render();
 
     Camera::instance().set_main_menu_position();
     Camera::instance().detach_from_main_dude();

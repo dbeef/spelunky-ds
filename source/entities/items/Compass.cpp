@@ -72,7 +72,7 @@ void Compass::init_sprites() {
 void Compass::draw_arrow_to_exit() {
 
     MapTile *exit = nullptr;
-    GameState::instance().current_level->get_first_tile_of_given_type(MapTileType::EXIT, exit);
+    Level::instance().get_first_tile_of_given_type(MapTileType::EXIT, exit);
 
 
     if (exit != nullptr) {

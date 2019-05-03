@@ -7,7 +7,6 @@
 #include "../../GameState.hpp"
 #include "Blood.hpp"
 #include "../../collisions/Collisions.hpp"
-#include "../../tiles/LevelRenderingUtils.hpp"
 
 #include "../../time/Timer.h"
 #include "../../graphics/SpriteUtils.hpp"

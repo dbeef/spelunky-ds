@@ -10,7 +10,6 @@
 #include "../../../build/gfx_spider_skeleton.h"
 #include "../items/Rock.hpp"
 #include "../../collisions/Collisions.hpp"
-#include "../../tiles/LevelRenderingUtils.hpp"
 #include "../../../build/soundbank.h"
 
 #include "../../GameState.hpp"

@@ -137,7 +137,7 @@ void Damsel::update_creature_specific() {
 
         //search for an exit
         MapTile *tiles[9] = {};
-        Collisions::getNeighboringTiles(GameState::instance().current_level->map_tiles, MainDude::instance().current_x_in_tiles,
+        Collisions::getNeighboringTiles(Level::instance().map_tiles, MainDude::instance().current_x_in_tiles,
                                         MainDude::instance().current_y_in_tiles, tiles);
 
         exiting_level = tiles[static_cast<uint16>(TileOrientation::CENTER)] != nullptr && tiles[static_cast<uint16>(TileOrientation::CENTER)]->mapTileType == MapTileType::EXIT;

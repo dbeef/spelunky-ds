@@ -60,8 +60,8 @@ void populate_cave_moniez() {
     for (int b = ROOMS_Y - 1; b >= 0; b--) {
         for (int a = 0; a < ROOMS_X; a++) {
 
-            RoomType& room_type = GameState::instance().current_level->layout[a][b];
-            int room_id = GameState::instance().current_level->layout_room_ids[a][b];
+            RoomType& room_type = Level::instance().layout[a][b];
+            int room_id = Level::instance().layout_room_ids[a][b];
 
 
             if (room_id == -1)
@@ -203,8 +203,8 @@ void populate_cave_npcs() {
     for (int b = ROOMS_Y - 1; b >= 0; b--) {
         for (int a = 0; a < ROOMS_X; a++) {
 
-            RoomType& room_type = GameState::instance().current_level->layout[a][b];
-            int room_id = GameState::instance().current_level->layout_room_ids[a][b];
+            RoomType& room_type = Level::instance().layout[a][b];
+            int room_id = Level::instance().layout_room_ids[a][b];
 
 
             if (room_id == -1)

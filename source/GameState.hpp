@@ -77,11 +77,6 @@ public:
 
     Scene _current_scene;
 
-    // TODO: Make current level a singleton.
-    Level *current_level{};
-
-    u16 *temp_map{}; //cave background only
-
     std::vector<BaseCreature *> creatures;
     std::vector<BaseDecoration *> decorations;
     std::vector<BaseTreasure *> treasures;
@@ -91,10 +86,7 @@ public:
     std::vector<CreatureType> killed_npcs; //list of NPCs killed in current level //FIXME should be SpriteType
     std::vector<TreasureType> collected_treasures; //list of loot collected in current level
 
-    int bg_main_address; //technically, it's an id returned by oam init FIXME naming
-    int bg_sub_address; //technically, it's an id returned by oam init FIXME naming
     double clean_unused_oam_timer; //every arbitrary amount of time OAM is checked for unused entities and cleaned off
-    u16 current_map[4096]; //cave background with tiles rendered on it
 
 private:
     static GameState *_instance;

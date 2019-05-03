@@ -57,8 +57,10 @@ add_executable(spelunkyds
         source/GameLoop.hpp
         source/tiles/Level.cpp
         source/tiles/Level.hpp
-        source/tiles/LevelRenderingUtils.cpp
-        source/tiles/LevelRenderingUtils.hpp
+        source/math/Math.cpp
+        source/math/Math.hpp
+        source/tiles/LevelRenderer.hpp
+        source/tiles/LevelRenderer.cpp
         source/tiles/MapTile.cpp
         source/tiles/MapTile.hpp
         source/collisions/Collisions.cpp

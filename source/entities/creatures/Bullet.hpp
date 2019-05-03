@@ -8,8 +8,8 @@
 #include "_BaseCreature.h"
 #include "../_common/Orientation.hpp"
 #include "../../collisions/Collisions.hpp"
-#include "../../tiles/LevelRenderingUtils.hpp"
 #include "../../graphics/SpriteUtils.hpp"
+#include "../../math/Math.hpp"
 
 
 class Bullet : public BaseCreature {
@@ -33,8 +33,8 @@ public:
             CreatureType::BULLET
     ) {
         //checking this in case of firing just in front of a wall
-        int xx = floor_div(this->_x + 0.5 * _physical_width, TILE_WIDTH);
-        int yy = floor_div(this->_y + 0.5 * _physical_height, TILE_HEIGHT);
+        int xx = math::floor_div(this->_x + 0.5 * _physical_width, TILE_WIDTH);
+        int yy = math::floor_div(this->_y + 0.5 * _physical_height, TILE_HEIGHT);
         update_collisions_with_map(xx, yy);
         if (killed) {
             _ready_to_dispose = true;

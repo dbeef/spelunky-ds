@@ -6,7 +6,6 @@
 #include "../../../build/gfx_spike_collectibles_flame.h"
 #include "_BaseCreature.h"
 #include "Bullet.hpp"
-#include "../../tiles/LevelRenderingUtils.hpp"
 
 #include "../../GameState.hpp"
 #include "../../time/Timer.h"

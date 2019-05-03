@@ -7,11 +7,9 @@
 
 #include "Bomb.hpp"
 #include "../../GameState.hpp"
-#include "../../tiles/LevelRenderingUtils.hpp"
 #include "../../collisions/Collisions.hpp"
 #include "../../../build/gfx_bomb.h"
 #include "../../../build/soundbank.h"
-#include "../../tiles/LevelRenderingUtils.hpp"
 
 #include "../animations/Flame.hpp"
 #include "../decorations/Explosion.h"
@@ -19,6 +17,8 @@
 #include "../../time/Timer.h"
 #include "../../graphics/SpriteUtils.hpp"
 #include "../../sound/Sound.hpp"
+#include "../../math/Math.hpp"
+#include "../../tiles/LevelRenderer.hpp"
 
 void Bomb::update_item_specific() {
 
@@ -118,11 +118,11 @@ void Bomb::explode() {
     sound::explosion();
     sprite_utils::set_visibility(false, _main_sprite_info, _sub_sprite_info);
 
-    int xx = floor_div(this->_x + 0.5 * _sprite_width, TILE_WIDTH);
-    int yy = floor_div(this->_y + 0.5 * _sprite_height, TILE_HEIGHT);
+    int xx = math::floor_div(this->_x + 0.5 * _sprite_width, TILE_WIDTH);
+    int yy = math::floor_div(this->_y + 0.5 * _sprite_height, TILE_HEIGHT);
 
-    Collisions::bombNeighboringTiles(GameState::instance().current_level->map_tiles, xx, yy);
-    GameState::instance().current_level->update_level();
+    Collisions::bombNeighboringTiles(Level::instance().map_tiles, xx, yy);
+    LevelRenderer::instance().render();
 
     auto *explosion = new Explosion(_x - 32, _y - 32);
     GameState::instance().decorations.push_back(explosion);

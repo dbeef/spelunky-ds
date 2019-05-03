@@ -4,7 +4,7 @@
 
 #include <nds.h>
 #include <nds/arm9/sprite.h>
-
+#include "../../math/Math.hpp"
 #include <cstdlib>
 
 #include "../../graphics/SpriteUtils.hpp"
@@ -12,7 +12,6 @@
 #include "MainDude.hpp"
 #include "../../GameState.hpp"
 #include "../../collisions/Collisions.hpp"
-#include "../../tiles/LevelRenderingUtils.hpp"
 #include "../../../build/gfx_spelunker.h"
 #include "../../../build/soundbank.h"
 #include "../../tiles/TileOrientation.hpp"
@@ -67,7 +66,7 @@ void MainDude::reset_state(){
 void MainDude::set_position_to(MapTileType t) {
 
     MapTile *entrance;
-    GameState::instance().current_level->get_first_tile_of_given_type(t, entrance);
+    Level::instance().get_first_tile_of_given_type(t, entrance);
 
     if (entrance != nullptr && entrance->exists) {
         _x = entrance->x * 16;
@@ -175,8 +174,8 @@ void MainDude::handle_key_input() {
 
         }
 
-        int xx = floor_div(this->_x + 0.5 * _physical_width, TILE_WIDTH);
-        int yy = floor_div(this->_y + 0.5 * _physical_height, TILE_HEIGHT);
+        int xx = math::floor_div(this->_x + 0.5 * _physical_width, TILE_WIDTH);
+        int yy = math::floor_div(this->_y + 0.5 * _physical_height, TILE_HEIGHT);
 
         current_x_in_tiles = xx;
         current_y_in_tiles = yy;
@@ -206,7 +205,7 @@ void MainDude::handle_key_input() {
             }
 
             MapTile *neighboringTiles[9] = {};
-            Collisions::getNeighboringTiles(GameState::instance().current_level->map_tiles, xx, yy, neighboringTiles);
+            Collisions::getNeighboringTiles(Level::instance().map_tiles, xx, yy, neighboringTiles);
 
 
             can_climb_ladder = neighboringTiles[static_cast<uint16>(TileOrientation::CENTER)] != nullptr &&
@@ -273,7 +272,7 @@ void MainDude::handle_key_input() {
 
             MapTile *neighboringTiles[9] = {};
 
-            Collisions::getNeighboringTiles(GameState::instance().current_level->map_tiles, xx, yy, neighboringTiles);
+            Collisions::getNeighboringTiles(Level::instance().map_tiles, xx, yy, neighboringTiles);
             can_climb_ladder = neighboringTiles[static_cast<uint16>(TileOrientation::CENTER)]->mapTileType == MapTileType::LADDER ||
                                neighboringTiles[static_cast<uint16>(TileOrientation::CENTER)]->mapTileType == MapTileType::LADDER_DECK;
 
@@ -543,7 +542,6 @@ void MainDude::reset_values_checked_every_frame() {
 #include "../items/SpringShoes.hpp"
 #include "../items/Rope.hpp"
 #include "../../collisions/Collisions.hpp"
-#include "../../tiles/LevelRenderingUtils.hpp"
 #include "../../../build/soundbank.h"
 #include "../../tiles/TileOrientation.hpp"
 #include "../items/SpikeShoes.hpp"
@@ -562,6 +560,7 @@ void MainDude::reset_values_checked_every_frame() {
 #include "../../input/InputHandler.hpp"
 #include "../../GameState.hpp"
 #include "../../graphics/SpriteUtils.hpp"
+#include "../../math/Math.hpp"
 
 void MainDude::throw_item() {
 
@@ -673,7 +672,7 @@ void MainDude::throw_rope() {
     Hud::instance().draw_level_hud();
 
     u8 ROPE_PHYSICAL_WIDTH = 16;
-    Rope *rope = new Rope((floor_div(_x + (0.5 * _physical_width), TILE_WIDTH) * TILE_WIDTH) + (ROPE_PHYSICAL_WIDTH * 0.5),
+    Rope *rope = new Rope((math::floor_div(_x + (0.5 * _physical_width), TILE_WIDTH) * TILE_WIDTH) + (ROPE_PHYSICAL_WIDTH * 0.5),
                           _y + 6);
     rope->_activated = true;
     rope->_y_speed = -4;

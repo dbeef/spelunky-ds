@@ -413,7 +413,7 @@ void Shopkeeper::set_shop_bounds() {
 
 
     MapTile *shop_sign = nullptr;
-    GameState::instance().current_level->get_first_tile_of_given_type(MapTileType::SHOP_SIGN_RARE, shop_sign);
+    Level::instance().get_first_tile_of_given_type(MapTileType::SHOP_SIGN_RARE, shop_sign);
 
     int tile_x = shop_sign->x * TILE_WIDTH;
 

@@ -10,7 +10,6 @@
 #include "../../sound/Sound.hpp"
 #include "../../GameState.hpp"
 #include "../../collisions/Collisions.hpp"
-#include "../../tiles/LevelRenderingUtils.hpp"
 #include "../singletons/MainDude.hpp"
 
 #include "Arrow.hpp"
