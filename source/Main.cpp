@@ -56,6 +56,8 @@ int main() {
     oamInit(&oamMain, SpriteMapping_1D_64, false);
     oamInit(&oamSub, SpriteMapping_1D_64, false);
 
+    // TODO: Decouple Level state from tile rendering logics and put these
+    //   calls in TileRenderer constructor or whatever class will come out of this decoupling.
     //https://devkitpro.org/viewtopic.php?f=38&t=8720
     // OBJPRIORITY_0 > BG_PRIORITY_0 >
     // OBJPRIORITY_1 > BG_PRIORITY_1 >
@@ -94,6 +96,7 @@ int main() {
     constexpr int OFFSET_MULTIPLIER_MAIN = BOUNDARY_VALUE / sizeof(SPRITE_GFX[0]);
     constexpr int OFFSET_MULTIPLIER_SUB = BOUNDARY_VALUE / sizeof(SPRITE_GFX_SUB[0]);
 
+    // TODO: constexpr arguments, can be in called method definition.
     OAMManager::main().initOAMTable(SPRITE_GFX, SPRITE_PALETTE, OAM, OFFSET_MULTIPLIER_MAIN);
     OAMManager::sub().initOAMTable(SPRITE_GFX_SUB, SPRITE_PALETTE_SUB, OAM_SUB, OFFSET_MULTIPLIER_SUB);
 
