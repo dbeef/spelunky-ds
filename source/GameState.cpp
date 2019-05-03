@@ -40,8 +40,7 @@ GameState::GameState() {
     treasures.reserve(8);
 
     // set up logics
-    in_main_menu = true;
-    just_started_game = true;
+    _current_scene = Scene::MAIN_MENU;
 }
 
 void GameState::start_new_game() {
@@ -59,36 +58,37 @@ void GameState::start_new_game() {
 }
 
 void GameState::start_main_menu() {
+
+    _current_scene = Scene::MAIN_MENU;
+
     MainDude::instance().climbing = false;
     Camera::instance().detach_from_main_dude();
-    in_main_menu = true;
-    levels_transition_screen = false;
-    scores_screen = false;
     populate_main_menu();
 }
 
 void GameState::start_scores() {
+
+    _current_scene = Scene::SCORES;
+
     MainDude::instance().reset_state();
-    scores_screen = true;
     Hud::instance().draw_scores();
     Camera::instance().detach_from_main_dude();
 }
 
-void GameState::start_level_transition_screen() {
+void GameState::start_level_summary() {
+
+    _current_scene = Scene::LEVEL_SUMMARY;
+
     Hud::instance().total_time_spent += Hud::instance().time_spent_on_level;
     Hud::instance().level++;
 
-    levels_transition_screen = true;
-    splash_screen = true;
-
-    InputHandler::instance().stop_handling = true;
-    InputHandler::instance().l_bumper_held = true;
-    InputHandler::instance().right_key_held = true;
+    InputHandler::instance().block_user_input();
+    InputHandler::instance().keys.l_bumper_held = true;
+    InputHandler::instance().keys.right_key_held = true;
 
     Camera::instance().detach_from_main_dude();
-    consoleClear();
+    Hud::instance().clear_console();
     Hud::instance().draw_on_level_done();
-
 
     if (damsels_rescued_this_level > 0) {
         Hud::instance().hearts += damsels_rescued_this_level;
@@ -114,25 +114,26 @@ void GameState::start_level_transition_screen() {
 
 void GameState::start_next_level() {
 
+    _current_scene = Scene::LEVEL;
+
     Hud::instance().items_offset_y = 7;
     MainDude::instance().holding_item = false;
     MainDude::instance().spawn_carried_items();
     Hud::instance().init_sprites();
     populate_cave_npcs();
     populate_cave_moniez();
-    levels_transition_screen = false;
-    in_main_menu = false;
     killed_npcs.clear();
     collected_treasures.clear();
     Hud::instance().money_on_this_level = 0;
     Hud::instance().draw_level_hud();
 
+    InputHandler::instance().unblock_user_input();
 }
 
 void GameState::handle_changing_screens() {
 
-    if ((MainDude::instance().dead && InputHandler::instance().y_key_down) ||
-        (MainDude::instance().animFrame >= 16 && !splash_screen)) {
+    if ((MainDude::instance().dead && InputHandler::instance().keys.y_key_down) ||
+        (MainDude::instance().animFrame >= 16)) {
 
         MainDude::instance().animFrame = 0;
 
@@ -141,11 +142,11 @@ void GameState::handle_changing_screens() {
 
         generate_new_level_layout();
 
-        if (in_main_menu || levels_transition_screen) {
+        if (_current_scene == Scene::MAIN_MENU || _current_scene == Scene::LEVEL_SUMMARY) {
 
             //next level or starting game
 
-            if (in_main_menu) {
+            if (_current_scene == Scene::MAIN_MENU) {
                 sound::stop_menu_music();
                 sound::start_cave_music();
             } else
@@ -167,9 +168,9 @@ void GameState::handle_changing_screens() {
 
             //splash screen; scores or level transition
 
-            if (scores_screen) {
+            if (_current_scene == Scene::SCORES) {
 
-                robbed_killed_shopkeeper = false;
+                robbed_or_killed_shopkeeper = false;
 
                 sound::stop_cave_music();
                 sound::start_menu_music();
@@ -224,9 +225,9 @@ void GameState::handle_changing_screens() {
         MainDude::instance().init_sprites();
         Whip::instance().init_sprites();
 
-        if (in_main_menu || levels_transition_screen) {
+        if (_current_scene == Scene::MAIN_MENU || _current_scene == Scene::LEVEL_SUMMARY) {
 
-            if (in_main_menu) {
+            if (_current_scene == Scene::MAIN_MENU) {
                 start_new_game();
             } else {
                 sound::start_cave_music();
@@ -236,30 +237,22 @@ void GameState::handle_changing_screens() {
 
         } else {
 
-            if (scores_screen) {
+            if (_current_scene == Scene::SCORES) {
                 start_main_menu();
-            }
-            else if (MainDude::instance().dead) {
+            } else if (MainDude::instance().dead) {
                 start_scores();
             } else {
-                start_level_transition_screen();
+                start_level_summary();
             }
         }
 
         MainDude::instance().exiting_level = false;
         MainDude::instance().dead = false;
 
-    } else if (MainDude::instance().animFrame >= 16 && splash_screen) {
-
+    } else if (MainDude::instance().animFrame >= 16) {
         sprite_utils::set_visibility(false,
                                      MainDude::instance().main_sprite_info,
                                      MainDude::instance().sub_sprite_info);
-
-        InputHandler::instance().stop_handling = false;
-
-        if (InputHandler::instance().y_key_down) {
-            splash_screen = false;
-        }
     }
 }
 
@@ -270,7 +263,7 @@ void GameState::handle_transition_screen_smooch() {
     if (smooching) {
         if (144 - MainDude::instance()._x <= 16) {
             smooch_timer += Timer::getDeltaTime();
-            InputHandler::instance().right_key_held = false;
+            InputHandler::instance().keys.right_key_held = false;
             if (!spawned_smooch) {
                 sound::kiss();
                 spawned_smooch = true;

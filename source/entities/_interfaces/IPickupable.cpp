@@ -10,10 +10,10 @@
 bool IPickupable::check_if_can_be_opened() {
     if (!_activated &&
         Collisions::checkCollisionWithMainDudeWidthBoundary(_x, _y, _physical_width, _physical_height, 8) &&
-        InputHandler::instance().up_key_held && InputHandler::instance().y_key_down) {
+        InputHandler::instance().keys.up_key_held && InputHandler::instance().keys.y_key_down) {
 
         _activated = true;
-        InputHandler::instance().y_key_down = false;
+        InputHandler::instance().keys.y_key_down = false;
 
         return true;
     } else
@@ -25,20 +25,20 @@ bool IPickupable::check_if_can_be_opened() {
 void IPickupable::check_if_can_be_pickuped() {
 
     if (_hold_by_main_dude &&
-        InputHandler::instance().y_key_down &&
-        InputHandler::instance().down_key_held &&
+        InputHandler::instance().keys.y_key_down &&
+        InputHandler::instance().keys.down_key_held &&
         MainDude::instance()._bottom_collision) {
 
         //leave item on ground
 
         _hold_by_main_dude = false;
         MainDude::instance().holding_item = false;
-        InputHandler::instance().y_key_down = false;
+        InputHandler::instance().keys.y_key_down = false;
         _bottom_collision = false;
         MainDude::instance()._currently_held_creature = nullptr;
 
-    } else if (InputHandler::instance().y_key_down &&
-               InputHandler::instance().down_key_held &&
+    } else if (InputHandler::instance().keys.y_key_down &&
+               InputHandler::instance().keys.down_key_held &&
                !MainDude::instance().holding_item &&
                Collisions::checkCollisionWithMainDude(_x, _y, _physical_width, _physical_height)) {
 
@@ -47,7 +47,7 @@ void IPickupable::check_if_can_be_pickuped() {
         MainDude::instance().holding_item = true;
         MainDude::instance()._currently_held_pickupable = this;
         _hold_by_main_dude = true;
-        InputHandler::instance().y_key_down = false;
+        InputHandler::instance().keys.y_key_down = false;
 
     }
 
@@ -56,12 +56,12 @@ void IPickupable::check_if_can_be_pickuped() {
 //check, if main dude can pickup to the inventory (not to the hands)
 bool IPickupable::check_if_can_be_equipped() {
 
-    bool q = (InputHandler::instance().y_key_down && InputHandler::instance().down_key_held &&
+    bool q = (InputHandler::instance().keys.y_key_down && InputHandler::instance().keys.down_key_held &&
               !MainDude::instance().holding_item) &&
              Collisions::checkCollisionWithMainDude(_x, _y, _sprite_width, _sprite_height);
 
     if (q) {
-        InputHandler::instance().y_key_down = false;
+        InputHandler::instance().keys.y_key_down = false;
     }
 
     return q;

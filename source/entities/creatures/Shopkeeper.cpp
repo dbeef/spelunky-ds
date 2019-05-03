@@ -228,7 +228,7 @@ void Shopkeeper::apply_dmg(int dmg_to_apply) {
     if (!killed && hitpoints <= 0) {
         Hud::instance().disable_all_prompts();
         de_shopify_all_items();
-        GameState::instance().robbed_killed_shopkeeper = true;
+        GameState::instance().robbed_or_killed_shopkeeper = true;
         GameState::instance().killed_npcs.push_back(_creature_type);
         killed = true;
         _bouncing_factor_x = ICollidable::default_bouncing_factor_x;
@@ -515,7 +515,7 @@ void Shopkeeper::de_shopify_all_items() {
         if(shop_item->_shopping_icon)
             shop_item->_shopping_icon->set_ready_to_dispose();
     }
-    GameState::instance().robbed_killed_shopkeeper = true;
+    GameState::instance().robbed_or_killed_shopkeeper = true;
 }
 
 void Shopkeeper::spawn_shotgun() {
@@ -560,7 +560,7 @@ Shopkeeper::Shopkeeper(int x, int y) : BaseCreature(
     ) {
     hitpoints = 3;
 
-    if (GameState::instance().robbed_killed_shopkeeper && !no_shotgun) {
+    if (GameState::instance().robbed_or_killed_shopkeeper && !no_shotgun) {
         standby = true;
         spawn_shotgun();
     }

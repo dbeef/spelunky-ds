@@ -23,7 +23,7 @@ void gameloop::run() {
     while (GameState::instance().update()) {
 
         Timer::update_ms_since_last_frame();
-        InputHandler::instance().updateInput();
+        InputHandler::instance().update_input();
 
         Camera::instance().update();
         Hud::instance().update();

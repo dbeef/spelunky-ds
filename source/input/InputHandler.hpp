@@ -19,24 +19,28 @@ public:
         return *_instance;
     }
 
-    void updateInput();
+    void update_input();
 
-    bool stop_handling{};
+    inline void block_user_input() { _block_input = true; }
 
-    bool left_key_held{};
-    bool right_key_held{};
-    bool down_key_held{};
-    bool up_key_held{};
-    bool b_key_held{};
-    bool y_key_held{};
-    bool l_bumper_held{};
-    bool r_bumper_held{};
-    bool r_bumper_down{};
-    bool l_bumper_down{};
-    bool x_key_down{};
-    bool y_key_down{};
-    bool a_key_down{};
-    bool b_key_down{};
+    inline void unblock_user_input() { _block_input = false; }
+
+    struct {
+        bool left_key_held{};
+        bool right_key_held{};
+        bool down_key_held{};
+        bool up_key_held{};
+        bool b_key_held{};
+        bool y_key_held{};
+        bool l_bumper_held{};
+        bool r_bumper_held{};
+        bool r_bumper_down{};
+        bool l_bumper_down{};
+        bool x_key_down{};
+        bool y_key_down{};
+        bool a_key_down{};
+        bool b_key_down{};
+    } keys;
 
 private:
 
@@ -46,6 +50,11 @@ private:
     int keys_held{};
     // recently pressed keys
     int keys_down{};
+    // update_input call will be ignored if true
+    bool _block_input{};
+
+    void reset_key_state();
+
 };
 
 

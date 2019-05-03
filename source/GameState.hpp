@@ -30,10 +30,19 @@
 
 static constexpr uint8 DEFAULT_DMA_CHANNEL = 3;
 
+enum class Scene {
+    MAIN_MENU,
+    LEVEL,
+    LEVEL_SUMMARY,
+    SCORES,
+};
+
 class GameState {
+
 public:
 
     GameState();
+
     ~GameState();
 
     static void init();
@@ -53,23 +62,20 @@ public:
 
     void start_scores();
 
-    void start_level_transition_screen();
+    void start_level_summary();
 
     void start_next_level();
 
     void handle_changing_screens();
 
-    bool just_started_game{};
     bool exiting_game{};
-    bool robbed_killed_shopkeeper{};
-    bool splash_screen{};
-    bool levels_transition_screen{};
-    bool scores_screen{};
-    bool in_main_menu{};
+    bool robbed_or_killed_shopkeeper{};
     bool spawned_smooch{};
     bool smooching{};
     int damsels_rescued_this_level{};
     int smooch_timer{};
+
+    Scene _current_scene;
 
     // TODO: Make current level a singleton.
     Level *current_level{};

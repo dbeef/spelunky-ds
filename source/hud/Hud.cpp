@@ -277,7 +277,7 @@ void Hud::update() {
         draw_level_hud();
     }
 
-    if (!GameState::instance().splash_screen)
+    if (GameState::instance()._current_scene == Scene::LEVEL)
         time_spent_on_level += Timer::getDeltaTime();
 
     if (MainDude::instance().dead &&
@@ -307,10 +307,7 @@ void Hud::add_moniez_on_collected_loot(int value) {
 
 void Hud::set_hud_sprites_attributes() {
 
-    bool playing_level =
-            !GameState::instance().in_main_menu &&
-            !GameState::instance().scores_screen &&
-            !GameState::instance().levels_transition_screen;
+    bool playing_level = GameState::instance()._current_scene == Scene::LEVEL;
 
     sprite_utils::set_visibility(!MainDude::instance().dead & playing_level,
                                  heartSpriteInfo, bombSpriteInfo, ropeSpriteInfo, dollarSpriteInfo,

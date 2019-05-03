@@ -476,7 +476,7 @@ void Damsel::apply_smooching_sprites() {
         GameState::instance().smooching = false;
         GameState::instance().spawned_smooch = false;
         GameState::instance().smooch_timer = 0;
-        InputHandler::instance().right_key_held = true;
+        InputHandler::instance().keys.right_key_held = true;
     } else
         frameGfx = (u8 *) gfx_caveman_damselTiles +
                    ((_sprite_size * (DAMSEL_SPRITESHEET_OFFSET + animFrame + 43)) / 2);

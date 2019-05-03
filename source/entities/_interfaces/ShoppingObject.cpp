@@ -15,7 +15,7 @@ void ShoppingObject::init_anim_icon() {
 
 void ShoppingObject::update_anim_icon(int x, int y, int carrier_width) {
 
-    if (GameState::instance().robbed_killed_shopkeeper || !_shopping_icon)
+    if (GameState::instance().robbed_or_killed_shopkeeper || !_shopping_icon)
         return;
 
     if (!_bought && _shopping_icon) {
@@ -39,7 +39,7 @@ bool ShoppingObject::shopping_transaction(BaseItem *m) {
 
     if (!_bought) {
         console_display_name_cost();
-        if (InputHandler::instance().l_bumper_down) {
+        if (InputHandler::instance().keys.l_bumper_down) {
             if (Hud::instance().money >= _cost) {
                 _bought = true;
                 Hud::instance().money -= _cost;
@@ -66,7 +66,7 @@ bool ShoppingObject::shopping_transaction(BaseCreature *m) {
 
     if (!_bought) {
         console_display_name_cost();
-        if (InputHandler::instance().l_bumper_down) {
+        if (InputHandler::instance().keys.l_bumper_down) {
             if (Hud::instance().money >= _cost) {
                 _bought = true;
                 Hud::instance().money -= _cost;

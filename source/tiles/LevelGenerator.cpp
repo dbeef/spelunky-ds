@@ -142,7 +142,7 @@ void place_a_shop() {
             if (GameState::instance().current_level->layout[a][b] == RoomType::R_CLOSED) {
                 if (a == 0) {
                     if (GameState::instance().current_level->layout[a + 1][b] != RoomType::R_CLOSED) {
-                        if (GameState::instance().robbed_killed_shopkeeper)
+                        if (GameState::instance().robbed_or_killed_shopkeeper)
                             GameState::instance().current_level->layout[a][b] = RoomType::R_SHOP_RIGHT_MUGSHOT;
                         else
                             GameState::instance().current_level->layout[a][b] = RoomType::R_SHOP_RIGHT;
@@ -150,7 +150,7 @@ void place_a_shop() {
                     }
                 } else if (a == 2) {
                     if (GameState::instance().current_level->layout[a - 1][b] != RoomType::R_CLOSED) {
-                        if (GameState::instance().robbed_killed_shopkeeper)
+                        if (GameState::instance().robbed_or_killed_shopkeeper)
                             GameState::instance().current_level->layout[a][b] = RoomType::R_SHOP_LEFT_MUGSHOT;
                         else
                             GameState::instance().current_level->layout[a][b] = RoomType::R_SHOP_LEFT;

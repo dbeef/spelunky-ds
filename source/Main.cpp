@@ -67,7 +67,7 @@ int main() {
     bgSetPriority(GameState::instance().bg_main_address, BG_PRIORITY_3);
     bgSetPriority(GameState::instance().bg_sub_address, BG_PRIORITY_3);
 
-    //Copy cave background tiles to the graphics graphics
+    //Copy cave background tiles to the graphics memory
     dmaCopy(gfx_cavebgTiles, bgGetGfxPtr(GameState::instance().bg_main_address), sizeof(gfx_cavebgTiles));
     dmaCopy(gfx_cavebgTiles, bgGetGfxPtr(GameState::instance().bg_sub_address), sizeof(gfx_cavebgTiles));
 

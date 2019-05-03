@@ -128,7 +128,7 @@ void Camera::update() {
 
     if (_position_update_timer > CAMERA_UPDATE_DELTA) {
 
-        if (InputHandler::instance().r_bumper_held)
+        if (InputHandler::instance().keys.r_bumper_held)
             incremental_focus(CAMERA_SPEED_MAIN_DUDE_RUNNING);
         else
             incremental_focus(CAMERA_SPEED_MAIN_DUDE_WALKING);

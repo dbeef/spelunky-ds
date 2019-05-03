@@ -47,7 +47,7 @@ void Cape::update_item_specific() {
         if (MainDude::instance().climbing || MainDude::instance().exiting_level) {
             set_pickuped_position_not_checking(0, 0, 4);
             sprite_utils::set_priority(OBJPRIORITY_0, _main_sprite_info, _sub_sprite_info);
-        } else if (InputHandler::instance().down_key_held || MainDude::instance().dead || MainDude::instance().stunned) {
+        } else if (InputHandler::instance().keys.down_key_held || MainDude::instance().dead || MainDude::instance().stunned) {
             set_pickuped_position_not_checking(0, 0, 4);
             sprite_utils::set_priority(OBJPRIORITY_1, _main_sprite_info, _sub_sprite_info);
         } else {
@@ -106,7 +106,7 @@ void Cape::match_animation() {
     } else if (MainDude::instance().climbing) {
         //climbing
         frame_gfx = sprite_utils::get_frame((u8 *) gfx_goldbarsTiles, _sprite_size, 3);
-    } else if (InputHandler::instance().down_key_held || MainDude::instance().dead || MainDude::instance().stunned ||
+    } else if (InputHandler::instance().keys.down_key_held || MainDude::instance().dead || MainDude::instance().stunned ||
                (!MainDude::instance().using_cape && !MainDude::instance().stunned &&
                 (MainDude::instance()._x_speed != 0 || MainDude::instance()._y_speed != 0))) {
 

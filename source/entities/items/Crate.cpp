@@ -21,7 +21,7 @@ void Crate::update_item_specific() {
 
     if (_ready_to_dispose) return;
 
-    if (!_dropped_loot && InputHandler::instance().up_key_held && check_collision(MainDude::instance())) {
+    if (!_dropped_loot && InputHandler::instance().keys.up_key_held && check_collision(MainDude::instance())) {
         sound::pickup();
         _hold_by_main_dude = false;
         MainDude::instance().holding_item = false;
