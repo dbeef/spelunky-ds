@@ -5,10 +5,9 @@
 #include "Whip.hpp"
 #include "../../../build/gfx_spike_collectibles_flame.h"
 #include "../../GameState.hpp"
-
+#include "../singletons/states/_DudeStateHandler.hpp"
 #include "../../time/Timer.h"
 #include "../../graphics/SpriteUtils.hpp"
-#include "MainDudeConsts.h"
 
 Whip *Whip::_instance = nullptr;
 

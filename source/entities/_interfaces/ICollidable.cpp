@@ -11,6 +11,7 @@
 #include "../../GameState.hpp"
 #include "../../time/Timer.h"
 #include "../../sound/Sound.hpp"
+#include "../singletons/states/_DudeStateHandler.hpp"
 
 void ICollidable::update_collisions_with_map(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
     Collisions::getNeighboringTiles(Level::instance().map_tiles, x_current_pos_in_tiles,
@@ -150,7 +151,8 @@ bool ICollidable::kill_creatures_if_have_speed(u8 dmg_to_apply) const {
             if (is_killable_creature(GameState::instance().creatures.at(a))
                 && !GameState::instance().creatures.at(a)->killed) {
                 if (Collisions::checkCollisionBodies(_x, _y, 16, 16, GameState::instance().creatures.at(a)->_x,
-                                                     GameState::instance().creatures.at(a)->_y, _physical_width, _physical_height)) {
+                                                     GameState::instance().creatures.at(a)->_y, _physical_width,
+                                                     _physical_height)) {
 
                     GameState::instance().creatures.at(a)->apply_dmg(dmg_to_apply);
                     killed = true;
@@ -209,8 +211,10 @@ bool ICollidable::kill_main_dude_if_have_speed(u8 dmg_to_apply) const {
 }
 
 void ICollidable::deal_damage_main_dude_on_collision(int dmg_to_apply) const {
-    if (!MainDude::instance().dead && Collisions::checkCollisionWithMainDude(_x, _y, 16, 16) &&
-        MainDude::instance().time_since_last_damage > 1000 && !MainDude::instance().exiting_level) {
+    if (MainDude::instance()._current_state->_state != _MainDudeState::DEAD &&
+        MainDude::instance()._current_state->_state != _MainDudeState::STUNNED &&
+        Collisions::checkCollisionWithMainDude(_x, _y, 16, 16) &&
+        MainDude::instance().time_since_last_damage > 1000) {
 
         MainDude::instance().time_since_last_damage = 0;
         Hud::instance().hearts -= dmg_to_apply;

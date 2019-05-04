@@ -47,10 +47,7 @@ void gameloop::run() {
 
 void gameloop::update_entities() {
 
-    // TODO: Merge those functions.
-    MainDude::instance().handle_key_input();
     MainDude::instance().update();
-
     Whip::instance().update();
 
     // Iterating using indexes since entities may be

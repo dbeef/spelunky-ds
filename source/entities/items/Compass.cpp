@@ -10,6 +10,7 @@
 #include "../../../build/gfx_saleable.h"
 #include "../../entities/decorations/GotCollectible.hpp"
 #include "../../graphics/SpriteUtils.hpp"
+#include "../singletons/MainDude.hpp"
 
 
 void Compass::update_item_specific() {
@@ -138,8 +139,8 @@ void Compass::equip() {
     auto *g = new GotCollectible(_x - 12, _y - 20, GotCollectible::Type::ITEM);
     GameState::instance().decorations.push_back(g);
 
-    if (!MainDude::instance().carrying_compass) {
-        MainDude::instance().carrying_compass = true;
+    if (!MainDude::instance().carried_items.compass) {
+        MainDude::instance().carried_items.compass = true;
         update_sprites_position();
         _x = HUD_ITEMS_ROW_X;
         _y = Hud::instance().items_offset_y;

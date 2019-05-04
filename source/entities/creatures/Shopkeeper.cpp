@@ -11,6 +11,8 @@
 #include "../../GameState.hpp"
 #include "../../time/Timer.h"
 #include "../../graphics/SpriteUtils.hpp"
+#include "../singletons/MainDude.hpp"
+#include "../singletons/states/_DudeStateHandler.hpp"
 
 #define SHOPKEEPER_SPRITESHEET_OFFSET 0
 #define SHOPKEEPER_POS_INC_DELTA 18
@@ -33,7 +35,7 @@ void Shopkeeper::update_creature_specific() {
 
     kill_if_whip(1);
 
-    if (!MainDude::instance().dead)
+    if (MainDude::instance()._current_state->_state != _MainDudeState::DEAD)
         kill_if_main_dude_jumped_on_you(1);
 
     check_if_dude_in_shop_bounds();
@@ -85,7 +87,7 @@ void Shopkeeper::update_creature_specific() {
             shotgun->_orientation= Orientation::LEFT;
         }
 
-        if (!MainDude::instance().dead && triggered) {
+        if (MainDude::instance()._current_state->_state != _MainDudeState::DEAD && triggered) {
             shotgun->_activated = true;
         }
     }
@@ -93,7 +95,7 @@ void Shopkeeper::update_creature_specific() {
     if (hold_by_main_dude) {
 
         if (!killed)
-            MainDude::instance().carrying_damsel = true;
+            MainDude::instance().carried_items.damsel = true;
 
         if (MainDude::instance().killed) {
             hold_by_main_dude = false;
@@ -135,7 +137,7 @@ void Shopkeeper::update_creature_specific() {
     }
 
     if (triggered) {
-        if (MainDude::instance().dead) {
+        if (MainDude::instance()._current_state->_state == _MainDudeState::DEAD) {
             triggered = false;
             standby = true;
         }

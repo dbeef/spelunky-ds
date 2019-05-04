@@ -6,530 +6,7 @@
 #include <nds/arm9/sprite.h>
 #include "../../math/Math.hpp"
 #include <cstdlib>
-
-#include "../../graphics/SpriteUtils.hpp"
-#include "../../GameState.hpp"
-#include "MainDude.hpp"
-#include "../../GameState.hpp"
-#include "../../collisions/Collisions.hpp"
-#include "../../../build/gfx_spelunker.h"
-#include "../../../build/soundbank.h"
-#include "../../tiles/TileOrientation.hpp"
-#include "../animations/FallPoof.hpp"
-#include "../../sound/Sound.hpp"
-
-#include "../../tiles/MapTile.hpp"
-#include "../../tiles/Level.hpp"
-#include "../../camera/Camera.hpp"
-
-#include "../items/Bomb.hpp"
-#include "../../input/InputHandler.hpp"
-#include "../items/_BaseItem.h"
-#include "../_interfaces/IPickupable.h"
-#include "MainDudeConsts.h"
-#include "../../time/Timer.h"
-
-MainDude* MainDude::_instance = nullptr;
-
-void MainDude::init() {
-    SPELUNKYDS_BREAKING_ASSERT(!_instance);
-    _instance = new MainDude(MAIN_DUDE_MENU_START_POSITION_X, MAIN_DUDE_MENU_START_POSITION_Y);
-    SPELUNKYDS_BREAKING_ASSERT(_instance);
-}
-
-void MainDude::dispose() {
-    SPELUNKYDS_BREAKING_ASSERT(_instance);
-    delete _instance;
-}
-
-void MainDude::reset_state(){
-    // no items
-    carrying_spring_shoes = false;
-    carrying_compass = false;
-    carrying_glove = false;
-    carrying_mitt = false;
-    carrying_spike_shoes = false;
-    carrying_cape = false;
-    carrying_shotgun = false;
-    carrying_pistol = false;
-    carrying_jetpack = false;
-    // alive and not in weird state
-    dead = false;
-    stunned = false;
-    hanging_on_tile_right = false;
-    hanging_on_tile_left = false;
-}
-
-/**
- * Sets main dude's position to the first tile of given type that occurs during iteration through the map
- */
-void MainDude::set_position_to(MapTileType t) {
-
-    MapTile *entrance;
-    Level::instance().get_first_tile_of_given_type(t, entrance);
-
-    if (entrance != nullptr && entrance->exists) {
-        _x = entrance->x * 16;
-        _y = entrance->y * 16;
-    } else {
-        _x = 0;
-        _y = 144;
-    }
-
-    Camera::instance().follow_main_dude();
-    Camera::instance().instant_focus();
-}
-
-// Called externally in game loop
-void MainDude::handle_key_input() {
-
-    if (!stunned && !exiting_level && !dead) {
-        if (InputHandler::instance().keys.b_key_down && time_since_last_jump > 100) {
-
-            if (_bottom_collision || climbing) {
-                if (carrying_spring_shoes)
-                    _y_speed = -MAIN_DUDE_JUMP_SPEED * 1.65;
-                else
-                    _y_speed = -MAIN_DUDE_JUMP_SPEED;
-                climbing = false;
-                started_climbing_rope = false;
-                started_climbing_ladder = false;
-                can_climb_rope = false;
-                time_since_last_jump = 0;
-
-                sound::jump();
-            } else if (_y_speed > 0 && carrying_cape) {
-                using_cape = true;
-            }
-            if ((hanging_on_tile_left || hanging_on_tile_right) && hanging_timer > MAIN_DUDE_MIN_HANGING_TIME &&
-                time_since_last_jump > 100) {
-
-                sound::jump();
-
-                _y_speed = -MAIN_DUDE_JUMP_SPEED;
-                hanging_on_tile_left = false;
-                hanging_on_tile_right = false;
-                hanging_timer = 0;
-                time_since_last_jump = 0;
-
-            }
-        }
-
-        if (InputHandler::instance().keys.b_key_down && time_since_last_jump > 100) {
-
-            if (!climbing && carrying_jetpack && jetpack_fuel_counter > 0) {
-                jumping_timer = 0;
-                using_jetpack = true;
-                _y_speed -= MAIN_DUDE_JUMP_SPEED;
-                jetpack_fuel_counter--;
-                sound::jetpack();
-                time_since_last_jump = 0;
-            } else
-                using_jetpack = false;
-
-        }
-
-        if (InputHandler::instance().keys.y_key_down) {
-
-            if (!stunned && !using_whip) {
-                if (holding_item) {
-                    throw_item();
-                } else {
-                    sound::whip();
-                    using_whip = true;
-                    animFrame = 0;
-                }
-            }
-
-        }
-
-        if (InputHandler::instance().keys.x_key_down && Hud::instance().ropes > 0) {
-            throw_rope();
-        } else if (InputHandler::instance().keys.a_key_down && !holding_item && Hud::instance().bombs > 0) {
-            take_out_bomb();
-        }
-
-        if (InputHandler::instance().keys.left_key_held) {
-
-            sprite_state = Orientation::LEFT;
-            hanging_on_tile_left = false;
-            if (!(hanging_on_tile_right || hanging_on_tile_left) && !climbing)
-                if (speed_inc_timer > MAIN_DUDE_X_SPEED_DELTA_TIME_MS) {
-                    _x_speed -= MAIN_DUDE_X_SPEED_DELTA_VALUE;
-                    speed_inc_timer = 0;
-                }
-
-        }
-
-        if (InputHandler::instance().keys.right_key_held) {
-
-            sprite_state = Orientation::RIGHT;
-            hanging_on_tile_right = false;
-            if (!(hanging_on_tile_right || hanging_on_tile_left) && !climbing) {
-                if (speed_inc_timer > MAIN_DUDE_X_SPEED_DELTA_TIME_MS) {
-                    _x_speed += MAIN_DUDE_X_SPEED_DELTA_VALUE;
-                    speed_inc_timer = 0;
-                }
-            }
-
-        }
-
-        int xx = math::floor_div(this->_x + 0.5 * _physical_width, TILE_WIDTH);
-        int yy = math::floor_div(this->_y + 0.5 * _physical_height, TILE_HEIGHT);
-
-        current_x_in_tiles = xx;
-        current_y_in_tiles = yy;
-
-        if (InputHandler::instance().keys.l_bumper_held || InputHandler::instance().keys.up_key_held ||
-            InputHandler::instance().keys.down_key_held) {
-
-            if (climbing) {
-
-                if (GameState::instance()._current_scene == Scene::MAIN_MENU && !GameState::instance().exiting_game) {
-                    if (_y <= 100) {
-                        GameState::instance().exiting_game = true;
-                    }
-                }
-
-                climbing_timer += Timer::getDeltaTime();
-                if (climbing_timer > 260) {
-                    climbing_timer = 0;
-                    climbing_sound++;
-                    if (climbing_sound % 2 == 0)
-                        sound::climb_1();
-                    else
-                        sound::climb_2();
-                }
-            } else {
-                climbing_timer = 200;
-            }
-
-            MapTile *neighboringTiles[9] = {};
-            Collisions::getNeighboringTiles(Level::instance().map_tiles, xx, yy, neighboringTiles);
-
-
-            can_climb_ladder = neighboringTiles[static_cast<uint16>(TileOrientation::CENTER)] != nullptr &&
-                               (neighboringTiles[static_cast<uint16>(TileOrientation::CENTER)]->mapTileType == MapTileType::LADDER ||
-                                neighboringTiles[static_cast<uint16>(TileOrientation::CENTER)]->mapTileType == MapTileType::LADDER_DECK);
-
-            can_climb_ladder = can_climb_ladder && InputHandler::instance().keys.up_key_held;
-            can_climb_rope = can_climb_rope && InputHandler::instance().keys.up_key_held;
-
-            exiting_level = neighboringTiles[static_cast<uint16>(TileOrientation::CENTER)] != nullptr &&
-                            (neighboringTiles[static_cast<uint16>(TileOrientation::CENTER)]->mapTileType == MapTileType::EXIT) &&
-                            InputHandler::instance().keys.l_bumper_held;
-
-            if (exiting_level) {
-
-                sound::steps();
-
-                sound::stop_cave_music();
-
-                _x = neighboringTiles[static_cast<uint16>(TileOrientation::CENTER)]->x * 16;
-                _y = neighboringTiles[static_cast<uint16>(TileOrientation::CENTER)]->y * 16;
-
-                animFrame = 0;
-                animation_frame_timer = 0;
-                _x_speed = 0;
-                _y_speed = 0;
-
-            }
-
-            on_top_of_climbing_space = on_top_of_climbing_space ||
-                                       (neighboringTiles[static_cast<uint16>(TileOrientation::UP_MIDDLE)] != nullptr &&
-                                        neighboringTiles[static_cast<uint16>(TileOrientation::UP_MIDDLE)]->collidable);
-
-            if (can_climb_ladder) {
-                _x = neighboringTiles[static_cast<uint16>(TileOrientation::CENTER)]->x * 16;
-            }
-
-            if (can_climb_rope || can_climb_ladder) {
-
-                climbing = true;
-                jumping_timer = 0;
-                _x_speed = 0;
-
-                if (InputHandler::instance().keys.up_key_held)
-                    _y_speed = -1;
-
-                if (can_climb_rope)
-                    started_climbing_rope = true;
-                else
-                    started_climbing_ladder = true;
-            }
-
-            if (!can_climb_rope && climbing && on_top_of_climbing_space && !can_climb_ladder) {
-                _y_speed = 0;
-                jumping_timer = 0;
-                _x_speed = 0;
-            }
-
-        } else if (climbing) {
-            _y_speed = 0;
-        }
-
-        if (InputHandler::instance().keys.down_key_held) {
-
-            MapTile *neighboringTiles[9] = {};
-
-            Collisions::getNeighboringTiles(Level::instance().map_tiles, xx, yy, neighboringTiles);
-            can_climb_ladder = neighboringTiles[static_cast<uint16>(TileOrientation::CENTER)]->mapTileType == MapTileType::LADDER ||
-                               neighboringTiles[static_cast<uint16>(TileOrientation::CENTER)]->mapTileType == MapTileType::LADDER_DECK;
-
-            if (climbing) {
-                can_climb_ladder = neighboringTiles[static_cast<uint16>(TileOrientation::CENTER)] != nullptr &&
-                                   (neighboringTiles[static_cast<uint16>(TileOrientation::CENTER)]->mapTileType == MapTileType::LADDER ||
-                                    neighboringTiles[static_cast<uint16>(TileOrientation::CENTER)]->mapTileType == MapTileType::LADDER_DECK) &&
-                                   (neighboringTiles[static_cast<uint16>(TileOrientation::DOWN_MIDDLE)] == nullptr ||
-                                    !neighboringTiles[static_cast<uint16>(TileOrientation::DOWN_MIDDLE)]->collidable);
-            }
-
-            if (climbing) {
-                _y_speed = 1;
-            }
-
-            if ((!can_climb_rope && climbing && !on_top_of_climbing_space) || (!can_climb_ladder && climbing)) {
-                jumping_timer = 0;
-                climbing = false;
-                started_climbing_rope = false;
-                started_climbing_ladder = false;
-            }
-
-            hanging_on_tile_left = false;
-            hanging_on_tile_right = false;
-            if (_bottom_collision) {
-                crawling = true;
-                _pos_update_delta = main_dude_pos_update_delta_crawling;
-                _max_x_speed = main_dude_max_x_crawling;
-            }
-        } else {
-            crawling = false;
-            if (!InputHandler::instance().keys.r_bumper_held) {
-                _max_x_speed = main_dude_max_x_speed_walking;
-                _pos_update_delta = main_dude_pos_update_delta_walking_running;
-            }
-        }
-
-
-    } else {
-        crawling = false;
-        if (!InputHandler::instance().keys.r_bumper_held) {
-            _max_x_speed = main_dude_max_x_speed_walking;
-            _pos_update_delta = main_dude_pos_update_delta_walking_running;
-        }
-    }
-
-    update_sprites_position();
-
-}
-
-void MainDude::boost_going_through_map_holes(MapTile **const t) {
-    if (!_bottom_collision) {
-        if ((t[static_cast<uint16>(TileOrientation::RIGHT_MIDDLE)] == nullptr || !t[static_cast<uint16>(TileOrientation::RIGHT_MIDDLE)]->collidable) &&
-            (t[static_cast<uint16>(TileOrientation::RIGHT_UP)] != nullptr && t[static_cast<uint16>(TileOrientation::RIGHT_DOWN)] != nullptr)) {
-            //if there's no collidable tile on right-mid, but there are on right-up and right-down,
-            //add extra x-pos to ease going through a hole
-            if (_x_speed > 0)
-                _x += 2;
-        }
-
-        if ((t[static_cast<uint16>(TileOrientation::LEFT_MIDDLE)] == nullptr || !t[static_cast<uint16>(TileOrientation::LEFT_MIDDLE)]->collidable) &&
-            (t[static_cast<uint16>(TileOrientation::LEFT_UP)] != nullptr && t[static_cast<uint16>(TileOrientation::LEFT_DOWN)] != nullptr)) {
-            //same but for left side
-            if (_x_speed < 0)
-                _x -= 2;
-        }
-    }
-}
-
-void MainDude::update_creature_specific() {
-
-    if (exiting_level || (dead && InputHandler::instance().keys.y_key_down)) {
-        GameState::instance().handle_changing_screens();
-    }
-
-    match_animation();
-    reset_values_checked_every_frame();
-    apply_blinking_on_damage();
-
-    // update max speed
-    if (crawling) {
-        _max_x_speed = MAIN_DUDE_MAX_X_SPEED_CRAWLING;
-        _max_y_speed = MAIN_DUDE_MAX_Y_SPEED;
-    } else if (InputHandler::instance().keys.r_bumper_held) {
-        // running fast
-        _max_x_speed = main_dude_max_x_speed_running;
-        _max_y_speed = MAIN_DUDE_MAX_Y_SPEED;
-    } else if (using_cape) {
-        // falling, but with cape
-        _max_x_speed = MAIN_DUDE_MAX_X_SPEED;
-        _max_y_speed = MAIN_DUDE_MAX_Y_SPEED_USING_CAPE;
-    } else {
-        // default values
-        _max_x_speed = MAIN_DUDE_MAX_X_SPEED;
-        _max_y_speed = MAIN_DUDE_MAX_Y_SPEED;
-    }
-
-    if (crawling) {
-        _pos_update_delta = main_dude_pos_update_delta_crawling;
-        _max_x_speed = main_dude_max_x_crawling;
-    } else {
-        if (!InputHandler::instance().keys.r_bumper_held)
-            _pos_update_delta = main_dude_pos_update_delta_walking_running;
-    }
-    // "Update timers"
-
-
-    pos_inc_timer += Timer::getDeltaTime();
-    speed_inc_timer += Timer::getDeltaTime();
-    hanging_timer += Timer::getDeltaTime();
-
-    if (animation_frame_timer > 65) {
-
-        animation_frame_timer = 0;
-
-        if (!using_whip || (using_whip && animFrame < 5) || (started_climbing_rope && animFrame < 12) ||
-            (exiting_level && animFrame < 16) || (started_climbing_ladder && animFrame < 6))
-            animFrame++;
-
-    }
-
-    if (!InputHandler::instance().keys.left_key_held && pushing_left) {
-        pushing_left = false;
-        pushing_timer = 0;
-    }
-    if (!InputHandler::instance().keys.right_key_held && pushing_right) {
-        pushing_right = false;
-        pushing_timer = 0;
-    }
-
-    if ((_left_collision || _right_collision) && !crawling && !hanging_on_tile_left && !hanging_on_tile_right &&
-        (InputHandler::instance().keys.left_key_held || InputHandler::instance().keys.right_key_held)) {
-        pushing_timer += Timer::getDeltaTime();
-        if (pushing_timer > MAIN_DUDE_PUSHING_TIME) {
-            if (_left_collision) {
-                pushing_right = true;
-                pushing_timer = 0;
-            } else {
-                pushing_left = true;
-                pushing_timer = 0;
-            }
-        }
-
-    } else {
-        pushing_timer = 0;
-        pushing_left = false;
-        pushing_right = false;
-    }
-
-    if (animFrame >= MAIN_DUDE_FRAMES_PER_ANIMATION && !crawling && !pushing_left && !pushing_right && !exiting_level)
-        animFrame = 0;
-
-    if (animFrame >= 9 && crawling)
-        animFrame = 0;
-
-    if ((pushing_left || pushing_right) && animFrame >= 7)
-        animFrame = 0;
-
-
-    if (!_bottom_collision && !hanging_on_tile_left && !hanging_on_tile_right && !climbing)
-        jumping_timer += Timer::getDeltaTime();
-
-    if (_bottom_collision && jumping_timer > MAIN_DUDE_STUN_FALLING_TIME) {
-
-
-        if (Hud::instance().hearts > 0) {
-            Hud::instance().hearts--;
-            Hud::instance().draw_level_hud();
-        }
-
-        stunned = true;
-
-        auto *f_left = new FallPoof(_x, _y);
-        auto *f_right = new FallPoof(_x, _y);
-
-        f_left->_x = _x - 4;
-        f_right->_x = _x + MainDude::main_dude_physical_width - 6;
-
-        f_left->_y = _y + 8;
-        f_right->_y = _y + 8;
-
-        GameState::instance().creatures.push_back(f_left);
-        GameState::instance().creatures.push_back(f_right);
-
-        if (Hud::instance().hearts == 0) {
-            MainDude::instance().set_dead();
-        }
-
-        sound::land();
-
-        jumping_timer = 0;
-    } else if (_bottom_collision && jumping_timer < MAIN_DUDE_STUN_FALLING_TIME) {
-        jumping_timer = 0;
-    }
-
-    if (stunned)
-        stunned_timer += Timer::getDeltaTime();
-    if (stunned_timer > MAIN_DUDE_STUN_TIME) {
-        stunned = false;
-        stunned_timer = 0;
-    }
-
-
-    if (_x_speed != 0 || stunned || using_whip || (pushing_left || pushing_right) || (climbing && _y_speed != 0) ||
-        exiting_level)
-        animation_frame_timer += Timer::getDeltaTime();
-
-
-    if (!_bottom_collision) {
-        crawling = false;
-        if (!InputHandler::instance().keys.r_bumper_held) {
-            _max_x_speed = main_dude_max_x_speed_walking;
-            _pos_update_delta = main_dude_pos_update_delta_walking_running;
-        }
-    }
-
-    time_since_last_jump += Timer::getDeltaTime();
-    time_since_last_damage += Timer::getDeltaTime();
-
-    // Map collisions
-
-    if (_map_collisions_checked) {
-        can_hang_on_tile(_neighboring_tiles);
-        boost_going_through_map_holes(_neighboring_tiles);
-        _map_collisions_checked = false;
-    }
-
-}
-
-void MainDude::init_sprites() {
-
-    delete_sprites();
-
-    main_sprite_info = OAMManager::main().initSprite(gfx_spelunkerPal, gfx_spelunkerPalLen, nullptr,
-                                                            _sprite_size, ObjSize::OBJSIZE_16, _spritesheet_type, true,
-                                                            false,
-                                                            LAYER_LEVEL::MIDDLE_TOP);
-
-
-    sub_sprite_info = OAMManager::sub().initSprite(gfx_spelunkerPal, gfx_spelunkerPalLen, nullptr,
-                                                          _sprite_size, ObjSize::OBJSIZE_16, _spritesheet_type, true,
-                                                          false,
-                                                          LAYER_LEVEL::MIDDLE_TOP);
-
-    sprite_utils::set_vertical_flip(false, main_sprite_info, sub_sprite_info);
-    sprite_utils::set_horizontal_flip(false, main_sprite_info, sub_sprite_info);
-
-    update_sprites_position();
-    match_animation();
-}
-
-
-void MainDude::reset_values_checked_every_frame() {
-    can_climb_rope = false;
-    can_climb_ladder = false;
-}
-
+#include <cstring>
 
 #include <cstdlib>
 #include <cmath>
@@ -562,6 +39,130 @@ void MainDude::reset_values_checked_every_frame() {
 #include "../../graphics/SpriteUtils.hpp"
 #include "../../math/Math.hpp"
 
+#include "../../graphics/SpriteUtils.hpp"
+#include "../../GameState.hpp"
+#include "MainDude.hpp"
+#include "../../GameState.hpp"
+#include "../../collisions/Collisions.hpp"
+#include "../../../build/gfx_spelunker.h"
+#include "../../../build/soundbank.h"
+#include "../../tiles/TileOrientation.hpp"
+#include "../animations/FallPoof.hpp"
+#include "../../sound/Sound.hpp"
+
+#include "../../tiles/MapTile.hpp"
+#include "../../tiles/Level.hpp"
+#include "../../camera/Camera.hpp"
+
+#include "../items/Bomb.hpp"
+#include "../../input/InputHandler.hpp"
+#include "../items/_BaseItem.h"
+#include "../_interfaces/IPickupable.h"
+#include "../../time/Timer.h"
+
+#include "states/_DudeStateHandler.hpp"
+#include "states/Climbing.hpp"
+#include "states/Dead.hpp"
+#include "states/ExitingLevel.hpp"
+#include "states/HangingOnEdge.hpp"
+#include "states/Stunned.hpp"
+#include "states/Walking.hpp"
+
+MainDude *MainDude::_instance = nullptr;
+
+void MainDude::init() {
+    SPELUNKYDS_BREAKING_ASSERT(!_instance);
+    _instance = new MainDude(MAIN_DUDE_MENU_START_POSITION_X, MAIN_DUDE_MENU_START_POSITION_Y);
+    SPELUNKYDS_BREAKING_ASSERT(_instance);
+}
+
+void MainDude::dispose() {
+    SPELUNKYDS_BREAKING_ASSERT(_instance);
+    delete _instance;
+}
+
+void MainDude::reset_state() {
+    reset_carried_items();
+    _current_state = _walking;
+}
+
+// Sets main dude's position to the first tile of given type that occurs during iteration through the map.
+void MainDude::set_position_to(MapTileType t) {
+
+    MapTile *entrance;
+    Level::instance().get_first_tile_of_given_type(t, entrance);
+
+    if (entrance != nullptr && entrance->exists) {
+        _x = entrance->x * 16;
+        _y = entrance->y * 16;
+    } else {
+        _x = 0;
+        _y = 144;
+    }
+
+    Camera::instance().follow_main_dude();
+    Camera::instance().instant_focus();
+}
+
+void MainDude::boost_going_through_map_holes(MapTile **const t) {
+    if (!_bottom_collision) {
+        if ((t[static_cast<uint16>(TileOrientation::RIGHT_MIDDLE)] == nullptr ||
+             !t[static_cast<uint16>(TileOrientation::RIGHT_MIDDLE)]->collidable) &&
+            (t[static_cast<uint16>(TileOrientation::RIGHT_UP)] != nullptr &&
+             t[static_cast<uint16>(TileOrientation::RIGHT_DOWN)] != nullptr)) {
+            //if there's no collidable tile on right-mid, but there are on right-up and right-down,
+            //add extra x-pos to ease going through a hole
+            if (_x_speed > 0)
+                _x += 2;
+        }
+
+        if ((t[static_cast<uint16>(TileOrientation::LEFT_MIDDLE)] == nullptr ||
+             !t[static_cast<uint16>(TileOrientation::LEFT_MIDDLE)]->collidable) &&
+            (t[static_cast<uint16>(TileOrientation::LEFT_UP)] != nullptr &&
+             t[static_cast<uint16>(TileOrientation::LEFT_DOWN)] != nullptr)) {
+            //same but for left side
+            if (_x_speed < 0)
+                _x -= 2;
+        }
+    }
+}
+
+void MainDude::update_creature_specific() {
+    SPELUNKYDS_BREAKING_ASSERT(_current_state);
+    _current_state->handle_input();
+    _current_state->update();
+}
+
+void MainDude::init_sprites() {
+
+    delete_sprites();
+
+    main_sprite_info = OAMManager::main().initSprite(gfx_spelunkerPal, gfx_spelunkerPalLen, nullptr,
+                                                     _sprite_size, ObjSize::OBJSIZE_16, _spritesheet_type, true,
+                                                     false,
+                                                     LAYER_LEVEL::MIDDLE_TOP);
+
+
+    sub_sprite_info = OAMManager::sub().initSprite(gfx_spelunkerPal, gfx_spelunkerPalLen, nullptr,
+                                                   _sprite_size, ObjSize::OBJSIZE_16, _spritesheet_type, true,
+                                                   false,
+                                                   LAYER_LEVEL::MIDDLE_TOP);
+
+    sprite_utils::set_vertical_flip(false, main_sprite_info, sub_sprite_info);
+    sprite_utils::set_horizontal_flip(false, main_sprite_info, sub_sprite_info);
+
+    update_sprites_position();
+    match_animation();
+
+}
+
+
+void MainDude::reset_values_checked_every_frame() {
+//    can_climb_rope = false;
+//    can_climb_ladder = false;
+}
+
+// FIXME: This is not called.
 void MainDude::throw_item() {
 
     //throw holding item
@@ -586,7 +187,7 @@ void MainDude::throw_item() {
 
             if (!InputHandler::instance().keys.down_key_held) {
 
-                if (carrying_mitt) {
+                if (carried_items.mitt) {
                     if (sprite_state == Orientation::LEFT)
                         held->_x_speed = -6 - abs(_x_speed);
                     else
@@ -672,8 +273,9 @@ void MainDude::throw_rope() {
     Hud::instance().draw_level_hud();
 
     u8 ROPE_PHYSICAL_WIDTH = 16;
-    Rope *rope = new Rope((math::floor_div(_x + (0.5 * _physical_width), TILE_WIDTH) * TILE_WIDTH) + (ROPE_PHYSICAL_WIDTH * 0.5),
-                          _y + 6);
+    Rope *rope = new Rope(
+            (math::floor_div(_x + (0.5 * _physical_width), TILE_WIDTH) * TILE_WIDTH) + (ROPE_PHYSICAL_WIDTH * 0.5),
+            _y + 6);
     rope->_activated = true;
     rope->_y_speed = -4;
     GameState::instance().items.push_back(rope);
@@ -682,7 +284,7 @@ void MainDude::throw_rope() {
 
 void MainDude::spawn_carried_items() {
 
-    if (carrying_spring_shoes) {
+    if (carried_items.spring_shoes) {
         auto *springShoes = new SpringShoes(HUD_ITEMS_ROW_X, Hud::instance().items_offset_y);
         springShoes->collected = true;
         springShoes->_bought = true;
@@ -690,7 +292,7 @@ void MainDude::spawn_carried_items() {
         Hud::instance().increment_offset_on_grabbed_item();
     }
 
-    if (carrying_spike_shoes) {
+    if (carried_items.spike_shoes) {
         auto *spikeShoes = new SpikeShoes(HUD_ITEMS_ROW_X, Hud::instance().items_offset_y);
         spikeShoes->_render_in_hud = true;
         spikeShoes->_bought = true;
@@ -698,42 +300,42 @@ void MainDude::spawn_carried_items() {
         Hud::instance().increment_offset_on_grabbed_item();
     }
 
-    if (carrying_compass) {
+    if (carried_items.compass) {
         auto *compass = new Compass(HUD_ITEMS_ROW_X, Hud::instance().items_offset_y);
         compass->collected = true;
         compass->_bought = true;
         GameState::instance().items.push_back(compass);
         Hud::instance().increment_offset_on_grabbed_item();
     }
-    if (carrying_glove) {
+    if (carried_items.glove) {
         auto *glove = new Glove(HUD_ITEMS_ROW_X, Hud::instance().items_offset_y);
         glove->_render_in_hud = true;
         glove->_bought = true;
         GameState::instance().items.push_back(glove);
         Hud::instance().increment_offset_on_grabbed_item();
     }
-    if (carrying_cape) {
+    if (carried_items.cape) {
         auto cape = new Cape(HUD_ITEMS_ROW_X, Hud::instance().items_offset_y);
         cape->_collected = true;
         cape->_bought = true;
         GameState::instance().items.push_back(cape);
         Hud::instance().increment_offset_on_grabbed_item();
     }
-    if (carrying_jetpack) {
+    if (carried_items.jetpack) {
         auto *jetpack = new Jetpack(HUD_ITEMS_ROW_X, Hud::instance().items_offset_y);
         jetpack->collected = true;
         jetpack->_bought = true;
         GameState::instance().items.push_back(jetpack);
         Hud::instance().increment_offset_on_grabbed_item();
     }
-    if (carrying_mitt) {
+    if (carried_items.mitt) {
         auto mitt = new Mitt(HUD_ITEMS_ROW_X, Hud::instance().items_offset_y);
         mitt->collected = true;
         mitt->_bought = true;
         GameState::instance().items.push_back(mitt);
         Hud::instance().increment_offset_on_grabbed_item();
     }
-    if (carrying_shotgun) {
+    if (carried_items.shotgun) {
         holding_item = true;
         auto *shotgun = new Shotgun(_x, _y);
         shotgun->_bought = true;
@@ -741,7 +343,7 @@ void MainDude::spawn_carried_items() {
         GameState::instance().items.push_back(shotgun);
     }
 
-    if (carrying_pistol) {
+    if (carried_items.pistol) {
         holding_item = true;
         auto *pistol = new Pistol(_x, _y);
         pistol->_bought = true;
@@ -751,124 +353,32 @@ void MainDude::spawn_carried_items() {
 }
 
 
-void MainDude::set_sprite_crawling() {
-
-    if (sprite_state == Orientation::LEFT)
-        frameGfx = sprite_utils::get_frame((u8 *) gfx_spelunkerTiles, _sprite_size,
-                                           animFrame + 24);
-    else
-        frameGfx = sprite_utils::get_frame((u8 *) gfx_spelunkerTiles, _sprite_size,
-                                           animFrame + 33);
-
-}
-
-void MainDude::set_sprite_hanging_on_tile() {
-
-    if (hanging_on_tile_right)
-        frameGfx = sprite_utils::get_frame((u8 *) gfx_spelunkerTiles, _sprite_size, 13);
-    else if (hanging_on_tile_left)
-        frameGfx = sprite_utils::get_frame((u8 *) gfx_spelunkerTiles, _sprite_size, 12);
-}
-
-void MainDude::set_sprite_whiping() {
-
-    if (sprite_state == Orientation::LEFT)
-        frameGfx = sprite_utils::get_frame((u8 *) gfx_spelunkerTiles, _sprite_size, 56 + animFrame);
-    else if (sprite_state == Orientation::RIGHT)
-        frameGfx = sprite_utils::get_frame((u8 *) gfx_spelunkerTiles, _sprite_size, 62 + animFrame);
-
-}
-
-void MainDude::set_sprite_pushing() {
-
-    if (pushing_left)
-        frameGfx = sprite_utils::get_frame((u8 *) gfx_spelunkerTiles, _sprite_size, 42 + animFrame);
-    else
-        frameGfx = sprite_utils::get_frame((u8 *) gfx_spelunkerTiles, _sprite_size, 49 + animFrame);
-}
-
-void MainDude::set_sprite_stunned() {
-
-    if (animFrame > 4)
-        animFrame = 0;
-
-    frameGfx = sprite_utils::get_frame((u8 *) gfx_spelunkerTiles, _sprite_size, 18 + animFrame);
-}
-
-void MainDude::set_sprite_climbing() {
-
-    if (started_climbing_rope) {
-
-        if (animFrame >= 12)
-            animFrame = 0;
-
-        frameGfx = sprite_utils::get_frame((u8 *) gfx_spelunkerTiles, _sprite_size, 74 + animFrame);
-    } else if (started_climbing_ladder) {
-
-        if (animFrame >= 6)
-            animFrame = 0;
-
-        frameGfx = sprite_utils::get_frame((u8 *) gfx_spelunkerTiles, _sprite_size, 96 + animFrame);
-    }
-
-}
-
-void MainDude::set_sprite_dead() {
-    if (_bottom_collision)
-        frameGfx = sprite_utils::get_frame((u8 *) gfx_spelunkerTiles, _sprite_size, 17);
-    else
-        frameGfx = sprite_utils::get_frame((u8 *) gfx_spelunkerTiles, _sprite_size, 16);
-}
-
-void MainDude::set_sprite_walking_when_in_air() {
-    frameGfx = sprite_utils::get_frame((u8 *) gfx_spelunkerTiles, _sprite_size, static_cast<u16>(sprite_state) * 6);
-}
-
-void MainDude::set_sprite_falling() {
-
-    if (fabs(_x_speed) != 0)
-        frameGfx = sprite_utils::get_frame((u8 *) gfx_spelunkerTiles, _sprite_size,
-                                           animFrame +
-                                           (static_cast<u16>(sprite_state) * MAIN_DUDE_FRAMES_PER_ANIMATION));
-    else if (sprite_state == Orientation::LEFT)
-        frameGfx = sprite_utils::get_frame((u8 *) gfx_spelunkerTiles, _sprite_size, 14);
-    else if (sprite_state == Orientation::RIGHT)
-        frameGfx = sprite_utils::get_frame((u8 *) gfx_spelunkerTiles, _sprite_size, 15);
-}
-
-void MainDude::set_sprite_exiting_level() {
-    frameGfx = sprite_utils::get_frame((u8 *) gfx_spelunkerTiles, _sprite_size, 80 + animFrame);
-}
-
 void MainDude::apply_blinking_on_damage() {
-
-    if (GameState::instance()._current_scene == Scene::LEVEL_SUMMARY) {
-
-        if (time_since_last_damage < MAIN_DUDE_DAMAGE_PROTECTION_TIME) {
-            sprite_utils::set_visibility(((int) time_since_last_damage % 100) >= 50, main_sprite_info, sub_sprite_info);
-        } else
-            sprite_utils::set_visibility(true, main_sprite_info, sub_sprite_info);
-
-    }
+    if (time_since_last_damage < MAIN_DUDE_DAMAGE_PROTECTION_TIME) {
+        sprite_utils::set_visibility(((int) time_since_last_damage % 100) >= 50, main_sprite_info, sub_sprite_info);
+    } else
+        sprite_utils::set_visibility(true, main_sprite_info, sub_sprite_info);
 }
 
-
-void MainDude::can_hang_on_tile(MapTile **neighboringTiles) {
+bool MainDude::can_hang_on_tile(MapTile **neighboringTiles) {
 
     if (_bottom_collision || (!_left_collision && !_right_collision))
-        return;
+        return false;
 
-    if ((neighboringTiles[static_cast<uint16>(TileOrientation::UP_MIDDLE)] != nullptr && neighboringTiles[static_cast<uint16>(TileOrientation::UP_MIDDLE)]->collidable) ||
-        (neighboringTiles[static_cast<uint16>(TileOrientation::DOWN_MIDDLE)] != nullptr && neighboringTiles[static_cast<uint16>(TileOrientation::DOWN_MIDDLE)]->collidable))
-        return;
+    if ((neighboringTiles[static_cast<uint16>(TileOrientation::UP_MIDDLE)] != nullptr &&
+         neighboringTiles[static_cast<uint16>(TileOrientation::UP_MIDDLE)]->collidable) ||
+        (neighboringTiles[static_cast<uint16>(TileOrientation::DOWN_MIDDLE)] != nullptr &&
+         neighboringTiles[static_cast<uint16>(TileOrientation::DOWN_MIDDLE)]->collidable))
+        return false;
 
     bool y_bound = false;
     bool x_bound = false;
 
     if (_right_collision && sprite_state == Orientation::LEFT) {
 
-        if (!carrying_glove && (neighboringTiles[static_cast<uint16>(TileOrientation::LEFT_UP)] != nullptr && neighboringTiles[static_cast<uint16>(TileOrientation::LEFT_UP)]->collidable))
-            return;
+        if (!carried_items.glove && (neighboringTiles[static_cast<uint16>(TileOrientation::LEFT_UP)] != nullptr &&
+                                     neighboringTiles[static_cast<uint16>(TileOrientation::LEFT_UP)]->collidable))
+            return false;
 
         x_bound = (this->_x <= (neighboringTiles[static_cast<uint16>(TileOrientation::LEFT_MIDDLE)]->x * 16) + 16 &&
                    (this->_x >= (neighboringTiles[static_cast<uint16>(TileOrientation::LEFT_MIDDLE)]->x * 16) + 12));
@@ -876,8 +386,9 @@ void MainDude::can_hang_on_tile(MapTile **neighboringTiles) {
                   (this->_y < (neighboringTiles[static_cast<uint16>(TileOrientation::LEFT_MIDDLE)]->y * 16) + 8);
     } else if (_left_collision && sprite_state == Orientation::RIGHT) {
 
-        if (!carrying_glove && (neighboringTiles[static_cast<uint16>(TileOrientation::RIGHT_UP)] != nullptr && neighboringTiles[static_cast<uint16>(TileOrientation::RIGHT_UP)]->collidable))
-            return;
+        if (!carried_items.glove && (neighboringTiles[static_cast<uint16>(TileOrientation::RIGHT_UP)] != nullptr &&
+                                     neighboringTiles[static_cast<uint16>(TileOrientation::RIGHT_UP)]->collidable))
+            return false;
 
         y_bound = (this->_y > (neighboringTiles[static_cast<uint16>(TileOrientation::RIGHT_MIDDLE)]->y * 16) - 2) &&
                   (this->_y < (neighboringTiles[static_cast<uint16>(TileOrientation::RIGHT_MIDDLE)]->y * 16) + 8);
@@ -889,69 +400,28 @@ void MainDude::can_hang_on_tile(MapTile **neighboringTiles) {
 
         if (_right_collision && neighboringTiles[static_cast<uint16>(TileOrientation::LEFT_MIDDLE)]->collidable) {
             this->_y = (neighboringTiles[static_cast<uint16>(TileOrientation::LEFT_MIDDLE)]->y * 16);
-            hanging_on_tile_right = true;
+            _orientation = Orientation::RIGHT;
             jumping_timer = 0;
             hanging_timer = 0;
             _y_speed = 0;
         }
         if (_left_collision && neighboringTiles[static_cast<uint16>(TileOrientation::RIGHT_MIDDLE)]->collidable) {
             jumping_timer = 0;
-            hanging_on_tile_left = true;
+            _orientation = Orientation::LEFT;
             this->_y = (neighboringTiles[static_cast<uint16>(TileOrientation::RIGHT_MIDDLE)]->y * 16);
             hanging_timer = 0;
             _y_speed = 0;
         }
     }
-
-
-    if (hanging_on_tile_right || hanging_on_tile_left) {
-        using_cape = false;
-        using_jetpack = false;
-    }
-
-    if (_upper_collision || _bottom_collision) {
-        hanging_on_tile_left = false;
-        hanging_on_tile_right = false;
-        if (using_cape)
-            jumping_timer = 0;
-    }
-
-
+    return true;
 }
 
 void MainDude::apply_dmg(int dmg_to_apply) {
     if (dmg_to_apply == 4) {
-        //fixme some enum that would indicate 'instant death, no matter for hp quantity' or a function kill_instantly
-        //to differentiate (overloaded function)
+        //FIXME: An enum that would indicate 'instant death,
+        // no matter for hp quantity' or a function kill_instantly.
         set_dead();
     }
-}
-
-void MainDude::match_animation() {
-
-    if (exiting_level || (dead && InputHandler::instance().keys.y_key_down)) {
-        set_sprite_exiting_level();
-    } else if (using_whip) {
-        set_sprite_whiping();
-    } else if (dead) {
-        set_sprite_dead();
-    } else if (climbing) {
-        set_sprite_climbing();
-    } else if (stunned) {
-        set_sprite_stunned();
-    } else if (pushing_left || pushing_right) {
-        set_sprite_pushing();
-    } else if (hanging_on_tile_right || hanging_on_tile_left) {
-        set_sprite_hanging_on_tile();
-    } else if (crawling) {
-        set_sprite_crawling();
-    } else if (!_bottom_collision) {
-        set_sprite_walking_when_in_air();
-    } else {
-        set_sprite_falling();
-    }
-
-    sprite_utils::update_frame(frameGfx, _sprite_size, main_sprite_info, sub_sprite_info);
 }
 
 void MainDude::update_sprites_position() {
@@ -962,27 +432,9 @@ void MainDude::update_sprites_position() {
 }
 
 bool MainDude::can_apply_gravity() const {
-    return !_bottom_collision && !climbing && !(hanging_on_tile_left || hanging_on_tile_right);
-}
-
-//TODO Enum dead cause?
-void MainDude::set_dead() {
-    time_since_last_damage = 0;
-    Hud::instance().hearts = 0;
-    Hud::instance().draw_level_hud();
-    dead = true;
-    _bouncing_factor_y = ICollidable::default_bouncing_factor_y;
-    _y_speed = -MAIN_DUDE_JUMP_SPEED * 0.25;
-    climbing = false;
-    can_climb_rope = false;
-    can_climb_ladder = false;
-    hanging_on_tile_left = false;
-    hanging_on_tile_right = false;
-    pushing_left = false;
-    pushing_right = false;
-    Hud::instance().clear_console();
-    sound::stop_cave_music();
-    sound::die();
+    return !_bottom_collision &&
+           _current_state->_state != _MainDudeState::CLIMBING &&
+           _current_state->_state != _MainDudeState::HANGING_ON_EDGE;
 }
 
 void MainDude::delete_sprites() {
@@ -993,7 +445,12 @@ void MainDude::delete_sprites() {
 }
 
 MainDude::~MainDude() {
-    // do nothing
+    delete _climbing;
+    delete _dead;
+    delete _exiting_level;
+    delete _hanging_on_edge;
+    delete _stunned;
+    delete _walking;
 }
 
 MainDude::MainDude(int x, int y) : BaseCreature(
@@ -1006,13 +463,186 @@ MainDude::MainDude(int x, int y) : BaseCreature(
         main_dude_physical_height,
         CreatureType::MAIN_DUDE
 ) {
+
+    // main dude specific characteristics
     time_since_last_damage = MAIN_DUDE_DAMAGE_PROTECTION_TIME + 1;
     _friction = ICollidable::default_friction * 5.0f;
     _bouncing_factor_y = 0;
     _bouncing_factor_x = 0;
     _gravity = ICollidable::default_gravity * 1.15f;
+
+    // allocate possible states and start with walking
+    _climbing = new Climbing();
+    _dead = new Dead();
+    _exiting_level = new ExitingLevel();
+    _hanging_on_edge = new HangingOnEdge();
+    _stunned = new Stunned();
+    _walking = new Walking();
+
+    _current_state = _walking;
 }
 
 void MainDude::print_classname() const {
     printf("MAIN_DUDE\n");
+}
+
+void MainDude::reset_carried_items() {
+    carried_items = {};
+}
+
+void MainDude::set_stunned() {
+    _current_state = _stunned;
+    _current_state->enter();
+}
+
+void MainDude::set_exiting_level() {
+    _current_state = _exiting_level;
+    _current_state->enter();
+}
+
+void MainDude::set_walking() {
+    _current_state = _hanging_on_edge;
+    _current_state->enter();
+}
+
+void MainDude::set_climbing() {
+    _current_state = _climbing;
+    _current_state->enter();
+}
+
+void MainDude::set_hanging_on_edge() {
+    _current_state = _hanging_on_edge;
+    _current_state->enter();
 };
+
+void MainDude::set_dead() {
+    _current_state = _dead;
+    _current_state->enter();
+}
+
+void MainDude::set_sprite_crawling() {
+    // FIXME: animFrame checking
+    if (sprite_state == Orientation::LEFT)
+        frameGfx = sprite_utils::get_frame((u8 *) gfx_spelunkerTiles, _sprite_size,
+                                           animFrame + 24);
+    else
+        frameGfx = sprite_utils::get_frame((u8 *) gfx_spelunkerTiles, _sprite_size,
+                                           animFrame + 33);
+}
+
+void MainDude::set_sprite_hanging_on_tile() {
+    // FIXME: animFrame checking
+    if (_orientation == Orientation::RIGHT)
+        frameGfx = sprite_utils::get_frame((u8 *) gfx_spelunkerTiles, _sprite_size, 13);
+    else if (_orientation == Orientation::LEFT)
+        frameGfx = sprite_utils::get_frame((u8 *) gfx_spelunkerTiles, _sprite_size, 12);
+}
+
+void MainDude::set_sprite_whiping() {
+    // FIXME: animFrame checking
+    if (sprite_state == Orientation::LEFT)
+        frameGfx = sprite_utils::get_frame((u8 *) gfx_spelunkerTiles, _sprite_size, 56 + animFrame);
+    else if (sprite_state == Orientation::RIGHT)
+        frameGfx = sprite_utils::get_frame((u8 *) gfx_spelunkerTiles, _sprite_size, 62 + animFrame);
+}
+
+void MainDude::set_sprite_pushing() {
+    // FIXME: animFrame checking
+    if (_orientation == Orientation::LEFT)
+        frameGfx = sprite_utils::get_frame((u8 *) gfx_spelunkerTiles, _sprite_size, 42 + animFrame);
+    else
+        frameGfx = sprite_utils::get_frame((u8 *) gfx_spelunkerTiles, _sprite_size, 49 + animFrame);
+}
+
+void MainDude::set_sprite_stunned() {
+    if (animFrame > 4) animFrame = 0;
+    frameGfx = sprite_utils::get_frame((u8 *) gfx_spelunkerTiles, _sprite_size, 18 + animFrame);
+}
+
+void MainDude::set_sprite_climbing_ladder() {
+    if (animFrame >= 6) animFrame = 0;
+    frameGfx = sprite_utils::get_frame((u8 *) gfx_spelunkerTiles, _sprite_size, 96 + animFrame);
+}
+
+void MainDude::set_sprite_climbing_rope() {
+    if (animFrame >= 12) animFrame = 0;
+    frameGfx = sprite_utils::get_frame((u8 *) gfx_spelunkerTiles, _sprite_size, 74 + animFrame);
+}
+
+void MainDude::set_sprite_dead() {
+    if (_bottom_collision)
+        frameGfx = sprite_utils::get_frame((u8 *) gfx_spelunkerTiles, _sprite_size, 17);
+    else
+        frameGfx = sprite_utils::get_frame((u8 *) gfx_spelunkerTiles, _sprite_size, 16);
+}
+
+void MainDude::set_sprite_walking() {
+    // FIXME: animFrame checking
+    frameGfx = sprite_utils::get_frame((u8 *) gfx_spelunkerTiles, _sprite_size, static_cast<u16>(sprite_state) * 6);
+}
+
+void MainDude::set_sprite_falling() {
+    // FIXME: animFrame checking
+    if (fabs(_x_speed) != 0)
+        frameGfx = sprite_utils::get_frame((u8 *) gfx_spelunkerTiles, _sprite_size,
+                                           animFrame +
+                                           (static_cast<u16>(sprite_state) * MAIN_DUDE_FRAMES_PER_ANIMATION));
+
+    else if (sprite_state == Orientation::LEFT)
+        frameGfx = sprite_utils::get_frame((u8 *) gfx_spelunkerTiles, _sprite_size, 14);
+    else if (sprite_state == Orientation::RIGHT)
+        frameGfx = sprite_utils::get_frame((u8 *) gfx_spelunkerTiles, _sprite_size, 15);
+}
+
+void MainDude::set_sprite_exiting_level() {
+    // FIXME: animFrame checking
+    frameGfx = sprite_utils::get_frame((u8 *) gfx_spelunkerTiles, _sprite_size, 80 + animFrame);
+}
+
+void MainDude::match_animation() {
+    switch (_current_state->_state) {
+        case _MainDudeState::WALKING: {
+            if (using_whip)
+                set_sprite_whiping();
+            else
+                set_sprite_walking();
+            break;
+        }
+        case _MainDudeState::CLIMBING: {
+            if (using_whip)
+                set_sprite_whiping();
+            else {
+                switch(_climbing->_type){
+                    case Climbing::LADDER:{
+                        set_sprite_climbing_ladder();
+                        break;
+                    }
+                    case Climbing::ROPE:{
+                        set_sprite_climbing_rope();
+                        break;
+                    }
+                }
+            }
+            break;
+        }
+        case _MainDudeState::HANGING_ON_EDGE: {
+            if (using_whip)
+                set_sprite_whiping();
+            else
+                set_sprite_hanging_on_tile();
+            break;
+        }
+        case _MainDudeState::STUNNED: {
+            set_sprite_stunned();
+            break;
+        }
+        case _MainDudeState::DEAD: {
+            set_sprite_dead();
+            break;
+        }
+        case _MainDudeState::EXITING_LEVEL: {
+            set_sprite_exiting_level();
+            break;
+        }
+    }
+}

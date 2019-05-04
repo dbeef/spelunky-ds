@@ -4,6 +4,7 @@
 
 #include <cstdlib>
 
+#include "../singletons/states/_DudeStateHandler.hpp"
 
 #include "../../../build/gfx_spike_collectibles_flame.h"
 #include "../../../build/soundbank.h"
@@ -21,7 +22,7 @@ void Spikes::update_creature_specific() {
     if (_ready_to_dispose) return;
 
     // check whether main dude can be killed by this spikes
-    if (!MainDude::instance().dead && !MainDude::instance().using_cape &&
+    if (MainDude::instance()._current_state->_state != _MainDudeState::DEAD && !MainDude::instance().using_cape &&
         Collisions::checkCollisionBodiesLeftLowerCorner(_x, _y + 16, _physical_width, _physical_height,
                                                         MainDude::instance()._x, MainDude::instance()._y + 16, 16, 16) &&
         !MainDude::instance()._bottom_collision && MainDude::instance()._y_speed > 1) {

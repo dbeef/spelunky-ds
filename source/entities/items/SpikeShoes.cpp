@@ -11,6 +11,7 @@
 
 #include "SpikeShoes.hpp"
 #include "../../graphics/SpriteUtils.hpp"
+#include "../singletons/MainDude.hpp"
 
 void SpikeShoes::update_item_specific() {
 
@@ -71,9 +72,9 @@ void SpikeShoes::equip() {
     auto *g = new GotCollectible(_x - 12, _y - 20, GotCollectible::Type::ITEM);
     GameState::instance().decorations.push_back(g);
 
-    if (!MainDude::instance().carrying_spike_shoes) {
+    if (!MainDude::instance().carried_items.spike_shoes) {
 
-        MainDude::instance().carrying_spike_shoes = true;
+        MainDude::instance().carried_items.spike_shoes = true;
 
         _x = HUD_ITEMS_ROW_X;
         _y = Hud::instance().items_offset_y;

@@ -15,6 +15,7 @@
 #include "Arrow.hpp"
 #include "../../time/Timer.h"
 #include "../../graphics/SpriteUtils.hpp"
+#include "../singletons/states/_DudeStateHandler.hpp"
 
 void Arrow::update_item_specific() {
 
@@ -51,16 +52,9 @@ void Arrow::update_item_specific() {
 
         // TODO Make an util function for this;
         // settings those flags causes main dude to fall off whatever he is hanging on.
-        MainDude::instance().can_climb_rope = false;
-        MainDude::instance().started_climbing_rope = false;
-        MainDude::instance().can_climb_ladder = false;
-        MainDude::instance().started_climbing_ladder = false;
-        MainDude::instance().climbing = false;
-        MainDude::instance().hanging_on_tile_left = false;
-        MainDude::instance().hanging_on_tile_right = false;
-        MainDude::instance().using_whip = false;
         MainDude::instance().stunned_timer = 0;
-        MainDude::instance().stunned = true;
+
+        MainDude::instance().set_stunned();
 
         if (_orientation == Orientation::LEFT)
             MainDude::instance()._x_speed = -3;

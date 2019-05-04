@@ -11,6 +11,7 @@
 #include "Mitt.hpp"
 #include "../../entities/decorations/GotCollectible.hpp"
 #include "../../graphics/SpriteUtils.hpp"
+#include "../singletons/MainDude.hpp"
 
 
 void Mitt::update_item_specific() {
@@ -62,8 +63,8 @@ void Mitt::equip() {
     auto *g = new GotCollectible(_x - 12, _y - 20, GotCollectible::Type::ITEM);
     GameState::instance().decorations.push_back(g);
 
-    if (!MainDude::instance().carrying_mitt) {
-        MainDude::instance().carrying_mitt = true;
+    if (!MainDude::instance().carried_items.mitt) {
+        MainDude::instance().carried_items.mitt = true;
         update_sprites_position();
         _x = HUD_ITEMS_ROW_X;
         _y = Hud::instance().items_offset_y;

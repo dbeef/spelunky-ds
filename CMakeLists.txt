@@ -27,6 +27,20 @@ add_executable(spelunkyds
         source/entities/decorations/_BaseDecoration.h
         source/entities/singletons/MainDude.cpp
         source/entities/singletons/MainDude.hpp
+        source/entities/singletons/states/Walking.hpp
+        source/entities/singletons/states/Walking.cpp
+        source/entities/singletons/states/Climbing.hpp
+        source/entities/singletons/states/Climbing.cpp
+        source/entities/singletons/states/HangingOnEdge.hpp
+        source/entities/singletons/states/HangingOnEdge.cpp
+        source/entities/singletons/states/Stunned.cpp
+        source/entities/singletons/states/Stunned.hpp
+        source/entities/singletons/states/Dead.cpp
+        source/entities/singletons/states/Dead.hpp
+        source/entities/singletons/states/ExitingLevel.cpp
+        source/entities/singletons/states/ExitingLevel.cpp
+        source/entities/singletons/states/_DudeStateHandler.hpp
+        source/entities/singletons/states/_MainDudeState.hpp
         source/entities/items/Bomb.cpp
         source/entities/items/Rock.cpp
         source/entities/items/Arrow.cpp
@@ -50,7 +64,6 @@ add_executable(spelunkyds
         source/tiles/MapTile.hpp
         source/GameLoop.cpp
         source/GameLoop.hpp
-        source/entities/singletons/MainDudeConsts.h
         source/entities/singletons/MainDude.cpp
         source/entities/singletons/MainDude.hpp
         source/entities/_common/Orientation.hpp

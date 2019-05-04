@@ -7,8 +7,10 @@
 
 namespace brightness {
 
+    //!> this should be called after Vblank (otherwise - crash!)
     void set_maximum_brightness();
 
+    //!> this should be called after Vblank (otherwise - crash!)
     void update_brightness();
 
     bool is_maximum_brightness();

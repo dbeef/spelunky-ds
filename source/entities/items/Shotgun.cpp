@@ -14,6 +14,7 @@
 #include "Shotgun.hpp"
 #include "../../time/Timer.h"
 #include "../../sound/Sound.hpp"
+#include "../singletons/MainDude.hpp"
 
 void Shotgun::update_item_specific() {
 
@@ -27,7 +28,7 @@ void Shotgun::update_item_specific() {
         if (shopping_transaction(this))
             equip();
 
-        MainDude::instance().carrying_shotgun = true;
+        MainDude::instance().carried_items.shotgun = true;
         _orientation = MainDude::instance().sprite_state;
         sprite_utils::set_priority(OBJPRIORITY_0, _main_sprite_info, _sub_sprite_info);
 
@@ -39,7 +40,7 @@ void Shotgun::update_item_specific() {
 
     } else {
         sprite_utils::set_priority(OBJPRIORITY_1, _main_sprite_info, _sub_sprite_info);
-        MainDude::instance().carrying_shotgun = false;
+        MainDude::instance().carried_items.shotgun = false;
     }
 
     update_sprites_position();

@@ -27,6 +27,7 @@ int main() {
 
     // Setting screen full white to smooth transition from game launcher,
     // which happens to transit to white color when starting game.
+    swiWaitForVBlank();
     brightness::set_maximum_brightness();
 
     init_singletons();

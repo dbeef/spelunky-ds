@@ -8,14 +8,15 @@
 #include "../../entities/decorations/GotCollectible.hpp"
 #include "../../collisions/Collisions.hpp"
 #include "../animations/FallPoof.hpp"
-
+#include "../singletons/states/_DudeStateHandler.hpp"
 #include "../../time/Timer.h"
 #include "../../graphics/SpriteUtils.hpp"
+#include "../singletons/MainDude.hpp"
 
 void Jetpack::update_item_specific() {
 
-    if (MainDude::instance().carrying_cape && collected) {
-        MainDude::instance().carrying_jetpack = false;
+    if (MainDude::instance().carried_items.cape && collected) {
+        MainDude::instance().carried_items.cape = false;
         _ready_to_dispose = true;
         sprite_utils::set_visibility(false, _main_sprite_info, _sub_sprite_info);
     }
@@ -38,7 +39,8 @@ void Jetpack::update_item_specific() {
 
     if (collected) {
 
-        if (MainDude::instance().climbing || MainDude::instance().exiting_level) {
+        if (MainDude::instance()._current_state->_state == _MainDudeState::CLIMBING ||
+            MainDude::instance()._current_state->_state == _MainDudeState::EXITING_LEVEL) {
             sprite_utils::set_priority(OBJPRIORITY_0, _main_sprite_info, _sub_sprite_info);
             set_pickuped_position_not_checking(-3, -3, 2);
             sprite_utils::set_horizontal_flip(false, _main_sprite_info, _sub_sprite_info);
@@ -96,8 +98,8 @@ void Jetpack::update_item_specific() {
         }
     }
 
-    if (MainDude::instance()._bottom_collision || MainDude::instance().hanging_on_tile_left ||
-        MainDude::instance().hanging_on_tile_right) {
+    if (MainDude::instance()._bottom_collision ||
+        MainDude::instance()._current_state->_state == _MainDudeState::HANGING_ON_EDGE) {
         MainDude::instance().using_jetpack = false;
         MainDude::instance().jetpack_fuel_counter = 15;
     }
@@ -117,11 +119,11 @@ void Jetpack::init_sprites() {
     delete_sprites();
 
     _sub_sprite_info = OAMManager::sub().initSprite(gfx_bat_snake_jetpackPal, gfx_bat_snake_jetpackPalLen,
-                                                           nullptr, _sprite_size, ObjSize::OBJSIZE_16,
-                                                           _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
+                                                    nullptr, _sprite_size, ObjSize::OBJSIZE_16,
+                                                    _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
     _main_sprite_info = OAMManager::main().initSprite(gfx_bat_snake_jetpackPal, gfx_bat_snake_jetpackPalLen,
-                                                             nullptr, _sprite_size, ObjSize::OBJSIZE_16,
-                                                             _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
+                                                      nullptr, _sprite_size, ObjSize::OBJSIZE_16,
+                                                      _spritesheet_type, true, false, LAYER_LEVEL::MIDDLE_TOP);
 
     update_anim_icon(_x, _y, _physical_width);
 
@@ -143,12 +145,12 @@ void Jetpack::equip() {
     auto *g = new GotCollectible(_x - 12, _y - 20, GotCollectible::Type::ITEM);
     GameState::instance().decorations.push_back(g);
 
-    if (MainDude::instance().carrying_cape) {
-        MainDude::instance().carrying_cape = false;
+    if (MainDude::instance().carried_items.jetpack) {
+        MainDude::instance().carried_items.jetpack = false;
     }
 
-    if (!MainDude::instance().carrying_jetpack) {
-        MainDude::instance().carrying_jetpack = true;
+    if (!MainDude::instance().carried_items.jetpack) {
+        MainDude::instance().carried_items.jetpack = true;
         update_sprites_position();
         collected = true;
         u8 *frame_gfx = sprite_utils::get_frame((u8 *) gfx_bat_snake_jetpackTiles, _sprite_size, 8);

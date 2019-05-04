@@ -15,6 +15,7 @@
 #include "../creatures/Bullet.hpp"
 #include "../../time/Timer.h"
 #include "../../sound/Sound.hpp"
+#include "../singletons/MainDude.hpp"
 
 void Pistol::update_item_specific() {
 
@@ -27,12 +28,12 @@ void Pistol::update_item_specific() {
         if (shopping_transaction(this))
             equip();
 
-        MainDude::instance().carrying_pistol = true;
+        MainDude::instance().carried_items.pistol = true;
         _orientation = MainDude::instance().sprite_state;
         match_animation();
 
     } else
-        MainDude::instance().carrying_pistol = false;
+        MainDude::instance().carried_items.pistol = false;
 
     update_sprites_position(); //must be called here, after position is offsetted if pistol carried
     handle_shooting();

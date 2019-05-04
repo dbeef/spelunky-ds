@@ -55,7 +55,7 @@ void Rope::update_item_specific() {
     //checking if main dude can climb over the rope
 
     bool onTopOfClimbingSpace = MainDude::instance()._y < _y + 6;
-    MainDude::instance().on_top_of_climbing_space = onTopOfClimbingSpace;
+//    MainDude::instance().on_top_of_climbing_space = onTopOfClimbingSpace;
 
     for (unsigned long a = 0; a < _rope_chain.size(); a++) {
 
@@ -66,7 +66,7 @@ void Rope::update_item_specific() {
             _rope_chain.at(a)->_active
             && !onTopOfClimbingSpace) {
             if (!InputHandler::instance().keys.r_bumper_down) {
-                MainDude::instance().can_climb_rope = true;
+//                MainDude::instance().can_climb_rope = true;
                 if (InputHandler::instance().keys.up_key_held) {
                     MainDude::instance()._x = _rope_chain.at(a)->_x - 4;
                 }

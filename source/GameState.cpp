@@ -14,7 +14,6 @@
 #include "tiles/BaseMap.hpp"
 #include "tiles/LevelGenerator.hpp"
 #include "tiles/PopulatingUtils.hpp"
-#include "entities/singletons/MainDudeConsts.h"
 #include "time/Timer.h"
 #include "graphics/OamUtils.hpp"
 #include "graphics/Brightness.hpp"
@@ -51,10 +50,7 @@ void GameState::start_new_game() {
 }
 
 void GameState::start_main_menu() {
-
     _current_scene = Scene::MAIN_MENU;
-
-    MainDude::instance().climbing = false;
     Camera::instance().detach_from_main_dude();
     populate_main_menu();
 }
@@ -125,117 +121,113 @@ void GameState::start_next_level() {
 
 void GameState::handle_changing_screens() {
 
-    if ((MainDude::instance().dead && InputHandler::instance().keys.y_key_down) ||
-        (MainDude::instance().animFrame >= 16)) {
-
-        MainDude::instance().animFrame = 0;
-
-        generate_new_level_layout();
-
-        if (_current_scene == Scene::MAIN_MENU || _current_scene == Scene::LEVEL_SUMMARY) {
-
-            //next level or starting game
-
-            if (_current_scene == Scene::MAIN_MENU) {
-                sound::stop_menu_music();
-                sound::start_cave_music();
-            } else
-                sound::stop_cave_music();
-
-
-            Level::instance().generate_frame();
-            Level::instance().initialise_tiles_from_room_layout();
-            MainDude::instance().set_position_to(MapTileType::ENTRANCE);
-
-
-        } else {
-
-            Level::instance().clean_map_layout();
-
-            //flushing the buffer so it wouldn't update in the scores/main menu/transition screen if != 0
-            Hud::instance().money_on_this_level += Hud::instance().dollars_buffer;
-            Hud::instance().dollars_buffer = 0;
-
-            //splash screen; scores or level transition
-
-            if (_current_scene == Scene::SCORES) {
-
-                robbed_or_killed_shopkeeper = false;
-
-                sound::stop_cave_music();
-                sound::start_menu_music();
-
-                Level::instance().initialise_tiles_from_splash_screen(SplashScreenType::MAIN_MENU_UPPER);
-                Level::instance().initialise_tiles_from_splash_screen(SplashScreenType::MAIN_MENU_LOWER);
-                // FIXME: Should call method below or use constexpr position
-//                set_position_to(MapTileType::ENTRANCE);
-                MainDude::instance()._x = 113;
-                MainDude::instance()._y = 288;
-                // FIXME: Shouldn't detach?
-                Camera::instance().follow_main_dude();
-                Camera::instance().instant_focus();
-
-            } else if (MainDude::instance().dead) {
-                Level::instance().initialise_tiles_from_splash_screen(SplashScreenType::SCORES_UPPER);
-                Level::instance().initialise_tiles_from_splash_screen(SplashScreenType::SCORES_LOWER);
-                MainDude::instance().set_position_to(MapTileType::EXIT);
-            } else {
-                Level::instance().initialise_tiles_from_splash_screen(SplashScreenType::ON_LEVEL_DONE_UPPER);
-                Level::instance().initialise_tiles_from_splash_screen(SplashScreenType::ON_LEVEL_DONE_LOWER);
-                MainDude::instance().set_position_to(MapTileType::ENTRANCE);
-            }
-
-        }
-
-        bool dead = MainDude::instance().dead;
-        int temp_x = MainDude::instance()._x;
-        int temp_y = MainDude::instance()._y;
-
-        MainDude::instance().dead = dead; //TODO Move this fields out to the game_state! or do the thing above, same result
-
-        MainDude::instance()._x = temp_x;
-        MainDude::instance()._y = temp_y;
-
-        Hud::instance().clear_console();
-
-        // changing scene, so delete all MovingObjects you have, and according SpriteInfos
-        oam_utils::delete_all_sprites();
-
-        // init sprites since they've been disposed
-        MainDude::instance().init_sprites();
-        Whip::instance().init_sprites();
-
-        if (_current_scene == Scene::MAIN_MENU || _current_scene == Scene::LEVEL_SUMMARY) {
-
-            if (_current_scene == Scene::MAIN_MENU) {
-                start_new_game();
-            } else {
-                sound::start_cave_music();
-            }
-
-            start_next_level(); //initializes hud entities
-
-        } else {
-
-            if (_current_scene == Scene::SCORES) {
-                start_main_menu();
-            } else if (MainDude::instance().dead) {
-                start_scores();
-            } else {
-                start_level_summary();
-            }
-        }
-
-        MainDude::instance().exiting_level = false;
-        MainDude::instance().dead = false;
-
-        LevelRenderer::instance().render();
-
-    } else if (MainDude::instance().animFrame >= 16) {
-        sprite_utils::set_visibility(false,
-                                     MainDude::instance().main_sprite_info,
-                                     MainDude::instance().sub_sprite_info);
-    }
+//    if ((MainDude::instance()._current_state->_state == _MainDudeState::DEAD && InputHandler::instance().keys.y_key_down) ||
+//        (MainDude::instance().animFrame >= 16)) {
+//
+//        MainDude::instance().animFrame = 0;
+//
+//        generate_new_level_layout();
+//
+//        if (_current_scene == Scene::MAIN_MENU || _current_scene == Scene::LEVEL_SUMMARY) {
+//
+//            //next level or starting game
+//
+//            if (_current_scene == Scene::MAIN_MENU) {
+//                sound::stop_menu_music();
+//                sound::start_cave_music();
+//            } else
+//                sound::stop_cave_music();
+//
+//
+//            Level::instance().generate_frame();
+//            Level::instance().initialise_tiles_from_room_layout();
+//            MainDude::instance().set_position_to(MapTileType::ENTRANCE);
+//
+//
+//        } else {
+//
+//            Level::instance().clean_map_layout();
+//
+//            //flushing the buffer so it wouldn't update in the scores/main menu/transition screen if != 0
+//            Hud::instance().money_on_this_level += Hud::instance().dollars_buffer;
+//            Hud::instance().dollars_buffer = 0;
+//
+//            //splash screen; scores or level transition
+//
+//            if (_current_scene == Scene::SCORES) {
+//
+//                robbed_or_killed_shopkeeper = false;
+//
+//                sound::stop_cave_music();
+//                sound::start_menu_music();
+//
+//                Level::instance().initialise_tiles_from_splash_screen(SplashScreenType::MAIN_MENU_UPPER);
+//                Level::instance().initialise_tiles_from_splash_screen(SplashScreenType::MAIN_MENU_LOWER);
+//                // FIXME: Should call method below or use constexpr position
+////                set_position_to(MapTileType::ENTRANCE);
+//                MainDude::instance()._x = 113;
+//                MainDude::instance()._y = 288;
+//                // FIXME: Shouldn't detach?
+//                Camera::instance().follow_main_dude();
+//                Camera::instance().instant_focus();
+//
+//            } else if (MainDude::instance()._current_state->_state == _MainDudeState::DEAD) {
+//                Level::instance().initialise_tiles_from_splash_screen(SplashScreenType::SCORES_UPPER);
+//                Level::instance().initialise_tiles_from_splash_screen(SplashScreenType::SCORES_LOWER);
+//                MainDude::instance().set_position_to(MapTileType::EXIT);
+//            } else {
+//                Level::instance().initialise_tiles_from_splash_screen(SplashScreenType::ON_LEVEL_DONE_UPPER);
+//                Level::instance().initialise_tiles_from_splash_screen(SplashScreenType::ON_LEVEL_DONE_LOWER);
+//                MainDude::instance().set_position_to(MapTileType::ENTRANCE);
+//            }
+//
+//        }
+//
+//        int temp_x = MainDude::instance()._x;
+//        int temp_y = MainDude::instance()._y;
+//
+//        MainDude::instance()._x = temp_x;
+//        MainDude::instance()._y = temp_y;
+//
+//        Hud::instance().clear_console();
+//
+//        // changing scene, so delete all MovingObjects you have, and according SpriteInfos
+//        oam_utils::delete_all_sprites();
+//
+//        // init sprites since they've been disposed
+//        MainDude::instance().init_sprites();
+//        Whip::instance().init_sprites();
+//
+//        if (_current_scene == Scene::MAIN_MENU || _current_scene == Scene::LEVEL_SUMMARY) {
+//
+//            if (_current_scene == Scene::MAIN_MENU) {
+//                start_new_game();
+//            } else {
+//                sound::start_cave_music();
+//            }
+//
+//            start_next_level(); //initializes hud entities
+//
+//        } else {
+//
+//            if (_current_scene == Scene::SCORES) {
+//                start_main_menu();
+//            } else if (MainDude::instance()._current_state->_state == _MainDudeState::DEAD) {
+//                start_scores();
+//            } else {
+//                start_level_summary();
+//            }
+//        }
+//
+//        MainDude::instance()._current_state = _MainDudeState::STANDING;
+//
+//        LevelRenderer::instance().render();
+//
+//    } else if (MainDude::instance().animFrame >= 16) {
+//        sprite_utils::set_visibility(false,
+//                                     MainDude::instance().main_sprite_info,
+//                                     MainDude::instance().sub_sprite_info);
+//    }
 }
 
 /**

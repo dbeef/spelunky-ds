@@ -52,5 +52,5 @@ void InputHandler::update_input() {
 }
 
 void InputHandler::reset_key_state() {
-    memset(&keys, 0, sizeof(keys));
+    keys = {};
 }

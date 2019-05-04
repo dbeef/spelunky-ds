@@ -10,6 +10,7 @@
 #include "../../../build/gfx_saleable.h"
 #include "../../entities/decorations/GotCollectible.hpp"
 #include "../../graphics/SpriteUtils.hpp"
+#include "../singletons/MainDude.hpp"
 
 
 void SpringShoes::update_item_specific() {
@@ -60,8 +61,8 @@ void SpringShoes::equip() {
     auto g = new GotCollectible(_x - 12, _y - 20, GotCollectible::Type::ITEM);
     GameState::instance().decorations.push_back(g);
 
-    if (!MainDude::instance().carrying_spring_shoes) {
-        MainDude::instance().carrying_spring_shoes = true;
+    if (!MainDude::instance().carried_items.spring_shoes) {
+        MainDude::instance().carried_items.spike_shoes = true;
         update_sprites_position();
         collected = true;
         _x = HUD_ITEMS_ROW_X;

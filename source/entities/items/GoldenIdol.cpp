@@ -31,8 +31,8 @@ void GoldenIdol::update_item_specific() {
         }
 
         MapTile *tiles[9] = {};
-        Collisions::getNeighboringTiles(Level::instance().map_tiles, MainDude::instance().current_x_in_tiles,
-                                        MainDude::instance().current_y_in_tiles, tiles);
+        Collisions::getNeighboringTiles(Level::instance().map_tiles, MainDude::instance()._current_x_in_tiles,
+                                        MainDude::instance()._current_y_in_tiles, tiles);
 
         collected = tiles[static_cast<uint16>(TileOrientation::CENTER)] != nullptr && tiles[static_cast<uint16>(TileOrientation::CENTER)]->mapTileType == MapTileType::EXIT;
         if (collected) {

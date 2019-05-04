@@ -11,7 +11,7 @@
 #include "../entities/creatures/Snake.hpp"
 #include "../entities/creatures/Bat.hpp"
 #include "../entities/creatures/Spider.hpp"
-
+#include "../entities/singletons/states/_DudeStateHandler.hpp"
 #include "../entities/creatures/Damsel.hpp"
 #include "../entities/creatures/Skeleton.hpp"
 #include "../entities/creatures/Caveman.hpp"
@@ -20,7 +20,6 @@
 #include "../entities/treasures/RubySmall.h"
 #include "../entities/treasures/TripleGoldbar.h"
 #include "../entities/treasures/SingleGoldbar.hpp"
-#include "../entities/singletons/MainDudeConsts.h"
 #include "../GameState.hpp"
 #include "../time/Timer.h"
 #include "../graphics/SpriteUtils.hpp"
@@ -124,7 +123,7 @@ void Hud::draw_level_hud() {
 
     consoleClear();
 
-    if (!MainDude::instance().dead) {
+    if (MainDude::instance()._current_state->_state != _MainDudeState::DEAD) {
 
         if (dollars_buffer != 0) {
             printf("\n   %d    %d    %d    %d\n                  +%d",
@@ -280,7 +279,7 @@ void Hud::update() {
     if (GameState::instance()._current_scene == Scene::LEVEL)
         time_spent_on_level += Timer::getDeltaTime();
 
-    if (MainDude::instance().dead &&
+    if (MainDude::instance()._current_state->_state == _MainDudeState::DEAD &&
         MainDude::instance().time_since_last_damage > MAIN_DUDE_DAMAGE_PROTECTION_TIME) {
 
         bool milestone_0 = game_over_timer > 0;
@@ -309,7 +308,7 @@ void Hud::set_hud_sprites_attributes() {
 
     bool playing_level = GameState::instance()._current_scene == Scene::LEVEL;
 
-    sprite_utils::set_visibility(!MainDude::instance().dead & playing_level,
+    sprite_utils::set_visibility(MainDude::instance()._current_state->_state != _MainDudeState::DEAD && playing_level,
                                  heartSpriteInfo, bombSpriteInfo, ropeSpriteInfo, dollarSpriteInfo,
                                  holdingItemSpriteInfo);
 

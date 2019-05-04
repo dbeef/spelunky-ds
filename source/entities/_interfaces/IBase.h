@@ -29,8 +29,8 @@ public:
 
     // Should print its name upper-cased with newline character.
     // For debugging purposes.
-    //https://stackoverflow.com/questions/3649278/how-can-i-get-the-class-name-from-a-c-object
-    //https://stackoverflow.com/questions/32016809/using-typeid-to-get-name-of-derived-class
+    // https://stackoverflow.com/questions/3649278/how-can-i-get-the-class-name-from-a-c-object
+    // https://stackoverflow.com/questions/32016809/using-typeid-to-get-name-of-derived-class
     virtual void print_classname() const = 0;
 
 };

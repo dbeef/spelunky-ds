@@ -16,6 +16,7 @@
 #include "../../time/Timer.h"
 #include "../../graphics/SpriteUtils.hpp"
 #include "../../sound/Sound.hpp"
+#include "../singletons/MainDude.hpp"
 
 #define DAMSEL_SPRITESHEET_OFFSET 25
 #define DAMSEL_POS_INC_DELTA 18
@@ -54,7 +55,7 @@ void Damsel::update_creature_specific() {
         yelling = false;
 
         if (!killed)
-            MainDude::instance().carrying_damsel = true;
+            MainDude::instance().carried_items.damsel = true;
 
         if (MainDude::instance().killed) {
             hold_by_main_dude = false;
@@ -80,8 +81,8 @@ void Damsel::update_creature_specific() {
 
     update_sprites_position();
 
-    if (!hold_by_main_dude && MainDude::instance().carrying_damsel) {
-        MainDude::instance().carrying_damsel = false;
+    if (!hold_by_main_dude && MainDude::instance().carried_items.damsel) {
+        MainDude::instance().carried_items.damsel = false;
         stunned = true;
         stunned_timer = 0;
         triggered = true;
@@ -137,8 +138,8 @@ void Damsel::update_creature_specific() {
 
         //search for an exit
         MapTile *tiles[9] = {};
-        Collisions::getNeighboringTiles(Level::instance().map_tiles, MainDude::instance().current_x_in_tiles,
-                                        MainDude::instance().current_y_in_tiles, tiles);
+        Collisions::getNeighboringTiles(Level::instance().map_tiles, MainDude::instance()._current_x_in_tiles,
+                                        MainDude::instance()._current_y_in_tiles, tiles);
 
         exiting_level = tiles[static_cast<uint16>(TileOrientation::CENTER)] != nullptr && tiles[static_cast<uint16>(TileOrientation::CENTER)]->mapTileType == MapTileType::EXIT;
         if (exiting_level) {
@@ -148,9 +149,9 @@ void Damsel::update_creature_specific() {
             _y = tiles[static_cast<uint16>(TileOrientation::CENTER)]->y * 16;
             hold_by_main_dude = false;
             sound::steps();
-            if (MainDude::instance().carrying_damsel) {
+            if (MainDude::instance().carried_items.damsel) {
                 MainDude::instance().holding_item = false;
-                MainDude::instance().carrying_damsel = false;
+                MainDude::instance().carried_items.damsel = false;
             }
         }
     }

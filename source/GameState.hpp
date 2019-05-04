@@ -27,6 +27,7 @@
 // https://stackoverflow.com/questions/8036474/when-vectors-are-allocated-do-they-use-memory-on-the-heap-or-the-stack
 // https://stackoverflow.com/questions/21505021/extern-and-global-same-variable-in-same-file
 // https://stackoverflow.com/questions/37323227/benefits-of-using-extern-declaration-in-same-file-as-definition
+// https://www.quora.com/Are-primitives-default-initialized-in-C++11
 
 static constexpr uint8 DEFAULT_DMA_CHANNEL = 3;
 

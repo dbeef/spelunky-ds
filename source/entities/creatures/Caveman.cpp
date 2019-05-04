@@ -17,6 +17,7 @@
 #include "../../graphics/SpriteUtils.hpp"
 #include "../../sound/Sound.hpp"
 #include "../../math/Math.hpp"
+#include "../singletons/MainDude.hpp"
 
 #define CAVEMAN_POS_INC_DELTA 20
 #define CAVEMAN_TRIGGERED_SPEED 3
@@ -80,7 +81,7 @@ void Caveman::update_creature_specific() {
     if (!stunned && !killed)
         kill_if_whip(1);
     if (!stunned && !killed) {
-        if (MainDude::instance().carrying_spike_shoes)
+        if (MainDude::instance().carried_items.spike_shoes)
             kill_if_main_dude_jumped_on_you(3);
         else
             kill_if_main_dude_jumped_on_you(1);
