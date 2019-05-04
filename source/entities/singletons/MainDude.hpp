@@ -25,7 +25,6 @@ static const u16 MAIN_DUDE_STUN_TIME = 2000;
 static const u16 MAIN_DUDE_STUN_FALLING_TIME = 900;
 static const u16 MAIN_DUDE_PUSHING_TIME = 500;
 static const u16 MAIN_DUDE_DAMAGE_PROTECTION_TIME = 1500;
-static const u16 MAIN_DUDE_FRAMES_PER_ANIMATION = 6;
 static const u16 MAIN_DUDE_HITPOINTS = 4;
 static const u16 MAIN_DUDE_SPRITESHEET_ROW_WIDTH = 6;
 static const u16 MAIN_DUDE_X_SPEED_DELTA_TIME_MS = 2;
@@ -115,8 +114,6 @@ public:
     bool can_hang_on_tile(MapTile **neighboringTiles);
 
     void apply_blinking_on_damage();
-
-    void reset_values_checked_every_frame();
 
     void throw_item();
 

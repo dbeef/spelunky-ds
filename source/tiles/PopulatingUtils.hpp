@@ -5,10 +5,16 @@
 #ifndef SPELUNKYDS_POPULATING_UTILS_H
 #define SPELUNKYDS_POPULATING_UTILS_H
 
-void populate_cave_npcs();
+namespace populate {
 
-void populate_cave_moniez();
+    void cave_creatures();
 
-void populate_main_menu();
+    void cave_loot();
+
+    void main_menu();
+
+    // TODO: Move populating scores screen here.
+
+}
 
 #endif //SPELUNKYDS_POPULATING_UTILS_H

@@ -109,7 +109,7 @@ void GameState::start_next_level() {
     MainDude::instance().holding_item = false;
     MainDude::instance().spawn_carried_items();
     Hud::instance().init_sprites();
-    populate_cave_npcs();
+    populate_cave_creatures();
     populate_cave_moniez();
     killed_npcs.clear();
     collected_treasures.clear();
