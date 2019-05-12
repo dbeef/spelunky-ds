@@ -6,13 +6,13 @@
 #define SPELUNKYDS_WALKING_HPP
 
 
-#include "_DudeStateHandler.hpp"
+#include "../DudeActionState.hpp"
 
-class Walking : public _DudeStateHandler {
+class Walking : public DudeActionState {
 
 public:
 
-    Walking() : _DudeStateHandler(_MainDudeState::WALKING) {}
+    Walking() : DudeActionState(_MainDudeState::WALKING) {}
 
     ~Walking() override = default;
 

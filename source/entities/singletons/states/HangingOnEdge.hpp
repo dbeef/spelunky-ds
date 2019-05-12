@@ -5,13 +5,13 @@
 #ifndef SPELUNKYDS_HANGINGONEDGE_HPP
 #define SPELUNKYDS_HANGINGONEDGE_HPP
 
-#include "_DudeStateHandler.hpp"
+#include "../DudeActionState.hpp"
 
-class HangingOnEdge : public _DudeStateHandler {
+class HangingOnEdge : public DudeActionState {
 
 public:
 
-    HangingOnEdge() : _DudeStateHandler(_MainDudeState::HANGING_ON_EDGE) {}
+    HangingOnEdge() : DudeActionState(_MainDudeState::HANGING_ON_EDGE) {}
 
     ~HangingOnEdge() override = default;
 

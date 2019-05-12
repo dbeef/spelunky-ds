@@ -8,6 +8,8 @@
 #include "../../../build/gfx_spelunker.h"
 #include "states/Climbing.hpp"
 
+// TODO: Separate class for this, encapsulating current animation frame
+
 void MainDude::set_sprite_crawling() {
     if (animFrame >= 9) animFrame = 0;
     if (sprite_state == Orientation::LEFT)

@@ -8,7 +8,7 @@
 #include "../../entities/decorations/GotCollectible.hpp"
 #include "../../collisions/Collisions.hpp"
 #include "../animations/FallPoof.hpp"
-#include "../singletons/states/_DudeStateHandler.hpp"
+#include "../singletons/DudeActionState.hpp"
 #include "../../time/Timer.h"
 #include "../../graphics/SpriteUtils.hpp"
 #include "../singletons/MainDude.hpp"

@@ -6,13 +6,13 @@
 #define SPELUNKYDS_STUNNED_HPP
 
 
-#include "_DudeStateHandler.hpp"
+#include "../DudeActionState.hpp"
 
-class Stunned : public _DudeStateHandler {
+class Stunned : public DudeActionState {
 
 public:
 
-    Stunned() : _DudeStateHandler(_MainDudeState::STUNNED) {}
+    Stunned() : DudeActionState(_MainDudeState::STUNNED) {}
 
     ~Stunned() override = default;
 

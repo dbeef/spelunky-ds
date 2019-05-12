@@ -11,7 +11,7 @@
 #include "../../GameState.hpp"
 #include "../../time/Timer.h"
 #include "../../sound/Sound.hpp"
-#include "../singletons/states/_DudeStateHandler.hpp"
+#include "../singletons/DudeActionState.hpp"
 
 void ICollidable::update_collisions_with_map(int x_current_pos_in_tiles, int y_current_pos_in_tiles) {
     Collisions::getNeighboringTiles(Level::instance().map_tiles, x_current_pos_in_tiles,

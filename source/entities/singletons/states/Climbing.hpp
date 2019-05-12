@@ -6,13 +6,13 @@
 #define SPELUNKYDS_CLIMBING_HPP
 
 
-#include "_DudeStateHandler.hpp"
+#include "../DudeActionState.hpp"
 
-class Climbing : public _DudeStateHandler {
+class Climbing : public DudeActionState {
 
 public:
 
-    Climbing() : _DudeStateHandler(_MainDudeState::CLIMBING) {}
+    Climbing() : DudeActionState(_MainDudeState::CLIMBING) {}
 
     ~Climbing() override = default;
 

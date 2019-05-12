@@ -2,7 +2,7 @@
 // Created by xdbeef on 02.06.18.
 //
 
-#include "../singletons/states/_DudeStateHandler.hpp"
+#include "../singletons/DudeActionState.hpp"
 #include "Cape.hpp"
 #include "../../../build/gfx_goldbars.h"
 #include "../../GameState.hpp"

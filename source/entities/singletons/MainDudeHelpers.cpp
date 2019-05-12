@@ -20,7 +20,9 @@
 #include "../items/Bomb.hpp"
 #include "../../math/Math.hpp"
 #include "../../graphics/SpriteUtils.hpp"
+#include "../../sound/Sound.hpp"
 
+// FIXME: This could be moved to Base interface, up in hierarchy, since it's probably used by shopkeeper.
 // Sets main dude's position to the first tile of given type that occurs during iteration through the map.
 void MainDude::set_position_to(MapTileType t) {
 
@@ -39,6 +41,7 @@ void MainDude::set_position_to(MapTileType t) {
     Camera::instance().instant_focus();
 }
 
+// FIXME: This could be moved to Base interface, up in hierarchy, since it's used by caveman/damsel.
 void MainDude::boost_going_through_map_holes(MapTile **const t) {
     if (!_bottom_collision) {
         if ((t[static_cast<uint16>(TileOrientation::RIGHT_MIDDLE)] == nullptr ||
@@ -62,7 +65,7 @@ void MainDude::boost_going_through_map_holes(MapTile **const t) {
     }
 }
 
-// FIXME: This is not called.
+// FIXME: This will be moved to DudeEquipmentState handler
 void MainDude::throw_item() {
 
     //throw holding item
@@ -106,7 +109,6 @@ void MainDude::throw_item() {
                     held->_x_speed = -0.04f;
                 else
                     held->_x_speed = 0.04f;
-
             }
 
 
@@ -158,6 +160,7 @@ void MainDude::throw_item() {
     }
 }
 
+// FIXME: This could be moved out to DudeActionState handler
 void MainDude::take_out_bomb() {
     Hud::instance().bombs--;
     Hud::instance().draw_level_hud();
@@ -167,6 +170,7 @@ void MainDude::take_out_bomb() {
     holding_item = true;
 }
 
+// FIXME: This could be moved out to DudeActionState handler
 void MainDude::throw_rope() {
 
     Hud::instance().ropes--;
@@ -182,6 +186,7 @@ void MainDude::throw_rope() {
 
 }
 
+// FIXME: This could be moved out to DudeActionState handler
 void MainDude::spawn_carried_items() {
 
     if (carried_items.spring_shoes) {
@@ -252,7 +257,6 @@ void MainDude::spawn_carried_items() {
     }
 }
 
-
 void MainDude::apply_blinking_on_damage() {
     if (time_since_last_damage < MAIN_DUDE_DAMAGE_PROTECTION_TIME) {
         sprite_utils::set_visibility(((int) time_since_last_damage % 100) >= 50, main_sprite_info, sub_sprite_info);
@@ -260,6 +264,7 @@ void MainDude::apply_blinking_on_damage() {
         sprite_utils::set_visibility(true, main_sprite_info, sub_sprite_info);
 }
 
+// FIXME: This could be moved out to DudeActionState handler
 bool MainDude::can_hang_on_tile(MapTile **neighboringTiles) {
 
     if (_bottom_collision || (!_left_collision && !_right_collision))

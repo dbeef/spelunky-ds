@@ -6,13 +6,13 @@
 #define SPELUNKYDS_DEAD_HPP
 
 
-#include "_DudeStateHandler.hpp"
+#include "../DudeActionState.hpp"
 
-class Dead : public _DudeStateHandler {
+class Dead : public DudeActionState {
 
 public:
 
-    Dead() : _DudeStateHandler(_MainDudeState::DEAD) {}
+    Dead() : DudeActionState(_MainDudeState::DEAD) {}
 
     ~Dead() override = default;
 

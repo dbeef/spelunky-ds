@@ -11,7 +11,7 @@
 #include "../creatures/_BaseCreature.h"
 #include "../_common/Orientation.hpp"
 #include "Whip.hpp"
-#include "states/_MainDudeState.hpp"
+#include "_MainDudeState.hpp"
 
 static const float MAIN_DUDE_MAX_X_SPEED = 2;
 static const float MAIN_DUDE_MAX_X_SPEED_CRAWLING = 1.5f;
@@ -39,7 +39,7 @@ class _BaseItem;
 
 class IPickupable;
 
-class _DudeStateHandler;
+class DudeActionState;
 
 class Climbing;
 
@@ -177,7 +177,7 @@ public:
     bool using_jetpack{};
 
     Orientation _orientation{};
-    _DudeStateHandler *_current_state{};
+    DudeActionState *_current_state{};
 
     // State transition
 

@@ -60,7 +60,7 @@
 #include "../_interfaces/IPickupable.h"
 #include "../../time/Timer.h"
 
-#include "states/_DudeStateHandler.hpp"
+#include "DudeActionState.hpp"
 #include "states/Climbing.hpp"
 #include "states/Dead.hpp"
 #include "states/ExitingLevel.hpp"

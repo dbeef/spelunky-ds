@@ -4,7 +4,7 @@
 
 #include <cstdlib>
 
-#include "../singletons/states/_DudeStateHandler.hpp"
+#include "../singletons/DudeActionState.hpp"
 
 #include "../../../build/gfx_spike_collectibles_flame.h"
 #include "../../../build/soundbank.h"

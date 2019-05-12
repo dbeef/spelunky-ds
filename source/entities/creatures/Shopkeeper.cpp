@@ -12,7 +12,7 @@
 #include "../../time/Timer.h"
 #include "../../graphics/SpriteUtils.hpp"
 #include "../singletons/MainDude.hpp"
-#include "../singletons/states/_DudeStateHandler.hpp"
+#include "../singletons/DudeActionState.hpp"
 
 #define SHOPKEEPER_SPRITESHEET_OFFSET 0
 #define SHOPKEEPER_POS_INC_DELTA 18

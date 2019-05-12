@@ -6,13 +6,13 @@
 #define SPELUNKYDS_EXITINGLEVEL_HPP
 
 
-#include "_DudeStateHandler.hpp"
+#include "../DudeActionState.hpp"
 
-class ExitingLevel : public _DudeStateHandler {
+class ExitingLevel : public DudeActionState {
 
 public:
 
-    ExitingLevel() : _DudeStateHandler(_MainDudeState::EXITING_LEVEL) {}
+    ExitingLevel() : DudeActionState(_MainDudeState::EXITING_LEVEL) {}
 
     ~ExitingLevel() override = default;
 

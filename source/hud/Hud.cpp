@@ -11,7 +11,7 @@
 #include "../entities/creatures/Snake.hpp"
 #include "../entities/creatures/Bat.hpp"
 #include "../entities/creatures/Spider.hpp"
-#include "../entities/singletons/states/_DudeStateHandler.hpp"
+#include "../entities/singletons/DudeActionState.hpp"
 #include "../entities/creatures/Damsel.hpp"
 #include "../entities/creatures/Skeleton.hpp"
 #include "../entities/creatures/Caveman.hpp"

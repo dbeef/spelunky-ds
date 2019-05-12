@@ -15,7 +15,7 @@
 #include "Arrow.hpp"
 #include "../../time/Timer.h"
 #include "../../graphics/SpriteUtils.hpp"
-#include "../singletons/states/_DudeStateHandler.hpp"
+#include "../singletons/DudeActionState.hpp"
 
 void Arrow::update_item_specific() {
 

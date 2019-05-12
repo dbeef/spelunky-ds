@@ -39,8 +39,8 @@ add_executable(spelunkyds
         source/entities/singletons/states/Dead.hpp
         source/entities/singletons/states/ExitingLevel.cpp
         source/entities/singletons/states/ExitingLevel.cpp
-        source/entities/singletons/states/_DudeStateHandler.hpp
-        source/entities/singletons/states/_MainDudeState.hpp
+        source/entities/singletons/DudeActionState.hpp
+        source/entities/singletons/DudeEquipmentState.hpp
         source/entities/singletons/MainDudeAnimations.cpp
         source/entities/singletons/MainDudeHelpers.cpp
         source/entities/items/Bomb.cpp
