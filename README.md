@@ -12,7 +12,8 @@
 </p>
 
 <h2 align="center">To-do list as for now</h2>
-- ✔	Implement shopkeeper logics and randomly spawned shops
+
+- ✔ Implement shopkeeper logics and randomly spawned shops
 - ✔ Implement damsel
 - ✔ Implement caveman
 - ✔ Implement skeleton
@@ -33,6 +34,7 @@
 Obviously I omit things like implement Olmec or implement lava city - let's finish cave level first.
 
 <h2 align="center">Known bugs</h2>
+
 - 🗙 Though overall randomness of the generator is improved it sometimes makes some ugly structures, to be fixed later
 - 🗙 I messed up a bit with collision detection
 - 🗙 Arrow trap is triggered even if there's a tile (or tiles) between some moving object and the trap
