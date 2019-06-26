@@ -60,7 +60,11 @@ In order to compile this application on your own, you will need [devkitPro](http
 
 Once everything is downloaded and installed, `git clone` this repository, navigate to the folder in which it was cloned, and run `make` to compile the application. If there is an error, let us know.
 
-<h2 align="center"> Debugging </h2>
+<h2 align="center">TroubleShooting</h2>
+
+- If audio does not work, launch the application using TWiLightMenu++
+
+<h2 align="center">Debugging</h2>
 To compile SpelunkyDS with assertions fired up, type "make DEBUG=1" when compiling.
 Debugging seemingly random crashes is possible only on an emulator, which will provide last executed line:
 
